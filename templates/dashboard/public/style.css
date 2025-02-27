@@ -1,0 +1,264 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,400&display=swap');
+body {
+	margin: 0;
+	padding:0;
+	font-family: 'Roboto', sans-serif;
+}
+
+header {
+	width:calc(100% - 20px);
+	height:60px;
+	background: #fff;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	display: flex;
+	align-items: center;
+	padding-left:20px;
+}
+
+header h2 {
+	margin:0px;
+	padding:0px;
+	color:#171D29;
+}
+
+.container {
+	width: 100%;
+	min-height: calc(100vh - 60px);
+	display: flex;
+}
+
+aside {
+	width:20%;
+	padding-top: 30px;
+}
+
+aside ul {
+	display: flex;
+	flex-direction: column;
+	gap:10px;
+	margin: 0px;
+	padding: 0px;
+	position: fixed;
+}
+
+aside ul a {
+	width:100%;
+	height:40px;
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+	color:#171D29;
+	padding-left:20px;
+	font-weight: 700;
+	letter-spacing: 2px;
+}
+
+aside ul a:hover {
+	background: #171D29;
+	color:#fff;
+}
+
+aside ul a i {
+	text-align: center;
+	width: 30px;
+}
+
+aside ul a p {
+	margin-left:10px;
+}
+
+
+/*aside ul a i */
+
+main {
+	width: 100%;
+	background: #E0E0E0;
+}
+
+.content-container {
+	width:90%;
+	margin: auto;
+	margin-top:100px;
+	background: #fff;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	border-radius: 20px;
+	padding:0px 20px 20px 20px;
+}
+
+.list-header {
+	width: calc(100% - 20px);
+	height:60px;
+	border-bottom:2px solid #171D29;
+	padding-left:20px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.content-container h3 {
+	color:#171D29;
+	margin: 0px;
+}
+
+.list-header a {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width:120px;
+	height:40px;
+	text-decoration: none;
+	color:#fff;
+	background: #FF3366;
+	gap:5px;
+	border-radius: 5px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	font-weight: 500;
+}
+
+.content-container table {
+	width:100%;
+	margin-top:20px;
+	text-align: center;
+	color:#171D29;
+}
+
+.content-container table thead {
+	height:40px;
+	text-align: center;
+}
+
+.content-container table tbody tr {
+	border-bottom: 1px solid #171D29;
+}
+
+.content-container table tbody td {
+	height: 40px;
+}
+
+
+.content-container table tbody td:nth-child(2) {
+	text-align: left;	
+	padding-left:20px;
+}
+
+.content-container table tbody td:last-child{
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
+.content-container table tbody td:last-child a{
+	color:#171D29;
+}
+
+.content-container table tbody td:last-child a:hover{
+	color:#FF3366;
+}
+
+.published {
+	color:#5cb85c;
+	font-weight: 700;
+}
+
+.no-published {
+	color:#d9534f;
+	font-weight: 700;
+}
+
+.content-container form {
+	display: flex;
+	flex-direction: column;
+}
+
+.content-container input {
+	width: 400px;
+	height:30px;
+	outline: none;
+	font-weight: 700;
+	color:#171D29;
+	padding:0px 10px;
+	border-radius: 5px;
+	border:1px solid #171D29;
+}
+
+.content-container textarea {
+	width: 90%;
+	height:200px;
+	outline: none;
+	font-weight: 700;
+	color:#171D29;
+	padding:10px;
+	margin:20px 0px;
+}
+
+.content-container input[type=submit] {
+	width:100px;
+	border:none;
+	background: #FF3366;
+	color:#fff;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	cursor: pointer;
+}
+
+.post-content p {
+	text-align: justify;
+}
+
+.content-container label {
+	display: flex;
+	align-items: center;
+	gap:10px;
+}
+
+.content-container input[type=radio] {
+	width: 15px;
+	padding:0px;
+}
+
+.choice-day {
+	display: flex;
+	justify-content: center;
+	margin-top:20;
+	gap:10px;
+}
+
+.choice-day label {
+	gap:0px;
+}
+
+.timetable {
+	display: flex;
+	flex-direction: column;
+	gap:10px;
+}
+
+.contact-form span {
+	width: 60px;
+}
+
+.price-form span, .camp-form  span{
+	width:300px;
+}
+
+.timetable-create-form span{
+	width: 100px;
+}
+
+.contact-form, .price-form, .camp-form, .timetable-create-form {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.camp-form textarea {
+	width: 400px;
+	height:100px;
+	outline: none;
+	font-weight: 700;
+	color:#171D29;
+	padding:0px 10px;
+	border-radius: 5px;
+	border:1px solid #171D29;
+}

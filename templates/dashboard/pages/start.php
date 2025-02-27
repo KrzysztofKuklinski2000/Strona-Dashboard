@@ -1,0 +1,44 @@
+<?php 
+	$counter = 1;
+	$data = $params['data'];
+?>
+
+<div class="content-container">
+	<?php if(!$params['operation']): ?>
+		<div class="list-header">
+			<h3>Posty - Strona Główna</h3>
+			<a href="?dashboard=start&subpage=start&operation=create"><p>Nowy </p><i class="fa-solid fa-plus"></i></a>
+		</div>
+		<table>
+			<thead>
+				<tr>
+					<th>Lp.</th>
+					<th>Tytuł</th>
+					<th>Data</th>
+					<th>Status</th>
+					<th>Opcje</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach($data ?? [] as $row): ?>
+					<tr>
+						<td><?php echo $counter++ ?>.</td>
+						<td><?php echo $row['title'] ?></td>
+						<td><?php echo $row['created'] ?></td>
+						<td class="<?php echo $row['status'] == 1 ? 'published' : 'no-published' ?>">
+							<?php echo $row['status'] == 1 ? 'Publiczny' : 'Nie publiczny' ?>
+						</td>
+						<td>
+						<a href="?dashboard=start&subpage=start&operation=edit&id=<?php echo $row['id']?>"><i class="fa-regular fa-pen-to-square"></i></a>
+						<a href="?dashboard=start&subpage=start&operation=delete&id=<?php echo $row['id']?>"><i class="fa-solid fa-trash"></i></a>
+						<a href="?dashboard=start&subpage=start&operation=show&id=<?php echo $row['id']?>"><i class="fa-solid fa-magnifying-glass"></i></a>
+						</td>
+					</tr> 
+				<?php endforeach ?>
+			</tbody>
+		</table>
+	<?php else: require_once('templates/dashboard/pages/operation/'.$params['operation'].'.php');?>
+	<?php endif; ?>
+</div>
+
+
