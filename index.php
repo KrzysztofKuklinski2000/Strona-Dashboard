@@ -10,21 +10,21 @@ spl_autoload_register(function (string $classNamespace) {
   	require_once($path);
 });
 
+session_start();
+
 $configuration = require_once('config/config.php');
 
 use App\Controller\pageController;
 use App\Controller\AbstractController;
 use App\Controller\DashboardController;
 use App\Exception\AppException;
-use App\Exception\StorageException;
-use App\Exception\NotFoundException;
 use App\Request;
 
-$request = new Request($_GET, $_POST, $_SERVER);
+$request = new Request($_GET, $_POST, $_SERVER, $_SESSION);
 
 try {
 	AbstractController::initConfiguration($configuration);
-	$request->getParam('dashboard')
+	$request->getParam('dashboard') && $request->getParam('dashboard') === 'start'
 		? (new DashboardController($request))->run()
 		: (new pageController($request))->run();
 

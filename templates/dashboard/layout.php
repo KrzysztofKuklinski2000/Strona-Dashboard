@@ -12,6 +12,7 @@
 		<h2><i style="margin-right: 10px;" class="fa-solid fa-gear"></i>Dashboard</h2>
 	</header>
 	<div class="container">
+		<?php if(!in_array($params['page'], ['login', 'register'])): ?>
 		<aside>
 			<ul>
 				<a href="?dashboard=start&subpage=start">
@@ -52,6 +53,7 @@
 				</a>
 			</ul>
 		</aside>
+		<?php endif;?>
 		<main>
 			<?php require_once('templates/dashboard/pages/'.$params['page'].'.php'); ?>
 		</main>

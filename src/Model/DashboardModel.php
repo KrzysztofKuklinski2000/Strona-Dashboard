@@ -5,7 +5,6 @@ namespace App\Model;
 
 use PDO;
 use Throwable;
-use PDOException;
 use App\Exception\StorageException;
 use App\Exception\NotFoundException;
 use App\Model\ContentModel;

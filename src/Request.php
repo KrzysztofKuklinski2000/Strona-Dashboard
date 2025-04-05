@@ -7,11 +7,17 @@ class Request {
 	private array $get = [];
 	private array $post = [];
 	private array $server = [];
+	private array $session = [];
 
-	public function __construct($get, $post, $server) {
+	public function __construct($get, $post, $server, $session) {
 		$this->get = $get;
 		$this->post = $post;
 		$this->server = $server;
+		$this->session = $session;
+	}
+
+	public function getSession(string $param, $default = null) {
+		return $this->session[$param] ?? $default;
 	}
 
 	public function getParam(string $name = null, $default = null): ?string {
