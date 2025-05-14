@@ -39,7 +39,7 @@
 </head>
 <body>
 	<!-- menu na urządzenia mobilne -->
-	<?php require_once('components/manu_for_mobile.php') ?>
+	<?php require_once('components/mobile_menu.php') ?>
 
 	<header>
 		<?php 

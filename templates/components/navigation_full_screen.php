@@ -5,9 +5,9 @@
 			<div class="logo">
 				<img src="public/images/logo1.png">
 				<span>
-					<p style="font-size:1.1em; font-weight: 700; color:#fff">Karate</p>
-					<p style="font-size:1.1em; font-weight: 700; color:#CC0000;">Kyokushin</p>
-					<p style="font-size:.9em; font-weight: 500; color:#fff">Wejherowo</p>
+					<p style="font-size:1.1em;  color:#fff">Karate</p>
+					<p style="font-size:1.1em;  color:#CC0000;">Kyokushin</p>
+					<p style="font-size:.9em;  color:#fff">Wejherowo</p>
 				</span>
 			</div>
 		</a>

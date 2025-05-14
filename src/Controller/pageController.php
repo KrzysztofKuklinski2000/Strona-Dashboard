@@ -6,7 +6,13 @@ namespace App\Controller;
 class pageController extends AbstractController {
 
 	public function aktualnosciAction(): void {
-		$this->view->renderPageView(['page' => 'news', 'content' => $this->contentModel->getData("news")]);
+		$page = (int) $this->request->getParam('page');
+		$this->view->renderPageView([
+			'page' => 'news', 
+			'content' => $this->contentModel->getData("news", $page-1), 
+			'numberOfRows' => $this->contentModel->countData('news'),
+			'currentNumberOfPage' => $page,
+		]);
 	}
 
 	public function przysiega_do_joAction():  void {

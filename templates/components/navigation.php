@@ -1,12 +1,12 @@
 <div style="<?php if($params['page'] !== 'start'){echo 'background: #171D29;';} ?>">
-	<div class="nav-container margin-auto">
+	<div class="nav-container margin-auto <?php if($params['page'] !== 'start'){echo 'border-bottom-for-nav';} ?>">
 		<a href="?view=start">
 			<div class="logo">
-				<img src="public/images/logo.gif">
+				<img src="public/images/<?php if($params['page'] !== 'start'){echo 'logo1.png';}else {echo 'logo.gif';} ?>">
 				<span>
-					<p style="font-size:1.1em; font-weight: 700; <?php if($params['page'] !== 'start'){echo 'color: #fff;';}else {echo 'color:#111;';} ?>">Karate</p>
-					<p style="font-size:1.1em; font-weight: 700; color:#CC0000;">Kyokushin</p>
-					<p style="font-size:.9em; font-weight: 500; <?php if($params['page'] !== 'start'){echo 'color: #fff;';}else {echo 'color:#111;';} ?>">Wejherowo</p>
+					<p style="font-size:.9em;  <?php if($params['page'] !== 'start'){echo 'color: #fff;';}else {echo 'color:#111;';} ?>">Karate</p>
+					<p style="font-size:.9em; color:#CC0000;">Kyokushin</p>
+					<p style="font-size:.9em; <?php if($params['page'] !== 'start'){echo 'color: #fff;';}else {echo 'color:#111;';} ?>">Wejherowo</p>
 				</span>
 			</div>
 		</a>

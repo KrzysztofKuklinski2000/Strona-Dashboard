@@ -1,4 +1,9 @@
-<?php $params = $params['content'];?>
+<?php
+$numberOfRows = $params['numberOfRows'];
+$currentPage = $params['currentNumberOfPage'];
+$params = $params['content'];
+
+?>
 <div class="respons-container">
 	<div class="news-contianer">
 		<div class="line flex-item-center">
@@ -7,23 +12,43 @@
 		</div>
 		<div class="news">
 			<?php foreach ($params ?? [] as $content): ?>
-				<?php if($content['status']): ?>
+				<?php if ($content['status']): ?>
 					<div class="news-box">
 						<div class="news-line"></div>
 						<div>
-							<h3><?php echo $content['title']; ?></h3>
-							<span style="color:gray;"><?php echo $content['created']; ?></span>
-							<p><?php echo $content['description']; ?></p>
+							<h3><?= $content['title']; ?></h3>
+							<span style="color:gray;"><?= $content['created']; ?></span>
+							<p><?= $content['description']; ?></p>
 						</div>
 					</div>
 				<?php endif ?>
 			<?php endforeach; ?>
 		</div>
 	</div>
+	<div class="pagination">
+		<div class="pagination-box">
+			<?php if($currentPage > 1): ?>
+				<a href="/?view=aktualnosci&page=<?= $currentPage - 1 ?>">
+					<i class="fa-regular fa-square-caret-left"></i>
+				</a>
+			<?php endif ?>
 
-	<div class="show-more-news flex-center">
-		<button class="btn-more">
-			<i class="fa-solid fa-angles-down"></i>
-		</button>
+			<?php for ($i = 1; $i <= ceil($numberOfRows / 10); $i++):	?>
+				<?php if ($currentPage <= 0): ?>
+					<a <?= $i === 1 ? "class=current" : "" ?> href="/?view=aktualnosci&page=<?= $i ?>"><?= $i ?></a>
+				<?php elseif ($currentPage > ceil($numberOfRows / 10)): ?>
+					<a <?= $i == ceil($numberOfRows / 10) ? "class=current" : "" ?> href="/?view=aktualnosci&page=<?= $i ?>"><?= $i ?></a>
+				<?php else: ?>
+					<a <?= $i === $currentPage ? "class=current" : "" ?> href="/?view=aktualnosci&page=<?= $i ?>"><?= $i ?></a>
+				<?php endif; ?>
+
+			<?php endfor; ?>
+
+			<?php if($currentPage < ceil($numberOfRows / 10)): ?>
+			<a href="/?view=aktualnosci&page=<?= $currentPage + 1 ?>">
+				<i class="fa-regular fa-square-caret-right"></i>
+			</a>
+			<?php endif; ?>
+		</div>
 	</div>
 </div>

@@ -9,6 +9,10 @@
 		font-size: 2em;
 	}
 
+	.timetable-box {
+		width: 400px;
+	}
+
 	.nav-container {
 		display: none;
 	}
@@ -125,7 +129,7 @@
 	}
 
 	.full-screen-menu li:hover {
-		border-bottom: 2px solid #ee4035;;
+		border-bottom: 2px solid #ee4035;
 	}
 
 	.footer-container {
@@ -224,7 +228,7 @@
 
 	.nt div {
 		flex:1 1 0;
-		widht:0;
+		width:0;
 		padding:0px 10px;
 	}
 /*KONTAKT*/
@@ -238,8 +242,6 @@
 	}
 /*OPLATY*/
 	.price-container {
-		width:100%;
-		position: static;
 		display: flex;
 		flex-wrap: wrap;
 		row-gap: 20px;

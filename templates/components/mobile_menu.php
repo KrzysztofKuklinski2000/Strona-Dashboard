@@ -1,12 +1,12 @@
 <div class="menu">
-	<div class="nav-container margin-auto" style="border-bottom:2px solid #262C39;">
+	<div class="nav-container margin-auto border-bottom-for-nav">
 		<a href="?view=start">
 			<div class="logo">
-				<img src="public/images/logo.gif">
+				<img src="public/images/logo1.png">
 				<span>
-					<p style="font-size:1.1em; font-weight: 700; color:#fff;">Karate</p>
-					<p style="font-size:1.1em; font-weight: 700; color:#CC0000;">Kyokushin</p>
-					<p style="font-size:.9em; font-weight: 500; color:#fff">Wejherowo</p>
+					<p style="font-size:.9em;  color:#fff;">Karate</p>
+					<p style="font-size:.9em;  color:#CC0000;">Kyokushin</p>
+					<p style="font-size:.9em; color:#fff">Wejherowo</p>
 				</span>
 			</div>
 		</a>
@@ -15,7 +15,11 @@
 		</div>
 	</div>
 	<ul>
-		<a href="?view=start"><li>Strona Główna</li></a>
+		<a href="?view=start">
+			<li>
+				Strona Główna
+			</li>
+		</a>
 		<a href="?view=oplaty"><li>Opłaty</li></a>
 		<a href="?view=grafik"><li>Grafik</li></a>
 		<a href="?view=zapisy"><li>Zapisy</li></a>

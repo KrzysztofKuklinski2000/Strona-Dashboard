@@ -1,5 +1,5 @@
 <div class="subpage-header flex-center">
-	<h1 style="color:white">
+	<h1>
 		<?php switch($params['page']): case 'camp-info': ?>
 				Obozy
 			<?php break;  case 'contact' :?>
@@ -26,4 +26,5 @@
 				Błąd
 		<?php endswitch; ?>
 	</h1>
+	<span class="bottom-line"></span>
 </div>

@@ -22,15 +22,28 @@ class ContentModel {
 		}
 	}
 
-	public function getData(string $table):array {
+	public function getData(string $table, ?int $page=1):array {
 		try {
-			$sql = "SELECT * FROM $table";
-			$result = $this->con->query($sql);
+			if($page >= ceil($this->countData('news') / 10)) {
+				$page = ceil($this->countData('news') / 10)-1;
+			}
+			elseif($page < 1) $page = 0;
 
-			return $result->fetchAll(PDO::FETCH_ASSOC);
+			$sql = "SELECT * FROM $table";
+			$page *= 10;
+			if($table === "news") $sql .= " LIMIT 10 OFFSET $page";
+			$result = $this->con->query($sql);
+			$result = $result->fetchAll(PDO::FETCH_ASSOC);
+
+			return $result;
 		}catch(Throwable $e) {
 			throw new StorageException("Nie udało się pobrać danych");
 		}
+	}
+
+	public function countData(string $table): int {
+		$result = $this->con->query("SELECT COUNT(*) FROM $table");
+		return (int) $result->fetchColumn();
 	}
 
 	public function timetablePageData(): array
@@ -53,67 +66,4 @@ class ContentModel {
 			throw new StorageException('Nie udało się załadować zawartości strony.', 400, $e);
 		}
 	}
-
-	// public function newsPageData():array {
-	// 	try {
-	// 		$sql = "SELECT id, title, description, created, status FROM news";
-	// 		$result  = $this->con->query($sql);
-			
-	// 		return $result->fetchAll(PDO::FETCH_ASSOC);
-	// 	}catch (Throwable $e){
-	// 		throw new StorageException('Nie udało się załadować zawartości strony .', 400, $e);
-	// 	}
-	// }
-
-	// public function mainPageData(): array {
-	// 	try {
-	// 		return [$this->getData("main_page_posts"), $this->getData("important_posts")];
-	// 	}catch(Throwable $e) {
-	// 		throw new StorageException('Nie udało się załadować zawartości strony.', 400, $e);
-	// 	}
-	// }
-
-	// public function feesPageData(): array {
-	// 	try{
-	// 		$sql = "SELECT * FROM fees";
-	// 		$result = $this->con->query($sql);
-
-	// 		return $result->fetch(PDO::FETCH_ASSOC);
-	// 	}catch(Throwable $e) {
-	// 		throw new StorageException("Nie udało się załadować zawartości strony.", 400, $e);
-	// 	}
-	// }
-
-	// public function contactPageData(): array {
-	// 	try {
-	// 		$sql = "SELECT * FROM contact";
-	// 		$result = $this->con->query($sql);
-
-	// 		return $result->fetch(PDO::FETCH_ASSOC);
-	// 	}catch(Throwable $e) {
-	// 		throw new StorageException('Nie udało się załadować zawartości strony.', 400, $e);
-	// 	}
-	// }
-
-	// public function campPageData(): array {
-	// 	try {
-	// 		$sql = "SELECT * FROM camp";
-	// 		$result = $this->con->query($sql);
-
-	// 		return $result->fetch(PDO::FETCH_ASSOC);
-	// 	}catch(Throwable $e) {
-	// 		throw new StorageException('Nie udało się załadować zawartości strony.', 400, $e);
-	// 	}
-	// }
-
-	// public function importantPostsPageData(): array {
-	// 	try {
-	// 		$sql = "SELECT * FROM important_posts ORDER BY updated DESC";
-	// 		$result = $this->con->query($sql);
-
-	// 		return $result->fetchAll(PDO::FETCH_ASSOC);
-	// 	}catch(Throwable $e) {
-	// 		throw new StorageException('Nie udało się załadować zawartości strony', 400, $e);
-	// 	}
-	// }
 }
