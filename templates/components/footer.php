@@ -1,6 +1,6 @@
 <div class="footer-header margin-auto">
 	<h2>Karate Kyokushin</h2>
-	<p>Wejherowo</p>
+	<p>Wejherowo / Reda</p>
 </div>	
 <div class="footer-container">
 	<div class="footer-nav">

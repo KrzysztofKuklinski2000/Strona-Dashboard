@@ -18,10 +18,10 @@
 				<div class="left-arrow"><i class="fa-solid fa-caret-left"></i></div>
 				<div class="right-arrow"><i class="fa-solid fa-caret-right"></i></div>
 			</div>
-			<img class="img" src="public/images/slider/4.jpg" alt="">
-			<img class="img" src="public/images/slider/3.jpg" alt="">
-			<img class="img" src="public/images/slider/2.jpg" alt="">
-			<img class="img" src="public/images/slider/1.jpg" alt="">
+			<img class="img" src="public/images/slider/4.JPG" alt="">
+			<img class="img" src="public/images/slider/3.JPG" alt="">
+			<img class="img" src="public/images/slider/2.JPG" alt="">
+			<img class="img" src="public/images/slider/1.JPG" alt="">
 			<div class="black-filter"></div>
 		</div>
 	</div><br><br>
@@ -31,35 +31,35 @@
 	 ?>
 	<div class="gallery">
 		<div class="img-box">
-			<img src="public/images/karate/1.jpg" alt="">
+			<img src="public/images/karate/1.JPG" alt="">
 			<p> Obóz Głuchołazy 2022</p>
 		</div>
 		<div class="img-box">
-			<img src="public/images/karate/5.jpg" alt="">
+			<img src="public/images/karate/5.JPG" alt="">
 			<p> Obóz Głuchołazy 2022</p>
 		</div>
 		<div class="img-box">
-			<img src="public/images/karate/3.jpg" alt="">
+			<img src="public/images/karate/3.JPG" alt="">
 			<p> Obóz Głuchołazy 2022</p>
 		</div>
 		<div class="img-box">
-			<img src="public/images/karate/4.jpg" alt="">
+			<img src="public/images/karate/4.JPG" alt="">
 			<p> Obóz Głuchołazy 2022</p>
 		</div>
 		<div class="img-box">
-			<img src="public/images/karate/2.jpg" alt="">
+			<img src="public/images/karate/2.JPG" alt="">
 			<p> Obóz Głuchołazy 2022</p>
 		</div>
 		<div class="img-box">
-			<img src="public/images/karate/6.jpg" alt="">
+			<img src="public/images/karate/6.JPG" alt="">
 			<p> Obóz Głuchołazy 2022</p>
 		</div>
 		<div class="img-box">
-			<img src="public/images/karate/7.jpg" alt="">
+			<img src="public/images/karate/7.JPG" alt="">
 			<p> Obóz Głuchołazy 2022</p>
 		</div>
 		<div class="img-box">
-			<img src="public/images/karate/8.jpg" alt="">
+			<img src="public/images/karate/8.JPG" alt="">
 			<p> Obóz Głuchołazy 2022</p>
 		</div>
 	</div>

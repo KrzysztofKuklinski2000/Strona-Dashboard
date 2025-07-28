@@ -19,15 +19,14 @@
 
 	.dropdown {
 		position: absolute;
+		right:30px;
+		top:70px;
 		display: none;
 	}
 
 	.dropdown ul {
 		display: flex;
 		flex-direction: column;
-		position: relative;
-		left:-30px;
-		top:10px;
 		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	}
 
@@ -160,7 +159,6 @@
 
 	.price-content {
 		width: 100%;
-		font-weight: 400;
 	}
 
 	.respons-container {
@@ -228,8 +226,12 @@
 
 	.nt div {
 		flex:1 1 0;
-		width:0;
+		/* width:0; */
 		padding:0px 10px;
+	}
+
+	.nt h2 {
+		font-size:1.2em;
 	}
 /*KONTAKT*/
 	.contact-information {
@@ -392,6 +394,13 @@
 
 	.slider {
 		height:300px;
+	}
+}
+
+@media only screen and (min-width: 1280px) {
+	.img-box {
+		flex: 0 0 calc(33% - 20px);
+		max-height: 250px;
 	}
 }
 
