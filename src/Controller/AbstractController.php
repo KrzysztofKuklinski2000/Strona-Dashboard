@@ -44,10 +44,18 @@ class AbstractController {
 	public function run(): void {
 		try{
 			$dashboard = $this->request->getParam('dashboard');
+			$auth = $this->request->getParam('auth');
+
 			if($dashboard === 'start') {
 				$action = $this->dashboardAction().'DashboardAction';
 				if(!method_exists($this, $action)){
 					$action = self::DEFAULT_ACTION_FOR_DASHBOARD.'DashboardAction';
+				}
+				$this->$action();
+			}else if($auth) {
+				$action = $this->authAction() . 'Action';
+				if (!method_exists($this, $action)) {
+					$action = self::DEFAULT_ACTION_FOR_DASHBOARD . 'Action';
 				}
 				$this->$action();
 			}else {
@@ -72,6 +80,10 @@ class AbstractController {
 
 	private function takeAction(): string {
 		return $this->request->getParam('view', self::DEFAULT_ACTION);
+	}
+
+	private function authAction() {
+		return $this->request->getParam('auth', self::DEFAULT_ACTION);
 	}
 
 	private function dashboardAction() {

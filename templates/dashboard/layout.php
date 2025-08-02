@@ -47,7 +47,7 @@
 					<i class="fa-regular fa-address-book"></i> 
 					<p>Kontakt</p>
 				</a>
-				<a href="?dashboard=start&subpage=logout">
+				<a href="?auth=logout">
 					<i class="fa-solid fa-arrow-right-from-bracket"></i>
 					<p>Wyloguj</p>
 				</a>

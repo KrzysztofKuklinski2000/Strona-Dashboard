@@ -1,9 +1,9 @@
 <?php
-  $errors = $params['messages'];
+  $errors = $params['messages'] ?? [];
 ?>
 
 <div class="login-form">
-  <form action="?dashboard=start&subpage=login" method="POST">
+  <form action="/?auth=login" method="POST">
     <h1>Logowanie</h1>
     <label for="login">Login</label>
     <input type="text" name="login" id="login">

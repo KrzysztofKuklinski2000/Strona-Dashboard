@@ -1,9 +1,7 @@
 - Zaktualizować dane 
 - Refaktoryzacja 
 - Nowa galeria 
-- tłumaczenie kodu na angielski
-- AuthController - przeniesienie logiki logowania do AuthController
-- Pozycjonowanie 
+- tłumaczenie nazewnictwa
 - Ujednolocenie nazewnictwa plików i class
 - Dodać w formularzach (fees, camp, contact) w dashboard action=""
-- strona główna ogarnąć kolejność wyświetlania
+- Przekierowywanie 

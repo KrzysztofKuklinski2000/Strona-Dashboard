@@ -12,41 +12,41 @@ class DashboardController extends AbstractController {
 	// use Auth;
 	
 	public function oplatyDashboardAction(): void {
-		if(empty($this->request->getSession('user'))) header('location: /?dashboard=start&subpage=login');
+		if(empty($this->request->getSession('user'))) header('location: /?auth=start');
 		$this->handlePost('fees', fn()=>$this->editFees());
 	}
 
 	public function kontaktDashboardAction(): void {
-		if (empty($this->request->getSession('user'))) header('location: /?dashboard=start&subpage=login');
+		if (empty($this->request->getSession('user'))) header('location: /?auth=start&subpage=login');
 		$this->handlePost('contact', fn() => $this->editContact());
 	}
 
 	public function obozyDashboardAction(): void {
-		if (empty($this->request->getSession('user'))) header('location: /?dashboard=start&subpage=login');
+		if (empty($this->request->getSession('user'))) header('location: /?auth=start');
 		$this->handlePost('camp', fn() => $this->editCamp());
 	}
 
 	public function startDashboardAction(): void {
-		if (empty($this->request->getSession('user'))) header('location: /?dashboard=start&subpage=login');
+		if (empty($this->request->getSession('user'))) header('location: /?auth=start');
 		$result = $this->operationRedirect("main_page_posts");
 		$this->view->renderDashboardView(['page' => 'start', 'operation' => $result["operation"], 'data' => $result["data"]]);
 	}
 
 	public function aktualnosciDashboardAction():void {
-		if (empty($this->request->getSession('user'))) header('location: /?dashboard=start&subpage=login');
+		if (empty($this->request->getSession('user'))) header('location: /?auth=start');
 		$result = $this->operationRedirect("news");
 		$this->view->renderDashboardView(['page' => 'news', 'operation' => $result["operation"], 'data' => $result["data"]]);
 	}
 
 	
 	public function grafikDashboardAction():void {
-		if (empty($this->request->getSession('user'))) header('location: /?dashboard=start&subpage=login');
+		if (empty($this->request->getSession('user'))) header('location: /?auth=start');
 		$result = $this->operationRedirect("timetable");
 		$this->view->renderDashboardView(['page' => 'timetable', 'operation' => $result["operation"] ,'data' => $result["data"]]);
 	}
 
 	public function important_postsDashboardAction(): void {
-		if(empty($this->request->getSession('user'))) header('location: /?dashboard=start&subpage=login');
+		if(empty($this->request->getSession('user'))) header('location: /?auth=start');
 
 		$result = $this->operationRedirect("important_posts");
 		$this->view->renderDashboardView(['page' => 'important_posts', 'operation' => $result["operation"], 'data' => $result["data"]]);
