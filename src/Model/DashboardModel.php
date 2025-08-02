@@ -12,6 +12,19 @@ use App\Model\ContentModel;
 
 class DashboardModel extends ContentModel {
 
+	public function getDashboardData(string $table) {
+	try {
+			$sql = "SELECT * FROM $table ";
+			if(!in_array($table, ['contact', 'fees', 'camp'])) $sql .= "ORDER BY id DESC";
+			$result = $this->con->query($sql);
+			$result = $result->fetchAll(PDO::FETCH_ASSOC);
+
+			return $result;
+		}catch(Throwable $e) {
+			throw new StorageException("Nie udało się pobrać danych");
+		}
+	}
+
 	public function getPost(int $id, string $table): array {
 		try {
 			$sql = "SELECT * FROM $table WHERE id = $id";
@@ -119,8 +132,9 @@ class DashboardModel extends ContentModel {
 			$fees7 = $data['fees7'];
 			$fees8 = $data['fees8'];
 			$fees9 = $this->con->quote($data['fees9']);
-
-			$sql = "UPDATE fees SET reduced_contribution_1_month =  $fees1, reduced_contribution_2_month = $fees2, family_contribution_month = $fees3, contribution = $fees4, entry_fee = $fees5, reduced_contribution_1_year = $fees6, reduced_contribution_2_year = $fees7, family_contribution_year = $fees8, reduced_contribution_holidays = $fees9";
+			$fees10 = $this->con->quote($data['fees10']);
+			
+			$sql = "UPDATE fees SET reduced_contribution_1_month =  $fees1, reduced_contribution_2_month = $fees2, family_contribution_month = $fees3, contribution = $fees4, entry_fee = $fees5, reduced_contribution_1_year = $fees6, reduced_contribution_2_year = $fees7, family_contribution_year = $fees8, reduced_contribution_holidays = $fees9, extra_information = $fees10";
 
 			$this->con->exec($sql);
 		}catch(Throwable $e) {

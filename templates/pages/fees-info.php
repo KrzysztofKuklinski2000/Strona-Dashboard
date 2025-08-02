@@ -9,7 +9,7 @@ $content = $params['content'];
 		require('templates/components/post_header.php');
 		?>
 		<p>
-			Składka członkowska i miesięczna ( łącznie składka ) obowiązuje wszystkich Członków Klubu przez 12 miesięcy w roku. Zajęcia prowadzimy przez cały rok, w wakacje i ferie też. W okresie wakacji składka jest obniżona. W przypadku, gdy członek Klubu nie uczestniczył w zajęciach np z powodu choroby, oraz w innych szczególnych wypadkach nieobecności dłuższej niż 3 tygodnie w miesiącu, może być zmniejszona na pisemny wniosek Członka ( lub rodziców/opiekunów prawnych) do wysokości 70 zł za miesiąc. Wpisowe obecnie jest zawieszone. Obowiązuje tylko przy ponownym wstąpieniu do Klubu.
+			<?= $content['extra_information'] ?>
 		</p>
 	</div>
 	<br><br>

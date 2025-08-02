@@ -242,6 +242,12 @@ main {
 	width:300px;
 }
 
+.price-form textarea {
+	width: 400px;
+	height:200px;
+	border-radius: 5px;
+}
+
 .timetable-create-form span{
 	width: 100px;
 }

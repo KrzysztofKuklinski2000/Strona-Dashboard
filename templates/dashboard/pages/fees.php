@@ -1,4 +1,4 @@
-<?php 
+<?php
 $data = $params['data'];
 ?>
 <div class="content-container">
@@ -8,7 +8,7 @@ $data = $params['data'];
 	<br>
 	<form action="" method="POST" class="price-form ">
 		<label>
-			<span>Składka Ulgowa (jedna osoba):</span> 
+			<span>Składka Ulgowa (jedna osoba):</span>
 			<input type="number" name="n1" value="<?php echo $data['reduced_contribution_1_month'] ?>">
 		</label>
 		<label>
@@ -42,6 +42,10 @@ $data = $params['data'];
 		<label>
 			<span>Składka Ulgowa Wakacje (np: 70zł, 110zł, 160zł):</span>
 			<input type="text" name="n9" value="<?php echo $data['reduced_contribution_holidays'] ?>">
+		</label>
+		<label>
+			<span>Informacje:</span>
+			<textarea name="n10"><?php echo $data['extra_information'] ?></textarea>
 		</label>
 		<input type="submit" value="Zapisz">
 	</form>

@@ -1,3 +1,4 @@
+<?php $data['day'] = trim($data['day']) ?>
 <br>
 <h3>Edytuj </h3>
 <br>
@@ -6,13 +7,13 @@
 	<label>
 		<span>Dzień: </span> 
 		<select name="day">
-			<option <?php echo $data['day'] == "PON"   ? 'selected' : '' ?> value="PON   "> Poniedziałek </option>
-			<option <?php echo $data['day'] == "WT"    ? 'selected' : '' ?> value="WT    "> Wtorek       </option>
-			<option <?php echo $data['day'] == 'ŚR'    ? 'selected' : '' ?> value="ŚR    "> Środa		 </option>
-			<option <?php echo $data['day'] == 'CZW'   ? 'selected' : '' ?> value="CZW   "> Czwartek 	 </option>
-			<option <?php echo $data['day'] == 'PT'    ? 'selected' : '' ?> value="PT    "> Piątek 	 	 </option>
-			<option <?php echo $data['day'] == 'SOB'   ? 'selected' : '' ?> value="SOB   "> Sobota 		 </option>
-			<option <?php echo $data['day'] == 'NIEDZ' ? 'selected' : '' ?> value="NIEDZ "> Niedziela 	 </option>
+			<option <?php echo $data['day'] === "PON"   ? 'selected' : '' ?> value="PON"> Poniedziałek </option>
+			<option <?php echo $data['day'] === "WT"    ? 'selected' : '' ?> value="WT"> Wtorek       </option>
+			<option <?php echo $data['day'] === 'ŚR'    ? 'selected' : '' ?> value="ŚR"> Środa		 </option>
+			<option <?php echo $data['day'] === 'CZW'   ? 'selected' : '' ?> value="CZW"> Czwartek 	 </option>
+			<option <?php echo $data['day'] === 'PT'    ? 'selected' : '' ?> value="PT"> Piątek 	 	 </option>
+			<option <?php echo $data['day'] === 'SOB'   ? 'selected' : '' ?> value="SOB"> Sobota 		 </option>
+			<option <?php echo $data['day'] === 'NIEDZ' ? 'selected' : '' ?> value="NIEDZ"> Niedziela 	 </option>
 		</select>
 	</label>
 	<label>

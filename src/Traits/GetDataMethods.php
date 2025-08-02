@@ -60,6 +60,7 @@ trait GetDataMethods {
       'fees7' => $this->request->postParam('n7'),
       'fees8' => $this->request->postParam('n8'),
       'fees9' => $this->request->postParam('n9'),
+      'fees10' => $this->request->postParam('n10'),
     ];
   }
 

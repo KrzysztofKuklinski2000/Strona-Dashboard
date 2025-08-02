@@ -9,7 +9,7 @@ use App\Traits\GetDataMethods;
 class DashboardController extends AbstractController {
 
 	use GetDataMethods;
-	use Auth;
+	// use Auth;
 	
 	public function oplatyDashboardAction(): void {
 		if(empty($this->request->getSession('user'))) header('location: /?dashboard=start&subpage=login');
@@ -106,11 +106,10 @@ class DashboardController extends AbstractController {
 		if ($this->request->isPost()) {
 			$function();
 		}
-
 		$this->view->renderDashboardView(
 			[
 				'page' => $table,
-				'data' => $this->dashboardModel->getData($table)[0] ?? []
+				'data' => $this->dashboardModel->getDashboardData($table)[0] ?? []
 			]
 		);
 	}
@@ -148,10 +147,18 @@ class DashboardController extends AbstractController {
 	{
 		$operation = $this->request->getParam('operation');
 		$subpage = $this->request->getParam('subpage');
+		$data = null;
 
-		$data = (in_array($operation, ['edit', 'show', 'delete']))
-			? $this->getSingleData($table)
-			: $this->dashboardModel->getData($table) ?? "";
+		// $data = (in_array($operation, ['edit', 'show', 'delete']))
+		// 	? $this->getSingleData($table)
+		// 	: $this->dashboardModel->getDashboardData($table) ?? [];
+
+		if(in_array($operation, ['edit', 'show', 'delete'])) $data = $this->getSingleData($table);
+		else {
+			$data = $table === "timetable" 
+							? $data = $this->dashboardModel->timetablePageData() 
+							: $this->dashboardModel->getDashboardData($table) ?? [];
+		}
 
 		$operationSubpage = match ($operation) {
 			"create" => $this->handleCreate($table, $subpage),

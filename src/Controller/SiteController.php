@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-class pageController extends AbstractController {
+class SiteController extends AbstractController {
 
 	public function aktualnosciAction(): void {
 		$page = (int) $this->request->getParam('page');
 		$this->view->renderPageView([
 			'page' => 'news', 
-			'content' => $this->contentModel->getData("news", $page-1), 
+			'content' => $this->contentModel->getData("news", "DESC", $page-1), 
 			'numberOfRows' => $this->contentModel->countData('news'),
 			'currentNumberOfPage' => $page,
 		]);
@@ -40,22 +40,34 @@ class pageController extends AbstractController {
 	}
 
 	public function obozyAction(): void {
-		$this->view->renderPageView(['page' => 'camp-info', 'content' => $this->contentModel->getData("camp")[0]]);
+		$this->view->renderPageView(['page' => 'camp-info', 'content' => $this->contentModel->getData("camp", "DESC")[0]]);
 	}
 
 	public function oplatyAction(): void {
-		$this->view->renderPageView(['page' => 'fees-info', 'content' => $this->contentModel->getData("fees")[0]]);
+		$this->view->renderPageView(['page' => 'fees-info', 'content' => $this->contentModel->getData("fees", "DESC")[0]]);
 	}
 
 	public function zapisyAction(): void {
-		$this->view->renderPageView(['page' => 'entries-info', 'content' => $this->contentModel->getData("fees")[0]]);
+		$this->view->renderPageView(['page' => 'entries-info', 'content' => $this->contentModel->getData("fees", "DESC")[0]]);
 	}
 
 	public function kontaktAction():void {
-		$this->view->renderPageView(['page' => 'contact', 'content' => $this->contentModel->getData("contact")[0]]);
+		$this->view->renderPageView(['page' => 'contact', 'content' => $this->contentModel->getData("contact", "DESC")[0]]);
 	}	
 
 	public function startAction(): void {
-		$this->view->renderPageView(['page' => 'start', 'content' => [$this->contentModel->getData("main_page_posts"), $this->contentModel->getData("important_posts")] ]);
+		$firstPost = [];
+		$posts = $this->contentModel->getData("main_page_posts", "DESC");
+		$importantPosts = $this->contentModel->getData("important_posts", "DESC");
+
+		foreach($posts as $key =>  $post) {
+			if($post['id'] === 1) {
+				$firstPost = $post;
+				unset($posts[$key]);
+				break;
+			} 
+		}
+
+		$this->view->renderPageView(['page' => 'start', 'content' => [$posts, $importantPosts, $firstPost]]);
 	}
 }

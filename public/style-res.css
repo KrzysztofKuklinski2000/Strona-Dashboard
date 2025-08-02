@@ -136,11 +136,6 @@
 		justify-content: space-evenly;
 	}
 
-	.post:nth-child(2n) > .post-content > p {
-		padding-bottom:50px;
-		border-bottom:2px solid #BFBFBF;
-	}
-
 	.fa-money-bill-1 {
 		margin-left: -40px;
 		margin-right: 10px;

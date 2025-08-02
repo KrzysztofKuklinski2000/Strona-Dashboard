@@ -8,6 +8,8 @@ const TOLERANCE = 1;
 
 // Funkcja aktualizująca widoczność strzałek
 function updateArrowVisibility() {
+	if (!scrollElement) return;
+
 	const maxScrollLeft = scrollElement.scrollWidth - scrollElement.clientWidth;
 
 	if (maxScrollLeft <= TOLERANCE) {
@@ -21,6 +23,34 @@ function updateArrowVisibility() {
 			scrollElement.scrollLeft >= maxScrollLeft - TOLERANCE ? 'hidden' : 'visible';
 	}
 }
+
+// Inicjalizacja
+function init() {
+	if (!scrollElement) return;
+
+	// Wymuszenie reflow – przeglądarka przelicza layout
+	scrollElement.offsetWidth;
+
+	// Od razu sprawdzenie widoczności strzałek
+	updateArrowVisibility();
+
+	// Reakcja na resize
+	window.addEventListener('resize', updateArrowVisibility);
+
+	// Reakcja na dodanie nowych elementów
+	const observer = new MutationObserver(() => {
+		// Odczekaj klatkę i sprawdź scroll ponownie
+		requestAnimationFrame(updateArrowVisibility);
+	});
+	observer.observe(scrollElement, { childList: true });
+}
+
+// Inicjalizacja po załadowaniu strony z lekkim opóźnieniem
+window.addEventListener('load', () => {
+	requestAnimationFrame(() => {
+		setTimeout(init, 50);
+	});
+});
 
 // Przewijanie w prawo z ograniczeniem
 rightArrow.addEventListener('click', () => {
@@ -40,6 +70,3 @@ leftArrow.addEventListener('click', () => {
 scrollElement.addEventListener('scroll', () => {
 	setTimeout(updateArrowVisibility, 100);
 });
-
-// Pierwsze sprawdzenie po załadowaniu strony
-window.addEventListener('load', updateArrowVisibility);

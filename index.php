@@ -14,7 +14,7 @@ session_start();
 
 $configuration = require_once('config/config.php');
 
-use App\Controller\pageController;
+use App\Controller\SiteController;
 use App\Controller\AbstractController;
 use App\Controller\DashboardController;
 use App\Exception\AppException;
@@ -26,7 +26,7 @@ try {
 	AbstractController::initConfiguration($configuration);
 	$request->getParam('dashboard') && $request->getParam('dashboard') === 'start'
 		? (new DashboardController($request))->run()
-		: (new pageController($request))->run();
+		: (new SiteController($request))->run();
 
 
 }catch (AppException $e){

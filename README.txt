@@ -1,4 +1,9 @@
-- rozwiązać problem z nieładowanymi zdjęciami na podstronie galeria
-- poprawa important_post sówak za daleko jedzie
-- zaktualizować dane 
-- refaktoryzacja 
+- Zaktualizować dane 
+- Refaktoryzacja 
+- Nowa galeria 
+- tłumaczenie kodu na angielski
+- AuthController - przeniesienie logiki logowania do AuthController
+- Pozycjonowanie 
+- Ujednolocenie nazewnictwa plików i class
+- Dodać w formularzach (fees, camp, contact) w dashboard action=""
+- strona główna ogarnąć kolejność wyświetlania

@@ -22,24 +22,46 @@ class ContentModel {
 		}
 	}
 
-	public function getData(string $table, ?int $page=1):array {
+	public function getData(string $table, string $orderBy, ?int $page = 1): array
+	{
 		try {
-			if($page >= ceil($this->countData('news') / 10)) {
-				$page = ceil($this->countData('news') / 10)-1;
+			$orderBy = strtoupper($orderBy);
+			if (!in_array($orderBy, ['ASC', 'DESC'])) {
+				$orderBy = 'ASC';
 			}
-			elseif($page < 1) $page = 0;
 
-			$sql = "SELECT * FROM $table";
-			$page *= 10;
-			if($table === "news") $sql .= " LIMIT 10 OFFSET $page";
+			$totalRecords = $this->countData($table);
+			$perPage = 10;
+			$totalPages = max(ceil($totalRecords / $perPage), 1);
+
+			if ($page > $totalPages) {
+				$page = $totalPages;
+			} elseif ($page < 1) {
+				$page = 1;
+			}
+
+			$offset = ($page - 1) * $perPage;
+
+			$sql = "SELECT * FROM `$table`";
+
+			if (!in_array($table, ['contact', 'fees', 'camp'])) {
+				$sql .= " ORDER BY id $orderBy";
+			}
+
+			// Limit i offset tylko dla news 
+			if ($table === "news") {
+				$sql .= " LIMIT $perPage OFFSET $offset";
+			}
+
 			$result = $this->con->query($sql);
 			$result = $result->fetchAll(PDO::FETCH_ASSOC);
 
 			return $result;
-		}catch(Throwable $e) {
+		} catch (Throwable $e) {
 			throw new StorageException("Nie udało się pobrać danych");
 		}
 	}
+
 
 	public function countData(string $table): int {
 		$result = $this->con->query("SELECT COUNT(*) FROM $table");

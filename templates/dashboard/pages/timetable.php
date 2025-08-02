@@ -11,7 +11,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th>Lp.</th>
+					<th>ID</th>
 					<th>Dzień</th>
 					<th>Miasto</th>
 					<th>Grupa</th>
@@ -24,7 +24,8 @@
 			<tbody>
 				<?php foreach($data ?? [] as $row): ?>
 					<tr>
-						<td><?php echo $counter++ ?>.</td>
+						<!-- <td><?php echo $counter++ ?>.</td> -->
+						<td><?= $row['id'] ?></td>
 						<td><?php echo $row['day'] ?></td>
 						<td><?php echo $row['city'] ?></td>
 						<td><?php echo $row['advancement_group'] ?></td>
