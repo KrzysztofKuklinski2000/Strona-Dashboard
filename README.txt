@@ -1,5 +1,4 @@
 - Zaktualizować dane 
 - Refaktoryzacja 
-- Nowa galeria 
 - tłumaczenie nazewnictwa
 - Przekierowywanie 

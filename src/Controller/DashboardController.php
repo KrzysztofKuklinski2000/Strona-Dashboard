@@ -9,19 +9,18 @@ use App\Traits\GetDataMethods;
 class DashboardController extends AbstractController {
 
 	use GetDataMethods;
-	// use Auth;
 	
-	public function oplatyDashboardAction(): void {
+	public function feesDashboardAction(): void {
 		if(empty($this->request->getSession('user'))) header('location: /?auth=start');
 		$this->handlePost('fees', fn()=>$this->editFees());
 	}
 
-	public function kontaktDashboardAction(): void {
+	public function contactDashboardAction(): void {
 		if (empty($this->request->getSession('user'))) header('location: /?auth=start&subpage=login');
 		$this->handlePost('contact', fn() => $this->editContact());
 	}
 
-	public function obozyDashboardAction(): void {
+	public function campDashboardAction(): void {
 		if (empty($this->request->getSession('user'))) header('location: /?auth=start');
 		$this->handlePost('camp', fn() => $this->editCamp());
 	}
@@ -32,14 +31,14 @@ class DashboardController extends AbstractController {
 		$this->view->renderDashboardView(['page' => 'start', 'operation' => $result["operation"], 'data' => $result["data"]]);
 	}
 
-	public function aktualnosciDashboardAction():void {
+	public function newsDashboardAction():void {
 		if (empty($this->request->getSession('user'))) header('location: /?auth=start');
 		$result = $this->operationRedirect("news");
 		$this->view->renderDashboardView(['page' => 'news', 'operation' => $result["operation"], 'data' => $result["data"]]);
 	}
 
 	
-	public function grafikDashboardAction():void {
+	public function timetableDashboardAction():void {
 		if (empty($this->request->getSession('user'))) header('location: /?auth=start');
 		$result = $this->operationRedirect("timetable");
 		$this->view->renderDashboardView(['page' => 'timetable', 'operation' => $result["operation"] ,'data' => $result["data"]]);

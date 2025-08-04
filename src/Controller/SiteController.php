@@ -5,7 +5,7 @@ namespace App\Controller;
 
 class SiteController extends AbstractController {
 
-	public function aktualnosciAction(): void {
+	public function newsAction(): void {
 		$page = (int) $this->request->getParam('page');
 		$this->view->renderPageView([
 			'page' => 'news', 
@@ -15,19 +15,19 @@ class SiteController extends AbstractController {
 		]);
 	}
 
-	public function przysiega_do_joAction():  void {
+	public function dojoOathAction():  void {
 		$this->view->renderPageView(['page' => 'dojo-oath']);
 	}
 
-	public function wymaganiaAction(): void {
+	public function requirementsAction(): void {
 		$this->view->renderPageView(['page' => 'requirements']);
 	}
 
-	public function grafikAction(): void {
+	public function timetableAction(): void {
 		$this->view->renderPageView(['page' => 'timetable', 'content' => $this->contentModel->timetablePageData()]);
 	}
 
-	public function regulaminAction(): void {
+	public function statuteAction(): void {
 		$this->view->renderPageView(['page' => 'statute']);
 	}
 
@@ -35,23 +35,23 @@ class SiteController extends AbstractController {
 		$this->view->renderPageView(['page' => 'oyama']);
 	}
 
-	public function galeriaAction(): void {
+	public function gallleryAction(): void {
 		$this->view->renderPageView(['page' => 'gallery']);
 	}
 
-	public function obozyAction(): void {
+	public function campAction(): void {
 		$this->view->renderPageView(['page' => 'camp-info', 'content' => $this->contentModel->getData("camp", "DESC")[0]]);
 	}
 
-	public function oplatyAction(): void {
+	public function feesAction(): void {
 		$this->view->renderPageView(['page' => 'fees-info', 'content' => $this->contentModel->getData("fees", "DESC")[0]]);
 	}
 
-	public function zapisyAction(): void {
+	public function registrationAction(): void {
 		$this->view->renderPageView(['page' => 'entries-info', 'content' => $this->contentModel->getData("fees", "DESC")[0]]);
 	}
 
-	public function kontaktAction():void {
+	public function contactAction():void {
 		$this->view->renderPageView(['page' => 'contact', 'content' => $this->contentModel->getData("contact", "DESC")[0]]);
 	}	
 
