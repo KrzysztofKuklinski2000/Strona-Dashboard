@@ -149,10 +149,6 @@ class DashboardController extends AbstractController {
 		$subpage = $this->request->getParam('subpage');
 		$data = null;
 
-		// $data = (in_array($operation, ['edit', 'show', 'delete']))
-		// 	? $this->getSingleData($table)
-		// 	: $this->dashboardModel->getDashboardData($table) ?? [];
-
 		if(in_array($operation, ['edit', 'show', 'delete'])) $data = $this->getSingleData($table);
 		else {
 			$data = $table === "timetable" 

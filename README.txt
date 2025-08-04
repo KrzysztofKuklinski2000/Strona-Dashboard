@@ -2,6 +2,4 @@
 - Refaktoryzacja 
 - Nowa galeria 
 - tłumaczenie nazewnictwa
-- Ujednolocenie nazewnictwa plików i class
-- Dodać w formularzach (fees, camp, contact) w dashboard action=""
 - Przekierowywanie 

@@ -4,7 +4,7 @@
 		<h3>Obozy - Edytuj</h3>
 	</div>
 	<br>
-	<form action="" method="POST" class="camp-form ">
+	<form action="/?dashboard=start&subpage=obozy" method="POST" class="camp-form ">
 		<label>
 			<span>Miejscowość:</span> 
 			<input type="text" name="town" value="<?php echo $data['city'] ?>">

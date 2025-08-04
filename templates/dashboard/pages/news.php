@@ -6,7 +6,7 @@
 <div class="content-container">
 	<?php if(!$params['operation']): ?>
 		<div class="list-header">
-			<h3>Posty - Strona Główna</h3>
+			<h3>Posty - Aktualności</h3>
 			<a href="?dashboard=start&subpage=aktualnosci&operation=create"><p>Nowy </p><i class="fa-solid fa-plus"></i></a>
 		</div>
 		<table>

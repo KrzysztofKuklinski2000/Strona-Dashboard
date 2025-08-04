@@ -6,7 +6,7 @@ $data = $params['data'];
 		<h3>Opłaty - Edytuj</h3>
 	</div>
 	<br>
-	<form action="" method="POST" class="price-form ">
+	<form action="/?dashboard=start&subpage=oplaty" method="POST" class="price-form ">
 		<label>
 			<span>Składka Ulgowa (jedna osoba):</span>
 			<input type="number" name="n1" value="<?php echo $data['reduced_contribution_1_month'] ?>">

@@ -5,7 +5,7 @@
 		<h3>Kontakt - Edytuj</h3>
 	</div>
 	<br>
-	<form action="" method="POST" class="contact-form">
+	<form action="/?dashboard=start&subpage=kontakt" method="POST" class="contact-form">
 		<label>
 			<span>E-mail:</span> 
 			<input type="email" name="email" value="<?php echo $data['email'] ?>">
