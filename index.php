@@ -28,7 +28,7 @@ try {
 	
 	if($request->getParam('auth')) {
 		(new AuthController($request))->run();
-	}else if($request->getParam('dashboard')) {
+	}else if($request->getParam('dashboard') && $request->getParam('dashboard') === 'start') {
 		(new DashboardController($request))->run();
 	}else {
 		(new SiteController($request))->run();

@@ -35,7 +35,7 @@ class SiteController extends AbstractController {
 		$this->view->renderPageView(['page' => 'oyama']);
 	}
 
-	public function gallleryAction(): void {
+	public function galleryAction(): void {
 		$this->view->renderPageView(['page' => 'gallery']);
 	}
 

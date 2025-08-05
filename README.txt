@@ -1,4 +1,3 @@
 - Zaktualizować dane 
 - Refaktoryzacja 
-- tłumaczenie nazewnictwa
 - Przekierowywanie 
