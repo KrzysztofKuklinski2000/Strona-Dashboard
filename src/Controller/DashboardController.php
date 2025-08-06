@@ -2,13 +2,22 @@
 declare(strict_types=1);
 namespace App\Controller;
 
-use App\Controller\AbstractController;
-use App\Traits\Auth;
+use App\Model\DashboardModel;
 use App\Traits\GetDataMethods;
+use App\Controller\AbstractController;
+use App\Request;
 
 class DashboardController extends AbstractController {
 
+	public DashboardModel $dashboardModel;
+
 	use GetDataMethods;
+
+	public function __construct(Request $request, DashboardModel $dashboardModel) 
+	{
+		parent::__construct($request);
+		$this->dashboardModel = $dashboardModel;
+	}
 	
 	public function feesDashboardAction(): void {
 		if(empty($this->request->getSession('user'))) header('location: /?auth=start');

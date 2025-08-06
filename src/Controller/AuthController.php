@@ -2,7 +2,19 @@
 declare(strict_types=1);
 namespace App\Controller;
 
+use App\Model\UserModel;
+use App\Request;
+
 class AuthController extends AbstractController {
+
+  public UserModel $userModel;
+
+  public function __construct(Request $request, UserModel $userModel)
+  {
+    parent::__construct($request);
+    $this->userModel = $userModel;
+  }
+
   public function startAction(): void {
     if (!empty($this->request->getSession('user'))) header('location: /?dashboard=start');
     $this->view->renderDashboardView(['page' => 'login']);

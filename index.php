@@ -12,26 +12,30 @@ spl_autoload_register(function (string $classNamespace) {
 
 session_start();
 
-$configuration = require_once('config/config.php');
-
 use App\Controller\SiteController;
-use App\Controller\AbstractController;
 use App\Controller\DashboardController;
 use App\Controller\AuthController;
 use App\Exception\AppException;
+use App\Model\ContentModel;
+use App\Model\DashboardModel;
+use App\Model\UserModel;
 use App\Request;
+
+
+$configuration = require_once('config/config.php');
+if (empty($configuration)) {
+	throw new Exception('Configuration Error');
+}
 
 $request = new Request($_GET, $_POST, $_SERVER, $_SESSION);
 
 try {
-	AbstractController::initConfiguration($configuration);
-	
 	if($request->getParam('auth')) {
-		(new AuthController($request))->run();
+		(new AuthController($request, new UserModel($configuration['db'])))->run();
 	}else if($request->getParam('dashboard') && $request->getParam('dashboard') === 'start') {
-		(new DashboardController($request))->run();
+		(new DashboardController($request, new DashboardModel($configuration['db'])))->run();
 	}else {
-		(new SiteController($request))->run();
+		(new SiteController($request, new ContentModel($configuration['db'])))->run();
 	}
 
 

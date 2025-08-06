@@ -3,7 +3,17 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\ContentModel;
+use App\Request;
+
 class SiteController extends AbstractController {
+
+	public ContentModel $contentModel;
+
+	public function __construct(Request $request, ContentModel $contentModel) {
+		parent::__construct($request);
+		$this->contentModel = $contentModel;
+	}
 
 	public function newsAction(): void {
 		$page = (int) $this->request->getParam('page');
