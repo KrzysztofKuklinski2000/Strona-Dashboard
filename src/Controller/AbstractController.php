@@ -19,9 +19,7 @@ class AbstractController {
 	public function __construct(Request $request) {
 		$this->view = new View();
 		$this->request = $request;
-
 		$this->actionResolver = new ActionResolver();
-
 	}
 
 	public function run(): void {
