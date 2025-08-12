@@ -14,12 +14,11 @@ class DashboardModel extends ContentModel {
 
 	public function getDashboardData(string $table) {
 	try {
-			$sql = "SELECT * FROM $table ";
-			if(!in_array($table, ['contact', 'fees', 'camp'])) $sql .= "ORDER BY id DESC";
-			$result = $this->con->query($sql);
-			$result = $result->fetchAll(PDO::FETCH_ASSOC);
-
-			return $result;
+			$table = $this->validateTable($table);
+			$sql = "SELECT * FROM $table";
+			if(!in_array($table, ['contact', 'fees', 'camp'])) $sql .= " ORDER BY id DESC";
+			
+			return $this->runQuery($sql)->fetchAll(PDO::FETCH_ASSOC);
 		}catch(Throwable $e) {
 			throw new StorageException("Nie udało się pobrać danych");
 		}
@@ -27,9 +26,8 @@ class DashboardModel extends ContentModel {
 
 	public function getPost(int $id, string $table): array {
 		try {
-			$sql = "SELECT * FROM $table WHERE id = $id";
-			$result = $this->con->query($sql);
-			$result = $result->fetch(PDO::FETCH_ASSOC); 
+			$table = $this->validateTable($table);
+			$result = $this->runQuery("SELECT * FROM $table WHERE id = :id", [':id' => $id])->fetch(PDO::FETCH_ASSOC);
 		} catch (Throwable $e) {
 			throw new StorageException('Nie udało się pobrać notatki', 400, $e);
 		}
@@ -44,27 +42,32 @@ class DashboardModel extends ContentModel {
 
 	public function edit(array $data, string $table): void {
 		try {
-			$id = $data['id'];
-			$title = $this->con->quote($data['title']);
-			$description = $this->con->quote($data['description']);
-			$date = $data['date'];
+			$table = $this->validateTable($table);
 
-			$sql = "UPDATE $table SET title = $title, description = $description, updated = '$date' WHERE id = $id";
-
-			$this->con->exec($sql);
-		}catch(Throwable $e) {
+			$this->runQuery("UPDATE $table SET title = :title, description = :description, updated = :updated WHERE id = :id", [
+				":title" => $data['title'],
+				":description" => $data['description'],
+				":updated" => $data['date'],
+				":id" => $data['id'],
+			]);
+ 		}catch(Throwable $e) {
 			throw new StorageException('Nie udało się zaktualizować posta');
 		} 
 	}
 
 	public function create(array $data, string $table): void {
 		try {
-			$title = $this->con->quote($data['title']);
-			$description = $this->con->quote($data['description']);
-			$date = $data['date'];
+			$table = $this->validateTable($table);
 
-			$sql = "INSERT INTO $table (title, description, created, updated, status) VALUES ($title, $description, '$date', '$date', 1) ";
-			$this->con->exec($sql);
+			$this->runQuery(
+				"INSERT INTO $table (title, description, created, updated, status) 
+				VALUES (:title, :description, :created, :updated, :status)", [
+				":title" => $data['title'],
+				":description" => $data['description'],
+				":created" => $data['created'],
+				":updated" => $data['updated'],
+				":status" => 1,
+			]);
 		}catch(Throwable $e) {
 			throw new StorageException('Nie udało się stworzyć notatki !!!', 400, $e);
 		}
@@ -72,12 +75,11 @@ class DashboardModel extends ContentModel {
 
 	public function published(array $data, string $table) {
 		try {
-			$published = $data['published'];
-			$id = $data['id'];
-
-			$sql = "UPDATE $table SET status = $published WHERE id = $id";
-
-			$this->con->exec($sql);
+			$table = $this->validateTable($table);
+			$this->runQuery("UPDATE $table SET status = :published WHERE id = :id", [
+				':published' => $data['published'],
+				':id' => $data['id'],
+			]);
 		}catch(Throwable $e) {
 			throw new StorageException('Nie udało się zmienić statusu posta', 400, $e);
 		}
@@ -85,8 +87,8 @@ class DashboardModel extends ContentModel {
 
 	public function delete(int $id, string $table) {
 		try {
-			$sql = "DELETE FROM $table WHERE id = $id LIMIT 1";
-			$this->con->exec($sql);
+			$table = $this->validateTable($table);
+			$this->runQuery("DELETE FROM $table WHERE id = $id LIMIT 1", [":id" => $id]);
 		}catch(Throwable $e) {
 			throw new StorageException('Nie udało się usunąć posta !!!', 400, $e);
 		}
@@ -94,28 +96,27 @@ class DashboardModel extends ContentModel {
 
 	public function editCamp(array $data): void {
 		try {
-			$city = $this->con->quote($data['city']);
-			$cityStart = $this->con->quote($data['townStart']);
-			$guesthouse = $this->con->quote($data['guesthouse']);
-			$dateStart = $this->con->quote($data['dateStart']);
-			$dateEnd = $this->con->quote($data['dateEnd']);
-			$timeStart = $this->con->quote($data['timeStart']);
-			$timeEnd = $this->con->quote($data['timeEnd']);
-			$place = $this->con->quote($data['place']);
-			$accommodation = $this->con->quote($data['accommodation']);
-			$meals = $this->con->quote($data['meals']);
-			$trips = $this->con->quote($data['trips']);
-			$staff = $this->con->quote($data['staff']);
-			$transport = $this->con->quote($data['transport']);
-			$training = $this->con->quote($data['training']);
-			$insurance = $this->con->quote($data['insurance']);
-			$cost = $this->con->quote($data['cost']);
-			$advancePayment = $this->con->quote($data['advancePayment']);
-			$advanceDate = $this->con->quote($data['advanceDate']);
-
-			$sql = "UPDATE camp SET city = $city, city_start = $cityStart, date_start = $dateStart, date_end = $dateEnd, time_start = $timeStart,time_end = $timeEnd, place = $place, accommodation = $accommodation, meals = $meals, trips = $trips, staff = $staff, transport = $transport,training = $training, insurance = $insurance, cost = $cost, advancePayment = $advancePayment, advanceDate = $advanceDate, guesthouse = $guesthouse";
-
-			$this->con->exec($sql);
+			$this->runQuery("UPDATE camp SET city = :city, city_start = :cityStart, date_start = :dateStart, date_end = :dateEnd, time_start = :timeStart,time_end = :timeEnd, place = :place, accommodation = :accommodation, meals = :meals, trips = :trips, staff = :staff, transport = :transport,training = :training, insurance = :insurance, cost = :cost, advancePayment = :advancePayment, advanceDate = :advanceDate, guesthouse = :guesthouse", 
+			[
+					":city" => $data['city'],
+					":cityStart" => $data['townStart'],
+					":dateStart" => $data['dateStart'],
+					":dateEnd" => $data['dateEnd'],
+					":timeStart" => $data['timeStart'],
+					":timeEnd" => $data['timeEnd'],
+					":place" => $data['place'],
+					":accommodation" => $data['accommodation'],
+					":meals" => $data['meals'],
+					":trips" => $data['trips'],
+					":staff" => $data['staff'],
+					":transport" => $data['transport'],
+					":training" => $data['training'],
+					":insurance" => $data['insurance'],
+					":cost" => $data['cost'],
+					":advancePayment" => $data['advancePayment'],
+					":advanceDate" => $data['advanceDate'],
+					":guesthouse" => $data['guesthouse'],
+			]);
 		} catch (Throwable $e) {
 			throw new StorageException('Nie udało się zaktualizować danych !', 400, $e);
 		}
@@ -123,20 +124,19 @@ class DashboardModel extends ContentModel {
 
 	public function editFees(array $data): void {
 		try {
-			$fees1 = $data['fees1'];
-			$fees2 = $data['fees2'];
-			$fees3 = $data['fees3'];
-			$fees4 = $data['fees4'];
-			$fees5 = $data['fees5'];
-			$fees6 = $data['fees6'];
-			$fees7 = $data['fees7'];
-			$fees8 = $data['fees8'];
-			$fees9 = $this->con->quote($data['fees9']);
-			$fees10 = $this->con->quote($data['fees10']);
-			
-			$sql = "UPDATE fees SET reduced_contribution_1_month =  $fees1, reduced_contribution_2_month = $fees2, family_contribution_month = $fees3, contribution = $fees4, entry_fee = $fees5, reduced_contribution_1_year = $fees6, reduced_contribution_2_year = $fees7, family_contribution_year = $fees8, reduced_contribution_holidays = $fees9, extra_information = $fees10";
-
-			$this->con->exec($sql);
+			$this->runQuery("UPDATE fees SET reduced_contribution_1_month =  :reduced_contribution_1_month, reduced_contribution_2_month = :reduced_contribution_2_month, family_contribution_month = :family_contribution_month, contribution = :contribution, entry_fee = :entry_fee, reduced_contribution_1_year = :reduced_contribution_1_year, reduced_contribution_2_year = :reduced_contribution_2_year, family_contribution_year = :family_contribution_year, reduced_contribution_holidays = :reduced_contribution_holidays, extra_information = :extra_information", 
+			[
+					":reduced_contribution_1_month" => $data['fees1'],
+					":reduced_contribution_2_month" => $data['fees2'],
+					":family_contribution_month" => $data['fees3'],
+					":contribution" => $data['fees4'],
+					":entry_fee" => $data['fees5'],
+					":reduced_contribution_1_year" => $data['fees6'],
+					":reduced_contribution_2_year" => $data['fees7'],
+					":family_contribution_year" => $data['fees8'],
+					":reduced_contribution_holidays" => $data['fees9'],
+					":extra_information" => $data['fees10'],
+			]);
 		}catch(Throwable $e) {
 			throw new StorageException('Nie udało się zaktualizować danych !', 400, $e);
 		}
@@ -144,12 +144,11 @@ class DashboardModel extends ContentModel {
 
 	public function editContact(array $data): void {
 		try {
-			$email = $this->con->quote($data['email']);
-			$phone = $this->con->quote($data['phone']);
-			$address = $this->con->quote($data['address']);
-
-			$sql = "UPDATE contact SET email = $email, phone = $phone, address = $address";
-			$this->con->exec($sql);
+			$this->runQuery("UPDATE contact SET email = :email, phone = :phone, address = :address", [
+				":email" => $data['email'],
+				":phone" => $data['phone'],
+				":address" => $data['address'],
+			]);
 		}catch(Throwable $e) {
 			throw new StorageException('Nie udało się zaktualizować danych !', 400, $e);
 		}
@@ -157,15 +156,16 @@ class DashboardModel extends ContentModel {
 
 	public function	addDayToTimetable(array $data): void {
 		try {
-				$day = $this->con->quote($data['day']);
-				$city = $this->con->quote($data['city']);
-				$group = $this->con->quote($data['group']);
-				$place = $this->con->quote($data['place']);
-				$startTime = $this->con->quote($data['startTime']);
-				$endTime = $this->con->quote($data['endTime']);
-
-				$sql = "INSERT INTO timetable (day, city, advancement_group, place, start, end) VALUES($day, $city, $group, $place, $startTime, $endTime)";
-				$this->con->exec($sql);
+				$this->runQuery(
+					"INSERT INTO timetable (day, city, advancement_group, place, start, end) 
+					VALUES(:day, :city, :group, :place, :startTime, :endTime)", [
+					":day" => $data['day'],
+					":city" => $data['city'],
+					":group" => $data['group'],
+					":place" => $data['place'],
+					":startTime" => $data['startTime'],
+					":endTime" => $data['endTime']
+				]);
 		}catch(Throwable $e) {
 			throw new StorageException('Nie udało się dodać danych !', 400, $e);
 		}
@@ -174,23 +174,16 @@ class DashboardModel extends ContentModel {
 	public function	editTimetable(array $data): void
 	{
 		try {
-			$id = $data['id'];
-			$day = $this->con->quote($data['day']);
-			$city = $this->con->quote($data['city']);
-			$group = $this->con->quote($data['group']);
-			$place = $this->con->quote($data['place']);
-			$startTime = $this->con->quote($data['startTime']);
-			$endTime = $this->con->quote($data['endTime']);
-
-			$sql = "UPDATE timetable SET 
-							day = $day, 
-							city = $city, 
-							advancement_group = $group,
-							place = $place,
-							start = $startTime, 
-							end = $endTime
-							WHERE id = $id";
-			$this->con->exec($sql);
+			$this->runQuery("UPDATE timetable SET day = :day, city = :city, advancement_group = :group, place = :place, start = :startTime, end = :endTime WHERE id = :id", [
+				":day" => $data['day'],
+				":city" => $data['city'],
+				":advancement_group" => $data['group'],
+				":place" => $data['place'],
+				":startTime" => $data['startTime'],
+				":endTime" => $data['endTime'],
+				":id" => $data['id']
+			]);
+			
 		} catch (Throwable $e) {
 			throw new StorageException('Nie udało się zaktualizować Notatki !', 400, $e);
 		}

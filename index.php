@@ -16,7 +16,6 @@ use App\Request;
 use App\Core\ControllerFactory;
 use App\Exception\AppException;
 
-
 $configuration = require_once('config/config.php');
 
 
