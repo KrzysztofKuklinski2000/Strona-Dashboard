@@ -11,7 +11,7 @@ trait GetDataMethods {
       'id' => $this->request->postParam('postId'),
       'title' => $this->request->postParam('postTitle'),
       'description' => $this->request->postParam('postDescription'),
-      'date' => date('Y-m-d')
+      'updated' => date('Y-m-d')
     ];
   }
 
@@ -29,11 +29,11 @@ trait GetDataMethods {
     return [
       'city' => $this->request->postParam('town'),
       'guesthouse' => $this->request->postParam('guesthouse'),
-      'townStart' => $this->request->postParam('townStart'),
-      'dateStart' => $this->request->postParam('dateStart'),
-      'dateEnd' => $this->request->postParam('dateEnd'),
-      'timeStart' => $this->request->postParam('timeStart'),
-      'timeEnd' => $this->request->postParam('timeEnd'),
+      'city_start' => $this->request->postParam('townStart'),
+      'date_start' => $this->request->postParam('dateStart'),
+      'date_end' => $this->request->postParam('dateEnd'),
+      'time_start' => $this->request->postParam('timeStart'),
+      'time_end' => $this->request->postParam('timeEnd'),
       'place' => $this->request->postParam('place'),
       'accommodation' => $this->request->postParam('accommodation'),
       'meals' => $this->request->postParam('meals'),
@@ -51,16 +51,16 @@ trait GetDataMethods {
   protected function getDataToFeesEdit(): array
   {
     return [
-      'fees1' => $this->request->postParam('n1'),
-      'fees2' => $this->request->postParam('n2'),
-      'fees3' => $this->request->postParam('n3'),
-      'fees4' => $this->request->postParam('n4'),
-      'fees5' => $this->request->postParam('n5'),
-      'fees6' => $this->request->postParam('n6'),
-      'fees7' => $this->request->postParam('n7'),
-      'fees8' => $this->request->postParam('n8'),
-      'fees9' => $this->request->postParam('n9'),
-      'fees10' => $this->request->postParam('n10'),
+      'reduced_contribution_1_month' => $this->request->postParam('n1'),
+      'reduced_contribution_2_month' => $this->request->postParam('n2'),
+      'family_contribution_month' => $this->request->postParam('n3'),
+      'contribution' => $this->request->postParam('n4'),
+      'entry_fee' => $this->request->postParam('n5'),
+      'reduced_contribution_1_year' => $this->request->postParam('n6'),
+      'reduced_contribution_2_year' => $this->request->postParam('n7'),
+      'family_contribution_year' => $this->request->postParam('n8'),
+      'reduced_contribution_holidays' => $this->request->postParam('n9'),
+      'extra_information' => $this->request->postParam('n10'),
     ];
   }
 
@@ -91,10 +91,10 @@ trait GetDataMethods {
       "id" => $this->request->postParam('id'),
       'day' => $this->request->postParam('day'),
       'city' => $this->request->postParam('city'),
-      'group' => $this->request->postParam('group'),
+      'advancement_group' => $this->request->postParam('group'),
       'place' => $this->request->postParam('place'),
-      'startTime' => $this->request->postParam('startTime'),
-      'endTime' => $this->request->postParam('endTime')
+      'start' => $this->request->postParam('startTime'),
+      'end' => $this->request->postParam('endTime')
     ];
   }
 }

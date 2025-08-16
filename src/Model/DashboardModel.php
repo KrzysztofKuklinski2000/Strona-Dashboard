@@ -40,19 +40,18 @@ class DashboardModel extends ContentModel {
 		return $result;
 	}
 
-	public function edit(array $data, string $table): void {
+	public function edit(string $table, array $data):void {
 		try {
 			$table = $this->validateTable($table);
+			$sql = "UPDATE $table SET ". implode(", ", array_map(fn($k) => "$k = :$k", array_filter(array_keys($data), fn($k)=> $k !== "id")));
 
-			$this->runQuery("UPDATE $table SET title = :title, description = :description, updated = :updated WHERE id = :id", [
-				":title" => $data['title'],
-				":description" => $data['description'],
-				":updated" => $data['date'],
-				":id" => $data['id'],
-			]);
- 		}catch(Throwable $e) {
-			throw new StorageException('Nie udało się zaktualizować posta');
-		} 
+			if(in_array($table, ['news', 'main_page_posts', 'important_posts', 'timetable'])) $sql .= " WHERE id = :id";
+			$result = array_combine(array_map(fn($k) => ":$k", array_keys($data)), $data);
+
+			$this->runQuery($sql, $result);
+		}catch(Throwable $e) {
+			throw new StorageException("Nie udało się zaktualizować danych");
+		}
 	}
 
 	public function create(array $data, string $table): void {
@@ -94,66 +93,6 @@ class DashboardModel extends ContentModel {
 		}
 	}
 
-	public function editCamp(array $data): void {
-		try {
-			$this->runQuery("UPDATE camp SET city = :city, city_start = :cityStart, date_start = :dateStart, date_end = :dateEnd, time_start = :timeStart,time_end = :timeEnd, place = :place, accommodation = :accommodation, meals = :meals, trips = :trips, staff = :staff, transport = :transport,training = :training, insurance = :insurance, cost = :cost, advancePayment = :advancePayment, advanceDate = :advanceDate, guesthouse = :guesthouse", 
-			[
-					":city" => $data['city'],
-					":cityStart" => $data['townStart'],
-					":dateStart" => $data['dateStart'],
-					":dateEnd" => $data['dateEnd'],
-					":timeStart" => $data['timeStart'],
-					":timeEnd" => $data['timeEnd'],
-					":place" => $data['place'],
-					":accommodation" => $data['accommodation'],
-					":meals" => $data['meals'],
-					":trips" => $data['trips'],
-					":staff" => $data['staff'],
-					":transport" => $data['transport'],
-					":training" => $data['training'],
-					":insurance" => $data['insurance'],
-					":cost" => $data['cost'],
-					":advancePayment" => $data['advancePayment'],
-					":advanceDate" => $data['advanceDate'],
-					":guesthouse" => $data['guesthouse'],
-			]);
-		} catch (Throwable $e) {
-			throw new StorageException('Nie udało się zaktualizować danych !', 400, $e);
-		}
-	}
-
-	public function editFees(array $data): void {
-		try {
-			$this->runQuery("UPDATE fees SET reduced_contribution_1_month =  :reduced_contribution_1_month, reduced_contribution_2_month = :reduced_contribution_2_month, family_contribution_month = :family_contribution_month, contribution = :contribution, entry_fee = :entry_fee, reduced_contribution_1_year = :reduced_contribution_1_year, reduced_contribution_2_year = :reduced_contribution_2_year, family_contribution_year = :family_contribution_year, reduced_contribution_holidays = :reduced_contribution_holidays, extra_information = :extra_information", 
-			[
-					":reduced_contribution_1_month" => $data['fees1'],
-					":reduced_contribution_2_month" => $data['fees2'],
-					":family_contribution_month" => $data['fees3'],
-					":contribution" => $data['fees4'],
-					":entry_fee" => $data['fees5'],
-					":reduced_contribution_1_year" => $data['fees6'],
-					":reduced_contribution_2_year" => $data['fees7'],
-					":family_contribution_year" => $data['fees8'],
-					":reduced_contribution_holidays" => $data['fees9'],
-					":extra_information" => $data['fees10'],
-			]);
-		}catch(Throwable $e) {
-			throw new StorageException('Nie udało się zaktualizować danych !', 400, $e);
-		}
-	}
-
-	public function editContact(array $data): void {
-		try {
-			$this->runQuery("UPDATE contact SET email = :email, phone = :phone, address = :address", [
-				":email" => $data['email'],
-				":phone" => $data['phone'],
-				":address" => $data['address'],
-			]);
-		}catch(Throwable $e) {
-			throw new StorageException('Nie udało się zaktualizować danych !', 400, $e);
-		}
-	}
-
 	public function	addDayToTimetable(array $data): void {
 		try {
 				$this->runQuery(
@@ -168,24 +107,6 @@ class DashboardModel extends ContentModel {
 				]);
 		}catch(Throwable $e) {
 			throw new StorageException('Nie udało się dodać danych !', 400, $e);
-		}
-	}
-
-	public function	editTimetable(array $data): void
-	{
-		try {
-			$this->runQuery("UPDATE timetable SET day = :day, city = :city, advancement_group = :group, place = :place, start = :startTime, end = :endTime WHERE id = :id", [
-				":day" => $data['day'],
-				":city" => $data['city'],
-				":advancement_group" => $data['group'],
-				":place" => $data['place'],
-				":startTime" => $data['startTime'],
-				":endTime" => $data['endTime'],
-				":id" => $data['id']
-			]);
-			
-		} catch (Throwable $e) {
-			throw new StorageException('Nie udało się zaktualizować Notatki !', 400, $e);
 		}
 	}
 }

@@ -26,18 +26,22 @@ class ContentModel {
 
 	public function runQuery(string $sql, array $params = []): PDOStatement
 	{
-		$stmt = $this->con->prepare($sql);
+		try {
+			$stmt = $this->con->prepare($sql);
 
-		foreach ($params as $key => $value) {
-			if (is_array($value)) {
-				$stmt->bindValue($key, $value[0], $value[1]);
-			} else {
-				$stmt->bindValue($key, $value, PDO::PARAM_STR);
+			foreach ($params as $key => $value) {
+				if (is_array($value)) {
+					$stmt->bindValue($key, $value[0], $value[1]);
+				} else {
+					$stmt->bindValue($key, $value, PDO::PARAM_STR);
+				}
 			}
-		}
 
-		$stmt->execute();
-		return $stmt;
+			$stmt->execute();
+			return $stmt;
+		}catch(Throwable) {
+				throw new StorageException("Błąd bazy danych");
+		}
 	}
 
 	protected function validateTable(string $table): string {

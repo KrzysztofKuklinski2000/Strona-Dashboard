@@ -61,7 +61,7 @@ class DashboardController extends AbstractController {
 	}
 
 	private function edit(string $table, string $redirectTo = ""): void {
-		$this->dashboardModel->edit($this->getPostDataToEdit(), $table);
+		$this->dashboardModel->edit($table, $this->getPostDataToEdit());
 		$this->redirect("/?dashboard=start&subpage=$redirectTo");
 	}
 
@@ -85,17 +85,17 @@ class DashboardController extends AbstractController {
 	}
 
 	private function editCamp(): void { 
-		$this->dashboardModel->editCamp($this->getDataToCampEdit());
+		$this->dashboardModel->edit("camp", $this->getDataToCampEdit());
 		$this->redirect("/?dashboard=start&subpage=obozy");
 	}
 
 	private function editFees(): void {
-		$this->dashboardModel->editFees($this->getDataToFeesEdit());
+		$this->dashboardModel->edit("fees", $this->getDataToFeesEdit());
 		$this->redirect("/?dashboard=start&subpage=oplaty");
  	}
 
  	private function editContact(): void {
- 		$this->dashboardModel->editContact($this->getDataToContactEdit());
+ 		$this->dashboardModel->edit("contact", $this->getDataToContactEdit());
 		$this->redirect("/?dashboard=start&subpage=kontakt");
  	}
 
@@ -105,7 +105,7 @@ class DashboardController extends AbstractController {
 	}
 
 	private function editTimetable(): void {
-		$this->dashboardModel->editTimetable($this->getDataToEditTimetable());
+		$this->dashboardModel->edit("timetable", $this->getDataToEditTimetable());
 		$this->redirect("/?dashboard=start&subpage=grafik");
 	}
 
