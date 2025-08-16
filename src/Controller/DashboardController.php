@@ -100,7 +100,7 @@ class DashboardController extends AbstractController {
  	}
 
 	private function addDayToTimetable(): void {
-		$this->dashboardModel->addDayToTimetable($this->getDataToAddTimetable());
+		$this->dashboardModel->create($this->getDataToAddTimetable(), "timetable");
 		$this->redirect("/?dashboard=start&subpage=grafik");
 	}
 

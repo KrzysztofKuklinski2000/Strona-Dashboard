@@ -20,7 +20,9 @@ trait GetDataMethods {
     return [
       'title' => $this->request->postParam('postTitle'),
       'description' => $this->request->postParam('postDescription'),
-      'date' => date('Y-m-d')
+      'created' => date('Y-m-d'),
+      'updated' => date('Y-m-d'),
+      'status' => 1,
     ];
   }
 
@@ -78,10 +80,10 @@ trait GetDataMethods {
     return [
       'day' => $this->request->postParam('day'),
       'city' => $this->request->postParam('city'),
-      'group' => $this->request->postParam('group'),
+      'advancement_group' => $this->request->postParam('group'),
       'place' => $this->request->postParam('place'),
-      'startTime' => $this->request->postParam('startTime'),
-      'endTime' => $this->request->postParam('endTime')
+      'start' => $this->request->postParam('startTime'),
+      'end' => $this->request->postParam('endTime')
     ];
   }
 
