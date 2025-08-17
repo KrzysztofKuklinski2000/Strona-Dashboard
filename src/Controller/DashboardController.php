@@ -17,56 +17,49 @@ class DashboardController extends AbstractController {
 	{
 		parent::__construct($request);
 		$this->dashboardModel = $dashboardModel;
+		if (empty($this->request->getSession('user'))) header('location: /?auth=start');
 	}
 	
 	public function feesDashboardAction(): void {
-		if(empty($this->request->getSession('user'))) header('location: /?auth=start');
-		$this->handlePost('fees', fn()=>$this->editFees());
+		$this->handlePost('fees', fn()=>$this->edit("fees", "oplaty"));
 	}
 
 	public function contactDashboardAction(): void {
-		if (empty($this->request->getSession('user'))) header('location: /?auth=start&subpage=login');
-		$this->handlePost('contact', fn() => $this->editContact());
+		$this->handlePost('contact', fn() => $this->edit("contact", "kontakt"));
 	}
 
 	public function campDashboardAction(): void {
-		if (empty($this->request->getSession('user'))) header('location: /?auth=start');
-		$this->handlePost('camp', fn() => $this->editCamp());
+		$this->handlePost('camp', fn() => $this->edit("camp", "obozy"));
 	}
 
 	public function startDashboardAction(): void {
-		if (empty($this->request->getSession('user'))) header('location: /?auth=start');
 		$result = $this->operationRedirect("main_page_posts");
 		$this->view->renderDashboardView(['page' => 'start', 'operation' => $result["operation"], 'data' => $result["data"]]);
 	}
 
 	public function newsDashboardAction():void {
-		if (empty($this->request->getSession('user'))) header('location: /?auth=start');
 		$result = $this->operationRedirect("news");
 		$this->view->renderDashboardView(['page' => 'news', 'operation' => $result["operation"], 'data' => $result["data"]]);
 	}
 
 	
 	public function timetableDashboardAction():void {
-		if (empty($this->request->getSession('user'))) header('location: /?auth=start');
 		$result = $this->operationRedirect("timetable");
 		$this->view->renderDashboardView(['page' => 'timetable', 'operation' => $result["operation"] ,'data' => $result["data"]]);
 	}
 
 	public function important_postsDashboardAction(): void {
-		if(empty($this->request->getSession('user'))) header('location: /?auth=start');
-
 		$result = $this->operationRedirect("important_posts");
 		$this->view->renderDashboardView(['page' => 'important_posts', 'operation' => $result["operation"], 'data' => $result["data"]]);
 	}
 
-	private function edit(string $table, string $redirectTo = ""): void {
-		$this->dashboardModel->edit($table, $this->getPostDataToEdit());
-		$this->redirect("/?dashboard=start&subpage=$redirectTo");
-	}
-
 	private function create(string $table, string $redirectTo = ""): void {
-		$this->dashboardModel->create($this->getPostDataToCreate(), $table);
+		$data = match ($table) {
+			"timetable" => $this->getDataToAddTimetable(),
+			default => $this->getPostDataToCreate(),
+		};
+
+		$this->dashboardModel->create($data, $table);
 		$this->redirect("/?dashboard=start&subpage=$redirectTo");
 	}
 
@@ -78,77 +71,45 @@ class DashboardController extends AbstractController {
 		$this->redirect("/?dashboard=start&subpage=$redirectTo");
 	}
 
-	private function delete(string $table, string $redirectTo = "") {
+	private function delete(string $table, string $redirectTo = ""): void {
 		$id = (int) $this->request->postParam('postId');
 		$this->dashboardModel->delete($id, $table);
 		$this->redirect("/?dashboard=start&subpage=$redirectTo");
 	}
 
-	private function editCamp(): void { 
-		$this->dashboardModel->edit("camp", $this->getDataToCampEdit());
-		$this->redirect("/?dashboard=start&subpage=obozy");
+	private function edit(string $table, string $redirectTo= ""): void {
+		$data = match($table) {
+			"camp" => $this->getDataToCampEdit(),
+			"fees" => $this->getDataToFeesEdit(),
+			"contact" => $this->getDataToContactEdit(),
+			"timetable" => $this->getDataToEditTimetable(),
+			default => $this->getPostDataToEdit(),
+		};
+
+		$this->dashboardModel->edit($table, $data);
+		$this->redirect("/?dashboard=start&subpage=$redirectTo");
 	}
 
-	private function editFees(): void {
-		$this->dashboardModel->edit("fees", $this->getDataToFeesEdit());
-		$this->redirect("/?dashboard=start&subpage=oplaty");
- 	}
-
- 	private function editContact(): void {
- 		$this->dashboardModel->edit("contact", $this->getDataToContactEdit());
-		$this->redirect("/?dashboard=start&subpage=kontakt");
- 	}
-
-	private function addDayToTimetable(): void {
-		$this->dashboardModel->create($this->getDataToAddTimetable(), "timetable");
-		$this->redirect("/?dashboard=start&subpage=grafik");
-	}
-
-	private function editTimetable(): void {
-		$this->dashboardModel->edit("timetable", $this->getDataToEditTimetable());
-		$this->redirect("/?dashboard=start&subpage=grafik");
-	}
-
-	private function handlePost(string $table, callable $function)
+	private function handlePost(string $table, callable $function): void
 	{
-		if ($this->request->isPost()) {
-			$function();
-		}
+		if ($this->request->isPost()) $function();
 		$this->view->renderDashboardView(
 			[
 				'page' => $table,
-				'data' => $this->dashboardModel->getDashboardData($table)[0] ?? []
+				'data' => $this->dashboardModel->getDashboardData($table)[0]
 			]
 		);
 	}
 
 	private function handleCreate(string $table, string $subpage): string
 	{
-		if ($this->request->hasPost()) {
-			($subpage === "grafik" ? $this->addDayToTimetable() : $this->create($table, $subpage));
-		}
-
+		if ($this->request->hasPost()) $this->create($table, $subpage);
 		return "create";
 	}
 
-	private function handleEditOrDeleteOrShow(
-		string $operation,
-		string $subpage,
-		callable $function,
-		?callable $functionTimeTable = null
-	): string {
-
-		if ($this->request->isPost()) {
-			($subpage === "grafik" && $functionTimeTable ? $functionTimeTable() : $function());
-		}
-
+	private function handleEditOrDeleteOrShow(string $operation, callable $function): string {
+		if ($this->request->isPost()) $function();
 		return $operation; 
-	}
-
-	private function getSingleData(string $table): array
-	{
-		$postId = (int) $this->request->getParam('id');
-		return $postId ? $this->dashboardModel->getPost($postId, $table) : [];
 	}
 
 	private function operationRedirect(string $table): array
@@ -158,34 +119,32 @@ class DashboardController extends AbstractController {
 		$data = null;
 
 		if(in_array($operation, ['edit', 'show', 'delete'])) $data = $this->getSingleData($table);
-		else {
+		else if(empty($operation)) {
 			$data = $table === "timetable" 
-							? $data = $this->dashboardModel->timetablePageData() 
-							: $this->dashboardModel->getDashboardData($table) ?? [];
+							? $data = $this->dashboardModel->timetablePageData()
+							: $this->dashboardModel->getDashboardData($table);
 		}
 
 		$operationSubpage = match ($operation) {
 			"create" => $this->handleCreate($table, $subpage),
-			"edit" => $this->handleEditOrDeleteOrShow(
-				"edit",
-				$subpage,
-				fn() => $this->edit($table, $subpage),
-				fn() => $this->editTimetable()
-			),
-			"show" => $this->handleEditOrDeleteOrShow(
-				"show",
-				$subpage,
-				fn() => $this->published($table, $subpage),
-			),
-			"delete" => $this->handleEditOrDeleteOrShow(
-				"delete",
-				$subpage,
-				fn() => $this->delete($table, $subpage),
-			),
+			"edit" => $this->handleEditOrDeleteOrShow("edit", fn() => $this->edit($table, $subpage)),
+			"show" => $this->handleEditOrDeleteOrShow("show", fn() => $this->published($table, $subpage)),
+			"delete" => $this->handleEditOrDeleteOrShow("delete", fn() => $this->delete($table, $subpage)),
 			default => ""
 		};
 
 		return ["data" => $data, "operation" => $operationSubpage];
+	}
+
+	private function getSingleData(string $table): array
+	{
+		$postId = $this->request->getParam('id');
+
+		if($postId === null || !ctype_digit((string) $postId) ) $this->redirect("/?dashboard=start");
+
+		$postId = (int) $postId;
+
+		return $this->dashboardModel->getPost($postId, $table);
 	}
 }
 

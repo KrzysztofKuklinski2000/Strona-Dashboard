@@ -62,7 +62,10 @@ class DashboardModel extends AbstractModel {
 			$result = array_combine(array_map(fn($k) => ":$k", array_keys($data)), $data);
 			
 			$sql = "INSERT INTO $table ($col) VALUES ($val)";
-			
+			echo $sql."<br>";
+			print_r($result);
+			exit;
+
 			$this->runQuery($sql,$result);
 		}catch(Throwable $e) {
 			throw new StorageException('Nie udało się stworzyć notatki !!!', 400, $e);
@@ -84,7 +87,7 @@ class DashboardModel extends AbstractModel {
 	public function delete(int $id, string $table) {
 		try {
 			$table = $this->validateTable($table);
-			$this->runQuery("DELETE FROM $table WHERE id = id LIMIT 1", [":id" => $id]);
+			$this->runQuery("DELETE FROM $table WHERE id = :id LIMIT 1", [":id" => $id]);
 		}catch(Throwable $e) {
 			throw new StorageException('Nie udało się usunąć posta !!!', 400, $e);
 		}
