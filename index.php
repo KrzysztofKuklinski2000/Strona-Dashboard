@@ -18,11 +18,9 @@ use App\Exception\AppException;
 
 $configuration = require_once('config/config.php');
 
-
 $request = new Request($_GET, $_POST, $_SERVER, $_SESSION);
 
 try {
-
 	(new ControllerFactory($configuration))->createController($request)->run();
 
 }catch (AppException $e){

@@ -62,9 +62,6 @@ class DashboardModel extends AbstractModel {
 			$result = array_combine(array_map(fn($k) => ":$k", array_keys($data)), $data);
 			
 			$sql = "INSERT INTO $table ($col) VALUES ($val)";
-			echo $sql."<br>";
-			print_r($result);
-			exit;
 
 			$this->runQuery($sql,$result);
 		}catch(Throwable $e) {

@@ -92,24 +92,15 @@ class DashboardController extends AbstractController {
 
 	private function handlePost(string $table, callable $function): void
 	{
-		if ($this->request->isPost()) $function();
+		if ($this->request->isPost()) {
+			$function();
+		}
 		$this->view->renderDashboardView(
 			[
 				'page' => $table,
 				'data' => $this->dashboardModel->getDashboardData($table)[0]
 			]
 		);
-	}
-
-	private function handleCreate(string $table, string $subpage): string
-	{
-		if ($this->request->hasPost()) $this->create($table, $subpage);
-		return "create";
-	}
-
-	private function handleEditOrDeleteOrShow(string $operation, callable $function): string {
-		if ($this->request->isPost()) $function();
-		return $operation; 
 	}
 
 	private function operationRedirect(string $table): array
@@ -125,15 +116,17 @@ class DashboardController extends AbstractController {
 							: $this->dashboardModel->getDashboardData($table);
 		}
 
-		$operationSubpage = match ($operation) {
-			"create" => $this->handleCreate($table, $subpage),
-			"edit" => $this->handleEditOrDeleteOrShow("edit", fn() => $this->edit($table, $subpage)),
-			"show" => $this->handleEditOrDeleteOrShow("show", fn() => $this->published($table, $subpage)),
-			"delete" => $this->handleEditOrDeleteOrShow("delete", fn() => $this->delete($table, $subpage)),
-			default => ""
-		};
+		if ($this->request->isPost()) {
+			match ($operation) {
+				"create" => $this->create($table, $subpage),
+				"edit" => $this->edit($table, $subpage),
+				"show" => $this->published($table, $subpage),
+				"delete" => $this->delete($table, $subpage),
+				default => null
+			};
+		}
 
-		return ["data" => $data, "operation" => $operationSubpage];
+		return ["data" => $data, "operation" => $operation];
 	}
 
 	private function getSingleData(string $table): array
