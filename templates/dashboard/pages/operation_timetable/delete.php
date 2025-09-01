@@ -8,6 +8,7 @@
 <h4>Start: <?php echo $data['start'] ?></h4>
 <h4>Koniec: <?php echo $data['end'] ?> </h4>
 <form action="?dashboard=start&subpage=grafik&operation=delete" method="Post">
+	<input type="hidden" name="csrf_token" value="<?php echo $params['csrf_token'] ?? '' ?>">
 	<input type="hidden" name="postId" value="<?php echo $data['id'] ?>">
 	<input type="submit" value="Usuń">
 </form>

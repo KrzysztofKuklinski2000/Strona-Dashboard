@@ -6,6 +6,7 @@
 	</div>
 	<br>
 	<form action="/?dashboard=start&subpage=kontakt" method="POST" class="contact-form">
+	<input type="hidden" name="csrf_token" value="<?php echo $params['csrf_token'] ?? '' ?>">
 		<label>
 			<span>E-mail:</span> 
 			<input type="email" name="email" value="<?php echo $data['email'] ?>">

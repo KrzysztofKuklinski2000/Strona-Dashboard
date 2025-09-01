@@ -10,7 +10,8 @@
 	<h4>Start: <?php echo $data['start'] ?></h4>
 	<h4>Koniec: <?php echo $data['end'] ?></h4>
 
-	<form action="?dashboard=start&subpage=grafik&operation=show" method="POST">
+	<form action="?dashboard=start&subpage=grafik&operation=show" method="POST">	
+		<input type="hidden" name="csrf_token" value="<?php echo $params['csrf_token'] ?? '' ?>">
 		<input type="hidden" name="postId" value="<?php echo $data['id'] ?>">
 		<label>
 			<input type="radio" name="postPublished" value="1" <?php echo $data['status'] == 1 ? 'checked' : '' ?>> Publiczny

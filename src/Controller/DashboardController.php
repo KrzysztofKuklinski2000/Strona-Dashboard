@@ -6,6 +6,7 @@ use App\Model\DashboardModel;
 use App\Traits\GetDataMethods;
 use App\Controller\AbstractController;
 use App\Request;
+use EasyCSRF\EasyCSRF;
 
 class DashboardController extends AbstractController {
 
@@ -13,9 +14,9 @@ class DashboardController extends AbstractController {
 
 	use GetDataMethods;
 
-	public function __construct(Request $request, DashboardModel $dashboardModel) 
+	public function __construct(Request $request, DashboardModel $dashboardModel, EasyCSRF $easyCSRF) 
 	{
-		parent::__construct($request);
+		parent::__construct($request, $easyCSRF);
 		$this->dashboardModel = $dashboardModel;
 		if (empty($this->request->getSession('user'))) header('location: /?auth=start');
 	}
@@ -34,23 +35,23 @@ class DashboardController extends AbstractController {
 
 	public function startDashboardAction(): void {
 		$result = $this->operationRedirect("main_page_posts");
-		$this->view->renderDashboardView(['page' => 'start', 'operation' => $result["operation"], 'data' => $result["data"]]);
+		$this->view->renderDashboardView(['page' => 'start', 'operation' => $result["operation"], 'data' => $result["data"] , 'csrf_token' => $result["csrf_token"]]);
 	}
 
 	public function newsDashboardAction():void {
 		$result = $this->operationRedirect("news");
-		$this->view->renderDashboardView(['page' => 'news', 'operation' => $result["operation"], 'data' => $result["data"]]);
+		$this->view->renderDashboardView(['page' => 'news', 'operation' => $result["operation"], 'data' => $result["data"] , 'csrf_token' => $result["csrf_token"]]);
 	}
 
 	
 	public function timetableDashboardAction():void {
 		$result = $this->operationRedirect("timetable");
-		$this->view->renderDashboardView(['page' => 'timetable', 'operation' => $result["operation"] ,'data' => $result["data"]]);
+		$this->view->renderDashboardView(['page' => 'timetable', 'operation' => $result["operation"] ,'data' => $result["data"] , 'csrf_token' => $result["csrf_token"]]);
 	}
 
 	public function important_postsDashboardAction(): void {
 		$result = $this->operationRedirect("important_posts");
-		$this->view->renderDashboardView(['page' => 'important_posts', 'operation' => $result["operation"], 'data' => $result["data"]]);
+		$this->view->renderDashboardView(['page' => 'important_posts', 'operation' => $result["operation"], 'data' => $result["data"] , 'csrf_token' => $result["csrf_token"]]);
 	}
 
 	private function create(string $table, string $redirectTo = ""): void {
@@ -90,15 +91,21 @@ class DashboardController extends AbstractController {
 		$this->redirect("/?dashboard=start&subpage=$redirectTo");
 	}
 
-	private function handlePost(string $table, callable $function): void
+	private function handlePost(string $table, callable $function, string $redirectTo = ""): void
 	{
 		if ($this->request->isPost()) {
-			$function();
+			try {
+				$this->easyCSRF->check('csrf_token', $this->request->postParam('csrf_token'));
+				$function();
+			} catch (\EasyCSRF\Exceptions\InvalidCsrfTokenException $e) {
+				$this->redirect("/?dashboard=start&subpage=$redirectTo&error=csrf");
+			}
 		}
 		$this->view->renderDashboardView(
 			[
 				'page' => $table,
-				'data' => $this->dashboardModel->getDashboardData($table)[0]
+				'data' => $this->dashboardModel->getDashboardData($table)[0],
+				'csrf_token' => $this->easyCSRF->generate('csrf_token'),
 			]
 		);
 	}
@@ -117,16 +124,25 @@ class DashboardController extends AbstractController {
 		}
 
 		if ($this->request->isPost()) {
-			match ($operation) {
-				"create" => $this->create($table, $subpage),
-				"edit" => $this->edit($table, $subpage),
-				"show" => $this->published($table, $subpage),
-				"delete" => $this->delete($table, $subpage),
-				default => null
-			};
+			try {
+				$this->easyCSRF->check('csrf_token', $this->request->postParam('csrf_token'));
+				match ($operation) {
+					"create" => $this->create($table, $subpage),
+					"edit" => $this->edit($table, $subpage),
+					"show" => $this->published($table, $subpage),
+					"delete" => $this->delete($table, $subpage),
+					default => null
+				};
+			} catch (\EasyCSRF\Exceptions\InvalidCsrfTokenException $e) {
+				$this->redirect("/?dashboard=start&subpage=$subpage&error=csrf");
+			}
 		}
 
-		return ["data" => $data, "operation" => $operation];
+		return [
+			"data" => $data, 
+			"operation" => $operation,
+			"csrf_token" => $this->easyCSRF->generate('csrf_token'),
+		];
 	}
 
 	private function getSingleData(string $table): array

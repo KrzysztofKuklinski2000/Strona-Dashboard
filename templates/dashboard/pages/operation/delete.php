@@ -7,6 +7,7 @@ $actionUrl = "/?dashboard=start&subpage=$subpage&operation=delete&id=" . ($data[
 <br>
 <h4>Tytuł posta: <?php echo $data['title'] ?? "" ?> </h4>
 <form action="<?= $actionUrl ?>" method="POST">
+	<input type="hidden" name="csrf_token" value="<?php echo $params['csrf_token'] ?? '' ?>">
 	<input type="hidden" name="postId" value="<?php echo $data['id'] ?? "" ?>">
 	<input type="submit" value="Usuń">
 </form>

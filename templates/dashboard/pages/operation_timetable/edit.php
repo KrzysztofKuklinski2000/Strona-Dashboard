@@ -3,6 +3,7 @@
 <h3>Edytuj </h3>
 <br>
 <form action="?dashboard=start&subpage=grafik&operation=edit" method="POST" class="timetable-create-form">
+	<input type="hidden" name="csrf_token" value="<?php echo $params['csrf_token'] ?? '' ?>">
 	<input type="hidden" name="id" value = "<?php echo $data['id'] ?>">
 	<label>
 		<span>Dzień: </span> 

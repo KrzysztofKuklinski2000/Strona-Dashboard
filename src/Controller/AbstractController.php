@@ -7,19 +7,21 @@ use App\View;
 use App\Request;
 use App\Exception\NotFoundException; 
 use App\Exception\StorageException;
+use EasyCSRF\EasyCSRF;
 
 
 class AbstractController {
 	public View $view;
 	public Request $request;
+	protected EasyCSRF $easyCSRF;
 	private ActionResolver $actionResolver;
-
 	private const DEFAULT_ACTION = 'start';
 
-	public function __construct(Request $request) {
+	public function __construct(Request $request, EasyCSRF $easyCSRF) {
 		$this->view = new View();
 		$this->request = $request;
 		$this->actionResolver = new ActionResolver();
+		$this->easyCSRF = $easyCSRF;
 	}
 
 	public function run(): void {

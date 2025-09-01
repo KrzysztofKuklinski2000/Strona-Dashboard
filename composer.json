@@ -1,0 +1,5 @@
+{
+    "require": {
+        "gilbitron/easycsrf": "^1.5"
+    }
+}

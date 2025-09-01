@@ -7,6 +7,7 @@ $data = $params['data'];
 	</div>
 	<br>
 	<form action="/?dashboard=start&subpage=oplaty" method="POST" class="price-form ">
+		<input type="hidden" name="csrf_token" value="<?php echo $params['csrf_token'] ?? '' ?>">
 		<label>
 			<span>Składka Ulgowa (jedna osoba):</span>
 			<input type="number" name="n1" value="<?php echo $data['reduced_contribution_1_month'] ?>">

@@ -5,6 +5,7 @@
 	</div>
 	<br>
 	<form action="/?dashboard=start&subpage=obozy" method="POST" class="camp-form ">
+		<input type="hidden" name="csrf_token" value="<?php echo $params['csrf_token'] ?? '' ?>">
 		<label>
 			<span>Miejscowość:</span> 
 			<input type="text" name="town" value="<?php echo $data['city'] ?>">

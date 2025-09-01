@@ -12,6 +12,8 @@ use App\Model\DashboardModel;
 use App\Model\UserModel;
 use App\Request;
 use Exception;
+use EasyCSRF\EasyCSRF;
+
 
 
 class ControllerFactory {
@@ -26,12 +28,12 @@ class ControllerFactory {
     $this->config = $config;
   }
 
-  public function createController(Request $request): AbstractController  {
+  public function createController(Request $request, EasyCSRF $easyCSRF): AbstractController  {
     $dbconfig = $this->config['db'];
     return match(true) {
-      $request->getParam('auth') !== null => new AuthController($request, new UserModel($dbconfig)),
-      $request->getParam('dashboard') === 'start' => new DashboardController($request, new DashboardModel($dbconfig)),
-      default => new SiteController($request, new ContentModel($dbconfig)),
+      $request->getParam('auth') !== null => new AuthController($request, new UserModel($dbconfig) , $easyCSRF),
+      $request->getParam('dashboard') === 'start' => new DashboardController($request, new DashboardModel($dbconfig) , $easyCSRF),
+      default => new SiteController($request, new ContentModel($dbconfig) , $easyCSRF),
     };
   }
 

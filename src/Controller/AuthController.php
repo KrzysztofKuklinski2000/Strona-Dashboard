@@ -4,20 +4,22 @@ namespace App\Controller;
 
 use App\Model\UserModel;
 use App\Request;
+use EasyCSRF\EasyCSRF;
 
 class AuthController extends AbstractController {
 
   public UserModel $userModel;
 
-  public function __construct(Request $request, UserModel $userModel)
+  public function __construct(Request $request, UserModel $userModel, EasyCSRF $easyCSRF)
   {
-    parent::__construct($request);
+    parent::__construct($request, $easyCSRF);
     $this->userModel = $userModel;
   }
 
   public function startAction(): void {
     if (!empty($this->request->getSession('user'))) header('location: /?dashboard=start');
-    $this->view->renderDashboardView(['page' => 'login']);
+    header('location: /?auth=login');
+    exit;
   }
 
   public function loginAction(): void {
@@ -26,25 +28,30 @@ class AuthController extends AbstractController {
     $errors = [];
 
     if ($this->request->hasPost()) {
+      try {
+				$this->easyCSRF->check('csrf_token', $this->request->postParam('csrf_token'));
+        $login = $this->request->postParam('login');
+        $password = $this->request->postParam('password');
+        $user = $this->userModel->getUser($login);
 
-      $login = $this->request->postParam('login');
-      $password = $this->request->postParam('password');
-      $user = $this->userModel->getUser($login);
+        if ($user) {
+          if (password_verify($password, $user['password'])) {
+            $_SESSION['user'] = $user;
+            header('location: /?dashboard=start');
 
-      if ($user) {
-        if (password_verify($password, $user['password'])) {
-          $_SESSION['user'] = $user;
-          header('location: /?dashboard=start');
+          } else {
+            $errors['password'] = "Nie poprawne hasło";
 
+          }
         } else {
-          $errors['password'] = "Nie poprawne hasło";
-
+          $errors['login'] = "Nie poprawny login";
         }
-      } else {
-        $errors['login'] = "Nie poprawny login";
-      }
+        } catch (\EasyCSRF\Exceptions\InvalidCsrfTokenException $e) {
+          $this->redirect("/?auth=start&error=csrf");
+        }
+
     }
-    $this->view->renderDashboardView(['page' => 'login', 'messages' => $errors]);
+    $this->view->renderDashboardView(['page' => 'login', 'messages' => $errors, 'csrf_token' => $this->easyCSRF->generate('csrf_token')]);
   }
 
   public function logoutAction()

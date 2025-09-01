@@ -2,6 +2,7 @@
 <h3>Nowy Dzień Treningowy</h3>
 <br>
 <form action="?dashboard=start&subpage=grafik&operation=create" method="POST" class="timetable-create-form">
+	<input type="hidden" name="csrf_token" value="<?php echo $params['csrf_token'] ?? '' ?>">
 	<label>
 		<span>Dzień: </span>
 		<select name="day">

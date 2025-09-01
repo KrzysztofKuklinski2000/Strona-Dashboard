@@ -5,13 +5,14 @@ namespace App\Controller;
 
 use App\Model\ContentModel;
 use App\Request;
+use EasyCSRF\EasyCSRF;
 
 class SiteController extends AbstractController {
 
 	public ContentModel $contentModel;
 
-	public function __construct(Request $request, ContentModel $contentModel) {
-		parent::__construct($request);
+	public function __construct(Request $request, ContentModel $contentModel, EasyCSRF $easyCSRF) {
+		parent::__construct($request, $easyCSRF);
 		$this->contentModel = $contentModel;
 	}
 
