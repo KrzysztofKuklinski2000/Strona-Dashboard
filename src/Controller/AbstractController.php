@@ -5,8 +5,6 @@ namespace App\Controller;
 
 use App\View;
 use App\Request;
-use App\Exception\NotFoundException; 
-use App\Exception\StorageException;
 use EasyCSRF\EasyCSRF;
 
 
@@ -25,27 +23,31 @@ class AbstractController {
 	}
 
 	public function run(): void {
-		try{
-			$action = $this->actionResolver->resolve($this->request);
-			
-			if(!method_exists($this, $action)){
-				if(str_ends_with($action, 'DashboardAction')) {
-					$action = self::DEFAULT_ACTION . "DashboardAction";
-				}else {
-					$action = self::DEFAULT_ACTION . "Action";
-				}
+		$action = $this->actionResolver->resolve($this->request);
+		
+		if(!method_exists($this, $action)){
+			if(str_ends_with($action, 'DashboardAction')) {
+				$action = self::DEFAULT_ACTION . "DashboardAction";
+			}else {
+				$action = self::DEFAULT_ACTION . "Action";
 			}
-			$this->$action();
-		}catch(StorageException $e){
-				echo 'Błąd: ' .$e->getMessage();
-		}catch(NotFoundException $e) {
-			$this->redirect('/');
 		}
+		$this->$action();
 	}
 
 	public function redirect(string $to) {
 		$location = $to == '/' ? '?dashboard=start' : $to;
 		header("Location: $location");
 		exit();
+	}
+
+	protected function getFlash(): ?array {
+		$flash = $_SESSION['flash'] ?? null;
+		if($flash) unset($_SESSION['flash']);
+		return $flash;
+	}
+
+	protected function setFlash(string $type, string $message):void {
+		$_SESSION['flash'] = ["type" => $type, "text" => $message];
 	}
 }

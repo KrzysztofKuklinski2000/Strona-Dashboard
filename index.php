@@ -20,19 +20,20 @@ use EasyCSRF\NativeSessionProvider;
 use App\Request;
 use App\Core\ControllerFactory;
 use App\Exception\AppException;
+use App\Core\ErrorHandler;
 
 $easyCSRF = new EasyCSRF(new NativeSessionProvider());
 
 $configuration = require_once('config/config.php');
+$isDev = $configuration['env'] ?? false;
+
+$errorHandler = new ErrorHandler($isDev, __DIR__."/templates/errors");
 
 $request = new Request($_GET, $_POST, $_SERVER, $_SESSION);
 
 try {
 	(new ControllerFactory($configuration))->createController($request, $easyCSRF)->run();
 
-}catch (AppException $e){
-	echo 'Błąd przechowywania: '. $e->getMessage();
-
-}catch(\Throwable $e) {
-	echo 'Nieoczekiwany błąd: '. $e;
+} catch(\Throwable $e) {
+	$errorHandler->handle($e);
 }

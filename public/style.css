@@ -976,3 +976,36 @@ footer .copy {
 	border-radius: 100%;
 	margin-right: 20px;
 }
+
+.e404, .e500 {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 2em;
+	letter-spacing: 2px;
+}
+
+.e404 h1, .e500 h1 {
+	font-size: 6em;
+	color:#1C2331;
+	margin:0px;
+}
+
+.e500 h2 {
+	font-size:2em;
+	margin: 0px;
+	color:#dc3545;
+}
+
+.e404 p, .e500 p {
+	color:gray;
+}
+
+.e404 a {
+	padding:5px 20px;
+	background-color: #3760E3;
+	color:#fff;
+	border-radius: 2px;
+}
