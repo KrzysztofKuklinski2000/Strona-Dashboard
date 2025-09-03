@@ -21,11 +21,10 @@ class ContentModel extends AbstractModel {
 				$orderBy = 'ASC';
 			}
 
-			$totalRecords = $this->countData($table);
 			$perPage = 10;
-			$totalPages = max(ceil($totalRecords / $perPage), 1);
-			$page = max(min($page, $totalPages), 1);
-			$offset = ($page - 1) * $perPage;
+			$totalPages = ceil($this->countData($table) / $perPage);
+			$page = max(1, min($page, $totalPages));
+			$offset = ($page-1) * $perPage;
 
 			$sql = "SELECT * FROM $table";
 			if (!in_array($table, ['contact', 'fees', 'camp'])) {

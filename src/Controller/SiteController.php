@@ -20,7 +20,7 @@ class SiteController extends AbstractController {
 		$page = (int) $this->request->getParam('page');
 		$this->view->renderPageView([
 			'page' => 'news', 
-			'content' => $this->contentModel->getData("news", "DESC", $page-1), 
+			'content' => $this->contentModel->getData("news", "DESC", $page), 
 			'numberOfRows' => $this->contentModel->countData('news'),
 			'currentNumberOfPage' => $page,
 		]);
