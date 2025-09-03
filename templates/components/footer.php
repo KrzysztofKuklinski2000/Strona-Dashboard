@@ -26,11 +26,11 @@
 	<div class="footer-nav">
 		<h3>Kontakt</h3>
 		<p></p>
-		<ul>
+		<ul class="contact"">
 			<li>Klub Karate Kyokushin i Sportów Walki</li>
-			<li>ul. Nanicka 22, Wejherowo</li>
-			<li>Tel: 518844843</li>
-			<li>Email: kyokushin.wejherowo@gmail.com</li>
+			<li style="display:flex; gap:5px;"><i class="fa-solid fa-map-pin" style="color:#757575;"></i><?= $params['contact']['address'] ?></li>
+			<li style="display:flex; gap:5px;"><i class="fa-solid fa-mobile-screen-button" style="color:#757575;"></i><?= $params['contact']['phone'] ?></li>
+			<li style="display:flex; gap:5px;"><i class="fa-regular fa-envelope" style="color:#757575;"></i><?= $params['contact']['email'] ?></li>
 		</ul>
 	</div>
 </div>

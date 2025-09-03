@@ -1,8 +1,6 @@
 <?php
 $numberOfRows = $params['numberOfRows'];
 $currentPage = $params['currentNumberOfPage'];
-$params = $params['content'];
-
 ?>
 <div class="respons-container">
 	<div class="news-contianer">
@@ -11,7 +9,7 @@ $params = $params['content'];
 			<p></p>
 		</div>
 		<div class="news">
-			<?php foreach ($params ?? [] as $content): ?>
+			<?php foreach ($params['content'] ?? [] as $content): ?>
 				<?php if ($content['status']): ?>
 					<div class="news-box">
 						<div class="news-line"></div>

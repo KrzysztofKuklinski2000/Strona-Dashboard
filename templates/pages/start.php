@@ -1,20 +1,13 @@
-<?php 
-	$params = $params['content'];
-    $firstPost = $params[2];
-    $importantPosts = $params[1];
-    $params = $params[0];
-	$counter = 0;
-?>
 <div class="respons-container arrows-container">
     <div class="important-info">
-        <?php foreach($importantPosts ?? [] as $post): ?>
+        <?php foreach($params['content'][1] ?? [] as $post): ?>
             <?php if($post['status']): ?>
                 <div class="info-box">
-                    <div class="info-icon <?php echo $post['important'] === 0 ? 'info-neg' : 'info-que' ?>">
-                        <i class="fa-solid <?php echo $post['important'] === 0 ? 'fa-exclamation' : 'fa-question' ?> "></i>
+                    <div class="info-icon <?= $post['important'] === 0 ? 'info-neg' : 'info-que' ?>">
+                        <i class="fa-solid <?= $post['important'] === 0 ? 'fa-exclamation' : 'fa-question' ?> "></i>
                     </div>
-                    <h2 class="info-title"> <?php echo $post['title'] ?> </h2>
-                    <p class="info-description"> <?php echo $post['description'] ?> </p>
+                    <h2 class="info-title"> <?= $post['title'] ?> </h2>
+                    <p class="info-description"> <?= $post['description'] ?> </p>
                 </div>
             <?php endif ?>
         <?php endforeach ?>
@@ -25,24 +18,24 @@
     </div>
 </div>
 <div class="padding-top">
-    <?php if($firstPost['status']): ?>
+    <?php if($params['content'][2]['status']): ?>
         <div class="post-free">
             <div class="post">
                 <div class="left-side-post">
                     <?php 
-                        $text = $firstPost['title']; 
+                        $text = $params['content'][2]['title']; 
                         require('templates/components/post_header.php'); 
                     ?>
                 </div>
                 <div class="post-content flex-item-center">
                     <span>zajęcia za darmo</span>
-                    <p><?php echo $firstPost['description']; ?></p><br/>
+                    <p><?= $params['content'][2]['description']; ?></p><br/>
                     <a class="text-uppercase" href="?view=zapisy">Zapisz się</a>
                 </div>
             </div>
         </div>
     <?php endif ?>
-        <?php foreach($params ?? [] as  $content): ?>
+        <?php foreach($params['content'][0] ?? [] as  $content): ?>
             <?php if($content['status']): ?>
                 <?php $class = $content['id'] % 2 === 0 ? "dark-post" : 'light-post'  ?>
                 <div class="post">
@@ -51,7 +44,7 @@
                         require('templates/components/post_header.php');
                     ?>
                     <div class="post-content flex-item-center <?= $class ?>">
-                        <p> <?php echo $content['description']; ?></p>
+                        <p> <?= $content['description']; ?></p>
                     </div>
                 </div>
             <?php endif ?>

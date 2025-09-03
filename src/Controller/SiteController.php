@@ -18,7 +18,7 @@ class SiteController extends AbstractController {
 
 	public function newsAction(): void {
 		$page = (int) $this->request->getParam('page');
-		$this->view->renderPageView([
+		$this->renderPage([
 			'page' => 'news', 
 			'content' => $this->contentModel->getData("news", "DESC", $page), 
 			'numberOfRows' => $this->contentModel->countData('news'),
@@ -27,43 +27,58 @@ class SiteController extends AbstractController {
 	}
 
 	public function dojoOathAction():  void {
-		$this->view->renderPageView(['page' => 'dojo-oath']);
+		$this->renderPage(['page' => 'dojo-oath']);
 	}
 
 	public function requirementsAction(): void {
-		$this->view->renderPageView(['page' => 'requirements']);
+		$this->renderPage(['page' => 'requirements']);
 	}
 
 	public function timetableAction(): void {
-		$this->view->renderPageView(['page' => 'timetable', 'content' => $this->contentModel->timetablePageData()]);
+		$this->renderPage([
+			'page' => 'timetable', 
+			'content' => $this->contentModel->timetablePageData()
+		]);
 	}
 
 	public function statuteAction(): void {
-		$this->view->renderPageView(['page' => 'statute']);
+		$this->renderPage(['page' => 'statute']);
 	}
 
 	public function oyamaAction(): void {
-		$this->view->renderPageView(['page' => 'oyama']);
+		$this->renderPage(['page' => 'oyama']);
 	}
 
 	public function galleryAction(): void {
-		$this->view->renderPageView(['page' => 'gallery']);
+		$this->renderPage(['page' => 'gallery']);
 	}
 
 	public function campAction(): void {
-		$this->view->renderPageView(['page' => 'camp-info', 'content' => $this->contentModel->getData("camp", "DESC")[0]]);
+		$this->renderPage([
+			'page' => 'camp-info', 
+			'content' => $this->contentModel->getData("camp", "DESC")[0]
+		]);
 	}
 
 	public function feesAction(): void {
-		$this->view->renderPageView(['page' => 'fees-info', 'content' => $this->contentModel->getData("fees", "DESC")[0]]);
+		$this->renderPage([
+			'page' => 'fees-info', 
+			'content' => $this->contentModel->getData("fees", "DESC")[0]
+		]);
 	}
 
 	public function registrationAction(): void {
-		$this->view->renderPageView(['page' => 'entries-info', 'content' => $this->contentModel->getData("fees", "DESC")[0]]);
+		$this->renderPage([
+			'page' => 'entries-info', 
+			'content' => $this->contentModel->getData("fees", "DESC")[0]
+		]);
 	}
 
 	public function contactAction():void {
-		$this->view->renderPageView(['page' => 'contact', 'content' => $this->contentModel->getData("contact", "DESC")[0]]);
+		$this->renderPage([
+			'page' => 'contact', 
+			'content' => $this->contentModel->getData("contact", "DESC")[0]
+		]);
 	}	
 
 	public function startAction(): void {
@@ -79,6 +94,14 @@ class SiteController extends AbstractController {
 			} 
 		}
 
-		$this->view->renderPageView(['page' => 'start', 'content' => [$posts, $importantPosts, $firstPost]]);
+		$this->renderPage([
+			'page'=> 'start',
+			'content' => [$posts, $importantPosts, $firstPost],
+		]);
+	}
+
+	private function renderPage(array $params): void {
+		$params['contact'] = $this->contentModel->getData('contact', 'DESC')[0];
+		$this->view->renderPageView($params);
 	}
 }

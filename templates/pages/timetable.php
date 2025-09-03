@@ -1,5 +1,4 @@
 <?php
-$params = $params['content'];
 $prevDay = null;
 ?>
 <div class="respons-container">
@@ -9,7 +8,7 @@ $prevDay = null;
 			<p></p>
 		</div>
 		<div>
-			<?php foreach ($params ?? [] as $content): ?>
+			<?php foreach ($params['content'] ?? [] as $content): ?>
 				<?php if ($content['status']): ?>
 					<div class="timetable-day-header">
 						<?php
@@ -45,12 +44,12 @@ $prevDay = null;
 						<div class="timetable-line"></div>
 						<div class="box-content">
 							<div>
-								<h3><?php echo $content['city'] ?> </h3>
+								<h3><?= $content['city'] ?> </h3>
 								<a href="#addresses">adres</a>
 							</div>
-							<p><i class="fa-regular fa-clock"></i> <?php echo $content['start'] . ' - ' . $content['end']; ?></p>
-							<p>Grupa: <?php echo $content['advancement_group']; ?></p>
-							<p style="font-weight: 100;"> <?php echo $content['place']; ?></p>
+							<p><i class="fa-regular fa-clock"></i> <?= $content['start'] . ' - ' . $content['end']; ?></p>
+							<p>Grupa: <?= $content['advancement_group']; ?></p>
+							<p style="font-weight: 100;"> <?= $content['place']; ?></p>
 						</div>
 					</div>
 				<?php endif ?>
