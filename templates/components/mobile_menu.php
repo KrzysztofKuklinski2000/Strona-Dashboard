@@ -6,7 +6,7 @@
 				<span>
 					<p style="font-size:.9em;  color:#fff;">Karate</p>
 					<p style="font-size:.9em;  color:#CC0000;">Kyokushin</p>
-					<p style="font-size:.9em; color:#fff">Wejherowo</p>
+					<p style="font-size:.9em; color:#fff">Wejherowo / Reda</p>
 				</span>
 			</div>
 		</a>

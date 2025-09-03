@@ -13,10 +13,10 @@ $actionUrl = "/?dashboard=start&subpage=$subpage&operation=show&id=" . ($data['i
 		<input type="hidden" name="csrf_token" value="<?php echo $params['csrf_token'] ?? '' ?>">
 		<input type="hidden" name="postId" value=" <?php echo $data['id'] ?? "" ?> ">
 		<label>
-			<input type="radio" name="postPublished" value='1' <?php echo $data['status'] ?? "" == 1 ? 'checked' : '' ?>> Publiczny
+			<input type="radio" name="postPublished" value='1' <?php echo $data['status'] == 1 ? 'checked' : '' ?>> Publiczny
 		</label>
 		<label>
-			<input type="radio" name="postPublished" value='0' <?php echo $data['status'] ?? "" == 0 ? 'checked' : '' ?>> Niepubliczny
+			<input type="radio" name="postPublished" value='0' <?php echo $data['status'] == 0 ? 'checked' : '' ?>> Niepubliczny
 		</label>
 		<input type="submit" value="Zapisz">
 	</form>

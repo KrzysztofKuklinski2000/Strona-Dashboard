@@ -1,8 +1,11 @@
-<?php $data['day'] = trim($data['day']) ?>
+<?php 
+	$data['day'] = trim($data['day']);
+	$actionUrl = "/?dashboard=start&subpage=grafik&operation=edit&id=" . ($data['id'] ?? '');
+?>
 <br>
 <h3>Edytuj </h3>
 <br>
-<form action="?dashboard=start&subpage=grafik&operation=edit" method="POST" class="timetable-create-form">
+<form action="<?= $actionUrl ?>" method="POST" class="timetable-create-form">
 	<input type="hidden" name="csrf_token" value="<?php echo $params['csrf_token'] ?? '' ?>">
 	<input type="hidden" name="id" value = "<?php echo $data['id'] ?>">
 	<label>

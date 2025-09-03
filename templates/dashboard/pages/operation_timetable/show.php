@@ -1,3 +1,6 @@
+<?php 
+	$actionUrl = "/?dashboard=start&subpage=grafik&operation=show&id=" . ($data['id'] ?? '');
+?>
 <br>
 <h3>Szczegóły posta</h3>
 <br>
@@ -10,7 +13,7 @@
 	<h4>Start: <?php echo $data['start'] ?></h4>
 	<h4>Koniec: <?php echo $data['end'] ?></h4>
 
-	<form action="?dashboard=start&subpage=grafik&operation=show" method="POST">	
+	<form action="<?= $actionUrl ?>" method="POST">	
 		<input type="hidden" name="csrf_token" value="<?php echo $params['csrf_token'] ?? '' ?>">
 		<input type="hidden" name="postId" value="<?php echo $data['id'] ?>">
 		<label>
