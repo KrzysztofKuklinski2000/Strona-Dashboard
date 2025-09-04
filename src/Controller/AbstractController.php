@@ -42,12 +42,12 @@ class AbstractController {
 	}
 
 	protected function getFlash(): ?array {
-		$flash = $_SESSION['flash'] ?? null;
-		if($flash) unset($_SESSION['flash']);
+		$flash = $this->request->getSession('flash') ?? null;
+		if($flash) $this->request->removeSession('flash');
 		return $flash;
 	}
 
 	protected function setFlash(string $type, string $message):void {
-		$_SESSION['flash'] = ["type" => $type, "text" => $message];
+		$this->request->setSession('flash', ["type" => $type, "message" => $message]);
 	}
 }

@@ -37,7 +37,9 @@ class AuthController extends AbstractController {
         if ($user) {
           if (password_verify($password, $user['password'])) {
             $_SESSION['user'] = $user;
+            $this->setFlash('info', 'Udało się zalogować');
             header('location: /?dashboard=start');
+            exit;
 
           } else {
             $errors['password'] = "Nie poprawne hasło";
@@ -46,12 +48,12 @@ class AuthController extends AbstractController {
         } else {
           $errors['login'] = "Nie poprawny login";
         }
+        $this->setFlash('warning', 'Nie poprawne dane logowania');
         } catch (\EasyCSRF\Exceptions\InvalidCsrfTokenException $e) {
           $this->redirect("/?auth=start&error=csrf");
         }
-
     }
-    $this->view->renderDashboardView(['page' => 'login', 'messages' => $errors, 'csrf_token' => $this->easyCSRF->generate('csrf_token')]);
+    $this->view->renderDashboardView(['page' => 'login', 'messages' => $errors, 'csrf_token' => $this->easyCSRF->generate('csrf_token'), 'flash' => $this->getFlash()]);
   }
 
   public function logoutAction()

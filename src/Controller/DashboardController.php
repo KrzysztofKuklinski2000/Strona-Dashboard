@@ -35,23 +35,23 @@ class DashboardController extends AbstractController {
 
 	public function startDashboardAction(): void {
 		$result = $this->operationRedirect("main_page_posts");
-		$this->view->renderDashboardView(['page' => 'start', 'operation' => $result["operation"], 'data' => $result["data"] , 'csrf_token' => $result["csrf_token"]]);
+		$this->renderPage(['page' => 'start', 'operation' => $result["operation"], 'data' => $result["data"] , 'csrf_token' => $result["csrf_token"]]);
 	}
 
 	public function newsDashboardAction():void {
 		$result = $this->operationRedirect("news");
-		$this->view->renderDashboardView(['page' => 'news', 'operation' => $result["operation"], 'data' => $result["data"] , 'csrf_token' => $result["csrf_token"]]);
+		$this->renderPage(['page' => 'news', 'operation' => $result["operation"], 'data' => $result["data"] , 'csrf_token' => $result["csrf_token"]]);
 	}
 
 	
 	public function timetableDashboardAction():void {
 		$result = $this->operationRedirect("timetable");
-		$this->view->renderDashboardView(['page' => 'timetable', 'operation' => $result["operation"] ,'data' => $result["data"] , 'csrf_token' => $result["csrf_token"]]);
+		$this->renderPage(['page' => 'timetable', 'operation' => $result["operation"] ,'data' => $result["data"] , 'csrf_token' => $result["csrf_token"]]);
 	}
 
 	public function important_postsDashboardAction(): void {
 		$result = $this->operationRedirect("important_posts");
-		$this->view->renderDashboardView(['page' => 'important_posts', 'operation' => $result["operation"], 'data' => $result["data"] , 'csrf_token' => $result["csrf_token"]]);
+		$this->renderPage(['page' => 'important_posts', 'operation' => $result["operation"], 'data' => $result["data"] , 'csrf_token' => $result["csrf_token"]]);
 	}
 
 	private function create(string $table, string $redirectTo = ""): void {
@@ -59,8 +59,8 @@ class DashboardController extends AbstractController {
 			"timetable" => $this->getDataToAddTimetable(),
 			default => $this->getPostDataToCreate(),
 		};
-
 		$this->dashboardModel->create($data, $table);
+		$this->setFlash("success","Udało się utworzyć nowy wpis");
 		$this->redirect("/?dashboard=start&subpage=$redirectTo");
 	}
 
@@ -69,12 +69,14 @@ class DashboardController extends AbstractController {
 			'published' => $this->request->postParam('postPublished'),
 			'id' => $this->request->postParam('postId')
 		], $table);
+		$this->setFlash('info','Udało się zmienić status');
 		$this->redirect("/?dashboard=start&subpage=$redirectTo");
 	}
 
 	private function delete(string $table, string $redirectTo = ""): void {
 		$id = (int) $this->request->postParam('postId');
 		$this->dashboardModel->delete($id, $table);
+		$this->setFlash('success','Udało się usunąć');
 		$this->redirect("/?dashboard=start&subpage=$redirectTo");
 	}
 
@@ -88,6 +90,7 @@ class DashboardController extends AbstractController {
 		};
 
 		$this->dashboardModel->edit($table, $data);
+		$this->setFlash("success","Udało się edytować");
 		$this->redirect("/?dashboard=start&subpage=$redirectTo");
 	}
 
@@ -101,7 +104,7 @@ class DashboardController extends AbstractController {
 				$this->redirect("/?dashboard=start&subpage=$redirectTo&error=csrf");
 			}
 		}
-		$this->view->renderDashboardView(
+		$this->renderPage(
 			[
 				'page' => $table,
 				'data' => $this->dashboardModel->getDashboardData($table)[0],
@@ -154,6 +157,12 @@ class DashboardController extends AbstractController {
 		$postId = (int) $postId;
 
 		return $this->dashboardModel->getPost($postId, $table);
+	}
+
+	private function renderPage(array $params): void {
+		$params['flash'] = $this->getFlash();
+
+		$this->view->renderDashboardView($params);
 	}
 }
 

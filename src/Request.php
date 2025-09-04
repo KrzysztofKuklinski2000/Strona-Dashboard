@@ -20,6 +20,16 @@ class Request {
 		return $this->session[$param] ?? $default;
 	}
 
+	public function setSession(string $key, mixed $value): void {
+		$_SESSION[$key] = $value;
+		$this->session[$key] = $value;
+	}
+
+	public function removeSession(string $key) :void{
+		unset($_SESSION[$key]);
+		unset($this->session[$key]);
+	}
+
 	public function getParam(string $name = null, $default = null): ?string {
 		return $this->get[$name] ?? $default;
 	}

@@ -1,3 +1,10 @@
+<?php if(isset($params['flash'])): ?>
+	<div class="flash <?= htmlspecialchars($params['flash']['type']) ?>"> 
+		<?= $params['flash']['message'] ?> 
+		<i class="flash-close fa-solid fa-xmark"></i>
+	</div>
+<?php endif ?>
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -8,6 +15,7 @@
 	<title>DASHBOARD</title>
 </head>
 <body>
+
 	<header>
 		<h2><i style="margin-right: 10px;" class="fa-solid fa-gear"></i>Dashboard</h2>
 	</header>
@@ -59,4 +67,7 @@
 		</main>
 	</div>
 </body>
+<?php if(isset($params['flash'])): ?>
+	<script src="templates/dashboard/public/main.js"></script>
+<?php endif;?>
 </html>
