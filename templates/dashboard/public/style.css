@@ -188,7 +188,7 @@ main {
 	font-weight: 700;
 	color:#171D29;
 	padding:10px;
-	margin:20px 0px;
+	margin:20px 0px 0px 0px;
 }
 
 .content-container input[type=submit] {
@@ -199,6 +199,7 @@ main {
 	text-transform: uppercase;
 	letter-spacing: 2px;
 	cursor: pointer;
+	margin-top:10px;
 }
 
 .post-content p {
@@ -377,4 +378,12 @@ main {
 
 .flash.warning {
 	background-color: #bb2124;
+}
+
+.validation-error {
+	margin: 0px;
+	padding:0px;
+	color:#bb2124;
+	font-size: 0.8em;
+	font-weight: 500;
 }

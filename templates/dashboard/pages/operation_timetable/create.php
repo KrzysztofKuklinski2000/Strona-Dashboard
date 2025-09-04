@@ -15,10 +15,12 @@
 			<option value="NIEDZ">Niedziela</option>
 		</select>
 	</label>
+	<p class="validation-error"><?= $params['flash']['message']['day'] ?? ""  ?></p>
 	<label>
 		<span>Miasto: </span>
 		<input type="text" name="city" maxlength="30" placeholder="Reda">
 	</label>
+	<p class="validation-error"><?= $params['flash']['message']['city'] ?? ""  ?></p>
 	<label>
 		<span>Grupa</span>
 		<select name="group">
@@ -30,17 +32,21 @@
 			<option value="Kadra">Kadra</option>
 		</select>
 	</label>
+	<p class="validation-error"><?= $params['flash']['message']['group'] ?? ""  ?></p>
 	<label>
 		<span>Opis miejsca: </span>
 		<input type="text" name="place" maxlength="100" placeholder="np: sala gimnastyczna/salka pod basenem">
 	</label>
+	<p class="validation-error"><?= $params['flash']['message']['place'] ?? ""  ?></p>
 	<label>
 		<span>Start:</span>
 		<input type="time" name="startTime">
 	</label>
+	<p class="validation-error"><?= $params['flash']['message']['startTime'] ?? ""  ?></p>
 	<label>
 		<span>Koniec:</span>
 		<input type="time" name="endTime">
 	</label>
+	<p class="validation-error"><?= $params['flash']['message']['endTime'] ?? ""  ?></p>
 	<input type="submit" value="Stwórz">
 </form>

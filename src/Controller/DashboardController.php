@@ -7,6 +7,7 @@ use App\Traits\GetDataMethods;
 use App\Controller\AbstractController;
 use App\Request;
 use EasyCSRF\EasyCSRF;
+use InvalidArgumentException;
 
 class DashboardController extends AbstractController {
 
@@ -59,9 +60,12 @@ class DashboardController extends AbstractController {
 			"timetable" => $this->getDataToAddTimetable(),
 			default => $this->getPostDataToCreate(),
 		};
-		$this->dashboardModel->create($data, $table);
-		$this->setFlash("success","Udało się utworzyć nowy wpis");
-		$this->redirect("/?dashboard=start&subpage=$redirectTo");
+		if(!$this->request->getErrors()) {
+			$this->dashboardModel->create($data, $table);
+			$this->setFlash("success","Udało się utworzyć nowy wpis");
+			$this->redirect("/?dashboard=start&subpage=$redirectTo");
+		}
+		$this->setFlash("errors", $this->request->getErrors());	
 	}
 
 	private function published(string $table, string $redirectTo = ""): void {
@@ -89,9 +93,13 @@ class DashboardController extends AbstractController {
 			default => $this->getPostDataToEdit(),
 		};
 
-		$this->dashboardModel->edit($table, $data);
-		$this->setFlash("success","Udało się edytować");
-		$this->redirect("/?dashboard=start&subpage=$redirectTo");
+		if(!$this->request->getErrors()){
+			$this->dashboardModel->edit($table, $data);
+			$this->setFlash("success","Udało się edytować");
+			$this->redirect("/?dashboard=start&subpage=$redirectTo");
+			
+		}
+		$this->setFlash("errors", $this->request->getErrors());	
 	}
 
 	private function handlePost(string $table, callable $function, string $redirectTo = ""): void

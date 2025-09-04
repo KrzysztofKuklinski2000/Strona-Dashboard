@@ -9,6 +9,8 @@ class Request {
 	private array $server = [];
 	private array $session = [];
 
+	private array $errors = [];
+
 	public function __construct($get, $post, $server, $session) {
 		$this->get = $get;
 		$this->post = $post;
@@ -44,5 +46,31 @@ class Request {
 
 	public function hasPost(): bool {
 		return !empty($this->post);
+	}
+
+	public function getErrors():array {
+		return $this->errors;
+	}
+
+	public function validate(string $param,  bool $required, string $type = 'string', int $maxLength = null, int $minLength = null): string {
+		$value = $this->postParam($param);
+
+		if ($required && empty($value)) {
+			$this->errors[$param] = "Pole jest wymagany";
+		}
+	
+		if ($type === 'int' && !ctype_digit((string)$value)) {
+			$this->errors[$param] = "Pole musi zawierać tylko liczby całkowite.";
+		}
+	
+		if ($maxLength !== null && strlen((string)$value) > $maxLength) {
+			$this->errors[$param] = "Długość pola musi być mniejsza niz $maxLength. znaków";
+		}
+
+		if ($minLength !== null && strlen((string)$value) < $minLength) {
+			$this->errors[$param] = "Długość pola musi być większa niz $minLength. znaków";
+		}
+	
+		return $value;
 	}
 }

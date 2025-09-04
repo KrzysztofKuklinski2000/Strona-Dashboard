@@ -47,7 +47,7 @@ class AbstractController {
 		return $flash;
 	}
 
-	protected function setFlash(string $type, string $message):void {
+	protected function setFlash(string $type, string|array $message):void {
 		$this->request->setSession('flash', ["type" => $type, "message" => $message]);
 	}
 }

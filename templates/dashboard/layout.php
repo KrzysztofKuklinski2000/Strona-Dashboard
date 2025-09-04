@@ -1,4 +1,4 @@
-<?php if(isset($params['flash'])): ?>
+<?php if(isset($params['flash']) && in_array($params['flash']['type'], ['success', 'info', 'warning'])): ?>
 	<div class="flash <?= htmlspecialchars($params['flash']['type']) ?>"> 
 		<?= $params['flash']['message'] ?> 
 		<i class="flash-close fa-solid fa-xmark"></i>
@@ -67,7 +67,7 @@
 		</main>
 	</div>
 </body>
-<?php if(isset($params['flash'])): ?>
+<?php if(isset($params['flash']) && in_array($params['flash']['type'], ['success', 'info', 'warning'])): ?>
 	<script src="templates/dashboard/public/main.js"></script>
 <?php endif;?>
 </html>

@@ -20,10 +20,12 @@
 			<option <?php echo $data['day'] === 'NIEDZ' ? 'selected' : '' ?> value="NIEDZ"> Niedziela 	 </option>
 		</select>
 	</label>
+	<p class="validation-error"><?= $params['flash']['message']['day'] ?? ""  ?></p>
 	<label>
 		<span>Miasto: </span>
 		<input type="text" name="city" maxlength="30" value="<?php echo $data['city'] ?>" >
 	</label>
+	<p class="validation-error"><?= $params['flash']['message']['city'] ?? ""  ?></p>
 	<label>
 		<span>Grupa</span>
 		<select name="group">
@@ -35,17 +37,21 @@
 			<option <?php echo $data['advancement_group'] == "Początkująca dzieci"?'selected' :''?> value="Początkująca dzieci">Początkująca dzieci</option>
 		</select>
 	</label>
+	<p class="validation-error"><?= $params['flash']['message']['group'] ?? ""  ?></p>
 	<label>
 		<span>Opis miejsca: </span>
 		<input type="text" name="place" maxlength="100" value="<?php echo $data['place'] ?>">
 	</label>
+	<p class="validation-error"><?= $params['flash']['message']['place'] ?? ""  ?></p>
 	<label>
 		<span>Start:</span>
 		<input type="time" name="startTime" value="<?php echo $data['start'] ?>">
 	</label>
+	<p class="validation-error"><?= $params['flash']['message']['startTime'] ?? ""  ?></p>
 	<label>
 		<span>Koniec:</span>
 		<input type="time" name="endTime" value="<?php echo $data['end'] ?>">
 	</label>
+	<p class="validation-error"><?= $params['flash']['message']['endTime'] ?? ""  ?></p>
 	<input type="submit" value="Zapisz">
 </form>

@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Błąd 404</title>
+    <title>Błąd 500</title>
     <link rel="stylesheet" href="/public/style.css">
     <style>
     </style>

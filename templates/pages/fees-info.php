@@ -77,7 +77,7 @@ $content = $params['content'];
 	</div>
 	<div class="price-box">
 		<h2>Składka Rodzinna</h2>
-		<strong><?php $content['family_contribution_year'] ?>zł <br> trzy i więcej osób</strong>
+		<strong><?php echo $content['family_contribution_year'] ?>zł <br> trzy i więcej osób</strong>
 		<p>za rok</p>
 		<div class="break"></div>
 		<br>

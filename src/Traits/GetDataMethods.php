@@ -8,9 +8,9 @@ trait GetDataMethods {
   protected function getPostDataToEdit(): array
   {
     return [
-      'id' => $this->request->postParam('postId'),
-      'title' => $this->request->postParam('postTitle'),
-      'description' => $this->request->postParam('postDescription'),
+      'id' => $this->request->validate(param: 'postId', required: true, type: 'int'),
+      'title' => $this->request->validate(param: 'postTitle', required:true, type: 'string', maxLength: 60, minLength:10),
+      'description' => $this->request->validate(param: 'postDescription', required: true,  type: 'string', maxLength:1000, minLength:20),
       'updated' => date('Y-m-d')
     ];
   }
@@ -18,8 +18,8 @@ trait GetDataMethods {
   protected function getPostDataToCreate(): array
   {
     return [
-      'title' => $this->request->postParam('postTitle'),
-      'description' => $this->request->postParam('postDescription'),
+      'title' => $this->request->validate(param: 'postTitle', required:true, type: 'string', maxLength: 60, minLength:10),
+      'description' => $this->request->validate(param: 'postDescription', required: true,  type: 'string', maxLength:1000, minLength:20),
       'created' => date('Y-m-d'),
       'updated' => date('Y-m-d'),
       'status' => 1,
@@ -29,74 +29,74 @@ trait GetDataMethods {
   protected function getDataToCampEdit(): array
   {
     return [
-      'city' => $this->request->postParam('town'),
-      'guesthouse' => $this->request->postParam('guesthouse'),
-      'city_start' => $this->request->postParam('townStart'),
-      'date_start' => $this->request->postParam('dateStart'),
-      'date_end' => $this->request->postParam('dateEnd'),
-      'time_start' => $this->request->postParam('timeStart'),
-      'time_end' => $this->request->postParam('timeEnd'),
-      'place' => $this->request->postParam('place'),
-      'accommodation' => $this->request->postParam('accommodation'),
-      'meals' => $this->request->postParam('meals'),
-      'trips' => $this->request->postParam('trips'),
-      'staff' => $this->request->postParam('staff'),
-      'transport' => $this->request->postParam('transport'),
-      'training' => $this->request->postParam('training'),
-      'insurance' => $this->request->postParam('insurance'),
-      'cost' => $this->request->postParam('cost'),
-      'advancePayment' => $this->request->postParam('advancePayment'),
-      'advanceDate' => $this->request->postParam('advanceDate')
+      'city' => $this->request->validate(param: 'town', required: true, type:'string', maxLength:50),
+      'guesthouse' => $this->request->validate(param:'guesthouse', required: true, type: 'string', maxLength:70),
+      'city_start' => $this->request->validate(param:'townStart', required: true, type: 'string', maxLength:50),
+      'date_start' => $this->request->validate(param: 'dateStart', required: true),
+      'date_end' => $this->request->validate(param: 'dateEnd', required:true),
+      'time_start' => $this->request->validate(param: 'timeStart', required:true),
+      'time_end' => $this->request->validate(param: 'timeEnd', required:true),
+      'place' => $this->request->validate(param: 'place', required:true, type: 'string', maxLength:100),
+      'accommodation' => $this->request->validate(param: 'accommodation', required:true, type: 'string', maxLength:500),
+      'meals' => $this->request->validate(param: 'meals', required:true, type: 'string', maxLength:500),
+      'trips' => $this->request->validate(param: 'trips', required:true, type:'string', maxLength:500),
+      'staff' => $this->request->validate(param: 'staff', required:true, type: 'string', maxLength:500),
+      'transport' => $this->request->validate(param: 'transport', required:true, type: 'string', maxLength:500),
+      'training' => $this->request->validate(param: 'training', required:true, type: 'string', maxLength:500),
+      'insurance' => $this->request->validate(param: 'insurance', required:true, type: 'string', maxLength:500),
+      'cost' => $this->request->validate(param: 'cost', required:true, type: 'int'),
+      'advancePayment' => $this->request->validate(param: 'advancePayment', required:true, type:'int'),
+      'advanceDate' => $this->request->validate(param: 'advanceDate', required:true, type:'string'),
     ];
   }
 
   protected function getDataToFeesEdit(): array
   {
     return [
-      'reduced_contribution_1_month' => $this->request->postParam('n1'),
-      'reduced_contribution_2_month' => $this->request->postParam('n2'),
-      'family_contribution_month' => $this->request->postParam('n3'),
-      'contribution' => $this->request->postParam('n4'),
-      'entry_fee' => $this->request->postParam('n5'),
-      'reduced_contribution_1_year' => $this->request->postParam('n6'),
-      'reduced_contribution_2_year' => $this->request->postParam('n7'),
-      'family_contribution_year' => $this->request->postParam('n8'),
-      'reduced_contribution_holidays' => $this->request->postParam('n9'),
-      'extra_information' => $this->request->postParam('n10'),
+      'reduced_contribution_1_month' => $this->request->validate(param: 'n1', required:true, type:'int'),
+      'reduced_contribution_2_month' => $this->request->validate(param: 'n2', required:true, type:'int'),
+      'family_contribution_month' => $this->request->validate(param: 'n3', required:true, type:'int'),
+      'contribution' => $this->request->validate(param: 'n4', required:true, type:'int'),
+      'entry_fee' => $this->request->validate(param: 'n5', required:true, type:'int'),
+      'reduced_contribution_1_year' => $this->request->validate(param: 'n6', required:true, type:'int'),
+      'reduced_contribution_2_year' => $this->request->validate(param: 'n7', required:true, type:'int'),
+      'family_contribution_year' => $this->request->validate(param: 'n8', required:true, type:'int'),
+      'reduced_contribution_holidays' => $this->request->validate(param: 'n9', required:true, type:'string', maxLength: 50),
+      'extra_information' => $this->request->validate(param: 'n10', required:true, type:'string'),
     ];
   }
 
   protected function getDataToContactEdit(): array
   {
     return [
-      'email' => $this->request->postParam('email'),
-      'phone' => $this->request->postParam('phone'),
-      'address' => $this->request->postParam('address')
+      'email' => $this->request->validate(param:'email', required: true, type:'string', maxLength:100),
+      'phone' => $this->request->validate('phone', required: true, type:'int', maxLength:9),
+      'address' => $this->request->validate(param: 'address', required: true, type:'string'),
     ];
   }
 
   protected function getDataToAddTimetable(): array
   {
     return [
-      'day' => $this->request->postParam('day'),
-      'city' => $this->request->postParam('city'),
-      'advancement_group' => $this->request->postParam('group'),
-      'place' => $this->request->postParam('place'),
-      'start' => $this->request->postParam('startTime'),
-      'end' => $this->request->postParam('endTime')
+      'day' => $this->request->validate(param: 'day', required: true, type:'string', maxLength:20),
+      'city' => $this->request->validate(param: 'city', required: true, type:'string', maxLength:40),
+      'advancement_group' => $this->request->validate(param: 'group', required: true, type:'string', maxLength:40),
+      'place' => $this->request->validate(param: 'place', required: true, type:'string', maxLength:100),
+      'start' => $this->request->validate(param: 'startTime', required: true, type:'string'),
+      'end' => $this->request->validate(param: 'endTime', required: true, type:'string'),
     ];
   }
 
   protected function getDataToEditTimetable(): array
   {
     return [
-      "id" => $this->request->postParam('id'),
-      'day' => $this->request->postParam('day'),
-      'city' => $this->request->postParam('city'),
-      'advancement_group' => $this->request->postParam('group'),
-      'place' => $this->request->postParam('place'),
-      'start' => $this->request->postParam('startTime'),
-      'end' => $this->request->postParam('endTime')
+      "id" => $this->request->validate(param: 'id', required: true, type:'int'),
+      'day' => $this->request->validate(param: 'day', required: true, type:'string', maxLength:20),
+      'city' => $this->request->validate(param: 'city', required: true, type:'string', maxLength:40),
+      'advancement_group' => $this->request->validate(param: 'group', required: true, type:'string', maxLength:40),
+      'place' => $this->request->validate(param: 'place', required: true, type:'string', maxLength:100),
+      'start' => $this->request->validate(param: 'startTime', required: true, type:'string'),
+      'end' => $this->request->validate(param: 'endTime', required: true, type:'string'),
     ];
   }
 }
