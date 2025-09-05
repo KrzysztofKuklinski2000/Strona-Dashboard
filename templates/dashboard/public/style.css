@@ -120,6 +120,7 @@ main {
 	margin-top:20px;
 	text-align: center;
 	color:#171D29;
+	border-collapse: collapse;
 }
 
 .content-container table thead {
@@ -127,9 +128,10 @@ main {
 	text-align: center;
 }
 
-.content-container table tbody tr {
-	border-bottom: 1px solid #171D29;
+.content-container table tbody tr:nth-child(odd){
+	background-color: #f5f5f5;;
 }
+
 
 .content-container table tbody td {
 	height: 40px;
@@ -143,15 +145,21 @@ main {
 
 .content-container table tbody td:last-child{
 	display: flex;
-	justify-content: space-evenly;
+	flex-direction: column;
+	justify-content: center;
 	align-items: center;
 }
 
-.content-container table tbody td:last-child a{
+.content-container table tbody td .links {
+	display: flex;
+	flex-direction: wrap;
+}
+
+.content-container .links a{
 	color:#171D29;
 }
 
-.content-container table tbody td:last-child a:hover{
+.content-container .links a:hover{
 	color:#FF3366;
 }
 

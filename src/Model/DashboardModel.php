@@ -16,7 +16,7 @@ class DashboardModel extends AbstractModel {
 	try {
 			$table = $this->validateTable($table);
 			$sql = "SELECT * FROM $table";
-			if(!in_array($table, ['contact', 'fees', 'camp'])) $sql .= " ORDER BY id DESC";
+			if(!in_array($table, ['contact', 'fees', 'camp'])) $sql .= " ORDER BY position ASC";
 			
 			return $this->runQuery($sql)->fetchAll(PDO::FETCH_ASSOC);
 		}catch(Throwable $e) {
@@ -54,17 +54,56 @@ class DashboardModel extends AbstractModel {
 		}
 	}
 
+	public function move(string $table, array $data):void {
+		try {
+			$this->con->beginTransaction();
+
+			$table = $this->validateTable($table);
+			// pobrać posta do przesunięcia 
+			$currentPost = $this->getPost((int) $data["id"], $table);
+
+			//pobrać post ktróry bedzie zamieniany zaleznie od dir
+			$stmt = $this->runQuery(
+				"SELECT * FROM $table WHERE position = :pos", 
+				[':pos' => $data['dir'] === 'up' ? (int) $currentPost['position'] - 1 : (int) $currentPost['position'] + 1 ]
+			)->fetch(PDO::FETCH_ASSOC);;
+			
+			if($stmt) {
+				// zaktualizować nową pozycje dla aktualnego posta
+				$this->runQuery(
+					"UPDATE $table SET position = :pos WHERE id = :id", 
+					[':pos'=> (int) $stmt['position'], ':id' => (int) $currentPost['id']]
+				);
+				// zaktualozować pozycje dla posta zamienianego 
+				$this->runQuery(
+					"UPDATE $table SET position = :pos WHERE id = :id", 
+					[':pos'=> (int) $currentPost['position'], ':id' => (int) $stmt['id']]
+				);
+			}
+			$this->con->commit();
+		} catch(Throwable $e) {
+			$this->con->rollBack();
+			throw new StorageException("Nie udało się zmienić pozycji posta");
+		}
+	}
+
 	public function create(array $data, string $table): void {
 		try {
 			$table = $this->validateTable($table);
+
+			$this->con->beginTransaction();
+			$this->runQuery("UPDATE $table SET position = position + 1");
+
 			$col = implode(", ", array_map(fn($k) => "$k", array_filter(array_keys($data), fn($k) => $k !== "id")));
 			$val = implode(", ", array_map(fn($k) => ":$k", array_filter(array_keys($data), fn($k) => $k !== "id")));
 			$result = array_combine(array_map(fn($k) => ":$k", array_keys($data)), $data);
-			
+
 			$sql = "INSERT INTO $table ($col) VALUES ($val)";
 
 			$this->runQuery($sql,$result);
+			$this->con->commit();
 		}catch(Throwable $e) {
+			$this->con->rollBack();
 			throw new StorageException('Nie udało się stworzyć notatki !!!', 400, $e);
 		}
 	}
@@ -83,9 +122,18 @@ class DashboardModel extends AbstractModel {
 
 	public function delete(int $id, string $table) {
 		try {
+			$this->con->beginTransaction();
 			$table = $this->validateTable($table);
+
+			$currenPost = $this->getPost($id, $table);
+
 			$this->runQuery("DELETE FROM $table WHERE id = :id LIMIT 1", [":id" => $id]);
+
+			$this->runQuery("UPDATE $table set position = position - 1 WHERE position > :pos", [':pos' => $currenPost['position']]);
+
+			$this->con->commit();
 		}catch(Throwable $e) {
+			$this->con->rollBack();
 			throw new StorageException('Nie udało się usunąć posta !!!', 400, $e);
 		}
 	}

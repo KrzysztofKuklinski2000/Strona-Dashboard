@@ -28,7 +28,7 @@ class ContentModel extends AbstractModel {
 
 			$sql = "SELECT * FROM $table";
 			if (!in_array($table, ['contact', 'fees', 'camp'])) {
-				$sql .= " ORDER BY id $orderBy";
+				$sql .= " ORDER BY position $orderBy";
 			}
 
 			// Limit i offset tylko dla news 

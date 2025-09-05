@@ -34,11 +34,12 @@
 						<td class="<?php echo $row['status'] == 1 ? 'published' : 'no-published' ?>">
 							<?php echo $row['status'] == 1 ? 'Publiczny' : 'Nie publiczny' ?>
 						</td>
-						<td>
-						<a href="?dashboard=start&subpage=grafik&operation=edit&id=<?php echo $row['id']?>"><i class="fa-regular fa-pen-to-square"></i></a>
-						<a href="?dashboard=start&subpage=grafik&operation=delete&id=<?php echo $row['id']?>"><i class="fa-solid fa-trash"></i></a>
-						<a href="?dashboard=start&subpage=grafik&operation=show&id=<?php echo $row['id']?>"><i class="fa-solid fa-magnifying-glass"></i></a>
+						<td class="links">
+							<a href="?dashboard=start&subpage=grafik&operation=edit&id=<?php echo $row['id']?>"><i class="fa-regular fa-pen-to-square"></i></a>
+							<a href="?dashboard=start&subpage=grafik&operation=delete&id=<?php echo $row['id']?>"><i class="fa-solid fa-trash"></i></a>
+							<a href="?dashboard=start&subpage=grafik&operation=show&id=<?php echo $row['id']?>"><i class="fa-solid fa-magnifying-glass"></i></a>
 						</td>
+						<td></td>
 					</tr> 
 				<?php endforeach ?>
 			</tbody>

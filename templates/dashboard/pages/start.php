@@ -17,6 +17,7 @@
 					<th>Data</th>
 					<th>Status</th>
 					<th>Opcje</th>
+					<th>Position</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -28,10 +29,24 @@
 						<td class="<?php echo $row['status'] == 1 ? 'published' : 'no-published' ?>">
 							<?php echo $row['status'] == 1 ? 'Publiczny' : 'Nie publiczny' ?>
 						</td>
+						<td class="links">
+							<a href="?dashboard=start&subpage=start&operation=edit&id=<?php echo $row['id']?>"><i class="fa-regular fa-pen-to-square"></i></a>
+							<a href="?dashboard=start&subpage=start&operation=delete&id=<?php echo $row['id']?>"><i class="fa-solid fa-trash"></i></a>
+							<a href="?dashboard=start&subpage=start&operation=show&id=<?php echo $row['id']?>"><i class="fa-solid fa-magnifying-glass"></i></a>
+						</td>
 						<td>
-						<a href="?dashboard=start&subpage=start&operation=edit&id=<?php echo $row['id']?>"><i class="fa-regular fa-pen-to-square"></i></a>
-						<a href="?dashboard=start&subpage=start&operation=delete&id=<?php echo $row['id']?>"><i class="fa-solid fa-trash"></i></a>
-						<a href="?dashboard=start&subpage=start&operation=show&id=<?php echo $row['id']?>"><i class="fa-solid fa-magnifying-glass"></i></a>
+							<form action="?dashboard=start&subpage=start&operation=move"  method="POST">
+								<input type="hidden" name="csrf_token" value="<?php echo $params['csrf_token'] ?? '' ?>">
+								<input type="hidden" name="id" value="<?= $row['id'] ?>">
+								<input type="hidden" name="dir" value="up">
+								<button type="submit"><i class="fa-solid fa-caret-up"></i></button>
+							</form>
+							<form action="?dashboard=start&subpage=start&operation=move"  method="POST">
+								<input type="hidden" name="csrf_token" value="<?php echo $params['csrf_token'] ?? '' ?>">
+								<input type="hidden" name="id" value="<?= $row['id'] ?>">
+								<input type="hidden" name="dir" value="down">
+								<button type="submit"><i class="fa-solid fa-caret-down"></i></button>
+							</form>	
 						</td>
 					</tr> 
 				<?php endforeach ?>

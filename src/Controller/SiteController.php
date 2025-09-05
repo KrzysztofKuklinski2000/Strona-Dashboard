@@ -20,7 +20,7 @@ class SiteController extends AbstractController {
 		$page = (int) $this->request->getParam('page');
 		$this->renderPage([
 			'page' => 'news', 
-			'content' => $this->contentModel->getData("news", "DESC", $page), 
+			'content' => $this->contentModel->getData("news", "ASC", $page), 
 			'numberOfRows' => $this->contentModel->countData('news'),
 			'currentNumberOfPage' => $page,
 		]);
@@ -83,8 +83,8 @@ class SiteController extends AbstractController {
 
 	public function startAction(): void {
 		$firstPost = [];
-		$posts = $this->contentModel->getData("main_page_posts", "DESC");
-		$importantPosts = $this->contentModel->getData("important_posts", "DESC");
+		$posts = $this->contentModel->getData("main_page_posts", "ASC");
+		$importantPosts = $this->contentModel->getData("important_posts", "ASC");
 
 		foreach($posts as $key =>  $post) {
 			if($post['id'] === 1) {

@@ -102,6 +102,12 @@ class DashboardController extends AbstractController {
 		$this->setFlash("errors", $this->request->getErrors());	
 	}
 
+	private function move(string $table, string $redirectTo= ""): void {
+		$data = $this->getDataToChangePostPosition();
+		$this->dashboardModel->move($table, $data);
+		$this->redirect("/?dashboard=start&subpage=$redirectTo");
+	}
+
 	private function handlePost(string $table, callable $function, string $redirectTo = ""): void
 	{
 		if ($this->request->isPost()) {
@@ -142,6 +148,7 @@ class DashboardController extends AbstractController {
 					"edit" => $this->edit($table, $subpage),
 					"show" => $this->published($table, $subpage),
 					"delete" => $this->delete($table, $subpage),
+					"move" => $this->move(table: $table, redirectTo: $subpage),
 					default => null
 				};
 			} catch (\EasyCSRF\Exceptions\InvalidCsrfTokenException $e) {

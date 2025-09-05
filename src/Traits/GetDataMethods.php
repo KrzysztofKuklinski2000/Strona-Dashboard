@@ -4,6 +4,12 @@ namespace App\Traits;
 
 trait GetDataMethods {
 
+  protected function getDataToChangePostPosition(): array {
+    return [
+      'id' => $this->request->validate(param: 'id', required: true, type: 'int'),
+      'dir' => $this->request->validate(param:'dir', required: true, type:'string')
+    ];
+  }
 
   protected function getPostDataToEdit(): array
   {
