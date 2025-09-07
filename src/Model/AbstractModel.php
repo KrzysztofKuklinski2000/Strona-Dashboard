@@ -13,7 +13,7 @@ use App\Exception\StorageException;
 
 class AbstractModel {
   protected PDO $con;
-  private const ALLOWED_TABLES = ['news', 'contact', 'fees', 'camp', 'user', 'timetable', 'important_posts', 'main_page_posts'];
+  private const ALLOWED_TABLES = ['news', 'contact', 'fees', 'camp', 'user', 'timetable', 'important_posts', 'main_page_posts', 'gallery'];
 
   public function __construct(array $config)
   {
@@ -37,7 +37,6 @@ class AbstractModel {
           $stmt->bindValue($key, $value, PDO::PARAM_STR);
         }
       }
-
       $stmt->execute();
       return $stmt;
     } catch (Throwable) {

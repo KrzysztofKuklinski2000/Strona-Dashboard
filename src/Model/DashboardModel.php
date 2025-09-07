@@ -13,11 +13,11 @@ use App\Exception\NotFoundException;
 class DashboardModel extends AbstractModel {
 
 	public function getDashboardData(string $table) {
-	try {
+		try {	
 			$table = $this->validateTable($table);
 			$sql = "SELECT * FROM $table";
 			if(!in_array($table, ['contact', 'fees', 'camp'])) $sql .= " ORDER BY position ASC";
-			
+
 			return $this->runQuery($sql)->fetchAll(PDO::FETCH_ASSOC);
 		}catch(Throwable $e) {
 			throw new StorageException("Nie udało się pobrać danych");
@@ -45,7 +45,7 @@ class DashboardModel extends AbstractModel {
 			$table = $this->validateTable($table);
 			$sql = "UPDATE $table SET ". implode(", ", array_map(fn($k) => "$k = :$k", array_filter(array_keys($data), fn($k)=> $k !== "id")));
 
-			if(in_array($table, ['news', 'main_page_posts', 'important_posts', 'timetable'])) $sql .= " WHERE id = :id";
+			if(in_array($table, ['news', 'main_page_posts', 'important_posts', 'timetable', 'gallery'])) $sql .= " WHERE id = :id";
 			$result = array_combine(array_map(fn($k) => ":$k", array_keys($data)), $data);
 
 			$this->runQuery($sql, $result);
@@ -135,6 +135,44 @@ class DashboardModel extends AbstractModel {
 		}catch(Throwable $e) {
 			$this->con->rollBack();
 			throw new StorageException('Nie udało się usunąć posta !!!', 400, $e);
+		}
+	}
+
+	public function addImage(array $data): void {
+		try {
+			$this->con->beginTransaction();
+			$imageName = NULL;
+
+			if($data['image_name'] && $data['image_name']['error'] === 0) {
+				$uploadDir = 'public/images/karate/';
+
+				if(!is_dir($uploadDir)) {
+					mkdir($uploadDir,0777, true);
+				}
+
+				$imageName = uniqid('karate_', true). '.'.pathinfo($data['image_name']['name'], PATHINFO_EXTENSION);
+				$imagePath = $uploadDir . $imageName;
+
+				if(!move_uploaded_file($data['image_name']['tmp_name'], $imagePath)) {
+					throw new StorageException('Nie udało się przesłać obrazka');
+				}
+
+				$this->runQuery("UPDATE gallery SET position = position + 1");
+
+				$this->runQuery(
+					"INSERT INTO gallery (image_name, description, created_at, updated_at, category) VALUES(:image_name, :description, :created_at, :updated_at, :category)", 
+				[
+						":image_name" => $imageName,
+						":description" => $data['description'],
+						":created_at" => $data['created_at'],
+						":updated_at" => $data['updated_at'],
+						":category" => $data['category'],
+						]);
+			}
+			$this->con->commit();
+		}catch(Throwable $e) {
+			$this->con->rollBack();
+			throw new StorageException('Nie udało się dodać zdjęcia !!!');
 		}
 	}
 }

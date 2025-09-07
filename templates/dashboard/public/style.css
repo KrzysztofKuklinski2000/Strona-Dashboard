@@ -395,3 +395,11 @@ main {
 	font-size: 0.8em;
 	font-weight: 500;
 }
+
+.dashboard-image-index {
+	width:50px;
+}
+
+.dashboard-image {
+	width:300px;
+}

@@ -50,7 +50,10 @@ class SiteController extends AbstractController {
 	}
 
 	public function galleryAction(): void {
-		$this->renderPage(['page' => 'gallery']);
+		$this->renderPage([
+			'page' => 'gallery',
+			'content' => $this->contentModel->getData("gallery", "DESC"),
+		]);
 	}
 
 	public function campAction(): void {

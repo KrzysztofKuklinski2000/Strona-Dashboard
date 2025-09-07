@@ -55,11 +55,24 @@ class DashboardController extends AbstractController {
 		$this->renderPage(['page' => 'important_posts', 'operation' => $result["operation"], 'data' => $result["data"] , 'csrf_token' => $result["csrf_token"]]);
 	}
 
+	public function galleryDashboardAction():void {	
+		$result = $this->operationRedirect("gallery");
+		$this->renderPage(['page' => 'gallery', 'operation' => $result["operation"], 'data' => $result["data"] , 'csrf_token' => $result["csrf_token"]]);
+	}
+
 	private function create(string $table, string $redirectTo = ""): void {
 		$data = match ($table) {
 			"timetable" => $this->getDataToAddTimetable(),
+			"gallery" => $this->getDataToAddImage(),
 			default => $this->getPostDataToCreate(),
 		};
+
+		if($table === "gallery" && !$this->request->getErrors()) {
+			$this->dashboardModel->addImage($data);
+			$this->setFlash("success","Udało się utworzyć nowy wpis");
+			$this->redirect("/?dashboard=start&subpage=$redirectTo");
+		}
+
 		if(!$this->request->getErrors()) {
 			$this->dashboardModel->create($data, $table);
 			$this->setFlash("success","Udało się utworzyć nowy wpis");
@@ -90,6 +103,7 @@ class DashboardController extends AbstractController {
 			"fees" => $this->getDataToFeesEdit(),
 			"contact" => $this->getDataToContactEdit(),
 			"timetable" => $this->getDataToEditTimetable(),
+			"gallery" => $this->getDataToEditImage(),
 			default => $this->getPostDataToEdit(),
 		};
 
@@ -136,7 +150,7 @@ class DashboardController extends AbstractController {
 		if(in_array($operation, ['edit', 'show', 'delete'])) $data = $this->getSingleData($table);
 		else if(empty($operation)) {
 			$data = $table === "timetable" 
-							? $data = $this->dashboardModel->timetablePageData()
+							? $this->dashboardModel->timetablePageData()
 							: $this->dashboardModel->getDashboardData($table);
 		}
 

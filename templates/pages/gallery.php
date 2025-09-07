@@ -30,38 +30,12 @@
 		require('templates/components/post_header.php');
 	 ?>
 	<div class="gallery">
-		<div class="img-box">
-			<img src="public/images/karate/1.JPG" alt="">
-			<p> Obóz Głuchołazy 2022</p>
-		</div>
-		<div class="img-box">
-			<img src="public/images/karate/5.JPG" alt="">
-			<p> Obóz Głuchołazy 2022</p>
-		</div>
-		<div class="img-box">
-			<img src="public/images/karate/3.JPG" alt="">
-			<p> Obóz Głuchołazy 2022</p>
-		</div>
-		<div class="img-box">
-			<img src="public/images/karate/4.JPG" alt="">
-			<p> Obóz Głuchołazy 2022</p>
-		</div>
-		<div class="img-box">
-			<img src="public/images/karate/2.JPG" alt="">
-			<p> Obóz Głuchołazy 2022</p>
-		</div>
-		<div class="img-box">
-			<img src="public/images/karate/6.JPG" alt="">
-			<p> Obóz Głuchołazy 2022</p>
-		</div>
-		<div class="img-box">
-			<img src="public/images/karate/7.JPG" alt="">
-			<p> Obóz Głuchołazy 2022</p>
-		</div>
-		<div class="img-box">
-			<img src="public/images/karate/8.JPG" alt="">
-			<p> Obóz Głuchołazy 2022</p>
-		</div>
+		<?php foreach($params['content'] as $content): ?>
+			<div class="img-box">
+				<img src="public/images/karate/<?= $content['image_name'] ?>" alt="">
+				<p><?= $content['description'] ?></p>
+			</div>
+		<?php endforeach; ?>
 	</div>
 </div>
 

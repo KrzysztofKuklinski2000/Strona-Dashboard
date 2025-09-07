@@ -36,7 +36,7 @@ class Request {
 		return $this->get[$name] ?? $default;
 	}
 
-	public function postParam(string $name = null, $default = null): ?string {
+	public function postParam(string $name = null, $default = null): mixed {
 		return $this->post[$name] ?? $default;
 	}
 

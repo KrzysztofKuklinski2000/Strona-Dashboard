@@ -12,12 +12,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="templates/dashboard/public/style.css">
 	<script src="https://kit.fontawesome.com/062ebc24f8.js" crossorigin="anonymous"></script>
-	<title>DASHBOARD</title>
+	<title>Panel Administracyjny - Karate Kyokushin</title>
 </head>
 <body>
 
 	<header>
-		<h2><i style="margin-right: 10px;" class="fa-solid fa-gear"></i>Dashboard</h2>
+		<h2><i style="margin-right: 10px;" class="fa-solid fa-gear"></i>Panel Administracyjny</h2>
 	</header>
 	<div class="container">
 		<?php if(!in_array($params['page'], ['login', 'register'])): ?>
@@ -38,6 +38,16 @@
 					<p>Grafik</p>
 				</a>
 
+				<a href="?dashboard=start&subpage=aktualnosci">
+					<i class="fa-solid fa-info"></i> 
+					<p>Aktualności</p>
+				</a>
+
+				<a href="?dashboard=start&subpage=galeria">
+					<i class="fa-solid fa-image"></i>
+					<p>Galeria</p>
+				</a>
+
 				<a href="?dashboard=start&subpage=obozy">
 					<i class="fa-solid fa-campground"></i> 
 					<p>Obozy</p>
@@ -46,10 +56,6 @@
 				<a href="?dashboard=start&subpage=oplaty">
 					<i class="fa-solid fa-money-check-dollar"></i> 
 					<p>Opłaty</p>
-				</a>
-				<a href="?dashboard=start&subpage=aktualnosci">
-					<i class="fa-solid fa-info"></i> 
-					<p>Aktualności</p>
 				</a>
 				<a href="?dashboard=start&subpage=kontakt">
 					<i class="fa-regular fa-address-book"></i> 

@@ -28,6 +28,7 @@ class ActionResolver {
     'aktualnosci' => 'news',
     'grafik' => 'timetable',
     'important_posts' => 'important_posts',
+    'galeria' => 'gallery'
   ];
 
   private const DEFAULT_ACTION = 'start';

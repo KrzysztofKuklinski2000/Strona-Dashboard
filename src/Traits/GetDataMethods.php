@@ -105,4 +105,23 @@ trait GetDataMethods {
       'end' => $this->request->validate(param: 'endTime', required: true, type:'string'),
     ];
   }
+
+  protected function getDataToAddImage():array {
+    return [
+      'category' => $this->request->validate(param: 'category', required: true, type:'string', maxLength:8),
+      'description' => $this->request->validate(param: 'description', required:  true, type: 'string', maxLength: 50, minLength: 10),
+      'image_name' => $_FILES['image_name'],
+      'created_at' => date('Y-m-d'),
+      'updated_at' => date('Y-m-d'),
+    ];
+  }
+
+  protected function getDataToEditImage():array {
+    return [
+      "id" => $this->request->validate(param: 'id', required: true, type:'int'),
+      'category' => $this->request->validate(param: 'category', required: true, type:'string', maxLength:8),
+      'description' => $this->request->validate(param: 'description', required:  true, type: 'string', maxLength: 50, minLength: 10),
+      'updated_at' => date('Y-m-d'),
+    ];
+  }
 }
