@@ -11,7 +11,7 @@ use App\Exception\StorageException;
 
 class ContentModel extends AbstractModel {
 
-	public function getData(string $table, string $orderBy, ?int $page = 1): array
+	public function getData(string $table, string $orderBy, ?int $page = 1, ?string $category=null): array
 	{
 		try {
 			$table = $this->validateTable($table);
@@ -27,6 +27,17 @@ class ContentModel extends AbstractModel {
 			$offset = ($page-1) * $perPage;
 
 			$sql = "SELECT * FROM $table";
+
+			if (in_array($table, ['news', 'main_page_posts', 'important_posts', 'timetable'])) {
+				$sql .= " WHERE status=1";
+			}
+
+			if($table === "gallery" && in_array($category, ['traning', 'camp']) ){
+				$sql .= " WHERE status=1 AND category = '$category'";
+			}elseif ($table === "gallery" && !$category){
+				$sql .= " WHERE status=1";
+			}
+
 			if (!in_array($table, ['contact', 'fees', 'camp'])) {
 				$sql .= " ORDER BY position $orderBy";
 			}

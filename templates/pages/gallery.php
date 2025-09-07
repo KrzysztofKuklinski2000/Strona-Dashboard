@@ -29,6 +29,10 @@
 		$text = '<i style="color:#1C2331" class="fa-regular fa-image"></i> Zdjęcia ';
 		require('templates/components/post_header.php');
 	 ?>
+	 <div class="filter"> 
+		<a href="/?view=galeria&category=traning">Treningi</a>
+		<a href="/?view=galeria&category=camp">Obozy</a>
+	 </div>
 	<div class="gallery">
 		<?php foreach($params['content'] as $content): ?>
 			<div class="img-box">

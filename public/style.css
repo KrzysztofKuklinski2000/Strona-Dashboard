@@ -1009,3 +1009,22 @@ footer .copy {
 	color:#fff;
 	border-radius: 2px;
 }
+
+.filter {
+	padding:20px 0px;
+	display: flex;
+	gap:20px;
+}
+
+.filter a {
+	padding:5px 15px;
+	background-color: #dbdbdb;
+	border-radius: 20px;
+	color:rgb(91, 91, 91);
+	font-size: .6em;
+	border:1px solid rgb(181, 181, 181);
+}
+
+.filter a:hover {
+	background-color: #cecece;
+}

@@ -5,13 +5,14 @@ namespace App\Controller;
 use App\Model\DashboardModel;
 use App\Traits\GetDataMethods;
 use App\Controller\AbstractController;
+use App\Middleware\CsrfMiddleware;
 use App\Request;
 use EasyCSRF\EasyCSRF;
-use InvalidArgumentException;
 
 class DashboardController extends AbstractController {
 
 	public DashboardModel $dashboardModel;
+	private CsrfMiddleware $csrfMiddleware;
 
 	use GetDataMethods;
 
@@ -19,6 +20,9 @@ class DashboardController extends AbstractController {
 	{
 		parent::__construct($request, $easyCSRF);
 		$this->dashboardModel = $dashboardModel;
+
+		$this->csrfMiddleware = new \App\Middleware\CsrfMiddleware($easyCSRF, $this->request);
+
 		if (empty($this->request->getSession('user'))) header('location: /?auth=start');
 	}
 	
@@ -124,19 +128,15 @@ class DashboardController extends AbstractController {
 
 	private function handlePost(string $table, callable $function, string $redirectTo = ""): void
 	{
-		if ($this->request->isPost()) {
-			try {
-				$this->easyCSRF->check('csrf_token', $this->request->postParam('csrf_token'));
-				$function();
-			} catch (\EasyCSRF\Exceptions\InvalidCsrfTokenException $e) {
-				$this->redirect("/?dashboard=start&subpage=$redirectTo&error=csrf");
-			}
-		}
+		$this->csrfMiddleware->verify();
+
+		if ($this->request->isPost()) $function();
+
 		$this->renderPage(
 			[
 				'page' => $table,
 				'data' => $this->dashboardModel->getDashboardData($table)[0],
-				'csrf_token' => $this->easyCSRF->generate('csrf_token'),
+				'csrf_token' => $this->csrfMiddleware->generateToken(),
 			]
 		);
 	}
@@ -154,26 +154,23 @@ class DashboardController extends AbstractController {
 							: $this->dashboardModel->getDashboardData($table);
 		}
 
+		$this->csrfMiddleware->verify();
+
 		if ($this->request->isPost()) {
-			try {
-				$this->easyCSRF->check('csrf_token', $this->request->postParam('csrf_token'));
-				match ($operation) {
-					"create" => $this->create($table, $subpage),
-					"edit" => $this->edit($table, $subpage),
-					"show" => $this->published($table, $subpage),
-					"delete" => $this->delete($table, $subpage),
-					"move" => $this->move(table: $table, redirectTo: $subpage),
-					default => null
-				};
-			} catch (\EasyCSRF\Exceptions\InvalidCsrfTokenException $e) {
-				$this->redirect("/?dashboard=start&subpage=$subpage&error=csrf");
-			}
+			match ($operation) {
+				"create" => $this->create($table, $subpage),
+				"edit" => $this->edit($table, $subpage),
+				"show" => $this->published($table, $subpage),
+				"delete" => $this->delete($table, $subpage),
+				"move" => $this->move(table: $table, redirectTo: $subpage),
+				default => null
+			};
 		}
 
 		return [
 			"data" => $data, 
 			"operation" => $operation,
-			"csrf_token" => $this->easyCSRF->generate('csrf_token'),
+			"csrf_token" => $this->csrfMiddleware->generateToken(),
 		];
 	}
 

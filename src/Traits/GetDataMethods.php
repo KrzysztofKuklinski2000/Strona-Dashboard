@@ -110,7 +110,7 @@ trait GetDataMethods {
     return [
       'category' => $this->request->validate(param: 'category', required: true, type:'string', maxLength:8),
       'description' => $this->request->validate(param: 'description', required:  true, type: 'string', maxLength: 50, minLength: 10),
-      'image_name' => $_FILES['image_name'],
+      'image_name' => $this->request->validateFile('image_name'),
       'created_at' => date('Y-m-d'),
       'updated_at' => date('Y-m-d'),
     ];

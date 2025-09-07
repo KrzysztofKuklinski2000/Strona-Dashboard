@@ -52,7 +52,7 @@ class SiteController extends AbstractController {
 	public function galleryAction(): void {
 		$this->renderPage([
 			'page' => 'gallery',
-			'content' => $this->contentModel->getData("gallery", "DESC"),
+			'content' => $this->contentModel->getData(table: "gallery", orderBy: "DESC", category:$this->request->getParam('category')),
 		]);
 	}
 

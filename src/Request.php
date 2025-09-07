@@ -52,16 +52,24 @@ class Request {
 		return $this->errors;
 	}
 
-	public function validate(string $param,  bool $required, string $type = 'string', int $maxLength = null, int $minLength = null): string {
+	public function validate(string $param,  bool $required, string $type = 'string', int $maxLength = null, int $minLength = null): mixed {
 		$value = $this->postParam($param);
 
 		if ($required && empty($value)) {
 			$this->errors[$param] = "Pole jest wymagany";
+			return null;
 		}
 	
-		if ($type === 'int' && !ctype_digit((string)$value)) {
-			$this->errors[$param] = "Pole musi zawierać tylko liczby całkowite.";
+		if ($type === 'int') {
+			if(!ctype_digit((string)$value)) {
+				$this->errors[$param] = "Pole musi zawierać tylko liczby całkowite.";
+				return null;
+			}
+ 			
+			return (int) $value;
 		}
+
+		$value = (string) $value;
 	
 		if ($maxLength !== null && strlen((string)$value) > $maxLength) {
 			$this->errors[$param] = "Długość pola musi być mniejsza niz $maxLength. znaków";
@@ -73,4 +81,31 @@ class Request {
 	
 		return $value;
 	}
+
+	public function validateFile(string $field, array $allowedTypes = ['image/jpeg', 'image/png'], int $maxSize = 2_000_000): ?array {
+		if (!isset($_FILES[$field])) {
+			$this->errors[$field] = "Plik nie został przesłany";
+			return null;
+		}
+
+		$file = $_FILES[$field];
+
+		if ($file['error'] !== UPLOAD_ERR_OK) {
+			$this->errors[$field] = "Błąd przesyłania pliku";
+			return null;
+		}
+
+		if (!in_array(mime_content_type($file['tmp_name']), $allowedTypes)) {
+			$this->errors[$field] = "Nieprawidłowy typ pliku";
+			return null;
+		}
+
+		if ($file['size'] > $maxSize) {
+			$this->errors[$field] = "Plik jest zbyt duży (max ".($maxSize/1_000_000)." MB)";
+			return null;
+		}
+
+		return $file;
+	}
+
 }
