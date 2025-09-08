@@ -9,8 +9,10 @@ use App\Controller\DashboardController;
 use App\Controller\SiteController;
 use App\Model\ContentModel;
 use App\Model\DashboardModel;
+use App\Model\DashboardRepository;
 use App\Model\UserModel;
 use App\Request;
+use App\Service\DashboardService;
 use Exception;
 use EasyCSRF\EasyCSRF;
 
@@ -32,7 +34,7 @@ class ControllerFactory {
     $dbconfig = $this->config['db'];
     return match(true) {
       $request->getParam('auth') !== null => new AuthController($request, new UserModel($dbconfig) , $easyCSRF),
-      $request->getParam('dashboard') === 'start' => new DashboardController($request, new DashboardModel($dbconfig) , $easyCSRF),
+      $request->getParam('dashboard') === 'start' => new DashboardController($request, new DashboardService(new DashboardRepository($dbconfig)) , $easyCSRF),
       default => new SiteController($request, new ContentModel($dbconfig) , $easyCSRF),
     };
   }

@@ -12,7 +12,7 @@ use App\Exception\StorageException;
 
 
 class AbstractModel {
-  protected PDO $con;
+  public PDO $con;
   private const ALLOWED_TABLES = ['news', 'contact', 'fees', 'camp', 'user', 'timetable', 'important_posts', 'main_page_posts', 'gallery'];
 
   public function __construct(array $config)

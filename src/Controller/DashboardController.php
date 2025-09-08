@@ -7,19 +7,18 @@ use App\Traits\GetDataMethods;
 use App\Controller\AbstractController;
 use App\Middleware\CsrfMiddleware;
 use App\Request;
+use App\Service\DashboardService;
 use EasyCSRF\EasyCSRF;
 
 class DashboardController extends AbstractController {
 
-	public DashboardModel $dashboardModel;
 	private CsrfMiddleware $csrfMiddleware;
 
 	use GetDataMethods;
 
-	public function __construct(Request $request, DashboardModel $dashboardModel, EasyCSRF $easyCSRF) 
+	public function __construct(Request $request, public DashboardService $dashboardService, EasyCSRF $easyCSRF) 
 	{
 		parent::__construct($request, $easyCSRF);
-		$this->dashboardModel = $dashboardModel;
 
 		$this->csrfMiddleware = new \App\Middleware\CsrfMiddleware($easyCSRF, $this->request);
 
@@ -71,32 +70,32 @@ class DashboardController extends AbstractController {
 			default => $this->getPostDataToCreate(),
 		};
 
-		if($table === "gallery" && !$this->request->getErrors()) {
-			$this->dashboardModel->addImage($data);
+		if(!$this->request->getErrors()) {
+			if($table === "gallery")
+				$this->dashboardService->addImage($data);
+			else 
+				$this->dashboardService->create($table, $data);
+
 			$this->setFlash("success","Udało się utworzyć nowy wpis");
 			$this->redirect("/?dashboard=start&subpage=$redirectTo");
 		}
 
-		if(!$this->request->getErrors()) {
-			$this->dashboardModel->create($data, $table);
-			$this->setFlash("success","Udało się utworzyć nowy wpis");
-			$this->redirect("/?dashboard=start&subpage=$redirectTo");
-		}
 		$this->setFlash("errors", $this->request->getErrors());	
 	}
 
 	private function published(string $table, string $redirectTo = ""): void {
-		$this->dashboardModel->published([
+		$this->dashboardService->published($table, [
 			'published' => $this->request->postParam('postPublished'),
 			'id' => $this->request->postParam('postId')
-		], $table);
+		]);
+
 		$this->setFlash('info','Udało się zmienić status');
 		$this->redirect("/?dashboard=start&subpage=$redirectTo");
 	}
 
 	private function delete(string $table, string $redirectTo = ""): void {
 		$id = (int) $this->request->postParam('postId');
-		$this->dashboardModel->delete($id, $table);
+		$this->dashboardService->delete($id, $table);
 		$this->setFlash('success','Udało się usunąć');
 		$this->redirect("/?dashboard=start&subpage=$redirectTo");
 	}
@@ -112,7 +111,7 @@ class DashboardController extends AbstractController {
 		};
 
 		if(!$this->request->getErrors()){
-			$this->dashboardModel->edit($table, $data);
+			$this->dashboardService->edit($table, $data);
 			$this->setFlash("success","Udało się edytować");
 			$this->redirect("/?dashboard=start&subpage=$redirectTo");
 			
@@ -122,7 +121,7 @@ class DashboardController extends AbstractController {
 
 	private function move(string $table, string $redirectTo= ""): void {
 		$data = $this->getDataToChangePostPosition();
-		$this->dashboardModel->move($table, $data);
+		$this->dashboardService->move($table, $data);
 		$this->redirect("/?dashboard=start&subpage=$redirectTo");
 	}
 
@@ -135,7 +134,7 @@ class DashboardController extends AbstractController {
 		$this->renderPage(
 			[
 				'page' => $table,
-				'data' => $this->dashboardModel->getDashboardData($table)[0],
+				'data' => $this->dashboardService->getDashboardData($table)[0],
 				'csrf_token' => $this->csrfMiddleware->generateToken(),
 			]
 		);
@@ -150,8 +149,8 @@ class DashboardController extends AbstractController {
 		if(in_array($operation, ['edit', 'show', 'delete'])) $data = $this->getSingleData($table);
 		else if(empty($operation)) {
 			$data = $table === "timetable" 
-							? $this->dashboardModel->timetablePageData()
-							: $this->dashboardModel->getDashboardData($table);
+							? $this->dashboardService->timetablePageData()
+							: $this->dashboardService->getDashboardData($table);
 		}
 
 		$this->csrfMiddleware->verify();
@@ -182,7 +181,7 @@ class DashboardController extends AbstractController {
 
 		$postId = (int) $postId;
 
-		return $this->dashboardModel->getPost($postId, $table);
+		return $this->dashboardService->getPost($postId, $table);
 	}
 
 	private function renderPage(array $params): void {
