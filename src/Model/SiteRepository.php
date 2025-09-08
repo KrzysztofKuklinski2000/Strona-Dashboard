@@ -1,0 +1,69 @@
+<?php 
+declare(strict_types= 1);
+namespace App\Model;
+
+use PDO;
+use Throwable;
+use App\Exception\StorageException;
+class SiteRepository extends AbstractModel {
+
+    public function getData(string $table):array {
+        try {
+            $this->validateTable($table);
+            $sql = "SELECT * FROM $table WHERE status = 1 ORDER BY position ASC";
+            return $this->runQuery($sql)->fetchAll(PDO::FETCH_ASSOC);
+        }catch (Throwable $e) {
+            throw new StorageException("Nie udało się pobrać danych",0, $e);
+        }
+    }
+
+    public function getSingleRecord(string $table):array {
+        try {
+            $this->validateTable($table);
+            $sql = "SELECT * FROM $table";
+            return $this->runQuery($sql)->fetch(PDO::FETCH_ASSOC);
+        }catch (Throwable $e) {
+            throw new StorageException("Nie udało się pobrać danych",0, $e);
+        }
+    }
+
+    public function getNews(int $limit, int $offset):array {
+        try {
+            $sql = "SELECT * FROM news WHERE status = 1 ORDER BY ASC LIMIT :limit OFFSET :offset";
+            return $this->runQuery($sql, [
+                ':limit' => [$limit, PDO::PARAM_INT], 
+                ':offset' => [$offset, PDO::PARAM_INT]
+            ])->fetchAll(PDO::FETCH_ASSOC);
+        }catch(Throwable $e){
+            throw new StorageException('Nie udało się pobrać danych',500, $e);
+        }
+    }
+
+    public function getGallery(string $category = null): array {
+        try {
+            $sql = "SELECT * FROM gallery WHERE status = 1";
+            $params = [];
+
+            if($category && in_array($category, ["traning","camp"])) {
+                $sql .= " AND category = :category";
+                $params[':category'] = $category;
+            }
+
+            $sql .= " ORDER BY position ASC";
+
+            return $this->runQuery($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
+
+        }catch(Throwable $e){
+            throw new StorageException('Nie udało się pobrać danych',500, $e);
+        }
+    }
+
+    public function countData(string $table): int {
+		try {
+            $stmt = $this->runQuery("SELECT COUNT(*) FROM $table");
+		    return (int) $stmt->fetchColumn();
+        }catch(Throwable $e){
+            throw new StorageException("Nie udało się pobrać danych",500, $e);
+        }
+	}
+}

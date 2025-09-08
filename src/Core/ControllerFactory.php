@@ -7,15 +7,14 @@ use App\Controller\AbstractController;
 use App\Controller\AuthController;
 use App\Controller\DashboardController;
 use App\Controller\SiteController;
-use App\Model\ContentModel;
-use App\Model\DashboardModel;
 use App\Model\DashboardRepository;
+use App\Model\SiteRepository;
 use App\Model\UserModel;
 use App\Request;
 use App\Service\DashboardService;
+use App\Service\SiteService;
 use Exception;
 use EasyCSRF\EasyCSRF;
-
 
 
 class ControllerFactory {
@@ -35,7 +34,7 @@ class ControllerFactory {
     return match(true) {
       $request->getParam('auth') !== null => new AuthController($request, new UserModel($dbconfig) , $easyCSRF),
       $request->getParam('dashboard') === 'start' => new DashboardController($request, new DashboardService(new DashboardRepository($dbconfig)) , $easyCSRF),
-      default => new SiteController($request, new ContentModel($dbconfig) , $easyCSRF),
+      default => new SiteController($request, new SiteService(new SiteRepository($dbconfig) ), $easyCSRF),
     };
   }
 

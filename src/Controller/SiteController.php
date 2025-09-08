@@ -3,43 +3,78 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Model\ContentModel;
 use App\Request;
+use App\Service\SiteService;
 use EasyCSRF\EasyCSRF;
 
 class SiteController extends AbstractController {
 
-	public ContentModel $contentModel;
-
-	public function __construct(Request $request, ContentModel $contentModel, EasyCSRF $easyCSRF) {
+	public function __construct(Request $request, public SiteService $siteService, EasyCSRF $easyCSRF) {
 		parent::__construct($request, $easyCSRF);
-		$this->contentModel = $contentModel;
 	}
 
-	public function newsAction(): void {
-		$page = (int) $this->request->getParam('page');
+	public function startAction(): void {
 		$this->renderPage([
-			'page' => 'news', 
-			'content' => $this->contentModel->getData("news", "ASC", $page), 
-			'numberOfRows' => $this->contentModel->countData('news'),
-			'currentNumberOfPage' => $page,
+			'page'=> 'start',
+			'content' => $this->siteService->getFrontPage(),
 		]);
 	}
 
-	public function dojoOathAction():  void {
-		$this->renderPage(['page' => 'dojo-oath']);
+	public function newsAction(): void {
+		$page = (int) $this->request->getParam('page', 1);
+		$result = $this->siteService->getNews($page);
+
+		$this->renderPage([
+			'page' => 'news', 
+			'content' =>$result['data'], 
+			'numberOfRows' => $result['totalPages'],
+			'currentNumberOfPage' => $result['currentPage'],
+		]);
 	}
 
-	public function requirementsAction(): void {
-		$this->renderPage(['page' => 'requirements']);
-	}
 
 	public function timetableAction(): void {
 		$this->renderPage([
 			'page' => 'timetable', 
-			'content' => $this->contentModel->timetablePageData()
+			'content' => $this->siteService->getTimetable()
 		]);
 	}
+
+	public function galleryAction(): void {
+		$this->renderPage([
+			'page' => 'gallery',
+			'content' => $this->siteService->getGallery($this->request->getParam('category')),
+		]);
+	}
+
+	public function campAction(): void {
+		$this->renderPage([
+			'page' => 'camp-info', 
+			'content' => $this->siteService->getCamp()
+		]);
+	}
+
+	public function feesAction(): void {
+		$this->renderPage([
+			'page' => 'fees-info', 
+			'content' => $this->siteService->getFees()
+		]);
+	}
+
+	public function registrationAction(): void {
+		$this->renderPage([
+			'page' => 'entries-info', 
+			'content' => $this->siteService->getFees()
+		]);
+	}
+
+	public function contactAction():void {
+		$this->renderPage([
+			'page' => 'contact', 
+			'content' => $this->siteService->getContact()
+		]);
+	}	
+
 
 	public function statuteAction(): void {
 		$this->renderPage(['page' => 'statute']);
@@ -49,62 +84,17 @@ class SiteController extends AbstractController {
 		$this->renderPage(['page' => 'oyama']);
 	}
 
-	public function galleryAction(): void {
-		$this->renderPage([
-			'page' => 'gallery',
-			'content' => $this->contentModel->getData(table: "gallery", orderBy: "DESC", category:$this->request->getParam('category')),
-		]);
+
+	public function dojoOathAction():  void {
+		$this->renderPage(['page' => 'dojo-oath']);
 	}
 
-	public function campAction(): void {
-		$this->renderPage([
-			'page' => 'camp-info', 
-			'content' => $this->contentModel->getData("camp", "DESC")[0]
-		]);
-	}
-
-	public function feesAction(): void {
-		$this->renderPage([
-			'page' => 'fees-info', 
-			'content' => $this->contentModel->getData("fees", "DESC")[0]
-		]);
-	}
-
-	public function registrationAction(): void {
-		$this->renderPage([
-			'page' => 'entries-info', 
-			'content' => $this->contentModel->getData("fees", "DESC")[0]
-		]);
-	}
-
-	public function contactAction():void {
-		$this->renderPage([
-			'page' => 'contact', 
-			'content' => $this->contentModel->getData("contact", "DESC")[0]
-		]);
-	}	
-
-	public function startAction(): void {
-		$firstPost = [];
-		$posts = $this->contentModel->getData("main_page_posts", "ASC");
-		$importantPosts = $this->contentModel->getData("important_posts", "ASC");
-
-		foreach($posts as $key =>  $post) {
-			if($post['id'] === 1) {
-				$firstPost = $post;
-				unset($posts[$key]);
-				break;
-			} 
-		}
-
-		$this->renderPage([
-			'page'=> 'start',
-			'content' => [$posts, $importantPosts, $firstPost],
-		]);
+	public function requirementsAction(): void {
+		$this->renderPage(['page' => 'requirements']);
 	}
 
 	private function renderPage(array $params): void {
-		$params['contact'] = $this->contentModel->getData('contact', 'DESC')[0];
+		$params['contact'] = $this->siteService->getContact();
 		$this->view->renderPageView($params);
 	}
 }
