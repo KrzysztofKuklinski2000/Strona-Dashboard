@@ -45,7 +45,7 @@ class SiteRepository extends AbstractRepository {
             $sql = "SELECT * FROM gallery WHERE status = 1";
             $params = [];
 
-            if($category && in_array($category, ["traning","camp"])) {
+            if($category && in_array($category, ["training","camp"])) {
                 $sql .= " AND category = :category";
                 $params[':category'] = $category;
             }

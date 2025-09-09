@@ -30,7 +30,7 @@
 		require('templates/components/post_header.php');
 	 ?>
 	 <div class="filter"> 
-		<a href="/?view=galeria&category=traning">Treningi</a>
+		<a href="/?view=galeria&category=training">Treningi</a>
 		<a href="/?view=galeria&category=camp">Obozy</a>
 	 </div>
 	<div class="gallery">

@@ -83,14 +83,19 @@ class DashboardService {
     public function move(string $table, array $data):void {
         try{
             $this->dashboardRepository->con->beginTransaction();
+
             $currentPost = $this->dashboardRepository->getPost($data['id'], $table);
+
             $stmt = $this->dashboardRepository->getPostByPosition(
                 $table, 
                 $data['dir'] === 'up' ? (int) $currentPost['position'] - 1 : (int) $currentPost['position'] + 1,
                 );
-            if($stmt) 
+
+            if($stmt) {
                 $this->dashboardRepository->movePosition($table, [':pos' => (int) $stmt['position'], ':id' => $currentPost['id']]);
                 $this->dashboardRepository->movePosition($table, [':pos' => (int) $currentPost['position'], ':id' => $stmt['id']]);
+            }
+                
             $this->dashboardRepository->con->commit();
         }catch (Throwable $e) {
             $this->dashboardRepository->con->rollBack();
@@ -100,10 +105,8 @@ class DashboardService {
 
     public function addImage(array $data): void {
         try{
-            $imageName = $this->fileHandler->uploadImage($data['image_name']);
-
             $this->dashboardRepository->con->beginTransaction();
-
+            $imageName = $this->fileHandler->uploadImage($data['image_name']);
             $this->dashboardRepository->incrementPosition('gallery');
             $data['image_name'] = $imageName;
             $this->dashboardRepository->addImage($data);

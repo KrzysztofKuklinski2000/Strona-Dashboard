@@ -18,7 +18,7 @@
     </div>
 </div>
 <div class="padding-top">
-    <?php if($params['content'][2]['status']): ?>
+    <?php if($params['content'][2]): ?>
         <div class="post-free">
             <div class="post">
                 <div class="left-side-post">

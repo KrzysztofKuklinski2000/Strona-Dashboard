@@ -133,21 +133,22 @@ main {
 }
 
 
-.content-container table tbody td {
-	height: 40px;
-}
-
 
 .content-container table tbody td:nth-child(2) {
 	text-align: left;	
 	padding-left:20px;
 }
 
-.content-container table tbody td:last-child{
+.content-container table tbody td{
+	height: 40px;
+}
+
+.content-container table tbody td:last-child div {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	gap:10px;
 }
 
 .content-container table tbody td .links {

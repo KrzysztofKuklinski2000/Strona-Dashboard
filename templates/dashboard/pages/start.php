@@ -35,18 +35,20 @@
 							<a href="?dashboard=start&subpage=start&operation=show&id=<?php echo $row['id']?>"><i class="fa-solid fa-magnifying-glass"></i></a>
 						</td>
 						<td>
-							<form action="?dashboard=start&subpage=start&operation=move"  method="POST">
-								<input type="hidden" name="csrf_token" value="<?php echo $params['csrf_token'] ?? '' ?>">
-								<input type="hidden" name="id" value="<?= $row['id'] ?>">
-								<input type="hidden" name="dir" value="up">
-								<button type="submit"><i class="fa-solid fa-caret-up"></i></button>
-							</form>
-							<form action="?dashboard=start&subpage=start&operation=move"  method="POST">
-								<input type="hidden" name="csrf_token" value="<?php echo $params['csrf_token'] ?? '' ?>">
-								<input type="hidden" name="id" value="<?= $row['id'] ?>">
-								<input type="hidden" name="dir" value="down">
-								<button type="submit"><i class="fa-solid fa-caret-down"></i></button>
-							</form>	
+							<div>
+								<form action="?dashboard=start&subpage=start&operation=move"  method="POST">
+									<input type="hidden" name="csrf_token" value="<?php echo $params['csrf_token'] ?? '' ?>">
+									<input type="hidden" name="id" value="<?= $row['id'] ?>">
+									<input type="hidden" name="dir" value="up">
+									<button type="submit"><i class="fa-solid fa-caret-up"></i></button>
+								</form>
+								<form action="?dashboard=start&subpage=start&operation=move"  method="POST">
+									<input type="hidden" name="csrf_token" value="<?php echo $params['csrf_token'] ?? '' ?>">
+									<input type="hidden" name="id" value="<?= $row['id'] ?>">
+									<input type="hidden" name="dir" value="down">
+									<button type="submit"><i class="fa-solid fa-caret-down"></i></button>
+								</form>
+							</div>	
 						</td>
 					</tr> 
 				<?php endforeach ?>

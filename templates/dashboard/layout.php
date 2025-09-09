@@ -1,10 +1,3 @@
-<?php if(isset($params['flash']) && in_array($params['flash']['type'], ['success', 'info', 'warning'])): ?>
-	<div class="flash <?= htmlspecialchars($params['flash']['type']) ?>"> 
-		<?= $params['flash']['message'] ?> 
-		<i class="flash-close fa-solid fa-xmark"></i>
-	</div>
-<?php endif ?>
-
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -15,7 +8,12 @@
 	<title>Panel Administracyjny - Karate Kyokushin</title>
 </head>
 <body>
-
+	<?php if(isset($params['flash']) && in_array($params['flash']['type'], ['success', 'info', 'warning'])): ?>
+		<div class="flash <?= htmlspecialchars($params['flash']['type']) ?>"> 
+			<?= $params['flash']['message'] ?> 
+			<i class="flash-close fa-solid fa-xmark"></i>
+		</div>
+	<?php endif ?>
 	<header>
 		<h2><i style="margin-right: 10px;" class="fa-solid fa-gear"></i>Panel Administracyjny</h2>
 	</header>
