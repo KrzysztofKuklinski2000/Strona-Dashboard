@@ -7,10 +7,11 @@ use App\Controller\AbstractController;
 use App\Controller\AuthController;
 use App\Controller\DashboardController;
 use App\Controller\SiteController;
-use App\Model\DashboardRepository;
-use App\Model\SiteRepository;
-use App\Model\UserModel;
+use App\Repository\AuthRepository;
+use App\Repository\DashboardRepository;
+use App\Repository\SiteRepository;
 use App\Request;
+use App\Service\AuthService;
 use App\Service\DashboardService;
 use App\Service\SiteService;
 use Exception;
@@ -32,7 +33,7 @@ class ControllerFactory {
   public function createController(Request $request, EasyCSRF $easyCSRF): AbstractController  {
     $dbconfig = $this->config['db'];
     return match(true) {
-      $request->getParam('auth') !== null => new AuthController($request, new UserModel($dbconfig) , $easyCSRF),
+      $request->getParam('auth') !== null => new AuthController($request, new AuthService(new AuthRepository($dbconfig)) , $easyCSRF),
       $request->getParam('dashboard') === 'start' => new DashboardController($request, new DashboardService(new DashboardRepository($dbconfig)) , $easyCSRF),
       default => new SiteController($request, new SiteService(new SiteRepository($dbconfig) ), $easyCSRF),
     };

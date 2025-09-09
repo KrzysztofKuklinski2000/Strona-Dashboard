@@ -2,7 +2,6 @@
 declare(strict_types=1);
 namespace App\Controller;
 
-use App\Model\DashboardModel;
 use App\Traits\GetDataMethods;
 use App\Controller\AbstractController;
 use App\Middleware\CsrfMiddleware;

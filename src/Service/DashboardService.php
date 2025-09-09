@@ -2,7 +2,7 @@
 declare(strict_types= 1);
 namespace App\Service;
 
-use App\Model\DashboardRepository;
+use App\Repository\DashboardRepository;
 use App\Exception\StorageException;
 use App\Core\FileHandler;
 use Throwable;

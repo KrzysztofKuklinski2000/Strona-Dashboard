@@ -1,17 +1,16 @@
 <?php 
 declare(strict_types= 1);
 
-namespace App\Model;
+namespace App\Repository;
 
 use PDO;
 use Throwable;
 use PDOStatement;
-use App\Model\AbstractModel;
 use App\Exception\StorageException;
 use App\Exception\NotFoundException;
 
 
-class DashboardRepository extends AbstractModel {
+class DashboardRepository extends AbstractRepository {
     public function getDashboardData(string $table) {
 		try {	
 			$table = $this->validateTable($table);

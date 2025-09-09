@@ -3,7 +3,7 @@ declare(strict_types= 1);
 namespace App\Service;
 
 use App\Exception\StorageException;
-use App\Model\SiteRepository;
+use App\Repository\SiteRepository;
 use Throwable;
 
 class SiteService {

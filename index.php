@@ -19,7 +19,6 @@ use EasyCSRF\EasyCSRF;
 use EasyCSRF\NativeSessionProvider;
 use App\Request;
 use App\Core\ControllerFactory;
-use App\Exception\AppException;
 use App\Core\ErrorHandler;
 
 $easyCSRF = new EasyCSRF(new NativeSessionProvider());

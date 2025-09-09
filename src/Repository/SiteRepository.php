@@ -1,11 +1,11 @@
 <?php 
 declare(strict_types= 1);
-namespace App\Model;
+namespace App\Repository;
 
 use PDO;
 use Throwable;
 use App\Exception\StorageException;
-class SiteRepository extends AbstractModel {
+class SiteRepository extends AbstractRepository {
 
     public function getData(string $table):array {
         try {

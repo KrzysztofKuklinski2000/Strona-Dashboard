@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model;
+namespace App\Repository;
 
 use PDO;
 use Throwable;
@@ -11,7 +11,7 @@ use PDOStatement;
 use App\Exception\StorageException;
 
 
-class AbstractModel {
+class AbstractRepository {
   public PDO $con;
   private const ALLOWED_TABLES = ['news', 'contact', 'fees', 'camp', 'user', 'timetable', 'important_posts', 'main_page_posts', 'gallery'];
 
