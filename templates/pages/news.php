@@ -31,18 +31,18 @@ $currentPage = $params['currentNumberOfPage'];
 				</a>
 			<?php endif ?>
 
-			<?php for ($i = 1; $i <= ceil($numberOfRows / 10); $i++):	?>
+			<?php for ($i = 1; $i <= $numberOfRows; $i++):	?>
 				<?php if ($currentPage <= 0): ?>
 					<a <?= $i === 1 ? "class=current" : "" ?> href="/?view=aktualnosci&page=<?= $i ?>"><?= $i ?></a>
-				<?php elseif ($currentPage > ceil($numberOfRows / 10)): ?>
-					<a <?= $i == ceil($numberOfRows / 10) ? "class=current" : "" ?> href="/?view=aktualnosci&page=<?= $i ?>"><?= $i ?></a>
+				<?php elseif ($currentPage > $numberOfRows ): ?>
+					<a <?= $i == $numberOfRows  ? "class=current" : "" ?> href="/?view=aktualnosci&page=<?= $i ?>"><?= $i ?></a>
 				<?php else: ?>
 					<a <?= $i === $currentPage ? "class=current" : "" ?> href="/?view=aktualnosci&page=<?= $i ?>"><?= $i ?></a>
 				<?php endif; ?>
 
 			<?php endfor; ?>
 
-			<?php if($currentPage < ceil($numberOfRows / 10)): ?>
+			<?php if($currentPage < $numberOfRows): ?>
 			<a href="/?view=aktualnosci&page=<?= $currentPage + 1 ?>">
 				<i class="fa-regular fa-square-caret-right"></i>
 			</a>

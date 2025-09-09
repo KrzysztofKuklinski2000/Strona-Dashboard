@@ -21,7 +21,7 @@ class SiteController extends AbstractController {
 	}
 
 	public function newsAction(): void {
-		$page = (int) $this->request->getParam('page', 1);
+		$page = (int) $this->request->getParam('page');
 		$result = $this->siteService->getNews($page);
 
 		$this->renderPage([

@@ -14,13 +14,12 @@ class SiteService {
             $perPage = 10;
             $totalPages = ceil($this->siteRepository->countData('news') / $perPage);
             $page = max(1, min($page, $totalPages));
-            $offset = ($page-1) * $perPage;
-
+            $offset = (int) (($page-1) * $perPage);
             $news = $this->siteRepository->getNews($perPage, $offset);
 
             return [
                 'data' => $news, 
-                'currentPage' => $page,
+                'currentPage' => (int) $page,
                 'totalPages' => $totalPages,
             ];
         }catch(Throwable $e) {

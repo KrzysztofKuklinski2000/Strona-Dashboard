@@ -29,7 +29,8 @@ class SiteRepository extends AbstractRepository {
 
     public function getNews(int $limit, int $offset):array {
         try {
-            $sql = "SELECT * FROM news WHERE status = 1 ORDER BY ASC LIMIT :limit OFFSET :offset";
+            $sql = "SELECT * FROM news WHERE status = 1 ORDER BY position ASC LIMIT :limit OFFSET :offset";
+
             return $this->runQuery($sql, [
                 ':limit' => [$limit, PDO::PARAM_INT], 
                 ':offset' => [$offset, PDO::PARAM_INT]
