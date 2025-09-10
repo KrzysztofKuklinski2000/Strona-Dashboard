@@ -13,7 +13,7 @@ class ActionResolver {
     'regulamin' => 'statute',
     'oyama' => 'oyama',
     'obozy' => 'camp',
-    'oplaty' => 'fees',
+    'skladki' => 'fees',
     'zapisy' => 'registration',
     'kontakt' => 'contact',
     'aktualnosci' => 'news',
@@ -21,7 +21,7 @@ class ActionResolver {
   ];
 
   private const VIEW_DASHBOARD_ALIASES = [
-    'oplaty' => 'fees',
+    'skladki' => 'fees',
     'kontakt' => 'contact',
     'obozy' => 'camp',
     'start' => 'start',

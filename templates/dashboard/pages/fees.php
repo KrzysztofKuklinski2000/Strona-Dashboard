@@ -6,7 +6,7 @@ $data = $params['data'];
 		<h3>Opłaty - Edytuj</h3>
 	</div>
 	<br>
-	<form action="/?dashboard=start&subpage=oplaty" method="POST" class="price-form ">
+	<form action="/?dashboard=start&subpage=skladki" method="POST" class="price-form ">
 		<input type="hidden" name="csrf_token" value="<?php echo $params['csrf_token'] ?? '' ?>">
 		<label>
 			<span>Składka Ulgowa (jedna osoba):</span>
@@ -24,16 +24,6 @@ $data = $params['data'];
 		</label>
 		<p class="validation-error"><?= $params['flash']['message']['n3'] ?? ""  ?></p>
 		<label>
-			<span>Składka Normalna: </span>
-			<input type="number" name="n4" value="<?php echo $data['contribution'] ?>">
-		</label>
-		<p class="validation-error"><?= $params['flash']['message']['n4'] ?? ""  ?></p>
-		<label>
-			<span>Wpisowe: </span>
-			<input type="number" name="n5" value="<?php echo $data['entry_fee'] ?>">
-		</label>
-		<p class="validation-error"><?= $params['flash']['message']['n5'] ?? ""  ?></p>
-		<label>
 			<span>Składka Ulgowa (jedna osoba/rok): </span>
 			<input type="number" name="n6" value="<?php echo $data['reduced_contribution_1_year'] ?>">
 		</label>
@@ -49,15 +39,15 @@ $data = $params['data'];
 		</label>
 		<p class="validation-error"><?= $params['flash']['message']['n8'] ?? ""  ?></p>
 		<label>
-			<span>Składka Ulgowa Wakacje (np: 70zł, 110zł, 160zł):</span>
-			<input type="text" name="n9" value="<?php echo $data['reduced_contribution_holidays'] ?>">
-		</label>
-		<p class="validation-error"><?= $params['flash']['message']['n9'] ?? ""  ?></p>
-		<label>
-			<span>Informacje:</span>
+			<span>Informacje dodatkowe (góra):</span>
 			<textarea name="n10"><?php echo $data['extra_information'] ?></textarea>
 		</label>
 		<p class="validation-error"><?= $params['flash']['message']['n10'] ?? ""  ?></p>
+		<label>
+			<span>Infomracje o Składkach (dół):</span>
+			<textarea name="n11"><?php echo $data['fees_information'] ?></textarea>
+		</label>
+		<p class="validation-error"><?= $params['flash']['message']['n11'] ?? ""  ?></p>
 		<input type="submit" value="Zapisz">
 	</form>
 </div>

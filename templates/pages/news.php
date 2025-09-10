@@ -15,7 +15,6 @@ $currentPage = $params['currentNumberOfPage'];
 						<div class="news-line"></div>
 						<div>
 							<h3><?= $content['title']; ?></h3>
-							<span style="color:gray;"><?= $content['created']; ?></span>
 							<p><?= $content['description']; ?></p>
 						</div>
 					</div>

@@ -51,9 +51,9 @@
 					<p>Obozy</p>
 				</a>
 
-				<a href="?dashboard=start&subpage=oplaty">
+				<a href="?dashboard=start&subpage=skladki">
 					<i class="fa-solid fa-money-check-dollar"></i> 
-					<p>Opłaty</p>
+					<p>Składki</p>
 				</a>
 				<a href="?dashboard=start&subpage=kontakt">
 					<i class="fa-regular fa-address-book"></i> 

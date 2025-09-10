@@ -20,7 +20,7 @@
 				Strona Główna
 			</li>
 		</a>
-		<a href="?view=oplaty"><li>Opłaty</li></a>
+		<a href="?view=skladki"><li>Składki</li></a>
 		<a href="?view=grafik"><li>Grafik</li></a>
 		<a href="?view=zapisy"><li>Zapisy</li></a>
 		<a href="?view=kontakt"><li>Kontakt</li></a>

@@ -18,7 +18,7 @@
 			<?php break; case 'entries-info': ?>
 				Zapisy
 			<?php break; case 'fees-info': ?>
-				Opłaty
+				Składki
 			<?php break; case 'gallery': ?>
 				Galeria
 			<?php break; case 'news': ?>

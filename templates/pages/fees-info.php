@@ -37,19 +37,6 @@ $content = $params['content'];
 			<p>za miesiąc</p>
 			<div class="break"></div>
 		</div>
-		<div class="price-box">
-			<h2>Składka Normalna</h2>
-			<strong><?php echo $content['contribution']; ?>zł <br> Jedna Osoba</strong>
-			<p>za miesiąc</p>
-			<div class="break"></div>
-		</div>
-		<div class="price-box">
-			<h2>Wpisowe</h2>
-			<strong><?php echo $content['entry_fee']; ?>zł <br> Jedna Osoba</strong>
-			<br><br>
-			<div class="break"></div>
-			<br>
-		</div>
 		<div class="join">
 			<a class="btn-join" href="?view=zapisy">ZAPISZ SIĘ <i style="color:white;" class="fa-solid fa-angle-right"></i></a>
 			<br><br>
@@ -96,13 +83,8 @@ $content = $params['content'];
 		require('templates/components/post_header.php');
 		?>
 		<br>
-		<div class="impor-info flex-item-center">
-			<i class="fa-solid fa-circle-exclamation"></i>
-			<p>Składki ulgowe w lipcu i sierpniu wynoszą odpowiednio: <?php echo $content['reduced_contribution_holidays'] ?>. dla osób nie biorących udziału w zajęciach</p> <br><br>
-		</div>
-		<br>
 		<p>
-			Składka za dwie osoby i rodzinna dotyczy osób pozostających w bliskim pokrewieństwie: rodzeństwo, rodzice i dzieci, małżeństwo. Składka ulgowa dotyczy płatności terminowych tj wpłaconych do 12 każdego miesiąca. Po tym terminie składki ulgowa i rodzinna, oraz obniżka składek w lipcu i sierpniu nie obowiązują. Treningi , dla Członków Klubu są bezpłatne. Ich ilość nie jest limitowana. Każdy Członek po uiszczeniu składki może brać udział we wszystkich treningach, we wszystkich lokalizacjach, gdzie je prowadzimy. Jedynym kryterium wstępu jest stopień zaawansowania i wiek( jeśli zajęcia są skierowane do konkretnej grupy wiekowej )Składka normalna dotyczy tych członków Klubu, którzy nie opłacili składek w terminie. Nieobecność na treningach nie zwalnia z opłacania składek i skutkuje utratą ulgi.Obowiązuje trzymiesięczny okres wypowiedzenia członkostwa.
+			<?= $content['fees_information'] ?>
 		</p>
 	</div>
 	<div>

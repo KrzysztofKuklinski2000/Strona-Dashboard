@@ -19,10 +19,10 @@
 						<p>start</p>
 					</li>
 				</a>
-				<a href="?view=oplaty">
+				<a href="?view=skladki">
 					<li>
 						<i class="fa-solid fa-money-check-dollar"></i>
-						<p>opłaty</p>
+						<p>Składki</p>
 					</li>
 				</a>
 				<a href="?view=grafik">

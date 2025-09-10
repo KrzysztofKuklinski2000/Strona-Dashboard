@@ -679,6 +679,19 @@ footer .copy {
 	text-align: center;
 }
 
+.show-content2 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px; 
+	text-align: center;
+}
+
+.show-content2 .content {
+	width: 100%;
+}
+
+
 .content-justify {
 	text-align: justify;
 	letter-spacing: 1.5px;
@@ -797,6 +810,15 @@ footer .copy {
   left: calc(-50vw + 50%);
 }
 
+.table-requirements-header {
+	font-size: .8em;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	color:#1C2331;
+	margin-bottom:10px;
+}
+
 .table-requirements .row {
 	display: flex;
 
@@ -806,6 +828,10 @@ footer .copy {
 	flex: 1 1 0;
 	height:50px;
 	color:#BDBDBD;
+}
+
+.table-requirements .choice:hover {
+	color:white;
 }
 
 .slider {

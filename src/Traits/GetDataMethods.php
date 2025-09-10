@@ -62,13 +62,11 @@ trait GetDataMethods {
       'reduced_contribution_1_month' => $this->request->validate(param: 'n1', required:true, type:'int'),
       'reduced_contribution_2_month' => $this->request->validate(param: 'n2', required:true, type:'int'),
       'family_contribution_month' => $this->request->validate(param: 'n3', required:true, type:'int'),
-      'contribution' => $this->request->validate(param: 'n4', required:true, type:'int'),
-      'entry_fee' => $this->request->validate(param: 'n5', required:true, type:'int'),
       'reduced_contribution_1_year' => $this->request->validate(param: 'n6', required:true, type:'int'),
       'reduced_contribution_2_year' => $this->request->validate(param: 'n7', required:true, type:'int'),
       'family_contribution_year' => $this->request->validate(param: 'n8', required:true, type:'int'),
-      'reduced_contribution_holidays' => $this->request->validate(param: 'n9', required:true, type:'string', maxLength: 50),
       'extra_information' => $this->request->validate(param: 'n10', required:true, type:'string'),
+      'fees_information' => $this->request->validate(param: 'n11', required:true, type:'string'),
     ];
   }
 

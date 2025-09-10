@@ -3,8 +3,8 @@
         <?php foreach($params['content'][1] ?? [] as $post): ?>
             <?php if($post['status']): ?>
                 <div class="info-box">
-                    <div class="info-icon <?= $post['important'] === 0 ? 'info-neg' : 'info-que' ?>">
-                        <i class="fa-solid <?= $post['important'] === 0 ? 'fa-exclamation' : 'fa-question' ?> "></i>
+                    <div class="info-icon info-neg">
+                        <i class="fa-solid fa-exclamation"></i>
                     </div>
                     <h2 class="info-title"> <?= $post['title'] ?> </h2>
                     <p class="info-description"> <?= $post['description'] ?> </p>

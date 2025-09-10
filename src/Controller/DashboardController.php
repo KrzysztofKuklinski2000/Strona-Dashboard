@@ -25,7 +25,7 @@ class DashboardController extends AbstractController {
 	}
 	
 	public function feesDashboardAction(): void {
-		$this->handlePost('fees', fn()=>$this->edit("fees", "oplaty"));
+		$this->handlePost('fees', fn()=>$this->edit("fees", "skladki"));
 	}
 
 	public function contactDashboardAction(): void {
