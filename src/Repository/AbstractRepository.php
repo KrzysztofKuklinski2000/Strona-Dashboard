@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\Exception\RepositoryException;
 use PDO;
-use Throwable;
 use PDOException;
 use PDOStatement;
-use App\Exception\StorageException;
 
 
 class AbstractRepository {
@@ -21,7 +20,7 @@ class AbstractRepository {
       $dns = "mysql:dbname={$config['database']};host={$config['host']}";
       $this->con = new PDO($dns, $config['user'], $config['password'], [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
     } catch (PDOException $e) {
-      throw new StorageException('Connection Error');
+      throw new RepositoryException('Błąd połączenia z bazą danych !', 500, $e);
     }
   }
 
@@ -39,15 +38,15 @@ class AbstractRepository {
       }
       $stmt->execute();
       return $stmt;
-    } catch (Throwable) {
-      throw new StorageException("Błąd bazy danych");
+    } catch (PDOException $e) {
+      throw new RepositoryException("Błąd bazy danych", 500, $e);
     }
   }
 
   protected function validateTable(string $table): string
   {
     if (!in_array($table, self::ALLOWED_TABLES)) {
-      throw new StorageException("Nie ma takiej tabeli");
+      throw new RepositoryException("Nie ma takiej tabeli", 400);
     }
 
     return $table;
@@ -68,8 +67,8 @@ class AbstractRepository {
 					END ASC, start ASC";
 
       return $this->runQuery($sql)->fetchAll(PDO::FETCH_ASSOC);
-    } catch (Throwable $e) {
-      throw new StorageException('Nie udało się załadować zawartości strony.', 400, $e);
+    } catch (PDOException $e) {
+      throw new RepositoryException('Nie udało się pobrać danych.', 500, $e);
     }
   }
 }

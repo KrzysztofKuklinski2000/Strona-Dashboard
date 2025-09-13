@@ -152,9 +152,10 @@ class DashboardController extends AbstractController {
 							: $this->dashboardService->getDashboardData($table);
 		}
 
-		$this->csrfMiddleware->verify();
+		
 
 		if ($this->request->isPost()) {
+			$this->csrfMiddleware->verify();
 			match ($operation) {
 				"create" => $this->create($table, $subpage),
 				"edit" => $this->edit($table, $subpage),

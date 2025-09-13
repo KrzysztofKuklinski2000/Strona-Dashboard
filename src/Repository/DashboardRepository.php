@@ -4,11 +4,9 @@ declare(strict_types= 1);
 namespace App\Repository;
 
 use PDO;
-use Throwable;
 use PDOStatement;
-use App\Exception\StorageException;
 use App\Exception\NotFoundException;
-
+use App\Exception\RepositoryException;
 
 class DashboardRepository extends AbstractRepository {
     public function getDashboardData(string $table) {
@@ -18,8 +16,8 @@ class DashboardRepository extends AbstractRepository {
 			if(!in_array($table, ['contact', 'fees', 'camp'])) $sql .= " ORDER BY position ASC";
 
 			return $this->runQuery($sql)->fetchAll(PDO::FETCH_ASSOC);
-		}catch(Throwable $e) {
-			throw new StorageException("Nie udało się pobrać danych");
+		}catch(RepositoryException $e) {
+			throw new RepositoryException("Nie udało się pobrać danych", 500, $e);
 		}
 	}
 
@@ -27,12 +25,12 @@ class DashboardRepository extends AbstractRepository {
 		try {
 			$table = $this->validateTable($table);
 			$result = $this->runQuery("SELECT * FROM $table WHERE id = :id", [':id' => $id])->fetch(PDO::FETCH_ASSOC);
-		} catch (Throwable $e) {
-			throw new StorageException('Nie udało się pobrać notatki', 400, $e);
+		} catch (RepositoryException $e) {
+			throw new RepositoryException('Nie udało się pobrać posta', 500, $e);
 		}
 
 		if(!$result) {
-			throw new NotFoundException('Nie ma takiej notatki');
+			throw new NotFoundException('Nie ma takiej posta', 404);
 		}
 
 
@@ -48,8 +46,8 @@ class DashboardRepository extends AbstractRepository {
 			$result = array_combine(array_map(fn($k) => ":$k", array_keys($data)), $data);
 
 			$this->runQuery($sql, $result);
-		}catch(Throwable $e) {
-			throw new StorageException("Nie udało się zaktualizować danych");
+		}catch(RepositoryException $e) {
+			throw new RepositoryException("Nie udało się edytować posta", 500, $e);
 		}
     }
 
@@ -57,8 +55,8 @@ class DashboardRepository extends AbstractRepository {
 		try {
 			$table = $this->validateTable($table);
 			return $this->runQuery("UPDATE $table SET position = :pos WHERE id = :id", $params);
-		}catch (Throwable $e) {
-			throw new StorageException("Nie udało się zmienić pozycji");
+		}catch (RepositoryException $e) {
+			throw new RepositoryException("Nie udało się zmienić pozycji", 500, $e);
 		}
 		
 	}
@@ -67,8 +65,8 @@ class DashboardRepository extends AbstractRepository {
 		try{
 			$table = $this->validateTable($table);
 			return $this->runQuery("SELECT * FROM $table WHERE position = :pos", [':pos' => $position])->fetch(PDO::FETCH_ASSOC);
-		}catch(Throwable $e) {
-			throw new StorageException("Nie udałi się pobrać elementu");
+		}catch(RepositoryException $e) {
+			throw new RepositoryException("Nie udałi się pobrać elementu", 500, $e);
 		}
 	}
 
@@ -76,8 +74,8 @@ class DashboardRepository extends AbstractRepository {
 		try{
 			$table = $this->validateTable($table);
 			$this->runQuery("UPDATE $table SET position = position + 1");
-		}catch(Throwable $e) {
-			throw new StorageException("Nie udało się zmienić pozycji");
+		}catch(RepositoryException $e) {
+			throw new RepositoryException("Nie udało się zmienić pozycji", 500, $e);
 		}
 	}
 
@@ -85,8 +83,8 @@ class DashboardRepository extends AbstractRepository {
 		try {
 			$table = $this->validateTable($table);
 			$this->runQuery("UPDATE $table set position = position - 1 WHERE position > :pos", [':pos' => $position]);
-		}catch(Throwable $e) {
-
+		}catch(RepositoryException $e) {
+			throw new RepositoryException('Nie udało się zmienić pozycji', 500, $e);
 		}
 	}
 
@@ -104,8 +102,8 @@ class DashboardRepository extends AbstractRepository {
 			$sql = "INSERT INTO $table ($col) VALUES ($val)";
 
 			$this->runQuery($sql,$result);
-		}catch(Throwable $e) {
-			throw new StorageException("Nie udało się utworzyć posta");
+		}catch(RepositoryException $e) {
+			throw new RepositoryException("Nie udało się utworzyć posta", 500, $e);
 		}
 	}
 
@@ -116,8 +114,8 @@ class DashboardRepository extends AbstractRepository {
 				':published' => $data['published'],
 				':id' => $data['id'],
 			]);
-		}catch(Throwable $e) {
-			throw new StorageException('Nie udało się zmienić statusu');
+		}catch(RepositoryException $e) {
+			throw new RepositoryException('Nie udało się zmienić statusu', 500, $e);
 		}
 	}
 
@@ -133,8 +131,8 @@ class DashboardRepository extends AbstractRepository {
 						":category" => $data['category'],
 						]
 				);
-		}catch(Throwable $e) {
-			throw new StorageException('Nie udało się dodać zdjęcia');
+		}catch(RepositoryException $e) {
+			throw new RepositoryException('Nie udało się dodać zdjęcia', 500, $e);
 		}
 	}
 }

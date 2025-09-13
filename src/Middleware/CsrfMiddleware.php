@@ -2,7 +2,6 @@
 declare(strict_types= 1);
 namespace App\Middleware;
 
-use App\Exception\StorageException;
 use App\Request;
 use EasyCSRF\EasyCSRF;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;

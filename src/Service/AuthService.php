@@ -2,9 +2,9 @@
 declare(strict_types= 1);
 namespace App\Service;
 
-use App\Exception\StorageException;
+use App\Exception\RepositoryException;
+use App\Exception\ServiceException;
 use App\Repository\AuthRepository;
-use Throwable;
 
 class AuthService {
 
@@ -24,8 +24,8 @@ class AuthService {
             }
 
             return $errors;
-        }catch (Throwable $e) {
-            throw new StorageException("Nie udało się zalogować", 500, $e);
+        }catch (RepositoryException $e) {
+            throw new ServiceException("Nie udało się zalogować", 500, $e);
         }
     }
 }

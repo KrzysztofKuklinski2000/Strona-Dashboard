@@ -3,9 +3,10 @@ declare(strict_types= 1);
 namespace App\Service;
 
 use App\Repository\DashboardRepository;
-use App\Exception\StorageException;
 use App\Core\FileHandler;
-use Throwable;
+use App\Exception\FileException;
+use App\Exception\RepositoryException;
+use App\Exception\ServiceException;
 
 class DashboardService {
 
@@ -17,8 +18,8 @@ class DashboardService {
     public function getDashboardData(string $table): array {
         try {
             return $this->dashboardRepository->getDashboardData($table);
-        }catch (Throwable $e) {
-            throw new StorageException("Nie udało się pobrać postów",0, $e);
+        }catch (RepositoryException $e) {
+            throw new ServiceException("Nie udało się pobrać postów",500, $e);
         }
         
     }
@@ -26,32 +27,32 @@ class DashboardService {
     public function getPost(int $id, string $table): array {
         try{
             return $this->dashboardRepository->getPost($id, $table);
-        }catch (Throwable $e) { 
-            throw new StorageException("Nie udało się pobrać posta",0, $e);
+        }catch (RepositoryException $e) { 
+            throw new ServiceException("Nie udało się pobrać posta",500, $e);
         }
     }
 
     public function timetablePageData(): array {
         try {
             return $this->dashboardRepository->timetablePageData();
-        }catch (Throwable $e) {
-            throw new StorageException("Nie udało się pobrać grafiku",0, $e);
+        }catch (RepositoryException $e) {
+            throw new ServiceException("Nie udało się pobrać grafiku",500, $e);
         }
     }
 
     public function edit(string $table, array $data): void {
         try {
             $this->dashboardRepository->edit($table, $data); 
-        }catch (Throwable $e) {
-            throw new StorageException("Nie udało się edytować",0, $e);
+        }catch (RepositoryException $e) {
+            throw new ServiceException("Nie udało się edytować",500, $e);
         }
     }
     
     public function published(string $table, array $data): void {
         try {
             $this->dashboardRepository->published($data, $table);
-       }catch (Throwable $e) {
-            throw new StorageException("Nie udało się zmienić statusu",0, $e);
+       }catch (RepositoryException $e) {
+            throw new ServiceException("Nie udało się zmienić statusu",500, $e);
        }
     }
 
@@ -61,9 +62,9 @@ class DashboardService {
             $this->dashboardRepository->incrementPosition($table);
             $this->dashboardRepository->create($data, $table);
             $this->dashboardRepository->con->commit();
-        }catch (Throwable $e) {
+        }catch (RepositoryException $e) {
             $this->dashboardRepository->con->rollBack();
-            throw new StorageException("Nie udało się utworzyć wpisu",0, $e);
+            throw new ServiceException("Nie udało się utworzyć posta",500, $e);
         }
     }
 
@@ -74,9 +75,9 @@ class DashboardService {
             $this->dashboardRepository->delete($id, $table);
             $this->dashboardRepository->decrementPosition($table, (int) $currentPost['position']);
             $this->dashboardRepository->con->commit();
-        }catch (Throwable $e) {
+        }catch (RepositoryException $e) {
             $this->dashboardRepository->con->rollBack();
-            throw new StorageException("Nie udało się usunąć wpisu",0, $e);
+            throw new ServiceException("Nie udało się usunąć posta",500, $e);
         }
     }
 
@@ -97,9 +98,9 @@ class DashboardService {
             }
                 
             $this->dashboardRepository->con->commit();
-        }catch (Throwable $e) {
+        }catch (RepositoryException $e) {
             $this->dashboardRepository->con->rollBack();
-            throw new StorageException("Nie udało się zmienić pozycji",0, $e);
+            throw new ServiceException("Nie udało się zmienić pozycji",500, $e);
         }
     }
 
@@ -111,9 +112,9 @@ class DashboardService {
             $data['image_name'] = $imageName;
             $this->dashboardRepository->addImage($data);
             $this->dashboardRepository->con->commit();
-        }catch (Throwable $e) {
+        }catch (RepositoryException | FileException $e) {
             $this->dashboardRepository->con->rollBack();
-            throw new StorageException("Nie udało się dodać zdjęcia",0, $e);
+            throw new ServiceException("Nie udało się dodać zdjęcia",500, $e);
         }
     }
 }

@@ -2,9 +2,8 @@
 declare(strict_types= 1);
 namespace App\Repository;
 
+use App\Exception\RepositoryException;
 use PDO;
-use Throwable;
-use App\Exception\StorageException;
 
 class AuthRepository extends AbstractRepository {
 
@@ -12,8 +11,8 @@ class AuthRepository extends AbstractRepository {
         try {
           $stmt = $this->runQuery("SELECT * FROM user WHERE login = :login LIMIT 1", [":login" => $login]);
           return $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
-        }catch(Throwable $e) {
-          throw new StorageException("Nie udało się pobrać użytkownika", 500 , $e);
+        }catch(RepositoryException $e) {
+          throw new RepositoryException("Nie udało się pobrać użytkownika", 500 , $e);
         }
       }
 }

@@ -2,9 +2,8 @@
 declare(strict_types= 1);
 namespace App\Repository;
 
+use App\Exception\RepositoryException;
 use PDO;
-use Throwable;
-use App\Exception\StorageException;
 class SiteRepository extends AbstractRepository {
 
     public function getData(string $table):array {
@@ -12,8 +11,8 @@ class SiteRepository extends AbstractRepository {
             $this->validateTable($table);
             $sql = "SELECT * FROM $table WHERE status = 1 ORDER BY position ASC";
             return $this->runQuery($sql)->fetchAll(PDO::FETCH_ASSOC);
-        }catch (Throwable $e) {
-            throw new StorageException("Nie udało się pobrać danych",0, $e);
+        }catch (RepositoryException $e) {
+            throw new RepositoryException("Nie udało się pobrać danych",500, $e);
         }
     }
 
@@ -22,8 +21,8 @@ class SiteRepository extends AbstractRepository {
             $this->validateTable($table);
             $sql = "SELECT * FROM $table";
             return $this->runQuery($sql)->fetch(PDO::FETCH_ASSOC);
-        }catch (Throwable $e) {
-            throw new StorageException("Nie udało się pobrać danych",0, $e);
+        }catch (RepositoryException $e) {
+            throw new RepositoryException("Nie udało się pobrać danych",500, $e);
         }
     }
 
@@ -35,8 +34,8 @@ class SiteRepository extends AbstractRepository {
                 ':limit' => [$limit, PDO::PARAM_INT], 
                 ':offset' => [$offset, PDO::PARAM_INT]
             ])->fetchAll(PDO::FETCH_ASSOC);
-        }catch(Throwable $e){
-            throw new StorageException('Nie udało się pobrać danych',500, $e);
+        }catch(RepositoryException $e){
+            throw new RepositoryException('Nie udało się pobrać aktualności',500, $e);
         }
     }
 
@@ -54,8 +53,8 @@ class SiteRepository extends AbstractRepository {
 
             return $this->runQuery($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
 
-        }catch(Throwable $e){
-            throw new StorageException('Nie udało się pobrać danych',500, $e);
+        }catch(RepositoryException $e){
+            throw new RepositoryException('Nie udało się pobrać galeri',500, $e);
         }
     }
 
@@ -63,8 +62,8 @@ class SiteRepository extends AbstractRepository {
 		try {
             $stmt = $this->runQuery("SELECT COUNT(*) FROM $table");
 		    return (int) $stmt->fetchColumn();
-        }catch(Throwable $e){
-            throw new StorageException("Nie udało się pobrać danych",500, $e);
+        }catch(RepositoryException $e){
+            throw new RepositoryException("Nie udało się pobrać liczby rekordów",500, $e);
         }
 	}
 }

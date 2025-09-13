@@ -2,9 +2,9 @@
 declare(strict_types= 1);
 namespace App\Service;
 
-use App\Exception\StorageException;
+use App\Exception\RepositoryException;
+use App\Exception\ServiceException;
 use App\Repository\SiteRepository;
-use Throwable;
 
 class SiteService {
     public function __construct(public SiteRepository $siteRepository) {}
@@ -22,8 +22,8 @@ class SiteService {
                 'currentPage' => (int) $page,
                 'totalPages' => $totalPages,
             ];
-        }catch(Throwable $e) {
-            throw new StorageException("Nie udało się pobrać danych", 500, $e);
+        }catch(RepositoryException $e) {
+            throw new ServiceException("Nie udało się pobrać danych", 500, $e);
         }
     }
 
@@ -43,48 +43,48 @@ class SiteService {
 
             return [$posts, $importantPosts, $firstPost];
 
-        }catch(Throwable $e) {
-            throw new StorageException("Nie udało się pobrać danych",500, $e);
+        }catch(RepositoryException $e) {
+            throw new ServiceException("Nie udało się pobrać danych",500, $e);
         }
     }
 
     public function getGallery(string $category = null): array {
         try {
             return $this->siteRepository->getGallery($category);
-        }catch(Throwable $e) {
-            throw new StorageException("Nie udało się pobrać danych",500, $e);
+        }catch(RepositoryException $e) {
+            throw new ServiceException("Nie udało się pobrać galeri",500, $e);
         }
     }
 
     public function getTimetable(): array {
         try {
             return $this->siteRepository->timetablePageData();
-        }catch(Throwable $e) {
-            throw new StorageException("Nie udało się pobrać danych",500, $e);
+        }catch(RepositoryException $e) {
+            throw new ServiceException("Nie udało się pobrać grafiku",500, $e);
         }
     }
 
     public function getContact(): array {
         try {
             return $this->siteRepository->getSingleRecord('contact');
-        }catch(Throwable $e) {
-            throw new StorageException("Nie udało się pobrać danych",500, $e);
+        }catch(RepositoryException $e) {
+            throw new ServiceException("Nie udało się pobrać danych kontaktowych",500, $e);
         }
     }
 
     public function getCamp(): array {
         try {
             return $this->siteRepository->getSingleRecord('camp');
-        }catch(Throwable $e) {
-            throw new StorageException("Nie udało się pobrać danych",500, $e);
+        }catch(RepositoryException $e) {
+            throw new ServiceException("Nie udało się pobrać danych o obozach",500, $e);
         }
     }
 
     public function getFees(): array { 
         try {
             return $this->siteRepository->getSingleRecord('fees');
-        }catch(Throwable $e) {
-            throw new StorageException("Nie udało się pobrać danych",500, $e);
+        }catch(RepositoryException $e) {
+            throw new ServiceException("Nie udało się pobrać danych o składkach",500, $e);
         }
     }
 
