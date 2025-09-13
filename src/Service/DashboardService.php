@@ -4,14 +4,22 @@ namespace App\Service;
 
 use App\Repository\DashboardRepository;
 use App\Exception\StorageException;
+use App\Traits\TransactionManager;
+use PDO;
 use App\Core\FileHandler;
 use Throwable;
 
 class DashboardService {
+    use TransactionManager;
 
     private FileHandler $fileHandler;
     public function __construct(public DashboardRepository $dashboardRepository){
         $this->fileHandler = new FileHandler();
+    }
+
+    public function getConnection(): PDO 
+    {
+        return $this->dashboardRepository->con;
     }
 
     public function getDashboardData(string $table): array {
@@ -56,28 +64,18 @@ class DashboardService {
     }
 
     public function create(string $table, array $data): void {
-        try {
-            $this->dashboardRepository->con->beginTransaction();
+        $this->executeInTransaction(function() use ($table, $data) {
             $this->dashboardRepository->incrementPosition($table);
             $this->dashboardRepository->create($data, $table);
-            $this->dashboardRepository->con->commit();
-        }catch (Throwable $e) {
-            $this->dashboardRepository->con->rollBack();
-            throw new StorageException("Nie udało się utworzyć wpisu",0, $e);
-        }
+        });
     }
 
     public function delete(int $id, string $table): void {
-        try {
-            $this->dashboardRepository->con->beginTransaction();
+        $this->executeInTransaction(function() use ($id, $table) {
             $currentPost = $this->dashboardRepository->getPost($id, $table);
             $this->dashboardRepository->delete($id, $table);
             $this->dashboardRepository->decrementPosition($table, (int) $currentPost['position']);
-            $this->dashboardRepository->con->commit();
-        }catch (Throwable $e) {
-            $this->dashboardRepository->con->rollBack();
-            throw new StorageException("Nie udało się usunąć wpisu",0, $e);
-        }
+        });
     }
 
     public function move(string $table, array $data):void {

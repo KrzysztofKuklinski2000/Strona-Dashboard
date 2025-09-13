@@ -2,7 +2,7 @@
 declare(strict_types= 1);
 namespace App\Middleware;
 
-use App\Exception\StorageException;
+use App\Exception\ValidationException;
 use App\Request;
 use EasyCSRF\EasyCSRF;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
@@ -16,8 +16,7 @@ class CsrfMiddleware {
             try {
                 $this->easyCSRF->check('csrf_token', $this->request->postParam('csrf_token'));
             } catch (InvalidCsrfTokenException $e) {
-                header('Location: /?dashboard=start&error=csrf');
-                exit;
+                throw ValidationException::csrfTokenInvalid();
             }
         }
     }

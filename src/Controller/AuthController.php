@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Exception\StorageException;
+use App\Exception\AuthException;
 use App\Middleware\CsrfMiddleware;
 use App\Request;
 use App\Service\AuthService;
@@ -44,7 +45,7 @@ class AuthController extends AbstractController {
             exit;
         }
         } catch (Throwable $e) {
-          throw new StorageException('Nie udało się zalogować', 400, $e);
+          throw AuthException::loginFailed('Database error during login', $e);
         }
     }
     $this->view->renderDashboardView(['page' => 'login', 'messages' => $errors, 'csrf_token' => $this->csrfMiddleware->generateToken()]);

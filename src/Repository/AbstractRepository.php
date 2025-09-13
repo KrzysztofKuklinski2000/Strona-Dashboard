@@ -21,7 +21,10 @@ class AbstractRepository {
       $dns = "mysql:dbname={$config['database']};host={$config['host']}";
       $this->con = new PDO($dns, $config['user'], $config['password'], [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
     } catch (PDOException $e) {
-      throw new StorageException('Connection Error');
+      throw StorageException::databaseConnection(
+        "Host: {$config['host']}, Database: {$config['database']}", 
+        $e
+      );
     }
   }
 
@@ -39,15 +42,23 @@ class AbstractRepository {
       }
       $stmt->execute();
       return $stmt;
-    } catch (Throwable) {
-      throw new StorageException("Błąd bazy danych");
+    } catch (Throwable $e) {
+      throw StorageException::queryFailed(
+        "SQL execution", 
+        $e, 
+        ['sql' => $sql, 'params' => $params]
+      );
     }
   }
 
   protected function validateTable(string $table): string
   {
     if (!in_array($table, self::ALLOWED_TABLES)) {
-      throw new StorageException("Nie ma takiej tabeli");
+      throw StorageException::queryFailed(
+        "Table validation", 
+        null, 
+        ['table' => $table, 'allowed_tables' => self::ALLOWED_TABLES]
+      );
     }
 
     return $table;
