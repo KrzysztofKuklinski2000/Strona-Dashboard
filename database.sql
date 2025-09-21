@@ -9,8 +9,19 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-CREATE DATABASE IF NOT EXISTS `karate_test`;
+CREATE DATABASE IF NOT EXISTS `karate_test` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_polish_ci;
+
+-- Zmiana na nowo utworzoną bazę
 USE `karate_test`;
+
+-- Tworzenie użytkownika (zmień 'root' i '' na swoje dane jeśli trzeba)
+CREATE USER IF NOT EXISTS 'karate_user'@'localhost' IDENTIFIED BY 'haslo123';
+
+-- Nadanie wszystkich uprawnień do bazy karate_test
+GRANT ALL PRIVILEGES ON `karate_test`.* TO 'karate_user'@'localhost';
+
+-- Odświeżenie uprawnień
+FLUSH PRIVILEGES;
 
 -- --------------------------------------------------------
 -- Table structure for table `camp`

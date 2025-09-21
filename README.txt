@@ -61,20 +61,23 @@ Projekt zawiera **publiczną stronę** (aktualności, galeria, grafik, obozy, op
 1. **Sklonuj repozytorium**:  
    git clone https://github.com/KrzysztofKuklinski2000/Strona-Dashboard.git
 
-2. Plik konfigracyjny do bazy danych w głównym katalogu projektu dodaj config/config.php:
+2. Instalacja Zależności:
+  composer install
+
+3. Plik konfigracyjny do bazy danych w głównym katalogu projektu dodaj config/config.php:
 <?php 
 return [
 	'env' => 'dev',
 	'db' => [
 		'host' => 'localhost',
 		'database' => 'karate_test',
-		'user' => 'root',
-		'password' => ''
+		'user' => 'karate_user',
+		'password' => 'haslo123 '
 	]
 ];
 
-3. Zaimportuj plik 'database.sql' w swojej lokalnej bazie danych
-4. Skonfiguruj serwer lokalny (np. XAMPP, MAMP) i otwórz w przeglądarce adres: http://localhost/<NAZWA_FOLDERU>
+4. Zaimportuj plik 'database.sql' w swojej lokalnej bazie danych
+5. Skonfiguruj serwer lokalny (np. XAMPP, MAMP) i otwórz w przeglądarce adres: http://localhost/<NAZWA_FOLDERU>
 
 dashboard dane do logowania (http://localhost/?dashboard=start)
 login: test
