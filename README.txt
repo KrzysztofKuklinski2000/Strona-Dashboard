@@ -67,13 +67,13 @@ Projekt zawiera **publiczną stronę** (aktualności, galeria, grafik, obozy, op
 3. Plik konfigracyjny do bazy danych w głównym katalogu projektu dodaj config/config.php:
 <?php 
 return [
-	'env' => 'dev',
-	'db' => [
-		'host' => 'localhost',
-		'database' => 'karate_test',
-		'user' => 'karate_user',
-		'password' => 'haslo123 '
-	]
+    'env'=> 'prod',
+    'db' =>[
+        'host' => 'localhost',
+        'database' => 'karate_test',
+        'user' => 'karate_user',
+        'password' => 'haslo123'
+    ]
 ];
 
 4. Zaimportuj plik 'database.sql' w swojej lokalnej bazie danych
