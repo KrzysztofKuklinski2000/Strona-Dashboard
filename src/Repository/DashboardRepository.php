@@ -100,7 +100,7 @@ class DashboardRepository extends AbstractRepository {
 			$result = array_combine(array_map(fn($k) => ":$k", array_keys($data)), $data);
 
 			$sql = "INSERT INTO $table ($col) VALUES ($val)";
-
+			
 			$this->runQuery($sql,$result);
 		}catch(RepositoryException $e) {
 			throw new RepositoryException("Nie udało się utworzyć posta", 500, $e);

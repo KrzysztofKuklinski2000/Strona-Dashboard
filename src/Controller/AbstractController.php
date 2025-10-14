@@ -4,34 +4,28 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\View;
-use App\Request;
+use App\Core\Request;
 use EasyCSRF\EasyCSRF;
+use App\Core\ActionResolver;
 
 
 class AbstractController {
 	public View $view;
-	public Request $request;
-	protected EasyCSRF $easyCSRF;
 	private ActionResolver $actionResolver;
 	private const DEFAULT_ACTION = 'start';
 
-	public function __construct(Request $request, EasyCSRF $easyCSRF) {
+	public function __construct(public Request $request, protected EasyCSRF $easyCSRF) {
 		$this->view = new View();
-		$this->request = $request;
 		$this->actionResolver = new ActionResolver();
-		$this->easyCSRF = $easyCSRF;
 	}
 
 	public function run(): void {
 		$action = $this->actionResolver->resolve($this->request);
 		
 		if(!method_exists($this, $action)){
-			if(str_ends_with($action, 'DashboardAction')) {
-				$action = self::DEFAULT_ACTION . "DashboardAction";
-			}else {
-				$action = self::DEFAULT_ACTION . "Action";
-			}
+			$action = self::DEFAULT_ACTION . "Action";
 		}
+		
 		$this->$action();
 	}
 

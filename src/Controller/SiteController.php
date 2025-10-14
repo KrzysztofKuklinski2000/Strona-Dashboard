@@ -3,12 +3,11 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Request;
+use App\Core\Request;
 use App\Service\SiteService;
 use EasyCSRF\EasyCSRF;
 
 class SiteController extends AbstractController {
-
 	public function __construct(Request $request, public SiteService $siteService, EasyCSRF $easyCSRF) {
 		parent::__construct($request, $easyCSRF);
 	}

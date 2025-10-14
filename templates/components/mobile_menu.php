@@ -2,7 +2,7 @@
 	<div class="nav-container margin-auto border-bottom-for-nav">
 		<a href="?view=start">
 			<div class="logo">
-				<img src="public/images/logo1.png">
+				<img src="public/images/logo1.png" alt="logo">
 				<span>
 					<p style="font-size:.9em;  color:#fff;">Karate</p>
 					<p style="font-size:.9em;  color:#CC0000;">Kyokushin</p>

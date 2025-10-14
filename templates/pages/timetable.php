@@ -87,5 +87,11 @@ $prevDay = null;
 				<a href="https://www.google.pl/maps/place/Szko%C5%82a+podstawowa+numer+5+im.+Jana+Drze%C5%BCd%C5%BCona+w+Redzie/@54.633877,18.3524456,17z/data=!3m1!4b1!4m6!3m5!1s0x46fdb1c3781d7d09:0x93c2c2bd929dedab!8m2!3d54.633877!4d18.3550205!16s%2Fg%2F11wqc3wsgl?entry=ttu&g_ep=EgoyMDI1MDQyMy4wIKXMDSoASAFQAw%3D%3D">link</a>
 			</p>
 		</div>
+		<div class="flex-item-center">
+			<span></span>
+			<p>Szkoła Podstawowa nr 11. Osiedle Kaszubskie 27
+				<a href="https://maps.app.goo.gl/gvt32jdECXXFMNYz8">link</a>
+			</p>
+		</div>
 	</div>
 </div>

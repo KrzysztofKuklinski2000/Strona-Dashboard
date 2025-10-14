@@ -72,7 +72,7 @@ return [
 		'host' => 'localhost',
 		'database' => 'karate_test',
 		'user' => 'karate_user',
-		'password' => 'haslo123 '
+		'password' => 'haslo123'
 	]
 ];
 

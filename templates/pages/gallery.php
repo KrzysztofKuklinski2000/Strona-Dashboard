@@ -18,25 +18,25 @@
 				<div class="left-arrow"><i class="fa-solid fa-caret-left"></i></div>
 				<div class="right-arrow"><i class="fa-solid fa-caret-right"></i></div>
 			</div>
-			<img class="img" src="public/images/slider/4.JPG" alt="">
-			<img class="img" src="public/images/slider/3.JPG" alt="">
-			<img class="img" src="public/images/slider/2.JPG" alt="">
-			<img class="img" src="public/images/slider/1.JPG" alt="">
+			<img class="img" src="public/images/slider/4.JPG" alt="zajecia">
+			<img class="img" src="public/images/slider/3.JPG" alt="zajecia">
+			<img class="img" src="public/images/slider/2.JPG" alt="zajecia">
+			<img class="img" src="public/images/slider/1.JPG" alt="zajecia">
 			<div class="black-filter"></div>
 		</div>
 	</div><br><br>
-	<?php 
-		$text = '<i style="color:#1C2331" class="fa-regular fa-image"></i> Zdjęcia ';
-		require('templates/components/post_header.php');
-	 ?>
-	 <div class="filter"> 
+	<?php
+	$text = '<i style="color:#1C2331" class="fa-regular fa-image"></i> Zdjęcia ';
+	require('templates/components/post_header.php');
+	?>
+	<div class="filter">
 		<a href="/?view=galeria&category=training">Treningi</a>
 		<a href="/?view=galeria&category=camp">Obozy</a>
-	 </div>
+	</div>
 	<div class="gallery">
-		<?php foreach($params['content'] as $content): ?>
+		<?php foreach ($params['content'] as $content): ?>
 			<div class="img-box">
-				<img src="public/images/karate/<?= $content['image_name'] ?>" alt="">
+				<img src="public/images/karate/<?= $content['image_name'] ?>" alt="zdjecia">
 				<p><?= $content['description'] ?></p>
 			</div>
 		<?php endforeach; ?>

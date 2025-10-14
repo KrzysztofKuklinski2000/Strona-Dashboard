@@ -2,7 +2,7 @@
 declare(strict_types= 1);
 namespace App\Middleware;
 
-use App\Request;
+use App\Core\Request;
 use EasyCSRF\EasyCSRF;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 

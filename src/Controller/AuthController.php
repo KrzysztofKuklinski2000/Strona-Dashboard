@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Exception\ServiceException;
 use App\Middleware\CsrfMiddleware;
-use App\Request;
+use App\Core\Request;
 use App\Service\AuthService;
 use EasyCSRF\EasyCSRF;
 use Throwable;

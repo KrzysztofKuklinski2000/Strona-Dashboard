@@ -21,6 +21,13 @@ trait GetDataMethods {
     ];
   }
 
+  protected function getDataToPublished() {
+    return [
+      'published' => $this->request->validate(param: 'postPublished', required: true),
+      'id' => $this->request->validate(param: 'postId', required: true)
+    ];
+  }
+
   protected function getPostDataToCreate(): array
   {
     return [

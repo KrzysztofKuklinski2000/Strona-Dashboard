@@ -3,7 +3,7 @@
 	<div class="nav" style="<?php if($params['page'] === 'start'){ echo "border:none";} ?>">
 		<a href="?view=start">
 			<div class="logo">
-				<img src="public/images/logo1.png">
+				<img src="public/images/logo1.png" alt="logo">
 				<span>
 					<p style="font-size:1.1em;  color:#fff">Karate</p>
 					<p style="font-size:1.1em;  color:#CC0000;">Kyokushin</p>

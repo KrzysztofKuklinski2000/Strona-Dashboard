@@ -28,7 +28,6 @@ class AbstractRepository {
   {
     try {
       $stmt = $this->con->prepare($sql);
-
       foreach ($params as $key => $value) {
         if (is_array($value)) {
           $stmt->bindValue($key, $value[0], $value[1]);

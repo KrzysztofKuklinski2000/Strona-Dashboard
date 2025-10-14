@@ -50,7 +50,6 @@
 
 	.header-container {
 		height:100vh;
-		max-height: 800px;
 		background-position-x: 0;
 	}
 
@@ -401,8 +400,7 @@
 
 @media only screen and (min-width: 1680px) {
 	.header-container {
-		height:100vh;
-		max-height: none;
+		height: 100vh;
 		background-position-x: 0;
 	}
 
