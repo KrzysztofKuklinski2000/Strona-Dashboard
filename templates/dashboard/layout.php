@@ -61,7 +61,7 @@
 						<i class="fa-regular fa-address-book"></i>
 						<p>Kontakt</p>
 					</a>
-					<a href="?auth=logout">
+					<a href="?auth&action=logout">
 						<i class="fa-solid fa-arrow-right-from-bracket"></i>
 						<p>Wyloguj</p>
 					</a>
@@ -69,7 +69,7 @@
 			</aside>
 		<?php endif; ?>
 		<main>
-			<div class="<?= $params['page'] !== 'login'? 'content-container' : ''?>">
+			<div class="<?= $params['page'] !== 'login' ? 'content-container' : ''?>">
 				<?php require_once('templates/dashboard/' . $params['page'] . '.php'); ?>
 			</div>
 		</main>

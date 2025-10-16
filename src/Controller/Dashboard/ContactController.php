@@ -6,8 +6,7 @@ use App\Core\Request;
 use EasyCSRF\EasyCSRF;
 use App\Service\Dashboard\ContactManagementServiceInterface;
 
-class ContactController extends AbstractDashboardController
-{
+class ContactController extends AbstractDashboardController {
   public function __construct(
     public ContactManagementServiceInterface $contactService,
     Request $request,
@@ -21,7 +20,7 @@ class ContactController extends AbstractDashboardController
     return 'contact';
   }
 
-  public function startAction(): void
+  public function indexAction(): void
   {
     $this->redirect('/?dashboard=contact&action=edit');
   }

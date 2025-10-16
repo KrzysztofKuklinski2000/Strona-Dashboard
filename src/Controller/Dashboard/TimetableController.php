@@ -6,8 +6,7 @@ use App\Core\Request;
 use EasyCSRF\EasyCSRF;
 use App\Service\Dashboard\TimetableManagementServiceInterface;
 
-class TimetableController extends AbstractDashboardController
-{
+class TimetableController extends AbstractDashboardController {
 
   public function __construct(
     public TimetableManagementServiceInterface $timetableService,
@@ -17,82 +16,69 @@ class TimetableController extends AbstractDashboardController
     parent::__construct($request, $easyCSRF, $timetableService);
   }
 
-  public function startAction(): void
-  {
+  public function indexAction(): void {
     $this->renderPage([
       'page' => 'timetable/index',
       'data' => $this->timetableService->getAllTimetable(),
     ]);
   }
 
-  public function editAction(): void
-  {
+  public function editAction(): void {
     $this->renderPage([
       'page' => 'timetable/edit',
       'data' => $this->getSingleData(),
     ]);
   }
 
-  public function createAction(): void
-  {
+  public function createAction(): void {
     $this->renderPage([
       'page' => 'timetable/create',
     ]);
   }
 
-  public function showAction(): void
-  {
+  public function showAction(): void {
     $this->renderPage([
       'page' => 'timetable/show',
       'data' => $this->getSingleData(),
     ]);
   }
 
-  public function confirmDeleteAction(): void
-  {
+  public function confirmDeleteAction(): void {
     $this->renderPage([
       'page' => 'timetable/delete',
       'data' => $this->getSingleData(),
     ]);
   }
 
-  protected function getModuleName(): string
-  {
+  protected function getModuleName(): string {
     return 'timetable';
   }
 
-  protected function getDataToCreate(): array
-  {
+  protected function getDataToCreate(): array {
     return $this->getDataToAddTimetable();
   }
 
-  protected function getDataToUpdate(): array
-  {
+  protected function getDataToUpdate(): array {
     return $this->getDataToEditTimetable();
   }
 
-  protected function handleCreate(array $data): void
-  {
+  protected function handleCreate(array $data): void {
     $this->timetableService->createTimetable($data);
   }
 
-  protected function handleUpdate(array $data): void
-  {
+  protected function handleUpdate(array $data): void {
     $this->timetableService->updateTimetable($data);
   }
 
-  protected function handleDelete(int $id): void
-  {
+  protected function handleDelete(int $id): void {
     $this->timetableService->deleteTimetable($id);
   }
 
-  protected function handlePublish(array $data): void
-  {
+  protected function handlePublish(array $data): void {
     $this->timetableService->publishedTimetable($data);
   }
 
-  protected function handleMove(array $data): void
-  {
+  protected function handleMove(array $data): void {
     $this->timetableService->moveTimetable($data);
   }
 }

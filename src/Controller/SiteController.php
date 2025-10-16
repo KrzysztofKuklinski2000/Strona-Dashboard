@@ -12,7 +12,7 @@ class SiteController extends AbstractController {
 		parent::__construct($request, $easyCSRF);
 	}
 
-	public function startAction(): void {
+	public function indexAction(): void {
 		$this->renderPage([
 			'page'=> 'start',
 			'content' => $this->siteService->getFrontPage(),

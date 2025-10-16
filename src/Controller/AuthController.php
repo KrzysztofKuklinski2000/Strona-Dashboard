@@ -13,21 +13,21 @@ class AuthController extends AbstractController {
 
   public CsrfMiddleware $csrfMiddleware;
 
-  public function __construct(Request $request, public AuthService $authService, EasyCSRF $easyCSRF)
-  {
+  public function __construct(Request $request, public AuthService $authService, EasyCSRF $easyCSRF) {
+
     parent::__construct($request, $easyCSRF);
     $this->csrfMiddleware = new \App\Middleware\CsrfMiddleware($easyCSRF, $this->request);
+    
   }
 
-  public function startAction(): void {
-    if (!empty($this->request->getSession('user'))) header('location: /?dashboard=start');
-    header('location: /?auth=login');
-    exit;
+  public function indexAction(): void {
+    if (!empty($this->request->getSession('user'))) $this->redirect('/?dashboard=start');
+
+    $this->redirect('/?auth&action=login');
   }
 
   public function loginAction(): void {
-    if (!empty($this->request->getSession('user'))) header('location: /?dashboard=start');
-
+    if (!empty($this->request->getSession('user'))) $this->redirect('/?dashboard=start');
     $errors = [];
 
     if ($this->request->hasPost()) {
@@ -40,8 +40,7 @@ class AuthController extends AbstractController {
 
         if (empty($errors)) {
             $this->setFlash('info', 'Udało się zalogować');
-            header('location: /?dashboard=start');
-            exit;
+            $this->redirect('/?dashboard=start');
         }
 
         }catch(ServiceException $e) {
@@ -53,10 +52,9 @@ class AuthController extends AbstractController {
     $this->view->renderDashboardView(['page' => 'login', 'messages' => $errors, 'csrf_token' => $this->csrfMiddleware->generateToken()]);
   }
 
-  public function logoutAction()
-  {
-    if (empty($this->request->getSession('user'))) header('location: /?dashboard=start');
-    session_destroy();
-    header("Location: /?auth=start");
+  public function logoutAction(){
+    if (empty($this->request->getSession('user'))) $this->redirect('/?dashboard=start');
+    $this->request->removeSession('user');
+    $this->redirect('/?auth&action=login');
   }
 }

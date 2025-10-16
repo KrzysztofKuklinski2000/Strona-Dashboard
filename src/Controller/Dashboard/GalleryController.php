@@ -6,8 +6,7 @@ use App\Core\Request;
 use EasyCSRF\EasyCSRF;
 use App\Service\Dashboard\GalleryManagementServiceInterface;
 
-class GalleryController extends AbstractDashboardController
-{
+class GalleryController extends AbstractDashboardController {
 
   public function __construct(
     public GalleryManagementServiceInterface $galleryService,
@@ -17,47 +16,41 @@ class GalleryController extends AbstractDashboardController
     parent::__construct($request, $easyCSRF, $galleryService);
   }
 
-  public function startAction(): void
-  {
+  public function indexAction(): void {
     $this->renderPage([
       'page' => 'gallery/index',
       'data' => $this->galleryService->getAllGallery(),
     ]);
   }
 
-  public function editAction(): void
-  {
+  public function editAction(): void {
     $this->renderPage([
       'page' => 'gallery/edit',
       'data' => $this->getSingleData(),
     ]);
   }
 
-  public function createAction(): void
-  {
+  public function createAction(): void {
     $this->renderPage([
       'page' => 'gallery/create',
     ]);
   }
 
-  public function showAction(): void
-  {
+  public function showAction(): void {
     $this->renderPage([
       'page' => 'gallery/show',
       'data' => $this->getSingleData(),
     ]);
   }
 
-  public function confirmDeleteAction(): void
-  {
+  public function confirmDeleteAction(): void {
     $this->renderPage([
       'page' => 'gallery/delete',
       'data' => $this->getSingleData(),
     ]);
   }
 
-  protected function getModuleName(): string
-  {
+  protected function getModuleName(): string {
     return 'gallery';
   }
 
@@ -70,28 +63,23 @@ class GalleryController extends AbstractDashboardController
   }
   
 
-  protected function handleCreate(array $data): void
-  {
+  protected function handleCreate(array $data): void {
     $this->galleryService->createGallery($data);
   }
 
-  protected function handleUpdate(array $data): void
-  {
+  protected function handleUpdate(array $data): void {
     $this->galleryService->updateGallery($data);
   }
 
-  protected function handleDelete(int $id): void
-  {
+  protected function handleDelete(int $id): void {
     $this->galleryService->deleteGallery($id);
   }
 
-  protected function handlePublish(array $data): void
-  {
+  protected function handlePublish(array $data): void {
     $this->galleryService->publishedGallery($data);
   }
 
-  protected function handleMove(array $data): void
-  {
+  protected function handleMove(array $data): void {
     $this->galleryService->moveGallery($data);
   }
 }

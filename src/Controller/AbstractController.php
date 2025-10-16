@@ -7,12 +7,13 @@ use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
 use App\Core\ActionResolver;
-
+use App\Exception\NotFoundException;
 
 class AbstractController {
+	
 	public View $view;
 	private ActionResolver $actionResolver;
-	private const DEFAULT_ACTION = 'start';
+	
 
 	public function __construct(public Request $request, protected EasyCSRF $easyCSRF) {
 		$this->view = new View();
@@ -23,7 +24,11 @@ class AbstractController {
 		$action = $this->actionResolver->resolve($this->request);
 		
 		if(!method_exists($this, $action)){
-			$action = self::DEFAULT_ACTION . "Action";
+			throw new NotFoundException(sprintf('Action "%s" not found in controller "%s".', $action, static::class));
+		}
+
+		if (!method_exists($this, $action)) {
+			throw new \LogicException(sprintf('Controller "%s" does not have a default "indexAction" method.', static::class));
 		}
 		
 		$this->$action();

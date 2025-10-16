@@ -15,7 +15,7 @@ class NewsController extends AbstractDashboardController {
     parent::__construct($request, $easyCSRF, $newsService);
   }
 
-  public function startAction() :void {
+  public function indexAction() :void {
     $this->renderPage([
       'page' => 'news/index',
       'data' => $this->newsService->getAllNews(),
@@ -49,7 +49,7 @@ class NewsController extends AbstractDashboardController {
     ]);
   }
 
-   protected function getModuleName(): string {
+  protected function getModuleName(): string {
     return 'news';
   }
 

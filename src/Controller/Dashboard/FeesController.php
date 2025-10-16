@@ -15,11 +15,7 @@ class FeesController extends AbstractDashboardController {
     parent::__construct($request, $easyCSRF, $feesService);
   }
 
-  protected function getModuleName(): string {
-    return 'fees';
-  }
-
-  public function startAction(): void {
+  public function indexAction(): void {
     $this->redirect('/?dashboard=fees&action=edit');
   }
 
@@ -30,13 +26,15 @@ class FeesController extends AbstractDashboardController {
     ]);
   }
 
-  protected function getDataToUpdate(): array
-  {
+  protected function getModuleName(): string {
+    return 'fees';
+  }
+
+  protected function getDataToUpdate(): array {
     return $this->getDataToFeesEdit();
   }
 
-  protected function handleUpdate(array $data): void
-  {
+  protected function handleUpdate(array $data): void {
     $this->feesService->updateFees($data);
   }
 }
