@@ -2,8 +2,9 @@
 
 namespace App\Factories\ServiceFactories;
 
-use App\Service\Dashboard\DashboardService;
+use App\Core\FileHandler;
 use App\Repository\DashboardRepository;
+use App\Service\Dashboard\DashboardService;
 
 class DashboardServiceFactory implements ServiceFactoryInterface {
 
@@ -12,6 +13,9 @@ class DashboardServiceFactory implements ServiceFactoryInterface {
   public function createService() {
     
     $repository = new DashboardRepository($this->dbconfig);
-    return new DashboardService($repository);
+
+    $fileHandler = new FileHandler();
+
+    return new DashboardService($repository, $fileHandler);
   }
 }

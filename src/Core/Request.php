@@ -4,18 +4,13 @@ declare(strict_types=1);
 namespace App\Core;
 
 class Request {
-	private array $get = [];
-	private array $post = [];
-	private array $server = [];
-	private array $session = [];
 	private array $errors = [];
 
-	public function __construct($get, $post, $server, $session) {
-		$this->get = $get;
-		$this->post = $post;
-		$this->server = $server;
-		$this->session = $session;
-	}
+	public function __construct(
+		private array $get, 
+		private array $post, 
+		private array $server, 
+		private array $session) {}
 
 	public function getSession(string $param, $default = null) {
 		return $this->session[$param] ?? $default;
@@ -26,21 +21,25 @@ class Request {
 		$this->session[$key] = $value;
 	}
 
-	public function removeSession(string $key) :void{
+	public function removeSession(string $key): void{
 		unset($_SESSION[$key]);
 		unset($this->session[$key]);
 	}
 
-	public function getParam(string $name = null, $default = null): ?string {
+	public function getQueryParam(string $name, $default = null): mixed {
 		return $this->get[$name] ?? $default;
 	}
 
-	public function postParam(string $name = null, $default = null): mixed {
+	public function getFormParam(string $name, $default = null): mixed {
 		return $this->post[$name] ?? $default;
 	}
 
+	public function getMethod(): string {
+		return $this->server['REQUEST_METHOD'] ?? 'GET';
+	}
+
 	public function isPost(): bool {
-		return $this->server['REQUEST_METHOD'] === 'POST';
+		return $this->getMethod()=== 'POST';
 	}
 
 	public function hasPost(): bool {
@@ -53,18 +52,23 @@ class Request {
 
 	public function resolverControllerKey(array $factories): string {
 		foreach($factories as $key => $_) {
-			if($this->getParam($key) !== null) {
+			if($this->getQueryParam($key) !== null) {
 				return $key;
 			}
 		}
 		return 'site';
 	}
 
-	public function validate(string $param,  bool $required, string $type = 'string', int $maxLength = null, int $minLength = null): mixed {
-		$value = $this->postParam($param);
+	public function validate(
+		string $param,  
+		bool $required, 
+		string $type = 'string', 
+		?int $maxLength = null, 
+		?int $minLength = null): mixed {
+		$value = $this->getFormParam($param);
 
 		if ($required && empty($value)) {
-			$this->errors[$param] = "Pole jest wymagany";
+			$this->errors[$param] = "To pole jest wymagane.";
 			return null;
 		}
 	

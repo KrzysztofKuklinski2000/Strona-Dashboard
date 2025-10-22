@@ -2,17 +2,21 @@
 
 namespace App\Controller\Dashboard;
 
+use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
+use App\Core\ActionResolver;
 use App\Service\Dashboard\FeesManagementServiceInterface;
 
 class FeesController extends AbstractDashboardController {
   public function __construct(
     public FeesManagementServiceInterface $feesService,
     Request $request,
-    EasyCSRF $easyCSRF
+    EasyCSRF $easyCSRF,
+    View $view,
+    ActionResolver $actionResolver
   ) {
-    parent::__construct($request, $easyCSRF, $feesService);
+    parent::__construct($request, $easyCSRF, $feesService, $view, $actionResolver);
   }
 
   public function indexAction(): void {

@@ -13,7 +13,7 @@ class FileHandler {
             }
 
             if(!is_dir(self::UPLOAD_DIR)) {
-                mkdir(self::UPLOAD_DIR,0777, true);
+                mkdir(self::UPLOAD_DIR,0755, true);
             }
 
             $imageName = uniqid('karate_', true). '.'.pathinfo($file['name'], PATHINFO_EXTENSION);

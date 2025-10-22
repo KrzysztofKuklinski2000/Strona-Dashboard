@@ -11,17 +11,23 @@ use PDOStatement;
 
 
 class AbstractRepository {
-  public PDO $con;
+  protected PDO $con;
   private const ALLOWED_TABLES = ['news', 'contact', 'fees', 'camp', 'user', 'timetable', 'important_posts', 'main_page_posts', 'gallery'];
 
-  public function __construct(array $config)
-  {
+  public function __construct(array $config) {
     try {
       $dns = "mysql:dbname={$config['database']};host={$config['host']}";
-      $this->con = new PDO($dns, $config['user'], $config['password'], [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+      $this->connect($dns, $config['user'], $config['password']);
     } catch (PDOException $e) {
       throw new RepositoryException('Błąd połączenia z bazą danych !', 500, $e);
     }
+  }
+
+  private function connect(string $dns, string $user, string $password): void{
+    $this->con = new PDO($dns, $user, $password, [
+      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+      PDO::ATTR_PERSISTENT => false,
+    ]);
   }
 
   public function runQuery(string $sql, array $params = []): PDOStatement
@@ -41,6 +47,22 @@ class AbstractRepository {
       throw new RepositoryException("Błąd bazy danych", 500, $e);
     }
   }
+
+  public function beginTransaction(): bool {
+    return $this->con->beginTransaction();
+  }
+
+  public function commit(): bool {
+    return $this->con->commit();
+  }
+  public function rollback(): bool {
+    if ($this->con->inTransaction()) {
+      return $this->con->rollback();
+    }
+    return false;
+  }
+
+
 
   protected function validateTable(string $table): string
   {

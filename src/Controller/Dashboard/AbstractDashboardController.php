@@ -2,13 +2,15 @@
 
 namespace App\Controller\Dashboard;
 
-use App\Core\Request;
+use App\View;
 use LogicException;
+use App\Core\Request;
 use EasyCSRF\EasyCSRF;
+use App\Core\ActionResolver;
 use App\Traits\GetDataMethods;
 use App\Middleware\CsrfMiddleware;
-use App\Controller\AbstractController;
 use App\Exception\NotFoundException;
+use App\Controller\AbstractController;
 use App\Service\Dashboard\SharedGetDataServiceInterface;
 
 abstract class AbstractDashboardController extends AbstractController {
@@ -20,16 +22,18 @@ abstract class AbstractDashboardController extends AbstractController {
   public function __construct(
     Request $request, 
     EasyCSRF $easyCSRF, 
-    protected SharedGetDataServiceInterface $dataService) {
+    protected SharedGetDataServiceInterface $dataService,
+    View $view,
+    ActionResolver $actionResolver
+    ) {
 
-    parent::__construct($request, $easyCSRF);
+    parent::__construct($request, $easyCSRF, $view, $actionResolver);
     
-    if (empty($this->request->getSession('user'))) header('location: /?auth=start');
     $this->csrfMiddleware = new CsrfMiddleware($easyCSRF, $this->request);
   }
 
   public function storeAction(): void {
-    if (!$this->request->isPost()) $this->redirect('/?dahboard='.$this->getModuleName());
+    if (!$this->request->isPost()) $this->redirect('/?dashboard='.$this->getModuleName());
 
     $this->csrfMiddleware->verify();
     $data = $this->getDataToCreate();
@@ -45,7 +49,7 @@ abstract class AbstractDashboardController extends AbstractController {
   }
 
   public function updateAction(): void {
-    if (!$this->request->isPost()) $this->redirect('/?dahboard='.$this->getModuleName());
+    if (!$this->request->isPost()) $this->redirect('/?dashboard='.$this->getModuleName());
 
     $this->csrfMiddleware->verify();
     $data = $this->getDataToUpdate();
@@ -64,14 +68,14 @@ abstract class AbstractDashboardController extends AbstractController {
     if (!$this->request->isPost()) $this->redirect('/?dashboard=' . $this->getModuleName());
 
       $this->csrfMiddleware->verify();
-      $id = (int) $this->request->postParam('postId');
+      $id = (int) $this->request->getFormParam('postId');
       $this->handleDelete($id);
       $this->setFlash('success', 'Udało się usunąć');
       $this->redirect('/?dashboard=' . $this->getModuleName());
   }
 
   public function publishedAction(): void {
-    if (!$this->request->isPost()) $this->redirect('/?dahboard=' . $this->getModuleName());
+    if (!$this->request->isPost()) $this->redirect('/?dashboard=' . $this->getModuleName());
 
     $this->csrfMiddleware->verify();
     $data = $this->getDataToPublished();
@@ -141,7 +145,7 @@ abstract class AbstractDashboardController extends AbstractController {
   }
 
   protected function getSingleData(): array {
-    $postId = $this->request->getParam('id');
+    $postId = $this->request->getQueryParam('id');
     if ($postId === null || !ctype_digit((string) $postId)) {
       throw new NotFoundException("Required 'id' parameter is missing or invalid");
     }

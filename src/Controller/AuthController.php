@@ -2,21 +2,28 @@
 declare(strict_types=1);
 namespace App\Controller;
 
-use App\Exception\ServiceException;
-use App\Middleware\CsrfMiddleware;
-use App\Core\Request;
-use App\Service\AuthService;
-use EasyCSRF\EasyCSRF;
+use App\View;
 use Throwable;
+use App\Core\Request;
+use EasyCSRF\EasyCSRF;
+use App\Core\ActionResolver;
+use App\Service\AuthService;
+use App\Middleware\CsrfMiddleware;
+use App\Exception\ServiceException;
 
 class AuthController extends AbstractController {
 
   public CsrfMiddleware $csrfMiddleware;
 
-  public function __construct(Request $request, public AuthService $authService, EasyCSRF $easyCSRF) {
+  public function __construct(
+    Request $request, 
+    public AuthService $authService, 
+    EasyCSRF $easyCSRF, 
+    View $view, ActionResolver 
+    $actionResolver) {
 
-    parent::__construct($request, $easyCSRF);
-    $this->csrfMiddleware = new \App\Middleware\CsrfMiddleware($easyCSRF, $this->request);
+    parent::__construct($request, $easyCSRF, $view, $actionResolver);
+    $this->csrfMiddleware = new CsrfMiddleware($easyCSRF, $this->request);
     
   }
 
@@ -33,8 +40,8 @@ class AuthController extends AbstractController {
     if ($this->request->hasPost()) {
       try {
 				$this->csrfMiddleware->verify();
-        $login = $this->request->postParam('login');
-        $password = $this->request->postParam('password');
+        $login = $this->request->getFormParam('login');
+        $password = $this->request->getFormParam('password');
 
         $errors = $this->authService->login($login, $password);
 

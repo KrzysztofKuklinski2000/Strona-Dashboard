@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Factories\ControllerFactories\Dashboard;
 
 
+use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
+use App\Core\ActionResolver;
 use App\Controller\AbstractController;
 use App\Controller\Dashboard\ContactController;
 use App\Factories\ServiceFactories\DashboardServiceFactory;
@@ -24,11 +26,17 @@ class ContactControllerFactory implements ControllerFactoryInterface
   public function createController(Request $request, EasyCSRF $easyCSRF): AbstractController
   {
     $dashboardService = $this->serviceFactory->createService();
+    
+    $view = new View();
+    $actionResolver = new ActionResolver();
+    
 
     return new ContactController(
       $dashboardService,
       $request,
-      $easyCSRF
+      $easyCSRF,
+      $view,
+      $actionResolver
     );
   }
 }

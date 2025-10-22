@@ -11,10 +11,8 @@ use App\Exception\ServiceException;
 
 class DashboardService implements NewsManagementServiceInterface, SharedGetDataServiceInterface, StartManagementServiceInterface, ImportantPostsManagementServiceInterface, GalleryManagementServiceInterface, TimeTableManagementServiceInterface, FeesManagementServiceInterface, CampManagementServiceInterface, ContactManagementServiceInterface {
 
-    private FileHandler $fileHandler;
-    public function __construct(public DashboardRepository $dashboardRepository){
-        $this->fileHandler = new FileHandler();
-    }
+    
+    public function __construct(public DashboardRepository $dashboardRepository, private FileHandler $fileHandler){}
 
     private function getDashboardData(string $table): array {
         try {
@@ -51,32 +49,32 @@ class DashboardService implements NewsManagementServiceInterface, SharedGetDataS
 
     private function create(string $table, array $data): void {
         try {
-            $this->dashboardRepository->con->beginTransaction();
+            $this->dashboardRepository->beginTransaction();
             $this->dashboardRepository->incrementPosition($table);
             $this->dashboardRepository->create($data, $table);
-            $this->dashboardRepository->con->commit();
+            $this->dashboardRepository->commit();
         }catch (RepositoryException $e) {
-            $this->dashboardRepository->con->rollBack();
+            $this->dashboardRepository->rollBack();
             throw new ServiceException("Nie udało się utworzyć posta",500, $e);
         }
     }
 
     private function delete(string $table, int $id): void {
         try {
-            $this->dashboardRepository->con->beginTransaction();
+            $this->dashboardRepository->beginTransaction();
             $currentPost = $this->dashboardRepository->getPost($id, $table);
             $this->dashboardRepository->delete($id, $table);
             $this->dashboardRepository->decrementPosition($table, (int) $currentPost['position']);
-            $this->dashboardRepository->con->commit();
+            $this->dashboardRepository->commit();
         }catch (RepositoryException $e) {
-            $this->dashboardRepository->con->rollBack();
+            $this->dashboardRepository->rollBack();
             throw new ServiceException("Nie udało się usunąć posta",500, $e);
         }
     }
 
     private function move(string $table, array $data):void {
         try{
-            $this->dashboardRepository->con->beginTransaction();
+            $this->dashboardRepository->beginTransaction();
 
             $currentPost = $this->dashboardRepository->getPost($data['id'], $table);
 
@@ -90,9 +88,9 @@ class DashboardService implements NewsManagementServiceInterface, SharedGetDataS
                 $this->dashboardRepository->movePosition($table, [':pos' => (int) $currentPost['position'], ':id' => $stmt['id']]);
             }
                 
-            $this->dashboardRepository->con->commit();
+            $this->dashboardRepository->commit();
         }catch (RepositoryException $e) {
-            $this->dashboardRepository->con->rollBack();
+            $this->dashboardRepository->rollBack();
             throw new ServiceException("Nie udało się zmienić pozycji",500, $e);
         }
     }
@@ -107,14 +105,14 @@ class DashboardService implements NewsManagementServiceInterface, SharedGetDataS
 
     public function addImage(array $data): void {
         try{
-            $this->dashboardRepository->con->beginTransaction();
+            $this->dashboardRepository->beginTransaction();
             $imageName = $this->fileHandler->uploadImage($data['image_name']);
             $this->dashboardRepository->incrementPosition('gallery');
             $data['image_name'] = $imageName;
             $this->dashboardRepository->addImage($data);
-            $this->dashboardRepository->con->commit();
+            $this->dashboardRepository->commit();
         }catch (RepositoryException | FileException $e) {
-            $this->dashboardRepository->con->rollBack();
+            $this->dashboardRepository->rollBack();
             throw new ServiceException("Nie udało się dodać zdjęcia",500, $e);
         }
     }

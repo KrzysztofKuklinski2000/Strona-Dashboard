@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Factories\ControllerFactories\Dashboard;
 
+use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
+use App\Core\ActionResolver;
 use App\Controller\AbstractController;
 use App\Controller\Dashboard\StartController;
 use App\Factories\ServiceFactories\DashboardServiceFactory;
@@ -24,10 +26,16 @@ class StartControllerFactory implements ControllerFactoryInterface
   {
     $dashboardService = $this->serviceFactory->createService();
 
+    $view = new View();
+    $actionResolver = new ActionResolver();
+    
+
     return new StartController(
       $dashboardService,
       $request,
-      $easyCSRF
+      $easyCSRF,
+      $view,
+      $actionResolver
     );
   }
 }

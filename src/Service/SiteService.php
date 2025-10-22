@@ -11,6 +11,7 @@ class SiteService {
 
     public function getNews(int $page): array {
         try {
+            
             $perPage = 10;
             $totalPages = ceil($this->siteRepository->countData('news') / $perPage);
             $page = max(1, min($page, $totalPages));

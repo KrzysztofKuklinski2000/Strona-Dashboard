@@ -6,7 +6,7 @@ $statusText = $isPublished ? 'Publiczny' : 'Niepubliczny';
 ?>
 <tr>
   <td><?= $key + 1 ?>.</td>
-  <td><img class="dashboard-image-index" src="/public/images/karate/<?= htmlspecialchars($row['image_name']) ?>" alt=""></td>
+  <td><img class="dashboard-image-index" src="/public/images/karate/<?= htmlspecialchars($row['image_name']) ?>" alt="zdjecie" loading="lazy"></td>
   <td><?= htmlspecialchars($row['description']) ?></td>
   <td><?= htmlspecialchars($row['created_at']) ?></td>
   <td class="<?= $statusClass ?>"><?= $statusText ?></td>

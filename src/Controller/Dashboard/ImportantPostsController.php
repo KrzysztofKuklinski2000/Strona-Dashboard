@@ -2,17 +2,21 @@
 
 namespace App\Controller\Dashboard;
 
+use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
+use App\Core\ActionResolver;
 use App\Service\Dashboard\ImportantPostsManagementServiceInterface;
 
 class ImportantPostsController extends AbstractDashboardController {
   public function __construct(
     public ImportantPostsManagementServiceInterface $importantPostsService,
     Request $request,
-    EasyCSRF $easyCSRF
+    EasyCSRF $easyCSRF,
+    View $view,
+    ActionResolver $actionResolver
   ) {
-    parent::__construct($request, $easyCSRF, $importantPostsService);
+    parent::__construct($request, $easyCSRF, $importantPostsService, $view, $actionResolver);
   }
 
   public function indexAction(): void {

@@ -10,84 +10,43 @@
 	<link rel="icon" type="image/x-icon" href="/public/images/logo.png">
 	<script src="https://kit.fontawesome.com/062ebc24f8.js" crossorigin="anonymous"></script>
 	<?php
-	$page = $params['page'];
-	switch ($page):
-		case 'camp-info':
-			$canonical = 'obozy';
-			break;
-		case 'contact':
-			$canonical = 'kontakt';
-			break;
-		case 'dojo-oath':
-			$canonical = 'przysiega-do-jo';
-			break;
-		case 'entries-info':
-			$canonical = 'zapisy';
-			break;
-		case 'gallery':
-			$canonical = 'galeria';
-			break;
-		case 'news':
-			$canonical = 'aktualnosci';
-			break;
-		case 'oyama':
-			$canonical = 'oyama';
-			break;
-		case 'requirements':
-			$canonical = 'wymagania';
-			break;
-		case 'statute':
-			$canonical = 'regulamin';
-			break;
-		case 'timetable':
-			$canonical = 'grafik';
-			break;
-		case 'fees-info':
-			$canonical = 'skladki';
-			break;
-		default:
-			$canonical = 'start';
-	endswitch;
+	$page = $params['page'] ?? 'start';
+	$canonicalSlug = match ($page) {
+		'camp-info' => 'obozy',
+		'contact' => 'kontakt',
+		'dojo-oath' => 'przysięga-dojo',
+		'entries-info' => 'zapisy',
+		'fees-info' => 'składki',
+		'gallery' => 'galeria',
+		'news' => 'aktualności',
+		'oyama' => 'matsutatsu-oyama',
+		'requirements' => 'wymagania-egzaminacyjne',
+		'statute' => 'regulamin',
+		'timetable' => 'grafik',
+		default => ''
+	};
+	$baseUrl = 'http://karatetestkyokushin.atwebpages.com/';
+	$canonicalUrl = rtrim($baseUrl, '/') . '/' . $canonicalSlug;
+	$canonicalUrl = str_replace('//', '/', $canonicalUrl)
 	?>
-	<link rel="canonical" href="http://karatetestkyokushin.atwebpages.com/<?= $canonical ?>" />
+	<link rel="canonical" href="<?= htmlspecialchars($canonicalUrl) ?>" />
 	<title>
-		<?php switch ($params['page']):
-			case 'camp-info': ?>
-				Obozy
-			<?php break;
-			case 'contact': ?>
-				Kontakt
-			<?php break;
-			case 'dojo-oath': ?>
-				Przysięga DoJo
-			<?php break;
-			case 'entries-info': ?>
-				Zapisy
-			<?php break;
-			case 'fees-info': ?>
-				Składki
-			<?php break;
-			case 'gallery': ?>
-				Galeria
-			<?php break;
-			case 'news': ?>
-				Aktualności
-			<?php break;
-			case 'oyama': ?>
-				Matsutatsu Oyama
-			<?php break;
-			case 'requirements': ?>
-				Wymagania Egzaminacyjne
-			<?php break;
-			case 'statute': ?>
-				Regulamin
-			<?php break;
-			case 'timetable': ?>
-				Grafik
-			<?php break;
-			default: ?>
-				Strona Główna
-		<?php endswitch; ?>
+		<?php
+		echo match ($page) {
+			'camp-info' => 'Obóz',
+			'contact' => 'Kontakt',
+			'dojo-oath' => 'Przysięga Dojo',
+			'entries-info' => 'Zapisy',
+			'fees-info' => 'Składki',
+			'gallery' => 'Galeria',
+			'news' => 'Aktualności',
+			'oyama' => 'Matsutatsu Oyama',
+			'requirements' => 'Wymagania Egzaminacyjne',
+			'statute' => 'Regulamin',
+			'timetable' => 'Grafik zajęć',
+			default => 'Strona Główna'
+		};
+		?>
 		- Klub Karate Kyokushin Wejherowo
 	</title>
 </head>

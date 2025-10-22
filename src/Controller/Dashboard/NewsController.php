@@ -1,8 +1,10 @@
 <?php 
 namespace App\Controller\Dashboard;
 
+use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
+use App\Core\ActionResolver;
 use App\Service\Dashboard\NewsManagementServiceInterface;
 
 class NewsController extends AbstractDashboardController {
@@ -10,9 +12,12 @@ class NewsController extends AbstractDashboardController {
   public function __construct(
     public NewsManagementServiceInterface $newsService, 
     Request $request, 
-    EasyCSRF $easyCSRF)
+    EasyCSRF $easyCSRF,
+    View $view,
+    ActionResolver $actionResolver
+    )
   {
-    parent::__construct($request, $easyCSRF, $newsService);
+    parent::__construct($request, $easyCSRF, $newsService, $view, $actionResolver);
   }
 
   public function indexAction() :void {

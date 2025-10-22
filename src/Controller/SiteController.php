@@ -3,13 +3,21 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\View;
 use App\Core\Request;
-use App\Service\SiteService;
 use EasyCSRF\EasyCSRF;
+use App\Core\ActionResolver;
+use App\Service\SiteService;
 
 class SiteController extends AbstractController {
-	public function __construct(Request $request, public SiteService $siteService, EasyCSRF $easyCSRF) {
-		parent::__construct($request, $easyCSRF);
+	public function __construct(
+		Request $request, 
+		public SiteService $siteService, 
+		EasyCSRF $easyCSRF,
+		View $view, 
+		ActionResolver $actionResolver
+		) {
+		parent::__construct($request, $easyCSRF, $view, $actionResolver);
 	}
 
 	public function indexAction(): void {
@@ -20,8 +28,9 @@ class SiteController extends AbstractController {
 	}
 
 	public function newsAction(): void {
-		$page = (int) $this->request->getParam('page');
+		$page = (int) $this->request->getQueryParam('page');
 		$result = $this->siteService->getNews($page);
+		
 
 		$this->renderPage([
 			'page' => 'news', 
@@ -42,7 +51,7 @@ class SiteController extends AbstractController {
 	public function galleryAction(): void {
 		$this->renderPage([
 			'page' => 'gallery',
-			'content' => $this->siteService->getGallery($this->request->getParam('category')),
+			'content' => $this->siteService->getGallery($this->request->getQueryParam('category')),
 		]);
 	}
 

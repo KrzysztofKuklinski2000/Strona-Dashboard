@@ -2,8 +2,10 @@
 
 namespace App\Controller\Dashboard;
 
+use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
+use App\Core\ActionResolver;
 use App\Service\Dashboard\StartManagementServiceInterface;
 
 class StartController extends AbstractDashboardController {
@@ -11,9 +13,11 @@ class StartController extends AbstractDashboardController {
   public function __construct(
     public StartManagementServiceInterface $startService,
     Request $request,
-    EasyCSRF $easyCSRF
+    EasyCSRF $easyCSRF,
+    View $view,
+    ActionResolver $actionResolver
   ) {
-    parent::__construct($request, $easyCSRF, $startService);
+    parent::__construct($request, $easyCSRF, $startService, $view, $actionResolver);
   }
 
   public function indexAction(): void {

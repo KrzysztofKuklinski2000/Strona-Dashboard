@@ -4,10 +4,9 @@ namespace App\Core;
 use App\Exception\NotFoundException;
 
 class ErrorHandler {
-    private string $isDev;
     private string $errorPath;
-    public function __construct(string $isDev, string $errorPath) {
-        $this->isDev = $isDev;  
+
+    public function __construct(private bool $isDev, string $errorPath) {
         $this->errorPath = rtrim($errorPath, '/');
     }
 
@@ -23,7 +22,7 @@ class ErrorHandler {
     }
 
     public function renderErrorPage(string $file, \Throwable $e): void {
-        if($this->isDev === "dev") {
+        if($this->isDev) {
             echo "<pre>" . get_class($e) .": ". $e->getMessage() ."\n";
             echo $e->getTraceAsString(). "</pre>";
         }else {
