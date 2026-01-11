@@ -8,6 +8,10 @@ class FileHandler {
     private const UPLOAD_DIR = 'public/images/karate/';
 
     public function uploadImage(array $file): string {
+            if (!isset($file['error']) || !isset($file['tmp_name']) || !isset($file['name'])) {
+                throw new FileException("Nieprawidłowe dane pliku.");
+            }
+            
             if($file['error'] !== 0) {
                 throw new FileException("Błąd podczas przesyłania pliku");
             }
