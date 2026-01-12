@@ -2,11 +2,17 @@
 namespace App;
 
 class View {
+	public function __construct(private string $templatePath = 'templates/'){}
+
 	public function renderPageView(array $params) {
-		require_once('templates/layout.php');
+		$path = rtrim($this->templatePath, '/').'/layout.php';
+
+		if(file_exists($path)) require $path;
 	}
 	
 	public function renderDashboardView(array $params) {
-		require_once('templates/dashboard/layout.php');
+		$path = rtrim($this->templatePath, '/') . '/dashboard/layout.php';
+		
+		if (file_exists($path)) require $path;
 	}
 }
