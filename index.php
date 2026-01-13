@@ -22,6 +22,7 @@ use EasyCSRF\EasyCSRF;
 use EasyCSRF\NativeSessionProvider;
 use App\Core\Request;
 use App\Core\ErrorHandler;
+use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 
 $factories = require_once('config/factories.php');
 
@@ -58,6 +59,9 @@ try {
 
 	$controller->run();
 
-} catch(\Throwable $e) {
+}catch(InvalidCsrfTokenException $e){
+	header('Location: /?dashboard=start&error=csrf');
+	exit;
+}catch(\Throwable $e) {
 	$errorHandler->handle($e);
 }

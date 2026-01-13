@@ -12,12 +12,7 @@ class CsrfMiddleware {
 
     public function verify():void {
         if($this->request->isPost()) {
-            try {
-                $this->easyCSRF->check('csrf_token', $this->request->getFormParam('csrf_token'));
-            } catch (InvalidCsrfTokenException $e) {
-                header('Location: /?dashboard=start&error=csrf');
-                exit;
-            }
+            $this->easyCSRF->check('csrf_token', $this->request->getFormParam('csrf_token'));
         }
     }
 
