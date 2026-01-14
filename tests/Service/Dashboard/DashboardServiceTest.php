@@ -2,13 +2,14 @@
 
 namespace Tests\Service\Dashboard;
 
-use App\Service\Dashboard\DashboardService;
-use App\Repository\DashboardRepository;
 use App\Core\FileHandler;
-use App\Exception\RepositoryException;
-use App\Exception\ServiceException;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use App\Exception\FileException;
+use App\Exception\ServiceException;
+use App\Exception\RepositoryException;
+use App\Repository\DashboardRepository;
+use App\Service\Dashboard\DashboardService;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class DashboardServiceTest extends TestCase {
   private DashboardRepository | MockObject $repository;
@@ -255,15 +256,115 @@ class DashboardServiceTest extends TestCase {
 
     $this->repository->expects($this->once())
       ->method('beginTransaction');
-
-    $this->repository->method('getPost')
-      ->willThrowException(new RepositoryException('Błąd'));
     
     $this->repository->expects($this->once())
       ->method('rollback');
 
     // WHEN 
+    $this->repository->method('getPost')
+      ->willThrowException(new RepositoryException('Błąd'));
+
     $this->service->moveNews(['id' => 10, 'dir' => 'up']);
   }
 
+  public function testShouldCreateGalleryAndUploadImage(): void {
+    // GIVEN
+    $fileData = ['tmp_name' => '/tmp/fakephp', 'name' => 'fake.jpg'];
+    $inputData = ['image_name' => $fileData, 'title' => 'Test'];
+
+    $uploadedFileName = 'unique_fake.jpg';
+
+    $expectedDbData = [
+      'image_name' => $uploadedFileName,
+      'title' => 'Test'
+      ];
+
+    // EXPECTS
+    $this->repository->expects($this->once())->method('beginTransaction');
+
+    $this->fileHandler->expects($this->once())
+      ->method('uploadImage')
+      ->with($fileData)
+      ->willReturn($uploadedFileName);
+
+    $this->repository->expects($this->once())
+      ->method('incrementPosition')
+      ->with('gallery');
+    
+    $this->repository->expects($this->once())
+      ->method('addImage')
+      ->with($expectedDbData);
+
+    $this->repository->expects($this->once())->method('commit');
+
+    // WHEN 
+    $this->service->createGallery($inputData);
+  
+  }
+
+  public function testShouldThrowServiceExceptionOnImageUploaderFailure(): void {
+    // GIVEN
+    $fileData = ['tmp_name' => '/tmp/fakephp', 'name' => 'fake.jpg'];
+    $inputData = ['image_name' => $fileData, 'title' => 'Test'];
+
+    // EXPECT 
+    $this->expectException(ServiceException::class);
+    $this->expectExceptionMessage('Nie udało się dodać zdjęcia');
+
+    $this->repository->expects($this->once())->method('beginTransaction');
+
+    $this->repository->expects($this->once())->method('rollback');
+
+    // WHEN 
+    $this->fileHandler->method('uploadImage')
+      ->with($fileData)
+      ->willThrowException(new FileException('Błąd'));
+
+    $this->service->createGallery($inputData);
+  }
+
+  public function testShouldRollbackTransactionWhenNoFileWasUploaded(): void {
+    // GIVEN
+    $fileData = ['error' => UPLOAD_ERR_NO_FILE];
+    $inputData = ['image_name' => $fileData, 'title' => 'Test'];
+
+    // EXPECT 
+    $this->expectException(ServiceException::class);
+    $this->expectExceptionMessage('Nie udało się dodać zdjęcia');
+
+    $this->repository->expects($this->once())->method('beginTransaction');
+
+    $this->repository->expects($this->once())->method('rollback');
+
+    // WHEN 
+    $this->fileHandler->method('uploadImage')
+      ->with($fileData)
+      ->willThrowException(new FileException('Błąd'));
+
+    $this->service->createGallery($inputData);
+  }
+
+  public function testShouldRollbackAndThorwRepositoryExceptionWhenFailsAfterUpload(): void {
+    // GIVEN
+    $fileData = ['tmp_name' => '/tmp/fakephp', 'name' => 'fake.jpg'];
+    $inputData = ['image_name' => $fileData, 'title' => 'Test'];
+
+    // EXPECT 
+    $this->expectException(ServiceException::class);
+    $this->expectExceptionMessage('Nie udało się dodać zdjęcia');
+
+    $this->repository->expects($this->once())->method('beginTransaction');
+
+    $this->fileHandler->expects($this->once())
+      ->method('uploadImage');
+
+    $this->repository->expects($this->once())->method('rollback');
+
+    // WHEN 
+    $this->repository->method('incrementPosition')
+      ->with('gallery')
+      ->willThrowException(new RepositoryException('Błąd'));
+
+    $this->service->createGallery($inputData);
+  }
 }
