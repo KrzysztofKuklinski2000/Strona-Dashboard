@@ -156,4 +156,114 @@ class DashboardServiceTest extends TestCase {
     // WHEN
     $this->service->publishedNews($data);
   }
+
+  public function testShouldMoveNewsUp(): void {
+    // GIVEN
+    $table = 'news';
+    $currentPost = ['id' => 10, 'position' => 5];
+    $neighborPost  = ['id' => 11, 'position' => 4];
+    $inputData = ['id' => 10, 'dir' => 'up'];
+
+    // EXPECTS
+    $this->repository->expects($this->once())->method('beginTransaction');
+
+    $this->repository->expects($this->once())
+      ->method('getPost')
+      ->with(10, $table)
+      ->willReturn($currentPost);
+
+    $this->repository->expects($this->once())
+      ->method('getPostByPosition')
+      ->with($table, 4) // $currentPost['position'] - 1 => 4
+      ->willReturn($neighborPost);
+
+
+    $this->repository->expects($this->exactly(2))
+      ->method('movePosition');
+
+    $this->repository->expects($this->once())->method('commit');
+
+    // WHEN 
+    $this->service->moveNews($inputData);
+  
+  }
+
+  public function testShouldMoveNewsDown(): void
+  {
+    // GIVEN
+    $table = 'news';
+    $currentPost = ['id' => 10, 'position' => 5];
+    $neighborPost  = ['id' => 11, 'position' => 6];
+    $inputData = ['id' => 10, 'dir' => 'down'];
+
+    // EXPECTS
+    $this->repository->expects($this->once())->method('beginTransaction');
+
+    $this->repository->expects($this->once())
+      ->method('getPost')
+      ->with(10, $table)
+      ->willReturn($currentPost);
+
+    $this->repository->expects($this->once())
+      ->method('getPostByPosition')
+      ->with($table, 6) // $currentPost['position'] + 1 => 6
+      ->willReturn($neighborPost);
+
+
+    $this->repository->expects($this->exactly(2))
+      ->method('movePosition');
+
+    $this->repository->expects($this->once())->method('commit');
+
+    // WHEN 
+    $this->service->moveNews($inputData);
+  }
+
+  public function testShouldNotMoveWhenNoNeighborFound(): void
+  {
+    $table = 'news';
+    $currentPost = ['id' => 10, 'position' => 1];
+    $inputData = ['id' => 10, 'dir' => 'up'];
+
+    // EXPECTS
+    $this->repository->expects($this->once())->method('beginTransaction');
+
+    $this->repository->expects($this->once())
+      ->method('getPost')
+      ->with(10, $table)
+      ->willReturn($currentPost);
+
+    $this->repository->expects($this->once())
+      ->method('getPostByPosition')
+      ->with($table, 0) // $currentPost['position'] - 1 => 0
+      ->willReturn(false);
+
+
+    $this->repository->expects($this->never())
+      ->method('movePosition');
+
+    $this->repository->expects($this->once())->method('commit');
+
+    // WHEN 
+    $this->service->moveNews($inputData);
+
+  }
+
+  public function testShouldRollbackTransactionOnMoveFailure(): void {
+    // EXPECTS
+    $this->expectException(ServiceException::class);
+
+    $this->repository->expects($this->once())
+      ->method('beginTransaction');
+
+    $this->repository->method('getPost')
+      ->willThrowException(new RepositoryException('Błąd'));
+    
+    $this->repository->expects($this->once())
+      ->method('rollback');
+
+    // WHEN 
+    $this->service->moveNews(['id' => 10, 'dir' => 'up']);
+  }
+
 }
