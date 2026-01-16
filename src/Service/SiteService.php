@@ -9,10 +9,8 @@ use App\Repository\SiteRepository;
 class SiteService {
     public function __construct(public SiteRepository $siteRepository) {}
 
-    public function getNews(int $page): array {
+    public function getNews(int $page, int $perPage = 10): array {
         try {
-            
-            $perPage = 10;
             $totalPages = ceil($this->siteRepository->countData('news') / $perPage);
             $page = max(1, min($page, $totalPages));
             $offset = (int) (($page-1) * $perPage);
