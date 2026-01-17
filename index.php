@@ -18,10 +18,11 @@ require_once 'vendor/autoload.php';
 
 session_start();
 
-use EasyCSRF\EasyCSRF;
-use EasyCSRF\NativeSessionProvider;
 use App\Core\Request;
+use App\Core\Database;
+use EasyCSRF\EasyCSRF;
 use App\Core\ErrorHandler;
+use EasyCSRF\NativeSessionProvider;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 
 $factories = require_once('config/factories.php');
@@ -47,8 +48,10 @@ try {
 	}else {
 		$factoryClass = $factoryConfig;
 	}
+	$database = new Database($configuration['db']);
+	$pdo = $database->connect();
 
-	$controllerFactory = new $factoryClass($configuration['db']);
+	$controllerFactory = new $factoryClass($pdo);
 	$controller = $controllerFactory->createController($request, $easyCSRF);
 
 

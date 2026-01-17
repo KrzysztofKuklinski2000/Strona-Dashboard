@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Factories\ControllerFactories;
 
 
+use PDO;
 use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
@@ -16,8 +17,8 @@ class SiteControllerFactory implements ControllerFactoryInterface {
   private SiteServiceFactory $serviceFactory;
   private array $slugMap;
 
-  public function __construct(private array $dbconfig){
-    $this->serviceFactory = new SiteServiceFactory($dbconfig);
+  public function __construct(PDO $pdo){
+    $this->serviceFactory = new SiteServiceFactory($pdo);
     $this->slugMap = require_once __DIR__ . '/../../../config/slugs.php';
   }
   

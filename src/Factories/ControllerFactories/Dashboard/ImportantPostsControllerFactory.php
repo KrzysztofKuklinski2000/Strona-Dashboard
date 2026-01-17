@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Factories\ControllerFactories\Dashboard;
 
 
+use PDO;
 use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
@@ -18,9 +19,9 @@ class ImportantPostsControllerFactory implements ControllerFactoryInterface
 {
   private DashboardServiceFactory $serviceFactory;
 
-  public function __construct(private array $dbconfig)
+  public function __construct(PDO $pdo)
   {
-    $this->serviceFactory = new DashboardServiceFactory($dbconfig);
+    $this->serviceFactory = new DashboardServiceFactory($pdo);
   }
 
   public function createController(Request $request, EasyCSRF $easyCSRF): AbstractController

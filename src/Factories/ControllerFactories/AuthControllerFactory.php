@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Factories\ControllerFactories;
 
+use PDO;
 use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
@@ -16,8 +17,8 @@ class AuthControllerFactory implements ControllerFactoryInterface {
   private AuthServiceFactory $serviceFactory;
 
 
-  public function __construct(private array $dbconfig){
-    $this->serviceFactory = new AuthServiceFactory($dbconfig);
+  public function __construct(PDO $pdo){
+    $this->serviceFactory = new AuthServiceFactory($pdo);
   }
 
   public function createController(Request $request, EasyCSRF $easyCSRF): AbstractController {

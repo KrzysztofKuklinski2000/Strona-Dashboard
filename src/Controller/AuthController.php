@@ -19,8 +19,8 @@ class AuthController extends AbstractController {
     Request $request, 
     public AuthService $authService, 
     EasyCSRF $easyCSRF, 
-    View $view, ActionResolver 
-    $actionResolver) {
+    View $view, 
+    ActionResolver $actionResolver) {
 
     parent::__construct($request, $easyCSRF, $view, $actionResolver);
     $this->csrfMiddleware = new CsrfMiddleware($easyCSRF, $this->request);
