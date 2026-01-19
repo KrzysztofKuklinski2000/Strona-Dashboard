@@ -73,8 +73,8 @@ class AbstractRepository {
 					END ASC, start ASC";
 
       return $this->runQuery($sql)->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-      throw new RepositoryException('Nie udało się pobrać danych.', 500, $e);
+    } catch (RepositoryException $e) {
+      throw new RepositoryException('Nie udało się pobrać danych grafiku.', 500, $e);
     }
   }
 }
