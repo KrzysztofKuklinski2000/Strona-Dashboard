@@ -30,7 +30,7 @@ class DashboardRepository extends AbstractRepository {
 		}
 
 		if(!$result) {
-			throw new NotFoundException('Nie ma takiej posta', 404);
+			throw new NotFoundException('Nie ma takiego posta', 404);
 		}
 
 
