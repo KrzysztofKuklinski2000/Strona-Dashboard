@@ -208,7 +208,7 @@ class DashboardServiceTest extends TestCase
 
     $this->repository->expects($this->once())->method('beginTransaction');
     $this->repository->expects($this->once())->method('getPost')->with(10, $table)->willReturn($currentPost);
-    $this->repository->expects($this->once())->method('getPostByPosition')->with($table, 0)->willReturn(false);
+    $this->repository->expects($this->once())->method('getPostByPosition')->with($table, 0)->willReturn([]);
     $this->repository->expects($this->never())->method('movePosition');
     $this->repository->expects($this->once())->method('commit');
 

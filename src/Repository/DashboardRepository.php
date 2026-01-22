@@ -61,12 +61,12 @@ class DashboardRepository extends AbstractRepository {
 		
 	}
 
-	public function getPostByPosition(string $table, int $position):array|bool {
+	public function getPostByPosition(string $table, int $position): array {
 		try{
 			$table = $this->validateTable($table);
-			return $this->runQuery("SELECT * FROM $table WHERE position = :pos", [':pos' => $position])->fetch(PDO::FETCH_ASSOC);
+			return $this->runQuery("SELECT * FROM $table WHERE position = :pos", [':pos' => $position])->fetch(PDO::FETCH_ASSOC) ?: [];
 		}catch(RepositoryException $e) {
-			throw new RepositoryException("Nie udałi się pobrać elementu", 500, $e);
+			throw new RepositoryException("Nie udało się pobrać elementu", 500, $e);
 		}
 	}
 
@@ -89,7 +89,12 @@ class DashboardRepository extends AbstractRepository {
 	}
 
 	public function delete(int $id, string $table) {
-		$this->runQuery("DELETE FROM $table WHERE id = :id LIMIT 1", [":id" => $id]);
+		try {
+			$table = $this->validateTable($table);
+			$this->runQuery("DELETE FROM $table WHERE id = :id", [":id" => $id]);
+		} catch (RepositoryException $e) {
+			throw new RepositoryException('Nie udało się usunąć posta', 500, $e);
+		}
 	}
 
 	public function create(array $data, string $table): void {
