@@ -7,6 +7,27 @@ use PHPUnit\Framework\TestCase;
 
 class RequestTest extends TestCase
 {
+  private Request $request;
+
+  private array $tempFiles = [];
+
+  public function setUp(): void
+  {
+    $this->request = new Request([], [], [], []);
+
+    $_FILES = [];
+  }
+
+  public function tearDown(): void
+  {
+    foreach ($this->tempFiles as $file) {
+      if (file_exists($file)) {
+        unlink($file);
+      }
+    }
+    $_FILES = [];
+  }
+
   public function testShouldGetSessionValue()
   {
     // GIVEN
@@ -315,5 +336,106 @@ class RequestTest extends TestCase
     // THEN 
     $this->assertArrayHasKey('title', $errors);
     $this->assertSame('Długość pola musi być większa niz 15. znaków', $errors['title']);
+  }
+
+  private function createTempFile(string $content = 'test content'): string
+  {
+    $path = tempnam(sys_get_temp_dir(), 'test_file');
+    file_put_contents($path, $content);
+    $this->tempFiles[] = $path;
+    return $path;
+  }
+
+  public function testShouldReturnNullWhenFileIsNotUploaded(): void
+  {
+    // WHEN
+    $result = $this->request->validateFile('avatar');
+
+    // THEN
+    $this->assertNull($result);
+    $this->assertArrayHasKey('avatar', $this->request->getErrors());
+    $this->assertEquals('Plik nie został przesłany', $this->request->getErrors()['avatar']);
+  }
+
+  public function testShouldReturnNullWhenUploadHasError(): void
+  {
+    // GIVEN
+    $_FILES['avatar'] = [
+      'name' => 'test.jpg',
+      'error' => UPLOAD_ERR_INI_SIZE, 
+      'tmp_name' => '',
+      'size' => 0
+    ];
+
+    // WHEN
+    $result = $this->request->validateFile('avatar');
+
+    // THEN
+    $this->assertNull($result);
+    $this->assertEquals('Błąd przesyłania pliku', $this->request->getErrors()['avatar']);
+  }
+
+  public function testShouldReturnNullWhenMimeTypeIsInvalid(): void
+  {
+    // GIVEN
+    $tempFile = $this->createTempFile('zwykły tekst');
+
+    $_FILES['avatar'] = [
+      'name' => 'test.txt',
+      'error' => UPLOAD_ERR_OK,
+      'tmp_name' => $tempFile,
+      'size' => 100
+    ];
+
+    // WHEN
+    $result = $this->request->validateFile('avatar');
+
+    // THEN
+    $this->assertNull($result);
+    $this->assertEquals('Nieprawidłowy typ pliku', $this->request->getErrors()['avatar']);
+  }
+
+  public function testShouldReturnNullWhenFileIsTooLarge(): void
+  {
+    // GIVEN
+    $tempFile = $this->createTempFile('fake content');
+
+    $_FILES['avatar'] = [
+      'name' => 'test.jpg',
+      'error' => UPLOAD_ERR_OK,
+      'tmp_name' => $tempFile,
+      'size' => 5_000_000 
+    ];
+
+    $allowedTypes = ['text/plain'];
+
+    // WHEN
+    $result = $this->request->validateFile('avatar', $allowedTypes, 2_000_000); // Max 2MB
+
+    // THEN
+    $this->assertNull($result);
+    $this->assertStringContainsString('Plik jest zbyt duży', $this->request->getErrors()['avatar']);
+  }
+
+  public function testShouldReturnFileArrayWhenValidationPasses(): void
+  {
+    // GIVEN
+    $tempFile = $this->createTempFile('fake content'); 
+
+    $_FILES['avatar'] = [
+      'name' => 'avatar.jpg',
+      'error' => UPLOAD_ERR_OK,
+      'tmp_name' => $tempFile,
+      'size' => 1000,
+      'type' => 'text/plain'
+    ];
+
+    // WHEN
+    $result = $this->request->validateFile('avatar', ['text/plain']);
+
+    // THEN
+    $this->assertIsArray($result);
+    $this->assertEquals($tempFile, $result['tmp_name']);
+    $this->assertEmpty($this->request->getErrors());
   }
 }
