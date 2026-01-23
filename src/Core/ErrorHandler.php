@@ -18,7 +18,7 @@ class ErrorHandler {
         }else {
             $this->renderErrorPage('500.php', $e);
         }
-        exit;
+        $this->terminate();
     }
 
     public function renderErrorPage(string $file, \Throwable $e): void {
@@ -33,5 +33,13 @@ class ErrorHandler {
                 echo "Wystąpił błąd. Spróbuj później";
             }
         }
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    protected function terminate(): void
+    {
+        exit;
     }
 }
