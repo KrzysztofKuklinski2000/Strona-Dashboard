@@ -7,8 +7,7 @@ use App\Core\Database;
 use PHPUnit\Framework\TestCase;
 use App\Exception\RepositoryException;
 
-class DatabaseConnectionTest extends TestCase
-{
+class DatabaseTest extends TestCase {
   public function testShouldThrowRepositoryExceptionWhenConnectionFails(): void
   {
     // GIVEN
