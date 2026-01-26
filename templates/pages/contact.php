@@ -1,5 +1,5 @@
 <?php
-$content = $params['content'];
+	$contact = $params['contact'];
 ?>
 
 <div class="respons-container padding-top">
@@ -12,15 +12,15 @@ $content = $params['content'];
 	<div class="contact-information">
 		<div class="flex-item-center">
 			<i class="fa-solid fa-map-pin"></i>
-			<p><?php echo $content['address']; ?></p>
+			<p><?= $contact['address'] ?? ''; ?></p>
 		</div>
 		<div class="flex-item-center">
 			<i class="fa-solid fa-mobile-screen-button"></i>
-			<p><?php echo $content['phone']; ?></p>
+			<p><?= $contact['phone'] ?? ''; ?></p>
 		</div>
 		<div class="flex-item-center">
 			<i class="fa-regular fa-envelope"></i>
-			<p><?php echo $content['email']; ?></p>
+			<p><?= $contact['email'] ?? ''; ?></p>
 		</div>
 	</div>
 	<br><br>

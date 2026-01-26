@@ -79,7 +79,6 @@ class SiteController extends AbstractController {
 	public function contactAction():void {
 		$this->renderPage([
 			'page' => 'contact', 
-			'content' => $this->siteService->getContact()
 		]);
 	}	
 
