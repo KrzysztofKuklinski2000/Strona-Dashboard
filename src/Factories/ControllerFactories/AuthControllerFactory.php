@@ -9,6 +9,7 @@ use App\Core\Request;
 use EasyCSRF\EasyCSRF;
 use App\Core\ActionResolver;
 use App\Controller\AuthController;
+use App\Middleware\CsrfMiddleware;
 use App\Controller\AbstractController;
 use App\Factories\ServiceFactories\AuthServiceFactory;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
@@ -26,13 +27,15 @@ class AuthControllerFactory implements ControllerFactoryInterface {
 
     $view = new View();
     $actionResolver = new ActionResolver();
+    $csrfMidleware = new CsrfMiddleware($easyCSRF, $request);
 
     return new AuthController(
       $request,
       $authService, 
       $easyCSRF,
       $view,
-      $actionResolver
+      $actionResolver,
+      $csrfMidleware
     );
   }
 }

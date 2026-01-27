@@ -13,28 +13,34 @@ use App\Exception\ServiceException;
 
 class AuthController extends AbstractController {
 
-  public CsrfMiddleware $csrfMiddleware;
-
   public function __construct(
     Request $request, 
     public AuthService $authService, 
     EasyCSRF $easyCSRF, 
     View $view, 
-    ActionResolver $actionResolver) {
+    ActionResolver $actionResolver,
+    public CsrfMiddleware $csrfMiddleware
+  ) {
 
     parent::__construct($request, $easyCSRF, $view, $actionResolver);
-    $this->csrfMiddleware = new CsrfMiddleware($easyCSRF, $this->request);
-    
   }
 
   public function indexAction(): void {
-    if (!empty($this->request->getSession('user'))) $this->redirect('/?dashboard=start');
+    if (!empty($this->request->getSession('user'))) {
+      $this->redirect('/?dashboard=start');
+      return;
+    }
+      
 
     $this->redirect('/?auth&action=login');
   }
 
   public function loginAction(): void {
-    if (!empty($this->request->getSession('user'))) $this->redirect('/?dashboard=start');
+    if (!empty($this->request->getSession('user'))) {
+      $this->redirect('/?dashboard=start');
+      return;
+    }
+
     $errors = [];
 
     if ($this->request->hasPost()) {
@@ -60,7 +66,11 @@ class AuthController extends AbstractController {
   }
 
   public function logoutAction(){
-    if (empty($this->request->getSession('user'))) $this->redirect('/?dashboard=start');
+    if (empty($this->request->getSession('user'))) {
+      $this->redirect('/?dashboard=start');
+      return;
+    }
+    
     $this->request->removeSession('user');
     $this->redirect('/?auth&action=login');
   }
