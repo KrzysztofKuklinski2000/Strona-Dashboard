@@ -25,6 +25,9 @@ class AbstractController {
 		$this->$action();
 	}
 
+	/**
+	 * @codeCoverageIgnore
+	 */
 	public function redirect(string $to, int $statusCode = 302) {
 		header("Location: $to", true, $statusCode);
 		exit();
