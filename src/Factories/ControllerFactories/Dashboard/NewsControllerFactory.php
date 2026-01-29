@@ -10,6 +10,7 @@ use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
 use App\Core\ActionResolver;
+use App\Middleware\CsrfMiddleware;
 use App\Controller\AbstractController;
 use App\Controller\Dashboard\NewsController;
 use App\Factories\ServiceFactories\DashboardServiceFactory;
@@ -30,14 +31,15 @@ class NewsControllerFactory implements ControllerFactoryInterface
 
     $view = new View();
     $actionResolver = new ActionResolver();
-    
+    $csrfMiddleware = new CsrfMiddleware($easyCSRF, $request);
 
     return new NewsController(
       $dashboardService,
       $request,
       $easyCSRF,
       $view,
-      $actionResolver
+      $actionResolver,
+      $csrfMiddleware
     );
   }
 }

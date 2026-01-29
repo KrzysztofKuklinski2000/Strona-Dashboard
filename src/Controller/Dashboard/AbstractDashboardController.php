@@ -17,23 +17,24 @@ abstract class AbstractDashboardController extends AbstractController {
 
   use GetDataMethods;
 
-  protected CsrfMiddleware $csrfMiddleware;
-
   public function __construct(
     Request $request, 
     EasyCSRF $easyCSRF, 
     protected SharedGetDataServiceInterface $dataService,
     View $view,
-    ActionResolver $actionResolver
+    ActionResolver $actionResolver,
+    protected CsrfMiddleware $csrfMiddleware
     ) {
 
     parent::__construct($request, $easyCSRF, $view, $actionResolver);
     
-    $this->csrfMiddleware = new CsrfMiddleware($easyCSRF, $this->request);
   }
 
   public function storeAction(): void {
-    if (!$this->request->isPost()) $this->redirect('/?dashboard='.$this->getModuleName());
+    if (!$this->request->isPost()) {
+      $this->redirect('/?dashboard=' . $this->getModuleName());
+      return;
+    }
 
     $this->csrfMiddleware->verify();
     $data = $this->getDataToCreate();
@@ -42,14 +43,19 @@ abstract class AbstractDashboardController extends AbstractController {
       $this->handleCreate($data);
       $this->setFlash("success", "Udało się utworzyć nowy wpis");
       $this->redirect("/?dashboard=".$this->getModuleName());
+      return;
     }
 
     $this->setFlash("errors", $this->request->getErrors());
     $this->redirect('/?dashboard='.$this->getModuleName().'&action=create');
+    return;
   }
 
   public function updateAction(): void {
-    if (!$this->request->isPost()) $this->redirect('/?dashboard='.$this->getModuleName());
+    if (!$this->request->isPost()) {
+      $this->redirect('/?dashboard=' . $this->getModuleName());
+      return;
+    }
 
     $this->csrfMiddleware->verify();
     $data = $this->getDataToUpdate();
@@ -58,24 +64,33 @@ abstract class AbstractDashboardController extends AbstractController {
       $this->handleUpdate($data);
       $this->setFlash("success", "Udało się edytować");
       $this->redirect('/?dashboard=' . $this->getModuleName());
+      return;
     }
 
     $this->setFlash("errors", $this->request->getErrors());
     $this->redirect('/?dashboard=' . $this->getModuleName() . '&action=edit&id=' . $data['id']);
+    return;
   }
 
   public function deleteAction(): void {
-    if (!$this->request->isPost()) $this->redirect('/?dashboard=' . $this->getModuleName());
+    if (!$this->request->isPost()) {
+      $this->redirect('/?dashboard=' . $this->getModuleName());
+      return;
+    }
 
       $this->csrfMiddleware->verify();
       $id = (int) $this->request->getFormParam('postId');
       $this->handleDelete($id);
       $this->setFlash('success', 'Udało się usunąć');
       $this->redirect('/?dashboard=' . $this->getModuleName());
+      return;
   }
 
   public function publishedAction(): void {
-    if (!$this->request->isPost()) $this->redirect('/?dashboard=' . $this->getModuleName());
+    if (!$this->request->isPost()) {
+      $this->redirect('/?dashboard=' . $this->getModuleName());
+      return;
+    }
 
     $this->csrfMiddleware->verify();
     $data = $this->getDataToPublished();
@@ -83,6 +98,7 @@ abstract class AbstractDashboardController extends AbstractController {
 
     $this->setFlash('info', 'Udało się zmienić status');
     $this->redirect('/?dashboard=' . $this->getModuleName());
+    return;
   }
 
   public function moveAction(): void {
@@ -91,6 +107,7 @@ abstract class AbstractDashboardController extends AbstractController {
       $data = $this->getDataToChangePostPosition();
       $this->handleMove($data);
       $this->redirect("/?dashboard=". $this->getModuleName());
+      return;
     }
   }
 

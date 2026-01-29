@@ -10,6 +10,7 @@ use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
 use App\Core\ActionResolver;
+use App\Middleware\CsrfMiddleware;
 use App\Controller\AbstractController;
 use App\Controller\Dashboard\ImportantPostsController;
 use App\Factories\ServiceFactories\DashboardServiceFactory;
@@ -30,14 +31,16 @@ class ImportantPostsControllerFactory implements ControllerFactoryInterface
 
     $view = new View();
     $actionResolver = new ActionResolver();
+    $csrfMiddleware = new CsrfMiddleware($easyCSRF, $request);
+
 
     return new ImportantPostsController(
       $dashboardService,
       $request,
       $easyCSRF,
       $view,
-      $actionResolver
-      
+      $actionResolver,
+      $csrfMiddleware
     );
   }
 }

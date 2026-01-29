@@ -5,6 +5,7 @@ use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
 use App\Core\ActionResolver;
+use App\Middleware\CsrfMiddleware;
 use App\Service\Dashboard\NewsManagementServiceInterface;
 
 class NewsController extends AbstractDashboardController {
@@ -14,10 +15,11 @@ class NewsController extends AbstractDashboardController {
     Request $request, 
     EasyCSRF $easyCSRF,
     View $view,
-    ActionResolver $actionResolver
+    ActionResolver $actionResolver,
+    CsrfMiddleware $csrfMiddleware
     )
   {
-    parent::__construct($request, $easyCSRF, $newsService, $view, $actionResolver);
+    parent::__construct($request, $easyCSRF, $newsService, $view, $actionResolver, $csrfMiddleware);
   }
 
   public function indexAction() :void {

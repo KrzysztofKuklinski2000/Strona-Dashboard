@@ -9,6 +9,7 @@ use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
 use App\Core\ActionResolver;
+use App\Middleware\CsrfMiddleware;
 use App\Controller\AbstractController;
 use App\Controller\Dashboard\GalleryController;
 use App\Factories\ServiceFactories\DashboardServiceFactory;
@@ -29,14 +30,17 @@ class GalleryControllerFactory implements ControllerFactoryInterface
 
     $view = new View();
     $actionResolver = new ActionResolver();
-    
+    $csrfMiddleware = new CsrfMiddleware($easyCSRF, $request);
+
+
 
     return new GalleryController(
       $dashboardService,
       $request,
       $easyCSRF,
       $view,
-      $actionResolver
+      $actionResolver,
+      $csrfMiddleware
     );
   }
 }

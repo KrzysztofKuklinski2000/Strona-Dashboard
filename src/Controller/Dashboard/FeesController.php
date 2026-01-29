@@ -6,6 +6,7 @@ use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
 use App\Core\ActionResolver;
+use App\Middleware\CsrfMiddleware;
 use App\Service\Dashboard\FeesManagementServiceInterface;
 
 class FeesController extends AbstractDashboardController {
@@ -14,9 +15,10 @@ class FeesController extends AbstractDashboardController {
     Request $request,
     EasyCSRF $easyCSRF,
     View $view,
-    ActionResolver $actionResolver
+    ActionResolver $actionResolver,
+    CsrfMiddleware $csrfMiddleware
   ) {
-    parent::__construct($request, $easyCSRF, $feesService, $view, $actionResolver);
+    parent::__construct($request, $easyCSRF, $feesService, $view, $actionResolver, $csrfMiddleware);
   }
 
   public function indexAction(): void {

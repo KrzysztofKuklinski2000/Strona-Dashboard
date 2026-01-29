@@ -5,15 +5,16 @@ declare(strict_types=1);
 namespace App\Factories\ControllerFactories\Dashboard;
 
 
+use PDO;
 use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
 use App\Core\ActionResolver;
+use App\Middleware\CsrfMiddleware;
 use App\Controller\AbstractController;
 use App\Controller\Dashboard\TimetableController;
 use App\Factories\ServiceFactories\DashboardServiceFactory;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
-use PDO;
 
 class TimetableControllerFactory implements ControllerFactoryInterface
 {
@@ -30,14 +31,15 @@ class TimetableControllerFactory implements ControllerFactoryInterface
 
     $view = new View();
     $actionResolver = new ActionResolver();
-    
+    $csrfMiddleware = new CsrfMiddleware($easyCSRF, $request);
 
     return new TimetableController(
       $dashboardService,
       $request,
       $easyCSRF,
       $view,
-      $actionResolver
+      $actionResolver,
+      $csrfMiddleware
     );
   }
 }
