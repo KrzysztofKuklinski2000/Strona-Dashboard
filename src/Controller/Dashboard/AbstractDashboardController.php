@@ -118,29 +118,50 @@ abstract class AbstractDashboardController extends AbstractController {
     return $this->getModuleName();
   }
 
-  /** Obsługuje logikę tworzenia rekordu. */
+  /**
+   * Obsługuje logikę tworzenia posta.
+   * @codeCoverageIgnore
+   */
   protected function handleCreate(array $data): void {
     throw new LogicException(sprintf('The "%s" module does not support creating', $this->getModuleName()));
   }
 
-  /** Obsługuje logikę aktualizacji rekordu. */
+  /**
+   * Obsługuje logikę aktualizacji posta.
+   * @codeCoverageIgnore
+   */
   protected function handleUpdate(array $data): void {
     throw new LogicException(sprintf('The "%s" module does not support updating', $this->getModuleName()));
   }
 
-  /** Obsługuje logikę usunięcia rekordu. */
+  /**
+   * Obsługuje logikę usunięcia posta.
+   * @codeCoverageIgnore
+   */
   protected function handleDelete(int $id): void {
     throw new LogicException(sprintf('The "%s" module does not support deleting', $this->getModuleName()));
   }
 
+  /**
+   * Obsługuje logikę publikowania posta.
+   * @codeCoverageIgnore
+   */
   protected function handlePublish(array $data): void {
     throw new LogicException(sprintf('The "%s" module does not support publishing', $this->getModuleName()));
   }
 
+  /**
+   * Obsługuje logikę przesówania posta.
+   * @codeCoverageIgnore
+   */
   protected function handleMove(array $data): void {
     throw new LogicException(sprintf('The "%s" module does not support moving', $this->getModuleName()));
   }
 
+  /**
+   * Obsługuje pobierania danych do tworzenia posta.
+   * @codeCoverageIgnore
+   */
   protected function getDataToCreate(): array {
     throw new \LogicException(sprintf(
       'The "%s" controller must implement the "getDataForCreate" method to use the "store" action.',
@@ -148,6 +169,10 @@ abstract class AbstractDashboardController extends AbstractController {
     ));
   }
 
+  /**
+   * Obsługuje pobierania danych do aktualizacji posta.
+   * @codeCoverageIgnore
+   */
   protected function getDataToUpdate(): array {
     throw new \LogicException(sprintf(
       'The "%s" controller must implement the "getDataForUpdate" method to use the "update" action.',
