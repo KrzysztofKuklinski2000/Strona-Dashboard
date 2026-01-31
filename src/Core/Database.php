@@ -11,17 +11,19 @@ class Database {
 
   public function connect(): PDO {
     try {
-      $dns = "mysql:dbname={$this->config['database']};host={$this->config['host']}";
-      
-      $pdo = new PDO($dns, $this->config['user'], $this->config['password'], [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_PERSISTENT => false,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-      ]);
+      $dsn = "mysql:dbname={$this->config['database']};host={$this->config['host']}";
 
-      return $pdo;
+      return $this->createConnection($dsn, $this->config['user'], $this->config['password']);
     } catch (PDOException $e) {
       throw new RepositoryException('Błąd połączenia z bazą danych !', 500, $e);
     }
+  }
+
+  protected function createConnection(string $dsn, string $user, string $password): PDO {
+    return new PDO($dsn, $user, $password, [
+      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+      PDO::ATTR_PERSISTENT => false,
+      PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    ]);
   }
 }
