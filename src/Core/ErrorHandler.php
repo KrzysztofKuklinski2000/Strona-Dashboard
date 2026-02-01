@@ -11,7 +11,7 @@ class ErrorHandler {
     }
 
     public function handle(\Throwable $e): void {
-        error_log($e->getMessage());
+        // error_log($e->getMessage());
 
         if($e instanceof NotFoundException) {
             $this->renderErrorPage('404.php', $e);

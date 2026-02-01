@@ -7,7 +7,7 @@ namespace App\Service\Dashboard;
 /**
  * Interfejs definiujący operacje wyłącznie dla modułu Aktualności.
  */
-interface CampManagementServiceInterface
+interface CampManagementServiceInterface extends SharedGetDataServiceInterface
 {
   /**
    * Pobiera wszystkie wpisy opłat.
