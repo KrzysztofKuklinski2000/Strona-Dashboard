@@ -7,7 +7,7 @@ namespace App\Service\Dashboard;
 /**
  * Interfejs definiujący operacje wyłącznie dla modułu Aktualności.
  */
-interface ContactManagementServiceInterface
+interface ContactManagementServiceInterface extends SharedGetDataServiceInterface
 {
   /**
    * Pobiera wszystkie wpisy opłat.
