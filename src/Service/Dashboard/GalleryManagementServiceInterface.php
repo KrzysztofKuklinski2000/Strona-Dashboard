@@ -7,7 +7,7 @@ namespace App\Service\Dashboard;
 /**
  * Interfejs definiujący operacje wyłącznie dla modułu Aktualności.
  */
-interface GalleryManagementServiceInterface
+interface GalleryManagementServiceInterface extends SharedGetDataServiceInterface
 {
   /**
    * Pobiera wszystkie wpisy galerii.
