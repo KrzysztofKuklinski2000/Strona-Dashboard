@@ -7,7 +7,7 @@ namespace App\Service\Dashboard;
 /**
  * Interfejs definiujący operacje wyłącznie dla modułu Aktualności.
  */
-interface ImportantPostsManagementServiceInterface
+interface ImportantPostsManagementServiceInterface extends SharedGetDataServiceInterface
 {
   /**
    * Pobiera wszystkie ważnych postów.
