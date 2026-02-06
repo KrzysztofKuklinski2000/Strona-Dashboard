@@ -7,7 +7,7 @@ namespace App\Service\Dashboard;
 /**
  * Interfejs definiujący operacje wyłącznie dla modułu Aktualności.
  */
-interface NewsManagementServiceInterface
+interface NewsManagementServiceInterface extends SharedGetDataServiceInterface
 {
   /**
    * Pobiera wszystkie wpisy aktualności.
