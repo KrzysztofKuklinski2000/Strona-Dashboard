@@ -1,6 +1,15 @@
 <?php
 declare(strict_types=1);
 
+use App\Core\Database;
+use App\Core\ErrorHandler;
+use App\Core\Request;
+use App\Core\Router;
+use App\Exception\NotFoundException;
+use EasyCSRF\EasyCSRF;
+use EasyCSRF\Exceptions\InvalidCsrfTokenException;
+use EasyCSRF\NativeSessionProvider;
+
 $configuration = require_once('config/config.php');
 $isDev = ($configuration['env'] ?? 'prod') === 'dev';
 
@@ -18,53 +27,47 @@ require_once 'vendor/autoload.php';
 
 session_start();
 
-use App\Core\Request;
-use App\Core\Database;
-use EasyCSRF\EasyCSRF;
-use App\Core\ErrorHandler;
-use EasyCSRF\NativeSessionProvider;
-use EasyCSRF\Exceptions\InvalidCsrfTokenException;
-
-$factories = require_once('config/factories.php');
-
 
 $errorHandler = new ErrorHandler($isDev, __DIR__."/templates/errors");
 $request = new Request($_GET, $_POST, $_SERVER, $_SESSION);
 $easyCSRF = new EasyCSRF(new NativeSessionProvider());
+$router = new Router();
+
+$factories = require_once('config/factories.php');
+
 
 try {
-	$mainKey = $request->resolverControllerKey($factories);
-	$factoryConfig = $factories[$mainKey] ?? $factories['site'];
+	[$controllerClass, $action] = $router->dispatch($request);
 
-	$factoryClass = null;
-
-	if(is_array($factoryConfig)) {
-		$subpage = $request->getQueryParam($mainKey);
-		if(isset($factoryConfig[$subpage])) {
-			$factoryClass = $factoryConfig[$subpage];
-		}else {
-			$factoryClass = $factoryConfig['_default'];
-		}
-	}else {
-		$factoryClass = $factoryConfig;
+	if(!isset($factories[$controllerClass])) {
+		throw new \Exception("Błąd konfiguracji: Brak fabryki dla kontrolera " . $controllerClass);
 	}
+
+	$factoryClass = $factories[$controllerClass];
+
 	$database = new Database($configuration['db']);
 	$pdo = $database->connect();
 
 	$controllerFactory = new $factoryClass($pdo);
 	$controller = $controllerFactory->createController($request, $easyCSRF);
 
-
-	if($controller instanceof \App\Controller\Dashboard\AbstractDashboardController && empty($request->getSession('user'))) {
-		header('Location: /?auth&action=login');
+	if ($controller instanceof \App\Controller\Dashboard\AbstractDashboardController && empty($request->getSession('user'))) {
+		header('Location: /login');
 		exit;
 	}
 
-	$controller->run();
+	if (!method_exists($controller, $action)) {
+		throw new \Exception("Metoda $action nie istnieje w kontrolerze $controllerClass");
+	}
 
-}catch(InvalidCsrfTokenException $e){
-	header('Location: /?dashboard=start&error=csrf');
+	$controller->$action();
+
+} catch (InvalidCsrfTokenException $e) {
+	header('Location: /dashboard?error=csrf');
 	exit;
-}catch(\Throwable $e) {
+} catch (NotFoundException $e) {
+	http_response_code(404);
+	$errorHandler->renderErrorPage('404.php', $e);
+} catch (\Throwable $e) {
 	$errorHandler->handle($e);
 }

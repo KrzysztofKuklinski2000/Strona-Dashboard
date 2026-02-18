@@ -5,6 +5,7 @@ namespace App\Core;
 
 class Request {
 	private array $errors = [];
+	private array $routeParams = [];
 
 	public function __construct(
 		private array $get, 
@@ -120,4 +121,13 @@ class Request {
 		return $file;
 	}
 
+	public function setRouteParams(array $params): void {
+		$this->routeParams = $params;
+	}
+
+	public function getRouteParam(string $key, $default = null): mixed {
+		return $this->routeParams[$key] ?? $default;
+	}
+
+	
 }
