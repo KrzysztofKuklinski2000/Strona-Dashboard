@@ -6,7 +6,6 @@ use App\View;
 use Throwable;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
-use App\Core\ActionResolver;
 use App\Service\AuthService;
 use App\Middleware\CsrfMiddleware;
 use App\Exception\ServiceException;
@@ -18,11 +17,10 @@ class AuthController extends AbstractController {
     public AuthService $authService, 
     EasyCSRF $easyCSRF, 
     View $view, 
-    ActionResolver $actionResolver,
     public CsrfMiddleware $csrfMiddleware
   ) {
 
-    parent::__construct($request, $easyCSRF, $view, $actionResolver);
+    parent::__construct($request, $easyCSRF, $view);
   }
 
   public function indexAction(): void {

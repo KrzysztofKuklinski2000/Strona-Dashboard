@@ -51,15 +51,6 @@ class Request {
 		return $this->errors;
 	}
 
-	public function resolverControllerKey(array $factories): string {
-		foreach($factories as $key => $_) {
-			if($this->getQueryParam($key) !== null) {
-				return $key;
-			}
-		}
-		return 'site';
-	}
-
 	public function validate(
 		string $param,  
 		bool $required, 

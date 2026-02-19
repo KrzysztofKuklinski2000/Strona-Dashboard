@@ -6,7 +6,6 @@ namespace App\Controller;
 use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
-use App\Core\ActionResolver;
 use App\Service\SiteService;
 
 class SiteController extends AbstractController {
@@ -15,9 +14,8 @@ class SiteController extends AbstractController {
 		public SiteService $siteService, 
 		EasyCSRF $easyCSRF,
 		View $view, 
-		ActionResolver $actionResolver
 		) {
-		parent::__construct($request, $easyCSRF, $view, $actionResolver);
+		parent::__construct($request, $easyCSRF, $view);
 	}
 
 	public function indexAction(): void {

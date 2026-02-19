@@ -5,7 +5,6 @@ namespace App\Controller\Dashboard;
 use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
-use App\Core\ActionResolver;
 use App\Middleware\CsrfMiddleware;
 use App\Service\Dashboard\ContactManagementServiceInterface;
 
@@ -15,10 +14,9 @@ class ContactController extends AbstractDashboardController {
     Request $request,
     EasyCSRF $easyCSRF,
     View $view,
-    ActionResolver $actionResolver,
     CsrfMiddleware $csrfMiddleware
   ) {
-    parent::__construct($request, $easyCSRF, $contactService, $view, $actionResolver, $csrfMiddleware);
+    parent::__construct($request, $easyCSRF, $contactService, $view, $csrfMiddleware);
   }
 
   protected function getModuleName(): string

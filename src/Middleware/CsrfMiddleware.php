@@ -4,7 +4,6 @@ namespace App\Middleware;
 
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
-use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 
 class CsrfMiddleware {
 

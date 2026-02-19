@@ -6,24 +6,12 @@ namespace App\Controller;
 use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
-use App\Core\ActionResolver;
-use App\Exception\NotFoundException;
 
 class AbstractController {
 	public function __construct(
 		public Request $request,
 		protected EasyCSRF $easyCSRF,
-		public View $view, 
-		private ActionResolver $actionResolver) {}
-
-	public function run(): void {
-		$action = $this->actionResolver->resolve($this->request);
-		
-		if(!method_exists($this, $action)){
-			throw new NotFoundException(sprintf('Action "%s" not found in controller "%s".', $action, static::class));
-		}
-		$this->$action();
-	}
+		public View $view, ) {}
 
 	/**
 	 * @codeCoverageIgnore

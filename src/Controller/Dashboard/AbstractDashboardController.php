@@ -6,7 +6,6 @@ use App\View;
 use LogicException;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
-use App\Core\ActionResolver;
 use App\Traits\GetDataMethods;
 use App\Middleware\CsrfMiddleware;
 use App\Exception\NotFoundException;
@@ -22,11 +21,10 @@ abstract class AbstractDashboardController extends AbstractController {
     EasyCSRF $easyCSRF, 
     protected SharedGetDataServiceInterface $dataService,
     View $view,
-    ActionResolver $actionResolver,
     protected CsrfMiddleware $csrfMiddleware
     ) {
 
-    parent::__construct($request, $easyCSRF, $view, $actionResolver);
+    parent::__construct($request, $easyCSRF, $view);
     
   }
 
@@ -187,7 +185,7 @@ abstract class AbstractDashboardController extends AbstractController {
   }
 
   protected function getSingleData(): array {
-    $postId = $this->request->getQueryParam('id');
+    $postId = $this->request->getRouteParam('id');
     if ($postId === null || !ctype_digit((string) $postId)) {
       throw new NotFoundException("Required 'id' parameter is missing or invalid");
     }

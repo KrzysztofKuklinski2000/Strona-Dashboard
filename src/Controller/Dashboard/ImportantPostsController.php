@@ -5,7 +5,6 @@ namespace App\Controller\Dashboard;
 use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
-use App\Core\ActionResolver;
 use App\Middleware\CsrfMiddleware;
 use App\Service\Dashboard\ImportantPostsManagementServiceInterface;
 
@@ -15,10 +14,9 @@ class ImportantPostsController extends AbstractDashboardController {
     Request $request,
     EasyCSRF $easyCSRF,
     View $view,
-    ActionResolver $actionResolver,
     CsrfMiddleware $csrfMiddleware
   ) {
-    parent::__construct($request, $easyCSRF, $importantPostsService, $view, $actionResolver, $csrfMiddleware);
+    parent::__construct($request, $easyCSRF, $importantPostsService, $view, $csrfMiddleware);
   }
 
   public function indexAction(): void {

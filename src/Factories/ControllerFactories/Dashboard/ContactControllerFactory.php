@@ -9,7 +9,6 @@ use PDO;
 use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
-use App\Core\ActionResolver;
 use App\Middleware\CsrfMiddleware;
 use App\Controller\AbstractController;
 use App\Controller\Dashboard\ContactController;
@@ -30,7 +29,6 @@ class ContactControllerFactory implements ControllerFactoryInterface
     $dashboardService = $this->serviceFactory->createService();
     
     $view = new View();
-    $actionResolver = new ActionResolver();
     $csrfMiddleware = new CsrfMiddleware($easyCSRF, $request);
     
 
@@ -39,7 +37,6 @@ class ContactControllerFactory implements ControllerFactoryInterface
       $request,
       $easyCSRF,
       $view,
-      $actionResolver,
       $csrfMiddleware
     );
   }

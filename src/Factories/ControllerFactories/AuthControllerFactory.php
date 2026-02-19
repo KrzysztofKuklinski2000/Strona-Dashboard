@@ -7,7 +7,6 @@ use PDO;
 use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
-use App\Core\ActionResolver;
 use App\Controller\AuthController;
 use App\Middleware\CsrfMiddleware;
 use App\Controller\AbstractController;
@@ -26,7 +25,6 @@ class AuthControllerFactory implements ControllerFactoryInterface {
     $authService = $this->serviceFactory->createService();
 
     $view = new View();
-    $actionResolver = new ActionResolver();
     $csrfMidleware = new CsrfMiddleware($easyCSRF, $request);
 
     return new AuthController(
@@ -34,7 +32,6 @@ class AuthControllerFactory implements ControllerFactoryInterface {
       $authService, 
       $easyCSRF,
       $view,
-      $actionResolver,
       $csrfMidleware
     );
   }
