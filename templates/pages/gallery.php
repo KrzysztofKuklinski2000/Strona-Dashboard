@@ -30,8 +30,8 @@
 	require('templates/components/post_header.php');
 	?>
 	<div class="filter">
-		<a href="/?view=galeria&category=training">Treningi</a>
-		<a href="/?view=galeria&category=camp">Obozy</a>
+		<a href="/galeria/training">Treningi</a>
+		<a href="/galeria/camp">Obozy</a>
 	</div>
 	<div class="gallery">
 		<?php foreach ($params['content'] as $content): ?>

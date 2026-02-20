@@ -1,6 +1,6 @@
 <div style="<?php if($params['page'] !== 'start'){echo 'background: #171D29;';} ?>">
 	<div class="nav-container margin-auto <?php if($params['page'] !== 'start'){echo 'border-bottom-for-nav';} ?>">
-		<a href="?action=start">
+		<a href="/">
 			<div class="logo">
 				<img src="public/images/<?php if($params['page'] !== 'start'){echo 'logo1.png';}else {echo 'logo.gif';} ?>" alt="logo"">
 				<span>

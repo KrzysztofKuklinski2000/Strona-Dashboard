@@ -7,16 +7,16 @@
 		<h3>Zajecia</h3>
 		<p></p>
 		<ul>
-			<a href="?action=zapisy">
+			<a href="/zapisy">
 				<li>Zapisy</li>
 			</a>
-			<a href="?action=grafik">
+			<a href="/grafik">
 				<li>Grafik</li>
 			</a>
-			<a href="?action=oplaty#price">
+			<a href="/skladki#price">
 				<li>Cennik</li>
 			</a>
-			<a href="?action=wymagania">
+			<a href="/wymagania-egzaminacyjne">
 				<li>Wymagania Egzaminacyjne</li>
 			</a>
 		</ul>
@@ -25,16 +25,16 @@
 		<h3>Dlaczego karate</h3>
 		<p></p>
 		<ul>
-			<a href="?action=oyama">
+			<a href="/oyama">
 				<li>Matsutatsu Oyama</li>
 			</a>
-			<a href="?action=przysiega_do_jo">
+			<a href="/dojo-oath">
 				<li>Przysięga Dojo</li>
 			</a>
-			<a href="?action=regulamin">
+			<a href="/status">
 				<li>Regulamin</li>
 			</a>
-			<a href="?action=aktualnosci">
+			<a href="/aktualnosci">
 				<li>Aktulności</li>
 			</a>
 		</ul>
@@ -42,7 +42,7 @@
 	<div class="footer-nav">
 		<h3>Kontakt</h3>
 		<p></p>
-		<ul class="contact"">
+		<ul class="contact">
 			<li>Klub Karate Kyokushin i Sportów Walki</li>
 			<li style=" display:flex; gap:5px;"><i class="fa-solid fa-map-pin" style="color:#757575;"></i><?= $params['contact']['address'] ?></li>
 			<li style="display:flex; gap:5px;"><i class="fa-solid fa-mobile-screen-button" style="color:#757575;"></i><?= $params['contact']['phone'] ?></li>

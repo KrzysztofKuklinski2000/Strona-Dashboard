@@ -25,24 +25,24 @@ $currentPage = $params['currentNumberOfPage'];
 	<div class="pagination">
 		<div class="pagination-box">
 			<?php if($currentPage > 1): ?>
-				<a href="/?action=aktualnosci&page=<?= $currentPage - 1 ?>">
+				<a href="/aktualnosci/<?= $currentPage - 1 ?>">
 					<i class="fa-regular fa-square-caret-left"></i>
 				</a>
 			<?php endif ?>
 
 			<?php for ($i = 1; $i <= $numberOfRows; $i++):	?>
 				<?php if ($currentPage <= 0): ?>
-					<a <?= $i === 1 ? "class=current" : "" ?> href="/?action=aktualnosci&page=<?= $i ?>"><?= $i ?></a>
+					<a <?= $i === 1 ? "class=current" : "" ?> href="/aktualnosci/<?= $i ?>"><?= $i ?></a>
 				<?php elseif ($currentPage > $numberOfRows ): ?>
-					<a <?= $i == $numberOfRows  ? "class=current" : "" ?> href="/?action=aktualnosci&page=<?= $i ?>"><?= $i ?></a>
+					<a <?= $i == $numberOfRows  ? "class=current" : "" ?> href="/aktualnosci/<?= $i ?>"><?= $i ?></a>
 				<?php else: ?>
-					<a <?= $i === $currentPage ? "class=current" : "" ?> href="/?action=aktualnosci&page=<?= $i ?>"><?= $i ?></a>
+					<a <?= $i === $currentPage ? "class=current" : "" ?> href="/aktualnosci/<?= $i ?>"><?= $i ?></a>
 				<?php endif; ?>
 
 			<?php endfor; ?>
 
 			<?php if($currentPage < $numberOfRows): ?>
-			<a href="/?action=aktualnosci&page=<?= $currentPage + 1 ?>">
+			<a href="/aktualnosci/<?= $currentPage + 1 ?>">
 				<i class="fa-regular fa-square-caret-right"></i>
 			</a>
 			<?php endif; ?>

@@ -38,7 +38,7 @@ $content = $params['content'];
 			<div class="break"></div>
 		</div>
 		<div class="join">
-			<a class="btn-join" href="?view=zapisy">ZAPISZ SIĘ <i style="color:white;" class="fa-solid fa-angle-right"></i></a>
+			<a class="btn-join" href="/zapisy">ZAPISZ SIĘ <i style="color:white;" class="fa-solid fa-angle-right"></i></a>
 			<br><br>
 		</div>
 	</div>
@@ -70,7 +70,7 @@ $content = $params['content'];
 		<br>
 	</div>
 	<div class="join">
-		<a class="btn-join" href="?view=zapisy">ZAPISZ SIĘ <i style="color:white;" class="fa-solid fa-angle-right"></i></a>
+		<a class="btn-join" href="/zapisy">ZAPISZ SIĘ <i style="color:white;" class="fa-solid fa-angle-right"></i></a>
 		<br><br>
 	</div>
 </div>

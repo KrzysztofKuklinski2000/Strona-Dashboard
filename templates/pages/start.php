@@ -30,7 +30,7 @@
                 <div class="post-content flex-item-center">
                     <span>zajęcia za darmo</span>
                     <p><?= $params['content'][2]['description']; ?></p><br/>
-                    <a class="text-uppercase" href="?view=zapisy">Zapisz się</a>
+                    <a class="text-uppercase" href="/zapisy">Zapisz się</a>
                 </div>
             </div>
         </div>

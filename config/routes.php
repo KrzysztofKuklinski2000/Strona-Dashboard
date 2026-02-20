@@ -7,7 +7,19 @@ use FastRoute\RouteCollector;
 
 return function (RouteCollector $r) {
   $r->get('/', [SiteController::class, 'indexAction']);
+  $r->get('/aktualnosci', [SiteController::class, 'newsAction']);
+  $r->get('/aktualnosci/{page:\d+}', [SiteController::class, 'newsAction']);
+  $r->get('/grafik', [SiteController::class, 'timetableAction']);
+  $r->get('/galeria', [SiteController::class, 'galleryAction']);
+  $r->get('/galeria/{category}', [SiteController::class, 'galleryAction']);
+  $r->get('/oboz', [SiteController::class, 'campAction']);
   $r->get('/skladki', [SiteController::class, 'feesAction']);
+  $r->get('/zapisy', [SiteController::class, 'registrationAction']);
+  $r->get('/kontakt', [SiteController::class, 'contactAction']);
+  $r->get('/status', [SiteController::class, 'statuteAction']);
+  $r->get('/oyama', [SiteController::class, 'oyamaAction']);
+  $r->get('/dojo-oath', [SiteController::class, 'dojoOathAction']);
+  $r->get('/wymagania-egzaminacyjne', [SiteController::class, 'requirementsAction']);
 
 
   $r->get('/dashboard/camp', [CampController::class, 'indexAction']);

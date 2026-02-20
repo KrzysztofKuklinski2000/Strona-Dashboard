@@ -33,7 +33,7 @@
 		</div>
 		<br>
 	</div>
-	<a class="price-btn" href="?view=oplaty">
+	<a class="price-btn" href="/skladki">
 		<div class="flex-item-center margin-auto">
 			<p style="color:white;">Więcej o <br> składkach</p> 
 			<i style="color:white;" class="fa-solid fa-angle-right"></i>

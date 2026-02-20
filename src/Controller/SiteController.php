@@ -26,7 +26,7 @@ class SiteController extends AbstractController {
 	}
 
 	public function newsAction(): void {
-		$page = (int) $this->request->getQueryParam('page');
+		$page = (int) $this->request->getRouteParam('page');
 		$result = $this->siteService->getNews($page);
 		
 
@@ -49,7 +49,7 @@ class SiteController extends AbstractController {
 	public function galleryAction(): void {
 		$this->renderPage([
 			'page' => 'gallery',
-			'content' => $this->siteService->getGallery($this->request->getQueryParam('category')),
+			'content' => $this->siteService->getGallery($this->request->getRouteParam('category')),
 		]);
 	}
 
