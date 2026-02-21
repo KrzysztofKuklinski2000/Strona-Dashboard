@@ -5,7 +5,6 @@ namespace Tests\Controller;
 use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
-use App\Core\ActionResolver;
 use App\Service\SiteService;
 use PHPUnit\Framework\TestCase;
 use App\Controller\SiteController;
@@ -17,7 +16,6 @@ class SiteControllerTest extends TestCase
   private SiteService | MockObject $siteService;
   private EasyCSRF | MockObject $easyCSRF;
   private View | MockObject $view;
-  private ActionResolver | MockObject $actionResolver;
   private SiteController $controller;
 
   public function setUp(): void
@@ -26,14 +24,12 @@ class SiteControllerTest extends TestCase
     $this->siteService = $this->createMock(SiteService::class);
     $this->easyCSRF = $this->createMock(EasyCSRF::class);
     $this->view = $this->createMock(View::class);
-    $this->actionResolver = $this->createMock(ActionResolver::class);
 
     $this->controller = new SiteController(
       $this->request, 
       $this->siteService, 
       $this->easyCSRF, 
       $this->view, 
-      $this->actionResolver
     );
   }
 
@@ -69,7 +65,7 @@ class SiteControllerTest extends TestCase
   {
     // GIVEN 
     $this->request->expects($this->once())
-      ->method('getQueryParam')
+      ->method('getRouteParam')
       ->with('page')
       ->willReturn(2);
 
@@ -134,7 +130,7 @@ class SiteControllerTest extends TestCase
   {
     // GIVEN 
     $this->request->expects($this->once())
-      ->method('getQueryParam')
+      ->method('getRouteParam')
       ->with('category')
       ->willReturn('camp');
 
@@ -161,7 +157,7 @@ class SiteControllerTest extends TestCase
 
   public function testShouldRenderCampPageWhenActionIsCamp(): void
   {
-    // GIVEN
+    // GIVENs
     $fakeContent = ['title' => 'O obozie'];
     $this->siteService->expects($this->once())
       ->method('getCamp')
