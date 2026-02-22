@@ -1,6 +1,6 @@
 <?php 
 $data = $params['data'];
-$action = "/?dashboard=timetable&action=delete&id=" . ($data['id'] ?? '');
+$action = "/dashboard/timetable/delete/" . ($data['id'] ?? '');
 $formTitle = "Usuń posta z grafiku";
 $csrf = $params['csrf_token'] ?? '';
 

@@ -8,6 +8,7 @@ use App\Controller\Dashboard\GalleryController;
 use App\Controller\Dashboard\ImportantPostsController;
 use App\Controller\Dashboard\NewsController;
 use App\Controller\Dashboard\StartController;
+use App\Controller\Dashboard\TimetableController;
 use App\Controller\SiteController;
 use FastRoute\RouteCollector;
 
@@ -87,5 +88,15 @@ return function (RouteCollector $r) {
   $r->get('/dashboard/start/confirmDelete/{id:\d+}', [StartController::class, 'confirmDeleteAction']);
   $r->post('/dashboard/start/delete/{id:\d+}', [StartController::class, 'deleteAction']);
   
-
+  $r->get('/dashboard/timetable', [TimetableController::class, 'indexAction']);
+  $r->post('/dashboard/timetable/move', [TimetableController::class, 'moveAction']);
+  $r->get('/dashboard/timetable/create', [TimetableController::class, 'createAction']);
+  $r->post('/dashboard/timetable/store', [TimetableController::class, 'storeAction']);
+  $r->get('/dashboard/timetable/edit/{id:\d+}', [TimetableController::class, 'editAction']);
+  $r->post('/dashboard/timetable/update/{id:\d+}', [TimetableController::class, 'updateAction']);
+  $r->get('/dashboard/timetable/show/{id:\d+}', [TimetableController::class, 'showAction']);
+  $r->post('/dashboard/timetable/published/{id:\d+}', [TimetableController::class, 'publishedAction']);
+  $r->get('/dashboard/timetable/confirmDelete/{id:\d+}', [TimetableController::class, 'confirmDeleteAction']);
+  $r->post('/dashboard/timetable/delete/{id:\d+}', [TimetableController::class, 'deleteAction']);
+  
 };

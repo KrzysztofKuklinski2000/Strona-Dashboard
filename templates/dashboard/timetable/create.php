@@ -1,6 +1,6 @@
 <?php 
 $data = $params['data'] ?? [];
-$action = "/?dashboard=timetable&action=store&id=" . ($data['id'] ?? '');
+$action = "/dashboard/timetable/store";
 $csrf = $params['csrf_token'] ?? '';
 $error = $params['flash']['message'] ?? [];
 $formTitle = "Nowy Post do grafiku";
