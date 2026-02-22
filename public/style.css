@@ -110,7 +110,7 @@ iframe {
 .header-container {
 	width:100%;
 	height:calc(100vh - 80px);
-	background: url('images/background-header1.jpg');
+	background: url('/images/background-header1.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position-x: 50%;

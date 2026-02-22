@@ -9,7 +9,7 @@
 													} ?>">
 		<a href="/">
 			<div class="logo">
-				<img src="public/images/logo1.png" alt="logo">
+				<img src="/public/images/logo1.png" alt="logo">
 				<span>
 					<p style="font-size:1.1em;  color:#fff">Karate</p>
 					<p style="font-size:1.1em;  color:#CC0000;">Kyokushin</p>

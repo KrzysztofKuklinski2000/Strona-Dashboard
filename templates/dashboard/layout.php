@@ -23,45 +23,45 @@
 		<?php if (!in_array($params['page'], ['login', 'register'])): ?>
 			<aside>
 				<ul>
-					<a href="?dashboard=start">
+					<a href="/dashboard/start">
 						<i class="fa-solid fa-house"></i>
 						<p>Strona Główna</p>
 					</a>
 
-					<a href="?dashboard=important_posts">
+					<a href="/dashboard/important_posts">
 						<i class="fa-solid fa-exclamation"></i>
 						<p>Ważne Info</p>
 					</a>
 
-					<a href="?dashboard=timetable">
+					<a href="/dashboard/timetable">
 						<i class="fa-regular fa-calendar"></i>
 						<p>Grafik</p>
 					</a>
 
-					<a href="?dashboard=news">
+					<a href="/dashboard/news">
 						<i class="fa-solid fa-info"></i>
 						<p>Aktualności</p>
 					</a>
 
-					<a href="?dashboard=gallery">
+					<a href="/dashboard/gallery">
 						<i class="fa-solid fa-image"></i>
 						<p>Galeria</p>
 					</a>
 
-					<a href="?dashboard=camp">
+					<a href="/dashboard/camp">
 						<i class="fa-solid fa-campground"></i>
 						<p>Obozy</p>
 					</a>
 
-					<a href="?dashboard=fees">
+					<a href="/dashboard/fees">
 						<i class="fa-solid fa-money-check-dollar"></i>
 						<p>Składki</p>
 					</a>
-					<a href="?dashboard=contact">
+					<a href="/dashboard/contact">
 						<i class="fa-regular fa-address-book"></i>
 						<p>Kontakt</p>
 					</a>
-					<a href="?auth&action=logout">
+					<a href="/auth/logout">
 						<i class="fa-solid fa-arrow-right-from-bracket"></i>
 						<p>Wyloguj</p>
 					</a>

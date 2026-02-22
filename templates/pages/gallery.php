@@ -18,10 +18,10 @@
 				<div class="left-arrow"><i class="fa-solid fa-caret-left"></i></div>
 				<div class="right-arrow"><i class="fa-solid fa-caret-right"></i></div>
 			</div>
-			<img class="img" src="public/images/slider/4.JPG" alt="Slajder z zdjeciami z zajęć" loading="lazy">
-			<img class="img" src="public/images/slider/3.JPG" alt="Slajder z zdjeciami z zajęć" loading="lazy">
-			<img class="img" src="public/images/slider/2.JPG" alt="Slajder z zdjeciami z zajęć" loading="lazy">
-			<img class="img" src="public/images/slider/1.JPG" alt="Slajder z zdjeciami z zajęć" loading="lazy">
+			<img class="img" src="/public/images/slider/4.JPG" alt="Slajder z zdjeciami z zajęć" loading="lazy">
+			<img class="img" src="/public/images/slider/3.JPG" alt="Slajder z zdjeciami z zajęć" loading="lazy">
+			<img class="img" src="/public/images/slider/2.JPG" alt="Slajder z zdjeciami z zajęć" loading="lazy">
+			<img class="img" src="/public/images/slider/1.JPG" alt="Slajder z zdjeciami z zajęć" loading="lazy">
 			<div class="black-filter"></div>
 		</div>
 	</div><br><br>
@@ -36,11 +36,11 @@
 	<div class="gallery">
 		<?php foreach ($params['content'] as $content): ?>
 			<div class="img-box">
-				<img src="public/images/karate/<?= $content['image_name'] ?>" alt="<?= $content['description'] ?>" loading="lazy">
+				<img src="/public/images/karate/<?= $content['image_name'] ?>" alt="<?= $content['description'] ?>" loading="lazy">
 				<p><?= $content['description'] ?></p>
 			</div>
 		<?php endforeach; ?>
 	</div>
 </div>
 
-<script type="text/javascript" src="public/js/slider.js"></script>
+<script type="text/javascript" src="/public/js/slider.js"></script>

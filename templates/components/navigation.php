@@ -2,7 +2,7 @@
 	<div class="nav-container margin-auto <?php if($params['page'] !== 'start'){echo 'border-bottom-for-nav';} ?>">
 		<a href="/">
 			<div class="logo">
-				<img src="public/images/<?php if($params['page'] !== 'start'){echo 'logo1.png';}else {echo 'logo.gif';} ?>" alt="logo"">
+				<img src="/public/images/<?php if($params['page'] !== 'start'){echo 'logo1.png';}else {echo 'logo.gif';} ?>" alt="logo"">
 				<span>
 					<p style="font-size:.9em;  <?php if($params['page'] !== 'start'){echo 'color: #fff;';}else {echo 'color:#111;';} ?>">Karate</p>
 					<p style="font-size:.9em; color:#CC0000;">Kyokushin</p>

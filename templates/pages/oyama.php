@@ -1,6 +1,6 @@
 <div class="respons-container padding-top">
 	<div style="text-align: center;" class="container">
-		<img class="oyama-img" src="public/images/oyama.jpg" alt="oyama">
+		<img class="oyama-img" src="/public/images/oyama.jpg" alt="oyama">
 		<br>
 		<br>
 		<?php 
