@@ -1,6 +1,6 @@
 <?php
 $data = $params['data'];
-$action = "/?dashboard=important_posts&action=update&id=" . ($data['id'] ?? '');
+$action = "/dashboard/important_posts/update/" . ($data['id'] ?? '');
 $formTitle = "Edytowanie ważnego posta";
 $buttonTitle = "Edytuj";
 $errors = $params['flash']['message'] ?? [];

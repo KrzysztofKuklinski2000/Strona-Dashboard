@@ -5,6 +5,7 @@ use App\Controller\Dashboard\CampController;
 use App\Controller\Dashboard\ContactController;
 use App\Controller\Dashboard\FeesController;
 use App\Controller\Dashboard\GalleryController;
+use App\Controller\Dashboard\ImportantPostsController;
 use App\Controller\SiteController;
 use FastRoute\RouteCollector;
 
@@ -50,4 +51,15 @@ return function (RouteCollector $r) {
   $r->post('/dashboard/gallery/published/{id:\d+}', [GalleryController::class, 'publishedAction']);
   $r->get('/dashboard/gallery/confirmDelete/{id:\d+}', [GalleryController::class, 'confirmDeleteAction']);
   $r->post('/dashboard/gallery/delete/{id:\d+}', [GalleryController::class, 'deleteAction']);
+
+  $r->get('/dashboard/important_posts', [ImportantPostsController::class, 'indexAction']);
+  $r->post('/dashboard/important_posts/move', [ImportantPostsController::class, 'moveAction']);
+  $r->get('/dashboard/important_posts/create', [ImportantPostsController::class, 'createAction']);
+  $r->post('/dashboard/important_posts/store', [ImportantPostsController::class, 'storeAction']);
+  $r->get('/dashboard/important_posts/edit/{id:\d+}', [ImportantPostsController::class, 'editAction']);
+  $r->post('/dashboard/important_posts/update/{id:\d+}', [ImportantPostsController::class, 'updateAction']);
+  $r->get('/dashboard/important_posts/show/{id:\d+}', [ImportantPostsController::class, 'showAction']);
+  $r->post('/dashboard/important_posts/published/{id:\d+}', [ImportantPostsController::class, 'publishedAction']);
+  $r->get('/dashboard/important_posts/confirmDelete/{id:\d+}', [ImportantPostsController::class,'confirmDeleteAction']);
+  $r->post('/dashboard/important_posts/delete/{id:\d+}', [ImportantPostsController::class, 'deleteAction']);
 };

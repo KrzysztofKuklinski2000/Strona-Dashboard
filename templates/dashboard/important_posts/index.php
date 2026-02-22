@@ -1,6 +1,6 @@
 <?php
 $data = $params['data'] ?? [];
-$action = '?dashboard=important_posts&action=move';
+$action = '/dashboard/important_posts/move';
 $moduleName = 'important_posts';
 $pageTitle = 'Ważne Informacje - Lista postów';
 $csrf = $params['csrf_token'] ?? '';

@@ -1,6 +1,6 @@
 <?php
 $data = $params['data'];
-$action = "/?dashboard=important_posts&action=published&id=" . ($data['id'] ?? '');
+$action = "/dashboard/important_posts/published/" . ($data['id'] ?? '');
 $csrf = $params['csrf_token'] ?? '';
 $formTitle = "Szczegóły posta ważnych informacji";
 

@@ -1,6 +1,6 @@
 <?php
 $data = $params['data'];
-$action = "/?dashboard=important_posts&action=delete&id=" . ($data['id'] ?? '');
+$action = "/dashboard/important_posts/delete/" . ($data['id'] ?? '');
 $formTitle = "Usuń ważnego posta";
 $csrf = $params['csrf_token'] ?? '';
 
