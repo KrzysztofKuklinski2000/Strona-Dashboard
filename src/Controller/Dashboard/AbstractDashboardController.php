@@ -51,7 +51,7 @@ abstract class AbstractDashboardController extends AbstractController {
 
   public function updateAction(): void {
     if (!$this->request->isPost()) {
-      $this->redirect('/?dashboard=' . $this->getModuleName());
+      $this->redirect('/dashboard/' . $this->getModuleName());
       return;
     }
 
@@ -61,12 +61,18 @@ abstract class AbstractDashboardController extends AbstractController {
     if (!$this->request->getErrors()) {
       $this->handleUpdate($data);
       $this->setFlash("success", "Udało się edytować");
-      $this->redirect('/?dashboard=' . $this->getModuleName());
+      $this->redirect('/dashboard/' . $this->getModuleName());
       return;
     }
 
     $this->setFlash("errors", $this->request->getErrors());
-    $this->redirect('/?dashboard=' . $this->getModuleName() . '&action=edit&id=' . $data['id']);
+    $redirectUrl = '/dashboard/' . $this->getModuleName() . '/edit';
+
+    if (isset($data['id']) && $data['id'] !== '') {
+      $redirectUrl .= '/' . $data['id'];
+    }
+
+    $this->redirect($redirectUrl);
     return;
   }
 

@@ -26,10 +26,9 @@ return function (RouteCollector $r) {
   $r->post('/auth/login', [AuthController::class, 'loginAction']);
   $r->get('/auth/logout', [AuthController::class, 'logoutAction']);
 
-
-  $r->get('/dashboard/camp', [CampController::class, 'indexAction']);
+  $r->get('/dashboard/camp', [CampController::class, 'editAction']);
   $r->get('/dashboard/camp/edit', [CampController::class, 'editAction']);
-  $r->post('/dashboard/camp/edit', [CampController::class, 'handleUpdate']);
+  $r->post('/dashboard/camp/update', [CampController::class, 'updateAction']);
 
   $r->get('/dashboard/fees', [FeesController::class, 'indexAction']);
   $r->get('/dashboard/fees/edit', [FeesController::class, 'editAction']);

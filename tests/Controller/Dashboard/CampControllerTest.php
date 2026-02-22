@@ -5,7 +5,6 @@ namespace Tests\Controller\Dashboard;
 use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
-use App\Core\ActionResolver;
 use PHPUnit\Framework\TestCase;
 use App\Middleware\CsrfMiddleware;
 use App\Controller\Dashboard\CampController;
@@ -17,7 +16,6 @@ class CampControllerTest extends TestCase {
   private CampManagementServiceInterface | MockObject $campService;
   private EasyCSRF | MockObject $easyCSRF;
   private View | MockObject $view;
-  private ActionResolver | MockObject $actionResolver;
   private CsrfMiddleware | MockObject $csrfMiddleware;
 
   private CampController | MockObject $controller;
@@ -28,7 +26,6 @@ class CampControllerTest extends TestCase {
     $this->campService = $this->createMock(CampManagementServiceInterface::class);
     $this->easyCSRF = $this->createMock(EasyCSRF::class);
     $this->view = $this->createMock(View::class);
-    $this->actionResolver = $this->createMock(ActionResolver::class);
     $this->csrfMiddleware = $this->createMock(CsrfMiddleware::class);
 
 
@@ -38,23 +35,10 @@ class CampControllerTest extends TestCase {
         $this->request,
         $this->easyCSRF,
         $this->view,
-        $this->actionResolver,
         $this->csrfMiddleware
       ])
       ->onlyMethods(['redirect'])
       ->getMock();
-  }
-
-  public function testShouldRedirectToEditPageWhenActionIsIndex(): void
-  {
-    // GIVEN 
-    $this->controller->expects($this->once())
-      ->method('redirect')
-      ->with('/?dashboard=camp&action=edit');
-
-    // WHEN
-    $this->controller->indexAction();
-
   }
 
   public function testShouldRenderViewWithCsrfTokenWhenActionIsEdit(): void {

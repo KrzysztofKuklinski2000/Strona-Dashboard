@@ -8,7 +8,7 @@ $errors = $params['flash']['message'] ?? [];
   <h3>Obozy - Edytuj</h3>
 </div>
 <br>
-<form action="/?dashboard=camp&action=update" method="POST" class="camp-form ">
+<form action="/dashboard/camp/update" method="POST" class="camp-form ">
   <input type="hidden" name="csrf_token" value="<?= $csrf  ?? '' ?>">
   <label>
     <span>Miejscowość:</span>

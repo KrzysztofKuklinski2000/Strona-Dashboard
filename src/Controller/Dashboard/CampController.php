@@ -19,10 +19,6 @@ class CampController extends AbstractDashboardController {
     parent::__construct($request, $easyCSRF, $campService, $view, $csrfMiddleware);
   }
 
-  public function indexAction(): void {
-    $this->redirect('/?dashboard=camp&action=edit');
-  }
-
   public function editAction(): void {
     $this->renderPage([
       'page' => 'camp/edit',
