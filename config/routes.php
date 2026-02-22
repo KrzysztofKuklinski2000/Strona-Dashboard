@@ -2,6 +2,7 @@
 
 use App\Controller\AuthController;
 use App\Controller\Dashboard\CampController;
+use App\Controller\Dashboard\ContactController;
 use App\Controller\Dashboard\FeesController;
 use App\Controller\SiteController;
 use FastRoute\RouteCollector;
@@ -29,6 +30,10 @@ return function (RouteCollector $r) {
   $r->get('/dashboard/camp', [CampController::class, 'editAction']);
   $r->get('/dashboard/camp/edit', [CampController::class, 'editAction']);
   $r->post('/dashboard/camp/update', [CampController::class, 'updateAction']);
+
+  $r->get('/dashboard/contact', [ContactController::class, 'editAction']);
+  $r->get('/dashboard/contact/edit', [ContactController::class, 'editAction']);
+  $r->post('/dashboard/contact/update', [ContactController::class, 'updateAction']);
 
   $r->get('/dashboard/fees', [FeesController::class, 'indexAction']);
   $r->get('/dashboard/fees/edit', [FeesController::class, 'editAction']);

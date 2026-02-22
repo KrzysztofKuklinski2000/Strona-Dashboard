@@ -52,37 +52,36 @@ class Request {
 	}
 
 	public function validate(
-		string $param,  
-		bool $required, 
-		string $type = 'string', 
-		?int $maxLength = null, 
-		?int $minLength = null): mixed {
+		string $param,
+		bool $required,
+		string $type = 'string',
+		?int $maxLength = null,
+		?int $minLength = null
+	): mixed {
 		$value = $this->getFormParam($param);
 
 		if ($required && empty($value)) {
 			$this->errors[$param] = "To pole jest wymagane.";
 			return null;
 		}
-	
+
 		if ($type === 'int') {
-			if(!ctype_digit((string)$value)) {
+			if (!ctype_digit((string)$value)) {
 				$this->errors[$param] = "Pole musi zawierać tylko liczby całkowite.";
 				return null;
 			}
- 			
-			return (int) $value;
+		} else {
+			$value = (string) $value;
 		}
 
-		$value = (string) $value;
-	
 		if ($maxLength !== null && strlen((string)$value) > $maxLength) {
-			$this->errors[$param] = "Długość pola musi być mniejsza niz $maxLength. znaków";
+			$this->errors[$param] = "Długość pola nie może być większa niż $maxLength znaków.";
 		}
 
 		if ($minLength !== null && strlen((string)$value) < $minLength) {
-			$this->errors[$param] = "Długość pola musi być większa niz $minLength. znaków";
+			$this->errors[$param] = "Długość pola musi być większa niż $minLength znaków.";
 		}
-	
+
 		return $value;
 	}
 

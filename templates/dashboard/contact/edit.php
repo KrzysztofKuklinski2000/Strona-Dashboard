@@ -8,7 +8,7 @@ $errors = $params['flash']['message'] ?? [];
   <h3>Kontakt - Edytuj</h3>
 </div>
 <br>
-<form action="/?dashboard=contact&action=update" method="POST" class="contact-form">
+<form action="/dashboard/contact/update" method="POST" class="contact-form">
   <input type="hidden" name="csrf_token" value="<?= $csrf ?>">
   <label>
     <span>E-mail:</span>

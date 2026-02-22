@@ -24,11 +24,6 @@ class ContactController extends AbstractDashboardController {
     return 'contact';
   }
 
-  public function indexAction(): void
-  {
-    $this->redirect('/?dashboard=contact&action=edit');
-  }
-
   public function editAction(): void
   {
     $this->renderPage([
