@@ -1,6 +1,6 @@
 <?php
 $formTitle = "Tworzenie nowego posta Strona Główna";
-$action = "?dashboard=start&action=store";
+$action = "/dashboard/start/store";
 $buttonTitle = "Stwórz";
 $errors = $params['flash']['message'] ?? [];
 $csrf = $params['csrf_token'] ?? '';

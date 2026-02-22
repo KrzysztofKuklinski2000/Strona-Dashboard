@@ -1,6 +1,6 @@
 <?php
 $data = $params['data'];
-$action = "/?dashboard=start&action=update&id=" . ($data['id'] ?? '');
+$action = "/dashboard/start/update/" . ($data['id'] ?? '');
 $formTitle = "Edytowanie posta strony głownej";
 $buttonTitle = "Edytuj";
 $errors = $params['flash']['message'] ?? [];

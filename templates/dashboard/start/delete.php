@@ -1,6 +1,6 @@
 <?php
 $data = $params['data'];
-$action = "/?dashboard=start&action=delete&id=" . ($data['id'] ?? '');
+$action = "/dashboard/start/delete/" . ($data['id'] ?? '');
 $formTitle = "Usuń posta z strony głównej";
 $csrf = $params['csrf_token'] ?? '';
 

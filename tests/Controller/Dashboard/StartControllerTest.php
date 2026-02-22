@@ -5,7 +5,6 @@ namespace Tests\Controller\Dashboard;
 use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
-use App\Core\ActionResolver;
 use PHPUnit\Framework\TestCase;
 use App\Middleware\CsrfMiddleware;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -18,7 +17,6 @@ class StartControllerTest extends TestCase
   private Request | MockObject $request;
   private EasyCSRF | MockObject $easyCSRF;
   private View | MockObject $view;
-  private ActionResolver | MockObject $actionResolver;
   private CsrfMiddleware | MockObject $csrfMiddleware;
 
   private StartController | MockObject $controller;
@@ -30,7 +28,6 @@ class StartControllerTest extends TestCase
     $this->request = $this->createMock(Request::class);
     $this->easyCSRF = $this->createMock(EasyCSRF::class);
     $this->view = $this->createMock(View::class);
-    $this->actionResolver = $this->createMock(ActionResolver::class);
     $this->csrfMiddleware = $this->createMock(CsrfMiddleware::class);
 
     $this->controller = $this->getMockBuilder(StartController::class)
@@ -39,7 +36,6 @@ class StartControllerTest extends TestCase
         $this->request,
         $this->easyCSRF,
         $this->view,
-        $this->actionResolver,
         $this->csrfMiddleware
       ])
       ->onlyMethods(['redirect'])
@@ -78,7 +74,7 @@ class StartControllerTest extends TestCase
       ->willReturn('token');
 
     $this->request->expects($this->once())
-      ->method('getQueryParam')
+      ->method('getRouteParam')
       ->with('id')
       ->willReturn(1);
 
@@ -130,7 +126,7 @@ class StartControllerTest extends TestCase
       ->willReturn('token');
 
     $this->request->expects($this->once())
-      ->method('getQueryParam')
+      ->method('getRouteParam')
       ->with('id')
       ->willReturn(1);
 
@@ -162,7 +158,7 @@ class StartControllerTest extends TestCase
       ->willReturn('token');
 
     $this->request->expects($this->once())
-      ->method('getQueryParam')
+      ->method('getRouteParam')
       ->with('id')
       ->willReturn(1);
 
