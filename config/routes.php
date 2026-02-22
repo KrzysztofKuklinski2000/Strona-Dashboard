@@ -35,9 +35,9 @@ return function (RouteCollector $r) {
   $r->get('/dashboard/contact/edit', [ContactController::class, 'editAction']);
   $r->post('/dashboard/contact/update', [ContactController::class, 'updateAction']);
 
-  $r->get('/dashboard/fees', [FeesController::class, 'indexAction']);
+  $r->get('/dashboard/fees', [FeesController::class, 'editAction']);
   $r->get('/dashboard/fees/edit', [FeesController::class, 'editAction']);
-  $r->post('/dashboard/fees/edit', [FeesController::class, 'handleUpdate']);
+  $r->post('/dashboard/fees/update', [FeesController::class, 'updateAction']);
 
   
 };

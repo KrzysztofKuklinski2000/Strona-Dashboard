@@ -19,10 +19,6 @@ class FeesController extends AbstractDashboardController {
     parent::__construct($request, $easyCSRF, $feesService, $view, $csrfMiddleware);
   }
 
-  public function indexAction(): void {
-    $this->redirect('/?dashboard=fees&action=edit');
-  }
-
   public function editAction(): void {
     $this->renderPage([
       'page' => 'fees/edit',

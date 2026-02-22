@@ -52,7 +52,7 @@ try {
 	$controller = $controllerFactory->createController($request, $easyCSRF);
 
 	if ($controller instanceof \App\Controller\Dashboard\AbstractDashboardController && empty($request->getSession('user'))) {
-		header('Location: /login');
+		header('Location: /auth/login');
 		exit;
 	}
 

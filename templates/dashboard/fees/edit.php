@@ -8,7 +8,7 @@ $errors = $params['flash']['message'] ?? [];
   <h3>Opłaty - Edytuj</h3>
 </div>
 <br>
-<form action="/?dashboard=fees&action=update" method="POST" class="price-form ">
+<form action="/dashboard/fees/update" method="POST" class="price-form ">
   <input type="hidden" name="csrf_token" value="<?= $csrf ?? '' ?>">
   <label>
     <span>Składka Ulgowa (jedna osoba):</span>
