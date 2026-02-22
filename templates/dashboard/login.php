@@ -3,7 +3,7 @@
 ?>
 
 <div class="login-form">
-  <form action="/?auth&action=login" method="POST">
+  <form action="/auth/login" method="POST">
     <input type="hidden" name="csrf_token" value="<?php echo $params['csrf_token'] ?? '' ?>">
     <h1>Logowanie</h1>
     <label for="login">Login</label>

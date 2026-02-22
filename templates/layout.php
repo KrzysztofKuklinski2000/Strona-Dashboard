@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="content=" Szkoła sztuk walki zaprasza na naukę karate kyokushin oraz samoobronę dla kobiet. Organizujemy obozy sportowe i kolonie dla dzieci i młodzieży - Wejherowo - Reda - Prowadzi zajęcia Pilates - Organizujemy warsztaty taneczne - Prowadzimy szkolenia dla firm - Pomorskie"">
+	<meta name="description" content="Szkoła sztuk walki zaprasza na naukę karate kyokushin oraz samoobronę dla kobiet. Organizujemy obozy sportowe i kolonie dla dzieci i młodzieży - Wejherowo - Reda - Prowadzi zajęcia Pilates - Organizujemy warsztaty taneczne - Prowadzimy szkolenia dla firm - Pomorskie">
 	<link rel="stylesheet" type="text/css" href="/public/style.css">
 	<link rel="stylesheet" type="text/css" href="/public/style-res.css">
 	<link rel="icon" type="image/x-icon" href="/public/images/logo.png">
@@ -77,7 +77,7 @@
 		<?php require_once('components/footer.php') ?>
 	</footer>
 
-	<script type="text/javascript" src="public/js/main.js"></script>
+	<script type="text/javascript" src="/public/js/main.js"></script>
 </body>
 
 </html>

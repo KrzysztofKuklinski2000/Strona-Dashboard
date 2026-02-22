@@ -1,5 +1,6 @@
 <?php
 
+use App\Controller\AuthController;
 use App\Controller\Dashboard\CampController;
 use App\Controller\Dashboard\FeesController;
 use App\Controller\SiteController;
@@ -12,7 +13,7 @@ return function (RouteCollector $r) {
   $r->get('/grafik', [SiteController::class, 'timetableAction']);
   $r->get('/galeria', [SiteController::class, 'galleryAction']);
   $r->get('/galeria/{category}', [SiteController::class, 'galleryAction']);
-  $r->get('/oboz', [SiteController::class, 'campAction']);
+  $r->get('/obozy', [SiteController::class, 'campAction']);
   $r->get('/skladki', [SiteController::class, 'feesAction']);
   $r->get('/zapisy', [SiteController::class, 'registrationAction']);
   $r->get('/kontakt', [SiteController::class, 'contactAction']);
@@ -20,6 +21,10 @@ return function (RouteCollector $r) {
   $r->get('/oyama', [SiteController::class, 'oyamaAction']);
   $r->get('/dojo-oath', [SiteController::class, 'dojoOathAction']);
   $r->get('/wymagania-egzaminacyjne', [SiteController::class, 'requirementsAction']);
+
+  $r->get('/auth/login', [AuthController::class, 'loginAction']);
+  $r->post('/auth/login', [AuthController::class, 'loginAction']);
+  $r->get('/auth/logout', [AuthController::class, 'logoutAction']);
 
 
   $r->get('/dashboard/camp', [CampController::class, 'indexAction']);

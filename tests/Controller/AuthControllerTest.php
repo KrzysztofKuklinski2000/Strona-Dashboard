@@ -5,7 +5,6 @@ namespace Tests\Controller;
 use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
-use App\Core\ActionResolver;
 use App\Service\AuthService;
 use PHPUnit\Framework\TestCase;
 use App\Controller\AuthController;
@@ -19,7 +18,6 @@ class AuthControllerTest extends TestCase {
   private AuthService | MockObject $authService;
   private EasyCSRF | MockObject $easyCSRF;
   private View | MockObject $view;
-  private ActionResolver | MockObject $actionResolver;
   private AuthController | MockObject $controller;
   private CsrfMiddleware | MockObject $csrfMiddleware;
 
@@ -30,7 +28,6 @@ class AuthControllerTest extends TestCase {
     $this->authService = $this->createMock(AuthService::class);
     $this->easyCSRF = $this->createMock(EasyCSRF::class);
     $this->view = $this->createMock(View::class);
-    $this->actionResolver = $this->createMock(ActionResolver::class);
     $this->csrfMiddleware = $this->createMock(CsrfMiddleware::class);
 
 
@@ -40,49 +37,12 @@ class AuthControllerTest extends TestCase {
         $this->authService,
         $this->easyCSRF,
         $this->view,
-        $this->actionResolver,
         $this->csrfMiddleware
       ])
       ->onlyMethods(['redirect', 'setFlash'])
       ->getMock();
   }
 
-  public function testShouldRedirectToDashboardIfUserIsLoggedInWhenActionIsIndex(): void
-  {
-    // GIVEN
-    $this->request->expects($this->once())
-      ->method('getSession')
-      ->with('user')
-      ->willReturn(['id' => 1]);
-
-
-    // EXPECTS
-    $this->controller->expects($this->once())
-      ->method('redirect')
-      ->with('/?dashboard=start');
-
-    // WHEN
-    $this->controller->indexAction();
-  
-  }
-
-  public function testShouldRedirectToLoginIfUserIsNotLoggedInWhenActionIsIndex(): void
-  {
-    // GIVEN
-    $this->request->expects($this->once())
-      ->method('getSession')
-      ->with('user')
-      ->willReturn(null);
-
-
-    // EXPECTS
-    $this->controller->expects($this->once())
-      ->method('redirect')
-      ->with('/?auth&action=login');
-
-    // WHEN
-    $this->controller->indexAction();
-  }
 
   public function testShouldRedirectToDashboardIfUserIsLoggedInWhenActionIsLogin(): void
   {
@@ -96,7 +56,7 @@ class AuthControllerTest extends TestCase {
     // EXPECTS
     $this->controller->expects($this->once())
       ->method('redirect')
-      ->with('/?dashboard=start');
+      ->with('/dashboard');
 
     // WHEN
     $this->controller->loginAction();
@@ -162,7 +122,7 @@ class AuthControllerTest extends TestCase {
     // EXPECTS
     $this->controller->expects($this->once())
       ->method('redirect')
-      ->with('/?dashboard=start');
+      ->with('/dashboard');
     
     $this->controller->expects($this->once())
       ->method('setFlash')
@@ -203,7 +163,7 @@ class AuthControllerTest extends TestCase {
     // EXPECTS
     $this->controller->expects($this->never())
       ->method('redirect')
-      ->with('/?dashboard=start');
+      ->with('/dashboard');
 
     $this->controller->expects($this->never())
       ->method('setFlash')
@@ -283,12 +243,6 @@ class AuthControllerTest extends TestCase {
 
   public function testShouldRemoveSessionAndRedirectWhenActionIsLogout(): void 
   {
-    // GIVEN 
-    $this->request->expects($this->once())
-      ->method('getSession')
-      ->with('user')
-      ->willReturn(['id' => 1]);
-    
     // EXPECTS 
     $this->request->expects($this->once())
       ->method('removeSession')
@@ -296,24 +250,7 @@ class AuthControllerTest extends TestCase {
     
     $this->controller->expects($this->once())
       ->method('redirect')
-      ->with('/?auth&action=login');
-
-    // WHEN
-    $this->controller->logoutAction();
-  }
-
-  public function testShouldRedirectWhenActionIsLogoutAndUserIsNotLoggedIn(): void
-  {
-    // GIVEN 
-    $this->request->expects($this->once())
-      ->method('getSession')
-      ->with('user')
-      ->willReturn(null);
-
-    // EXPECTS 
-    $this->controller->expects($this->once())
-      ->method('redirect')
-      ->with('/?dashboard=start');
+      ->with('/auth/login');
 
     // WHEN
     $this->controller->logoutAction();
