@@ -1,6 +1,6 @@
 <?php
 $formTitle = "Tworzenie nowego posta aktualności";
-$action = "?dashboard=news&action=store";
+$action = "/dashboard/news/store";
 $buttonTitle = "Stwórz";
 $errors = $params['flash']['message'] ?? [];
 $csrf = $params['csrf_token'] ?? '';

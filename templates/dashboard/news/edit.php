@@ -1,6 +1,6 @@
 <?php
 $data = $params['data'];
-$action = "/?dashboard=news&action=update&id=" . ($data['id'] ?? '');
+$action = "/dashboard/news/update/" . ($data['id'] ?? '');
 $formTitle = "Edytowanie posta aktualności";
 $buttonTitle = "Edytuj";
 $errors = $params['flash']['message'] ?? [];

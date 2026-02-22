@@ -1,6 +1,6 @@
 <?php
 $data = $params['data'];
-$action = "/?dashboard=news&action=delete&id=" . ($data['id'] ?? '');
+$action = "/dashboard/news/delete/" . ($data['id'] ?? '');
 $formTitle = "Usuń posta aktualności";
 $buttonTitle = "Usuń";
 $csrf = $params['csrf_token'] ?? '';

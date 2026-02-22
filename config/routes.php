@@ -6,6 +6,7 @@ use App\Controller\Dashboard\ContactController;
 use App\Controller\Dashboard\FeesController;
 use App\Controller\Dashboard\GalleryController;
 use App\Controller\Dashboard\ImportantPostsController;
+use App\Controller\Dashboard\NewsController;
 use App\Controller\SiteController;
 use FastRoute\RouteCollector;
 
@@ -62,4 +63,16 @@ return function (RouteCollector $r) {
   $r->post('/dashboard/important_posts/published/{id:\d+}', [ImportantPostsController::class, 'publishedAction']);
   $r->get('/dashboard/important_posts/confirmDelete/{id:\d+}', [ImportantPostsController::class,'confirmDeleteAction']);
   $r->post('/dashboard/important_posts/delete/{id:\d+}', [ImportantPostsController::class, 'deleteAction']);
+
+  $r->get('/dashboard/news', [NewsController::class, 'indexAction']);
+  $r->post('/dashboard/news/move', [NewsController::class, 'moveAction']);
+  $r->get('/dashboard/news/create', [NewsController::class, 'createAction']);
+  $r->post('/dashboard/news/store', [NewsController::class, 'storeAction']);
+  $r->get('/dashboard/news/edit/{id:\d+}', [NewsController::class, 'editAction']);
+  $r->post('/dashboard/news/update/{id:\d+}', [NewsController::class, 'updateAction']);
+  $r->get('/dashboard/news/show/{id:\d+}', [NewsController::class, 'showAction']);
+  $r->post('/dashboard/news/published/{id:\d+}', [NewsController::class, 'publishedAction']);
+  $r->get('/dashboard/news/confirmDelete/{id:\d+}', [NewsController::class, 'confirmDeleteAction']);
+  $r->post('/dashboard/news/delete/{id:\d+}', [NewsController::class, 'deleteAction']);
+
 };

@@ -1,6 +1,6 @@
 <?php
 $data = $params['data'] ?? [];
-$action = '?dashboard=news&action=move';
+$action = '/dashboard/news/move';
 $moduleName = 'news';
 $pageTitle = 'Aktualności - Lista postów';
 $csrf = $params['csrf_token'] ?? '';
