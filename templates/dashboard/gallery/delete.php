@@ -1,6 +1,6 @@
 <?php 
 $data = $params['data'];
-$action = "/?dashboard=gallery&action=delete&id=" . ($data['id'] ?? '');
+$action = "/dashboard/gallery/delete/" . ($data['id'] ?? '');
 $formTitle = "Usuń posta z grafiku";
 $csrf = $params['csrf_token'] ?? '';
 

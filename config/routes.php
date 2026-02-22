@@ -4,6 +4,7 @@ use App\Controller\AuthController;
 use App\Controller\Dashboard\CampController;
 use App\Controller\Dashboard\ContactController;
 use App\Controller\Dashboard\FeesController;
+use App\Controller\Dashboard\GalleryController;
 use App\Controller\SiteController;
 use FastRoute\RouteCollector;
 
@@ -39,5 +40,14 @@ return function (RouteCollector $r) {
   $r->get('/dashboard/fees/edit', [FeesController::class, 'editAction']);
   $r->post('/dashboard/fees/update', [FeesController::class, 'updateAction']);
 
-  
+  $r->get('/dashboard/gallery', [GalleryController::class, 'indexAction']);
+  $r->post('/dashboard/gallery/move', [GalleryController::class, 'moveAction']);
+  $r->get('/dashboard/gallery/create', [GalleryController::class, 'createAction']);
+  $r->post('/dashboard/gallery/store', [GalleryController::class, 'storeAction']);
+  $r->get('/dashboard/gallery/edit/{id:\d+}', [GalleryController::class, 'editAction']);
+  $r->post('/dashboard/gallery/update/{id:\d+}', [GalleryController::class, 'updateAction']);
+  $r->get('/dashboard/gallery/show/{id:\d+}', [GalleryController::class, 'showAction']);
+  $r->post('/dashboard/gallery/published/{id:\d+}', [GalleryController::class, 'publishedAction']);
+  $r->get('/dashboard/gallery/confirmDelete/{id:\d+}', [GalleryController::class, 'confirmDeleteAction']);
+  $r->post('/dashboard/gallery/delete/{id:\d+}', [GalleryController::class, 'deleteAction']);
 };

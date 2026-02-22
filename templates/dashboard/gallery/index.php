@@ -3,7 +3,7 @@ $pageTitle = 'Lista postów - Galeria';
 $moduleName = 'gallery';
 $data = $params['data'] ?? [];
 $csrf = $params['csrf_token'] ?? '';
-$action = '?dashboard=gallery&action=move';
+$action = '/dashboard/gallery/move';
 $showPosition = true;
 
 $tableHeadersHtml = <<<HTML

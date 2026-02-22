@@ -82,7 +82,11 @@ class Request {
 			$this->errors[$param] = "Długość pola musi być większa niż $minLength znaków.";
 		}
 
-		return $value;
+		if ($type === 'int') {
+			return (int) $value;
+		}
+
+		return (string) $value;
 	}
 
 	public function validateFile(string $field, array $allowedTypes = ['image/jpeg', 'image/png'], int $maxSize = 2_000_000): ?array {

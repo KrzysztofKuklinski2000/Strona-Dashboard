@@ -1,6 +1,6 @@
 <?php
 	$data = $params['data'];
-	$action = "/?dashboard=gallery&action=update&id=" . ($data['id'] ?? '');
+	$action = "/dashboard/gallery/update/" . ($data['id'] ?? '');
 ?>
 <br>
 <h3>Edytuj Zdjęcie</h3>

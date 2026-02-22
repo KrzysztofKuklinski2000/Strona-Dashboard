@@ -4,7 +4,7 @@ $csrfToken = $csrfToken ?? '';
 ?>
 <div class="list-header">
   <h3><?= htmlspecialchars($pageTitle) ?></h3>
-  <a href="?dashboard=<?= htmlspecialchars($moduleName) ?>&action=create">
+  <a href="/dashboard/<?= htmlspecialchars($moduleName) ?>/create">
     <p>Nowy </p><i class="fa-solid fa-plus"></i>
   </a>
 </div>

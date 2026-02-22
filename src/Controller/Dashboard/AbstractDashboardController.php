@@ -30,7 +30,7 @@ abstract class AbstractDashboardController extends AbstractController {
 
   public function storeAction(): void {
     if (!$this->request->isPost()) {
-      $this->redirect('/?dashboard=' . $this->getModuleName());
+      $this->redirect('/dashboard/' . $this->getModuleName());
       return;
     }
 
@@ -40,12 +40,12 @@ abstract class AbstractDashboardController extends AbstractController {
     if (!$this->request->getErrors()) {
       $this->handleCreate($data);
       $this->setFlash("success", "Udało się utworzyć nowy wpis");
-      $this->redirect("/?dashboard=".$this->getModuleName());
+      $this->redirect("/dashboard/".$this->getModuleName());
       return;
     }
 
     $this->setFlash("errors", $this->request->getErrors());
-    $this->redirect('/?dashboard='.$this->getModuleName().'&action=create');
+    $this->redirect('/dashboard/'.$this->getModuleName().'/create');
     return;
   }
 
@@ -78,7 +78,7 @@ abstract class AbstractDashboardController extends AbstractController {
 
   public function deleteAction(): void {
     if (!$this->request->isPost()) {
-      $this->redirect('/?dashboard=' . $this->getModuleName());
+      $this->redirect('/dashboard/' . $this->getModuleName());
       return;
     }
 
@@ -86,13 +86,13 @@ abstract class AbstractDashboardController extends AbstractController {
       $id = (int) $this->request->getFormParam('postId');
       $this->handleDelete($id);
       $this->setFlash('success', 'Udało się usunąć');
-      $this->redirect('/?dashboard=' . $this->getModuleName());
+      $this->redirect('/dashboard/' . $this->getModuleName());
       return;
   }
 
   public function publishedAction(): void {
     if (!$this->request->isPost()) {
-      $this->redirect('/?dashboard=' . $this->getModuleName());
+      $this->redirect('/dashboard/' . $this->getModuleName());
       return;
     }
 
@@ -101,7 +101,7 @@ abstract class AbstractDashboardController extends AbstractController {
     $this->handlePublish($data);
 
     $this->setFlash('info', 'Udało się zmienić status');
-    $this->redirect('/?dashboard=' . $this->getModuleName());
+    $this->redirect('/dashboard/' . $this->getModuleName());
     return;
   }
 
@@ -110,7 +110,7 @@ abstract class AbstractDashboardController extends AbstractController {
       $this->csrfMiddleware->verify();
       $data = $this->getDataToChangePostPosition();
       $this->handleMove($data);
-      $this->redirect("/?dashboard=". $this->getModuleName());
+      $this->redirect("/dashboard/". $this->getModuleName());
       return;
     }
   }
