@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Core\Request;
-use App\Service\Email\EmailService;
 use App\Service\SiteService;
 use App\View;
 use EasyCSRF\EasyCSRF;
@@ -20,8 +19,6 @@ class SiteController extends AbstractController {
 	}
 
 	public function indexAction(): void {
-		$emailService = new EmailService();
-		$emailService->sendTestEmail('test@strona.pl');
 		
 		$this->renderPage([
 			'page'=> 'start',
