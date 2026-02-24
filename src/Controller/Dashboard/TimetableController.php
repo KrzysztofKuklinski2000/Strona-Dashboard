@@ -2,16 +2,18 @@
 
 namespace App\Controller\Dashboard;
 
-use App\View;
 use App\Core\Request;
-use EasyCSRF\EasyCSRF;
 use App\Middleware\CsrfMiddleware;
 use App\Service\Dashboard\TimetableManagementServiceInterface;
+use App\Service\Email\EmailService;
+use App\View;
+use EasyCSRF\EasyCSRF;
 
 class TimetableController extends AbstractDashboardController {
 
   public function __construct(
     public TimetableManagementServiceInterface $timetableService,
+    private EmailService $emailService,
     Request $request,
     EasyCSRF $easyCSRF,
     View $view,
@@ -72,6 +74,8 @@ class TimetableController extends AbstractDashboardController {
 
   protected function handleUpdate(array $data): void {
     $this->timetableService->updateTimetable($data);
+
+    $this->emailService->sendTimetableUpdate([], '<p>Grafik zaktualizowany!</p>');
   }
 
   protected function handleDelete(int $id): void {
