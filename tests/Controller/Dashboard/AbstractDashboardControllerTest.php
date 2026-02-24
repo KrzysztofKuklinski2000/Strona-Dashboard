@@ -5,7 +5,6 @@ namespace Tests\Controller\Dashboard;
 use App\View;
 use App\Core\Request;
 use EasyCSRF\EasyCSRF;
-use App\Core\ActionResolver;
 use PHPUnit\Framework\TestCase;
 use App\Middleware\CsrfMiddleware;
 use App\Exception\NotFoundException;
@@ -19,7 +18,6 @@ class AbstractDashboardControllerTest extends TestCase
   private SharedGetDataServiceInterface | MockObject $dataService;
   private EasyCSRF | MockObject $easyCSRF;
   private View | MockObject $view;
-  private ActionResolver | MockObject $actionResolver;
   private CsrfMiddleware | MockObject $csrfMiddleware;
 
   private TestController $controller;
@@ -30,7 +28,6 @@ class AbstractDashboardControllerTest extends TestCase
     $this->dataService = $this->createMock(SharedGetDataServiceInterface::class);
     $this->easyCSRF = $this->createMock(EasyCSRF::class);
     $this->view = $this->createMock(View::class);
-    $this->actionResolver = $this->createMock(ActionResolver::class);
     $this->csrfMiddleware = $this->createMock(CsrfMiddleware::class);
 
     $this->controller = new TestController(
@@ -38,7 +35,6 @@ class AbstractDashboardControllerTest extends TestCase
       $this->easyCSRF,
       $this->dataService,
       $this->view,
-      $this->actionResolver,
       $this->csrfMiddleware
     );
   }
@@ -53,7 +49,7 @@ class AbstractDashboardControllerTest extends TestCase
     $this->controller->storeAction();
 
     // THEN
-    $this->assertEquals('/?dashboard=test_module', $this->controller->redirectUrl);
+    $this->assertEquals('/dashboard/test_module', $this->controller->redirectUrl);
   }
   
 
@@ -76,7 +72,7 @@ class AbstractDashboardControllerTest extends TestCase
     $this->controller->storeAction();
 
     // THEN
-    $this->assertEquals('/?dashboard=test_module', $this->controller->redirectUrl);
+    $this->assertEquals('/dashboard/test_module', $this->controller->redirectUrl);
   }
 
   public function testShouldReturnToFormIfValidationFailsWhenStoreActionIsCalled(): void 
@@ -99,7 +95,7 @@ class AbstractDashboardControllerTest extends TestCase
     $this->controller->storeAction();
 
     // THEN
-    $this->assertEquals('/?dashboard=test_module&action=create', $this->controller->redirectUrl);
+    $this->assertEquals('/dashboard/test_module/create', $this->controller->redirectUrl);
   }
 
   public function testShouldRedirectToListIfMethodIsNotPostWhenUpdateActionIsCalled(): void
@@ -112,7 +108,7 @@ class AbstractDashboardControllerTest extends TestCase
     $this->controller->updateAction();
 
     // THEN
-    $this->assertEquals('/?dashboard=test_module', $this->controller->redirectUrl);
+    $this->assertEquals('/dashboard/test_module', $this->controller->redirectUrl);
   }
 
   public function testShouldUpdateEntryAndRedirectOnSuccessWhenUpdateActionIsCalled(): void
@@ -134,7 +130,7 @@ class AbstractDashboardControllerTest extends TestCase
     $this->controller->updateAction();
 
     // THEN
-    $this->assertEquals('/?dashboard=test_module', $this->controller->redirectUrl);
+    $this->assertEquals('/dashboard/test_module', $this->controller->redirectUrl);
   }
 
   public function testShouldReturnToFormIfValidationFailsWhenUpdateActionIsCalled(): void
@@ -157,7 +153,7 @@ class AbstractDashboardControllerTest extends TestCase
     $this->controller->updateAction();
 
     // THEN
-    $this->assertEquals('/?dashboard=test_module&action=edit&id=1', $this->controller->redirectUrl);
+    $this->assertEquals('/dashboard/test_module/edit/1', $this->controller->redirectUrl);
   }
 
   public function testShouldRedirectToListIfMethodIsNotPostWhenDeleteActionIsCalled(): void
@@ -170,7 +166,7 @@ class AbstractDashboardControllerTest extends TestCase
     $this->controller->deleteAction();
 
     // THEN
-    $this->assertEquals('/?dashboard=test_module', $this->controller->redirectUrl);
+    $this->assertEquals('/dashboard/test_module', $this->controller->redirectUrl);
   }
 
   public function testShouldDeleteEntryAndRedirectToListWhenUpdateActionIsCalled(): void
@@ -193,7 +189,7 @@ class AbstractDashboardControllerTest extends TestCase
     $this->controller->deleteAction();
 
     // THEN
-    $this->assertEquals('/?dashboard=test_module', $this->controller->redirectUrl);
+    $this->assertEquals('/dashboard/test_module', $this->controller->redirectUrl);
   }
 
   public function testShouldRedirectToListIfMethodIsNotPostWhenPublishedActionIsCalled(): void
@@ -206,7 +202,7 @@ class AbstractDashboardControllerTest extends TestCase
     $this->controller->publishedAction();
 
     // THEN
-    $this->assertEquals('/?dashboard=test_module', $this->controller->redirectUrl);
+    $this->assertEquals('/dashboard/test_module', $this->controller->redirectUrl);
   }
 
   public function testShouldPublishEntryAndRedirectToListWhenPublishedActionIsCalled(): void
@@ -226,7 +222,7 @@ class AbstractDashboardControllerTest extends TestCase
     $this->controller->publishedAction();
 
     // THEN
-    $this->assertEquals('/?dashboard=test_module', $this->controller->redirectUrl);
+    $this->assertEquals('/dashboard/test_module', $this->controller->redirectUrl);
   }
 
 
@@ -242,13 +238,13 @@ class AbstractDashboardControllerTest extends TestCase
     $this->controller->moveAction();
 
     // THEN
-    $this->assertEquals('/?dashboard=test_module', $this->controller->redirectUrl);
+    $this->assertEquals('/dashboard/test_module', $this->controller->redirectUrl);
   }
 
   public function testShouldThrowExceptionIfIdIsMissingWhenGetSingleDataIsCalled(): void
   {
     // GIVEN
-    $this->request->method('getQueryParam')
+    $this->request->method('getRouteParam')
       ->with('id')
       ->willReturn(null);
 
@@ -263,7 +259,7 @@ class AbstractDashboardControllerTest extends TestCase
   public function testShouldThrowExceptionIfIdIsNotIntegerWhenGetSingleDataIsCalled(): void
   {
     // GIVEN
-    $this->request->method('getQueryParam')
+    $this->request->method('getRouteParam')
       ->with('id')
       ->willReturn('test');
 
@@ -278,7 +274,7 @@ class AbstractDashboardControllerTest extends TestCase
   public function testShouldReturnDataFromServiceWhenGetSingleDataIsCalled(): void
   {
     // GIVEN
-    $this->request->method('getQueryParam')
+    $this->request->method('getRouteParam')
       ->with('id')
       ->willReturn('15');
 

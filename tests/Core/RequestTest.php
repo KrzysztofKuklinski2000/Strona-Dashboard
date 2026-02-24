@@ -195,76 +195,6 @@ class RequestTest extends TestCase
     $this->assertEmpty($errors);
   }
 
-  public function testShouldResolveControllerKeyWhenQueryParamMatches() {
-    // GIVEN
-    $get = ['auth' => ''];
-    $request = new Request($get, [], [], []);
-
-    $factories = [
-      'auth' => '',
-      'site' => 'SiteController',
-      'dashboard' => 'DashboardController'
-    ];
-
-    // WHEN 
-    $key = $request->resolverControllerKey($factories);
-
-    // THEN 
-    $this->assertSame('auth', $key);
-  }
-
-  public function testShouldReturnDefaultSiteKeyWhenNotMatchFound(){
-    // GIVEN
-    $get = ['start' => ''];
-    $request = new Request($get, [], [], []);
-
-    $factories = [
-      'auth' => '',
-      'site' => 'SiteController',
-      'dashboard' => 'DashboardController'
-    ];
-
-    // WHEN 
-    $key = $request->resolverControllerKey($factories);
-
-    // THEN 
-    $this->assertSame('site', $key);
-  }
-
-  public function testShouldReturnDefaultSiteKeyWhenFactoriesListIsEmpty(){
-    // GIVEN
-    $get = ['auth' => ''];
-    $request = new Request($get, [], [], []);
-
-    $factories = [];
-
-    // WHEN 
-    $key = $request->resolverControllerKey($factories);
-
-    // THEN 
-    $this->assertSame('site', $key);
-    
-  }
-
-  public function testShouldReturnDefaultSiteKeyWhenGetParamsAreEmpty()
-  {
-    // GIVEN
-    $get = [];
-    $request = new Request($get, [], [], []);
-
-    $factories = [
-      'auth' => '',
-      'site' => 'SiteController',
-      'dashboard' => 'DashboardController'
-    ];
-
-    // WHEN 
-    $key = $request->resolverControllerKey($factories);
-
-    // THEN 
-    $this->assertSame('site', $key);
-  }
-
   public function testShouldReturnErrorWhenRequiredFieldIsMissingInValidation(){
     // GIVEN 
     $request = new Request([], [], [], []);
@@ -320,7 +250,7 @@ class RequestTest extends TestCase
 
     // THEN 
     $this->assertArrayHasKey('title', $errors);
-    $this->assertSame('Długość pola musi być mniejsza niz 5. znaków', $errors['title']);
+    $this->assertSame('Długość pola nie może być większa niż 5 znaków.', $errors['title']);
   }
 
   public function testShouldReturnErrorWhenStringIsTooShort()
@@ -335,7 +265,7 @@ class RequestTest extends TestCase
 
     // THEN 
     $this->assertArrayHasKey('title', $errors);
-    $this->assertSame('Długość pola musi być większa niz 15. znaków', $errors['title']);
+    $this->assertSame('Długość pola musi być większa niż 15 znaków.', $errors['title']);
   }
 
   private function createTempFile(string $content = 'test content'): string
