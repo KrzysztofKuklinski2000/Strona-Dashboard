@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\View;
 use App\Core\Request;
-use EasyCSRF\EasyCSRF;
 use App\Service\SiteService;
+use App\View;
+use EasyCSRF\EasyCSRF;
 
 class SiteController extends AbstractController {
 	public function __construct(
@@ -19,6 +19,7 @@ class SiteController extends AbstractController {
 	}
 
 	public function indexAction(): void {
+		
 		$this->renderPage([
 			'page'=> 'start',
 			'content' => $this->siteService->getFrontPage(),

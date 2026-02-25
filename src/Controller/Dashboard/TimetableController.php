@@ -2,11 +2,11 @@
 
 namespace App\Controller\Dashboard;
 
-use App\View;
 use App\Core\Request;
-use EasyCSRF\EasyCSRF;
 use App\Middleware\CsrfMiddleware;
 use App\Service\Dashboard\TimetableManagementServiceInterface;
+use App\View;
+use EasyCSRF\EasyCSRF;
 
 class TimetableController extends AbstractDashboardController {
 

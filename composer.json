@@ -1,7 +1,8 @@
 {
     "require": {
         "gilbitron/easycsrf": "^1.5",
-        "nikic/fast-route": "^1.3"
+        "nikic/fast-route": "^1.3",
+        "symfony/mailer": "^7.4"
     },
     "autoload": {
         "psr-4": {

@@ -5,19 +5,20 @@ declare(strict_types=1);
 namespace App\Factories\ControllerFactories\Dashboard;
 
 
-use PDO;
-use App\View;
-use App\Core\Request;
-use EasyCSRF\EasyCSRF;
-use App\Middleware\CsrfMiddleware;
 use App\Controller\AbstractController;
 use App\Controller\Dashboard\TimetableController;
-use App\Factories\ServiceFactories\DashboardServiceFactory;
+use App\Core\Request;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
+use App\Factories\ServiceFactories\DashboardServiceFactory;
+use App\Middleware\CsrfMiddleware;
+use App\View;
+use EasyCSRF\EasyCSRF;
+use PDO;
 
 class TimetableControllerFactory implements ControllerFactoryInterface
 {
   private DashboardServiceFactory $serviceFactory;
+
 
   public function __construct(PDO $pdo)
   {

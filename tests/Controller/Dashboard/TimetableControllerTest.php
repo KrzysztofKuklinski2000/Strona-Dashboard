@@ -2,14 +2,14 @@
 
 namespace Tests\Controller\Dashboard;
 
-use App\View;
-use App\Core\Request;
-use EasyCSRF\EasyCSRF;
-use PHPUnit\Framework\TestCase;
-use App\Middleware\CsrfMiddleware;
-use PHPUnit\Framework\MockObject\MockObject;
 use App\Controller\Dashboard\TimetableController;
+use App\Core\Request;
+use App\Middleware\CsrfMiddleware;
 use App\Service\Dashboard\TimeTableManagementServiceInterface;
+use App\View;
+use EasyCSRF\EasyCSRF;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
 class TimetableControllerTest extends TestCase
 {
