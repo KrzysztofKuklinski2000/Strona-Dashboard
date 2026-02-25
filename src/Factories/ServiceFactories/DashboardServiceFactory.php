@@ -3,10 +3,10 @@
 namespace App\Factories\ServiceFactories;
 
 use App\Core\FileHandler;
+use App\Notification\NotificationService;
 use App\Repository\DashboardRepository;
 use App\Repository\SubscriberRepository;
 use App\Service\Dashboard\DashboardService;
-use App\Service\NotificationService;
 use PDO;
 
 class DashboardServiceFactory implements ServiceFactoryInterface {

@@ -3,14 +3,14 @@
 namespace Tests\Service\Dashboard;
 
 use App\Core\FileHandler;
-use PHPUnit\Framework\TestCase;
 use App\Exception\FileException;
-use App\Exception\ServiceException;
 use App\Exception\RepositoryException;
+use App\Exception\ServiceException;
+use App\Notification\NotificationService;
 use App\Repository\DashboardRepository;
 use App\Service\Dashboard\DashboardService;
-use App\Service\NotificationService;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
 class DashboardServiceTest extends TestCase
 {

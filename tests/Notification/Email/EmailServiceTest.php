@@ -1,8 +1,8 @@
 <?php 
 
-namespace Tests\Service\Email;
+namespace Tests\Notification\Email;
 
-use App\Service\Email\EmailService;
+use App\Notification\Email\EmailService;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;

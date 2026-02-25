@@ -2,7 +2,7 @@
 
 namespace App\Factories\ServiceFactories;
 
-use App\Service\Email\EmailService;
+use App\Notification\Email\EmailService;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\Transport;
 

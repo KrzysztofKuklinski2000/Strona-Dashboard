@@ -1,10 +1,10 @@
 <?php 
 
-namespace Test\Service;
+namespace Test\Notification;
 
+use App\Notification\Email\EmailService;
+use App\Notification\NotificationService;
 use App\Repository\SubscriberRepository;
-use App\Service\Email\EmailService;
-use App\Service\NotificationService;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

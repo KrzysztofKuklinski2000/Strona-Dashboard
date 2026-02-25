@@ -3,7 +3,7 @@
 namespace Tests\Factories\ServiceFactories;
 
 use App\Factories\ServiceFactories\EmailServiceFactory;
-use App\Service\Email\EmailService;
+use App\Notification\Email\EmailService;
 use PHPUnit\Framework\TestCase;
 
 class EmailServiceFactoryTest extends TestCase {

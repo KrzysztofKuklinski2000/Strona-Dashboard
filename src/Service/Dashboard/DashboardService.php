@@ -7,8 +7,8 @@ use App\Core\FileHandler;
 use App\Exception\FileException;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
+use App\Notification\NotificationService;
 use App\Repository\DashboardRepository;
-use App\Service\NotificationService;
 
 class DashboardService implements NewsManagementServiceInterface, SharedGetDataServiceInterface, StartManagementServiceInterface, ImportantPostsManagementServiceInterface, GalleryManagementServiceInterface, TimeTableManagementServiceInterface, FeesManagementServiceInterface, CampManagementServiceInterface, ContactManagementServiceInterface {
 

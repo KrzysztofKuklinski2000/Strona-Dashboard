@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Service;
+namespace App\Notification;
 
+use App\Notification\Email\EmailService;
 use App\Repository\SubscriberRepository;
-use App\Service\Email\EmailService;
 
 
 class NotificationService {
