@@ -6,7 +6,6 @@ use App\Controller\Dashboard\TimetableController;
 use App\Core\Request;
 use App\Middleware\CsrfMiddleware;
 use App\Service\Dashboard\TimeTableManagementServiceInterface;
-use App\Service\Email\EmailService;
 use App\View;
 use EasyCSRF\EasyCSRF;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -15,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 class TimetableControllerTest extends TestCase
 {
   private TimeTableManagementServiceInterface | MockObject $timetableService;
-  private EmailService | MockObject $emailService;
   private Request | MockObject $request;
   private EasyCSRF | MockObject $easyCSRF;
   private View | MockObject $view;
@@ -27,7 +25,6 @@ class TimetableControllerTest extends TestCase
   public function setUp(): void
   {
     $this->timetableService = $this->createMock(TimeTableManagementServiceInterface::class);
-    $this->emailService = $this->createMock(EmailService::class);
     $this->request = $this->createMock(Request::class);
     $this->easyCSRF = $this->createMock(EasyCSRF::class);
     $this->view = $this->createMock(View::class);
@@ -36,7 +33,6 @@ class TimetableControllerTest extends TestCase
     $this->controller = $this->getMockBuilder(TimetableController::class)
       ->setConstructorArgs([
         $this->timetableService,
-        $this->emailService,
         $this->request,
         $this->easyCSRF,
         $this->view,
@@ -247,9 +243,6 @@ class TimetableControllerTest extends TestCase
     $this->timetableService->expects($this->once())
       ->method('updateTimetable')
       ->with($data);
-
-    $this->emailService->expects($this->once())
-      ->method('sendTimetableUpdate');
 
     // WHEN 
     $method->invoke($this->controller, $data);

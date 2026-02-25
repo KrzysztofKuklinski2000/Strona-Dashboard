@@ -3,16 +3,21 @@ declare(strict_types= 1);
 
 namespace App\Service\Dashboard;
 
-use App\Repository\DashboardRepository;
 use App\Core\FileHandler;
 use App\Exception\FileException;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
+use App\Repository\DashboardRepository;
+use App\Service\NotificationService;
 
 class DashboardService implements NewsManagementServiceInterface, SharedGetDataServiceInterface, StartManagementServiceInterface, ImportantPostsManagementServiceInterface, GalleryManagementServiceInterface, TimeTableManagementServiceInterface, FeesManagementServiceInterface, CampManagementServiceInterface, ContactManagementServiceInterface {
 
     
-    public function __construct(public DashboardRepository $dashboardRepository, private FileHandler $fileHandler){}
+    public function __construct(
+        public DashboardRepository $dashboardRepository, 
+        private FileHandler $fileHandler,
+        private NotificationService $notificationService
+    ){}
 
     private function getDashboardData(string $table): array {
         try {
@@ -231,6 +236,8 @@ class DashboardService implements NewsManagementServiceInterface, SharedGetDataS
 
     public function updateTimetable(array $data): void {
         $this->edit('timetable', $data);
+        $htmlContent = '<h2>Aktualizacja grafiku!</h2><p>Sprawdź nowy plan zajęć na naszej stronie.</p>';
+        $this->notificationService->notifyAboutTimetableUpdate($htmlContent);
     }
 
     public function createTimetable(array $data): void {

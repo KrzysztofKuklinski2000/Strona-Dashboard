@@ -9,6 +9,7 @@ use App\Exception\ServiceException;
 use App\Exception\RepositoryException;
 use App\Repository\DashboardRepository;
 use App\Service\Dashboard\DashboardService;
+use App\Service\NotificationService;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class DashboardServiceTest extends TestCase
@@ -16,13 +17,21 @@ class DashboardServiceTest extends TestCase
   private DashboardRepository | MockObject $repository;
   private FileHandler | MockObject $fileHandler;
   private DashboardService  $service;
+  private NotificationService | MockObject $notificationService;
+
 
   public function setUp(): void
   {
     $this->repository = $this->createMock(DashboardRepository::class);
     $this->fileHandler = $this->createMock(FileHandler::class);
+    $this->notificationService = $this->createMock(NotificationService::class);
 
-    $this->service = new DashboardService($this->repository, $this->fileHandler);
+
+    $this->service = new DashboardService(
+      $this->repository, 
+      $this->fileHandler,
+      $this->notificationService,
+    );
   }
 
   // =========================================================================
@@ -507,6 +516,7 @@ class DashboardServiceTest extends TestCase
   {
     $data = ['day' => 'wtorek'];
     $this->repository->expects($this->once())->method('edit')->with('timetable', $data);
+    $this->notificationService->expects($this->once())->method('notifyAboutTimetableUpdate');
     $this->service->updateTimetable($data);
   }
 
