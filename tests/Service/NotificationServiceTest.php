@@ -29,7 +29,6 @@ class NotificationServiceTest extends TestCase
         'email@example.pl',
         'email2@example.pl',
       ];
-      $htmlContent = "<p>Grafik zaktualizowany!</p>";
 
       //EXPECTS 
       $this->subscriberRepository->expects($this->once())
@@ -38,10 +37,10 @@ class NotificationServiceTest extends TestCase
 
       $this->emailService->expects($this->once())
         ->method('sendTimetableUpdate')
-        ->with($emails, $htmlContent);
+        ->with($emails, $this->stringContains('Aktualizacja Grafiku'));
 
       // WHEN 
-      $this->notificationService->notifyAboutTimetableUpdate($htmlContent);      
+      $this->notificationService->notifyAboutTimetableUpdate();      
     }
 
 }

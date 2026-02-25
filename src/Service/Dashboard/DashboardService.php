@@ -236,8 +236,7 @@ class DashboardService implements NewsManagementServiceInterface, SharedGetDataS
 
     public function updateTimetable(array $data): void {
         $this->edit('timetable', $data);
-        $htmlContent = '<h2>Aktualizacja grafiku!</h2><p>Sprawdź nowy plan zajęć na naszej stronie.</p>';
-        $this->notificationService->notifyAboutTimetableUpdate($htmlContent);
+        $this->notificationService->notifyAboutTimetableUpdate();
     }
 
     public function createTimetable(array $data): void {
