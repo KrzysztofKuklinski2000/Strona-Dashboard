@@ -14,15 +14,15 @@ class EmailService {
 
   public function sendTimetableUpdate(array $users, string $htmlContent): void
   {
-    $email = (new Email())
-      ->from($this->config['from_email'])
-      ->subject('Aktualizacja grafiku')
-      ->html($htmlContent);
+    foreach ($users as $user) {
 
-      foreach($users as $user) {
-        $email->addBcc($user);
-      }
-      
-    $this->mailer->send($email);
+      $email = (new Email())
+        ->from($this->config['from_email'])
+        ->to($user)
+        ->subject('Aktualizacja grafiku')
+        ->html($htmlContent);
+
+      $this->mailer->send($email);
+    }
   }
 }

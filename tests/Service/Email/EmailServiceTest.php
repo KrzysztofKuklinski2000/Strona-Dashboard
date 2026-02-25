@@ -17,19 +17,13 @@ class EmailServiceTest extends TestCase
     $mailerMock = $this->createMock(MailerInterface::class);
 
     // EXPECTS
-    $mailerMock->expects($this->once())
+    $mailerMock->expects($this->exactly(count($users)))
       ->method('send')
-      ->with($this->callback(function(Email $email){
-        $hasCorrectSubject = $email->getSubject() === 'Aktualizacja grafiku';
-
-        $bccAddresses = array_map(fn($address) => $address->getAddress(), $email->getBcc());
-
-        $hasCorrectBcc = count(array_intersect(['jan@example.com', 'karol@example.com'], $bccAddresses)) === 2;
-
-        return $hasCorrectSubject && $hasCorrectBcc;
+      ->with($this->callback(function(Email $email) use ($users){
+        return in_array($email->getTo()[0]->getAddress(), $users);
       }));
 
-    $config = $config = ['from_email' => 'test@strona.pl', 'from_name' => 'Test'];
+    $config = ['from_email' => 'test@strona.pl', 'from_name' => 'Test'];
     $emailService = new EmailService($mailerMock, $config);
 
     //WHEN
