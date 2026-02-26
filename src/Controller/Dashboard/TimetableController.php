@@ -11,19 +11,19 @@ use EasyCSRF\EasyCSRF;
 class TimetableController extends AbstractDashboardController {
 
   public function __construct(
-    public TimetableManagementServiceInterface $timetableService,
+    private TimetableManagementServiceInterface $service,
     Request $request,
     EasyCSRF $easyCSRF,
     View $view,
     CsrfMiddleware $csrfMiddleware
   ) {
-    parent::__construct($request, $easyCSRF, $timetableService, $view, $csrfMiddleware);
+    parent::__construct($request, $easyCSRF, $service, $view, $csrfMiddleware);
   }
 
   public function indexAction(): void {
     $this->renderPage([
       'page' => 'timetable/index',
-      'data' => $this->timetableService->getAllTimetable(),
+      'data' => $this->service->getAllTimetable(),
     ]);
   }
 
@@ -67,22 +67,22 @@ class TimetableController extends AbstractDashboardController {
   }
 
   protected function handleCreate(array $data): void {
-    $this->timetableService->createTimetable($data);
+    $this->service->createTimetable($data);
   }
 
   protected function handleUpdate(array $data): void {
-    $this->timetableService->updateTimetable($data);
+    $this->service->updateTimetable($data);
   }
 
   protected function handleDelete(int $id): void {
-    $this->timetableService->deleteTimetable($id);
+    $this->service->deleteTimetable($id);
   }
 
   protected function handlePublish(array $data): void {
-    $this->timetableService->publishedTimetable($data);
+    $this->service->publishedTimetable($data);
   }
 
   protected function handleMove(array $data): void {
-    $this->timetableService->moveTimetable($data);
+    $this->service->moveTimetable($data);
   }
 }

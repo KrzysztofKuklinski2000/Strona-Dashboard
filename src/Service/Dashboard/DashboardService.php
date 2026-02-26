@@ -7,16 +7,14 @@ use App\Core\FileHandler;
 use App\Exception\FileException;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
-use App\Notification\NotificationService;
 use App\Repository\DashboardRepository;
 
-class DashboardService implements NewsManagementServiceInterface, SharedGetDataServiceInterface, StartManagementServiceInterface, ImportantPostsManagementServiceInterface, GalleryManagementServiceInterface, TimeTableManagementServiceInterface, FeesManagementServiceInterface, CampManagementServiceInterface, ContactManagementServiceInterface {
+class DashboardService implements NewsManagementServiceInterface, SharedGetDataServiceInterface, StartManagementServiceInterface, ImportantPostsManagementServiceInterface, GalleryManagementServiceInterface, FeesManagementServiceInterface, CampManagementServiceInterface, ContactManagementServiceInterface {
 
     
     public function __construct(
         public DashboardRepository $dashboardRepository, 
         private FileHandler $fileHandler,
-        private NotificationService $notificationService
     ){}
 
     private function getDashboardData(string $table): array {
@@ -26,14 +24,6 @@ class DashboardService implements NewsManagementServiceInterface, SharedGetDataS
             throw new ServiceException("Nie udało się pobrać postów",500, $e);
         }
         
-    }
-
-    private function timetablePageData(): array {
-        try {
-            return $this->dashboardRepository->timetablePageData();
-        }catch (RepositoryException $e) {
-            throw new ServiceException("Nie udało się pobrać grafiku",500, $e);
-        }
     }
 
     private function edit(string $table, array $data): void {
@@ -228,31 +218,6 @@ class DashboardService implements NewsManagementServiceInterface, SharedGetDataS
 
     public function moveGallery(array $data): void {
         $this->move('gallery', $data);
-    }
-
-    public function getAllTimetable(): array {
-        return $this->timetablePageData();
-    }
-
-    public function updateTimetable(array $data): void {
-        $this->edit('timetable', $data);
-        $this->notificationService->notifyAboutTimetableUpdate();
-    }
-
-    public function createTimetable(array $data): void {
-        $this->create('timetable', $data);
-    }
-
-    public function publishedTimetable(array $data): void {
-        $this->published('timetable', $data);
-    }
-
-    public function deleteTimetable(int $id): void {
-        $this->delete('timetable', $id);
-    }
-
-    public function moveTimetable(array $data): void {
-        $this->move('timetable', $data);
     }
 
     public function updateFees(array $data): void {
