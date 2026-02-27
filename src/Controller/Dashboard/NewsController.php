@@ -10,20 +10,20 @@ use App\Service\Dashboard\NewsManagementServiceInterface;
 class NewsController extends AbstractDashboardController {
 
   public function __construct(
-    public NewsManagementServiceInterface $newsService, 
+    public NewsManagementServiceInterface $service, 
     Request $request, 
     EasyCSRF $easyCSRF,
     View $view,
     CsrfMiddleware $csrfMiddleware
     )
   {
-    parent::__construct($request, $easyCSRF, $newsService, $view, $csrfMiddleware);
+    parent::__construct($request, $easyCSRF, $service, $view, $csrfMiddleware);
   }
 
   public function indexAction() :void {
     $this->renderPage([
       'page' => 'news/index',
-      'data' => $this->newsService->getAllNews(),
+      'data' => $this->service->getAllNews(),
       ]);
   }
 
@@ -67,22 +67,22 @@ class NewsController extends AbstractDashboardController {
   }
 
   protected function handleCreate(array $data): void {
-    $this->newsService->createNews($data);
+    $this->service->createNews($data);
   }
 
   protected function handleUpdate(array $data): void{
-    $this->newsService->updateNews($data);
+    $this->service->updateNews($data);
   }
 
   protected function handleDelete(int $id): void{
-    $this->newsService->deleteNews($id);
+    $this->service->deleteNews($id);
   }
 
   protected function handlePublish(array $data): void { 
-    $this->newsService->publishedNews($data);
+    $this->service->publishedNews($data);
   }
 
   protected function handleMove(array $data): void{
-    $this->newsService->moveNews($data);
+    $this->service->moveNews($data);
   }
 }

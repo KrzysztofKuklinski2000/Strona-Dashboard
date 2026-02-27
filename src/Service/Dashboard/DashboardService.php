@@ -7,7 +7,7 @@ use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\DashboardRepository;
 
-class DashboardService implements NewsManagementServiceInterface, SharedGetDataServiceInterface, StartManagementServiceInterface {
+class DashboardService implements SharedGetDataServiceInterface, StartManagementServiceInterface {
 
     
     public function __construct(
@@ -93,32 +93,6 @@ class DashboardService implements NewsManagementServiceInterface, SharedGetDataS
         } catch (RepositoryException $e) {
             throw new ServiceException("Nie udało się pobrać posta", 500, $e);
         }
-    }
-
-    
-
-    public function getAllNews(): array {
-        return $this->getDashboardData('news');
-    }
-
-    public function updateNews(array $data): void {
-        $this->edit('news', $data);
-    }
-
-    public function createNews(array $data): void {
-        $this->create('news', $data);
-    }
-
-    public function publishedNews(array $data): void {
-        $this->published('news', $data);
-    }
-
-    public function deleteNews(int $id): void {
-        $this->delete('news', $id);
-    }
-
-    public function moveNews(array $data): void{
-        $this->move('news', $data);
     }
 
     public function getAllMain(): array
