@@ -11,19 +11,19 @@ use App\Service\Dashboard\StartManagementServiceInterface;
 class StartController extends AbstractDashboardController {
 
   public function __construct(
-    public StartManagementServiceInterface $startService,
+    public StartManagementServiceInterface $service,
     Request $request,
     EasyCSRF $easyCSRF,
     View $view,
     CsrfMiddleware $csrfMiddleware
   ) {
-    parent::__construct($request, $easyCSRF, $startService, $view, $csrfMiddleware);
+    parent::__construct($request, $easyCSRF, $service, $view, $csrfMiddleware);
   }
 
   public function indexAction(): void {
     $this->renderPage([
       'page' => 'start/index',
-      'data' => $this->startService->getAllMain(),
+      'data' => $this->service->getAllMain(),
     ]);
   }
 
@@ -72,22 +72,22 @@ class StartController extends AbstractDashboardController {
   
 
   protected function handleCreate(array $data): void {
-    $this->startService->createMain($data);
+    $this->service->createMain($data);
   }
 
   protected function handleUpdate(array $data): void {
-    $this->startService->updateMain($data);
+    $this->service->updateMain($data);
   }
 
   protected function handleDelete(int $id): void {
-    $this->startService->deleteMain($id);
+    $this->service->deleteMain($id);
   }
 
   protected function handlePublish(array $data): void {
-    $this->startService->publishedMain($data);
+    $this->service->publishedMain($data);
   }
 
   protected function handleMove(array $data): void {
-    $this->startService->moveMain($data);
+    $this->service->moveMain($data);
   }
 }
