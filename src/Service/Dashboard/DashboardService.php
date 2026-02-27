@@ -7,7 +7,7 @@ use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\DashboardRepository;
 
-class DashboardService implements NewsManagementServiceInterface, SharedGetDataServiceInterface, StartManagementServiceInterface, ImportantPostsManagementServiceInterface {
+class DashboardService implements NewsManagementServiceInterface, SharedGetDataServiceInterface, StartManagementServiceInterface {
 
     
     public function __construct(
@@ -119,36 +119,6 @@ class DashboardService implements NewsManagementServiceInterface, SharedGetDataS
 
     public function moveNews(array $data): void{
         $this->move('news', $data);
-    }
-
-    public function getAllImportantPosts(): array
-    {
-        return $this->getDashboardData('important_posts');
-    }
-
-    public function updateImportantPost(array $data): void
-    {
-        $this->edit('important_posts', $data);
-    }
-
-    public function createImportantPost(array $data): void
-    {
-        $this->create('important_posts', $data);
-    }
-
-    public function publishedImportantPost(array $data): void
-    {
-        $this->published('important_posts', $data);
-    }
-
-    public function deleteImportantPost(int $id): void
-    {
-        $this->delete('important_posts', $id);
-    }
-
-    public function moveImportantPost(array $data): void
-    {
-        $this->move('important_posts', $data);
     }
 
     public function getAllMain(): array

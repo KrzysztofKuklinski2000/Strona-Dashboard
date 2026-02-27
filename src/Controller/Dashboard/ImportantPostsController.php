@@ -10,19 +10,19 @@ use App\Service\Dashboard\ImportantPostsManagementServiceInterface;
 
 class ImportantPostsController extends AbstractDashboardController {
   public function __construct(
-    public ImportantPostsManagementServiceInterface $importantPostsService,
+    public ImportantPostsManagementServiceInterface $service,
     Request $request,
     EasyCSRF $easyCSRF,
     View $view,
     CsrfMiddleware $csrfMiddleware
   ) {
-    parent::__construct($request, $easyCSRF, $importantPostsService, $view, $csrfMiddleware);
+    parent::__construct($request, $easyCSRF, $service, $view, $csrfMiddleware);
   }
 
   public function indexAction(): void {
     $this->renderPage([
       'page' => 'important_posts/index',
-      'data' => $this->importantPostsService->getAllImportantPosts(),
+      'data' => $this->service->getAllImportantPosts(),
     ]);
   }
 
@@ -66,22 +66,22 @@ class ImportantPostsController extends AbstractDashboardController {
   }
 
   protected function handleCreate(array $data): void {
-    $this->importantPostsService->createImportantPost($data);
+    $this->service->createImportantPost($data);
   }
 
   protected function handleUpdate(array $data): void {
-    $this->importantPostsService->updateImportantPost($data);
+    $this->service->updateImportantPost($data);
   }
 
   protected function handleDelete(int $id): void {
-    $this->importantPostsService->deleteImportantPost($id);
+    $this->service->deleteImportantPost($id);
   }
 
   protected function handlePublish(array $data): void {
-    $this->importantPostsService->publishedImportantPost($data);
+    $this->service->publishedImportantPost($data);
   }
 
   protected function handleMove(array $data): void {
-    $this->importantPostsService->moveImportantPost($data);
+    $this->service->moveImportantPost($data);
   }
 }
