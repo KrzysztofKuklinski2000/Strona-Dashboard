@@ -11,19 +11,19 @@ use App\Service\Dashboard\GalleryManagementServiceInterface;
 class GalleryController extends AbstractDashboardController {
 
   public function __construct(
-    public GalleryManagementServiceInterface $galleryService,
+    public GalleryManagementServiceInterface $service,
     Request $request,
     EasyCSRF $easyCSRF,
     View $view,
     CsrfMiddleware $csrfMiddleware
   ) {
-    parent::__construct($request, $easyCSRF, $galleryService, $view, $csrfMiddleware);
+    parent::__construct($request, $easyCSRF, $service, $view, $csrfMiddleware);
   }
 
   public function indexAction(): void {
     $this->renderPage([
       'page' => 'gallery/index',
-      'data' => $this->galleryService->getAllGallery(),
+      'data' => $this->service->getAllGallery(),
     ]);
   }
 
@@ -68,22 +68,22 @@ class GalleryController extends AbstractDashboardController {
   
 
   protected function handleCreate(array $data): void {
-    $this->galleryService->createGallery($data);
+    $this->service->createGallery($data);
   }
 
   protected function handleUpdate(array $data): void {
-    $this->galleryService->updateGallery($data);
+    $this->service->updateGallery($data);
   }
 
   protected function handleDelete(int $id): void {
-    $this->galleryService->deleteGallery($id);
+    $this->service->deleteGallery($id);
   }
 
   protected function handlePublish(array $data): void {
-    $this->galleryService->publishedGallery($data);
+    $this->service->publishedGallery($data);
   }
 
   protected function handleMove(array $data): void {
-    $this->galleryService->moveGallery($data);
+    $this->service->moveGallery($data);
   }
 }

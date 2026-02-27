@@ -3,18 +3,15 @@ declare(strict_types= 1);
 
 namespace App\Service\Dashboard;
 
-use App\Core\FileHandler;
-use App\Exception\FileException;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\DashboardRepository;
 
-class DashboardService implements NewsManagementServiceInterface, SharedGetDataServiceInterface, StartManagementServiceInterface, ImportantPostsManagementServiceInterface, GalleryManagementServiceInterface {
+class DashboardService implements NewsManagementServiceInterface, SharedGetDataServiceInterface, StartManagementServiceInterface, ImportantPostsManagementServiceInterface {
 
     
     public function __construct(
         public DashboardRepository $dashboardRepository, 
-        private FileHandler $fileHandler,
     ){}
 
     private function getDashboardData(string $table): array {
@@ -98,19 +95,7 @@ class DashboardService implements NewsManagementServiceInterface, SharedGetDataS
         }
     }
 
-    public function addImage(array $data): void {
-        try{
-            $this->dashboardRepository->beginTransaction();
-            $imageName = $this->fileHandler->uploadImage($data['image_name']);
-            $this->dashboardRepository->incrementPosition('gallery');
-            $data['image_name'] = $imageName;
-            $this->dashboardRepository->addImage($data);
-            $this->dashboardRepository->commit();
-        }catch (RepositoryException | FileException $e) {
-            $this->dashboardRepository->rollBack();
-            throw new ServiceException("Nie udało się dodać zdjęcia",500, $e);
-        }
-    }
+    
 
     public function getAllNews(): array {
         return $this->getDashboardData('news');
@@ -194,29 +179,5 @@ class DashboardService implements NewsManagementServiceInterface, SharedGetDataS
     public function moveMain(array $data): void
     {
         $this->move('main_page_posts', $data);
-    }
-    
-    public function getAllGallery(): array {
-        return $this->getDashboardData('gallery');
-    }
-    
-    public function updateGallery(array $data): void {
-        $this->edit('gallery', $data);
-    }
-
-    public function createGallery(array $data): void {
-        $this->addImage($data);
-    }
-
-    public function publishedGallery(array $data): void {
-        $this->published('gallery', $data);
-    }
-
-    public function deleteGallery(int $id): void {
-        $this->delete('gallery', $id);
-    }
-
-    public function moveGallery(array $data): void {
-        $this->move('gallery', $data);
     }
 }       
