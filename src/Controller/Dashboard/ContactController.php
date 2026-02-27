@@ -10,13 +10,13 @@ use App\Service\Dashboard\ContactManagementServiceInterface;
 
 class ContactController extends AbstractDashboardController {
   public function __construct(
-    public ContactManagementServiceInterface $contactService,
+    public ContactManagementServiceInterface $service,
     Request $request,
     EasyCSRF $easyCSRF,
     View $view,
     CsrfMiddleware $csrfMiddleware
   ) {
-    parent::__construct($request, $easyCSRF, $contactService, $view, $csrfMiddleware);
+    parent::__construct($request, $easyCSRF, $service, $view, $csrfMiddleware);
   }
 
   protected function getModuleName(): string
@@ -28,7 +28,7 @@ class ContactController extends AbstractDashboardController {
   {
     $this->renderPage([
       'page' => 'contact/edit',
-      'data' => $this->contactService->getContact(),
+      'data' => $this->service->getContact(),
     ]);
   }
 
@@ -39,6 +39,6 @@ class ContactController extends AbstractDashboardController {
 
   protected function handleUpdate(array $data): void
   {
-    $this->contactService->updateContact($data);
+    $this->service->updateContact($data);
   }
 }

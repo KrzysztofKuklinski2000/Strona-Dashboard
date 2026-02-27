@@ -500,18 +500,4 @@ class DashboardServiceTest extends TestCase
     $this->repository->expects($this->once())->method('edit')->with('fees', $data);
     $this->service->updateFees($data);
   }
-
-  public function testShouldGetContactAndReturnFirstElement(): void
-  {
-    $contact = [['email' => 'test@gmail.com']];
-    $this->repository->expects($this->once())->method('getDashboardData')->with('contact')->willReturn($contact);
-    $this->assertEquals(['email' => 'test@gmail.com'], $this->service->getContact());
-  }
-
-  public function testShouldUpdateContact(): void
-  {
-    $data = ['email' => 'test@gmail.com'];
-    $this->repository->expects($this->once())->method('edit')->with('contact', $data);
-    $this->service->updateContact($data);
-  }
 }
