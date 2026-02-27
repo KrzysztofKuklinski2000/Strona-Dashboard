@@ -484,7 +484,7 @@ class DashboardServiceTest extends TestCase
   }
 
   // =========================================================================
-  // SECTION: SINGLE ROWS (Fees, Camp, Contact)
+  // SECTION: SINGLE ROWS (Fees, Contact)
   // =========================================================================
 
   public function testShouldGetFeesAndReturnFirstElement(): void
@@ -499,20 +499,6 @@ class DashboardServiceTest extends TestCase
     $data = ['amount' => 100];
     $this->repository->expects($this->once())->method('edit')->with('fees', $data);
     $this->service->updateFees($data);
-  }
-
-  public function testShouldGetCampAndReturnFirstElement(): void
-  {
-    $camp = [['city' => 'warszawa']];
-    $this->repository->expects($this->once())->method('getDashboardData')->with('camp')->willReturn($camp);
-    $this->assertEquals(['city' => 'warszawa'], $this->service->getCamp());
-  }
-
-  public function testShouldUpdateCamp(): void
-  {
-    $data = ['city' => 'warszawa'];
-    $this->repository->expects($this->once())->method('edit')->with('camp', $data);
-    $this->service->updateCamp($data);
   }
 
   public function testShouldGetContactAndReturnFirstElement(): void

@@ -10,19 +10,19 @@ use App\Service\Dashboard\CampManagementServiceInterface;
 
 class CampController extends AbstractDashboardController {
   public function __construct(
-    public CampManagementServiceInterface $campService,
+    public CampManagementServiceInterface $service,
     Request $request,
     EasyCSRF $easyCSRF,
     View $view,
     CsrfMiddleware $csrfMiddleware
   ) {
-    parent::__construct($request, $easyCSRF, $campService, $view, $csrfMiddleware);
+    parent::__construct($request, $easyCSRF, $service, $view, $csrfMiddleware);
   }
 
   public function editAction(): void {
     $this->renderPage([
       'page' => 'camp/edit',
-      'data' => $this->campService->getCamp(),
+      'data' => $this->service->getCamp(),
     ]);
   }
 
@@ -35,6 +35,6 @@ class CampController extends AbstractDashboardController {
   }
 
   protected function handleUpdate(array $data): void {
-    $this->campService->updateCamp($data);
+    $this->service->updateCamp($data);
   }
 }
