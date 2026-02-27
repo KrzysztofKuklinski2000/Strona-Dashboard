@@ -9,7 +9,7 @@ use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\DashboardRepository;
 
-class DashboardService implements NewsManagementServiceInterface, SharedGetDataServiceInterface, StartManagementServiceInterface, ImportantPostsManagementServiceInterface, GalleryManagementServiceInterface, FeesManagementServiceInterface {
+class DashboardService implements NewsManagementServiceInterface, SharedGetDataServiceInterface, StartManagementServiceInterface, ImportantPostsManagementServiceInterface, GalleryManagementServiceInterface {
 
     
     public function __construct(
@@ -218,12 +218,5 @@ class DashboardService implements NewsManagementServiceInterface, SharedGetDataS
 
     public function moveGallery(array $data): void {
         $this->move('gallery', $data);
-    }
-
-    public function updateFees(array $data): void {
-        $this->edit('fees', $data);
-    }
-    public function getFees(): array {
-        return $this->getDashboardData('fees')[0];
     }
 }       

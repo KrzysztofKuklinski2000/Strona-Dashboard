@@ -10,19 +10,19 @@ use App\Service\Dashboard\FeesManagementServiceInterface;
 
 class FeesController extends AbstractDashboardController {
   public function __construct(
-    public FeesManagementServiceInterface $feesService,
+    public FeesManagementServiceInterface $service,
     Request $request,
     EasyCSRF $easyCSRF,
     View $view,
     CsrfMiddleware $csrfMiddleware
   ) {
-    parent::__construct($request, $easyCSRF, $feesService, $view, $csrfMiddleware);
+    parent::__construct($request, $easyCSRF, $service, $view, $csrfMiddleware);
   }
 
   public function editAction(): void {
     $this->renderPage([
       'page' => 'fees/edit',
-      'data' => $this->feesService->getFees(),
+      'data' => $this->service->getFees(),
     ]);
   }
 
@@ -35,6 +35,6 @@ class FeesController extends AbstractDashboardController {
   }
 
   protected function handleUpdate(array $data): void {
-    $this->feesService->updateFees($data);
+    $this->service->updateFees($data);
   }
 }

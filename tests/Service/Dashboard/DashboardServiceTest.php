@@ -482,22 +482,4 @@ class DashboardServiceTest extends TestCase
 
     $this->service->moveMain(['id' => 10, 'dir' => 'up']);
   }
-
-  // =========================================================================
-  // SECTION: SINGLE ROWS (Fees, Contact)
-  // =========================================================================
-
-  public function testShouldGetFeesAndReturnFirstElement(): void
-  {
-    $fees = [['amount' => 100]];
-    $this->repository->expects($this->once())->method('getDashboardData')->with('fees')->willReturn($fees);
-    $this->assertEquals(['amount' => 100], $this->service->getFees());
-  }
-
-  public function testShouldUpdateFees(): void
-  {
-    $data = ['amount' => 100];
-    $this->repository->expects($this->once())->method('edit')->with('fees', $data);
-    $this->service->updateFees($data);
-  }
 }
