@@ -4,19 +4,22 @@ namespace App\Service\Dashboard;
 
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
-use App\Notification\NotificationService;
-use App\Repository\DashboardRepository;
+use App\Notification\Observer\TimetableObserverInterface;
 
 class TimetableService extends AbstractDashboardService implements TimeTableManagementServiceInterface {
 
-  public function __construct(
-    DashboardRepository $repository,
-    private NotificationService $notificationService
-  ){
-    parent::__construct($repository);
+  private const TABLE = 'timetable';
+  private array $observers = [];
+
+  public function attach(TimetableObserverInterface $observer): void {
+    $this->observers[] = $observer;
   }
 
-  private const TABLE = 'timetable';
+  private function notify(): void {
+    foreach ($this->observers as $observer) {
+      $observer->update();
+    }
+  }
 
   private function timetablePageData(): array
   {
@@ -35,7 +38,7 @@ class TimetableService extends AbstractDashboardService implements TimeTableMana
   public function updateTimetable(array $data): void
   {
     $this->edit(self::TABLE, $data);
-    $this->notificationService->notifyAboutTimetableUpdate();
+    $this->notify();
   }
 
   public function createTimetable(array $data): void

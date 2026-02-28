@@ -6,7 +6,7 @@ namespace Tests\Service\Dashboard;
 
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
-use App\Notification\NotificationService;
+use App\Notification\Observer\TimetableObserverInterface;
 use App\Repository\DashboardRepository;
 use App\Service\Dashboard\TimetableService;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -15,14 +15,25 @@ use PHPUnit\Framework\TestCase;
 class TimetableServiceTest extends TestCase
 {
   private DashboardRepository | MockObject $repository;
-  private NotificationService | MockObject $notificationService;
   private TimetableService $service;
 
   protected function setUp(): void
   {
     $this->repository = $this->createMock(DashboardRepository::class);
-    $this->notificationService = $this->createMock(NotificationService::class);
-    $this->service = new TimetableService($this->repository, $this->notificationService);
+    $this->service = new TimetableService($this->repository);
+  }
+
+  public function testUpdateTimetableNotifiesObservers(): void
+  {
+    $repository = $this->createMock(DashboardRepository::class);
+    $observer = $this->createMock(TimetableObserverInterface::class);
+
+    $service = new TimetableService($repository);
+    $service->attach($observer);
+    
+    $observer->expects($this->once())->method('update');
+
+    $service->updateTimetable(['id' => 1, 'day' => 'WT']);
   }
 
   public function testShouldCreateTimetable(): void
@@ -54,7 +65,6 @@ class TimetableServiceTest extends TestCase
   {
     $data = ['day' => 'wtorek'];
     $this->repository->expects($this->once())->method('edit')->with('timetable', $data);
-    $this->notificationService->expects($this->once())->method('notifyAboutTimetableUpdate');
     $this->service->updateTimetable($data);
   }
 
