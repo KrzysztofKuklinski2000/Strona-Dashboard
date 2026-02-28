@@ -4,7 +4,7 @@ namespace App\Notification\Email;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
-class EmailService {
+class Mailer {
 
   public function __construct(
     private MailerInterface $mailer, 
@@ -12,17 +12,14 @@ class EmailService {
     ) {
   }
 
-  public function sendTimetableUpdate(array $users, string $htmlContent): void
+  public function send(string $to, string $subject, string $htmlContent): void
   {
-    foreach ($users as $user) {
-
       $email = (new Email())
         ->from($this->config['from_email'])
-        ->to($user)
-        ->subject('Aktualizacja grafiku')
+        ->to($to)
+        ->subject($subject)
         ->html($htmlContent);
 
       $this->mailer->send($email);
-    }
   }
 }

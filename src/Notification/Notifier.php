@@ -2,13 +2,13 @@
 
 namespace App\Notification;
 
-use App\Notification\Email\EmailService;
+use App\Notification\Email\Mailer;
 use App\Repository\SubscriberRepository;
 
 
-class NotificationService {
+class Notifier {
   public function __construct(
-    private EmailService $emailService,
+    private Mailer $mailer,
     private SubscriberRepository $subscriberRepository
   ) {}
 
@@ -24,6 +24,8 @@ class NotificationService {
     require dirname(__DIR__, 2) . '/templates/emails/timetable_updated.php';
     $htmlContent = ob_get_clean();
 
-    $this->emailService->sendTimetableUpdate($emails, $htmlContent);
+    foreach ($emails as $email) {
+      $this->mailer->send($email, 'Aktualizacja grafiku', $htmlContent);
+    }
   }
 }
