@@ -17,8 +17,8 @@ class Router {
   }
 
   public function dispatch(Request $request): array {
-    $httpMethod = $_SERVER['REQUEST_METHOD'];
-    $uri = $_SERVER['REQUEST_URI'];
+    $httpMethod = $request->getMethod();
+    $uri = $request->getServerParam('REQUEST_URI', '/');
     
     if (false !== $pos = strpos($uri, '?')) {
       $uri = substr($uri, 0, $pos);

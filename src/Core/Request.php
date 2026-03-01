@@ -35,6 +35,11 @@ class Request {
 		return $this->post[$name] ?? $default;
 	}
 
+	public function getServerParam(string $key, $default = null): mixed
+	{
+		return $this->server[$key] ?? $default;
+	}
+
 	public function getMethod(): string {
 		return $this->server['REQUEST_METHOD'] ?? 'GET';
 	}

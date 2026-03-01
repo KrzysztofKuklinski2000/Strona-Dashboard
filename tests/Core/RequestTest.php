@@ -368,4 +368,57 @@ class RequestTest extends TestCase
     $this->assertEquals($tempFile, $result['tmp_name']);
     $this->assertEmpty($this->request->getErrors());
   }
+
+  public function testShouldSetAndGetRouteParams(): void {
+    // GIVEN 
+    $params = ['id' => 123, 'slug' => 'wymagania-egzaminacyjne'];
+
+    $request = new Request([], [], [], []);
+
+    // WHEN 
+    $request->setRouteParams($params);
+
+    // THEN 
+    $this->assertSame(123, $request->getRouteParam('id'));
+    $this->assertSame('wymagania-egzaminacyjne', $request->getRouteParam('slug'));
+  }
+
+  public function testShouldReturnDefaultValueWhenRouteParamDoesNotExist(): void
+  {
+    // GIVEN
+    $request = new Request([], [], [], []);
+    $request->setRouteParams(['existing' => 'value']);
+
+    // WHEN
+    $actual = $request->getRouteParam('non-existent', 'default_value');
+
+    // THEN
+    $this->assertSame('default_value', $actual);
+  }
+
+  public function testShouldReturnServerParamWhenExists(): void
+  {
+    // GIVEN
+    $server = ['REQUEST_URI' => '/news/10'];
+    $request = new Request([], [], $server, []);
+
+    // WHEN
+    $actual = $request->getServerParam('REQUEST_URI');
+
+    // THEN
+    $this->assertSame('/news/10', $actual);
+  }
+
+  public function testShouldReturnDefaultValueWhenServerParamDoesNotExist(): void
+  {
+    // GIVEN
+    $server = [];
+    $request = new Request([], [], $server, []);
+
+    // WHEN
+    $actual = $request->getServerParam('HTTP_USER', 'unknown');
+
+    // THEN
+    $this->assertSame('unknown', $actual);
+  }
 }
