@@ -10,10 +10,14 @@ use function FastRoute\simpleDispatcher;
 class Router {
   private Dispatcher $dispatcher;
 
-  public function __construct()
+  public function __construct(?Dispatcher $dispatcher = null)
   {
-    $routesDefinition = require __DIR__ . '/../../config/routes.php';
-    $this->dispatcher = simpleDispatcher($routesDefinition);
+    if ($dispatcher) {
+      $this->dispatcher = $dispatcher;
+    } else {
+      $routesDefinition = require __DIR__ . '/../../config/routes.php';
+      $this->dispatcher = simpleDispatcher($routesDefinition);
+    }
   }
 
   public function dispatch(Request $request): array {
