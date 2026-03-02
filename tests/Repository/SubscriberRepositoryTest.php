@@ -2,6 +2,7 @@
 
 namespace Tests\Repository;
 
+use App\Exception\RepositoryException;
 use App\Repository\SubscriberRepository;
 use PDO;
 use PHPUnit\Framework\TestCase;
@@ -34,5 +35,24 @@ class SubscriberRepositoryTest extends TestCase {
     $this->assertCount(2, $emails);
     $this->assertEquals('jan@test.pl', $emails[0]);
     $this->assertEquals('anna@test.pl', $emails[1]);
+  }
+
+  public function testShouldThrowRepositoryExceptionWhenGetAllEmailsFailure(): void
+  {
+    // GIVEN
+    $repository = $this->getMockBuilder(SubscriberRepository::class)
+      ->disableOriginalConstructor()
+      ->onlyMethods(['runQuery'])
+      ->getMock();
+
+    $repository->method('runQuery')
+      ->willThrowException(new RepositoryException("Błąd bazy"));
+
+    // EXPECTS
+    $this->expectException(RepositoryException::class);
+    $this->expectExceptionMessage("Nie udało się pobrać subskrybentów");
+
+    // WHEN
+    $repository->getAllEmails();
   }
 }
