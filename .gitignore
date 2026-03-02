@@ -4,3 +4,8 @@
 /public/images/karate/
 /coverage-report/
 /.phpunit.cache/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+.docker/

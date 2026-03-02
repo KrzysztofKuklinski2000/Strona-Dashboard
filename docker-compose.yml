@@ -1,0 +1,55 @@
+services: 
+  php:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: karate-php
+    volumes:
+      - .:/app
+      - /app/vendor
+    networks:
+      - karate-net
+
+  nginx:
+    image: nginx:alpine
+    container_name: karate-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - .:/app
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - karate-net
+
+  db:
+    image: mysql:8.0
+    container_name: karate-db
+    environment:
+      MYSQL_DATABASE: karate
+      MYSQL_USER: user_karate
+      MYSQL_PASSWORD: haslo
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./docker/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - karate-net
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: karate-phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+    networks:
+      - karate-net
+
+networks:
+  karate-net:
+    driver: bridge
+
+
+volumes:
+  db_data:
