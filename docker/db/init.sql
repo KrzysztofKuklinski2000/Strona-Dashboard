@@ -237,7 +237,7 @@ INSERT INTO `news` (`id`, `title`, `description`, `created`, `updated`, `status`
 
 CREATE TABLE `subscribers` (
   `id` int(11) NOT NULL,
-  `email` text NOT NULL
+  `email` VARCHAR(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -332,7 +332,7 @@ ALTER TABLE `news`
 --
 ALTER TABLE `subscribers`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`) USING HASH;
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `timetable`
