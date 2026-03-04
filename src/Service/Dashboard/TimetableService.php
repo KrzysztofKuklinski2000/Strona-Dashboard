@@ -6,7 +6,7 @@ use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Traits\Observable;
 
-class TimetableService extends AbstractDashboardService implements TimeTableManagementServiceInterface {
+class TimetableService extends AbstractDashboardService implements TimetableManagementServiceInterface {
 
   use Observable;
 

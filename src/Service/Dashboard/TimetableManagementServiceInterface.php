@@ -7,7 +7,7 @@ namespace App\Service\Dashboard;
 /**
  * Interfejs definiujący operacje wyłącznie dla modułu Timetable.
  */
-interface TimeTableManagementServiceInterface extends SharedGetDataServiceInterface
+interface TimetableManagementServiceInterface extends SharedGetDataServiceInterface
 {
   /**
    * Pobiera wszystkie wpisy.
