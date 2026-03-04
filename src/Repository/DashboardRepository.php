@@ -10,10 +10,10 @@ use App\Exception\RepositoryException;
 
 class DashboardRepository extends AbstractRepository {
     public function getDashboardData(string $table) {
-		try {	
+		try {
 			$table = $this->validateTable($table);
 			$sql = "SELECT * FROM $table";
-			if(!in_array($table, ['contact', 'fees', 'camp'])) $sql .= " ORDER BY position ASC";
+			if(!in_array($table, ['contact', 'fees', 'camp', 'subscribers'])) $sql .= " ORDER BY position ASC";
 
 			return $this->runQuery($sql)->fetchAll(PDO::FETCH_ASSOC);
 		}catch(RepositoryException $e) {

@@ -8,6 +8,7 @@ use App\Controller\Dashboard\GalleryController;
 use App\Controller\Dashboard\ImportantPostsController;
 use App\Controller\Dashboard\NewsController;
 use App\Controller\Dashboard\StartController;
+use App\Controller\Dashboard\SubscribersController;
 use App\Controller\Dashboard\TimetableController;
 use App\Controller\SiteController;
 use FastRoute\RouteCollector;
@@ -100,5 +101,7 @@ return function (RouteCollector $r) {
   $r->post('/dashboard/timetable/published/{id:\d+}', [TimetableController::class, 'publishedAction']);
   $r->get('/dashboard/timetable/confirmDelete/{id:\d+}', [TimetableController::class, 'confirmDeleteAction']);
   $r->post('/dashboard/timetable/delete/{id:\d+}', [TimetableController::class, 'deleteAction']);
+
+  $r->get('/dashboard/subscribers', [SubscribersController::class, 'indexAction']);
   
 };

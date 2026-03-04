@@ -9,6 +9,7 @@ use App\Controller\Dashboard\GalleryController;
 use App\Controller\Dashboard\ImportantPostsController;
 use App\Controller\Dashboard\NewsController;
 use App\Controller\Dashboard\StartController;
+use App\Controller\Dashboard\SubscribersController;
 use App\Controller\Dashboard\TimetableController;
 use App\Controller\SiteController;
 use App\Factories\ControllerFactories\AuthControllerFactory;
@@ -19,6 +20,7 @@ use App\Factories\ControllerFactories\Dashboard\GalleryControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\ImportantPostsControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\NewsControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\StartControllerFactory;
+use App\Factories\ControllerFactories\Dashboard\SubscribersControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\TimetableControllerFactory;
 use App\Factories\ControllerFactories\SiteControllerFactory;
 
@@ -32,6 +34,7 @@ return [
   CampController::class           => CampControllerFactory::class,
   ContactController::class        => ContactControllerFactory::class,
   StartController::class          => StartControllerFactory::class, // Dawny '_default'
+  SubscribersController::class    => SubscribersControllerFactory::class,
 
 
   SiteController::class           => SiteControllerFactory::class,

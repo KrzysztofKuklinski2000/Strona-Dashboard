@@ -11,7 +11,7 @@ use PDOStatement;
 
 
 class AbstractRepository {
-  private const ALLOWED_TABLES = ['news', 'contact', 'fees', 'camp', 'user', 'timetable', 'important_posts', 'main_page_posts', 'gallery'];
+  private const ALLOWED_TABLES = ['news', 'contact', 'fees', 'camp', 'user', 'timetable', 'important_posts', 'main_page_posts', 'gallery', 'subscribers'];
 
   public function __construct(protected PDO $con) {}
 
@@ -51,6 +51,7 @@ class AbstractRepository {
 
   protected function validateTable(string $table): string
   {
+    
     if (!in_array($table, self::ALLOWED_TABLES)) {
       throw new RepositoryException("Nie ma takiej tabeli", 400);
     }
