@@ -15,8 +15,18 @@ RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
 WORKDIR /app
+
+COPY docker/php/entrypoint.sh /usr/local/bin/docker-entrypoint
+RUN chmod +x /usr/local/bin/docker-entrypoint
+
+RUN git config --global --add safe.directory /app
+
 COPY composer.json composer.lock ./
 RUN composer install --no-scripts --no-autoloader
+
 COPY . .
 RUN composer dump-autoload --optimize
+
+ENTRYPOINT ["docker-entrypoint"]
