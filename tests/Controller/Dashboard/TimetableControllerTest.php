@@ -5,7 +5,7 @@ namespace Tests\Controller\Dashboard;
 use App\Controller\Dashboard\TimetableController;
 use App\Core\Request;
 use App\Middleware\CsrfMiddleware;
-use App\Service\Dashboard\TimeTableManagementServiceInterface;
+use App\Service\Dashboard\TimetableManagementServiceInterface;
 use App\View;
 use EasyCSRF\EasyCSRF;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -24,7 +24,7 @@ class TimetableControllerTest extends TestCase
 
   public function setUp(): void
   {
-    $this->timetableService = $this->createMock(TimeTableManagementServiceInterface::class);
+    $this->timetableService = $this->createMock(TimetableManagementServiceInterface::class);
     $this->request = $this->createMock(Request::class);
     $this->easyCSRF = $this->createMock(EasyCSRF::class);
     $this->view = $this->createMock(View::class);
