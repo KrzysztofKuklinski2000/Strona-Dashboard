@@ -70,7 +70,12 @@ class Request {
 			return null;
 		}
 
-		if ($type === 'int') {
+		if ($type === 'email') {
+			if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+				$this->errors[$param] = "Podany adres email jest nieprawidłowy.";
+				return null;
+			}
+		}elseif ($type === 'int') {
 			if (!ctype_digit((string)$value)) {
 				$this->errors[$param] = "Pole musi zawierać tylko liczby całkowite.";
 				return null;

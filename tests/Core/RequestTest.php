@@ -209,6 +209,35 @@ class RequestTest extends TestCase
     $this->assertSame('To pole jest wymagane.', $errors['title']);
   }
 
+  public function testShouldReturnStringWhenValidationTypeIsEmail() {
+    // GIVEN
+    $post = ['email' => 'test@gmail.com'];
+    $request = new Request([], $post, [], []);
+
+    // WHEN 
+    $actual = $request->validate('email', true, 'email');
+    $errors = $request->getErrors();
+
+    // THEN 
+    $this->assertSame('test@gmail.com', $actual);
+    $this->assertEmpty($errors); 
+  }
+
+  public function testShouldReturnErrorAndNullWhenEmailFieldIsInCorrect(){
+    // GIVEN 
+    $post = ['email' => 'test'];
+    $request = new Request([], $post, [], []);
+
+    // WHEN 
+    $actual = $request->validate('email', true, 'email');
+    $errors = $request->getErrors();
+
+    // THEN 
+    $this->assertNull($actual);
+    $this->assertArrayHasKey('email', $errors);
+    $this->assertSame('Podany adres email jest nieprawidłowy.', $errors['email']);
+  }
+
   public function testShouldReturnIntegerWhenValidationTypeIsInt() {
     // GIVEN
     $post = ['number' => '10'];

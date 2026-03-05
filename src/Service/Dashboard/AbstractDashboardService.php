@@ -7,6 +7,7 @@ use App\Exception\ServiceException;
 use App\Repository\DashboardRepository;
 
 abstract class AbstractDashboardService implements SharedGetDataServiceInterface {
+  protected const TABLES_WITHOUT_POSITION = ['subscribers'];
 
   public function __construct(protected DashboardRepository $repository) {}
 
@@ -32,7 +33,9 @@ abstract class AbstractDashboardService implements SharedGetDataServiceInterface
   {
     try {
       $this->repository->beginTransaction();
-      $this->repository->incrementPosition($table);
+      if (!in_array($table, static::TABLES_WITHOUT_POSITION)) {
+        $this->repository->incrementPosition($table);
+      }
       $this->repository->create($data, $table);
       $this->repository->commit();
     } catch (RepositoryException $e) {

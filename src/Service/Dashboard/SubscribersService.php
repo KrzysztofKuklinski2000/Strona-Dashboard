@@ -10,4 +10,9 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
   {
     return $this->getAll(self::TABLE);
   }
+
+  public function createSubscriber(array $data): void
+  {
+    $this->create(self::TABLE, $data);
+  }
 }

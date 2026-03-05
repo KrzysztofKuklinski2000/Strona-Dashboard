@@ -29,9 +29,25 @@ class SubscribersController extends AbstractDashboardController
         ]);
     }
 
+    public function createAction(): void
+    {
+        $this->renderPage([
+          'page' => 'subscribers/create'
+        ]);
+    }
+
     protected function getModuleName(): string
     {
         return 'subscribers';
+    }
+
+    protected function getDataToCreate(): array {
+        return $this->getEmailToCreate();
+    }
+
+    public function handleCreate(array $data): void
+    {
+        $this->service->createSubscriber($data);
     }
 }
 

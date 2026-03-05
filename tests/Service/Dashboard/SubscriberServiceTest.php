@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Service\Dashboard;
 
+use App\Exception\RepositoryException;
+use App\Exception\ServiceException;
 use App\Repository\DashboardRepository;
 use App\Service\Dashboard\SubscribersService;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -38,5 +40,31 @@ class SubscriberServiceTest extends TestCase
 
     // THEN
     $this->assertEquals($subscribers, $actual);
+  }
+
+  public function testShouldCreateSubscriberSuccessfully(): void
+  {
+    // GIVEN
+    $data = ['email' => 'example@gmail.com'];
+
+    // EXPECTS
+    $this->repository->expects($this->once())->method('beginTransaction');
+    $this->repository->expects($this->never())->method('incrementPosition');
+    $this->repository->expects($this->once())->method('create')->with($data, 'subscribers');
+    $this->repository->expects($this->once())->method('commit');
+
+    // WHEN
+    $this->service->createSubscriber($data);
+  }
+
+  public function testShouldThrowServiceExceptionWhenCreateSubscriberFailure(): void
+  {
+    // EXPECTS
+    $this->expectException(ServiceException::class);
+    $this->repository->expects($this->once())->method('rollback');
+
+    // WHEN 
+    $this->repository->method('create')->willThrowException(new RepositoryException('Błąd'));
+    $this->service->createSubscriber(['']);
   }
 }

@@ -129,4 +129,10 @@ trait GetDataMethods {
       'updated_at' => date('Y-m-d'),
     ];
   }
+
+  protected function getEmailToCreate(): array {
+    return [
+      'email' => $this->request->validate(param: 'email', required: true, type: 'email', maxLength: 100)
+    ];
+  }
 }
