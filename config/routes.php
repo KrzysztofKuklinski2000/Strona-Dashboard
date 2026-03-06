@@ -106,8 +106,10 @@ return function (RouteCollector $r) {
 
     $r->get('/dashboard/subscribers/create', [SubscribersController::class, 'createAction']);
     $r->post('/dashboard/subscribers/store', [SubscribersController::class, 'storeAction']);
-    
+
     $r->get('/dashboard/subscribers/edit/{id:\d+}', [SubscribersController::class, 'editAction']);
     $r->post('/dashboard/subscribers/update/{id:\d+}', [SubscribersController::class, 'updateAction']);
+    
+    $r->get('/dashboard/subscribers/show/{id:\d+}', [SubscribersController::class, 'showAction']);
 };
 

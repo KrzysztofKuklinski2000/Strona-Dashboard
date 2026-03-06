@@ -43,6 +43,13 @@ class SubscribersController extends AbstractDashboardController
         ]);
     }
 
+    public function showAction(): void {
+        $this->renderPage([
+        'page' => 'subscribers/show',
+        'data' => $this->getSingleData(),
+        ]);
+    }
+
     protected function getModuleName(): string
     {
         return 'subscribers';
