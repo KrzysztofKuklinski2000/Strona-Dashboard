@@ -20,4 +20,9 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
   {
     $this->edit(self::TABLE, $data);
   }
+
+  public function deleteSubscriber(int $id): void
+  {
+    $this->delete(self::TABLE, $id);
+  }
 }

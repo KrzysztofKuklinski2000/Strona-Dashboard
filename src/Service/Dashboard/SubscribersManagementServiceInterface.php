@@ -28,4 +28,11 @@ interface SubscribersManagementServiceInterface extends SharedGetDataServiceInte
    * @return void
    */
   public function updateSubscriber(array $data): void;
+
+  /**
+   * Usuwa subskrybenta.
+   * @param int $id ID subskrybenta do usunięcia.
+   * @return void
+   */
+  public function deleteSubscriber(int $id): void;
 }

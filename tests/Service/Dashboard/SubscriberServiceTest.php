@@ -89,4 +89,33 @@ class SubscriberServiceTest extends TestCase
     $this->repository->method('edit')->willThrowException(new RepositoryException('Błąd'));
     $this->service->updateSubscriber(['']);
   }
+
+  public function testShouldDeleteSubscriber(): void
+  {
+    // GIVEN 
+    $id = 1;
+    $postData = ['id' => 1, 'email' => 'test@gmail.com'];
+
+    // EXPECTS
+    $this->repository->expects($this->once())->method('beginTransaction');
+    $this->repository->expects($this->once())->method('getPost')->with($id, 'subscribers')->willReturn($postData);
+    $this->repository->expects($this->once())->method('delete')->with($id, 'subscribers');
+    $this->repository->expects($this->never())->method('decrementPosition');
+    $this->repository->expects($this->once())->method('commit');
+
+    // WHEN 
+    $this->service->deleteSubscriber($id);
+  }
+
+  public function testShouldThrowServiceExceptionWhenDeleteSubscriberFailure(): void
+  {
+    $this->expectException(ServiceException::class);
+    $this->expectExceptionMessage('Nie udało się usunąć posta');
+
+    $this->repository->expects($this->once())->method('beginTransaction');
+    $this->repository->method('getPost')->willThrowException(new RepositoryException('Błąd'));
+    $this->repository->expects($this->once())->method('rollBack');
+
+    $this->service->deleteSubscriber(1);
+  }
 }

@@ -50,6 +50,13 @@ class SubscribersController extends AbstractDashboardController
         ]);
     }
 
+    public function confirmDeleteAction(): void {
+        $this->renderPage([
+        'page' => 'subscribers/delete',
+        'data' => $this->getSingleData(),
+        ]);
+    }
+
     protected function getModuleName(): string
     {
         return 'subscribers';
@@ -63,13 +70,17 @@ class SubscribersController extends AbstractDashboardController
         return $this->getEmailToUpdate();
     }
 
-    public function handleCreate(array $data): void
+    protected function handleCreate(array $data): void
     {
         $this->service->createSubscriber($data);
     }
 
-    public function handleUpdate(array $data): void {
+    protected function handleUpdate(array $data): void {
         $this->service->updateSubscriber($data);
+    }
+
+    protected function handleDelete(int $id): void{
+        $this->service->deleteSubscriber($id);
     }
 }
 

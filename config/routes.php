@@ -111,5 +111,8 @@ return function (RouteCollector $r) {
     $r->post('/dashboard/subscribers/update/{id:\d+}', [SubscribersController::class, 'updateAction']);
     
     $r->get('/dashboard/subscribers/show/{id:\d+}', [SubscribersController::class, 'showAction']);
+
+    $r->get('/dashboard/subscribers/confirmDelete/{id:\d+}', [SubscribersController::class, 'confirmDeleteAction']);
+    $r->post('/dashboard/subscribers/delete/{id:\d+}', [SubscribersController::class, 'deleteAction']);
 };
 

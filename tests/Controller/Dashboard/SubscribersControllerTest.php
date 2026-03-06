@@ -228,4 +228,52 @@ class SubscribersControllerTest extends TestCase
     // WHEN
     $this->controller->showAction();
   }
+
+  public function testShouldRenderSubscriberConfirmDeleteViewWithCsrfTokenWhenActionIsConfirmDelete(): void
+  {
+    // GIVEN
+    $this->csrfMiddleware->expects($this->once())
+      ->method('generateToken')
+      ->willReturn('token');
+
+    $this->request->expects($this->once())
+      ->method('getRouteParam')
+      ->with('id')
+      ->willReturn(1);
+
+    $data = ['id' => 1, 'email' => 'test@gmail.com'];
+    $this->subscribersService->expects($this->once())
+      ->method('getPost')
+      ->with(1, 'subscribers')
+      ->willReturn($data);
+
+    // EXPECTS
+    $this->view->expects($this->once())
+      ->method('renderDashboardView')
+      ->with([
+        'page' => 'subscribers/delete',
+        'data' => $data,
+        'flash' => null,
+        'csrf_token' => 'token'
+      ]);
+
+    // WHEN
+    $this->controller->confirmDeleteAction();
+  }
+
+   public function testShouldCallServiceToDeleteSubscriberWhenActionIsHandleDelete(): void
+  {
+    // GIVEN 
+    $id = 1;
+    $method = new \ReflectionMethod(SubscribersController::class, 'handleDelete');
+    $method->setAccessible(true);
+
+    // EXPECTS 
+    $this->subscribersService->expects($this->once())
+      ->method('deleteSubscriber')
+      ->with($id);
+
+    // WHEN 
+    $method->invoke($this->controller, $id);
+  }
 }

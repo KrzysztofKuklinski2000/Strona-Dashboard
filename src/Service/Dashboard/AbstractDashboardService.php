@@ -59,7 +59,12 @@ abstract class AbstractDashboardService implements SharedGetDataServiceInterface
       $this->repository->beginTransaction();
       $currentPost = $this->repository->getPost($id, $table);
       $this->repository->delete($id, $table);
-      $this->repository->decrementPosition($table, (int) $currentPost['position']);
+
+      if (!in_array($table, static::TABLES_WITHOUT_POSITION)) {
+        
+        $this->repository->decrementPosition($table, (int) $currentPost['position']);
+      }
+      
       $this->repository->commit();
     } catch (RepositoryException $e) {
       $this->repository->rollBack();
