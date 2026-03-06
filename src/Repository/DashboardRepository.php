@@ -42,7 +42,7 @@ class DashboardRepository extends AbstractRepository {
 			$table = $this->validateTable($table);
 			$sql = "UPDATE $table SET ". implode(", ", array_map(fn($k) => "$k = :$k", array_filter(array_keys($data), fn($k)=> $k !== "id")));
 
-			if(in_array($table, ['news', 'main_page_posts', 'important_posts', 'timetable', 'gallery'])) $sql .= " WHERE id = :id";
+			if(in_array($table, ['news', 'main_page_posts', 'important_posts', 'timetable', 'gallery', 'subscribers'])) $sql .= " WHERE id = :id";
 			$result = array_combine(array_map(fn($k) => ":$k", array_keys($data)), $data);
 
 			$this->runQuery($sql, $result);

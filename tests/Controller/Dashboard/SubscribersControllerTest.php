@@ -115,7 +115,7 @@ class SubscribersControllerTest extends TestCase
         $this->assertEquals('email', $result['email']);
     }
 
-    public function testShouldCallServiceToCreateNewsWhenActionIsHandleCreate(): void
+    public function testShouldCallServiceToCreateSubscriberWhenActionIsHandleCreate(): void
     {
         // GIVEN
         $data = ['email' => 'test@gmail.com'];
@@ -125,6 +125,72 @@ class SubscribersControllerTest extends TestCase
         // EXPECTS
         $this->subscribersService->expects($this->once())
           ->method('createSubscriber')
+          ->with($data);
+
+        // WHEN
+        $method->invoke($this->controller, $data);
+    }
+
+  public function testShouldRenderSubscriberEditViewWithSinglePostDataAndCsrfTokenWhenActionIsEdit(): void
+  {
+    // GIVEN
+    $this->csrfMiddleware->expects($this->once())
+      ->method('generateToken')
+      ->willReturn('token');
+
+    $this->request->expects($this->once())
+      ->method('getRouteParam')
+      ->with('id')
+      ->willReturn(1);
+
+    $data = ['id' => 1, 'email' => 'test@gmail.com'];
+    $this->subscribersService->expects($this->once())
+      ->method('getPost')
+      ->with(1, 'subscribers')
+      ->willReturn($data);
+
+    // EXPECTS
+    $this->view->expects($this->once())
+      ->method('renderDashboardView')
+      ->with([
+        'page' => 'subscribers/edit',
+        'data' => $data,
+        'flash' => null,
+        'csrf_token' => 'token'
+      ]);
+
+    // WHEN
+    $this->controller->editAction();
+  }
+
+  public function testShouldReturnDataToUpdateWhenMethodGetDataToUpdateIsCalled(): void {
+    // GIVEN
+        $this->request->method('validate')
+          ->willReturnArgument(0);
+
+        $method = new \ReflectionMethod(SubscribersController::class, 'getDataToUpdate');
+        $method->setAccessible(true);
+
+        // WHEN
+        $result = $method->invoke($this->controller);
+
+        // THEN
+        $this->assertEquals('id', $result['id']);
+        $this->assertEquals('email', $result['email']);
+  }
+
+
+  public function testShouldCallServiceToUpdateSubscriberWhenActionIsHandleUpdate(): void
+    {
+        // GIVEN
+        $data = ['id' => 1, 'email' => 'test@gmail.com'];
+
+        $method = new \ReflectionMethod(SubscribersController::class, 'handleUpdate');
+        $method->setAccessible(true);
+
+        // EXPECTS
+        $this->subscribersService->expects($this->once())
+          ->method('updateSubscriber')
           ->with($data);
 
         // WHEN

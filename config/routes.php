@@ -103,7 +103,11 @@ return function (RouteCollector $r) {
     $r->post('/dashboard/timetable/delete/{id:\d+}', [TimetableController::class, 'deleteAction']);
 
     $r->get('/dashboard/subscribers', [SubscribersController::class, 'indexAction']);
+
     $r->get('/dashboard/subscribers/create', [SubscribersController::class, 'createAction']);
     $r->post('/dashboard/subscribers/store', [SubscribersController::class, 'storeAction']);
+    
+    $r->get('/dashboard/subscribers/edit/{id:\d+}', [SubscribersController::class, 'editAction']);
+    $r->post('/dashboard/subscribers/update/{id:\d+}', [SubscribersController::class, 'updateAction']);
 };
 

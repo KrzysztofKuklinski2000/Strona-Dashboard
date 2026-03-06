@@ -36,6 +36,13 @@ class SubscribersController extends AbstractDashboardController
         ]);
     }
 
+    public function editAction(): void {
+        $this->renderPage([
+        'page' => 'subscribers/edit',
+        'data' => $this->getSingleData(),
+        ]);
+    }
+
     protected function getModuleName(): string
     {
         return 'subscribers';
@@ -45,9 +52,17 @@ class SubscribersController extends AbstractDashboardController
         return $this->getEmailToCreate();
     }
 
+    protected function getDataToUpdate(): array {
+        return $this->getEmailToUpdate();
+    }
+
     public function handleCreate(array $data): void
     {
         $this->service->createSubscriber($data);
+    }
+
+    public function handleUpdate(array $data): void {
+        $this->service->updateSubscriber($data);
     }
 }
 

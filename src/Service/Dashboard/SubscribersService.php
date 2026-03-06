@@ -15,4 +15,9 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
   {
     $this->create(self::TABLE, $data);
   }
+
+  public function updateSubscriber(array $data): void
+  {
+    $this->edit(self::TABLE, $data);
+  }
 }

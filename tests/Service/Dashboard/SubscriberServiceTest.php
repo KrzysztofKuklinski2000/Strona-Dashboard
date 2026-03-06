@@ -67,4 +67,26 @@ class SubscriberServiceTest extends TestCase
     $this->repository->method('create')->willThrowException(new RepositoryException('Błąd'));
     $this->service->createSubscriber(['']);
   }
+
+  public function testShouldUpdateSubscriberSuccessfully(): void
+  {
+    // GIVEN
+    $data = ['id' => 1, 'email' => 'example@gmail.com'];
+
+    // EXPECTS
+    $this->repository->expects($this->once())->method('edit')->with('subscribers', $data);
+
+    // WHEN
+    $this->service->updateSubscriber($data);
+  }
+
+  public function testShouldThrowServiceExceptionWhenUpdateSubscriberFailure(): void
+  {
+    // EXPECTS
+    $this->expectException(ServiceException::class);
+    $this->expectExceptionMessage('Nie udało się edytować');
+    // WHEN 
+    $this->repository->method('edit')->willThrowException(new RepositoryException('Błąd'));
+    $this->service->updateSubscriber(['']);
+  }
 }

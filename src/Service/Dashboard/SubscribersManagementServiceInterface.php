@@ -16,9 +16,16 @@ interface SubscribersManagementServiceInterface extends SharedGetDataServiceInte
   public function getAllSubscribers(): array;
 
   /**
-   * Tworzy nowych subscrybentow .
+   * Tworzy nowych subskrybenta .
    * @param array $data Dane posta z formularza.
    * @return void
    */
   public function createSubscriber(array $data): void;
+
+  /**
+   * Aktualizuje dane subskrybenta.
+   * @param array $data Nowe dane z formularza.
+   * @return void
+   */
+  public function updateSubscriber(array $data): void;
 }

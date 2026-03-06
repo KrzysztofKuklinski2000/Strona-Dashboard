@@ -1,0 +1,22 @@
+<?php
+$data = $params['data'];
+$csrf = $params['csrf_token'] ?? '';
+$action = "/dashboard/subscribers/update/" . ($data['id'] ?? '');
+$errors = $params['flash']['message'] ?? [];
+?>
+
+<br>
+<h3>Edytuj email subskrybenta</h3>
+<br>
+<form action="<?= $action ?? "" ?>" method="POST">
+  <input type="hidden" name="csrf_token" value="<?= $csrf ?? '' ?>">
+
+  <?php if (isset($data['id'])): ?>
+    <input type="hidden" name="id" value="<?= $data['id'] ?? "" ?>">
+  <?php endif; ?>
+
+  <input type="email" name="email" maxlength="100" value="<?= $data['email'] ?? "" ?>" placeholder="Podaj email">
+  <p class="validation-error"><?= $errors['email'] ?? ""  ?></p>
+
+  <input type="submit" value="Zapisz">
+</form>
