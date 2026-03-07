@@ -29,7 +29,7 @@ class NotifierTest extends TestCase
 
     // EXPECTS 
     $this->subscriberRepository->expects($this->once())
-      ->method('getAllEmails')
+      ->method('getActiveEmails')
       ->willReturn($emails);
 
     $this->mailer->expects($this->exactly(count($emails)))
@@ -47,7 +47,7 @@ class NotifierTest extends TestCase
   public function testShouldNotSendEmailsIfSubscriberListIsEmpty(): void
   {
     // GIVEN
-    $this->subscriberRepository->method('getAllEmails')->willReturn([]);
+    $this->subscriberRepository->method('getActiveEmails')->willReturn([]);
 
     // EXPECTS
     $this->mailer->expects($this->never())->method('send');

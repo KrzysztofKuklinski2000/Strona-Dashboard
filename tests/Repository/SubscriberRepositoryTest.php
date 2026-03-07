@@ -18,23 +18,25 @@ class SubscriberRepositoryTest extends TestCase {
     
     $this->pdo->exec("CREATE TABLE subscribers (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        email TEXT NOT NULL UNIQUE
+        email TEXT NOT NULL UNIQUE,
+        is_active INTEGER DEFAULT 1
       )
     ");
 
     $this->repository = new SubscriberRepository($this->pdo);
   }
 
-  public function testShouldReturnListOfEmailsWhenGetAllEmailsIsCalled(): void {
+  public function testShouldReturnOnlyActiveEmailsWhenGetActiveEmailsIsCalled(): void {
     // GIVEN 
-    $this->pdo->exec("INSERT INTO subscribers (email) VALUES ('jan@test.pl')");
-    $this->pdo->exec("INSERT INTO subscribers (email) VALUES ('anna@test.pl')");
+    $this->pdo->exec("INSERT INTO subscribers (email, is_active) VALUES ('test1@gmail.com', 1)");
+    $this->pdo->exec("INSERT INTO subscribers (email, is_active) VALUES ('test2@gmail.com', 0)");
+    $this->pdo->exec("INSERT INTO subscribers (email, is_active) VALUES ('test3@gmail.com', 1)");
 
-    $emails = $this->repository->getAllEmails();
+    $emails = $this->repository->getActiveEmails();
 
     $this->assertCount(2, $emails);
-    $this->assertEquals('jan@test.pl', $emails[0]);
-    $this->assertEquals('anna@test.pl', $emails[1]);
+    $this->assertEquals('test1@gmail.com', $emails[0]);
+    $this->assertEquals('test3@gmail.com', $emails[1]);
   }
 
   public function testShouldThrowRepositoryExceptionWhenGetAllEmailsFailure(): void
@@ -53,6 +55,6 @@ class SubscriberRepositoryTest extends TestCase {
     $this->expectExceptionMessage("Nie udało się pobrać subskrybentów");
 
     // WHEN
-    $repository->getAllEmails();
+    $repository->getActiveEmails();
   }
 }

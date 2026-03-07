@@ -139,7 +139,8 @@ trait GetDataMethods {
   protected function getEmailToUpdate(): array {
     return [
       'id' => $this->request->validate(param: 'id', required: true, type:'int'),
-      'email' => $this->request->validate(param: 'email', required: true, type: 'email', maxLength: 100)
+      'email' => $this->request->validate(param: 'email', required: true, type: 'email', maxLength: 100),
+      'is_active' => (int) $this->request->validate(param: 'is_active', required: false)
     ];
   }
 }

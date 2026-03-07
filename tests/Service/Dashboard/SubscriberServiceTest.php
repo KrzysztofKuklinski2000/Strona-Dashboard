@@ -80,6 +80,24 @@ class SubscriberServiceTest extends TestCase
     $this->service->updateSubscriber($data);
   }
 
+  public function testShouldUpdateSubscriberWithActiveStatus(): void
+{
+    // GIVEN
+    $data = [
+        'id' => 1, 
+        'email' => 'example@gmail.com', 
+        'is_active' => 0 // Symulujemy odznaczenie subskrypcji
+    ];
+
+    // EXPECTS
+    $this->repository->expects($this->once())
+        ->method('edit')
+        ->with('subscribers', $data);
+
+    // WHEN
+    $this->service->updateSubscriber($data);
+}
+
   public function testShouldThrowServiceExceptionWhenUpdateSubscriberFailure(): void
   {
     // EXPECTS

@@ -14,7 +14,7 @@ class Notifier {
 
   public function notifyAboutTimetableUpdate(): void
   {
-    $emails = $this->subscriberRepository->getAllEmails();
+    $emails = $this->subscriberRepository->getActiveEmails();
 
     if(empty($emails)) {
       return;
