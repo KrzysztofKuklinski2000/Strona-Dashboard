@@ -25,8 +25,16 @@ class PublicSubscribersController extends AbstractController {
 
         $email = $this->request->validate('email', true, 'email');
 
+        $consent = $this->request->getFormParam('terms_consent');
+
         if($this->request->getErrors()) {
             $this->setFlash('error', 'Niepoprawny adres email.');
+            $this->redirect('/');
+            return;
+        }
+
+        if (!$consent) {
+            $this->setFlash('error', 'Musisz zaakceptować zgodę na przetwarzanie danych.');
             $this->redirect('/');
             return;
         }

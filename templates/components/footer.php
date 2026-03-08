@@ -22,6 +22,13 @@
                         </div>
                         <button type="submit">Zapisz się <i class="fa-solid fa-paper-plane"></i></button>
                     </div>
+
+                    <div class="consent-wrapper">
+                        <label class="consent-label">
+                            <input type="checkbox" name="terms_consent" required>
+                            <span>Wyrażam zgodę na przetwarzanie mojego adresu e-mail w celu otrzymywania powiadomień o aktualizacjach grafiku.</span>
+                        </label>
+                    </div>
                 </form>
             </div>
 

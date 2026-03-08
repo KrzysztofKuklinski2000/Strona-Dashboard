@@ -43,18 +43,15 @@ class PublicSubscribersControllerTest extends TestCase
             ->getMock();
     }
 
-    public function testShouldSubscribeSuccessfullyWhenDataIsValid(): void
+    public function testShouldSubscribeSuccessfullyWhenDataAndConsentAreValid(): void
     {
         // GIVEN
         $email = 'user@example.com';
         $this->csrfMiddleware->expects($this->once())->method('verify');
         
-        $this->request->expects($this->once())
-            ->method('validate')
-            ->with('email', true, 'email')
-            ->willReturn($email);
-            
+        $this->request->method('validate')->willReturn($email);
         $this->request->method('getErrors')->willReturn([]);
+        $this->request->method('getFormParam')->with('terms_consent')->willReturn('on');
 
         // EXPECTS
         $this->service->expects($this->once())
@@ -73,19 +70,20 @@ class PublicSubscribersControllerTest extends TestCase
         $this->controller->subscribeAction();
     }
 
-    public function testShouldRedirectWithErrorWhenEmailIsInvalid(): void
+    public function testShouldRedirectWithErrorWhenConsentIsMissing(): void
     {
         // GIVEN
-        $this->csrfMiddleware->expects($this->once())->method('verify');
-        $this->request->method('validate')->willReturn(null);
-        $this->request->method('getErrors')->willReturn(['email' => 'Invalid']);
+        $this->csrfMiddleware->method('verify');
+        $this->request->method('validate')->willReturn('test@test.pl');
+        $this->request->method('getErrors')->willReturn([]);
+        $this->request->method('getFormParam')->with('terms_consent')->willReturn(null);
 
         // EXPECTS
         $this->service->expects($this->never())->method('createSubscriber');
         
         $this->controller->expects($this->once())
             ->method('setFlash')
-            ->with('error', 'Niepoprawny adres email.');
+            ->with('error', 'Musisz zaakceptować zgodę na przetwarzanie danych.');
 
         $this->controller->expects($this->once())
             ->method('redirect')
@@ -95,19 +93,17 @@ class PublicSubscribersControllerTest extends TestCase
         $this->controller->subscribeAction();
     }
 
-    public function testShouldSetErrorFlashWhenServiceThrowsException(): void
+    public function testShouldRedirectWithErrorWhenEmailIsInvalidButConsentIsPresent(): void
     {
         // GIVEN
-        $this->request->method('validate')->willReturn('test@test.pl');
-        $this->request->method('getErrors')->willReturn([]);
-        
-        $this->service->method('createSubscriber')
-            ->willThrowException(new ServiceException('Database error'));
+        $this->request->method('validate')->willReturn(null);
+        $this->request->method('getErrors')->willReturn(['email' => 'Invalid']);
+        $this->request->method('getFormParam')->with('terms_consent')->willReturn('on');
 
         // EXPECTS
         $this->controller->expects($this->once())
             ->method('setFlash')
-            ->with('error', 'Wystąpił błąd podczas zapisu.');
+            ->with('error', 'Niepoprawny adres email.');
 
         // WHEN
         $this->controller->subscribeAction();

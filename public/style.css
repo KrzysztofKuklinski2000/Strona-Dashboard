@@ -1170,3 +1170,27 @@ footer .copy {
     align-items: center;
     text-transform: none !important; 
 }
+
+.consent-wrapper {
+    margin-top: 15px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.consent-label {
+    display: flex;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.consent-label span {
+    color: #757575;
+    font-size: 0.65em; 
+    line-height: 1.4;
+    text-align: left;
+}
+
+.consent-label input[type="checkbox"] {
+    margin-top: 2px;
+    accent-color: #FF3366; 
+}
