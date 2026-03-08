@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Core\Request;
+use App\Middleware\CsrfMiddleware;
 use App\Service\SiteService;
 use App\View;
 use EasyCSRF\EasyCSRF;
@@ -14,6 +15,7 @@ class SiteController extends AbstractController {
 		public SiteService $siteService, 
 		EasyCSRF $easyCSRF,
 		View $view, 
+		private CsrfMiddleware $csrfMiddleware
 		) {
 		parent::__construct($request, $easyCSRF, $view);
 	}
@@ -101,6 +103,7 @@ class SiteController extends AbstractController {
 
 	private function renderPage(array $params): void {
 		$params['contact'] = $this->siteService->getContact();
+		$params['csrf_token'] = $this->csrfMiddleware->generateToken();
 		$this->view->renderPageView($params);
 	}
 }

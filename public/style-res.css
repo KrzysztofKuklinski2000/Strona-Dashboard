@@ -307,6 +307,18 @@
 	.img-box img {
 		height: 250px;
 	}
+
+	.newsletter-box {
+        margin-top: 40px;
+        margin-left: 0;
+        flex: 1 1 300px; /* Pozwala mu stać obok nawigacji */
+        max-width: 350px;
+    }
+
+    .input-container {
+        flex-direction: column; /* Na desktopie w stopce pionowo też wygląda dobrze, 
+                                  ale jeśli chcesz obok siebie, zmień na row */
+    }
 }
 
 

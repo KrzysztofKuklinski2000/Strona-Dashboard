@@ -4,13 +4,14 @@ declare(strict_types=1);
 namespace App\Factories\ControllerFactories;
 
 
-use PDO;
-use App\View;
-use App\Core\Request;
-use EasyCSRF\EasyCSRF;
-use App\Controller\SiteController;
 use App\Controller\AbstractController;
+use App\Controller\SiteController;
+use App\Core\Request;
 use App\Factories\ServiceFactories\SiteServiceFactory;
+use App\Middleware\CsrfMiddleware;
+use App\View;
+use EasyCSRF\EasyCSRF;
+use PDO;
 
 class SiteControllerFactory implements ControllerFactoryInterface {
   private SiteServiceFactory $serviceFactory;
@@ -21,6 +22,7 @@ class SiteControllerFactory implements ControllerFactoryInterface {
   
   public function createController(Request $request, EasyCSRF $easyCSRF): AbstractController {
     $siteService = $this->serviceFactory->createService();
+    $csrfMiddleware = new CsrfMiddleware($easyCSRF, $request);
 
     $view = new View();
     
@@ -30,6 +32,7 @@ class SiteControllerFactory implements ControllerFactoryInterface {
       $siteService, 
       $easyCSRF,
       $view,
+      $csrfMiddleware
     );
   }
 }

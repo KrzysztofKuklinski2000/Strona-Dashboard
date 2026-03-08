@@ -1054,3 +1054,119 @@ footer .copy {
 .filter a:hover {
 	background-color: #cecece;
 }
+
+/* NEWSLETTER */
+.newsletter-box {
+    width: 90%;
+    margin: 40px auto 0 auto;
+}
+
+.newsletter-title h3 {
+    color: white;
+    letter-spacing: 3px;
+    font-weight: 500;
+    margin: 0px;
+    text-transform: uppercase;
+    font-size: 1.1em;
+}
+
+.newsletter-title p {
+    width: 30px;
+    height: 2px;
+    background: #FF3366;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-group i {
+    position: absolute;
+    left: 15px;
+    color: #757575;
+}
+
+.newsletter-form input[type="email"] {
+    width: 100%;
+    background: #282E39;
+    border: 1px solid #4F4F4F;
+    padding: 12px 12px 12px 45px;
+    color: white;
+    border-radius: 5px;
+    font-size: 0.9em;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.newsletter-form input[type="email"]:focus {
+    border-color: #FF3366;
+}
+
+.newsletter-form button {
+    background: #FF3366;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 0.8em;
+}
+
+.newsletter-form button:hover {
+    background: #e62e5c;
+}
+
+.footer-container {
+    width: 100%;
+    display: flex;
+    justify-content: center; 
+}
+
+.footer-content-wrapper {
+    width: 90%; 
+    max-width: 1200px; 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 40px 0;
+}
+
+.newsletter-box, 
+.footer-nav {
+    flex: 1 1 200px; 
+    margin: 0 !important; 
+}
+
+.newsletter-desc {
+    color: #757575;
+    font-size: 0.7em; 
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.newsletter-form button {
+    width: 100%; 
+    font-size: 0.75em;
+}
+
+.contact li {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    text-transform: none !important; 
+}

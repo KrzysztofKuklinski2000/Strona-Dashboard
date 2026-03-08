@@ -8,6 +8,7 @@ use EasyCSRF\EasyCSRF;
 use App\Service\SiteService;
 use PHPUnit\Framework\TestCase;
 use App\Controller\SiteController;
+use App\Middleware\CsrfMiddleware;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class SiteControllerTest extends TestCase 
@@ -16,7 +17,11 @@ class SiteControllerTest extends TestCase
   private SiteService | MockObject $siteService;
   private EasyCSRF | MockObject $easyCSRF;
   private View | MockObject $view;
+  private CsrfMiddleware | MockObject $csrfMiddleware;
   private SiteController $controller;
+
+  private const FAKE_CSRF = 'fake_token_123';
+  
 
   public function setUp(): void
   {
@@ -24,12 +29,16 @@ class SiteControllerTest extends TestCase
     $this->siteService = $this->createMock(SiteService::class);
     $this->easyCSRF = $this->createMock(EasyCSRF::class);
     $this->view = $this->createMock(View::class);
+    $this->csrfMiddleware = $this->createMock(CsrfMiddleware::class);
+
+    $this->csrfMiddleware->method('generateToken')->willReturn(self::FAKE_CSRF);
 
     $this->controller = new SiteController(
       $this->request, 
       $this->siteService, 
       $this->easyCSRF, 
       $this->view, 
+      $this->csrfMiddleware
     );
   }
 
@@ -50,7 +59,8 @@ class SiteControllerTest extends TestCase
     $expectParams = [
       'page' => 'start',
       'content' => $fakeContent,
-      'contact' => $fakeContact
+      'contact' => $fakeContact,
+      'csrf_token' => self::FAKE_CSRF
     ];
 
     $this->view->expects($this->once())
@@ -91,7 +101,8 @@ class SiteControllerTest extends TestCase
         'content' => ['news1', 'news2'],
         'numberOfRows' => $fakeNewsData['totalPages'],
         'currentNumberOfPage' => $fakeNewsData['currentPage'],
-        'contact' => []
+        'contact' => [],
+        'csrf_token' => self::FAKE_CSRF
       ]);
 
     // WHEN
@@ -115,7 +126,8 @@ class SiteControllerTest extends TestCase
     $expectParams = [
       'page' => 'timetable',
       'content' => $fakeContent,
-      'contact' => []
+      'contact' => [],
+      'csrf_token' => self::FAKE_CSRF
     ];
 
     $this->view->expects($this->once())
@@ -148,7 +160,8 @@ class SiteControllerTest extends TestCase
       ->with([
         'page' => 'gallery',
         'content' => ['img1', 'img2'],
-        'contact' => []
+        'contact' => [],
+        'csrf_token' => self::FAKE_CSRF
       ]);
 
     // WHEN
@@ -171,7 +184,8 @@ class SiteControllerTest extends TestCase
     $expectParams = [
       'page' => 'camp-info',
       'content' => $fakeContent,
-      'contact' => []
+      'contact' => [],
+      'csrf_token' => self::FAKE_CSRF
     ];
 
     $this->view->expects($this->once())
@@ -199,7 +213,8 @@ class SiteControllerTest extends TestCase
     $expectParams = [
       'page' => 'fees-info',
       'content' => $fakeContent,
-      'contact' => []
+      'contact' => [],
+      'csrf_token' => self::FAKE_CSRF
     ];
 
     $this->view->expects($this->once())
@@ -226,7 +241,8 @@ class SiteControllerTest extends TestCase
     $expectParams = [
       'page' => 'entries-info',
       'content' => $fakeContent,
-      'contact' => []
+      'contact' => [],
+      'csrf_token' => self::FAKE_CSRF
     ];
 
     $this->view->expects($this->once())
@@ -249,6 +265,7 @@ class SiteControllerTest extends TestCase
     $expectParams = [
       'page' => 'contact',
       'contact' => $fakeContent,
+      'csrf_token' => self::FAKE_CSRF
     ];
 
     $this->view->expects($this->once())
@@ -269,7 +286,8 @@ class SiteControllerTest extends TestCase
     // EXPECTS
     $expectParams = [
       'page' => 'statute',
-      'contact' => []
+      'contact' => [],
+      'csrf_token' => self::FAKE_CSRF
     ];
 
     $this->view->expects($this->once())
@@ -290,7 +308,8 @@ class SiteControllerTest extends TestCase
     // EXPECTS
     $expectParams = [
       'page' => 'oyama',
-      'contact' => []
+      'contact' => [],
+      'csrf_token' => self::FAKE_CSRF
     ];
 
     $this->view->expects($this->once())
@@ -311,7 +330,8 @@ class SiteControllerTest extends TestCase
     // EXPECTS
     $expectParams = [
       'page' => 'dojo-oath',
-      'contact' => []
+      'contact' => [],
+      'csrf_token' => self::FAKE_CSRF
     ];
 
     $this->view->expects($this->once())
@@ -332,7 +352,8 @@ class SiteControllerTest extends TestCase
     // EXPECTS
     $expectParams = [
       'page' => 'requirements',
-      'contact' => []
+      'contact' => [],
+      'csrf_token' => self::FAKE_CSRF
     ];
 
     $this->view->expects($this->once())
