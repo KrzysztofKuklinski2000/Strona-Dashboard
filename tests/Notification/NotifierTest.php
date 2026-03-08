@@ -55,4 +55,23 @@ class NotifierTest extends TestCase
     // WHEN
     $this->notifier->notifyAboutTimetableUpdate();
   }
+
+  public function testShouldSendConfirmationEmailWithCorrectTokenAndLink(): void
+    {
+        // GIVEN
+        $email = 'nowy@uzytkownik.pl';
+        $token = 'super-tajny-token-123';
+        $expectedSubject = 'Potwierdź zapis do newslettera - Karate Kyokushin';
+        
+        // EXPECTS
+        $this->mailer->expects($this->once())
+            ->method('send')
+            ->with(
+                $this->equalTo($email),
+                $this->equalTo($expectedSubject),
+            );
+
+        // WHEN
+        $this->notifier->sendConfirmationEmail($email, $token);
+    }
 }

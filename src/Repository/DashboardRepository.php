@@ -140,4 +140,21 @@ class DashboardRepository extends AbstractRepository {
 			throw new RepositoryException('Nie udało się dodać zdjęcia', 500, $e);
 		}
 	}
+
+	public function getSubscriberByToken(string $table, string $token): array {
+		try {
+			$table = $this->validateTable($table);
+			$result = $this->runQuery("SELECT * FROM $table WHERE token = :token", [':token' => $token])
+				->fetch(PDO::FETCH_ASSOC);
+		} catch (RepositoryException $e) {
+			throw new RepositoryException('Nie udało się pobrać posta', 500, $e);
+		}
+
+		if(!$result) {
+			throw new NotFoundException('Nie ma takiego subskrybenta', 404);
+		}
+		
+
+		return $result;
+	}
 }

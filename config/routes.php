@@ -29,7 +29,9 @@ return function (RouteCollector $r) {
     $r->get('/oyama', [SiteController::class, 'oyamaAction']);
     $r->get('/dojo-oath', [SiteController::class, 'dojoOathAction']);
     $r->get('/wymagania-egzaminacyjne', [SiteController::class, 'requirementsAction']);
+    
     $r->post('/subscribe', [PublicSubscribersController::class, 'subscribeAction']);
+    $r->get('/confirm-subscription', [PublicSubscribersController::class, 'confirmAction']);
 
     $r->get('/auth/login', [AuthController::class, 'loginAction']);
     $r->post('/auth/login', [AuthController::class, 'loginAction']);

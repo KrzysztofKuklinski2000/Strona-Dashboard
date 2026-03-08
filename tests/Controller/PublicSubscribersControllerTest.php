@@ -7,9 +7,9 @@ namespace Tests\Controller;
 use App\Controller\PublicSubscribersController;
 use App\Core\Request;
 use App\Middleware\CsrfMiddleware;
+use App\Notification\Notifier;
 use App\Service\Dashboard\SubscribersService;
 use App\View;
-use App\Exception\ServiceException;
 use EasyCSRF\EasyCSRF;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -21,7 +21,9 @@ class PublicSubscribersControllerTest extends TestCase
     private View|MockObject $view;
     private SubscribersService|MockObject $service;
     private CsrfMiddleware|MockObject $csrfMiddleware;
+    private Notifier | MockObject $notifier;
     private PublicSubscribersController $controller;
+    
 
     protected function setUp(): void
     {
@@ -30,6 +32,7 @@ class PublicSubscribersControllerTest extends TestCase
         $this->view = $this->createMock(View::class);
         $this->service = $this->createMock(SubscribersService::class);
         $this->csrfMiddleware = $this->createMock(CsrfMiddleware::class);
+        $this->notifier = $this->createMock(Notifier::class);
 
         $this->controller = $this->getMockBuilder(PublicSubscribersController::class)
             ->setConstructorArgs([
@@ -37,7 +40,8 @@ class PublicSubscribersControllerTest extends TestCase
                 $this->easyCSRF,
                 $this->view,
                 $this->service,
-                $this->csrfMiddleware
+                $this->csrfMiddleware,
+                $this->notifier,
             ])
             ->onlyMethods(['redirect', 'setFlash'])
             ->getMock();

@@ -51,7 +51,10 @@ try {
 	$controllerFactory = new $factoryClass($pdo);
 	$controller = $controllerFactory->createController($request, $easyCSRF);
 
-	if ($controller instanceof \App\Controller\Dashboard\AbstractDashboardController && empty($request->getSession('user'))) {
+	$uri = $request->getServerParam('REQUEST_URI');
+	$isDashboardRoute = str_starts_with($uri, '/dashboard');
+
+	if ($isDashboardRoute && empty($request->getSession('user'))) {
 		header('Location: /auth/login');
 		exit;
 	}

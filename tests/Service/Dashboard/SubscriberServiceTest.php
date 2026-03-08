@@ -50,7 +50,14 @@ class SubscriberServiceTest extends TestCase
     // EXPECTS
     $this->repository->expects($this->once())->method('beginTransaction');
     $this->repository->expects($this->never())->method('incrementPosition');
-    $this->repository->expects($this->once())->method('create')->with($data, 'subscribers');
+    $this->repository->expects($this->once())
+      ->method('create')
+      ->with($this->callback(function($passedData) {
+            return isset($passedData['token']) && 
+                   strlen($passedData['token']) === 64 && 
+                   $passedData['is_active'] === 0 &&
+                   $passedData['email'] === 'example@gmail.com';
+        }), 'subscribers');
     $this->repository->expects($this->once())->method('commit');
 
     // WHEN
@@ -61,6 +68,7 @@ class SubscriberServiceTest extends TestCase
   {
     // EXPECTS
     $this->expectException(ServiceException::class);
+    $this->repository->expects($this->once())->method('beginTransaction');
     $this->repository->expects($this->once())->method('rollback');
 
     // WHEN 
@@ -86,7 +94,7 @@ class SubscriberServiceTest extends TestCase
     $data = [
         'id' => 1, 
         'email' => 'example@gmail.com', 
-        'is_active' => 0 // Symulujemy odznaczenie subskrypcji
+        'is_active' => 0 
     ];
 
     // EXPECTS

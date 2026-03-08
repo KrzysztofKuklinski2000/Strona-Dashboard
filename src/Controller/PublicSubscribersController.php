@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Core\Request;
 use App\Exception\ServiceException;
 use App\Middleware\CsrfMiddleware;
+use App\Notification\Notifier;
 use App\Service\Dashboard\SubscribersService;
 use App\View;
 use EasyCSRF\EasyCSRF;
@@ -15,7 +16,8 @@ class PublicSubscribersController extends AbstractController {
         EasyCSRF $easyCSRF,
         View $view,
         private SubscribersService $service,
-        private CsrfMiddleware $csrfMiddleware
+        private CsrfMiddleware $csrfMiddleware,
+        private Notifier $notifier
     ) {
         parent::__construct($request, $easyCSRF, $view);
     }
@@ -40,10 +42,12 @@ class PublicSubscribersController extends AbstractController {
         }
 
         try {
-            $this->service->createSubscriber([
+            $token = $this->service->createSubscriber([
                 'email' => $email,
                 'is_active' => 0
             ]);
+
+            $this->notifier->sendConfirmationEmail($email, $token);
 
             $this->setFlash('success', 'Dziękujemy za zapisanie się!');
             
@@ -54,4 +58,23 @@ class PublicSubscribersController extends AbstractController {
         $this->redirect('/');
     }
 
+
+    public function confirmAction(): void {
+        $token = $this->request->getQueryParam('token');
+        
+        if (!$token) {
+            $this->redirect('/?error=invalid_token');
+            return;
+        }
+
+        try {
+            
+            $this->service->activateSubscriber($token);
+            $this->setFlash('success', 'Subskrypcja została potwierdzona! Oss!');
+        } catch (\Exception $e) {
+            $this->setFlash('error', 'Link aktywacyjny jest nieprawidłowy.');
+        }
+
+        $this->redirect('/');
+    }
 }

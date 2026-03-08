@@ -28,4 +28,19 @@ class Notifier {
       $this->mailer->send($email, 'Aktualizacja grafiku', $htmlContent);
     }
   }
+
+  public function sendConfirmationEmail(string $email, string $token): void {
+    $subject = "Potwierdź zapis do newslettera - Karate Kyokushin";
+    
+    $confirmUrl = "http://localhost:8000/confirm-subscription?token=" . $token;
+
+    $message = "Oss!\n\n";
+    $message .= "Dziękujemy za chęć zapisu do powiadomień o aktualizacjach grafiku klubu Karate Kyokushin.\n";
+    $message .= "Aby potwierdzić swój adres e-mail i aktywować subskrypcję, kliknij w poniższy link:\n\n";
+    $message .= "<a href=".$confirmUrl." >link</a>" . "\n\n";
+    $message .= "Jeśli to nie Ty zapisywałeś się na naszej stronie, zignoruj tę wiadomość.\n";
+    $message .= "Pozdrawiamy,\nKlub Karate Kyokushin";
+
+    $this->mailer->send($email, $subject, $message);
+  }
 }
