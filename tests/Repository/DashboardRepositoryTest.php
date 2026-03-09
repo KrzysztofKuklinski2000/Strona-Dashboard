@@ -70,6 +70,13 @@ class DashboardRepositoryTest extends TestCase
         category TEXT DEFAULT NULL,
         status TINYINT DEFAULT 1
         )");
+
+    $this->pdo->exec("CREATE TABLE subscribers (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        email TEXT,
+        token TEXT,
+        is_active TINYINT DEFAULT 0
+    )");
   }
 
 
@@ -712,5 +719,44 @@ class DashboardRepositoryTest extends TestCase
 
     // WHEN
     $this->repository->addImage($imageData);
+  }
+
+  public function testShouldReturnSubscriberDataWhenValidTokenGiven(): void
+  {
+    // GIVEN 
+    $token = 'secret-token-123';
+
+    $this->repository->runQuery(
+        "INSERT INTO subscribers (email, token, is_active) VALUES (:email, :token, :active)",
+        [':email' => 'subscriber@test.pl', ':token' => $token, ':active' => 0]
+    );
+
+    // WHEN
+    $result = $this->repository->getSubscriberByToken('subscribers', $token);
+
+    // THEN
+    $this->assertIsArray($result);
+    $this->assertEquals('subscriber@test.pl', $result['email']);
+    $this->assertEquals($token, $result['token']);
+  }
+
+  public function testShouldThrowNotFoundExceptionWhenSubscriberWithGivenTokenDoesNotExist(): void
+  { 
+    // EXPECTS
+    $this->expectException(NotFoundException::class);
+    $this->expectExceptionMessage('Nie ma takiego subskrybenta');
+
+    // WHEN
+    $this->repository->getSubscriberByToken('subscribers', 'non-existent-token');
+  }
+
+  public function testShouldThrowRepositoryExceptionWhenInvalidTableGivenForGetSubscriberByToken(): void
+  {
+    // EXPECTS
+    $this->expectException(RepositoryException::class);
+    $this->expectExceptionMessage('Nie udało się pobrać posta');
+
+    // WHEN
+    $this->repository->getSubscriberByToken('invalid_table', 'any-token');
   }
 }
