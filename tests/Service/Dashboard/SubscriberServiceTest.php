@@ -144,4 +144,52 @@ class SubscriberServiceTest extends TestCase
 
     $this->service->deleteSubscriber(1);
   }
+
+  public function testShouldActivateSubscriberSuccessfully(): void
+  {
+    // GIVEN
+    $token = 'valid-token-123';
+    $subscriberData = [
+        'id' => 10,
+        'email' => 'test@example.com',
+        'token' => $token,
+        'is_active' => 0
+    ];
+
+    // EXPECTS
+    $this->repository->expects($this->once())
+        ->method('getSubscriberByToken')
+        ->with('subscribers', $token)
+        ->willReturn($subscriberData);
+
+    $this->repository->expects($this->once())
+        ->method('edit')
+        ->with('subscribers', [
+            'id' => 10,
+            'is_active' => 1,
+            'token' => null
+        ]);
+
+    // WHEN
+    $this->service->activateSubscriber($token);
+  }
+
+  public function testShouldThrowServiceExceptionWhenSubscriberNotFoundByToken(): void
+  {
+    // GIVEN
+    $token = 'non-existent-token';
+
+    // EXPECTS
+    $this->repository->expects($this->once())
+        ->method('getSubscriberByToken')
+        ->with('subscribers', $token)
+        ->willReturn([]);
+
+    $this->expectException(ServiceException::class);
+    $this->expectExceptionMessage("Nieprawidłowy lub wygasły token.");
+    $this->expectExceptionCode(404);
+
+    // WHEN
+    $this->service->activateSubscriber($token);
+  }
 }
