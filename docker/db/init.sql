@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 02, 2026 at 01:42 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: db
+-- Generation Time: Mar 10, 2026 at 06:09 PM
+-- Wersja serwera: 8.0.45
+-- Wersja PHP: 8.3.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,38 +18,38 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `karate`
+-- Baza danych: `karate`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `camp`
+-- Struktura tabeli dla tabeli `camp`
 --
 
 CREATE TABLE `camp` (
-  `city` varchar(50) NOT NULL,
-  `city_start` varchar(50) NOT NULL,
+  `city` varchar(50) COLLATE utf8mb4_polish_ci NOT NULL,
+  `city_start` varchar(50) COLLATE utf8mb4_polish_ci NOT NULL,
   `date_start` date NOT NULL,
   `date_end` date NOT NULL,
   `time_start` time NOT NULL,
   `time_end` time NOT NULL,
-  `place` varchar(100) NOT NULL,
-  `accommodation` text NOT NULL,
-  `meals` text NOT NULL,
-  `trips` text NOT NULL,
-  `staff` text NOT NULL,
-  `transport` text NOT NULL,
-  `training` text NOT NULL,
-  `insurance` text NOT NULL,
-  `cost` int(11) NOT NULL,
-  `advancePayment` int(11) NOT NULL,
+  `place` varchar(100) COLLATE utf8mb4_polish_ci NOT NULL,
+  `accommodation` text COLLATE utf8mb4_polish_ci NOT NULL,
+  `meals` text COLLATE utf8mb4_polish_ci NOT NULL,
+  `trips` text COLLATE utf8mb4_polish_ci NOT NULL,
+  `staff` text COLLATE utf8mb4_polish_ci NOT NULL,
+  `transport` text COLLATE utf8mb4_polish_ci NOT NULL,
+  `training` text COLLATE utf8mb4_polish_ci NOT NULL,
+  `insurance` text COLLATE utf8mb4_polish_ci NOT NULL,
+  `cost` int NOT NULL,
+  `advancePayment` int NOT NULL,
   `advanceDate` date NOT NULL,
-  `guesthouse` varchar(70) NOT NULL
+  `guesthouse` varchar(70) COLLATE utf8mb4_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
--- Dumping data for table `camp`
+-- Zrzut danych tabeli `camp`
 --
 
 INSERT INTO `camp` (`city`, `city_start`, `date_start`, `date_end`, `time_start`, `time_end`, `place`, `accommodation`, `meals`, `trips`, `staff`, `transport`, `training`, `insurance`, `cost`, `advancePayment`, `advanceDate`, `guesthouse`) VALUES
@@ -58,17 +58,17 @@ INSERT INTO `camp` (`city`, `city_start`, `date_start`, `date_end`, `time_start`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `contact`
+-- Struktura tabeli dla tabeli `contact`
 --
 
 CREATE TABLE `contact` (
-  `email` text NOT NULL,
-  `phone` int(11) NOT NULL,
-  `address` text NOT NULL
+  `email` text COLLATE utf8mb4_polish_ci NOT NULL,
+  `phone` int NOT NULL,
+  `address` text COLLATE utf8mb4_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
--- Dumping data for table `contact`
+-- Zrzut danych tabeli `contact`
 --
 
 INSERT INTO `contact` (`email`, `phone`, `address`) VALUES
@@ -77,22 +77,22 @@ INSERT INTO `contact` (`email`, `phone`, `address`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `fees`
+-- Struktura tabeli dla tabeli `fees`
 --
 
 CREATE TABLE `fees` (
-  `reduced_contribution_1_month` int(11) NOT NULL,
-  `reduced_contribution_2_month` int(11) NOT NULL,
-  `family_contribution_month` int(11) NOT NULL,
-  `reduced_contribution_1_year` int(11) NOT NULL,
-  `reduced_contribution_2_year` int(11) NOT NULL,
-  `family_contribution_year` int(11) NOT NULL,
-  `extra_information` text NOT NULL,
-  `fees_information` text DEFAULT NULL
+  `reduced_contribution_1_month` int NOT NULL,
+  `reduced_contribution_2_month` int NOT NULL,
+  `family_contribution_month` int NOT NULL,
+  `reduced_contribution_1_year` int NOT NULL,
+  `reduced_contribution_2_year` int NOT NULL,
+  `family_contribution_year` int NOT NULL,
+  `extra_information` text COLLATE utf8mb4_polish_ci NOT NULL,
+  `fees_information` text COLLATE utf8mb4_polish_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
--- Dumping data for table `fees`
+-- Zrzut danych tabeli `fees`
 --
 
 INSERT INTO `fees` (`reduced_contribution_1_month`, `reduced_contribution_2_month`, `family_contribution_month`, `reduced_contribution_1_year`, `reduced_contribution_2_year`, `family_contribution_year`, `extra_information`, `fees_information`) VALUES
@@ -101,22 +101,22 @@ INSERT INTO `fees` (`reduced_contribution_1_month`, `reduced_contribution_2_mont
 -- --------------------------------------------------------
 
 --
--- Table structure for table `gallery`
+-- Struktura tabeli dla tabeli `gallery`
 --
 
 CREATE TABLE `gallery` (
-  `id` int(11) NOT NULL,
-  `image_name` text NOT NULL,
-  `description` varchar(50) NOT NULL,
+  `id` int NOT NULL,
+  `image_name` text COLLATE utf8mb4_polish_ci NOT NULL,
+  `description` varchar(50) COLLATE utf8mb4_polish_ci NOT NULL,
   `created_at` date NOT NULL,
   `updated_at` date NOT NULL,
-  `position` int(11) NOT NULL DEFAULT 1,
-  `category` enum('training','camp') DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1
+  `position` int NOT NULL DEFAULT '1',
+  `category` enum('training','camp') COLLATE utf8mb4_polish_ci DEFAULT NULL,
+  `status` tinyint NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
--- Dumping data for table `gallery`
+-- Zrzut danych tabeli `gallery`
 --
 
 INSERT INTO `gallery` (`id`, `image_name`, `description`, `created_at`, `updated_at`, `position`, `category`, `status`) VALUES
@@ -127,22 +127,22 @@ INSERT INTO `gallery` (`id`, `image_name`, `description`, `created_at`, `updated
 -- --------------------------------------------------------
 
 --
--- Table structure for table `important_posts`
+-- Struktura tabeli dla tabeli `important_posts`
 --
 
 CREATE TABLE `important_posts` (
-  `id` int(11) NOT NULL,
-  `title` varchar(60) NOT NULL,
-  `description` text NOT NULL,
+  `id` int NOT NULL,
+  `title` varchar(60) COLLATE utf8mb4_polish_ci NOT NULL,
+  `description` text COLLATE utf8mb4_polish_ci NOT NULL,
   `created` date NOT NULL,
   `updated` date NOT NULL,
-  `status` tinyint(4) NOT NULL,
-  `important` int(11) DEFAULT NULL,
-  `position` int(11) NOT NULL DEFAULT 1
+  `status` tinyint NOT NULL,
+  `important` int DEFAULT NULL,
+  `position` int NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
--- Dumping data for table `important_posts`
+-- Zrzut danych tabeli `important_posts`
 --
 
 INSERT INTO `important_posts` (`id`, `title`, `description`, `created`, `updated`, `status`, `important`, `position`) VALUES
@@ -152,21 +152,21 @@ INSERT INTO `important_posts` (`id`, `title`, `description`, `created`, `updated
 -- --------------------------------------------------------
 
 --
--- Table structure for table `main_page_posts`
+-- Struktura tabeli dla tabeli `main_page_posts`
 --
 
 CREATE TABLE `main_page_posts` (
-  `id` int(11) NOT NULL,
-  `title` varchar(60) NOT NULL,
-  `description` text NOT NULL,
+  `id` int NOT NULL,
+  `title` varchar(60) COLLATE utf8mb4_polish_ci NOT NULL,
+  `description` text COLLATE utf8mb4_polish_ci NOT NULL,
   `created` date NOT NULL,
   `updated` date NOT NULL,
-  `status` tinyint(4) NOT NULL,
-  `position` int(11) NOT NULL DEFAULT 1
+  `status` tinyint NOT NULL,
+  `position` int NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
--- Dumping data for table `main_page_posts`
+-- Zrzut danych tabeli `main_page_posts`
 --
 
 INSERT INTO `main_page_posts` (`id`, `title`, `description`, `created`, `updated`, `status`, `position`) VALUES
@@ -178,21 +178,21 @@ INSERT INTO `main_page_posts` (`id`, `title`, `description`, `created`, `updated
 -- --------------------------------------------------------
 
 --
--- Table structure for table `news`
+-- Struktura tabeli dla tabeli `news`
 --
 
 CREATE TABLE `news` (
-  `id` int(11) NOT NULL,
-  `title` varchar(60) NOT NULL,
-  `description` text NOT NULL,
+  `id` int NOT NULL,
+  `title` varchar(60) COLLATE utf8mb4_polish_ci NOT NULL,
+  `description` text COLLATE utf8mb4_polish_ci NOT NULL,
   `created` date DEFAULT NULL,
   `updated` date DEFAULT NULL,
   `status` tinyint(1) NOT NULL,
-  `position` int(11) NOT NULL DEFAULT 1
+  `position` int NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
--- Dumping data for table `news`
+-- Zrzut danych tabeli `news`
 --
 
 INSERT INTO `news` (`id`, `title`, `description`, `created`, `updated`, `status`, `position`) VALUES
@@ -232,41 +232,43 @@ INSERT INTO `news` (`id`, `title`, `description`, `created`, `updated`, `status`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `subscribers`
+-- Struktura tabeli dla tabeli `subscribers`
 --
 
 CREATE TABLE `subscribers` (
-  `id` int(11) NOT NULL,
-  `email` VARCHAR(255) NOT NULL
+  `id` int NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `is_active` tinyint(1) DEFAULT '1',
+  `token` varchar(64) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `subscribers`
+-- Zrzut danych tabeli `subscribers`
 --
 
-INSERT INTO `subscribers` (`id`, `email`) VALUES
-(1, 'example@gmail.com');
+INSERT INTO `subscribers` (`id`, `email`, `is_active`, `token`) VALUES
+(1, 'example@gmail.com', 0, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `timetable`
+-- Struktura tabeli dla tabeli `timetable`
 --
 
 CREATE TABLE `timetable` (
-  `id` int(11) NOT NULL,
-  `day` varchar(20) NOT NULL,
-  `city` varchar(40) NOT NULL,
-  `advancement_group` varchar(40) NOT NULL,
-  `place` text NOT NULL,
+  `id` int NOT NULL,
+  `day` varchar(20) COLLATE utf8mb4_polish_ci NOT NULL,
+  `city` varchar(40) COLLATE utf8mb4_polish_ci NOT NULL,
+  `advancement_group` varchar(40) COLLATE utf8mb4_polish_ci NOT NULL,
+  `place` text COLLATE utf8mb4_polish_ci NOT NULL,
   `start` time NOT NULL,
   `end` time NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
-  `position` int(11) NOT NULL DEFAULT 1
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `position` int NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
--- Dumping data for table `timetable`
+-- Zrzut danych tabeli `timetable`
 --
 
 INSERT INTO `timetable` (`id`, `day`, `city`, `advancement_group`, `place`, `start`, `end`, `status`, `position`) VALUES
@@ -276,23 +278,23 @@ INSERT INTO `timetable` (`id`, `day`, `city`, `advancement_group`, `place`, `sta
 (5, 'SOB', 'Wejherowo ', 'Początkująca dzieci', 'Salka pod basenem', '11:00:00', '11:45:00', 1, 2),
 (6, 'WT    ', 'Wejherowo', 'Początkująca', 'Treningi odbywają się na salce pod basenem ', '18:00:00', '19:00:00', 1, 2),
 (7, 'SOB', 'Wejherowo', 'Zaawansowana', 'Treningi odbywają się na salce pod basenem', '11:45:00', '13:00:00', 1, 2),
-(13, 'PON', 'Wejherowo 1', 'Zaawansowana', 'asdasd', '19:41:00', '22:44:00', 1, 2),
+(13, 'PON', 'Wejherowo', 'Zaawansowana', 'asdasd', '19:41:00', '22:44:00', 1, 2),
 (16, 'PON', 'Rekowo', 'Zaawansowana', 'po basenem', '20:45:00', '23:48:00', 1, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Struktura tabeli dla tabeli `user`
 --
 
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
-  `login` varchar(50) NOT NULL,
-  `password` varchar(250) NOT NULL
+  `id` int NOT NULL,
+  `login` varchar(50) COLLATE utf8mb4_polish_ci NOT NULL,
+  `password` varchar(250) COLLATE utf8mb4_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
--- Dumping data for table `user`
+-- Zrzut danych tabeli `user`
 --
 
 INSERT INTO `user` (`id`, `login`, `password`) VALUES
@@ -300,97 +302,98 @@ INSERT INTO `user` (`id`, `login`, `password`) VALUES
 (2, 'test', '$2y$10$rx/38yd5XRg5fzMHGfi3i.SjEQhIIqiiTM.eF2C/NvYIo8c/HEXUq');
 
 --
--- Indexes for dumped tables
+-- Indeksy dla zrzutów tabel
 --
 
 --
--- Indexes for table `gallery`
+-- Indeksy dla tabeli `gallery`
 --
 ALTER TABLE `gallery`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `important_posts`
+-- Indeksy dla tabeli `important_posts`
 --
 ALTER TABLE `important_posts`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `main_page_posts`
+-- Indeksy dla tabeli `main_page_posts`
 --
 ALTER TABLE `main_page_posts`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `news`
+-- Indeksy dla tabeli `news`
 --
 ALTER TABLE `news`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `subscribers`
+-- Indeksy dla tabeli `subscribers`
 --
 ALTER TABLE `subscribers`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `token` (`token`);
 
 --
--- Indexes for table `timetable`
+-- Indeksy dla tabeli `timetable`
 --
 ALTER TABLE `timetable`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user`
+-- Indeksy dla tabeli `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT dla zrzuconych tabel
 --
 
 --
--- AUTO_INCREMENT for table `gallery`
+-- AUTO_INCREMENT dla tabeli `gallery`
 --
 ALTER TABLE `gallery`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `important_posts`
+-- AUTO_INCREMENT dla tabeli `important_posts`
 --
 ALTER TABLE `important_posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `main_page_posts`
+-- AUTO_INCREMENT dla tabeli `main_page_posts`
 --
 ALTER TABLE `main_page_posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT for table `news`
+-- AUTO_INCREMENT dla tabeli `news`
 --
 ALTER TABLE `news`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
--- AUTO_INCREMENT for table `subscribers`
+-- AUTO_INCREMENT dla tabeli `subscribers`
 --
 ALTER TABLE `subscribers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `timetable`
+-- AUTO_INCREMENT dla tabeli `timetable`
 --
 ALTER TABLE `timetable`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT dla tabeli `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
