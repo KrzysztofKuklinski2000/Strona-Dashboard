@@ -5,7 +5,6 @@ namespace App\Controller\Dashboard;
 use App\View;
 use LogicException;
 use App\Core\Request;
-use EasyCSRF\EasyCSRF;
 use App\Traits\GetDataMethods;
 use App\Middleware\CsrfMiddleware;
 use App\Exception\NotFoundException;
@@ -18,13 +17,12 @@ abstract class AbstractDashboardController extends AbstractController {
 
   public function __construct(
     Request $request, 
-    EasyCSRF $easyCSRF, 
     protected SharedGetDataServiceInterface $dataService,
     View $view,
     protected CsrfMiddleware $csrfMiddleware
     ) {
 
-    parent::__construct($request, $easyCSRF, $view);
+    parent::__construct($request, $view);
     
   }
 

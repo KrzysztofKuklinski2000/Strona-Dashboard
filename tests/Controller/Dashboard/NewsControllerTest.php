@@ -4,7 +4,6 @@ namespace Tests\Controller\Dashboard;
 
 use App\View;
 use App\Core\Request;
-use EasyCSRF\EasyCSRF;
 use PHPUnit\Framework\TestCase;
 use App\Middleware\CsrfMiddleware;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -15,7 +14,6 @@ class NewsControllerTest extends TestCase
 {
   private NewsManagementServiceInterface | MockObject $newsService;
   private Request | MockObject $request;
-  private EasyCSRF | MockObject $easyCSRF;
   private View | MockObject $view;
   private CsrfMiddleware | MockObject $csrfMiddleware;
 
@@ -26,7 +24,6 @@ class NewsControllerTest extends TestCase
   {
     $this->newsService = $this->createMock(NewsManagementServiceInterface::class);
     $this->request = $this->createMock(Request::class);
-    $this->easyCSRF = $this->createMock(EasyCSRF::class);
     $this->view = $this->createMock(View::class);
     $this->csrfMiddleware = $this->createMock(CsrfMiddleware::class);
 
@@ -34,7 +31,6 @@ class NewsControllerTest extends TestCase
       ->setConstructorArgs([
         $this->newsService,
         $this->request,
-        $this->easyCSRF,
         $this->view,
         $this->csrfMiddleware
       ])

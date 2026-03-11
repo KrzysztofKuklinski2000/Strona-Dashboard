@@ -30,7 +30,6 @@ class SiteControllerFactory implements ControllerFactoryInterface {
     return new SiteController(
       $request,
       $siteService, 
-      $easyCSRF,
       $view,
       $csrfMiddleware
     );

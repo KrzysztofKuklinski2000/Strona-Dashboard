@@ -4,7 +4,6 @@ namespace Tests\Controller;
 
 use App\View;
 use App\Core\Request;
-use EasyCSRF\EasyCSRF;
 use App\Service\AuthService;
 use PHPUnit\Framework\TestCase;
 use App\Controller\AuthController;
@@ -16,7 +15,6 @@ use PHPUnit\Framework\MockObject\MockObject;
 class AuthControllerTest extends TestCase {
   private Request | MockObject $request;
   private AuthService | MockObject $authService;
-  private EasyCSRF | MockObject $easyCSRF;
   private View | MockObject $view;
   private AuthController | MockObject $controller;
   private CsrfMiddleware | MockObject $csrfMiddleware;
@@ -26,7 +24,6 @@ class AuthControllerTest extends TestCase {
   {
     $this->request = $this->createMock(Request::class);
     $this->authService = $this->createMock(AuthService::class);
-    $this->easyCSRF = $this->createMock(EasyCSRF::class);
     $this->view = $this->createMock(View::class);
     $this->csrfMiddleware = $this->createMock(CsrfMiddleware::class);
 
@@ -35,7 +32,6 @@ class AuthControllerTest extends TestCase {
       ->setConstructorArgs([
         $this->request,
         $this->authService,
-        $this->easyCSRF,
         $this->view,
         $this->csrfMiddleware
       ])

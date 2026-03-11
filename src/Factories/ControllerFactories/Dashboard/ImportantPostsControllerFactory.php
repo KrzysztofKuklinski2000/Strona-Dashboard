@@ -35,7 +35,6 @@ class ImportantPostsControllerFactory implements ControllerFactoryInterface
     return new ImportantPostsController(
       $service,
       $request,
-      $easyCSRF,
       $view,
       $csrfMiddleware
     );

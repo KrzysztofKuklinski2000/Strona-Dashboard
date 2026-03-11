@@ -35,7 +35,6 @@ class GalleryControllerFactory implements ControllerFactoryInterface
     return new GalleryController(
       $service,
       $request,
-      $easyCSRF,
       $view,
       $csrfMiddleware
     );

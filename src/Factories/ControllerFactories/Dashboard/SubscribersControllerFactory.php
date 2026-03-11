@@ -34,7 +34,6 @@ class SubscribersControllerFactory implements ControllerFactoryInterface
     return new SubscribersController(
       $service,
       $request,
-      $easyCSRF,
       $view,
       $csrfMiddleware
     );

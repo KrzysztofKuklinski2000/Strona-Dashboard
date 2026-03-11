@@ -4,7 +4,6 @@ namespace Tests\Controller;
 
 use App\View;
 use App\Core\Request;
-use EasyCSRF\EasyCSRF;
 use App\Service\SiteService;
 use PHPUnit\Framework\TestCase;
 use App\Controller\SiteController;
@@ -15,7 +14,6 @@ class SiteControllerTest extends TestCase
 {
   private Request | MockObject $request;
   private SiteService | MockObject $siteService;
-  private EasyCSRF | MockObject $easyCSRF;
   private View | MockObject $view;
   private CsrfMiddleware | MockObject $csrfMiddleware;
   private SiteController $controller;
@@ -27,7 +25,6 @@ class SiteControllerTest extends TestCase
   {
     $this->request = $this->createMock(Request::class);
     $this->siteService = $this->createMock(SiteService::class);
-    $this->easyCSRF = $this->createMock(EasyCSRF::class);
     $this->view = $this->createMock(View::class);
     $this->csrfMiddleware = $this->createMock(CsrfMiddleware::class);
 
@@ -36,7 +33,6 @@ class SiteControllerTest extends TestCase
     $this->controller = new SiteController(
       $this->request, 
       $this->siteService, 
-      $this->easyCSRF, 
       $this->view, 
       $this->csrfMiddleware
     );

@@ -33,7 +33,6 @@ class CampControllerFactory implements ControllerFactoryInterface
     return new CampController(
       $service,
       $request,
-      $easyCSRF,
       $view,
       $csrfMiddleware
     );

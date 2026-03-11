@@ -26,7 +26,6 @@ class PublicSubscribersControllerFactory {
 
         return new PublicSubscribersController(
             $request,
-            $easyCSRF,
             $view,
             $service,
             $csrfMiddleware,

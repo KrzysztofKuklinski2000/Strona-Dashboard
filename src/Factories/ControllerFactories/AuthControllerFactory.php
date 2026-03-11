@@ -30,7 +30,6 @@ class AuthControllerFactory implements ControllerFactoryInterface {
     return new AuthController(
       $request,
       $authService, 
-      $easyCSRF,
       $view,
       $csrfMidleware
     );

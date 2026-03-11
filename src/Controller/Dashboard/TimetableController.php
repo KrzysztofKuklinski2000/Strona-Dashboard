@@ -6,18 +6,16 @@ use App\Core\Request;
 use App\Middleware\CsrfMiddleware;
 use App\Service\Dashboard\TimetableManagementServiceInterface;
 use App\View;
-use EasyCSRF\EasyCSRF;
 
 class TimetableController extends AbstractDashboardController {
 
   public function __construct(
     private TimetableManagementServiceInterface $service,
     Request $request,
-    EasyCSRF $easyCSRF,
     View $view,
     CsrfMiddleware $csrfMiddleware
   ) {
-    parent::__construct($request, $easyCSRF, $service, $view, $csrfMiddleware);
+    parent::__construct($request, $service, $view, $csrfMiddleware);
   }
 
   public function indexAction(): void {

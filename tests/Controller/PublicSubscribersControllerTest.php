@@ -10,14 +10,12 @@ use App\Middleware\CsrfMiddleware;
 use App\Notification\Notifier;
 use App\Service\Dashboard\SubscribersService;
 use App\View;
-use EasyCSRF\EasyCSRF;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class PublicSubscribersControllerTest extends TestCase
 {
     private Request|MockObject $request;
-    private EasyCSRF|MockObject $easyCSRF;
     private View|MockObject $view;
     private SubscribersService|MockObject $service;
     private CsrfMiddleware|MockObject $csrfMiddleware;
@@ -28,7 +26,6 @@ class PublicSubscribersControllerTest extends TestCase
     protected function setUp(): void
     {
         $this->request = $this->createMock(Request::class);
-        $this->easyCSRF = $this->createMock(EasyCSRF::class);
         $this->view = $this->createMock(View::class);
         $this->service = $this->createMock(SubscribersService::class);
         $this->csrfMiddleware = $this->createMock(CsrfMiddleware::class);
@@ -37,7 +34,6 @@ class PublicSubscribersControllerTest extends TestCase
         $this->controller = $this->getMockBuilder(PublicSubscribersController::class)
             ->setConstructorArgs([
                 $this->request,
-                $this->easyCSRF,
                 $this->view,
                 $this->service,
                 $this->csrfMiddleware,

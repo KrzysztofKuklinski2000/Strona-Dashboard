@@ -4,7 +4,6 @@ namespace Tests\Controller\Dashboard;
 
 use App\View;
 use App\Core\Request;
-use EasyCSRF\EasyCSRF;
 use PHPUnit\Framework\TestCase;
 use App\Middleware\CsrfMiddleware;
 use App\Controller\Dashboard\CampController;
@@ -14,7 +13,6 @@ use App\Service\Dashboard\CampManagementServiceInterface;
 class CampControllerTest extends TestCase {
   private Request | MockObject $request;
   private CampManagementServiceInterface | MockObject $campService;
-  private EasyCSRF | MockObject $easyCSRF;
   private View | MockObject $view;
   private CsrfMiddleware | MockObject $csrfMiddleware;
 
@@ -24,7 +22,6 @@ class CampControllerTest extends TestCase {
   {
     $this->request = $this->createMock(Request::class);
     $this->campService = $this->createMock(CampManagementServiceInterface::class);
-    $this->easyCSRF = $this->createMock(EasyCSRF::class);
     $this->view = $this->createMock(View::class);
     $this->csrfMiddleware = $this->createMock(CsrfMiddleware::class);
 
@@ -33,7 +30,6 @@ class CampControllerTest extends TestCase {
       ->setConstructorArgs([
         $this->campService,
         $this->request,
-        $this->easyCSRF,
         $this->view,
         $this->csrfMiddleware
       ])

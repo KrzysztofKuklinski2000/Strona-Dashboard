@@ -4,7 +4,6 @@ namespace Tests\Controller\Dashboard;
 
 use App\View;
 use App\Core\Request;
-use EasyCSRF\EasyCSRF;
 use PHPUnit\Framework\TestCase;
 use App\Middleware\CsrfMiddleware;
 use App\Exception\NotFoundException;
@@ -16,7 +15,6 @@ class AbstractDashboardControllerTest extends TestCase
 {
   private Request | MockObject $request;
   private SharedGetDataServiceInterface | MockObject $dataService;
-  private EasyCSRF | MockObject $easyCSRF;
   private View | MockObject $view;
   private CsrfMiddleware | MockObject $csrfMiddleware;
 
@@ -26,13 +24,11 @@ class AbstractDashboardControllerTest extends TestCase
   {
     $this->request = $this->createMock(Request::class);
     $this->dataService = $this->createMock(SharedGetDataServiceInterface::class);
-    $this->easyCSRF = $this->createMock(EasyCSRF::class);
     $this->view = $this->createMock(View::class);
     $this->csrfMiddleware = $this->createMock(CsrfMiddleware::class);
 
     $this->controller = new TestController(
       $this->request,
-      $this->easyCSRF,
       $this->dataService,
       $this->view,
       $this->csrfMiddleware

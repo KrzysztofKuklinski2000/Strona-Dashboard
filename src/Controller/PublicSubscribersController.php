@@ -8,18 +8,16 @@ use App\Middleware\CsrfMiddleware;
 use App\Notification\Notifier;
 use App\Service\Dashboard\SubscribersService;
 use App\View;
-use EasyCSRF\EasyCSRF;
 
 class PublicSubscribersController extends AbstractController {
     public function __construct(
         Request $request,
-        EasyCSRF $easyCSRF,
         View $view,
         private SubscribersService $service,
         private CsrfMiddleware $csrfMiddleware,
         private Notifier $notifier
     ) {
-        parent::__construct($request, $easyCSRF, $view);
+        parent::__construct($request, $view);
     }
 
     public function subscribeAction(): void {

@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\View;
 use Throwable;
 use App\Core\Request;
-use EasyCSRF\EasyCSRF;
 use App\Service\AuthService;
 use App\Middleware\CsrfMiddleware;
 use App\Exception\ServiceException;
@@ -15,12 +14,11 @@ class AuthController extends AbstractController {
   public function __construct(
     Request $request, 
     public AuthService $authService, 
-    EasyCSRF $easyCSRF, 
     View $view, 
     public CsrfMiddleware $csrfMiddleware
   ) {
 
-    parent::__construct($request, $easyCSRF, $view);
+    parent::__construct($request, $view);
   }
 
   public function loginAction(): void {

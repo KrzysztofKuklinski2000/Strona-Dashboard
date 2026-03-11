@@ -4,7 +4,6 @@ namespace Tests\Controller;
 
 use App\View;
 use App\Core\Request;
-use EasyCSRF\EasyCSRF;
 use PHPUnit\Framework\TestCase;
 use App\Controller\AbstractController;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -12,20 +11,17 @@ use PHPUnit\Framework\MockObject\MockObject;
 class AbstractControllerTest extends TestCase
 {
   private Request | MockObject $request;
-  private EasyCSRF | MockObject $easyCSRF;
   private View | MockObject $view;
   private TestController $controller;
 
   public function setUp(): void
   {
     $this->request = $this->createMock(Request::class);
-    $this->easyCSRF = $this->createMock(EasyCSRF::class);
     $this->view = $this->createMock(View::class);
 
 
     $this->controller = new TestController(
       $this->request,
-      $this->easyCSRF,
       $this->view,
     );
 

@@ -35,7 +35,6 @@ class ContactControllerFactory implements ControllerFactoryInterface
     return new ContactController(
       $service,
       $request,
-      $easyCSRF,
       $view,
       $csrfMiddleware
     );

@@ -35,7 +35,6 @@ class StartControllerFactory implements ControllerFactoryInterface
     return new StartController(
       $service,
       $request,
-      $easyCSRF,
       $view,
       $csrfMiddleware
     );

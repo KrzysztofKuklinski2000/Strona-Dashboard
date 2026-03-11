@@ -35,7 +35,6 @@ class TimetableControllerFactory implements ControllerFactoryInterface
     return new TimetableController(
       $timetableService,
       $request,
-      $easyCSRF,
       $view,
       $csrfMiddleware
     );

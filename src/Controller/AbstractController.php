@@ -5,12 +5,10 @@ namespace App\Controller;
 
 use App\View;
 use App\Core\Request;
-use EasyCSRF\EasyCSRF;
 
 class AbstractController {
 	public function __construct(
 		public Request $request,
-		protected EasyCSRF $easyCSRF,
 		public View $view, ) {}
 
 	/**

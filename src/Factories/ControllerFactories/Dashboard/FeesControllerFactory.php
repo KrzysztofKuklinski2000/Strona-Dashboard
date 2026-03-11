@@ -35,7 +35,6 @@ class FeesControllerFactory implements ControllerFactoryInterface
     return new FeesController(
       $service,
       $request,
-      $easyCSRF,
       $view,
       $csrfMiddleware
     );

@@ -34,7 +34,6 @@ class NewsControllerFactory implements ControllerFactoryInterface
     return new NewsController(
       $service,
       $request,
-      $easyCSRF,
       $view,
       $csrfMiddleware
     );
