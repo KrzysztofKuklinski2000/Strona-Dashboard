@@ -20,6 +20,8 @@ class PublicSubscribersControllerTest extends TestCase
     private SubscribersService|MockObject $service;
     private CsrfMiddleware|MockObject $csrfMiddleware;
     private Notifier | MockObject $notifier;
+
+    /** @var PublicSubscribersController&MockObject */
     private PublicSubscribersController $controller;
     
 
