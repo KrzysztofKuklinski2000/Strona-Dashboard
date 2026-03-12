@@ -3,7 +3,6 @@
 namespace App\Service\Dashboard;
 
 use App\Exception\ServiceException;
-use Exception;
 
 class SubscribersService extends AbstractDashboardService implements SubscribersManagementServiceInterface
 {
@@ -44,10 +43,25 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
     if (!$subscriber) {
         throw new ServiceException("Nieprawidłowy lub wygasły token.", 404);
     }
+
+    $unsubscribeToken = bin2hex(random_bytes(32));
+
     $this->edit(self::TABLE, [
       'id' => $subscriber['id'],
       'is_active' => 1,
-      'token' => null
+      'token' => $unsubscribeToken
     ]);
   }
+
+  public function unsubscribe(string $token): void {
+    $subscriber = $this->repository->getSubscriberByToken(self::TABLE, $token);
+
+    if (!$subscriber) {
+        throw new ServiceException("Nieprawidłowy lub wygasły token.", 404);
+    }
+
+    $this->deleteSubscriber( (int) $subscriber['id'] );
+  }
+
+
 }

@@ -75,4 +75,23 @@ class PublicSubscribersController extends AbstractController {
 
         $this->redirect('/');
     }
+
+    public function unsubscribeAction(): void {
+        $token = $this->request->getQueryParam('token');
+
+        if (!$token) {
+            $this->setFlash('error', 'Brak klucza wypisania.');
+            $this->redirect('/');
+            return;
+        }
+
+        try {
+            $this->service->unsubscribe($token);
+            $this->setFlash('success', 'Twoje dane zostały usunięte. Nie będziesz już otrzymywać powiadomień.');
+        } catch (ServiceException $e) {
+            $this->setFlash('error', 'Nie udało się przetworzyć prośby o wypisanie.');
+        }
+
+        $this->redirect('/');
+    }
 }

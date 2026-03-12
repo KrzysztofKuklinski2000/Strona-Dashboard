@@ -32,6 +32,7 @@ return function (RouteCollector $r) {
     
     $r->post('/subscribe', [PublicSubscribersController::class, 'subscribeAction']);
     $r->get('/confirm-subscription', [PublicSubscribersController::class, 'confirmAction']);
+    $r->get('/unsubscribe', [PublicSubscribersController::class, 'unsubscribeAction']);
 
     $r->get('/auth/login', [AuthController::class, 'loginAction']);
     $r->post('/auth/login', [AuthController::class, 'loginAction']);

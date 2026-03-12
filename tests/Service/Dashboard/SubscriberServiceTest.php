@@ -192,4 +192,47 @@ class SubscriberServiceTest extends TestCase
     // WHEN
     $this->service->activateSubscriber($token);
   }
+
+  public function testShouldActivateAndGenerateNewToken(): void
+  {
+      // GIVEN
+      $oldToken = 'old-activation-token';
+      $subscriber = ['id' => 1, 'token' => $oldToken];
+      
+      $this->repository->expects($this->once())
+          ->method('getSubscriberByToken')
+          ->willReturn($subscriber);
+
+      // EXPECTS
+      $this->repository->expects($this->once())
+          ->method('edit')
+          ->with('subscribers', $this->callback(function($data) use ($oldToken) {
+              return $data['is_active'] === 1 && 
+                    $data['token'] !== $oldToken && 
+                    strlen($data['token']) === 64; 
+          }));
+
+      // WHEN
+      $this->service->activateSubscriber($oldToken);
+  }
+
+  public function testShouldUnsubscribeSuccessfully(): void
+  {
+      // GIVEN
+      $token = 'permanent-unsubscribe-token';
+      $subscriber = ['id' => 5, 'token' => $token];
+
+      $this->repository->expects($this->once())
+          ->method('getSubscriberByToken')
+          ->with('subscribers', $token)
+          ->willReturn($subscriber);
+
+      // EXPECTS
+      $this->repository->expects($this->once())
+          ->method('delete')
+          ->with(5, 'subscribers');
+
+      // WHEN
+      $this->service->unsubscribe($token);
+  }
 }

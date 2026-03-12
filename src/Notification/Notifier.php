@@ -14,17 +14,24 @@ class Notifier {
 
   public function notifyAboutTimetableUpdate(): void
   {
-    $emails = $this->subscriberRepository->getActiveEmails();
+    $subscribers = $this->subscriberRepository->getActiveEmails();
 
-    if(empty($emails)) {
+    if(empty($subscribers)) {
       return;
     }
 
-    ob_start();
-    require dirname(__DIR__, 2) . '/templates/emails/timetable_updated.php';
-    $htmlContent = ob_get_clean();
+    foreach ($subscribers as $subscriber) {
+      $email = $subscriber['email'];
+      $token = $subscriber['token'];
 
-    foreach ($emails as $email) {
+      $unsubscribeUrl = "http://localhost:8000/unsubscribe?token=" . $token;
+
+      ob_start();
+      require dirname(__DIR__, 2) . '/templates/emails/timetable_updated.php';
+      $htmlContent = ob_get_clean();
+      $htmlContent .= "<br><br><hr><p style='font-size: 12px;'>Chcesz zrezygnować? <a href='$unsubscribeUrl'>Wypisz się tutaj</a></p>";
+
+
       $this->mailer->send($email, 'Aktualizacja grafiku', $htmlContent);
     }
   }
