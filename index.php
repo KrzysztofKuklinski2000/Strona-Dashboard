@@ -10,6 +10,8 @@ use EasyCSRF\EasyCSRF;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 use EasyCSRF\NativeSessionProvider;
 
+session_start();
+
 $configuration = require_once('config/config.php');
 $isDev = ($configuration['env'] ?? 'prod') === 'dev';
 
@@ -25,7 +27,7 @@ if($isDev) {
 
 require_once 'vendor/autoload.php';
 
-session_start();
+
 
 
 $errorHandler = new ErrorHandler($isDev, __DIR__."/templates/errors");
@@ -66,8 +68,11 @@ try {
 	$controller->$action();
 
 } catch (InvalidCsrfTokenException $e) {
-	header('Location: /dashboard?error=csrf');
-	exit;
+	$uri = $_SERVER['REQUEST_URI'];
+    $redirectPath = str_contains($uri, '/dashboard') ? '/dashboard?error=csrf' : '/?error=csrf';
+    
+    header("Location: $redirectPath");
+    exit;
 } catch (NotFoundException $e) {
 	http_response_code(404);
 	$errorHandler->renderErrorPage('404.php', $e);

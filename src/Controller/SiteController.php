@@ -101,7 +101,8 @@ class SiteController extends AbstractController {
 
 	private function renderPage(array $params): void {
 		$params['contact'] = $this->siteService->getContact();
-		$params['csrf_token'] = $this->csrfMiddleware->generateToken();
+		$params['csrf_token'] = $this->csrfMiddleware->generateToken('public');
+
 		$this->view->renderPageView($params);
 	}
 }

@@ -31,7 +31,7 @@ class AuthController extends AbstractController {
 
     if ($this->request->hasPost()) {
       try {
-				$this->csrfMiddleware->verify();
+				$this->csrfMiddleware->verify('admin');
         $login = $this->request->getFormParam('login');
         $password = $this->request->getFormParam('password');
 
@@ -48,7 +48,7 @@ class AuthController extends AbstractController {
           throw new ServiceException('Wystąpił nieznany błąd ', 500, $e);
         }
     }
-    $this->view->renderDashboardView(['page' => 'login', 'messages' => $errors, 'csrf_token' => $this->csrfMiddleware->generateToken()]);
+    $this->view->renderDashboardView(['page' => 'login', 'messages' => $errors, 'csrf_token' => $this->csrfMiddleware->generateToken('admin')]);
   }
 
   public function logoutAction(){

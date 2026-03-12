@@ -32,7 +32,7 @@ abstract class AbstractDashboardController extends AbstractController {
       return;
     }
 
-    $this->csrfMiddleware->verify();
+    $this->csrfMiddleware->verify('admin');
     $data = $this->getDataToCreate();
 
     if (!$this->request->getErrors()) {
@@ -53,7 +53,7 @@ abstract class AbstractDashboardController extends AbstractController {
       return;
     }
 
-    $this->csrfMiddleware->verify();
+    $this->csrfMiddleware->verify('admin');
     $data = $this->getDataToUpdate();
 
     if (!$this->request->getErrors()) {
@@ -80,7 +80,7 @@ abstract class AbstractDashboardController extends AbstractController {
       return;
     }
 
-      $this->csrfMiddleware->verify();
+      $this->csrfMiddleware->verify('admin');
       $id = (int) $this->request->getFormParam('postId');
       $this->handleDelete($id);
       $this->setFlash('success', 'Udało się usunąć');
@@ -94,7 +94,7 @@ abstract class AbstractDashboardController extends AbstractController {
       return;
     }
 
-    $this->csrfMiddleware->verify();
+    $this->csrfMiddleware->verify('admin');
     $data = $this->getDataToPublished();
     $this->handlePublish($data);
 
@@ -105,7 +105,7 @@ abstract class AbstractDashboardController extends AbstractController {
 
   public function moveAction(): void {
     if($this->request->isPost()) {
-      $this->csrfMiddleware->verify();
+      $this->csrfMiddleware->verify('admin');
       $data = $this->getDataToChangePostPosition();
       $this->handleMove($data);
       $this->redirect("/dashboard/". $this->getModuleName());
@@ -184,7 +184,7 @@ abstract class AbstractDashboardController extends AbstractController {
 
   protected function renderPage(array $params): void {
     $params['flash'] = $this->getFlash();
-    $params['csrf_token'] = $this->csrfMiddleware->generateToken();
+    $params['csrf_token'] = $this->csrfMiddleware->generateToken('admin');
     $this->view->renderDashboardView($params);
   }
 

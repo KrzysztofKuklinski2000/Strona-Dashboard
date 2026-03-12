@@ -25,14 +25,17 @@ class NotifierTest extends TestCase
   public function testShouldFetchEmailsAndSendNotificationToEachSubscriber(): void
   {
     // GIVEN
-    $emails = ['email1@example.pl', 'email2@example.pl'];
+    $subscribers = [
+      ['id'=> 1, 'email' => 'email1@example.pl', 'token' => 'test-token'],
+      ['id'=> 2, 'email' => 'email2@example.pl', 'token' => 'test2-token']
+    ];
 
     // EXPECTS 
     $this->subscriberRepository->expects($this->once())
       ->method('getActiveEmails')
-      ->willReturn($emails);
+      ->willReturn($subscribers);
 
-    $this->mailer->expects($this->exactly(count($emails)))
+    $this->mailer->expects($this->exactly(count($subscribers)))
       ->method('send')
       ->with(
         $this->isType('string'),

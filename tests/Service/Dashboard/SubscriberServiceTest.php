@@ -164,11 +164,17 @@ class SubscriberServiceTest extends TestCase
 
     $this->repository->expects($this->once())
         ->method('edit')
-        ->with('subscribers', [
-            'id' => 10,
-            'is_active' => 1,
-            'token' => null
-        ]);
+        ->with(
+            $this->equalTo('subscribers'),
+            $this->callback(function ($data) {
+                $isIdCorrect = $data['id'] === 10;
+                $isActiveCorrect = $data['is_active'] === 1;
+                
+                $isTokenGenerated = isset($data['token']) && strlen($data['token']) === 64;
+
+                return $isIdCorrect && $isActiveCorrect && $isTokenGenerated;
+            })
+        );
 
     // WHEN
     $this->service->activateSubscriber($token);

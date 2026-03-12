@@ -33,20 +33,21 @@ class CsrfMiddlewareTest extends TestCase {
   } 
 
   public function testShouldVerifyPostRequestSuccess(): void {
+    // GIVEN
+    $context = 'public';
+    $key = 'csrf_token_' . $context;
+    
     // EXPECT 
     $this->easyCSRF->expects($this->once())
       ->method('check')
-      ->with('csrf_token', 'token'); 
+      ->with($key, 'valid-token'); 
 
     // GIVEN 
-    $this->request->method('isPost')
-      ->willReturn(true);
-
-    $this->request->method('getFormParam')
-      ->willReturn('token');
+    $this->request->method('isPost')->willReturn(true);
+    $this->request->method('getFormParam')->with('csrf_token')->willReturn('valid-token');
 
     // WHEN
-    $this->middleware->verify();
+    $this->middleware->verify($context);
   }
 
   public function testShouldThrowExceptionWhenTokenIsInvalid(): void {

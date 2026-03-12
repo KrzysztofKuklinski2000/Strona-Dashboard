@@ -35,8 +35,8 @@ class SubscriberRepositoryTest extends TestCase {
     $emails = $this->repository->getActiveEmails();
 
     $this->assertCount(2, $emails);
-    $this->assertEquals('test1@gmail.com', $emails[0]);
-    $this->assertEquals('test3@gmail.com', $emails[1]);
+    $this->assertEquals('test1@gmail.com', $emails[0]['email']);
+    $this->assertEquals('test3@gmail.com', $emails[1]['email']);
   }
 
   public function testShouldThrowRepositoryExceptionWhenGetAllEmailsFailure(): void

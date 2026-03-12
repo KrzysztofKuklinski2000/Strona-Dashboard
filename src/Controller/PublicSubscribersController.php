@@ -21,7 +21,7 @@ class PublicSubscribersController extends AbstractController {
     }
 
     public function subscribeAction(): void {
-        $this->csrfMiddleware->verify();
+        $this->csrfMiddleware->verify('public');
 
         $email = $this->request->validate('email', true, 'email');
 
