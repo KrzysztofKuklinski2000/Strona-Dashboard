@@ -54,7 +54,7 @@ class NewsControllerTest extends TestCase
       ->with([
         'page' => 'news/index',
         'data' => ['title' => 'test'],
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 
@@ -86,7 +86,7 @@ class NewsControllerTest extends TestCase
       ->with([
         'page' => 'news/edit',
         'data' => $data,
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 
@@ -106,7 +106,7 @@ class NewsControllerTest extends TestCase
       ->method('renderDashboardView')
       ->with([
         'page' => 'news/create',
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 
@@ -138,7 +138,7 @@ class NewsControllerTest extends TestCase
       ->with([
         'page' => 'news/show',
         'data' => $data,
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 
@@ -170,7 +170,7 @@ class NewsControllerTest extends TestCase
       ->with([
         'page' => 'news/delete',
         'data' => $data,
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 

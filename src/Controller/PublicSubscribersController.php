@@ -28,13 +28,13 @@ class PublicSubscribersController extends AbstractController {
         $consent = $this->request->getFormParam('terms_consent');
 
         if($this->request->getErrors()) {
-            $this->setFlash('error', 'Niepoprawny adres email.');
+            $this->setFlash('warning', 'Niepoprawny adres email.', 'public');
             $this->redirect('/');
             return;
         }
 
         if (!$consent) {
-            $this->setFlash('error', 'Musisz zaakceptować zgodę na przetwarzanie danych.');
+            $this->setFlash('warning', 'Musisz zaakceptować zgodę na przetwarzanie danych.', 'public');
             $this->redirect('/');
             return;
         }
@@ -47,10 +47,10 @@ class PublicSubscribersController extends AbstractController {
 
             $this->notifier->sendConfirmationEmail($email, $token);
 
-            $this->setFlash('success', 'Dziękujemy za zapisanie się!');
+            $this->setFlash('success', 'Dziękujemy za zapisanie się!', 'public');
             
         }catch(ServiceException $e) { 
-            $this->setFlash('error', 'Wystąpił błąd podczas zapisu.');
+            $this->setFlash('warning', 'Wystąpił błąd podczas zapisu.', 'public');
         }
 
         $this->redirect('/');
@@ -68,9 +68,9 @@ class PublicSubscribersController extends AbstractController {
         try {
             
             $this->service->activateSubscriber($token);
-            $this->setFlash('success', 'Subskrypcja została potwierdzona! Oss!');
+            $this->setFlash('success', 'Subskrypcja została potwierdzona! Oss!', 'public');
         } catch (\Exception $e) {
-            $this->setFlash('error', 'Link aktywacyjny jest nieprawidłowy.');
+            $this->setFlash('warning', 'Link aktywacyjny jest nieprawidłowy.', 'public');
         }
 
         $this->redirect('/');
@@ -80,16 +80,16 @@ class PublicSubscribersController extends AbstractController {
         $token = $this->request->getQueryParam('token');
 
         if (!$token) {
-            $this->setFlash('error', 'Brak klucza wypisania.');
+            $this->setFlash('warning', 'Brak klucza wypisania.', 'public');
             $this->redirect('/');
             return;
         }
 
         try {
             $this->service->unsubscribe($token);
-            $this->setFlash('success', 'Twoje dane zostały usunięte. Nie będziesz już otrzymywać powiadomień.');
+            $this->setFlash('success', 'Twoje dane zostały usunięte. Nie będziesz już otrzymywać powiadomień.', 'public');
         } catch (ServiceException $e) {
-            $this->setFlash('error', 'Nie udało się przetworzyć prośby o wypisanie.');
+            $this->setFlash('warning', 'Nie udało się przetworzyć prośby o wypisanie.', 'public');
         }
 
         $this->redirect('/');

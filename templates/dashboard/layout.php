@@ -10,9 +10,9 @@
 </head>
 
 <body>
-	<?php if (isset($params['flash']) && in_array($params['flash']['type'], ['success', 'info', 'warning'])): ?>
-		<div class="flash <?= htmlspecialchars($params['flash']['type']) ?>">
-			<?= $params['flash']['message'] ?>
+	<?php if (isset($params['flash_dashboard']) && in_array($params['flash_dashboard']['type'], ['success', 'info', 'warning'])): ?>
+		<div class="flash <?= htmlspecialchars($params['flash_dashboard']['type']) ?>">
+			<?= $params['flash_dashboard']['message'] ?>
 			<i class="flash-close fa-solid fa-xmark"></i>
 		</div>
 	<?php endif ?>
@@ -75,7 +75,7 @@
 		</main>
 	</div>
 </body>
-<?php if (isset($params['flash']) && in_array($params['flash']['type'], ['success', 'info', 'warning'])): ?>
+<?php if (isset($params['flash_dashboard']) && in_array($params['flash_dashboard']['type'], ['success', 'info', 'warning'])): ?>
 	<script src="/templates/dashboard/public/main.js"></script>
 <?php endif; ?>
 

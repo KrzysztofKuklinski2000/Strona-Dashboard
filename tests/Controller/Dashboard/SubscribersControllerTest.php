@@ -54,7 +54,7 @@ class SubscribersControllerTest extends TestCase
           ->with([
             'page' => 'subscribers/index',
             'data' => ['email' => 'example@test.com'],
-            'flash' => null,
+            'flash_dashboard' => null,
             'csrf_token' => 'token'
           ]);
 
@@ -87,7 +87,7 @@ class SubscribersControllerTest extends TestCase
           ->method('renderDashboardView')
           ->with([
             'page' => 'subscribers/create',
-            'flash' => null,
+            'flash_dashboard' => null,
             'csrf_token' => 'token'
           ]);
 
@@ -151,7 +151,7 @@ class SubscribersControllerTest extends TestCase
       ->with([
         'page' => 'subscribers/edit',
         'data' => $data,
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 
@@ -217,7 +217,7 @@ class SubscribersControllerTest extends TestCase
       ->with([
         'page' => 'subscribers/show',
         'data' => $data,
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 
@@ -249,7 +249,7 @@ class SubscribersControllerTest extends TestCase
       ->with([
         'page' => 'subscribers/delete',
         'data' => $data,
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 

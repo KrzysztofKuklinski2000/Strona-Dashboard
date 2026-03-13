@@ -32,7 +32,7 @@ class AbstractControllerTest extends TestCase
     // EXPECTS
     $this->request->expects($this->once())
       ->method('setSession')
-      ->with('flash', ['type' => 'info', 'message' => 'hello']);
+      ->with('flash_dashboard', ['type' => 'info', 'message' => 'hello']);
 
     // WHEN
     $this->controller->publicSetFlash('info', 'hello');
@@ -43,13 +43,13 @@ class AbstractControllerTest extends TestCase
     // GIVEN
     $this->request->expects($this->once())
       ->method('getSession')
-      ->with('flash')
+      ->with('flash_dashboard')
       ->willReturn(['type' => 'info', 'message' => 'hello']);
 
     // EXPECTS
     $this->request->expects($this->once())
       ->method('removeSession')
-      ->with('flash');
+      ->with('flash_dashboard');
 
     // WHEN
     $result = $this->controller->publicGetFlash();

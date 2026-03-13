@@ -62,7 +62,7 @@ class AbstractDashboardControllerTest extends TestCase
 
     $this->request->expects($this->once())
       ->method('setSession')
-      ->with('flash', ['type' => 'success', 'message' => 'Udało się utworzyć nowy wpis']);
+      ->with('flash_dashboard', ['type' => 'success', 'message' => 'Udało się utworzyć nowy wpis']);
     
     // WHEN 
     $this->controller->storeAction();
@@ -85,7 +85,7 @@ class AbstractDashboardControllerTest extends TestCase
 
     $this->request->expects($this->once())
       ->method('setSession')
-      ->with('flash', ['type' => 'errors', 'message' => ['some' => 'errors'] ]);
+      ->with('flash_dashboard', ['type' => 'warning', 'message' => ['some' => 'errors'] ]);
 
     // WHEN 
     $this->controller->storeAction();
@@ -120,7 +120,7 @@ class AbstractDashboardControllerTest extends TestCase
 
     $this->request->expects($this->once())
       ->method('setSession')
-      ->with('flash', ['type' => 'success', 'message' => 'Udało się edytować']);
+      ->with('flash_dashboard', ['type' => 'success', 'message' => 'Udało się edytować']);
 
     // WHEN 
     $this->controller->updateAction();
@@ -143,7 +143,7 @@ class AbstractDashboardControllerTest extends TestCase
 
     $this->request->expects($this->once())
       ->method('setSession')
-      ->with('flash', ['type' => 'errors', 'message' => ['some' => 'errors']]);
+      ->with('flash_dashboard', ['type' => 'warning', 'message' => ['some' => 'errors']]);
 
     // WHEN 
     $this->controller->updateAction();
@@ -179,7 +179,7 @@ class AbstractDashboardControllerTest extends TestCase
 
     $this->request->expects($this->once())
       ->method('setSession')
-      ->with('flash', ['type' => 'success', 'message' => 'Udało się usunąć']);
+      ->with('flash_dashboard', ['type' => 'success', 'message' => 'Udało się usunąć']);
 
     // WHEN 
     $this->controller->deleteAction();
@@ -212,7 +212,7 @@ class AbstractDashboardControllerTest extends TestCase
 
     $this->request->expects($this->once())
       ->method('setSession')
-      ->with('flash', ['type' => 'info', 'message' => 'Udało się zmienić status']);
+      ->with('flash_dashboard', ['type' => 'info', 'message' => 'Udało się zmienić status']);
 
     // WHEN 
     $this->controller->publishedAction();
@@ -290,7 +290,7 @@ class AbstractDashboardControllerTest extends TestCase
   {
     // GIVEN
     $this->request->method('getSession')
-      ->with('flash')
+      ->with('flash_dashboard')
       ->willReturn(['type' => 'info', 'message' => 'test']);
 
     $this->csrfMiddleware->method('generateToken')
@@ -301,7 +301,7 @@ class AbstractDashboardControllerTest extends TestCase
       ->method('renderDashboardView')
       ->with([
         'page' => 'test',
-        'flash' => ['type' => 'info', 'message' => 'test'],
+        'flash_dashboard' => ['type' => 'info', 'message' => 'test'],
         'csrf_token' => 'test_token'             
       ]);
 

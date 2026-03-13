@@ -52,7 +52,7 @@ class CampControllerTest extends TestCase {
       ->with([
         'page' => 'camp/edit',
         'data' => ['city' => 'Warszawa'],
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 

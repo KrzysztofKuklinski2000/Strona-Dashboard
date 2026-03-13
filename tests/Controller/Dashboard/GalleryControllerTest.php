@@ -54,7 +54,7 @@ class GalleryControllerTest extends TestCase
       ->with([
         'page' => 'gallery/index',
         'data' => ['gallery' => 'test'],
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 
@@ -86,7 +86,7 @@ class GalleryControllerTest extends TestCase
       ->with([
         'page' => 'gallery/edit',
         'data' => $data,
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 
@@ -106,7 +106,7 @@ class GalleryControllerTest extends TestCase
       ->method('renderDashboardView')
       ->with([
         'page' => 'gallery/create',
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 
@@ -138,7 +138,7 @@ class GalleryControllerTest extends TestCase
       ->with([
         'page' => 'gallery/show',
         'data' => $data,
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 
@@ -170,7 +170,7 @@ class GalleryControllerTest extends TestCase
       ->with([
         'page' => 'gallery/delete',
         'data' => $data,
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 

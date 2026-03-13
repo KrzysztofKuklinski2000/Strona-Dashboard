@@ -56,7 +56,8 @@ class SiteControllerTest extends TestCase
       'page' => 'start',
       'content' => $fakeContent,
       'contact' => $fakeContact,
-      'csrf_token' => self::FAKE_CSRF
+      'csrf_token' => self::FAKE_CSRF,
+      'flash_public' => null,
     ];
 
     $this->view->expects($this->once())
@@ -98,7 +99,8 @@ class SiteControllerTest extends TestCase
         'numberOfRows' => $fakeNewsData['totalPages'],
         'currentNumberOfPage' => $fakeNewsData['currentPage'],
         'contact' => [],
-        'csrf_token' => self::FAKE_CSRF
+        'csrf_token' => self::FAKE_CSRF,
+        'flash_public' => null,
       ]);
 
     // WHEN
@@ -123,7 +125,8 @@ class SiteControllerTest extends TestCase
       'page' => 'timetable',
       'content' => $fakeContent,
       'contact' => [],
-      'csrf_token' => self::FAKE_CSRF
+      'csrf_token' => self::FAKE_CSRF,
+      'flash_public' => null,
     ];
 
     $this->view->expects($this->once())
@@ -157,7 +160,8 @@ class SiteControllerTest extends TestCase
         'page' => 'gallery',
         'content' => ['img1', 'img2'],
         'contact' => [],
-        'csrf_token' => self::FAKE_CSRF
+        'csrf_token' => self::FAKE_CSRF,
+        'flash_public' => null,
       ]);
 
     // WHEN
@@ -181,7 +185,8 @@ class SiteControllerTest extends TestCase
       'page' => 'camp-info',
       'content' => $fakeContent,
       'contact' => [],
-      'csrf_token' => self::FAKE_CSRF
+      'csrf_token' => self::FAKE_CSRF,
+      'flash_public' => null,
     ];
 
     $this->view->expects($this->once())
@@ -210,7 +215,8 @@ class SiteControllerTest extends TestCase
       'page' => 'fees-info',
       'content' => $fakeContent,
       'contact' => [],
-      'csrf_token' => self::FAKE_CSRF
+      'csrf_token' => self::FAKE_CSRF,
+      'flash_public' => null,
     ];
 
     $this->view->expects($this->once())
@@ -238,7 +244,8 @@ class SiteControllerTest extends TestCase
       'page' => 'entries-info',
       'content' => $fakeContent,
       'contact' => [],
-      'csrf_token' => self::FAKE_CSRF
+      'csrf_token' => self::FAKE_CSRF,
+      'flash_public' => null,
     ];
 
     $this->view->expects($this->once())
@@ -261,7 +268,8 @@ class SiteControllerTest extends TestCase
     $expectParams = [
       'page' => 'contact',
       'contact' => $fakeContent,
-      'csrf_token' => self::FAKE_CSRF
+      'csrf_token' => self::FAKE_CSRF,
+      'flash_public' => null,
     ];
 
     $this->view->expects($this->once())
@@ -283,7 +291,8 @@ class SiteControllerTest extends TestCase
     $expectParams = [
       'page' => 'statute',
       'contact' => [],
-      'csrf_token' => self::FAKE_CSRF
+      'csrf_token' => self::FAKE_CSRF,
+      'flash_public' => null,
     ];
 
     $this->view->expects($this->once())
@@ -305,7 +314,8 @@ class SiteControllerTest extends TestCase
     $expectParams = [
       'page' => 'oyama',
       'contact' => [],
-      'csrf_token' => self::FAKE_CSRF
+      'csrf_token' => self::FAKE_CSRF,
+      'flash_public' => null,
     ];
 
     $this->view->expects($this->once())
@@ -327,7 +337,8 @@ class SiteControllerTest extends TestCase
     $expectParams = [
       'page' => 'dojo-oath',
       'contact' => [],
-      'csrf_token' => self::FAKE_CSRF
+      'csrf_token' => self::FAKE_CSRF,
+      'flash_public' => null,
     ];
 
     $this->view->expects($this->once())
@@ -349,7 +360,8 @@ class SiteControllerTest extends TestCase
     $expectParams = [
       'page' => 'requirements',
       'contact' => [],
-      'csrf_token' => self::FAKE_CSRF
+      'csrf_token' => self::FAKE_CSRF,
+      'flash_public' => null,
     ];
 
     $this->view->expects($this->once())

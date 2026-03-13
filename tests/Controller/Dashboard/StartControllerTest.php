@@ -54,7 +54,7 @@ class StartControllerTest extends TestCase
       ->with([
         'page' => 'start/index',
         'data' => ['title' => 'test'],
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 
@@ -86,7 +86,7 @@ class StartControllerTest extends TestCase
       ->with([
         'page' => 'start/edit',
         'data' => $data,
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 
@@ -106,7 +106,7 @@ class StartControllerTest extends TestCase
       ->method('renderDashboardView')
       ->with([
         'page' => 'start/create',
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 
@@ -138,7 +138,7 @@ class StartControllerTest extends TestCase
       ->with([
         'page' => 'start/show',
         'data' => $data,
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 
@@ -170,7 +170,7 @@ class StartControllerTest extends TestCase
       ->with([
         'page' => 'start/delete',
         'data' => $data,
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 

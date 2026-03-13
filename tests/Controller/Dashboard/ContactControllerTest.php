@@ -54,7 +54,7 @@ class ContactControllerTest extends TestCase
       ->with([
         'page' => 'contact/edit',
         'data' => ['email' => 'test@gmail.com'],
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 

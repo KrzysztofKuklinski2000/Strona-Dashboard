@@ -54,7 +54,7 @@ class TimetableControllerTest extends TestCase
       ->with([
         'page' => 'timetable/index',
         'data' => ['id' => 1, 'city' => 'Reda'],
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 
@@ -86,7 +86,7 @@ class TimetableControllerTest extends TestCase
       ->with([
         'page' => 'timetable/edit',
         'data' => $data,
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 
@@ -106,7 +106,7 @@ class TimetableControllerTest extends TestCase
       ->method('renderDashboardView')
       ->with([
         'page' => 'timetable/create',
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 
@@ -138,7 +138,7 @@ class TimetableControllerTest extends TestCase
       ->with([
         'page' => 'timetable/show',
         'data' => $data,
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 
@@ -170,7 +170,7 @@ class TimetableControllerTest extends TestCase
       ->with([
         'page' => 'timetable/delete',
         'data' => $data,
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 

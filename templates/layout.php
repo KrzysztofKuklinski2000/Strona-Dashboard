@@ -52,6 +52,12 @@
 </head>
 
 <body>
+	<?php if (isset($params['flash_public']) && in_array($params['flash_public']['type'], ['success', 'info', 'warning'])): ?>
+		<div class="flash <?= htmlspecialchars($params['flash_public']['type']) ?>">
+			<?= $params['flash_public']['message'] ?>
+			<i class="flash-close fa-solid fa-xmark"></i>
+		</div>
+	<?php endif ?>
 	<!-- menu na urządzenia mobilne -->
 	<?php require_once('components/mobile_menu.php') ?>
 

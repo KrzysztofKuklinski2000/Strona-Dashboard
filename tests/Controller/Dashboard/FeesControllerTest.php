@@ -54,7 +54,7 @@ class FeesControllerTest extends TestCase
       ->with([
         'page' => 'fees/edit',
         'data' => ['reduced_contribution_1_month' => 150],
-        'flash' => null,
+        'flash_dashboard' => null,
         'csrf_token' => 'token'
       ]);
 

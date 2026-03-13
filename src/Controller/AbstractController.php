@@ -19,13 +19,14 @@ class AbstractController {
 		exit();
 	}
 
-	protected function getFlash(): ?array {
-		$flash = $this->request->getSession('flash') ?? null;
-		if($flash) $this->request->removeSession('flash');
+	protected function getFlash(string $prefix = 'dashboard'): ?array {
+		$key = "flash_{$prefix}";
+		$flash = $this->request->getSession($key) ?? null;
+		if($flash) $this->request->removeSession($key);
 		return $flash;
 	}
 
-	protected function setFlash(string $type, string|array $message):void {
-		$this->request->setSession('flash', ["type" => $type, "message" => $message]);
+	protected function setFlash(string $type, string|array $message, string $prefix = 'dashboard'):void {
+		$this->request->setSession("flash_{$prefix}", ["type" => $type, "message" => $message]);
 	}
 }

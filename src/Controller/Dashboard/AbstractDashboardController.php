@@ -37,12 +37,12 @@ abstract class AbstractDashboardController extends AbstractController {
 
     if (!$this->request->getErrors()) {
       $this->handleCreate($data);
-      $this->setFlash("success", "Udało się utworzyć nowy wpis");
+      $this->setFlash("success", "Udało się utworzyć nowy wpis", 'dashboard');
       $this->redirect("/dashboard/".$this->getModuleName());
       return;
     }
 
-    $this->setFlash("errors", $this->request->getErrors());
+    $this->setFlash("warning", $this->request->getErrors(), 'dashboard');
     $this->redirect('/dashboard/'.$this->getModuleName().'/create');
     return;
   }
@@ -58,12 +58,12 @@ abstract class AbstractDashboardController extends AbstractController {
 
     if (!$this->request->getErrors()) {
       $this->handleUpdate($data);
-      $this->setFlash("success", "Udało się edytować");
+      $this->setFlash("success", "Udało się edytować", 'dashboard');
       $this->redirect('/dashboard/' . $this->getModuleName());
       return;
     }
 
-    $this->setFlash("errors", $this->request->getErrors());
+    $this->setFlash("warning", $this->request->getErrors(), 'dashboard');
     $redirectUrl = '/dashboard/' . $this->getModuleName() . '/edit';
 
     if (isset($data['id']) && $data['id'] !== '') {
@@ -83,7 +83,7 @@ abstract class AbstractDashboardController extends AbstractController {
       $this->csrfMiddleware->verify('admin');
       $id = (int) $this->request->getFormParam('postId');
       $this->handleDelete($id);
-      $this->setFlash('success', 'Udało się usunąć');
+      $this->setFlash('success', 'Udało się usunąć', 'dashboard');
       $this->redirect('/dashboard/' . $this->getModuleName());
       return;
   }
@@ -98,7 +98,7 @@ abstract class AbstractDashboardController extends AbstractController {
     $data = $this->getDataToPublished();
     $this->handlePublish($data);
 
-    $this->setFlash('info', 'Udało się zmienić status');
+    $this->setFlash('info', 'Udało się zmienić status', 'dashboard');
     $this->redirect('/dashboard/' . $this->getModuleName());
     return;
   }
@@ -183,7 +183,7 @@ abstract class AbstractDashboardController extends AbstractController {
   }
 
   protected function renderPage(array $params): void {
-    $params['flash'] = $this->getFlash();
+    $params['flash_dashboard'] = $this->getFlash();
     $params['csrf_token'] = $this->csrfMiddleware->generateToken('admin');
     $this->view->renderDashboardView($params);
   }

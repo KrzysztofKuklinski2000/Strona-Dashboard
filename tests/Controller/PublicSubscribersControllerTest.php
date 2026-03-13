@@ -90,7 +90,7 @@ class PublicSubscribersControllerTest extends TestCase
         
         $this->controller->expects($this->once())
             ->method('setFlash')
-            ->with('error', 'Musisz zaakceptować zgodę na przetwarzanie danych.');
+            ->with('warning', 'Musisz zaakceptować zgodę na przetwarzanie danych.');
 
         $this->controller->expects($this->once())
             ->method('redirect')
@@ -110,7 +110,7 @@ class PublicSubscribersControllerTest extends TestCase
         // EXPECTS
         $this->controller->expects($this->once())
             ->method('setFlash')
-            ->with('error', 'Niepoprawny adres email.');
+            ->with('warning', 'Niepoprawny adres email.');
 
         // WHEN
         $this->controller->subscribeAction();
@@ -134,7 +134,7 @@ class PublicSubscribersControllerTest extends TestCase
 
         $this->controller->expects($this->once())
             ->method('setFlash')
-            ->with('error', 'Wystąpił błąd podczas zapisu.');
+            ->with('warning', 'Wystąpił błąd podczas zapisu.');
 
         $this->controller->expects($this->once())
             ->method('redirect')
@@ -197,7 +197,7 @@ class PublicSubscribersControllerTest extends TestCase
         // EXPECTS
         $this->controller->expects($this->once())
             ->method('setFlash')
-            ->with('error', 'Link aktywacyjny jest nieprawidłowy.');
+            ->with('warning', 'Link aktywacyjny jest nieprawidłowy.');
 
         $this->controller->expects($this->once())
             ->method('redirect')

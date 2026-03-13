@@ -38,7 +38,7 @@ class AuthController extends AbstractController {
         $errors = $this->authService->login($login, $password);
 
         if (empty($errors)) {
-            $this->setFlash('info', 'Udało się zalogować');
+            $this->setFlash('info', 'Udało się zalogować', 'dashboard');
             $this->redirect('/dashboard');
         }
 
