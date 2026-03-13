@@ -115,6 +115,8 @@ class DashboardRepository extends AbstractRepository {
 	public function published(array $data, string $table) {
 		try {
 			$table = $this->validateTable($table);
+			// var_dump($data);
+			// exit;
 			$this->runQuery("UPDATE $table SET status = :published WHERE id = :id", [
 				':published' => $data['published'],
 				':id' => $data['id'],

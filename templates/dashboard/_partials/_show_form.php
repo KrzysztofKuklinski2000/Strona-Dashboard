@@ -6,7 +6,7 @@
 </div>
   <form action="<?= $action ?>" method="POST">
     <input type="hidden" name="csrf_token" value="<?= $csrf ?? '' ?>">
-    <input type="hidden" name="postId" value=" <?= $data['id'] ?? "" ?> ">
+    <input type="hidden" name="postId" value="<?= $data['id'] ?? "" ?>">
     <label>
       <input type="radio" name="postPublished" value='1' <?= $data['status'] == 1 ? 'checked' : '' ?>> Publiczny
     </label>

@@ -65,7 +65,7 @@ class Request {
 	): mixed {
 		$value = $this->getFormParam($param);
 
-		if ($required && empty($value)) {
+		if ($required && ($value === null || $value === '')) {
 			$this->errors[$param] = "To pole jest wymagane.";
 			return null;
 		}
@@ -75,11 +75,12 @@ class Request {
 				$this->errors[$param] = "Podany adres email jest nieprawidłowy.";
 				return null;
 			}
-		}elseif ($type === 'int') {
-			if (!ctype_digit((string)$value)) {
+		} elseif ($type === 'int') {
+			if (!is_numeric($value)) {
 				$this->errors[$param] = "Pole musi zawierać tylko liczby całkowite.";
 				return null;
 			}
+			$value = (int)$value;
 		} else {
 			$value = (string) $value;
 		}
