@@ -61,10 +61,15 @@
 						<i class="fa-regular fa-address-book"></i>
 						<p>Kontakt</p>
 					</a>
+					<a href="/dashboard/subscribers">
+						<i class="fa-regular fa-bell"></i>
+						<p>Subskrybenci</p>
+					</a>
 					<a href="/auth/logout">
 						<i class="fa-solid fa-arrow-right-from-bracket"></i>
 						<p>Wyloguj</p>
 					</a>
+					
 				</ul>
 			</aside>
 		<?php endif; ?>
