@@ -1,5 +1,5 @@
 <?php 
-$errors = $params['flash']['message'] ?? [];
+$errors = $params['flash_dashboard']['message'] ?? [];
 ?>
 <br>
 <h3>Dodaj nowego użytkownika</h3>

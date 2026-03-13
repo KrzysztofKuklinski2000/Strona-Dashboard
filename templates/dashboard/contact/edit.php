@@ -1,7 +1,7 @@
 <?php 
 $data = $params['data'];
 $csrf = $params['csrf_token'] ?? '';
-$errors = $params['flash']['message'] ?? [];
+$errors = $params['flash_dashboard']['message'] ?? [];
 ?>
 
 <div class="list-header">

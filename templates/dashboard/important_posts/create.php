@@ -2,7 +2,7 @@
 $formTitle = "Tworzenie nowego ważnego posta";
 $action = "/dashboard/important_posts/store";
 $buttonTitle = "Stwórz";
-$errors = $params['flash']['message'] ?? [];
+$errors = $params['flash_dashboard']['message'] ?? [];
 $csrf = $params['csrf_token'] ?? '';
 
 

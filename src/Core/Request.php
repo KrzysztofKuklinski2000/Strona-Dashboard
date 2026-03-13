@@ -87,10 +87,12 @@ class Request {
 
 		if ($maxLength !== null && strlen((string)$value) > $maxLength) {
 			$this->errors[$param] = "Długość pola nie może być większa niż $maxLength znaków.";
+			return null;
 		}
 
 		if ($minLength !== null && strlen((string)$value) < $minLength) {
 			$this->errors[$param] = "Długość pola musi być większa niż $minLength znaków.";
+			return null;
 		}
 
 		if ($type === 'int') {

@@ -2,7 +2,7 @@
 $formTitle = "Tworzenie nowego posta Strona Główna";
 $action = "/dashboard/start/store";
 $buttonTitle = "Stwórz";
-$errors = $params['flash']['message'] ?? [];
+$errors = $params['flash_dashboard']['message'] ?? [];
 $csrf = $params['csrf_token'] ?? '';
 
 

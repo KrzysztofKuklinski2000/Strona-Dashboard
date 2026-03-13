@@ -10,12 +10,17 @@
 </head>
 
 <body>
-	<?php if (isset($params['flash_dashboard']) && in_array($params['flash_dashboard']['type'], ['success', 'info', 'warning'])): ?>
-		<div class="flash <?= htmlspecialchars($params['flash_dashboard']['type']) ?>">
-			<?= $params['flash_dashboard']['message'] ?>
-			<i class="flash-close fa-solid fa-xmark"></i>
-		</div>
-	<?php endif ?>
+	<?php if (isset($params['flash_dashboard'])): ?>
+    <?php 
+        $flash = $params['flash_dashboard'];
+    ?>
+    <?php if (is_string($flash['message'])): ?>
+        <div class="flash <?= htmlspecialchars($flash['type']) ?>">
+            <?= htmlspecialchars($flash['message']) ?>
+            <i class="flash-close fa-solid fa-xmark"></i>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>
 	<header>
 		<h2><i style="margin-right: 10px;" class="fa-solid fa-gear"></i>Panel Administracyjny</h2>
 	</header>

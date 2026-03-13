@@ -2,7 +2,7 @@
 $data = $params['data'];
 $csrf = $params['csrf_token'] ?? '';
 $action = "/dashboard/subscribers/update/" . ($data['id'] ?? '');
-$errors = $params['flash']['message'] ?? [];
+$errors = $params['flash_dashboard']['message'] ?? [];
 ?>
 
 <br>

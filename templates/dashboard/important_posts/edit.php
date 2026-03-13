@@ -3,7 +3,7 @@ $data = $params['data'];
 $action = "/dashboard/important_posts/update/" . ($data['id'] ?? '');
 $formTitle = "Edytowanie ważnego posta";
 $buttonTitle = "Edytuj";
-$errors = $params['flash']['message'] ?? [];
+$errors = $params['flash_dashboard']['message'] ?? [];
 $csrf = $params['csrf_token'] ?? '';
 
 

@@ -81,7 +81,7 @@ trait GetDataMethods {
   {
     return [
       'email' => $this->request->validate(param:'email', required: true, type:'string', maxLength:100),
-      'phone' => $this->request->validate('phone', required: true, type:'int', maxLength:9),
+      'phone' => $this->request->validate('phone', required: true, type:'string', maxLength:9),
       'address' => $this->request->validate(param: 'address', required: true, type:'string'),
     ];
   }

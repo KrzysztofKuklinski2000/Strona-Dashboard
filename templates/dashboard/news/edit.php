@@ -3,7 +3,7 @@ $data = $params['data'];
 $action = "/dashboard/news/update/" . ($data['id'] ?? '');
 $formTitle = "Edytowanie posta aktualności";
 $buttonTitle = "Edytuj";
-$errors = $params['flash']['message'] ?? [];
+$errors = $params['flash_dashboard']['message'] ?? [];
 $csrf = $params['csrf_token'] ?? '';
 
 
