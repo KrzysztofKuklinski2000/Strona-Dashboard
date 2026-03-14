@@ -15,6 +15,10 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
 
   public function createSubscriber(array $data): string
   {
+    if($this->repository->emailExists($data['email'])) {
+      throw new ServiceException("Ten adres email jest już zapisany w bazie.", 409);
+    }
+
     $token = bin2hex(random_bytes(32));
     $data['token'] = $token;
 
@@ -62,6 +66,4 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
 
     $this->deleteSubscriber( (int) $subscriber['id'] );
   }
-
-
 }

@@ -50,7 +50,7 @@ class PublicSubscribersController extends AbstractController {
             $this->setFlash('success', 'Dziękujemy za zapisanie się!', 'public');
             
         }catch(ServiceException $e) { 
-            $this->setFlash('warning', 'Wystąpił błąd podczas zapisu.', 'public');
+            $this->setFlash('warning', $e->getMessage(), 'public');
         }
 
         $this->redirect('/');

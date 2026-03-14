@@ -155,8 +155,13 @@ class DashboardRepository extends AbstractRepository {
 		if(!$result) {
 			throw new NotFoundException('Nie ma takiego subskrybenta', 404);
 		}
-		
-
 		return $result;
+	}
+
+	public function emailExists(string $email): bool {
+		$sql = "SELECT COUNT(*) FROM subscribers WHERE email = :email";
+		$result = $this->runQuery($sql, [':email' => $email])->fetchColumn();
+
+		return $result > 0;
 	}
 }
