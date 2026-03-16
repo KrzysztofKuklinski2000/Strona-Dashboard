@@ -759,4 +759,38 @@ class DashboardRepositoryTest extends TestCase
     // WHEN
     $this->repository->getSubscriberByToken('invalid_table', 'any-token');
   }
+
+  public function testShouldReturnTrueWhenEmailAlreadyExistInTable(): void
+  {
+    // GIVEN 
+    $token = 'secret-token-123';
+
+    $this->repository->runQuery(
+        "INSERT INTO subscribers (email, token, is_active) VALUES (:email, :token, :active)",
+        [':email' => 'subscriber@test.pl', ':token' => $token, ':active' => 0]
+    );
+
+    // WHEN
+    $result = $this->repository->emailExists('subscriber@test.pl');
+
+    // THEN
+    $this->assertTrue($result);
+  }
+
+  public function testShouldReturnFalseWhenEmailAlreadyExistInTable(): void
+  {
+    // GIVEN 
+    $token = 'secret-token-123';
+
+    $this->repository->runQuery(
+        "INSERT INTO subscribers (email, token, is_active) VALUES (:email, :token, :active)",
+        [':email' => 'subscriber@test.pl', ':token' => $token, ':active' => 0]
+    );
+
+    // WHEN
+    $result = $this->repository->emailExists('test124@gmail.com');
+
+    // THEN
+    $this->assertFalse($result);
+  }
 }

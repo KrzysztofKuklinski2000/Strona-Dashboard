@@ -6,6 +6,7 @@ namespace Tests\Controller;
 
 use App\Controller\PublicSubscribersController;
 use App\Core\Request;
+use App\Exception\ServiceException;
 use App\Middleware\CsrfMiddleware;
 use App\Notification\Notifier;
 use App\Service\Dashboard\SubscribersService;
@@ -127,14 +128,14 @@ class PublicSubscribersControllerTest extends TestCase
         $this->request->method('getFormParam')->with('terms_consent')->willReturn('on');
 
         $this->service->method('createSubscriber')
-            ->willThrowException(new \App\Exception\ServiceException('Błąd bazy danych'));
+            ->willThrowException(new ServiceException('Błąd bazy danych'));
 
         // EXPECTS
         $this->notifier->expects($this->never())->method('sendConfirmationEmail');
 
         $this->controller->expects($this->once())
             ->method('setFlash')
-            ->with('warning', 'Wystąpił błąd podczas zapisu.');
+            ->with('warning', 'Błąd bazy danych');
 
         $this->controller->expects($this->once())
             ->method('redirect')
@@ -205,5 +206,71 @@ class PublicSubscribersControllerTest extends TestCase
 
         // WHEN
         $this->controller->confirmAction();
+    }
+
+    public function testShouldUnsubscribeSuccessfully(): void
+    {
+        // GIVEN
+        $token = 'valid-token-123';
+        $this->request->expects($this->once())
+            ->method('getQueryParam')
+            ->with('token')
+            ->willReturn($token);
+
+        // EXPECTS
+        $this->service->expects($this->once())
+            ->method('unsubscribe')
+            ->with($token);
+
+        $this->controller->expects($this->once())
+            ->method('setFlash')
+            ->with('success', 'Twoje dane zostały usunięte. Nie będziesz już otrzymywać powiadomień.', 'public');
+
+        $this->controller->expects($this->once())
+            ->method('redirect')
+            ->with('/');
+
+        // WHEN
+        $this->controller->unsubscribeAction();
+    }
+
+    public function testShouldRedirectWithErrorWhenUnsubscribeTokenIsMissing(): void {
+        // EXPECTS
+        $this->request->expects($this->once())
+            ->method('getQueryParam')
+            ->with('token')
+            ->willReturn(null);
+
+        $this->controller->expects($this->once())
+            ->method('setFlash')
+            ->with('warning', 'Brak klucza wypisania.', 'public');
+
+        $this->controller->expects($this->once())
+            ->method('redirect')
+            ->with('/');
+        
+        // WHEN
+        $this->controller->unsubscribeAction();
+    }
+
+    public function testShouldRedirectWhenUnsubscribeFails(): void {
+        // GIVEN
+        $token = 'valid-token-123';
+        $this->request->expects($this->once())
+            ->method('getQueryParam')
+            ->with('token')
+            ->willReturn($token);
+
+        $this->service->expects($this->once())
+            ->method('unsubscribe')
+            ->willThrowException(new ServiceException('błąd'));
+
+        // EXPECTS
+        $this->controller->expects($this->once())
+            ->method('setFlash')
+            ->with('warning', 'Nie udało się przetworzyć prośby o wypisanie.', 'public');
+
+        // WHEN
+        $this->controller->unsubscribeAction();
     }
 }

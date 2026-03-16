@@ -66,14 +66,38 @@ class SubscriberServiceTest extends TestCase
 
   public function testShouldThrowServiceExceptionWhenCreateSubscriberFailure(): void
   {
+    // GIVEN
+    $data = ['email' => 'test@gmail.com'];
     // EXPECTS
     $this->expectException(ServiceException::class);
+
+    $this->repository->expects($this->once())
+      ->method('emailExists')
+      ->with($data['email'])
+      ->willReturn(false);
+
     $this->repository->expects($this->once())->method('beginTransaction');
     $this->repository->expects($this->once())->method('rollback');
 
     // WHEN 
     $this->repository->method('create')->willThrowException(new RepositoryException('Błąd'));
-    $this->service->createSubscriber(['']);
+    $this->service->createSubscriber($data);
+  }
+
+  public function testShouldThrowServiceExceptionWhenEmailAlreadyExists(): void
+  {
+    // EXPECTS
+    $this->expectException(ServiceException::class);
+    $this->expectExceptionMessage('Ten adres email jest już zapisany w bazie.');
+
+    // GIVEN
+    $data = ['id' => 1, 'email' => 'test@gmail.com'];
+    $this->repository->expects($this->once())
+      ->method('emailExists')
+      ->willReturn(true);
+
+    // WHEN 
+    $this->service->createSubscriber($data);
   }
 
   public function testShouldUpdateSubscriberSuccessfully(): void
@@ -240,5 +264,17 @@ class SubscriberServiceTest extends TestCase
 
       // WHEN
       $this->service->unsubscribe($token);
+  }
+
+  public function testShouldThrowServiceExceptionWhenSubscriberNotExistAndActionIsUnsubscribe(): void {
+    // EXPECTS 
+    $this->expectException(ServiceException::class);
+    $this->expectExceptionMessage('Nieprawidłowy lub wygasły token.');
+
+    // GIVEN 
+    $this->repository->method('getSubscriberByToken')->willReturn([]);
+
+    // WHEN
+    $this->service->unsubscribe('not-exist-token');
   }
 }
