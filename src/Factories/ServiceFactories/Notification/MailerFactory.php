@@ -11,13 +11,7 @@ class MailerFactory implements ServiceFactoryInterface{
   public function createService(){
     $config = require dirname(__DIR__, 4) . '/config/mail.php';
 
-    $dsn = sprintf(
-      'smtp://%s:%s@%s:%d',
-      $config['username'],
-      $config['password'],
-      $config['host'],
-      $config['port']
-    );
+    $dsn = sprintf('smtp://%s:%d', $config['host'], $config['port']);
 
     $transport = Transport::fromDsn($dsn);
 

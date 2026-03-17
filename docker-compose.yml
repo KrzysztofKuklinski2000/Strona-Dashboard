@@ -9,6 +9,8 @@ services:
       - ./docker/php/conf.d:/usr/local/etc/php/conf.d
     networks:
       - karate-net
+    depends_on:
+      - mailpit
 
   nginx:
     image: nginx:alpine
@@ -43,6 +45,15 @@ services:
       - "8080:80"
     environment:
       PMA_HOST: db
+    networks:
+      - karate-net
+  
+  mailpit:
+    image: 'axllent/mailpit'
+    container_name: mailpit
+    ports:
+      - '1025:1025'
+      - '8025:8025'
     networks:
       - karate-net
 
