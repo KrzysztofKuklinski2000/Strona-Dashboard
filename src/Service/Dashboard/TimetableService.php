@@ -35,16 +35,19 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
   public function createTimetable(array $data): void
   {
     $this->create(self::TABLE, $data);
+    $this->notify();
   }
 
   public function publishedTimetable(array $data): void
   {
     $this->published(self::TABLE, $data);
+    $this->notify();
   }
 
   public function deleteTimetable(int $id): void
   {
     $this->delete(self::TABLE, $id);
+    $this->notify();
   }
 
   public function moveTimetable(array $data): void
