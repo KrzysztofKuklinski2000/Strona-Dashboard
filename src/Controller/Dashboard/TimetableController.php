@@ -64,6 +64,11 @@ class TimetableController extends AbstractDashboardController {
     return $this->getDataToEditTimetable();
   }
 
+  protected function getDataToPublished()
+  {
+    return $this->getDataToPublishedTimetable();
+  }
+
   protected function handleCreate(array $data): void {
     $this->service->createTimetable($data);
   }
@@ -73,7 +78,8 @@ class TimetableController extends AbstractDashboardController {
   }
 
   protected function handleDelete(int $id): void {
-    $this->service->deleteTimetable($id);
+    $shouldNotify = !empty($this->request->getFormParam('is_notify'));
+    $this->service->deleteTimetable($id, $shouldNotify);
   }
 
   protected function handlePublish(array $data): void {

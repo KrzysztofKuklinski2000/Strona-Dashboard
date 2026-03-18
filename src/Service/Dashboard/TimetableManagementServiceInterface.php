@@ -41,7 +41,7 @@ interface TimetableManagementServiceInterface extends SharedGetDataServiceInterf
    * @param int $id ID posta do usunięcia.
    * @return void
    */
-  public function deleteTimetable(int $id): void;
+  public function deleteTimetable(int $id, bool $shouldNotify): void;
 
   /**
    * Zmienia pozycje wpisu.

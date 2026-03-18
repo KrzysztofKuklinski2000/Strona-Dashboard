@@ -51,5 +51,10 @@
     <input type="time" name="endTime" value="<?= $data['end'] ?? '' ?>">
   </label>
   <p class="validation-error"><?= $error['endTime'] ?? ""  ?></p>
+
+  <label>
+    <input type="checkbox" name="is_notify">
+    Powiadom
+  </label>
   <input type="submit" value="Zapisz">
 </form>

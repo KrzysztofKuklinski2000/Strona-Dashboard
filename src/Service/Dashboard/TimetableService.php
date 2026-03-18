@@ -28,26 +28,53 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
 
   public function updateTimetable(array $data): void
   {
+    $shouldNotify = !empty($data['is_notify']);
+
+    unset($data['is_notify']);
+    
     $this->edit(self::TABLE, $data);
-    $this->notify();
+    
+    if($shouldNotify){
+      $this->notify();  
+    }
+    
   }
 
   public function createTimetable(array $data): void
   {
+    $shouldNotify = !empty($data['is_notify']);
+
+    unset($data['is_notify']);
+    
     $this->create(self::TABLE, $data);
-    $this->notify();
+    
+    if($shouldNotify){
+      $this->notify();  
+    }
+    
   }
 
   public function publishedTimetable(array $data): void
   {
+    $shouldNotify = !empty($data['is_notify']);
+
+    unset($data['is_notify']);
+    
     $this->published(self::TABLE, $data);
-    $this->notify();
+    
+    if($shouldNotify){
+      $this->notify();  
+    }
   }
 
-  public function deleteTimetable(int $id): void
+  public function deleteTimetable(int $id, bool $shouldNotify): void
   {
+    
     $this->delete(self::TABLE, $id);
-    $this->notify();
+    
+    if($shouldNotify){
+      $this->notify();  
+    }
   }
 
   public function moveTimetable(array $data): void

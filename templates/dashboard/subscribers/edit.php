@@ -22,6 +22,5 @@ $errors = $params['flash_dashboard']['message'] ?? [];
     <input type="checkbox" name="is_active" value="1" <?= ( $data['is_active'] ?? 0 ) ? 'checked' : '' ?> >
     Subskrypcja aktywna
   </label>
- 
   <input type="submit" value="Zapisz">
 </form>

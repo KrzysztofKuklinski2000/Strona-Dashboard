@@ -22,11 +22,14 @@ trait GetDataMethods {
   }
 
   protected function getDataToPublished() {
+    
     return [
       'published' => $this->request->validate(param: 'postPublished', required: true),
       'id' => $this->request->validate(param: 'postId', required: true)
     ];
   }
+
+  
 
   protected function getPostDataToCreate(): array
   {
@@ -95,6 +98,7 @@ trait GetDataMethods {
       'place' => $this->request->validate(param: 'place', required: true, type:'string', maxLength:100),
       'start' => $this->request->validate(param: 'startTime', required: true, type:'string'),
       'end' => $this->request->validate(param: 'endTime', required: true, type:'string'),
+      'is_notify' => $this->request->getFormParam('is_notify')
     ];
   }
 
@@ -108,6 +112,16 @@ trait GetDataMethods {
       'place' => $this->request->validate(param: 'place', required: true, type:'string', maxLength:100),
       'start' => $this->request->validate(param: 'startTime', required: true, type:'string'),
       'end' => $this->request->validate(param: 'endTime', required: true, type:'string'),
+      'is_notify' => $this->request->getFormParam('is_notify')
+    ];
+  }
+
+  protected function getDataToPublishedTimetable() {
+    
+    return [
+      'published' => $this->request->validate(param: 'postPublished', required: true),
+      'id' => $this->request->validate(param: 'postId', required: true),
+      'is_notify' => $this->request->getFormParam('is_notify')
     ];
   }
 
