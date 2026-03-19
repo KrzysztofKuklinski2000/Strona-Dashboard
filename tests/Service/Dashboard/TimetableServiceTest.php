@@ -33,7 +33,7 @@ class TimetableServiceTest extends TestCase
     
     $observer->expects($this->once())->method('update');
 
-    $service->updateTimetable(['id' => 1, 'day' => 'WT']);
+    $service->updateTimetable(['id' => 1, 'day' => 'WT', 'is_notify' => true]);
   }
 
   public function testShouldCreateTimetable(): void
@@ -86,7 +86,7 @@ class TimetableServiceTest extends TestCase
     $this->repository->expects($this->once())->method('decrementPosition')->with('timetable', 5);
     $this->repository->expects($this->once())->method('commit');
 
-    $this->service->deleteTimetable($id);
+    $this->service->deleteTimetable($id, true);
   }
 
   public function testShouldMoveTimetableUp(): void
