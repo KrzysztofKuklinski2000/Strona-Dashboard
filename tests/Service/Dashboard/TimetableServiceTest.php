@@ -16,33 +16,76 @@ class TimetableServiceTest extends TestCase
 {
   private DashboardRepository | MockObject $repository;
   private TimetableService $service;
+  private TimetableObserverInterface | MockObject $observer;
 
   protected function setUp(): void
   {
     $this->repository = $this->createMock(DashboardRepository::class);
     $this->service = new TimetableService($this->repository);
+
+    $this->observer = $this->createMock(TimetableObserverInterface::class);
+    $this->service->attach($this->observer);
   }
 
-  public function testUpdateTimetableNotifiesObservers(): void
+  public function testShouldUpdateTimetableWithNotification(): void
   {
-    $repository = $this->createMock(DashboardRepository::class);
-    $observer = $this->createMock(TimetableObserverInterface::class);
+    // GIVEN
+    $data = ['id' => 1, 'day' => 'wtorek', 'is_notify' => true];
+    $expectedRepoData = ['id' => 1, 'day' => 'wtorek'];
 
-    $service = new TimetableService($repository);
-    $service->attach($observer);
-    
-    $observer->expects($this->once())->method('update');
+    // EXPECTS
+    $this->observer->expects($this->once())->method('update');
+    $this->repository->expects($this->once())->method('edit')->with('timetable', $expectedRepoData);
 
-    $service->updateTimetable(['id' => 1, 'day' => 'WT', 'is_notify' => true]);
+    // WHEN
+    $this->service->updateTimetable($data);
   }
 
-  public function testShouldCreateTimetable(): void
+  public function testShouldUpdateTimetableWithoutNotification(): void
   {
-    $data = ['day' => 'poniedziałek'];
+    // GIVEN
+    $data = ['id' => 1, 'day' => 'wtorek', 'is_notify' => false];
+    $expectedRepoData = ['id' => 1, 'day' => 'wtorek'];
+
+    // EXPECTS
+    $this->observer->expects($this->never())->method('update');
+    $this->repository->expects($this->once())->method('edit')->with('timetable', $expectedRepoData);
+
+    // WHEN
+    $this->service->updateTimetable($data);
+  }
+
+  public function testShouldCreateTimetableAndNotify(): void
+  {
+    // GIVEN
+    $data = ['day' => 'poniedziałek', 'is_notify' => true];
+    $expectedRepoData = ['day' => 'poniedziałek'];
+
+    // EXPECTS
+    $this->observer->expects($this->once())->method('update');
     $this->repository->expects($this->once())->method('beginTransaction');
     $this->repository->expects($this->once())->method('incrementPosition')->with('timetable');
-    $this->repository->expects($this->once())->method('create')->with($data, 'timetable');
+    $this->repository->expects($this->once())->method('create')->with($expectedRepoData, 'timetable');
     $this->repository->expects($this->once())->method('commit');
+
+    // WHEN
+    $this->service->createTimetable($data);
+  }
+
+  public function testShouldNotSendNotificationWhenCheckboxIsNotCheckedAndActionIsCreateTimetable(): void 
+  {
+    // GIVEN 
+    $data = ['day' => 'poniedziałek', 'is_notify' => false];
+    $expectedRepoData = ['day' => 'poniedziałek'];
+
+    // EXPECTS
+    $this->observer->expects($this->never())->method('update');
+    $this->repository->expects($this->once())->method('beginTransaction');
+    $this->repository->expects($this->once())->method('incrementPosition')->with('timetable');
+    $this->repository->expects($this->once())->method('create')->with($expectedRepoData, 'timetable');
+    $this->repository->expects($this->once())->method('commit');
+
+    // WHEN
     $this->service->createTimetable($data);
   }
 
@@ -61,32 +104,36 @@ class TimetableServiceTest extends TestCase
     $this->service->getAllTimetable();
   }
 
-  public function testShouldUpdateTimetable(): void
+  public function testShouldPublishTimetableAndNotify(): void
   {
-    $data = ['day' => 'wtorek'];
-    $this->repository->expects($this->once())->method('edit')->with('timetable', $data);
-    $this->service->updateTimetable($data);
-  }
+    // GIVEN
+    $data = ['id' => 1, 'status' => 1, 'is_notify' => true];
+    $expectedRepoData = ['id' => 1, 'status' => 1];
 
-  public function testShouldPublishTimetable(): void
-  {
-    $data = ['id' => 1, 'status' => 1];
-    $this->repository->expects($this->once())->method('published')->with($data, 'timetable');
+    // EXPECTS
+    $this->observer->expects($this->once())->method('update');
+    $this->repository->expects($this->once())->method('published')->with($expectedRepoData, 'timetable');
+
+    // WHEN
     $this->service->publishedTimetable($data);
   }
-
-  public function testShouldDeleteTimetable(): void
+  public function testShouldDeleteTimetableWithNotification(): void
   {
+    // GIVEN
     $id = 1;
+    $shouldNotify = true;
     $postData = ['id' => 1, 'position' => 5];
 
+    // EXPECTS
+    $this->observer->expects($this->once())->method('update');
     $this->repository->expects($this->once())->method('beginTransaction');
     $this->repository->expects($this->once())->method('getPost')->with($id, 'timetable')->willReturn($postData);
     $this->repository->expects($this->once())->method('delete')->with($id, 'timetable');
     $this->repository->expects($this->once())->method('decrementPosition')->with('timetable', 5);
     $this->repository->expects($this->once())->method('commit');
 
-    $this->service->deleteTimetable($id, true);
+    // WHEN
+    $this->service->deleteTimetable($id, $shouldNotify);
   }
 
   public function testShouldMoveTimetableUp(): void
