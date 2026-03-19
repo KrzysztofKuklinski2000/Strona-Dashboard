@@ -210,6 +210,25 @@ class TimetableControllerTest extends TestCase
     $this->assertEquals('city', $result['city']);
   }
 
+  public function testShouldReturnDataToPublishedWhenMethodGetDataToPublishedIsCalled(): void
+  {
+    // GIVEN 
+    $this->request->method('validate')
+      ->willReturnArgument(0);
+    $this->request->method('getFormParam')->willReturnArgument(0);
+
+    $method = new \ReflectionMethod(TimetableController::class, 'getDataToPublished');
+    $method->setAccessible(true);
+
+    // WHEN
+    $result = $method->invoke($this->controller);
+
+    // THEN
+    $this->assertEquals('postId', $result['id']);
+    $this->assertEquals('postPublished', $result['published']);
+    $this->assertEquals('is_notify', $result['is_notify']);
+  }
+
   public function testShouldReturnDataToCreateWhenMethodGetDataToCreateIsCalled(): void
   {
     // GIVEN 
