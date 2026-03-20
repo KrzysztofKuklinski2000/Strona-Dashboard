@@ -12,7 +12,7 @@ class Notifier {
     private SubscriberRepository $subscriberRepository
   ) {}
 
-  public function notifyAboutTimetableUpdate(): void
+  public function notifyAboutTimetableUpdate(string $customMessage): void
   {
     $subscribers = $this->subscriberRepository->getActiveEmails();
 

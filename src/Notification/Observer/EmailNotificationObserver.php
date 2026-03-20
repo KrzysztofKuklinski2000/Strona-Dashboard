@@ -8,7 +8,7 @@ class EmailNotificationObserver implements TimetableObserverInterface {
 
   public function __construct(private Notifier $notification){}
 
-  public function update(): void {
-    $this->notification->notifyAboutTimetableUpdate();
+  public function update(string $customMessage = ''): void {
+    $this->notification->notifyAboutTimetableUpdate($customMessage);
   }
 }

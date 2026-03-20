@@ -35,7 +35,7 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
     $this->edit(self::TABLE, $data);
     
     if($shouldNotify){
-      $this->notify();  
+      $this->notify("Wprowadziliśmy zmiany w istniejącym grafiku treningów. Odwiedz strone aby zobaczyć zmiany!");  
     }
     
   }
@@ -49,7 +49,7 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
     $this->create(self::TABLE, $data);
     
     if($shouldNotify){
-      $this->notify();  
+      $this->notify("Do grafiku dodano nowe zajęcia! Sprawdź szczegóły na stronie.");  
     }
     
   }
@@ -63,7 +63,7 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
     $this->published(self::TABLE, $data);
     
     if($shouldNotify){
-      $this->notify();  
+      $this->notify("Grafik został zaktualizowany. Odwiedz strone aby zobaczyć zmiany!");  
     }
   }
 
@@ -73,7 +73,7 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
     $this->delete(self::TABLE, $id);
     
     if($shouldNotify){
-      $this->notify();  
+      $this->notify("Pewne zajęcia zostały usunięte z grafiku. Odwiedz strone aby zobaczyć zmiany!");  
     }
   }
 

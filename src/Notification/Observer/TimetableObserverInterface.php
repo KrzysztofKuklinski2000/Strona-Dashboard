@@ -3,5 +3,5 @@
 namespace App\Notification\Observer;
 
 interface TimetableObserverInterface {
-  public function update(): void;
+  public function update(string $customMessage = ''): void;
 }

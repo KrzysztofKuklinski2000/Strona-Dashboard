@@ -13,10 +13,10 @@ trait Observable {
     $this->observers[] = $observer;
   }
 
-  private function notify(): void
+  private function notify(string $customMessage): void
   {
     foreach ($this->observers as $observer) {
-      $observer->update();
+      $observer->update($customMessage);
     }
   }
 }
