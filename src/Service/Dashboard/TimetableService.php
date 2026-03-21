@@ -28,43 +28,35 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
 
   public function updateTimetable(array $data): void
   {
-    $shouldNotify = !empty($data['is_notify']);
+    $this->handleActionWithNotification(
+      $data, 
+      "Wprowadziliśmy zmiany w istniejącym grafiku treningów. Odwiedz strone aby zobaczyć zmiany!", 
+      function($cleanData){
 
-    unset($data['is_notify']);
-    
-    $this->edit(self::TABLE, $data);
-    
-    if($shouldNotify){
-      $this->notify("Wprowadziliśmy zmiany w istniejącym grafiku treningów. Odwiedz strone aby zobaczyć zmiany!");  
-    }
-    
+      $this->edit(self::TABLE, $cleanData);
+    });
   }
 
   public function createTimetable(array $data): void
   {
-    $shouldNotify = !empty($data['is_notify']);
+    $this->handleActionWithNotification(
+      $data, 
+      "Do grafiku dodano nowe zajęcia! Sprawdź szczegóły na stronie.", 
+      function($cleanData){
 
-    unset($data['is_notify']);
-    
-    $this->create(self::TABLE, $data);
-    
-    if($shouldNotify){
-      $this->notify("Do grafiku dodano nowe zajęcia! Sprawdź szczegóły na stronie.");  
-    }
-    
+      $this->create(self::TABLE, $cleanData);
+    });
   }
 
   public function publishedTimetable(array $data): void
   {
-    $shouldNotify = !empty($data['is_notify']);
+    $this->handleActionWithNotification(
+      $data, 
+      "Grafik został zaktualizowany. Odwiedz strone aby zobaczyć zmiany!", 
+      function($cleanData){
 
-    unset($data['is_notify']);
-    
-    $this->published(self::TABLE, $data);
-    
-    if($shouldNotify){
-      $this->notify("Grafik został zaktualizowany. Odwiedz strone aby zobaczyć zmiany!");  
-    }
+      $this->published(self::TABLE, $cleanData);
+    });
   }
 
   public function deleteTimetable(int $id, bool $shouldNotify): void
@@ -74,6 +66,18 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
     
     if($shouldNotify){
       $this->notify("Pewne zajęcia zostały usunięte z grafiku. Odwiedz strone aby zobaczyć zmiany!");  
+    }
+  }
+
+  private function handleActionWithNotification(array $data, string $message, callable $action): void {
+    $shouldNotify = !empty($data['is_notify']);
+
+    unset($data['is_notify']);
+    
+    $action($data);
+    
+    if($shouldNotify){
+      $this->notify($message);  
     }
   }
 
