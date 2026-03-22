@@ -37,7 +37,7 @@ class Notifier {
   }
 
   public function sendConfirmationEmail(string $email, string $token): void {
-    $subject = "Potwierdź zapis do newslettera - Karate Kyokushin";
+    $subject = "Potwierdź zapis do aktualności - Karate Kyokushin";
     $confirmUrl = "http://localhost:8000/confirm-subscription?token=" . $token;
 
     ob_start();

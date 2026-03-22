@@ -44,7 +44,7 @@ class NotifierTest extends TestCase
       );
 
     // WHEN 
-    $this->notifier->notifyAboutTimetableUpdate();
+    $this->notifier->notifyAboutTimetableUpdate('test');
   }
 
   public function testShouldNotSendEmailsIfSubscriberListIsEmpty(): void
@@ -56,7 +56,7 @@ class NotifierTest extends TestCase
     $this->mailer->expects($this->never())->method('send');
 
     // WHEN
-    $this->notifier->notifyAboutTimetableUpdate();
+    $this->notifier->notifyAboutTimetableUpdate('test');
   }
 
   public function testShouldSendConfirmationEmailWithCorrectTokenAndLink(): void
@@ -64,7 +64,7 @@ class NotifierTest extends TestCase
         // GIVEN
         $email = 'nowy@uzytkownik.pl';
         $token = 'super-tajny-token-123';
-        $expectedSubject = 'Potwierdź zapis do newslettera - Karate Kyokushin';
+        $expectedSubject = 'Potwierdź zapis do aktualności - Karate Kyokushin';
         
         // EXPECTS
         $this->mailer->expects($this->once())
