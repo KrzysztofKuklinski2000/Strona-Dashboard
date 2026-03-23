@@ -4,9 +4,18 @@ namespace App\Service\Dashboard;
 
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
+use App\Repository\Dashboard\TimetableRepository;
+use App\Repository\DashboardRepository;
 use App\Traits\Observable;
 
 class TimetableService extends AbstractDashboardService implements TimetableManagementServiceInterface {
+
+  public function __construct(
+    protected DashboardRepository $repository,
+    private TimetableRepository $timetableRepository
+  ) {
+    return parent::__construct($repository);
+  }
 
   use Observable;
 
@@ -15,7 +24,7 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
   private function timetablePageData(): array
   {
     try {
-      return $this->repository->timetablePageData();
+      return $this->timetableRepository->timetablePageData();
     } catch (RepositoryException $e) {
       throw new ServiceException("Nie udało się pobrać grafiku", 500, $e);
     }

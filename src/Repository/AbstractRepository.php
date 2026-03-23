@@ -11,8 +11,6 @@ use PDOStatement;
 
 
 class AbstractRepository {
-  private const ALLOWED_TABLES = ['news', 'contact', 'fees', 'camp', 'user', 'timetable', 'important_posts', 'main_page_posts', 'gallery', 'subscribers'];
-
   public function __construct(protected PDO $con) {}
 
   public function runQuery(string $sql, array $params = []): PDOStatement
@@ -45,37 +43,5 @@ class AbstractRepository {
       return $this->con->rollback();
     }
     return false;
-  }
-
-
-
-  protected function validateTable(string $table): string
-  {
-    
-    if (!in_array($table, self::ALLOWED_TABLES)) {
-      throw new RepositoryException("Nie ma takiej tabeli", 400);
-    }
-
-    return $table;
-  }
-
-  public function timetablePageData(): array
-  {
-    try {
-      $sql = "
-				SELECT * FROM timetable ORDER BY 
-					CASE 
-						WHEN day = 'PON' THEN 1
-						WHEN day = 'WT' THEN 2
-						WHEN day = 'ŚR' THEN 3
-						WHEN day = 'CZW' THEN 4
-						WHEN day = 'PT' THEN 5
-						WHEN day = 'SOB' THEN 6
-					END ASC, start ASC";
-
-      return $this->runQuery($sql)->fetchAll(PDO::FETCH_ASSOC);
-    } catch (RepositoryException $e) {
-      throw new RepositoryException('Nie udało się pobrać danych grafiku.', 500, $e);
-    }
   }
 }

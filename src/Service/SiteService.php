@@ -4,10 +4,14 @@ namespace App\Service;
 
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
+use App\Repository\Dashboard\TimetableRepository;
 use App\Repository\SiteRepository;
 
 class SiteService {
-    public function __construct(public SiteRepository $siteRepository) {}
+    public function __construct(
+        private SiteRepository $siteRepository,
+        private TimetableRepository $timetableRepository,
+        ) {}
 
     public function getNews(int $page, int $perPage = 10): array {
         try {
@@ -47,7 +51,7 @@ class SiteService {
         }
     }
 
-    public function getGallery(string $category = null): array {
+    public function getGallery(?string $category = null): array {
         try {
             return $this->siteRepository->getGallery($category);
         }catch(RepositoryException $e) {
@@ -57,7 +61,7 @@ class SiteService {
 
     public function getTimetable(): array {
         try {
-            return $this->siteRepository->timetablePageData();
+            return $this->timetableRepository->timetablePageData();
         }catch(RepositoryException $e) {
             throw new ServiceException("Nie udało się pobrać grafiku",500, $e);
         }

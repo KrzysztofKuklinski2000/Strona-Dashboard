@@ -8,7 +8,6 @@ class SiteRepository extends AbstractRepository {
 
     public function getData(string $table):array {
         try {
-            $this->validateTable($table);
             $sql = "SELECT * FROM $table WHERE status = 1 ORDER BY position ASC";
             return $this->runQuery($sql)->fetchAll(PDO::FETCH_ASSOC);
         }catch (RepositoryException $e) {
@@ -18,7 +17,6 @@ class SiteRepository extends AbstractRepository {
 
     public function getSingleRecord(string $table):array {
         try {
-            $this->validateTable($table);
             $sql = "SELECT * FROM $table";
             return $this->runQuery($sql)->fetch(PDO::FETCH_ASSOC);
         }catch (RepositoryException $e) {
@@ -39,7 +37,7 @@ class SiteRepository extends AbstractRepository {
         }
     }
 
-    public function getGallery(string $category = null): array {
+    public function getGallery(?string $category = null): array {
         try {
             $sql = "SELECT * FROM gallery WHERE status = 1";
             $params = [];

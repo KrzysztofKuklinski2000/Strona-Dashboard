@@ -5,6 +5,7 @@ namespace App\Factories\ServiceFactories\Dashboard;
 use App\Factories\ServiceFactories\Notification\NotifierFactory;
 use App\Factories\ServiceFactories\ServiceFactoryInterface;
 use App\Notification\Observer\EmailNotificationObserver;
+use App\Repository\Dashboard\TimetableRepository;
 use App\Repository\DashboardRepository;
 use App\Service\Dashboard\TimetableService;
 use PDO;
@@ -16,7 +17,8 @@ class TimetableServiceFactory implements ServiceFactoryInterface
   public function createService(): TimetableService
   {
     $repository = new DashboardRepository($this->pdo);
-    $timetableService = new TimetableService($repository);
+    $timetableRepository = new TimetableRepository($this->pdo);
+    $timetableService = new TimetableService($repository, $timetableRepository);
 
 
     $notifier = (new NotifierFactory($this->pdo))->createService();
