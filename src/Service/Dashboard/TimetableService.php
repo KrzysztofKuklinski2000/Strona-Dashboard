@@ -89,9 +89,4 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
       $this->notify($message);  
     }
   }
-
-  public function moveTimetable(array $data): void
-  {
-    $this->move(self::TABLE, $data);
-  }
 }

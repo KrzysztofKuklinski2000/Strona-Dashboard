@@ -3,10 +3,9 @@
 namespace App\Repository\Dashboard;
 
 use App\Exception\RepositoryException;
-use App\Repository\AbstractRepository;
 use PDO;
 
-class TimetableRepository extends AbstractRepository {
+class TimetableRepository extends BaseDashboardRepository {
     public function timetablePageData(): array
     {
         try {

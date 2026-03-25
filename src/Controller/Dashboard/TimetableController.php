@@ -85,8 +85,4 @@ class TimetableController extends AbstractDashboardController {
   protected function handlePublish(array $data): void {
     $this->service->publishedTimetable($data);
   }
-
-  protected function handleMove(array $data): void {
-    $this->service->moveTimetable($data);
-  }
 }

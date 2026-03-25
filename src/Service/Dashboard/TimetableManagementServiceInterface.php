@@ -42,11 +42,4 @@ interface TimetableManagementServiceInterface extends SharedGetDataServiceInterf
    * @return void
    */
   public function deleteTimetable(int $id, bool $shouldNotify): void;
-
-  /**
-   * Zmienia pozycje wpisu.
-   * @param array $data Dane posta z formularza.
-   * @return void
-   */
-  public function moveTimetable(array $data): void;
 }
