@@ -21,14 +21,14 @@ trait PositionableTrait
         }, "Błąd zmiany pozycji");
     }
 
-    protected function createWithPosition(string $table, array $data): void {
+    protected function create(string $table, array $data): void {
         $this->execute(function () use ($table, $data) {
             $this->repository->incrementPosition($table);
             $this->repository->create($table, $data);
         }, "Błąd tworzenia pozycji");
     }
 
-    protected function deleteWithPosition(string $table, int $id):void {
+    protected function delete(string $table, int $id):void {
         $this->execute(function () use ($table, $id) {
             $currentPost = $this->repository->getPost($id, $table);
             $this->repository->delete($id, $table);

@@ -14,10 +14,10 @@ abstract class AbstractDashboardService implements SharedGetDataServiceInterface
      * @throws ServiceException
      * @throws NotFoundException
      */
-    public function getPost(int $id, string $table): ?array
+    public function getPost(string $table, int $id): ?array
   {
     try {
-      return $this->repository->getPost($id, $table);
+      return $this->repository->getPost($table, $id);
     } catch (RepositoryException $e) {
       throw new ServiceException("Nie udało się pobrać posta", 500, $e);
     }

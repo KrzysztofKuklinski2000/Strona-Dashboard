@@ -20,7 +20,7 @@ class BaseDashboardRepository extends AbstractRepository {
 		}
 	}
 
-    public function getPost(int $id, string $table): array {
+    public function getPost(string $table, int $id): array {
 		try {
 			$result = $this->runQuery("SELECT * FROM $table WHERE id = :id", [':id' => $id])->fetch(PDO::FETCH_ASSOC);
 		} catch (RepositoryException $e) {
@@ -48,7 +48,7 @@ class BaseDashboardRepository extends AbstractRepository {
 		}
     }
 
-    public function delete(int $id, string $table) {
+    public function delete(string $table, int $id) {
 		try {
 			$this->runQuery("DELETE FROM $table WHERE id = :id", [":id" => $id]);
 		} catch (RepositoryException $e) {
@@ -56,7 +56,7 @@ class BaseDashboardRepository extends AbstractRepository {
 		}
 	}
 
-	public function create(array $data, string $table): void {
+	public function create(string $table, array $data ): void {
 		try {
 			$col = implode(", ", array_map(fn($k) => "$k", array_filter(array_keys($data), fn($k) => $k !== "id")));
 			$val = implode(", ", array_map(fn($k) => ":$k", array_filter(array_keys($data), fn($k) => $k !== "id")));
@@ -70,7 +70,7 @@ class BaseDashboardRepository extends AbstractRepository {
 		}
 	}
 
-    public function published(array $data, string $table) {
+    public function published(string $table, array $data) {
 		try {
 			$this->runQuery("UPDATE $table SET status = :published WHERE id = :id", [
 				':published' => $data['published'],

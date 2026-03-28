@@ -4,9 +4,9 @@ namespace App\Service\Dashboard\Traits;
 
 trait CanDelete
 {
-    protected function simpleDelete(string $table, int $id): void
+    protected function delete(string $table, int $id): void
     {
-        $this->execute(fn() => $this->repository->delete($id, $table),
+        $this->execute(fn() => $this->repository->delete($table, $id),
             "Nie udało się usunąć"
         );
     }

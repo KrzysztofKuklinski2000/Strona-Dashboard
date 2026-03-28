@@ -195,6 +195,6 @@ abstract class AbstractDashboardController extends AbstractController {
     }
 
     $postId = (int) $postId;
-    return $this->dataService->getPost($postId, $this->getTableName());
+    return $this->dataService->getPost($this->getTableName(), $postId);
   }
 }
