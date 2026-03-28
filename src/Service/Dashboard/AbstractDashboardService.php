@@ -6,7 +6,6 @@ use App\Exception\NotFoundException;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\BaseDashboardRepository;
-
 abstract class AbstractDashboardService implements SharedGetDataServiceInterface {
   public function __construct(protected BaseDashboardRepository $repository) {}
 
