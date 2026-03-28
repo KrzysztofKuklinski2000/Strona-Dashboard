@@ -2,6 +2,7 @@
 
 namespace App\Service\Dashboard;
 
+use App\Exception\NotFoundException;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\DashboardRepository;
@@ -11,7 +12,11 @@ abstract class AbstractDashboardService implements SharedGetDataServiceInterface
 
   public function __construct(protected DashboardRepository $repository) {}
 
-  public function getPost(int $id, string $table): ?array
+    /**
+     * @throws ServiceException
+     * @throws NotFoundException
+     */
+    public function getPost(int $id, string $table): ?array
   {
     try {
       return $this->repository->getPost($id, $table);
@@ -20,13 +25,30 @@ abstract class AbstractDashboardService implements SharedGetDataServiceInterface
     }
   }
 
-  protected function getAll(string $table): array
+    /**
+     * @throws ServiceException
+     */
+    protected function getAll(string $table): array
   {
     try {
       return $this->repository->getDashboardData($table);
     } catch (RepositoryException $e) {
       throw new ServiceException("Nie udało się pobrać postów", 500, $e);
     }
+  }
+
+    /**
+     * @throws ServiceException
+     */
+    protected function execute(callable $action, string $errorMessage): void {
+      try {
+          $this->repository->beginTransaction();
+          $action();
+          $this->repository->commit();
+      } catch(RepositoryException $e) {
+          $this->repository->rollBack();
+          throw new ServiceException($errorMessage, 500, $e);
+      }
   }
 
   protected function create(string $table, array $data): void
