@@ -6,7 +6,7 @@ trait PositionableTrait
 {
     protected function move(string $table, array $data): void {
         $this->execute(function () use ($table, $data) {
-            $current = $this->repository->getPost($data['id'], $table);
+            $current = $this->repository->getPost($table, $data['id']);
 
             $targetPos = $data['dir'] === 'up' ? (int) $current['position'] - 1 : (int) $current['position'] + 1;
             $stmt = $this->repository->getPostByPosition(
@@ -30,8 +30,8 @@ trait PositionableTrait
 
     protected function delete(string $table, int $id):void {
         $this->execute(function () use ($table, $id) {
-            $currentPost = $this->repository->getPost($id, $table);
-            $this->repository->delete($id, $table);
+            $currentPost = $this->repository->getPost($table, $id);
+            $this->repository->delete($table, $id);
             $this->repository->decrementPosition($table, (int) $currentPost['position']);
         }, "Błąd usuwania pozycji");
     }
