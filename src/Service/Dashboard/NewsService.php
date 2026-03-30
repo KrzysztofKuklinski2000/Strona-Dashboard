@@ -2,16 +2,28 @@
 
 namespace App\Service\Dashboard;
 
+use App\Exception\ServiceException;
+use App\Service\Dashboard\Traits\CanEdit;
+use App\Service\Dashboard\Traits\CanPublished;
+use App\Service\Dashboard\Traits\PositionableTrait;
+
 class NewsService extends AbstractDashboardService implements NewsManagementServiceInterface
 {
+    use PositionableTrait, CanPublished, CanEdit;
   private const TABLE = 'news';
 
-  public function getAllNews(): array
+    /**
+     * @throws ServiceException
+     */
+    public function getAllNews(): array
   {
     return $this->getAll(self::TABLE);
   }
 
-  public function updateNews(array $data): void
+    /**
+     * @throws ServiceException
+     */
+    public function updateNews(array $data): void
   {
     $this->edit(self::TABLE, $data);
   }
@@ -21,7 +33,10 @@ class NewsService extends AbstractDashboardService implements NewsManagementServ
     $this->create(self::TABLE, $data);
   }
 
-  public function publishedNews(array $data): void
+    /**
+     * @throws ServiceException
+     */
+    public function publishedNews(array $data): void
   {
     $this->published(self::TABLE, $data);
   }
