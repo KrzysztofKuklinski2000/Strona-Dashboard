@@ -2,7 +2,8 @@
 
 namespace App\Repository\Dashboard;
 
-class NewsRepository extends BaseDashboardRepository
+
+class ImportantPostsRepository extends BaseDashboardRepository
 {
     use Positionable;
 }

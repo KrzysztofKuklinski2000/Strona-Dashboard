@@ -31,9 +31,9 @@ class AuthController extends AbstractController {
 
     if ($this->request->hasPost()) {
       try {
-				$this->csrfMiddleware->verify('admin');
-        $login = $this->request->getFormParam('login');
-        $password = $this->request->getFormParam('password');
+          $this->csrfMiddleware->verify('admin');
+          $login = $this->request->getFormParam('login');
+          $password = $this->request->getFormParam('password');
 
         $errors = $this->authService->login($login, $password);
 

@@ -2,16 +2,29 @@
 
 namespace App\Service\Dashboard;
 
+use App\Exception\ServiceException;
+
+use App\Service\Dashboard\Traits\CanEdit;
+use App\Service\Dashboard\Traits\CanPublished;
+use App\Service\Dashboard\Traits\PositionableTrait;
+
 class ImportantPostsService extends AbstractDashboardService implements ImportantPostsManagementServiceInterface
 {
+    use PositionableTrait, CanPublished, CanEdit;
   private const TABLE = 'important_posts';
 
-  public function getAllImportantPosts(): array
+    /**
+     * @throws ServiceException
+     */
+    public function getAllImportantPosts(): array
   {
     return $this->getAll(self::TABLE);
   }
 
-  public function updateImportantPost(array $data): void
+    /**
+     * @throws ServiceException
+     */
+    public function updateImportantPost(array $data): void
   {
     $this->edit(self::TABLE, $data);
   }
@@ -21,7 +34,10 @@ class ImportantPostsService extends AbstractDashboardService implements Importan
     $this->create(self::TABLE, $data);
   }
 
-  public function publishedImportantPost(array $data): void
+    /**
+     * @throws ServiceException
+     */
+    public function publishedImportantPost(array $data): void
   {
     $this->published(self::TABLE, $data);
   }

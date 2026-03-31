@@ -3,7 +3,7 @@
 namespace App\Factories\ServiceFactories\Dashboard;
 
 use App\Factories\ServiceFactories\ServiceFactoryInterface;
-use App\Repository\DashboardRepository;
+use App\Repository\Dashboard\ImportantPostsRepository;
 use App\Service\Dashboard\ImportantPostsService;
 use PDO;
 
@@ -13,7 +13,7 @@ class ImportantPostsServiceFactory implements ServiceFactoryInterface
 
   public function createService(): ImportantPostsService
   {
-    $repository = new DashboardRepository($this->pdo);
+    $repository = new ImportantPostsRepository($this->pdo);
 
     return new ImportantPostsService($repository);
   }

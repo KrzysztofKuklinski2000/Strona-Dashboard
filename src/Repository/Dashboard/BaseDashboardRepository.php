@@ -9,7 +9,11 @@ use PDO;
 
 class BaseDashboardRepository extends AbstractRepository {
 
-    public function getDashboardData(string $table) {
+    /**
+     * @throws RepositoryException
+     */
+    public function getDashboardData(string $table): array
+    {
 		try {
 			$sql = "SELECT * FROM $table";
 			if(!in_array($table, ['contact', 'fees', 'camp', 'subscribers'])) $sql .= " ORDER BY position ASC";
@@ -20,6 +24,10 @@ class BaseDashboardRepository extends AbstractRepository {
 		}
 	}
 
+    /**
+     * @throws RepositoryException
+     * @throws NotFoundException
+     */
     public function getPost(string $table, int $id): array {
 		try {
 			$result = $this->runQuery("SELECT * FROM $table WHERE id = :id", [':id' => $id])->fetch(PDO::FETCH_ASSOC);
@@ -35,6 +43,9 @@ class BaseDashboardRepository extends AbstractRepository {
 		return $result;
 	}
 
+    /**
+     * @throws RepositoryException
+     */
     public function edit(string $table, array $data):void {
 		try {
 			$sql = "UPDATE $table SET ". implode(", ", array_map(fn($k) => "$k = :$k", array_filter(array_keys($data), fn($k)=> $k !== "id")));
@@ -48,7 +59,8 @@ class BaseDashboardRepository extends AbstractRepository {
 		}
     }
 
-    public function delete(string $table, int $id) {
+    public function delete(string $table, int $id): void
+    {
 		try {
 			$this->runQuery("DELETE FROM $table WHERE id = :id", [":id" => $id]);
 		} catch (RepositoryException $e) {
@@ -56,7 +68,10 @@ class BaseDashboardRepository extends AbstractRepository {
 		}
 	}
 
-	public function create(string $table, array $data ): void {
+    /**
+     * @throws RepositoryException
+     */
+    public function create(string $table, array $data ): void {
 		try {
 			$col = implode(", ", array_map(fn($k) => "$k", array_filter(array_keys($data), fn($k) => $k !== "id")));
 			$val = implode(", ", array_map(fn($k) => ":$k", array_filter(array_keys($data), fn($k) => $k !== "id")));
@@ -70,7 +85,11 @@ class BaseDashboardRepository extends AbstractRepository {
 		}
 	}
 
-    public function published(string $table, array $data) {
+    /**
+     * @throws RepositoryException
+     */
+    public function published(string $table, array $data): void
+    {
 		try {
 			$this->runQuery("UPDATE $table SET status = :published WHERE id = :id", [
 				':published' => $data['published'],
