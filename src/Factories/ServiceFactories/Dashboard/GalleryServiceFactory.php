@@ -4,7 +4,7 @@ namespace App\Factories\ServiceFactories\Dashboard;
 
 use App\Core\FileHandler;
 use App\Factories\ServiceFactories\ServiceFactoryInterface;
-use App\Repository\DashboardRepository;
+use App\Repository\Dashboard\GalleryRepository;
 use App\Service\Dashboard\GalleryService;
 use PDO;
 
@@ -15,7 +15,7 @@ class GalleryServiceFactory implements ServiceFactoryInterface
   public function createService(): GalleryService
   {
     $fileHandler = new FileHandler();
-    $repository = new DashboardRepository($this->pdo);
+    $repository = new GalleryRepository($this->pdo);
 
     return new GalleryService($repository, $fileHandler);
   }

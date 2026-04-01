@@ -13,14 +13,13 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
     use Observable;
     use StandardCrudTrait;
 
+    private const TABLE = 'timetable';
+
     public function __construct(
         private readonly TimetableRepository $timetableRepository
     ) {
         parent::__construct($timetableRepository);
     }
-
-
-    private const TABLE = 'timetable';
 
     /**
      * @throws ServiceException

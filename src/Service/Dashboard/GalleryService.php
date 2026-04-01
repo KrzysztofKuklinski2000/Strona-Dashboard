@@ -6,20 +6,27 @@ use App\Core\FileHandler;
 use App\Exception\FileException;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
-use App\Repository\DashboardRepository;
+use App\Repository\Dashboard\GalleryRepository;
+use App\Service\Dashboard\Traits\CanEdit;
+use App\Service\Dashboard\Traits\CanPublished;
+use App\Service\Dashboard\Traits\PositionableTrait;
 
 class GalleryService extends AbstractDashboardService implements GalleryManagementServiceInterface
 {
+    use PositionableTrait, CanPublished , CanEdit;
   private const TABLE = 'gallery';
 
   public function __construct(
-    DashboardRepository $repository,
-    private FileHandler $fileHandler
+    GalleryRepository $repository,
+    private readonly FileHandler $fileHandler
   ) {
     parent::__construct($repository);
   }
 
-  private function addImage(array $data): void
+    /**
+     * @throws ServiceException
+     */
+    private function addImage(array $data): void
   {
     try {
       $this->repository->beginTransaction();
@@ -34,22 +41,34 @@ class GalleryService extends AbstractDashboardService implements GalleryManageme
     }
   }
 
-  public function getAllGallery(): array
+    /**
+     * @throws ServiceException
+     */
+    public function getAllGallery(): array
   {
     return $this->getAll(self::TABLE);
   }
 
-  public function updateGallery(array $data): void
+    /**
+     * @throws ServiceException
+     */
+    public function updateGallery(array $data): void
   {
     $this->edit(self::TABLE, $data);
   }
 
-  public function createGallery(array $data): void
+    /**
+     * @throws ServiceException
+     */
+    public function createGallery(array $data): void
   {
     $this->addImage($data);
   }
 
-  public function publishedGallery(array $data): void
+    /**
+     * @throws ServiceException
+     */
+    public function publishedGallery(array $data): void
   {
     $this->published(self::TABLE, $data);
   }
