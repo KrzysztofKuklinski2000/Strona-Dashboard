@@ -3,7 +3,7 @@
 namespace App\Factories\ServiceFactories\Dashboard;
 
 use App\Factories\ServiceFactories\ServiceFactoryInterface;
-use App\Repository\DashboardRepository;
+use App\Repository\Dashboard\ContactRepository;
 use App\Service\Dashboard\ContactService;
 use PDO;
 
@@ -13,7 +13,7 @@ class ContactServiceFactory implements ServiceFactoryInterface
 
   public function createService(): ContactService
   {
-    $repository = new DashboardRepository($this->pdo);
+    $repository = new ContactRepository($this->pdo);
 
     return new ContactService($repository);
   }

@@ -2,16 +2,28 @@
 
 namespace App\Service\Dashboard;
 
-class ContactService extends AbstractDashboardService implements ContactManagementServiceInterface {
-  private const TABLE = 'contact';
+use App\Exception\ServiceException;
+use App\Service\Dashboard\Traits\CanEdit;
 
-  public function updateContact(array $data): void
-  {
-    $this->edit(self::TABLE, $data);
-  }
+class ContactService extends AbstractDashboardService implements ContactManagementServiceInterface
+{
+    use CanEdit;
 
-  public function getContact(): array
-  {
-    return $this->getAll(self::TABLE)[0];
-  }
+    private const TABLE = 'contact';
+
+    /**
+     * @throws ServiceException
+     */
+    public function updateContact(array $data): void
+    {
+        $this->edit(self::TABLE, $data);
+    }
+
+    /**
+     * @throws ServiceException
+     */
+    public function getContact(): array
+    {
+        return $this->getAll(self::TABLE)[0];
+    }
 }
