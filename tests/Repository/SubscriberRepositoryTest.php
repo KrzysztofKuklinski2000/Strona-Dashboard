@@ -3,7 +3,7 @@
 namespace Tests\Repository;
 
 use App\Exception\RepositoryException;
-use App\Repository\SubscriberRepository;
+use App\Repository\Dashboard\SubscriberRepository;
 use PDO;
 use PHPUnit\Framework\TestCase;
 

@@ -2,8 +2,9 @@
 
 namespace App\Notification;
 
+use App\Exception\RepositoryException;
 use App\Notification\Email\Mailer;
-use App\Repository\SubscriberRepository;
+use App\Repository\Dashboard\SubscriberRepository;
 
 
 class Notifier {
@@ -12,7 +13,10 @@ class Notifier {
     private SubscriberRepository $subscriberRepository
   ) {}
 
-  public function notifyAboutTimetableUpdate(string $customMessage): void
+    /**
+     * @throws RepositoryException
+     */
+    public function notifyAboutTimetableUpdate(string $customMessage): void
   {
     $subscribers = $this->subscriberRepository->getActiveEmails();
 

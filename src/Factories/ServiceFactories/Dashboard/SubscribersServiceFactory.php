@@ -3,7 +3,7 @@
 namespace App\Factories\ServiceFactories\Dashboard;
 
 use App\Factories\ServiceFactories\ServiceFactoryInterface;
-use App\Repository\DashboardRepository;
+use App\Repository\Dashboard\SubscriberRepository;
 use App\Service\Dashboard\SubscribersService;
 use PDO;
 
@@ -13,7 +13,7 @@ class SubscribersServiceFactory implements ServiceFactoryInterface
 
   public function createService(): SubscribersService
   {
-    $repository = new DashboardRepository($this->pdo);
+    $repository = new SubscriberRepository($this->pdo);
 
     return new SubscribersService($repository);
   }

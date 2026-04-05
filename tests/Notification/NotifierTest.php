@@ -4,7 +4,7 @@ namespace Test\Notification;
 
 use App\Notification\Email\Mailer;
 use App\Notification\Notifier;
-use App\Repository\SubscriberRepository;
+use App\Repository\Dashboard\SubscriberRepository;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

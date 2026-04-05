@@ -4,7 +4,7 @@ namespace App\Factories\ServiceFactories\Notification;
 
 use App\Factories\ServiceFactories\ServiceFactoryInterface;
 use App\Notification\Notifier;
-use App\Repository\SubscriberRepository;
+use App\Repository\Dashboard\SubscriberRepository;
 use PDO;
 
 class NotifierFactory implements ServiceFactoryInterface {
