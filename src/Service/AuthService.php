@@ -10,6 +10,9 @@ class AuthService {
 
     public function __construct(public AuthRepository $authRepository) {}
 
+    /**
+     * @throws ServiceException
+     */
     public function login(string $login, string $password):array {
         $errors = [];
         try {

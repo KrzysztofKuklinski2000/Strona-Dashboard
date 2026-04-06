@@ -8,6 +8,8 @@ use App\Middleware\CsrfMiddleware;
 use App\Notification\Notifier;
 use App\Service\Dashboard\SubscribersService;
 use App\View;
+use EasyCSRF\Exceptions\InvalidCsrfTokenException;
+use Random\RandomException;
 
 class PublicSubscribersController extends AbstractController {
     public function __construct(
@@ -20,6 +22,10 @@ class PublicSubscribersController extends AbstractController {
         parent::__construct($request, $view);
     }
 
+    /**
+     * @throws InvalidCsrfTokenException
+     * @throws RandomException
+     */
     public function subscribeAction(): void {
         $this->csrfMiddleware->verify('public');
 

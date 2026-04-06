@@ -9,10 +9,13 @@ use App\Repository\SiteRepository;
 
 class SiteService {
     public function __construct(
-        private SiteRepository $siteRepository,
-        private TimetableRepository $timetableRepository,
+        private readonly SiteRepository      $siteRepository,
+        private readonly TimetableRepository $timetableRepository,
         ) {}
 
+    /**
+     * @throws ServiceException
+     */
     public function getNews(int $page, int $perPage = 10): array {
         try {
             $totalPages = ceil($this->siteRepository->countData('news') / $perPage);
@@ -30,6 +33,9 @@ class SiteService {
         }
     }
 
+    /**
+     * @throws ServiceException
+     */
     public function getFrontPage(): array {
         try {
             $firstPost = [];
@@ -51,6 +57,9 @@ class SiteService {
         }
     }
 
+    /**
+     * @throws ServiceException
+     */
     public function getGallery(?string $category = null): array {
         try {
             return $this->siteRepository->getGallery($category);
@@ -59,6 +68,9 @@ class SiteService {
         }
     }
 
+    /**
+     * @throws ServiceException
+     */
     public function getTimetable(): array {
         try {
             return $this->timetableRepository->timetablePageData();
@@ -67,6 +79,9 @@ class SiteService {
         }
     }
 
+    /**
+     * @throws ServiceException
+     */
     public function getContact(): array {
         try {
             return $this->siteRepository->getSingleRecord('contact');
@@ -75,6 +90,9 @@ class SiteService {
         }
     }
 
+    /**
+     * @throws ServiceException
+     */
     public function getCamp(): array {
         try {
             return $this->siteRepository->getSingleRecord('camp');
@@ -83,7 +101,10 @@ class SiteService {
         }
     }
 
-    public function getFees(): array { 
+    /**
+     * @throws ServiceException
+     */
+    public function getFees(): array {
         try {
             return $this->siteRepository->getSingleRecord('fees');
         }catch(RepositoryException $e) {
