@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repository\Dashboard;
+namespace App\Repository\Dashboard\Traits;
 
 use App\Exception\RepositoryException;
 use PDO;

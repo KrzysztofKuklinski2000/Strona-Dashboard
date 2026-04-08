@@ -3,6 +3,7 @@
 namespace App\Repository\Dashboard;
 
 use App\Exception\RepositoryException;
+use App\Repository\Dashboard\Traits\Positionable;
 
 class GalleryRepository extends BaseDashboardRepository
 {
