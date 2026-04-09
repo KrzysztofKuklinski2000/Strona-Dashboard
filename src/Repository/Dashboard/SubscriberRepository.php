@@ -4,11 +4,13 @@ namespace App\Repository\Dashboard;
 
 use App\Exception\NotFoundException;
 use App\Exception\RepositoryException;
+use App\Repository\Dashboard\Traits\StandardCrud;
 use PDO;
 
 
 class SubscriberRepository extends BaseDashboardRepository
 {
+    use StandardCrud;
     /**
      * @throws RepositoryException
      */

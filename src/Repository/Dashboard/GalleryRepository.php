@@ -3,11 +3,14 @@
 namespace App\Repository\Dashboard;
 
 use App\Exception\RepositoryException;
+use App\Repository\Dashboard\Traits\CanDelete;
+use App\Repository\Dashboard\Traits\CanEdit;
+use App\Repository\Dashboard\Traits\CanPublished;
 use App\Repository\Dashboard\Traits\Positionable;
 
 class GalleryRepository extends BaseDashboardRepository
 {
-    use Positionable;
+    use Positionable, CanPublished, CanEdit, CanDelete;
 
     /**
      * @throws RepositoryException

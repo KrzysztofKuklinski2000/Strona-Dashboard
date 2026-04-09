@@ -7,6 +7,9 @@ use PDO;
 use PDOStatement;
 
 trait Positionable {
+    /**
+     * @throws RepositoryException
+     */
     public function movePosition(string $table, array $params): PDOStatement {
 		try {
 			return $this->runQuery("UPDATE $table SET position = :pos WHERE id = :id", $params);
@@ -16,7 +19,10 @@ trait Positionable {
 		
 	}
 
-	public function getPostByPosition(string $table, int $position): array {
+    /**
+     * @throws RepositoryException
+     */
+    public function getPostByPosition(string $table, int $position): array {
 		try{
 			return $this->runQuery("SELECT * FROM $table WHERE position = :pos", [':pos' => $position])->fetch(PDO::FETCH_ASSOC) ?: [];
 		}catch(RepositoryException $e) {
@@ -24,7 +30,10 @@ trait Positionable {
 		}
 	}
 
-	public function incrementPosition(string $table):void {
+    /**
+     * @throws RepositoryException
+     */
+    public function incrementPosition(string $table):void {
 		try{
 			$this->runQuery("UPDATE $table SET position = position + 1");
 		}catch(RepositoryException $e) {
@@ -32,7 +41,10 @@ trait Positionable {
 		}
 	}
 
-	public function decrementPosition(string $table, int $position) :void {
+    /**
+     * @throws RepositoryException
+     */
+    public function decrementPosition(string $table, int $position) :void {
 		try {
 			$this->runQuery("UPDATE $table set position = position - 1 WHERE position > :pos", [':pos' => $position]);
 		}catch(RepositoryException $e) {

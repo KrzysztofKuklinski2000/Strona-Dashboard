@@ -3,9 +3,17 @@
 namespace App\Repository\Dashboard;
 
 use App\Exception\RepositoryException;
+use App\Repository\Dashboard\Traits\CanPublished;
+use App\Repository\Dashboard\Traits\StandardCrud;
 use PDO;
 
 class TimetableRepository extends BaseDashboardRepository {
+
+    use StandardCrud, CanPublished;
+
+    /**
+     * @throws RepositoryException
+     */
     public function timetablePageData(): array
     {
         try {
