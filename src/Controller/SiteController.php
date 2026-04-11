@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Core\Request;
+use App\Exception\ServiceException;
 use App\Middleware\CsrfMiddleware;
 use App\Service\SiteService;
 use App\View;
@@ -13,12 +14,15 @@ class SiteController extends AbstractController {
 		Request $request, 
 		public SiteService $siteService, 
 		View $view, 
-		private CsrfMiddleware $csrfMiddleware
+		private readonly CsrfMiddleware $csrfMiddleware
 		) {
 		parent::__construct($request, $view);
 	}
 
-	public function indexAction(): void {
+    /**
+     * @throws ServiceException
+     */
+    public function indexAction(): void {
 		
 		$this->renderPage([
 			'page'=> 'start',
@@ -26,7 +30,10 @@ class SiteController extends AbstractController {
 		]);
 	}
 
-	public function newsAction(): void {
+    /**
+     * @throws ServiceException
+     */
+    public function newsAction(): void {
 		$page = (int) $this->request->getRouteParam('page');
 		$result = $this->siteService->getNews($page);
 		
@@ -40,66 +47,99 @@ class SiteController extends AbstractController {
 	}
 
 
-	public function timetableAction(): void {
+    /**
+     * @throws ServiceException
+     */
+    public function timetableAction(): void {
 		$this->renderPage([
 			'page' => 'timetable', 
 			'content' => $this->siteService->getTimetable()
 		]);
 	}
 
-	public function galleryAction(): void {
+    /**
+     * @throws ServiceException
+     */
+    public function galleryAction(): void {
 		$this->renderPage([
 			'page' => 'gallery',
 			'content' => $this->siteService->getGallery($this->request->getRouteParam('category')),
 		]);
 	}
 
-	public function campAction(): void {
+    /**
+     * @throws ServiceException
+     */
+    public function campAction(): void {
 		$this->renderPage([
 			'page' => 'camp-info', 
 			'content' => $this->siteService->getCamp()
 		]);
 	}
 
-	public function feesAction(): void {
+    /**
+     * @throws ServiceException
+     */
+    public function feesAction(): void {
 		$this->renderPage([
 			'page' => 'fees-info', 
 			'content' => $this->siteService->getFees()
 		]);
 	}
 
-	public function registrationAction(): void {
+    /**
+     * @throws ServiceException
+     */
+    public function registrationAction(): void {
 		$this->renderPage([
 			'page' => 'entries-info', 
 			'content' => $this->siteService->getFees()
 		]);
 	}
 
-	public function contactAction():void {
+    /**
+     * @throws ServiceException
+     */
+    public function contactAction():void {
 		$this->renderPage([
 			'page' => 'contact', 
 		]);
-	}	
+	}
 
 
-	public function statuteAction(): void {
+    /**
+     * @throws ServiceException
+     */
+    public function statuteAction(): void {
 		$this->renderPage(['page' => 'statute']);
 	}
 
-	public function oyamaAction(): void {
+    /**
+     * @throws ServiceException
+     */
+    public function oyamaAction(): void {
 		$this->renderPage(['page' => 'oyama']);
 	}
 
 
-	public function dojoOathAction():  void {
+    /**
+     * @throws ServiceException
+     */
+    public function dojoOathAction():  void {
 		$this->renderPage(['page' => 'dojo-oath']);
 	}
 
-	public function requirementsAction(): void {
+    /**
+     * @throws ServiceException
+     */
+    public function requirementsAction(): void {
 		$this->renderPage(['page' => 'requirements']);
 	}
 
-	private function renderPage(array $params): void {
+    /**
+     * @throws ServiceException
+     */
+    private function renderPage(array $params): void {
 		$params['contact'] = $this->siteService->getContact();
 		$params['csrf_token'] = $this->csrfMiddleware->generateToken('public');
 		$params['flash_public'] = $this->getFlash('public');

@@ -44,7 +44,6 @@ abstract class AbstractDashboardController extends AbstractController {
 
     $this->setFlash("warning", $this->request->getErrors(), 'dashboard');
     $this->redirect('/dashboard/'.$this->getModuleName().'/create');
-    return;
   }
 
   public function updateAction(): void {
@@ -71,7 +70,6 @@ abstract class AbstractDashboardController extends AbstractController {
     }
 
     $this->redirect($redirectUrl);
-    return;
   }
 
   public function deleteAction(): void {
@@ -85,7 +83,6 @@ abstract class AbstractDashboardController extends AbstractController {
       $this->handleDelete($id);
       $this->setFlash('success', 'Udało się usunąć', 'dashboard');
       $this->redirect('/dashboard/' . $this->getModuleName());
-      return;
   }
 
   public function publishedAction(): void {
@@ -100,7 +97,6 @@ abstract class AbstractDashboardController extends AbstractController {
 
     $this->setFlash('info', 'Udało się zmienić status', 'dashboard');
     $this->redirect('/dashboard/' . $this->getModuleName());
-    return;
   }
 
   public function moveAction(): void {
@@ -109,7 +105,6 @@ abstract class AbstractDashboardController extends AbstractController {
       $data = $this->getDataToChangePostPosition();
       $this->handleMove($data);
       $this->redirect("/dashboard/". $this->getModuleName());
-      return;
     }
   }
 
@@ -188,7 +183,10 @@ abstract class AbstractDashboardController extends AbstractController {
     $this->view->renderDashboardView($params);
   }
 
-  protected function getSingleData(): array {
+    /**
+     * @throws NotFoundException
+     */
+    protected function getSingleData(): array {
     $postId = $this->request->getRouteParam('id');
     if ($postId === null || !ctype_digit((string) $postId)) {
       throw new NotFoundException("Required 'id' parameter is missing or invalid");
