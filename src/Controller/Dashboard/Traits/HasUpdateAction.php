@@ -2,12 +2,26 @@
 
 namespace App\Controller\Dashboard\Traits;
 
+use App\Core\Request;
+use App\Middleware\CsrfMiddleware;
+use EasyCSRF\Exceptions\InvalidCsrfTokenException;
+
+/**
+ * @property Request $request
+ * @property CsrfMiddleware $csrfMiddleware
+ * @method void redirect(string $to)
+ * @method void setFlash(string $type, $message, string $prefix = 'dashboard')
+ * @method string getModuleName()
+ */
 trait HasUpdateAction
 {
     abstract protected function handleUpdate(array $data): void;
 
     abstract protected function getDataToUpdate(): array;
 
+    /**
+     * @throws InvalidCsrfTokenException
+     */
     public function updateAction(): void
     {
         if (!$this->request->isPost()) {
