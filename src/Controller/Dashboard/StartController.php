@@ -2,12 +2,18 @@
 
 namespace App\Controller\Dashboard;
 
+use App\Controller\Dashboard\Traits\HasDeleteAction;
+use App\Controller\Dashboard\Traits\HasMoveAction;
+use App\Controller\Dashboard\Traits\HasPublishedAction;
+use App\Controller\Dashboard\Traits\HasStoreAction;
+use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\View;
 use App\Core\Request;
 use App\Middleware\CsrfMiddleware;
 use App\Service\Dashboard\StartManagementServiceInterface;
 
 class StartController extends AbstractDashboardController {
+    use HasStoreAction, HasDeleteAction, HasUpdateAction, HasPublishedAction, HasMoveAction;
 
   public function __construct(
     public StartManagementServiceInterface $service,
