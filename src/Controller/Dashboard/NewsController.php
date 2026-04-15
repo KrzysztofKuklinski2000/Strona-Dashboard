@@ -1,86 +1,107 @@
-<?php 
+<?php
+
 namespace App\Controller\Dashboard;
 
+use App\Controller\Dashboard\Traits\HasDeleteAction;
+use App\Controller\Dashboard\Traits\HasMoveAction;
+use App\Controller\Dashboard\Traits\HasPublishedAction;
+use App\Controller\Dashboard\Traits\HasStoreAction;
+use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\View;
 use App\Core\Request;
 use App\Middleware\CsrfMiddleware;
 use App\Service\Dashboard\NewsManagementServiceInterface;
 
-class NewsController extends AbstractDashboardController {
+class NewsController extends AbstractDashboardController
+{
+    use HasStoreAction, HasDeleteAction, HasUpdateAction, HasPublishedAction, HasMoveAction;
 
-  public function __construct(
-    public NewsManagementServiceInterface $service, 
-    Request $request, 
-    View $view,
-    CsrfMiddleware $csrfMiddleware
+    public function __construct(
+        public NewsManagementServiceInterface $service,
+        Request                               $request,
+        View                                  $view,
+        CsrfMiddleware                        $csrfMiddleware
     )
-  {
-    parent::__construct($request, $service, $view, $csrfMiddleware);
-  }
+    {
+        parent::__construct($request, $service, $view, $csrfMiddleware);
+    }
 
-  public function indexAction() :void {
-    $this->renderPage([
-      'page' => 'news/index',
-      'data' => $this->service->getAllNews(),
-      ]);
-  }
+    public function indexAction(): void
+    {
+        $this->renderPage([
+            'page' => 'news/index',
+            'data' => $this->service->getAllNews(),
+        ]);
+    }
 
-  public function editAction(): void {
-    $this->renderPage([
-      'page' => 'news/edit',
-      'data' => $this->getSingleData(),
-    ]);
-  }
+    public function editAction(): void
+    {
+        $this->renderPage([
+            'page' => 'news/edit',
+            'data' => $this->getSingleData(),
+        ]);
+    }
 
-  public function createAction(): void {
-    $this->renderPage([
-      'page' => 'news/create',
-    ]);
-  }
+    public function createAction(): void
+    {
+        $this->renderPage([
+            'page' => 'news/create',
+        ]);
+    }
 
-  public function showAction(): void {
-    $this->renderPage([
-      'page' => 'news/show',
-      'data' => $this->getSingleData(),
-    ]);
-  }
+    public function showAction(): void
+    {
+        $this->renderPage([
+            'page' => 'news/show',
+            'data' => $this->getSingleData(),
+        ]);
+    }
 
-  public function confirmDeleteAction(): void {
-    $this->renderPage([
-      'page' => 'news/delete',
-      'data' => $this->getSingleData(),
-    ]);
-  }
+    public function confirmDeleteAction(): void
+    {
+        $this->renderPage([
+            'page' => 'news/delete',
+            'data' => $this->getSingleData(),
+        ]);
+    }
 
-  protected function getModuleName(): string {
-    return 'news';
-  }
+    protected function getModuleName(): string
+    {
+        return 'news';
+    }
 
-  protected function getDataToCreate(): array{
-    return $this->getPostDataToCreate();
-  }
+    protected function getDataToCreate(): array
+    {
+        return $this->getPostDataToCreate();
+    }
 
-  protected function getDataToUpdate(): array{
-    return $this->getPostDataToEdit();
-  }
+    protected function getDataToUpdate(): array
+    {
+        return $this->getPostDataToEdit();
+    }
 
-  protected function handleCreate(array $data): void {
-    $this->service->createNews($data);
-  }
+    protected function handleCreate(array $data): void
+    {
+        $this->service->createNews($data);
+    }
 
-  protected function handleUpdate(array $data): void{
-    $this->service->updateNews($data);
-  }
+    protected function handleUpdate(array $data): void
+    {
+        $this->service->updateNews($data);
+    }
 
-  protected function handleDelete(int $id): void{
-    $this->service->deleteNews($id);
-  }
+    protected function handleDelete(int $id): void
+    {
+        $this->service->deleteNews($id);
+    }
 
-  protected function handlePublish(array $data): void { 
-    $this->service->publishedNews($data);
-  }
+    protected function handlePublish(array $data): void
+    {
+        $this->service->publishedNews($data);
+    }
 
-  protected function handleMove(array $data): void{
-    $this->service->moveNews($data);
-  }
+    protected function handleMove(array $data): void
+    {
+        $this->service->moveNews($data);
+    }
 }
