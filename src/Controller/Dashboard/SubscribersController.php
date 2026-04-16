@@ -2,19 +2,26 @@
 
 namespace App\Controller\Dashboard;
 
+use App\Controller\Dashboard\Traits\HasDeleteAction;
+use App\Controller\Dashboard\Traits\HasStoreAction;
+use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\Request;
+use App\Exception\NotFoundException;
 use App\View;
 use App\Middleware\CsrfMiddleware;
 use App\Service\Dashboard\SubscribersManagementServiceInterface;
 
 class SubscribersController extends AbstractDashboardController
 {
+    use HasStoreAction, HasDeleteAction, HasUpdateAction;
+
     public function __construct(
-        private SubscribersManagementServiceInterface $service,
-        Request $request,
-        View $view,
-        CsrfMiddleware $csrfMiddleware
-    ) {
+        private readonly SubscribersManagementServiceInterface $service,
+        Request                                                $request,
+        View                                                   $view,
+        CsrfMiddleware                                         $csrfMiddleware
+    )
+    {
 
         parent::__construct($request, $service, $view, $csrfMiddleware);
     }
@@ -22,36 +29,48 @@ class SubscribersController extends AbstractDashboardController
     public function indexAction(): void
     {
         $this->renderPage([
-          'page' => 'subscribers/index',
-          'data' => $this->service->getAllSubscribers(),
+            'page' => 'subscribers/index',
+            'data' => $this->service->getAllSubscribers(),
         ]);
     }
 
     public function createAction(): void
     {
         $this->renderPage([
-          'page' => 'subscribers/create'
+            'page' => 'subscribers/create'
         ]);
     }
 
-    public function editAction(): void {
+    /**
+     * @throws NotFoundException
+     */
+    public function editAction(): void
+    {
         $this->renderPage([
-        'page' => 'subscribers/edit',
-        'data' => $this->getSingleData(),
+            'page' => 'subscribers/edit',
+            'data' => $this->getSingleData(),
         ]);
     }
 
-    public function showAction(): void {
+    /**
+     * @throws NotFoundException
+     */
+    public function showAction(): void
+    {
         $this->renderPage([
-        'page' => 'subscribers/show',
-        'data' => $this->getSingleData(),
+            'page' => 'subscribers/show',
+            'data' => $this->getSingleData(),
         ]);
     }
 
-    public function confirmDeleteAction(): void {
+    /**
+     * @throws NotFoundException
+     */
+    public function confirmDeleteAction(): void
+    {
         $this->renderPage([
-        'page' => 'subscribers/delete',
-        'data' => $this->getSingleData(),
+            'page' => 'subscribers/delete',
+            'data' => $this->getSingleData(),
         ]);
     }
 
@@ -60,11 +79,13 @@ class SubscribersController extends AbstractDashboardController
         return 'subscribers';
     }
 
-    protected function getDataToCreate(): array {
+    protected function getDataToCreate(): array
+    {
         return $this->getEmailToCreate();
     }
 
-    protected function getDataToUpdate(): array {
+    protected function getDataToUpdate(): array
+    {
         return $this->getEmailToUpdate();
     }
 
@@ -73,11 +94,13 @@ class SubscribersController extends AbstractDashboardController
         $this->service->createSubscriber($data);
     }
 
-    protected function handleUpdate(array $data): void {
+    protected function handleUpdate(array $data): void
+    {
         $this->service->updateSubscriber($data);
     }
 
-    protected function handleDelete(int $id): void{
+    protected function handleDelete(int $id): void
+    {
         $this->service->deleteSubscriber($id);
     }
 }
