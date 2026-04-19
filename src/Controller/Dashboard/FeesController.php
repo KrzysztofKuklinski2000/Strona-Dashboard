@@ -2,37 +2,46 @@
 
 namespace App\Controller\Dashboard;
 
+use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\View;
 use App\Core\Request;
 use App\Middleware\CsrfMiddleware;
 use App\Service\Dashboard\FeesManagementServiceInterface;
 
-class FeesController extends AbstractDashboardController {
-  public function __construct(
-    public FeesManagementServiceInterface $service,
-    Request $request,
-    View $view,
-    CsrfMiddleware $csrfMiddleware
-  ) {
-    parent::__construct($request, $service, $view, $csrfMiddleware);
-  }
+class FeesController extends AbstractDashboardController
+{
+    use HasUpdateAction;
 
-  public function editAction(): void {
-    $this->renderPage([
-      'page' => 'fees/edit',
-      'data' => $this->service->getFees(),
-    ]);
-  }
+    public function __construct(
+        public FeesManagementServiceInterface $service,
+        Request                               $request,
+        View                                  $view,
+        CsrfMiddleware                        $csrfMiddleware
+    )
+    {
+        parent::__construct($request, $service, $view, $csrfMiddleware);
+    }
 
-  protected function getModuleName(): string {
-    return 'fees';
-  }
+    public function editAction(): void
+    {
+        $this->renderPage([
+            'page' => 'fees/edit',
+            'data' => $this->service->getFees(),
+        ]);
+    }
 
-  protected function getDataToUpdate(): array {
-    return $this->getDataToFeesEdit();
-  }
+    protected function getModuleName(): string
+    {
+        return 'fees';
+    }
 
-  protected function handleUpdate(array $data): void {
-    $this->service->updateFees($data);
-  }
+    protected function getDataToUpdate(): array
+    {
+        return $this->getDataToFeesEdit();
+    }
+
+    protected function handleUpdate(array $data): void
+    {
+        $this->service->updateFees($data);
+    }
 }
