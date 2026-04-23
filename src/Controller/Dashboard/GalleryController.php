@@ -7,13 +7,14 @@ use App\Controller\Dashboard\Traits\HasMoveAction;
 use App\Controller\Dashboard\Traits\HasPublishedAction;
 use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
+use App\Controller\Dashboard\Traits\HasSingleData;
 use App\View;
 use App\Core\Request;
 use App\Middleware\CsrfMiddleware;
 use App\Service\Dashboard\GalleryManagementServiceInterface;
 
 class GalleryController extends AbstractDashboardController {
-    use HasStoreAction, HasDeleteAction, HasUpdateAction, HasPublishedAction, HasMoveAction;
+    use HasStoreAction, HasDeleteAction, HasUpdateAction, HasPublishedAction, HasMoveAction, HasSingleData;
 
   public function __construct(
     public GalleryManagementServiceInterface $service,

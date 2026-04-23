@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Controller\Dashboard\Traits;
+
 use App\Core\Request;
 use App\Exception\NotFoundException;
 use App\Service\Dashboard\SharedGetDataServiceInterface;
