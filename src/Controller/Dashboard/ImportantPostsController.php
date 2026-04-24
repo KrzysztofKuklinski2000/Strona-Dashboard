@@ -5,6 +5,7 @@ namespace App\Controller\Dashboard;
 use App\Controller\Dashboard\Traits\HasDeleteAction;
 use App\Controller\Dashboard\Traits\HasMoveAction;
 use App\Controller\Dashboard\Traits\HasPublishedAction;
+use App\Controller\Dashboard\Traits\HasSingleData;
 use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Exception\NotFoundException;
@@ -16,7 +17,7 @@ use App\Service\Dashboard\ImportantPostsManagementServiceInterface;
 class ImportantPostsController extends AbstractDashboardController
 {
 
-    use HasStoreAction, HasDeleteAction, HasUpdateAction, HasPublishedAction, HasMoveAction;
+    use HasStoreAction, HasDeleteAction, HasUpdateAction, HasPublishedAction, HasMoveAction, HasSingleData;
 
     public function __construct(
         public ImportantPostsManagementServiceInterface $service,
