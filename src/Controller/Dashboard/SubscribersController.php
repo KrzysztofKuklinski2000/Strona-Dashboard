@@ -3,6 +3,7 @@
 namespace App\Controller\Dashboard;
 
 use App\Controller\Dashboard\Traits\HasDeleteAction;
+use App\Controller\Dashboard\Traits\HasSingleData;
 use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\Request;
@@ -13,7 +14,7 @@ use App\Service\Dashboard\SubscribersManagementServiceInterface;
 
 class SubscribersController extends AbstractDashboardController
 {
-    use HasStoreAction, HasDeleteAction, HasUpdateAction;
+    use HasStoreAction, HasDeleteAction, HasUpdateAction, HasSingleData;
 
     public function __construct(
         private readonly SubscribersManagementServiceInterface $service,
