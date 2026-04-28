@@ -1,0 +1,2025 @@
+[33mcommit 2715f80d2334646fdbe2fd04c54d264ad3c0e1e6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Mon Apr 27 18:05:23 2026 +0200
+
+    refactor: apply HasSingleData trait to SubscribersController
+    
+    Subscribers module and traits update:
+    
+    * Added HasSingleData trait to SubscribersController to handle ID-based record fetching.
+
+[33mcommit aa04068efa784fae0f3bfea6e953256e34e6e913[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Sun Apr 26 17:47:58 2026 +0200
+
+    refactor: apply HasSingleData trait to StartController
+    
+    Start module and traits update:
+    
+    * Added HasSingleData trait to StartController to handle ID-based record fetching.
+
+[33mcommit 3cae9b28a832bfb3e01bf4f169cff0f3cb813c04[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Sat Apr 25 20:24:25 2026 +0200
+
+    refactor: apply HasSingleData trait to NewsController
+    
+    News module and traits update:
+    
+    * Added HasSingleData trait to NewsController to handle ID-based record fetching.
+
+[33mcommit 5f4824f6056d2be10500addc595b0a0bf4ca7321[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Fri Apr 24 21:17:56 2026 +0200
+
+    refactor: apply HasSingleData trait to ImportantPostsController
+    
+    Important Posts module and traits update:
+    
+    * Added HasSingleData trait to ImportantPostsController to handle ID-based record fetching.
+
+[33mcommit 90afe148fcd66f85c930a88e6b0b4df62b3570dd[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Thu Apr 23 17:47:09 2026 +0200
+
+    refactor: apply HasSingleData trait to GalleryController and fix namespace
+    
+    Gallery module and traits update:
+    
+    * Added HasSingleData trait to GalleryController to handle ID-based record fetching.
+    * Fixed missing namespace in HasSingleData.php to comply with project structure.
+
+[33mcommit f64701140c983bebc6d853ec809630762462778c[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Wed Apr 22 18:48:23 2026 +0200
+
+    refactor: make service dependency optional in base dashboard controller
+    
+    Decoupling service from base controller:
+    
+    * Removed SharedGetDataServiceInterface from AbstractDashboardController constructor.
+    * Moved getSingleData() logic to a new trait: HasSingleData.
+    * This allows creating controllers without forcing service implementation.
+
+[33mcommit 0dfde2dc8cf0e0145cbc45069270a23f8e652da3[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Tue Apr 21 18:28:54 2026 +0200
+
+    refactor: update CampController to use modular action traits
+    
+    Applied new architecture to CampController:
+    
+    * Integrated HasUpdateAction.
+
+[33mcommit 679c3ed42a9eb77197d47d1cfa33a013f4446dba[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Mon Apr 20 21:34:28 2026 +0200
+
+    refactor: update ContactController to use modular action traits
+    
+    Applied new architecture to ContactController:
+    
+    * Integrated HasUpdateAction.
+
+[33mcommit 0ddb7c72f72b2c887abdaeb4c0d73a41c07ee5ca[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Sun Apr 19 21:40:38 2026 +0200
+
+    refactor: update FeesController to use modular action traits
+    
+    Applied new architecture to FeesController:
+    
+    * Integrated HasUpdateAction.
+
+[33mcommit baa08ac845abe0e6a146a35cf07e9052d5aa013f[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Sat Apr 18 18:38:21 2026 +0200
+
+    refactor: update GalleryController to use modular action traits
+    
+    Applied new architecture to GalleryController:
+    
+    * Integrated HasStoreAction, HasDeleteAction, HasUpdateAction, HasPublishedA
+    ction, and HasMoveAction.
+
+[33mcommit 45ddc30cf5c7752b9868de9ae1681b62fb16fb63[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Fri Apr 17 17:54:47 2026 +0200
+
+    refactor: update ImportantPostsController to use modular action traits
+    
+    Applied new architecture to ImportantPostsController:
+    
+    * Integrated HasStoreAction, HasDeleteAction, HasUpdateAction, HasPublishedAction, and HasMoveAction.
+
+[33mcommit 5fc6f972b96a0b4cae52bd860956224c290794c4[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Thu Apr 16 17:24:31 2026 +0200
+
+    refactor: update SubscribersController to use modular action traits
+    
+    Applied new architecture to SubscribersController:
+    
+    * Integrated HasStoreAction, HasDeleteAction and HasUpdateAction.
+
+[33mcommit ea3bafa16e669569c0f287b7ebcdb6f0cc00e7aa[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Wed Apr 15 16:03:51 2026 +0200
+
+    refactor: update NewsController to use modular action traits
+    
+    Applied new architecture to NewsController:
+    
+    * Integrated HasStoreAction, HasDeleteAction, HasUpdateAction, HasPublishedAction, and HasMoveAction.
+
+[33mcommit 4752cefcdbffd0f1631419c1d78f8680dd7fa61a[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Tue Apr 14 17:44:04 2026 +0200
+
+    refactor: update TimetableController to use modular action traits
+    
+    Applied new architecture to TimetableController:
+    
+    * Integrated HasStoreAction, HasDeleteAction, HasUpdateAction, HasPublishedAction, and HasMoveAction.
+
+[33mcommit 941c9c15aece9532ec9beec982fd2bc68d06370b[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Mon Apr 13 17:52:37 2026 +0200
+
+    refactor: update StartController to use modular action traits
+    
+    Applied new architecture to StartController:
+    
+    * Integrated HasStoreAction, HasDeleteAction, HasUpdateAction, HasPublishedAction, and HasMoveAction.
+
+[33mcommit 5329aa32fd72ff59063d2e50bb9f6b186c685319[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Sun Apr 12 17:52:14 2026 +0200
+
+    docs: add PHPDoc annotations to dashboard controller traits
+    
+    Internal documentation update:
+    
+    - Added @property and @method annotations to all action traits.
+    - Fixed IDE 'undefined method' warnings in PHPStorm.
+    - Improved IntelliSense support and code navigation within traits.
+    - Linked traits semantically with AbstractDashboardController members.
+
+[33mcommit dac486d65f7186eda3458bcf9fd7b64472fca0df[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Sun Apr 12 17:35:18 2026 +0200
+
+    refactor: implement atomic action traits for dashboard controllers
+    
+    Modularizing the controller layer:
+    
+    * Created HasStoreAction, HasUpdateAction, HasDeleteAction, HasMoveAction, and HasPublishedAction traits.
+    * Cleaned AbstractDashboardController by removing unused placeholder methods and logic exceptions.
+    * Enforced implementation of handler methods through abstract protected declarations in traits.
+
+[33mcommit bc329b92cba74e9143c5aeee97e081f8a61d857a[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Sat Apr 11 18:30:20 2026 +0200
+
+    refactor: add PHPDocs to SiteController and remove unnecessary return in AbstractDashboardController
+
+[33mcommit 27cbbac18f3b24e98348d93409979d13a5a3328f[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Fri Apr 10 20:29:11 2026 +0200
+
+    Remove DashboardRepositoryTest
+
+[33mcommit b787b4fe0609de1c1bdde4e123a4dcd623a44e58[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Thu Apr 9 18:53:44 2026 +0200
+
+    refactor: implement atomic repository traits and clean base repository
+    
+    Finalizing repository architecture:
+    
+    * Moved CRUD operations (create, edit, delete, published) from BaseDashboardRepository to atomic traits.
+    * Cleaned BaseDashboardRepository to contain only shared read methods.
+    * Composed specific repositories (Gallery, News, Timetable, etc.) using only required traits.
+
+[33mcommit f114e0261c4a682038dd67491c6ec84daf942838[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Thu Apr 9 18:29:42 2026 +0200
+
+    Extract published method from BaseDashboardRepository to specific trait CanPublished
+
+[33mcommit fd4179782dbd04ca7aab8d11f442aad9a4e74a94[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Thu Apr 9 18:23:26 2026 +0200
+
+    Extract delete method from BaseDashboardRepository to specific trait CanDelete
+
+[33mcommit a81ea7da4848531c51b6b9d673d36121eabf700a[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Wed Apr 8 21:36:17 2026 +0200
+
+    Extract edit method from BaseDashboardRepository to specific trait CanEdit
+
+[33mcommit 411406fdd8e00fdfd7e4e0e1636dd780a20e2cf9[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Tue Apr 7 20:16:40 2026 +0200
+
+    clean up: remove DashboardRepository
+    
+    Removed DashboardRepository after migrating all services to specifice repositories
+
+[33mcommit da7d3bf2ab972f4c1f836e5155effc33f5f1ac68[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Mon Apr 6 16:26:34 2026 +0200
+
+    Add PHPdoc
+
+[33mcommit 730b59268d35209b5074f955869bb50d8c9cae1f[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Sun Apr 5 16:32:14 2026 +0200
+
+    refactor: update Subscriber module with traits and new repository
+    
+    Update SubscribeService module:
+    
+    * Changing namespace in Notifier
+    * Moved SubscriberRepossitory from repository to repository/dashboard
+    * Replace DashboardRepository with SubscriberRepository in service factory
+    * Applied StandardCrudTrait in SubscribersService.
+    * Move subscriber-specific methods to SubscriberRepositry from DashboardRepository
+
+[33mcommit 974c5665de399f77884ce5b65862d59effa39c45[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Sat Apr 4 13:50:30 2026 +0200
+
+    refactor: Contact service to use traits and specific repository
+    
+    Update ContactService module:
+    
+    * Applied CanEdit traits.
+    * Switched from DashboardRepository to ContactRepository in Factory.
+
+[33mcommit 4d9462b12f04edf8184c7e5d929e9113afd36fc4[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Fri Apr 3 20:49:04 2026 +0200
+
+    refactor: Camp service to use traits and specific repository
+    
+    Update CampService module:
+    
+    * Applied CanEdit traits.
+    * Switched from DashboardRepository to CampRepository in Factory.
+
+[33mcommit ac66c01b2aaaf51aec8458ad0276eaaddaacb0ee[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Thu Apr 2 19:35:53 2026 +0200
+
+    refactor: Fees service to use traits and specific repository
+    
+    Update FeesService module:
+    
+    * Applied CanEdit traits.
+    * Switched from DashboardRepository to FeesRepository in Factory.
+
+[33mcommit 64b646b00b3f5bb679d568088fae25f75cc087cd[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Wed Apr 1 17:33:31 2026 +0200
+
+    refactor: gallery service to use traits and specific repository
+    
+    Update GalleryService module:
+    
+    * Applied PositionableTrait for move/create/delete logic.
+    * Applied CanEdit and CanPublished traits.
+    * Updated argument order to (table, id/data) in PositionableTrait.
+    * Switched from DashboardRepository to GalleryRepository in Factory.
+
+[33mcommit d51452be51445a29297267caba1bf1d2a9680376[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Tue Mar 31 17:42:06 2026 +0200
+
+    refactor: important posts service to use traits and specific repository
+    
+    Update ImportantPostsService module:
+    
+    * Applied PositionableTrait for move/create/delete logic.
+    * Applied CanEdit and CanPublished traits.
+    * Updated argument order to (table, id/data) in PositionableTrait.
+    * Switched from DashboardRepository to ImportantPostsRepository in Factory.
+
+[33mcommit d18bdc248598403cefef7147de6bad489dccbb33[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Mon Mar 30 16:50:10 2026 +0200
+
+    refactor news service to use traits and specific repository
+    
+    Update NewsService module:
+    
+    * Applied PositionableTrait for move/create/delete logic.
+    * Applied CanEdit and CanPublished traits.
+    * Updated argument order to (table, id/data) in PositionableTrait.
+    * Switched from DashboardRepository to NewsRepository in Factory.
+
+[33mcommit 176c4555cba2c434264e6b6b81190bee99acfaac[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Sun Mar 29 16:53:25 2026 +0200
+
+    refactor start service to use traits and specific repository
+    
+    Update StartService module:
+    
+    * Applied PositionableTrait for move/create/delete logic.
+    * Applied CanEdit and CanPublished traits.
+    * Updated argument order to (table, id/data) in PositionableTrait.
+    * Switched from DashboardRepository to StartRepository in Factory.
+
+[33mcommit 2159dc8a75a664001ced35fb6d1143160f61b8d2[m
+Merge: 78d292d dd7ddbe
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Sat Mar 28 18:17:20 2026 +0100
+
+    Merge remote-tracking branch 'origin/master'
+    
+    # Conflicts:
+    #       src/Service/Dashboard/AbstractDashboardService.php
+    #       src/Service/Dashboard/Traits/CanCreate.php
+    #       src/Service/Dashboard/Traits/CanDelete.php
+    #       src/Service/Dashboard/Traits/PositionableTrait.php
+
+[33mcommit 78d292d418ed49bcf9e79bad7b10051c62704cf0[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Sat Mar 28 18:16:40 2026 +0100
+
+    standardize method signatures and refactor timetable service
+    
+    Big cleanup and consistency fix:
+    
+    * Changed argument order to (table, data/id) everywhere.
+    * Updated BaseDashboardRepository and AbstractDashboardService.
+    * Refactored TimetableService to use StandardCrudTrait.
+    * Removed DashboardRepository dependency from TimetableService.
+    * Simplified TimetableServiceFactory.
+    * Updated SharedGetDataServiceInterface and Controller to match new signatures.
+
+[33mcommit a9ede786ba3c6699da6e8879d7888cb664b32987[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Sat Mar 28 17:41:21 2026 +0100
+
+    refactor: add atomic service traits and refactor base service
+    
+    New architecture for services:
+    
+    * Created atomic traits: CanCreate, CanEdit, CanDelete, CanPublished.
+    * Created PositionableTrait for modules with ordering.
+    * Created StandardCrudTrait as a collection of basic actions.
+    * Updated AbstractDashboardService to use BaseDashboardRepository.
+    * Added execute helper for database transactions.
+    * Clean up AbstractDashboardService
+
+[33mcommit dd7ddbe45fec0ab07a91501ce47f40a67e3aab59[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Sat Mar 28 17:41:21 2026 +0100
+
+    refactor: add atomic service traits and refactor base service
+    
+    New architecture for services:
+    
+    * Created atomic traits: CanCreate, CanEdit, CanDelete, CanPublished.
+    * Created PositionableTrait for modules with ordering.
+    * Created StandardCrudTrait as a collection of basic actions.
+    * Updated AbstractDashboardService to use BaseDashboardRepository.
+    * Added execute helper for database transactions.
+    * Clean up AbstractDashboardService
+
+[33mcommit 515e8c862ca8ba16877d9d96ed093bec645aafbd[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Fri Mar 27 22:21:59 2026 +0100
+
+    create StandardCrudTrait
+
+[33mcommit f97cb43a3a965ee1aae3ac69b5dc3bfb533fb134[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Thu Mar 26 20:54:46 2026 +0100
+
+    Prepare StandardCrudTrait
+
+[33mcommit 628bdd15a44eb386ebe09fc6a8bd0369cdff08a3[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Wed Mar 25 19:23:58 2026 +0100
+
+    refactor: clean up timetable module
+    
+    Removed unused move logic from Timetable:
+    
+    - TimetableRepository now extends BaseDashboardRepository.
+    - Removed moveTimetable from Service and Interface.
+    - Removed move action from TimetableController.
+    - Fixed Timetable to use custom weekday sorting only.
+
+[33mcommit 8d108ec480c0c3329d0b717ebcf9822046396189[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Tue Mar 24 21:12:14 2026 +0100
+
+    refactor: add BaseDashboardRepository and Positionable trait
+    
+    Simplified repository structure:
+    
+    * Created BaseDashboardRepository for basic CRUD and status.
+    * Added Positionable trait for moving items.
+
+[33mcommit f0796419ff7c766ac5ed02ad724a74abcdf94d6e[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Mon Mar 23 18:14:25 2026 +0100
+
+    refactor: extract TimetableRepository and clean up AbstractRepository
+    
+    Major refactoring of the repository layer:
+    
+    * Created TimetableRepository to handle timetable-specific queries.
+    * Cleaned up AbstractRepository by removing ALLOWED_TABLES and validateTable logic.
+    * Refactored SiteService and TimetableService to use multiple repositories.
+    * Updated Service Factories to inject dedicated repositories.
+    * Removed deprecated timetablePageData from the base repository.
+
+[33mcommit 562317931da41012bcb1e437a0826cbfcfcbe09c[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Sun Mar 22 14:23:28 2026 +0100
+
+    test: Fixed Notification Tests
+
+[33mcommit 57a6f31c349f6f85d7a8803f0dfc77cfb6ddd630[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Sat Mar 21 18:31:53 2026 +0100
+
+    refactor: extract handleActionWithNotification to reduce duplication
+    
+    * Introduced a private helper method to centralize notification logic, data cleaning (unset), and action execution using callables. Simplified create, update, and publish methods in TimetableService.
+
+[33mcommit 74892efd8940b3e70825babb6d4de6710dfb1195[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Fri Mar 20 12:29:29 2026 +0100
+
+    feat: implement contextual email notifications for timetable actions
+    
+    Enhanced the notification system to support custom messages based on the specific action performed:
+    
+    * Updated TimetableService to pass specific strings to the notify method for create, update, publish, and delete actions.
+    * Modified Observable trait and TimetableObserverInterface to handle the customMessage parameter.
+    * Updated Notifier and timetable_updated.php template to dynamically render the action-specific text.
+    * Standardized the email layout while allowing flexible content updates.
+
+[33mcommit 7cd0a9d790e0fad778401b56b1782a9352e8df21[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Thu Mar 19 11:16:25 2026 +0100
+
+    test: update TimetableService tests to cover optional notifications
+
+[33mcommit a086a001497404750da5b63dbd78dda62f38cf12[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Thu Mar 19 11:01:02 2026 +0100
+
+    test: Added missing test for TimetableController
+
+[33mcommit 5f49a16d234d94408e5e2541bf85e94ce678fdba[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Thu Mar 19 10:56:49 2026 +0100
+
+    test: fixed unit test in TimetableServiceTest
+
+[33mcommit 8fbaff4ad8d5faeef082a264721cb191ff5df5b1[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Wed Mar 18 14:36:21 2026 +0100
+
+    feat: implement optional notifications for all timetable actions
+    
+    Introduced manual control over email notifications across the timetable module:
+    
+    * View: Added 'is_notify' checkbox to create, edit, delete, and publish forms.
+    * View: Refactored delete and show templates for Timetable to support custom fields.
+    * Traits: Updated GetDataMethods to capture 'is_notify' flag from requests.
+    * Service: Modified TimetableManagementServiceInterface and its implementation to handle the 'shouldNotify' boolean.
+    * Service: Implemented logic to strip 'is_notify' from data arrays before database operations to prevent SQL errors.
+    * Controller: Updated TimetableController to pass notification preferences from the request to the service layer.
+
+[33mcommit 193d234d00d27c2675024b3e540425a9fc6e89f5[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Tue Mar 17 13:08:59 2026 +0100
+
+    feat: trigger notifications for all timetable actions
+
+[33mcommit f0094f27277421af414606620f7c9c6fe7f122d3[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Tue Mar 17 13:08:19 2026 +0100
+
+    infra: add Mailpit container and update MailerFactory for local SMTP
+
+[33mcommit 2a3182528e98368dca3227062f7f0d5a9ab0e5d1[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Mon Mar 16 11:47:48 2026 +0100
+
+    test: expand subscriber suite with uniqueness and unsubscribe logic
+    * Added tests for email existence checks, uniqueness validation in SubscribersService, and full unsubscribe flow in PublicSubscribersController. Fixed TypeErrors in service tests
+
+[33mcommit 0d3ecca5ea8f3fa07dc2c6a1f4041ae36e7c2bee[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Sun Mar 15 18:07:06 2026 +0100
+
+    feat: use HTML template for subscription confirmation emails
+
+[33mcommit 195d3b864f38736fa41bff6ff561fa0903c5babb[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Sat Mar 14 19:25:44 2026 +0100
+
+    feat: enforce email uniqueness in SubscribersService
+    
+    * Added emailExists() method to DashboardRepository for direct database checks.
+    * Modified SubscribersService::createSubscriber to throw ServiceException if the email is already registered.
+
+[33mcommit 13a553199d22db415feea37ab925613dd8da1fe8[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Fri Mar 13 17:28:59 2026 +0100
+
+    fix: prevent Fatal Error by ignoring array-based flash messages in global layout
+
+[33mcommit c9cc153b04089bafc78cc662783b1b719538c6d7[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Fri Mar 13 16:48:18 2026 +0100
+
+    add subscribers link to dashboard navigation
+
+[33mcommit 34ba366dcc9b4fd0c957982b1df187b4a304a198[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Fri Mar 13 16:37:43 2026 +0100
+
+    fix: allow zero as a valid value in Request validation
+    
+    * Modified validate() method to use strict null/empty string check instead of empty().
+    This prevents radio buttons with value='0' from failing the required validation.
+
+[33mcommit d934f3d1a7cb77afa6ae8e1ee10823a664108b1d[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Fri Mar 13 16:23:23 2026 +0100
+
+    feat: implement flash message namespacing and public view integration
+    
+    * Refactored AbstractController's setFlash and getFlash to support context prefixes (default: 'dashboard').
+    * Updated Controllers to use explicit flash contexts for actions.
+    * Integrated flash message rendering into public Site views.
+    * Updated Dashboard controllers to use 'dashboard' prefix for internal notifications.
+    * Fixed all broken unit tests.
+
+[33mcommit b0f5c14d7887fb14a461c4efccb3281d2374633e[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Thu Mar 12 17:39:22 2026 +0100
+
+    fix: resolve CSRF collisions, update middleware and tests
+    
+    * Added context-based namespacing to CsrfMiddleware to prevent token overwriting between public and admin areas.
+
+[33mcommit 6b4c499e61232419cf4ad94416f55cca5bcb81e5[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Thu Mar 12 16:28:35 2026 +0100
+
+    feat: implement secure unsubscribe functionality and token rotation
+    
+    * Added unsubscribe logic to SubscribersService using permanent tokens.
+    * Implemented token rotation: activation tokens are now replaced with unique unsubscribe tokens upon activation.
+    * Updated Notifier to include dynamic unsubscribe links in timetable update emails.
+    * Added PublicSubscribersController::unsubscribeAction and registered new public route.
+    * Refactored SubscriberRepository to provide tokens for active subscribers.
+    * Updated unit tests to cover unsubscribe flow and token rotation logic.
+
+[33mcommit 4f18b923214a8675a12172ccae337e99702f2c4c[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Wed Mar 11 14:35:19 2026 +0100
+
+    refactor: add intersection types for controller mock in tests
+
+[33mcommit 420b4ba14e5ae73edad88c39ef35928c5aaba1de[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Wed Mar 11 14:29:12 2026 +0100
+
+    refactor: remove redundant EasyCSRF dependency from controllers
+    
+    * Simplified controller architecture by removing EasyCSRF from AbstractController and its children.
+    * Cleaned up unit tests by removing unnecessary library mocks.
+
+[33mcommit 2dfa29138c642af5ac9399440315807a3f997589[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Tue Mar 10 19:11:06 2026 +0100
+
+    database: update databse
+
+[33mcommit eee683f18aeab174d9c89a577b9eaf9f1829ba14[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Mon Mar 9 17:36:19 2026 +0100
+
+    test: add unit tests for subscriber activation in SubscribersService
+    
+    Added tests for successful activation flow and error handling for invalid/expired tokens.
+
+[33mcommit f0b859fe4d396d8825ce9b471497e67aa4e430a7[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Mon Mar 9 17:31:19 2026 +0100
+
+    test: add unit tests for getSubscriberByToken in DashboardRepository
+    
+    Verified successful subscriber retrieval by token and proper exception handling for missing records or invalid table names.
+
+[33mcommit 17d695bffe7acdbd35d74e64df01d8ca04d80152[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Mon Mar 9 17:24:54 2026 +0100
+
+    test: add full coverage for PublicSubscribersController
+    
+    Verified subscribe and confirm actions, including validation, ServiceException handling, and email notification
+
+[33mcommit c6a01af8c7d498512f400bcd7443fbded3c733b5[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Sun Mar 8 19:42:45 2026 +0100
+
+    feat: implement double opt-in subscription flow and activation system
+    
+    Comprehensive update for subscriber verification:
+    * Infrastructure: Fixed Nginx config to properly pass query strings ($is_args$args).
+    * Auth: Updated index.php to use URI-based dashboard protection, allowing public access to /subscribe and /confirm-subscription.
+    * Controller: Implemented PublicSubscribersController::confirmAction and injected Notifier dependency via updated Factory.
+    * Service: Enhanced SubscribersService to generate secure 64-char activation tokens and handle subscriber activation.
+    * Repository: Added getSubscriberByToken to DashboardRepository for secure data retrieval.
+    * Notifications: Added Notifier::sendConfirmationEmail to send localized activation links with correct protocol.
+    * Testing: Updated unit tests for Controller, Service, and Notifier
+
+[33mcommit 72e4c53bb7eda81f8861fa3001b9d6a05408cfec[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Sun Mar 8 15:53:58 2026 +0100
+
+    feat: implement GDPR consent checkbox and refactor test structure
+    
+    Comprehensive update for newsletter compliance and project organization:
+    * add required terms_consent checkbox to public subscription form in footer.php
+    * implement validation logic in PublicSubscribersController to verify consent
+    * add dedicated CSS styles for the consent checkbox and label
+    * move PublicSubscribersControllerTest from Tests/Controller/Dashboard to Tests/Controller
+    * update unit tests to verify both email validation and consent requirement
+
+[33mcommit ff1de210bd68475644a15c13f42c38dc0b5303a3[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Sun Mar 8 14:58:17 2026 +0100
+
+    feat: implement public newsletter subscription with CSRF protection
+    
+    Comprehensive update for subscriber registration:
+    
+    * Added PublicSubscribersController with validation and flash messages
+    * Implemented PublicSubscribersControllerFactory and updated DI factories
+    * Added CSRF protection to all public pages via SiteController and CsrfMiddleware
+    * Redesigned footer with a responsive newsletter form and improved layout
+    * Added unit tests for PublicSubscribersController and its Factory
+    * Updated SiteControllerTest to include CSRF token verification
+
+[33mcommit ecfe587135cb341a978072193872bf9887e2519d[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Sat Mar 7 16:11:34 2026 +0100
+
+    feat: add status column to subscribers list view
+
+[33mcommit 12bd579ef1c10fee1ebd881a6ec154d82b166f10[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Sat Mar 7 16:08:00 2026 +0100
+
+    feat: implement subscriber active status and filtered notifications
+    
+    * add is_active column support in SubscribersController and GetDataMethods
+    * update Notifier to send emails only to active subscribers using getActiveEmails
+    * implement getActiveEmails in SubscriberRepository with proper SQL filtering
+    * update all relevant tests (Repository, Service, Notifier) to cover active status logic
+
+[33mcommit af1eeeeeec927adcb28080df8c968e3315e80522[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Fri Mar 6 18:00:08 2026 +0100
+
+    feat: implement subscriber deletion
+    
+    * implement confirmDeleteAction and handleDelete in SubscribersController
+    * update AbstractDashboardService to skip decrementPosition for specific tables
+    * add deleteSubscriber method to service and interface
+    * create delete.php view utilizing common delete form partial
+    * register routes for subscriber deletion and confirmation
+    * add unit tests for deletion flow in controller and service
+
+[33mcommit 9913e25e8e4be4548cbcbf1010b69dd2f3da6b69[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Fri Mar 6 17:31:17 2026 +0100
+
+    feat: implement show view for subscribers module
+    
+    * add showAction to SubscribersController to display single subscriber details
+    * create show.php template for subscriber information display
+    * register route for viewing individual subscribers by ID
+    * add unit test for showAction in SubscribersControllerTest
+
+[33mcommit cb48fbad31919ab7c1441d702e10d2894e4d30bd[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Fri Mar 6 16:40:52 2026 +0100
+
+    feat: add edit and update functionality to subscribers module
+    
+    * implement editAction and updateAction in SubscribersController
+    * add updateSubscriber method to service and interface
+    * update DashboardRepository to support subscribers table in edit method
+    * create edit view for subscribers and update routes
+    * add unit tests for edit and update flows in controller and service
+
+[33mcommit 5c998abb40b5b717aba0d7af2ba2cd6370fa9525[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Thu Mar 5 20:30:16 2026 +0100
+
+    fix: resolve case sensitivity issues in Timetable interface usage
+
+[33mcommit ad829347bf20d80de171097b3857b95aac8592f6[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Thu Mar 5 20:25:11 2026 +0100
+
+    feat: implement subscriber creation with email validation
+    
+    * add email type support to Request validation using filter_var
+    * implement storeAction and handleCreate in SubscribersController
+    * optimize AbstractDashboardService to skip position increment for specific tables
+    * create create.php with proper email input type
+    * add comprehensive unit tests for email validation, service logic, and controller
+
+[33mcommit e2fe437f5b452b3603621d21a0890450ad1d8d84[m
+Author: KrzysztofKuklinski2000 <zono.mrzono21@gmail.com>
+Date:   Thu Mar 5 17:34:17 2026 +0100
+
+    style: fix code formatting in SubscriberController
+
+[33mcommit 129bff9db8db6ed2713d997c78691b672f8b98a6[m
+Author: Krzysztof Kukliński <krzysztof.kuklinski2000@gmail.com>
+Date:   Wed Mar 4 23:42:25 2026 +0100
+
+    fix: class name case sensitivity for linux
+    
+    * Remove anonymous vendor volume from docker-compose
+    * Add entrypoint script to install composer packages on startup
+
+[33mcommit 0937e1a34a0196a7dd448aac4e3afa03bb392533[m
+Author: Krzysztof Kukliński <krzysztof.kuklinski2000@gmail.com>
+Date:   Wed Mar 4 23:40:42 2026 +0100
+
+    fix: interface name case sensitivity
+    
+    * Rename TimeTableManagementServiceInterface to TimetableManagementServiceInterface.
+    * Fix case mismatch to support Linux environment in Docker.
+
+[33mcommit f2a9895ea7451f7c61bb02f17f3b816b584ad11b[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Wed Mar 4 16:24:41 2026 +0100
+
+    feat: implement subscribers module for dashboard
+    
+    * add SubscribersController with indexAction and factory
+    * create SubscribersService with dedicated interface and factory
+    * update DashboardRepository and AbstractRepository to support subscribers table
+    * add routing for subscribers dashboard view
+    * implement unit tests for controller, service, and factories
+    * add basic subscriber list template
+
+[33mcommit 467c2edc59a4b4ac3eff1c67c694244fd4fe97c3[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Tue Mar 3 19:46:27 2026 +0100
+
+    fix: resolve database driver and xdebug activation
+    
+    * fix pdo_mysql installation in Dockerfile
+    * add docker-php-ext-enable to properly load pdo_mysql
+
+[33mcommit 9a3e12cf14f75b34a43a050445fc196415122d1d[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Mon Mar 2 19:25:41 2026 +0100
+
+    test: add exception handling test for SubscriberRepository
+    
+    * mock runQuery to throw RepositoryException
+    * verify exception message and type in getAllEmails
+
+[33mcommit 88c8eaae9a1d4fa9774edb0b84ec74181a08af76[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Mon Mar 2 18:36:48 2026 +0100
+
+    test: add unit test for EmailNotificationObserver
+    
+    * create EmailNotificationObserverTest with Notifier mock
+    * verify if notifyAboutTimetableUpdate is called exactly once
+    * achieve 100% code coverage for Observer class
+
+[33mcommit cbab53d948b05525895de9ee7f68dc71eab3f8e7[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Mon Mar 2 18:18:44 2026 +0100
+
+    feat: add xdebug 3 to php container
+    
+    * install xdebug extension via pecl in Dockerfile
+    * add custom xdebug.ini with coverage and debug modes
+    * mount php configuration folder via docker-compose volumes
+    * enable code coverage reporting for phpunit
+
+[33mcommit 2984d7d013fa31b85d01ff3ef6fdc6ae1e16d8f7[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Mon Mar 2 14:16:10 2026 +0100
+
+    chore: setup docker environment
+    
+    * add php 8.2-fpm and nginx with /app workdir
+    * add mysql 8.0 with automatic database import
+    * add phpmyadmin on port 8080
+
+[33mcommit 68444e384abaefa5a0a0e6dab250af226c3274b4[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sun Mar 1 16:49:00 2026 +0100
+
+    test: implement full coverage for Router
+    
+    * add tests for successful route dispatching and parameter parsing
+    * add tests for NotFoundException and MethodNotAllowedException
+    * implement query string stripping test for clean URI matching
+    * achieve 100% coverage by testing edge cases and fail-safe exceptions
+
+[33mcommit 04f44ebb247cdcb1c88b3cbd49a4372cda434624[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sun Mar 1 16:03:16 2026 +0100
+
+    test: add route and server parameter handling to Request
+    
+    * add getServerParam and setRouteParams methods
+    * add unit tests for route data and server environment variables
+    * achieve 100% coverage for Request input data
+
+[33mcommit 9aac64f68ed2953437009444ec6306fd6f9398b3[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sat Feb 28 19:53:33 2026 +0100
+
+    update CSS background paths to include /public prefix
+
+[33mcommit 5aa8a831cd74bbbfbaa9f50fc9239297e6bdd83f[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sat Feb 28 19:34:41 2026 +0100
+
+    refactor: standardize notification system and service structure
+    
+    * rename NotificationService to Notifier and EmailService to Mailer
+    * move observer logic to Observable trait to clean up services
+    * organize factories into specialized sub-directories
+    * update Mailer to handle single delivery and Notifier to manage subscriber loops
+    * fix unit tests to match new class names and delivery flow
+
+[33mcommit 1dc3e19339b46d9efde2d859f362036a1cc5a250[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sat Feb 28 16:40:17 2026 +0100
+
+    feat: implement Observer pattern for timetable notifications
+    
+    * add TimetableObserverInterface and EmailNotificationObserver
+    * decouple TimetableService from NotificationService using attachment mechanism
+    * update TimetableServiceFactory to wire observers during service creation
+    * add unit tests to verify observer notification flow
+
+[33mcommit c41f5c59ab800ac44ded72d14cde004d86db5649[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Fri Feb 27 18:41:04 2026 +0100
+
+    refactor: extract Start module to separate service and factory
+    
+    * create StartService
+    * implement StartServiceFactory and StartControllerFactory
+    * clean up DashboardService and update unit tests
+
+[33mcommit f46fb45240bbdcce7802877a69787ce8218738da[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Fri Feb 27 18:34:00 2026 +0100
+
+    refactor: extract News module to separate service and factory
+    
+    * create NewsService
+    * implement NewsServiceFactory and NewsControllerFactory
+    * clean up DashboardService and update unit tests
+    * renamed GalleryServiceFactory to GalleryServiceFactoryTest
+
+[33mcommit 7789ad94733dd0c00e3cb4b21965c68efded7ce0[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Fri Feb 27 18:25:18 2026 +0100
+
+    refactor: extract important posts module to separate service and factory
+    
+    * create ImportantPostsService
+    * implement ImportantPostsServiceFactory and ImportantPostsControllerFactory
+    * clean up DashboardService and update unit tests
+
+[33mcommit b7c6abac5db39cd92ad14ef6480beb7ab2afd0fc[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Fri Feb 27 18:03:10 2026 +0100
+
+    refactor: extract gallery module to separate service and factory
+    
+    * create GalleryService
+    * implement GalleryServiceFactory and GalleryControllerFactory
+    * clean up DashboardService and update unit tests
+
+[33mcommit 2a86ba242353a6407445bd52c270549dd051bfce[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Fri Feb 27 17:32:56 2026 +0100
+
+    refactor: extract fees module to separate service and factory
+    
+    * create FeesService
+    * implement FeesServiceFactory and FeesControllerFactory
+    * clean up DashboardService and update unit tests
+
+[33mcommit e380886cdf0e0a78fb338dcc82d4cbd5e99ff76f[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Fri Feb 27 16:46:31 2026 +0100
+
+    refactor: extract contact module to separate service and factory
+    
+    * create ContactService
+    * implement ContactServiceFactory and ContactControllerFactory
+    * clean up DashboardService and update unit tests
+
+[33mcommit 07745a25d7651ee20ae4fac6fcf36f245bbecb84[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Fri Feb 27 16:36:03 2026 +0100
+
+    refactor: extract camp module to separate service and factory
+    
+    * create CampService
+    * implement CampServiceFactory and CampControllerFactory
+    * clean up DashboardService and update unit tests
+
+[33mcommit c36d194147961c256dc607024f1208dc5b81ec09[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Thu Feb 26 18:34:43 2026 +0100
+
+    refactor: extract timetable to separate service and factory
+    
+    * add AbstractDashboardService with generic crud methods
+    * create TimetableService with dedicated NotificationService logic
+    * implement TimetableServiceFactory and TimetableControllerFactory
+    * clean up DashboardService and update unit tests
+
+[33mcommit 55c01d0fdd0b61a7223a55673ba06e2d39d42d20[m
+Merge: 7e6b796 327add4
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Wed Feb 25 19:52:55 2026 +0100
+
+    Merge branch 'feature/email-notifications'
+
+[33mcommit 7e6b796179034ea38f461f629b4f29ca5c0919d4[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Wed Feb 25 19:52:11 2026 +0100
+
+    update .gitignore
+
+[33mcommit 327add45c842d1c49754dd5c56e899362183f521[m[33m ([m[1;31morigin/feature/email-notifications[m[33m)[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Wed Feb 25 19:47:47 2026 +0100
+
+    refactor(arch): move notification logic to dedicated module
+    
+    * move EmailService and NotificationService to src/Notification
+    * update namespaces and use statements in all files
+
+[33mcommit 9429d51767c464865ced21cac2e8eb1b911a0133[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Wed Feb 25 19:18:48 2026 +0100
+
+    refactor(email): send individual emails and update tests
+    
+    * use foreach to send email to each user
+    * update tests to check every email address
+
+[33mcommit ec1bcbd91207199a2117519bd2b6b7d28a1e39c0[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Wed Feb 25 19:04:58 2026 +0100
+
+    feat(email): add HTML template for timetable notifications
+    
+    * create responsive HTML template in views/emails
+    * update NotificationService to load template using ob_start
+    * refactor tests to use stringContains instead of hardcoded HTML
+
+[33mcommit 394c37371bfbc56f499304565c1874bf64f3fe31[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Wed Feb 25 18:43:00 2026 +0100
+
+    feat(notifications): create NotificationService and integrate with dashboard
+    
+    * add NotificationService and NotificationServiceTest
+    * remove EmailService from TimetableController to keep it clean
+    * inject NotificationService into DashboardService
+    * update factories to build the new notification system
+
+[33mcommit a746f868eb31cddbb208e1a2732967e88dd341ae[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Wed Feb 25 17:52:02 2026 +0100
+
+    feat(subscribers): add repository to get subscriber emails
+    
+    * add SubscriberRepositoryTest to ensure it returns array of emails
+    * create SubscriberRepository with getAllEmails method
+
+[33mcommit d9ce721171c22ad6865862de0081eee5c1efe52b[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Tue Feb 24 19:22:07 2026 +0100
+
+    test: fix failing tests for new routing system
+    
+    * remove ActionResolver from AbstractControllerTest
+    * remove ActionResolver from AbstractDashboardControllerTest
+    * delete ActionResolverTest because class was removed
+    * update text and remove old routing tests in RequestTest
+
+[33mcommit eb7f36e86e83196705ec28e6ea438b23bae84734[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Tue Feb 24 18:39:21 2026 +0100
+
+    feat(email): add factory for email service and update dependencies
+    
+    * create EmailServiceFactory and its test
+    * inject EmailService into TimetableController using factory
+    * update TimetableControllerTest to mock EmailService
+
+[33mcommit 12827dbaabf726010dcf0036199ea2a669147378[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Tue Feb 24 18:11:01 2026 +0100
+
+    feat(email): add timetable update notification and refactor service
+    
+    * add sendTimetableUpdate method to EmailService
+    * implement dependency injection in EmailService constructor
+    * remove sendTestEmail method from service
+    * create EmailServiceTest to check BCC and subject logic
+    * remove temporary test email call from SiteController
+
+[33mcommit 4d0a48ce6b7352006daf97a511bc30060eb16b73[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Mon Feb 23 17:11:04 2026 +0100
+
+    feat(email): add Symfony Mailer and EmailService
+    
+    * install symfony/mailer package using composer
+    * add mail configuration file to .gitignore
+    * create EmailService to handle SMTP connections using Mailtrap
+
+[33mcommit e6f1c6e40059fe8d42c9ed05cb82572e998a6533[m[33m ([m[1;31morigin/refactor/routing[m[33m)[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sun Feb 22 19:32:17 2026 +0100
+
+    fix(dashboard): update image paths, menu links and add root route
+    
+    * fix image src paths to use absolute URLs so they load on nested pages
+    * update dashboard navigation menu to use new routing links
+    * add /dashboard route pointing to StartController in config/routes.php
+
+[33mcommit 383c894865e22dc35f8bc5bd44b3729d8ad91709[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sun Feb 22 19:21:14 2026 +0100
+
+    refactor: update Timetable module for new routing
+    
+    * add new routes for Timetable in config/routes.php
+    * update form actions to use new routing URLs
+    * fix TimetableController tests to match new routing logic
+
+[33mcommit 82c2c88804f173de20427a840d37664f98f3ad2b[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sun Feb 22 19:14:22 2026 +0100
+
+    refactor: update Start module for new routing
+    
+    * add new routes for Start in config/routes.php
+    * update form actions to use new routing URLs
+    * fix StartController tests to match new routing logic
+
+[33mcommit 969b72e05aa876037c70a4bfc30645bd3080cf1b[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sun Feb 22 19:07:42 2026 +0100
+
+    refactor: update News module for new routing
+    
+    * add new routes for News in config/routes.php
+    * update form actions to use new routing URLs
+    * fix NewsController tests to match new routing logic
+
+[33mcommit 8390f9c34e001dcf3a80505bbaa7359a3ff8d510[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sun Feb 22 19:01:07 2026 +0100
+
+    refactor: update Important Posts module for new routing
+    
+    * add new routes for Important Posts in config/routes.php
+    * update form actions to use new routing URLs
+    * fix ImportantPostsController tests to match new routing logic
+
+[33mcommit 0eb42e4f5b2365ad9d47968c38a1d058a396843e[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sun Feb 22 18:51:52 2026 +0100
+
+    refactor: update Gallery module for new routing and fix validation in Request
+    
+    * add new routes for Gallery in config/routes.php
+    * update AbstractDashboardController to use URLs for all redirects
+    * fix integer validation return types in Request class
+    * update all view links, partials, and form actions to use new routing URLs
+    * fix GalleryController tests to match new routing logic
+
+[33mcommit 22de38484dc86ac3e475e0685d725452043ebe31[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sun Feb 22 18:08:11 2026 +0100
+
+    refactor: update Fees module for new routing and fix redirect in index.php
+    
+    * remove indexAction from FeesController
+    * fix FeesControllerTest to match new routing logic
+    * update form action URL to /dashboard/fees/update in fees view
+    * fix redirect from /login to /auth/login when user is not logged in
+
+[33mcommit 8336a5bcf42a8b8013bf79538c82401387484f51[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sun Feb 22 01:52:33 2026 +0100
+
+    refactor: update Contact module for new routing and fix integer validation logic in Request
+    
+    * remove indexAction from ContactController
+    * fix CampControllerTest to match new routing logic
+    * update form action URL to /dashboard/camp/update in camp view
+    * remove early return for integer type in validate method
+    * allow maxLength and minLength validation for integers
+
+[33mcommit b87843aacb628482cf6b5a91f5dccbc2fa13e7cf[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sun Feb 22 01:41:34 2026 +0100
+
+    refactor: update Camp module and AbstractDashboardController for new routing
+    
+    * update generic updateAction in AbstractDashboardController to use slash paths
+    * add conditional ID check for edit routes in AbstractDashboardController
+    * remove indexAction from CampController
+    * fix CampControllerTest to match new routing logic
+    * update form action URL to /dashboard/camp/update in camp view
+
+[33mcommit 5e32d6254be4086c4b6c7f2a140363487c93e24b[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sun Feb 22 01:10:08 2026 +0100
+
+    feat(auth): add AuthController, routing and fix tests
+    
+    * add login and logout routes to config/routes.php
+    * update AuthController to use new routing system
+    * fix CSS and JS absolute paths in HTML layout
+    * remove ActionResolver from setUp methods
+    * update redirect links in test
+
+[33mcommit 47a9627b0aa17546f9728c94ae5d47fecc6733b9[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sat Feb 21 22:26:54 2026 +0100
+
+    test(site): fix SiteControllerTest for new routing system
+    
+    * replace getQueryParam with getRouteParam in gallery and news tests
+    * remove ActionResolver mock from setUp method
+    * remove unused ActionResolver import
+    * update controller constructor in setUp
+
+[33mcommit fb47e229938b547e46faa529a3990cd4e76c73e8[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Fri Feb 20 17:09:09 2026 +0100
+
+    refactor(site): update routing and links for SiteController
+    
+    * add route definitions for SiteController in config/routes.php
+    * update href links in site views to use new URL paths
+    * remove old query string URLs from HTML templates
+
+[33mcommit 0e414797774dc0a64bd5b7654690d9023b9b4117[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Thu Feb 19 19:27:28 2026 +0100
+
+    refactor: clean up old routing system
+    
+    * delete ActionResolver class and sluger.php config
+    * remove ActionResolver from all factories and controllers
+    * remove run() method from AbstractController
+    * remove resolverControllerKey() from Request class
+    * update getSingleData() to use getRouteParam()
+
+[33mcommit 59a2a6d3d0691022a50eb031c1de09afa284b81e[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Wed Feb 18 19:58:37 2026 +0100
+
+    refactor(core): replace old routing with FastRoute implementation
+    
+    * implemented 'App\Core\Router' wrapper for 'nikic/fast-route' library
+    * updated 'index.php' to use Router for dispatching and Factory mapping
+    * refactored 'config/factories.php' from nested array to direct Controller-to-Factory map
+    * added 'config/routes.php' with initial route definitions
+    * added '.htaccess' to redirect all requests to the front controller
+
+[33mcommit cc65f81024ca5f773c556caee0a87bcb1e029209[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Mon Feb 16 21:38:57 2026 +0100
+
+    build(deps): install nikic/fast-route library
+    
+    * installed 'nikic/fast-route' via composer to handle routing
+    * updated composer.json and composer.lock
+
+[33mcommit 0f3a47373c94a59007e5665bb95efb4d27105b3f[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Tue Feb 10 13:23:52 2026 +0100
+
+     test(dashboard): add full test coverage for TimetableController
+    
+    * added unit tests for CRUD actions (index, edit, create, show, delete)
+    * implemented integration tests for parent method 'getSingleData'
+    * used Reflection to cover protected handle and data mapping methods
+    * validated interaction with TimetableService and Request
+
+[33mcommit 3217568d41b711fb2bde6e3ccb467eb282a6ddb1[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Mon Feb 9 13:29:51 2026 +0100
+
+    test(dashboard): add full test coverage for StartController
+    
+    * added unit tests for CRUD actions (index, edit, create, show, delete)
+    * implemented integration tests for parent method 'getSingleData'
+    * used Reflection to cover protected handle and data mapping methods
+    * validated interaction with StartService and Request
+
+[33mcommit 1a1cc1b8c567c1de5ffd4800efc5f59205e243a5[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Fri Feb 6 12:24:27 2026 +0100
+
+    test(dashboard): add full test coverage for NewsController
+    
+    * added unit tests for CRUD actions (index, edit, create, show, delete)
+    * implemented integration tests for parent method 'getSingleData'
+    * used Reflection to cover protected handle and data mapping methods
+    * validated interaction with NewsService and Request
+
+[33mcommit 2d7d87d879c9f3ecd24c59da6b3a302ce3c4c591[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Thu Feb 5 13:53:44 2026 +0100
+
+    test(dashboard): add full test coverage for ImportantPostsController
+    
+    * added unit tests for CRUD actions (index, edit, create, show, delete)
+    * implemented integration tests for parent method 'getSingleData'
+    * used Reflection to cover protected handle and data mapping methods
+    * validated interaction with ImportantPostsService and Request
+
+[33mcommit 2356abc4969908a52f0f78a10bf139eb7bafc0d1[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Wed Feb 4 14:35:03 2026 +0100
+
+    test(dashboard): add full test coverage for GalleryController
+    
+    * added unit tests for CRUD actions (index, edit, create, show, delete)
+    * implemented integration tests for parent method 'getSingleData'
+    * used Reflection to cover protected handle and data mapping methods
+    * validated interaction with GalleryService and Request
+
+[33mcommit 73cc1df2d7475bfdf1a806acaf52376f25fc7201[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Tue Feb 3 21:19:57 2026 +0100
+
+    test(dashboard): add full tests for FeesController
+    
+    * added unit tests for index and edit actions
+    * used Reflection to test protected methods (getModuleName, handleUpdate)
+    * tested data mapping in getDataToUpdate using 'willReturnArgument'
+    * fixed FeesManagementServiceInterface to extend SharedGetDataServiceInterface
+
+[33mcommit 796982f566d2069bdc2e7f7539e868ce9d172d3b[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Mon Feb 2 12:38:58 2026 +0100
+
+    test(dashboard): add full tests for ContactController
+    
+    * added unit tests for index and edit actions
+    * used Reflection to test protected methods (getModuleName, handleUpdate)
+    * tested data mapping in getDataToUpdate using 'willReturnArgument'
+    * fixed ContactManagementServiceInterface to extend SharedGetDataServiceInterface
+
+[33mcommit eb04b94a54f8af77970bbf28b9e22f966854941b[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sun Feb 1 21:55:38 2026 +0100
+
+    test(dashboard): add full tests for CampController
+    
+    * added unit tests for index and edit actions
+    * used Reflection to test protected methods (getModuleName, handleUpdate)
+    * tested data mapping in getDataToUpdate using 'willReturnArgument'
+    * fixed CampManagementServiceInterface to extend SharedGetDataServiceInterface
+
+[33mcommit b1391426fbd1e66a337b305cc54d56c9773fae30[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sat Jan 31 18:39:26 2026 +0100
+
+    refactor(core): extract PDO creation and update database tests
+    
+    * extracted PDO creation to a protected method in Database class
+    * updated tests to use partial mocks (getMockBuilder) for connection logic
+    * added a new test using sqlite::memory to cover the protected createConnection method
+    * added TestDatabase helper class to expose protected methods
+
+[33mcommit b80b0faff57f24155de9b48527ce213897fbc11e[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Fri Jan 30 14:48:45 2026 +0100
+
+    test(dashboard): add full tests
+    
+    * added tests for updating, deleting, publishing, and moving items
+    * verified that getSingleData and renderPage work correctly
+    * added @codeCoverageIgnore to default methods
+
+[33mcommit d3e9d94b87e8df8049ea89674b9a1186c7232296[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Thu Jan 29 20:05:08 2026 +0100
+
+    test(dashboard): add tests for storeAction and update middleware injection
+    
+    * added unit tests for creating items (storeAction)
+    * checked redirections for success and validation error scenarios
+    * updated AbstractDashboardController to use CsrfMiddleware in the constructor
+    * updated dashboard factories to pass the middleware
+    * created a helper TestController to test the abstract class
+
+[33mcommit 6b9ace464c8cba6b52e88c82f1771fafb1c8ce09[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Wed Jan 28 16:28:08 2026 +0100
+
+    test(controller): add tests for AbstractController core logic
+    
+    * verified that the run method executes the correct action
+    * verified that the run method throws an error if action is missing
+    * checked that flash messages are correctly saved to session
+    * checked that flash messages are retrieved and removed from session
+    * created a helper TestController class to expose protected methods
+
+[33mcommit 094dfd9ab2af5e2c912aabff979eed9afb499c29[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Tue Jan 27 19:12:29 2026 +0100
+
+    test(auth): add tests for login/logout and update factory dependency
+    
+    * added tests for logging in with correct and wrong passwords
+    * verified that logout removes the user session
+    * checked redirections for logged-in and logged-out users
+    * checked error messages appear when login fails
+    * updated AuthControllerFactory to inject CsrfMiddleware into AuthController
+
+[33mcommit ec1838882193894a0a543f08cf32fb168713f975[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Mon Jan 26 13:03:26 2026 +0100
+
+    test(controller): add unit tests for SiteController and remove redundant content parameter in contactAction
+    
+    * covered all public actions (index, news, gallery, timetable, etc.)
+    * verified correct data fetching from SiteService
+    * mocked dependencies for Request, View, and ActionResolver
+    * ensured correct parameters are passed to the view rendering method
+    * achieved 100% code coverage for SiteController
+    * removed duplicate getContact() call in SiteController::contactAction
+    * updated view to use 'contact' variable directly
+
+[33mcommit f2d232bb11a5d99a8bb81ff334ad2b8e20428f45[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sun Jan 25 14:52:44 2026 +0100
+
+    test(factories): add tests for Auth, Site and Dashboard controller factories
+    
+    * added tests for AuthControllerFactory and SiteControllerFactory
+    * added tests for all Dashboard controller factories (Camp, Contact, Fees, Gallery, ImportantPosts, News, Start, Timetable)
+    * verified correct controller instantiation using mocked dependencies
+    * achieved 100% code coverage for controller factories
+
+[33mcommit ef29d362d1d6514228092baedf41fd376527204f[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sat Jan 24 16:33:29 2026 +0100
+
+    test(factories): add tests for service factories
+    
+    * created tests for AuthServiceFactory, DashboardServiceFactory, and SiteServiceFactory
+    * verified that createService methods return correct service instances
+    * implemented PDO mocking to isolate unit tests
+    * achieved 100% code coverage for all service factories
+
+[33mcommit 472bfa4bbb0b7c50376da0a893a192ad4a706b15[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sat Jan 24 16:12:43 2026 +0100
+
+    Renamed DatabaseTest to DatabaseConnectionTest
+
+[33mcommit a71c6fc993dfce3443768cd253bb3631e3bbe645[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Fri Jan 23 14:12:00 2026 +0100
+
+    test(core): add tests for ErrorHandler rendering logic and decouple exit logic
+    
+    * created temporary templates in setUp for testing
+    * verified detailed output in development mode
+    * verified template inclusion in production mode
+    * verified fallback message when template is missing
+    * validated path trimming in constructor
+    * extracted exit statement to protected terminate() method
+    * added @codeCoverageIgnore for terminate method
+    * added unit tests for handle() method logic
+    * verified routing to 404.php for NotFoundException
+    * verified routing to 500.php for generic exceptions
+    * achieved 100% code coverage for ErrorHandler
+
+[33mcommit 3ed6ea5bba297812da20e1a185dbdb887dead427[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Fri Jan 23 14:01:31 2026 +0100
+
+    test(core): add tests for validateFile in Request class
+    
+    * covered missing file
+    * covered upload error handling
+    * covered invalid mime type validation using temp files
+    * verified file size limits
+    * verified successful file validation path
+
+[33mcommit ed297f4d85eaf6bac6bd71f981a9f7823b8e55a3[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Fri Jan 23 13:48:13 2026 +0100
+
+    test(core): add tests for Database connection
+    
+    * verified that RepositoryException is thrown when connection fails
+    * verified that successful connection returns valid PDO instance
+
+[33mcommit db1fa7d062889fa620d2381127d52e48ea3493a3[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Thu Jan 22 13:24:56 2026 +0100
+
+    test(dashboard): add tests for CRUD operations and position logic
+    
+    * added tests for creating and deleting posts
+    * verified position management (increment and decrement)
+    * covered status updates (publish/unpublish)
+    * added tests for gallery image insertion
+    * verified proper error handling for invalid tables and data
+
+[33mcommit f8bc84858c7aa64f5e4185a5d7259512b100fdac[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Wed Jan 21 14:59:17 2026 +0100
+
+    test(dashboard): add tests for DashboardRepository
+    
+    * created initial test setup with SQLite in-memory database
+    * covered data fetching, editing, and position changing
+    * verified exception handling for missing records and tables
+
+[33mcommit 97449b06bf4ca84e95ff85748e908c06b5e5089a[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Tue Jan 20 17:10:20 2026 +0100
+
+    test(site): add tests for SiteRepository
+    
+    * set up SQLite in-memory database with news and gallery tables
+    * added tests for data fetching, pagination, and counting
+    * verified filtering by status and category
+    * achieved 100% code coverage
+
+[33mcommit 96ba6a0334ffc0e6e243773b9350eb697c879ae5[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Mon Jan 19 13:33:24 2026 +0100
+
+    test(auth): add tests for AuthRepository
+    
+    * added SQLite setup for testing user data
+    * tested fetching user by login
+    * verified empty result when user does not exist
+    * checked exception handling for database errors
+
+[33mcommit 8e45d65df5a699a35d6146e2d6dbdd84f557a293[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Mon Jan 19 13:15:03 2026 +0100
+
+    test(repository): complete tests to reach 100% coverage
+    
+    * covered transaction logic (commit, rollback)
+    * added tests for array parameter binding
+    * verified exception handling for missing tables
+    * achieved full code coverage for AbstractRepository
+
+[33mcommit c0dea11b934faac3b8fdd58f8451d7af3ae53d7a[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sun Jan 18 22:14:29 2026 +0100
+
+    test(repository): add tests for AbstractRepository
+    
+    * added SQLite in-memory database for testing
+    * created a helper class to test protected methods
+    * verified SQL queries and timetable sorting logic
+
+[33mcommit b4d5ab2700a9e43e450974f9eea4138c3445ed2a[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sat Jan 17 15:57:01 2026 +0100
+
+    refactor(core): improve database connection
+    
+    * extracted database connection logic to a dedicated `Database` class
+    * updated `AbstractRepository` to accept a `PDO` object in constructor
+    * updated all Controller and Service factories to pass the `PDO` instance
+    * removed MySQL connection from repositories
+
+[33mcommit fac1487058b3053dc4a1fc456fcb7aababe0c20b[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Fri Jan 16 15:32:59 2026 +0100
+
+    test(site-service): add full tests for SiteService
+    
+    * tested news pagination logic (page limits and empty list)
+    * tested front page logic for splitting posts
+    * added tests for gallery, contact, and timetable
+    * checked error handling for all methods
+
+[33mcommit a64b2f7a671ce6e6330e5e417d6c30211d16da1b[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Fri Jan 16 14:05:32 2026 +0100
+
+    test(auth-service): add unit tests for login logic
+    
+    * added test for successful login and session creation
+    * added tests for invalid login
+    * added tests for invalid password
+    * verified ServiceException is thrown when repository fails
+
+[33mcommit 7714f8d2119e913df2b889967868d7c052869ac6[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Thu Jan 15 14:41:09 2026 +0100
+
+    test(dashboard-service): reach 100% coverage and organize tests
+    
+    * added missing tests to cover all methods (Main Page, Timetable, etc.)
+    * grouped tests into clear sections using comments
+    * fixed naming mistakes and typos
+
+[33mcommit 4e20b84c7618093479ddf11b6550cf729e7a2352[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Wed Jan 14 20:58:08 2026 +0100
+
+    test(dashboard-service): complete test for addImage
+    
+    * added tests for gallery creation and file upload integration
+    * added failure scenarios for file upload (missing file/upload error)
+    * verified transaction rollback mechanisms across all modifying actions
+
+[33mcommit 799ca160aafd5324690436b946578c9e2888f1e6[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Wed Jan 14 20:16:28 2026 +0100
+
+    test(dashboard-service): add unit tests for moveNews logic
+    
+    * added tests for moving post UP and DOWN
+    * added edge case test when neighbor post is missing
+    * verified transaction rollback on move error
+
+[33mcommit d11d889fb07287a8ac0a73bfa0385a9f09c6aec0[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Tue Jan 13 19:30:42 2026 +0100
+
+    test(dashboard-service): add unit tests for news CRUD operations
+    
+    * configured test environment with repository and file handler mocks
+    * added tests for createNews covering successful transaction and rollback on failure
+    * added test for deleteNews verifying post retrieval and position decrement
+    * added tests for updateNews, getAllNews, and publishedNews data flow
+
+[33mcommit 741e705e00ea50b0234eb625b9e20c9d8857c2b8[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Tue Jan 13 18:29:05 2026 +0100
+
+    refactor(middleware): clean up csrf logic and add tests
+    
+    * removed exit and header code from middleware
+    * index.php now catches error and redirects
+    * added tests to check if token works
+
+[33mcommit 8d903c2a37ac0bcf33159d8f52f57261195b308e[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Mon Jan 12 19:37:15 2026 +0100
+
+    test(core): update View logic and add tests
+    
+    * View now accepts path in constructor
+    * added tests using temp folder
+
+[33mcommit e50751b6bf24212dfe8a64f272be849190b9188b[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sun Jan 11 18:14:21 2026 +0100
+
+    chore: configure ignore rules and phpunit
+
+[33mcommit 828bbf68a29bb471c3dbd79a786ad43da66d78ae[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sun Jan 11 17:45:46 2026 +0100
+
+    test(core): add unit tests for ActionResolver
+    
+    * Add tests for default action resolution.
+    * Add tests for input sanitization (removing non-letters).
+    * Add tests for slug mapping logic (translation and fallback).
+    * Mock Request dependency.
+
+[33mcommit dde457d3afe27537e9f51d439004a759a4676769[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sun Jan 11 17:17:40 2026 +0100
+
+    test(core): add unit tests for FileHandler and improve input validation
+    
+    * Add tests for successful image upload.
+    * Add tests for directory creation and file system errors.
+    * Add validation for distorted file arrays in FileHandler class.
+    * Add namespace mocking to simulate move_uploaded_file and mkdir.
+
+[33mcommit 00ba0298b65d17f754db119af6757a6c56c3b7ff[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sat Jan 10 21:10:51 2026 +0100
+
+    test(core): add unit tests for Request class
+    
+    * Add tests for GET and POST parameters retrieval.
+    * Add tests for session handling (get, set, remove).
+    * Add tests for controller resolution logic (resolverControllerKey).
+    * Add validation tests (required fields, integer type, string length).
+    * Add tests for HTTP method detection (isPost, hasPost, getMethod).
+
+[33mcommit 8f14f3352be083872785459e94568843453d0015[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sat Jan 10 18:52:01 2026 +0100
+
+    chore(tests): setup PHPUnit testing environment
+    
+    * Install PHPUnit as a development dependency.
+    * Add basic configuration in phpunit.xml.
+    * Add ExampleTest.php to check if tests are running.
+    * Update composer.json and composer.lock with new packages.
+
+[33mcommit 2b3a9444b4d41b034487bb2f5e364532f2e68395[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Wed Oct 22 15:05:45 2025 +0200
+
+    refactor(Core): Improve DI, views, and add URL slug mapping
+    This commit includes major improvements to dependency injection, the view layer, and routing for the public site.
+    Key changes:
+    -Switched from custom autoloader to Composer's `vendor/autoload.php`. Configured error display based on environment (`dev`/`prod`). Improved `FileHandler` permissions (`mkdir 0755`, `chmod 0644`). Moved authentication check out of controller constructors.
+    -Injected core dependencies (`View`, `ActionResolver`, `FileHandler`) into constructors instead of using `new` inside classes.
+    -Removed direct access to the PDO connection (`->con`) from the `DashboardService`. Added `beginTransaction`, `commit`, `rollBack` methods to `AbstractRepository`.
+    -Fixed double `method_exists` check in `AbstractController::run`. Corrected `dahboard` typos. Removed magic redirect for '/'. Standardized login URL to `?auth&action=login`.
+    -Added URL slug mapping for the public site (e.g., `?action=aktualnosci` maps to `newsAction`) using a config file and the `ActionResolver`.
+    -Replaced `Request::getParam()` and `Request::postParam()` with clearer methods: `getQueryParam()` (`$_GET`) and `getFormParam()` (`$_POST`). Updated code accordingly.
+    -Fixed meta description and canonical URL logic. Added `loading='lazy'` and improved `alt` attributes for images."
+
+[33mcommit d4ed8e693ddf7534104d7f978080efa6a4511bba[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Thu Oct 16 18:53:32 2025 +0200
+
+    refactor: Improve routing and controller flexibility
+    This commit fixes several core architectural issues to make the code cleaner, more consistent, and easier to work with.
+    Key changes include:
+    - Simplified the `ActionResolver`. It no longer needs large alias lists and just follows a simple `action=...` rule for all controllers.
+    - Improved error handling. The app now shows a proper 404 'Not Found' page for bad URLs (like a wrong action or missing ID) instead of silently redirecting. This makes bugs much easier to find.
+    - Made the login URL consistent with the rest of the app (now `?auth&action=login`).
+    - Renamed the default action from `startAction` to `indexAction` in all controllers for better consistency.
+    - Reordered methods in all classes to follow a standard structure (properties, constructor, public, protected, private).
+    - Introduced the `getTableName()` method in the base controller to handle modules where the URL name and table name differ (like 'start' vs 'main_page_posts').
+    - Replaced direct `header('location: ...')` calls with the `this->redirect()` method in the `AuthController` to use the application's core logic."
+
+[33mcommit 36fb95834490a1d93d384523b143bbfe927749af[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Tue Oct 14 18:58:18 2025 +0200
+
+    refactor(Dashboard): Introduce factories and split dashboard controller
+    This is a big refactor to clean up the code. The main DashboardController was getting too large, so it's now split into smaller, more focused controllers like NewsController and FeesController.
+    Here are the key changes:
+    Made a base AbstractDashboardController to handle common tasks like creating, updating, and deleting
+    Added separate interfaces for each module (like NewsManagementServiceInterface) to make the code more flexible
+    Reorganized the folder structure. Controllers, factories, and services are now grouped in `Dashboard/` subfolders to keep things tidy
+    Cleaned up the view files by creating reusable 'partials' for forms and lists. This removes a lot of repeated code
+    duced the Factory pattern to create controllers and handle their dependencies. This makes the code much cleaner.
+
+[33mcommit 5854cd4f8fb6b2bbb069be143ae8fd0723ffa76a[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sun Sep 21 21:29:56 2025 +0200
+
+    Update Readme file and database file
+
+[33mcommit 2c367f2f2546774f683416ce11245893df3fafcb[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sun Sep 21 21:04:39 2025 +0200
+
+    Update Readme file and add database file
+
+[33mcommit c6c783ce6319197d2f8f14bead2085f567f8d425[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sun Sep 21 20:23:16 2025 +0200
+
+    Update project Readme file
+
+[33mcommit 4837fb410fa07bc18d08db31227c944bc500ed6f[m
+Author: Krzyszof Kuklinski <krzyszof@laptop-krzyszof.home>
+Date:   Sat Sep 13 17:21:51 2025 +0200
+
+    refactor: Unify exception handling across the entire application
+
+[33mcommit 6b2200a078c42005b1a52a8288d5dca0d7faf109[m
+Author: Krzyszof Kuklinski <krzyszof@laptop-krzyszof.home>
+Date:   Wed Sep 10 17:39:32 2025 +0200
+
+    Rename 'oplaty' to 'skladki' and update exam requirements
+
+[33mcommit f09bdbfa174cbbc1f6ed688505a1cd7c2e3cb9de[m
+Author: Krzyszof Kuklinski <krzyszof@laptop-krzyszof.home>
+Date:   Tue Sep 9 20:27:09 2025 +0200
+
+    Chore: fix minor bugs and typos
+    
+    Corrected small mistakes in code and comments
+    
+    No functional changes
+
+[33mcommit 9901b556d0d83e720203debf4c3e5fae7d05dc41[m
+Author: Krzyszof Kuklinski <krzyszof@laptop-krzyszof.home>
+Date:   Tue Sep 9 17:57:55 2025 +0200
+
+    Fix pagination
+
+[33mcommit 1fb60974bdf2106c56623981b22cd06a088018e9[m
+Author: Krzyszof Kuklinski <krzyszof@laptop-krzyszof.home>
+Date:   Tue Sep 9 17:29:57 2025 +0200
+
+    Refactor: restructure Auth and Repository layer
+    
+    Split AuthModel into AuthRepository (DB) and AuthService (logic)
+    
+    Rename AbstractModel -> AbstractRepository
+    
+    Rename folder Model -> Repository
+
+[33mcommit 63ac3ae9eb55a9f820497b9abff21a170d9a6b97[m
+Author: Krzyszof Kuklinski <krzyszof@laptop-krzyszof.home>
+Date:   Mon Sep 8 21:12:25 2025 +0200
+
+    Refactor: extracted Repository, Service from ContentModel
+    
+    SiteRepository ->  SQL operations
+    
+    SiteService ->  business logic
+
+[33mcommit 4dab5f0def087984a636101c5ff41f0a16575217[m
+Author: Krzyszof Kuklinski <krzyszof@laptop-krzyszof.home>
+Date:   Mon Sep 8 19:47:40 2025 +0200
+
+    Refactor: extracted Repository, Service and FileHandler from DashboardModel
+    
+    DashboardRepository ->  SQL operations
+    
+    DashboardService ->  business logic
+    
+    FileHandler ->  file upload and validation
+
+[33mcommit 8b77b3557f4e62ef34b4ea3e638efb040ec73b98[m
+Author: Krzyszof Kuklinski <krzyszof@laptop-krzyszof.home>
+Date:   Sun Sep 7 18:21:13 2025 +0200
+
+    Improve gallery, validation, and CSRF handling
+    
+    - Add sorting for gallery on the homepage
+    - Fix input validation and add file validation
+    - Extract CSRF verification to dedicated middleware
+
+[33mcommit 64902717bd15bcd2b515df4ab4bcbb02be6a1615[m
+Author: Krzyszof Kuklinski <krzyszof@laptop-krzyszof.home>
+Date:   Sun Sep 7 13:23:57 2025 +0200
+
+    Add image upload and display functionality
+    
+    - Added ability to upload images with dashboard form
+    
+    - Implemented image storage in model and database
+    
+    - Display images on the gallery page
+    
+    - Added proper form handling for file inputs (multipart/form-data)
+    
+    - Updated model to handle image insertion and validation
+
+[33mcommit c9e6db2f7aeff0b1f0f149217e015911d83c31a1[m
+Author: Krzyszof Kuklinski <krzyszof@laptop-krzyszof.home>
+Date:   Fri Sep 5 20:37:39 2025 +0200
+
+    Add record reordering with up/down arrows
+    
+    Added arrow buttons next to each record in the dashboard
+    
+    Implemented move operation (swap positions in DB)
+    
+    New records are inserted at position = 1, shifting others down
+    
+    Positions are updated automatically after deletion
+
+[33mcommit e088cf0ec71dc0944843e0d8f242e24b15d287f2[m
+Author: Krzyszof Kuklinski <krzyszof@laptop-krzyszof.home>
+Date:   Thu Sep 4 21:32:51 2025 +0200
+
+    Add validation system with field-specific error messages
+    
+    Add Request::validate method to collect errors
+    
+    Prepared errors to be displayed under corresponding form fields
+
+[33mcommit 26d0243973b0b940852b12f67d1e2a388c4d0e05[m
+Author: Krzyszof Kuklinski <krzyszof@laptop-krzyszof.home>
+Date:   Thu Sep 4 16:32:19 2025 +0200
+
+    Add flash message support for operations
+    
+    Adapted layout template and CSS to display flash messages. Added JS script to hide flash messages when clicking the X icon.
+
+[33mcommit 80ff79b9a59f54757dce6748940dffe32505260c[m
+Author: Krzyszof Kuklinski <krzyszof@laptop-krzyszof.home>
+Date:   Wed Sep 3 20:33:12 2025 +0200
+
+    Add renderPage method with global data for contact
+
+[33mcommit fa0abbe35304afb967d60d22c850cce738093761[m
+Author: Krzyszof Kuklinski <krzyszof@laptop-Krzyszof.local>
+Date:   Wed Sep 3 17:47:21 2025 +0200
+
+    Fix pagination for news
+
+[33mcommit 8182798be3a6992cb37ed1f70e23465fc2b38a33[m
+Author: Krzyszof Kuklinski <krzyszof@laptop-krzyszof.home>
+Date:   Wed Sep 3 16:37:02 2025 +0200
+
+    Fix form action for timetable operation (edit, show, delete) and update logo text
+
+[33mcommit 08f79eacbbda5c532bbe4bf0fd6a6c29acc4df2b[m
+Author: Krzyszof Kuklinski <krzyszof@laptop-krzyszof.home>
+Date:   Tue Sep 2 17:35:18 2025 +0200
+
+    Add centralized error handling with ErrorHandler
+    
+    Replaced inline exception catching in AbstractController with global ErrorHandler. Added 404 and 500 error pages.
+
+[33mcommit a61260464d9694cf297e63caed240a545daff23c[m
+Author: Krzyszof Kuklinski <krzyszof@laptop-krzyszof.home>
+Date:   Mon Sep 1 20:09:34 2025 +0200
+
+    Add CSRF protection to dashboard application
+    
+    - Add EasyCSRF library via Composer dependency
+    
+    - Update composer.json and composer.lock
+    
+    - Implement CSRF validation in all POST requests
+    
+    - Add CSRF tokens to all forms (fees, contact, camp, operations, login)
+    
+    - Update autoloader to support EasyCSRF library
+    
+    - Add CSRF validation in DashboardController and AuthController
+
+[33mcommit 2f712a1da30d8537d6141289fa950ece47a7a441[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Wed Aug 27 20:04:44 2025 +0200
+
+    Fix dashboard POST handling
+    
+    Corrected form action URLs and isPost logic so POST requests are recognized properly in DashboardController
+
+[33mcommit 495872551697fb6f64b49e96cea8cda261fdae5d[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sun Aug 17 19:20:25 2025 +0200
+
+    Refactor DashboardController
+    
+    1. Fixed getSingleData() method to correctly validate and cast post ID. 2. Added session check in constructor to redirect unauthenticated users. 3. Added explicit return types for all methods. 4. Unified edit and create logic into single methods
+
+[33mcommit 53feccd7483f2bc346b6f55c552d3d30bb68ce31[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sat Aug 16 19:54:19 2025 +0200
+
+    Unify create methods into a single generic create() and add AbstractModel
+    
+    Remove repetitive create methods (create, addDayToTimeTable),
+    replace them with one generic create method, and introduce AbstractModel
+    to encapsulate shared logic.
+
+[33mcommit d6288fd6dd1d38dd1e24357ac37a0757864f3c9a[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sat Aug 16 17:59:32 2025 +0200
+
+    Refactor: Unify edit methods into single generic edit()
+    
+    Removed repetitve edit methods (fees, timetable, camp, contact, main) and replaced them wiht one generic edit method. This reduces code duplication
+
+[33mcommit edc7fc0d5f47c1610aa31b31da0f5d44be8b3166[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Tue Aug 12 20:35:54 2025 +0200
+
+    Refactor: Implement runQuery method for safe SQL execution
+    
+    Added the runQuery method using PDO prepared statements with secure parameter binding
+
+[33mcommit 09946a231487367d4f0a33717079cc751367a766[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Thu Aug 7 20:04:02 2025 +0200
+
+    Refactor: Extract controller creation logic to ControllerFactory
+    
+    Moved the instantiation of controllers and their models from index.php to a dedicated ControllerFactory class
+
+[33mcommit 660f234ea15ee812bf8cd7f35ec65fde0fca95b0[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Wed Aug 6 19:07:18 2025 +0200
+
+    Refactor: Remove model instantiation from AbstractController
+    
+    This change removes the direct instantiation of models (ContentModel, DashboardModel, UserModel) inside the AbstractController.
+
+[33mcommit dde94a99913eb0809b2cf2a38bef88fc1e99f46d[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Tue Aug 5 19:44:55 2025 +0200
+
+    Refactor: AbstractController run method with centralized action resolution
+    
+    Moved action resolution logic to dedicated ActionResolver class.
+
+[33mcommit e5cdf39c2a2dc20772d6de62a4ceb571636ea316[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Mon Aug 4 18:30:07 2025 +0200
+
+    refactor: rename controllers methods to English
+
+[33mcommit d4362b32a69771a733f3f462b3ce8acaa416245f[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Mon Aug 4 17:59:16 2025 +0200
+
+    Improving the action attribute in forms
+
+[33mcommit 736b03ed95a7ae72815fa24a4ee83b0ee76bc116[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sat Aug 2 20:32:41 2025 +0200
+
+    Przeniesienie logiki logowania do AuthConroller
+
+[33mcommit 990d4307712ef55a1602228682c858bce7d51a27[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sat Aug 2 20:03:39 2025 +0200
+
+    Naprawa wyświetlania danych i nazewnictwa
+
+[33mcommit 88bf4b19768ee1e39849a57de1a45fd4f047177f[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Mon Jul 28 17:59:30 2025 +0200
+
+    Poprawki wyświetlania
+
+[33mcommit 5e93ea86f6e7b44236ec7fff5235ea9aa1056898[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Sun May 18 18:58:36 2025 +0200
+
+    naprawa przesuwania elementów w poziomie
+
+[33mcommit d67b6aae02e8307e7a5867b4f7497201fa2c9e08[m
+Author: KrzysztofKuKliński <zono.mrzono21@gmail.com>
+Date:   Wed May 14 20:09:10 2025 +0200
+
+    Dodanie paginacji na podstronie z aktualnościami
+
+[33mcommit 0cc3f4e53739e7e5b6c250826adeaaffe4ddc37a[m
+Author: zono21 <zono.mrzono21@gmail.com>
+Date:   Sat Apr 5 16:22:46 2025 +0200
+
+    Dodanie systemu autoryzacji użytkownika do dashboarda
+
+[33mcommit e8b935ba93df9d64cb5aa43fe6f872eba479fab9[m
+Author: zono21 <zono.mrzono21@gmail.com>
+Date:   Thu Mar 13 19:30:41 2025 +0100
+
+    Refaktoryzacja
+
+[33mcommit 9ba0df78543d2078de2d9ee997cffca075758837[m
+Author: zono21 <zono.mrzono21@gmail.com>
+Date:   Thu Feb 27 18:01:30 2025 +0100
+
+    -
+
+[33mcommit 4f2613530429778036f30b252b08d7860a992e0f[m
+Author: zono21 <zono.mrzono21@gmail.com>
+Date:   Thu Feb 27 17:51:28 2025 +0100
+
+    Projekt strony z dashboardem

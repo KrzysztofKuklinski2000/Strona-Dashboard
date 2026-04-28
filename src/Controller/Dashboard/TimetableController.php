@@ -4,6 +4,7 @@ namespace App\Controller\Dashboard;
 
 use App\Controller\Dashboard\Traits\HasDeleteAction;
 use App\Controller\Dashboard\Traits\HasPublishedAction;
+use App\Controller\Dashboard\Traits\HasSingleData;
 use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\Request;
@@ -14,7 +15,7 @@ use App\View;
 
 class TimetableController extends AbstractDashboardController
 {
-    use HasStoreAction, HasPublishedAction, HasUpdateAction, HasDeleteAction;
+    use HasStoreAction, HasPublishedAction, HasUpdateAction, HasDeleteAction, HasSingleData;
 
     public function __construct(
         private readonly TimetableManagementServiceInterface $service,
