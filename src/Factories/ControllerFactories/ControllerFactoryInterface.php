@@ -3,10 +3,9 @@
 namespace App\Factories\ControllerFactories;
 
 
-use App\Core\Request;
-use EasyCSRF\EasyCSRF;
+use App\Core\ContextController;
 use App\Controller\AbstractController;
 
 interface ControllerFactoryInterface {
-    public function createController(Request $request, EasyCSRF $easyCSRF): AbstractController;
+    public function createController(ContextController $contextController): AbstractController;
 }

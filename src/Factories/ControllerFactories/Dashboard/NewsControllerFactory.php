@@ -7,6 +7,7 @@ namespace App\Factories\ControllerFactories\Dashboard;
 
 use App\Controller\AbstractController;
 use App\Controller\Dashboard\NewsController;
+use App\Core\ContextController;
 use App\Core\Request;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\NewsServiceFactory;
@@ -17,25 +18,20 @@ use PDO;
 
 class NewsControllerFactory implements ControllerFactoryInterface
 {
-  private NewsServiceFactory $serviceFactory;
+    private NewsServiceFactory $serviceFactory;
 
-  public function __construct(PDO $pdo)
-  {
-    $this->serviceFactory = new NewsServiceFactory($pdo);
-  }
+    public function __construct(PDO $pdo)
+    {
+        $this->serviceFactory = new NewsServiceFactory($pdo);
+    }
 
-  public function createController(Request $request, EasyCSRF $easyCSRF): AbstractController
-  {
-    $service = $this->serviceFactory->createService();
+    public function createController(ContextController $contextController): AbstractController
+    {
+        $service = $this->serviceFactory->createService();
 
-    $view = new View();
-    $csrfMiddleware = new CsrfMiddleware($easyCSRF, $request);
-
-    return new NewsController(
-      $service,
-      $request,
-      $view,
-      $csrfMiddleware
-    );
-  }
+        return new NewsController(
+            $service,
+            $contextController
+        );
+    }
 }

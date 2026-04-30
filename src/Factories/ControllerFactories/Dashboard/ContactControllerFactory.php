@@ -7,6 +7,7 @@ namespace App\Factories\ControllerFactories\Dashboard;
 
 use App\Controller\AbstractController;
 use App\Controller\Dashboard\ContactController;
+use App\Core\ContextController;
 use App\Core\Request;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\ContactServiceFactory;
@@ -17,26 +18,20 @@ use PDO;
 
 class ContactControllerFactory implements ControllerFactoryInterface
 {
-  private ContactServiceFactory $serviceFactory;
+    private ContactServiceFactory $serviceFactory;
 
-  public function __construct(PDO $pdo)
-  {
-    $this->serviceFactory = new ContactServiceFactory($pdo);
-  }
+    public function __construct(PDO $pdo)
+    {
+        $this->serviceFactory = new ContactServiceFactory($pdo);
+    }
 
-  public function createController(Request $request, EasyCSRF $easyCSRF): AbstractController
-  {
-    $service = $this->serviceFactory->createService();
-    
-    $view = new View();
-    $csrfMiddleware = new CsrfMiddleware($easyCSRF, $request);
-    
+    public function createController(ContextController $contextController): AbstractController
+    {
+        $service = $this->serviceFactory->createService();
 
-    return new ContactController(
-      $service,
-      $request,
-      $view,
-      $csrfMiddleware
-    );
-  }
+        return new ContactController(
+            $service,
+            $contextController
+        );
+    }
 }

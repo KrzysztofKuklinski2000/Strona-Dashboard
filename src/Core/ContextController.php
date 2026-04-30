@@ -8,9 +8,9 @@ use App\View;
 readonly class ContextController
 {
     public function __construct(
-        public Request $request,
-        public View  $view,
-        private readonly CsrfMiddleware $csrfMiddleware
+        public Request        $request,
+        public View           $view,
+        public CsrfMiddleware $csrfMiddleware
     )
     {
     }

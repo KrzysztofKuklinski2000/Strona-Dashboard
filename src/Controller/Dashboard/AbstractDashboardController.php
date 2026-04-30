@@ -2,13 +2,11 @@
 
 namespace App\Controller\Dashboard;
 
+use App\Core\ContextController;
 use App\View;
-use App\Core\Request;
 use App\Traits\GetDataMethods;
 use App\Middleware\CsrfMiddleware;
-use App\Exception\NotFoundException;
 use App\Controller\AbstractController;
-use App\Service\Dashboard\SharedGetDataServiceInterface;
 
 abstract class AbstractDashboardController extends AbstractController
 {
@@ -16,13 +14,10 @@ abstract class AbstractDashboardController extends AbstractController
     use GetDataMethods;
 
     public function __construct(
-        Request                                 $request,
-        protected SharedGetDataServiceInterface $dataService,
-        View                                    $view,
-        protected CsrfMiddleware                $csrfMiddleware
+        ContextController $contextController,
     )
     {
-        parent::__construct($request, $view);
+        parent::__construct($contextController);
     }
 
     abstract protected function getModuleName(): string;

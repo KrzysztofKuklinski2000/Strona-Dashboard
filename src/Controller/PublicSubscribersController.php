@@ -2,38 +2,38 @@
 
 namespace App\Controller;
 
-use App\Core\Request;
+use App\Core\ContextController;
 use App\Exception\ServiceException;
-use App\Middleware\CsrfMiddleware;
 use App\Notification\Notifier;
 use App\Service\Dashboard\SubscribersService;
-use App\View;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
+use Exception;
 use Random\RandomException;
 
-class PublicSubscribersController extends AbstractController {
+class PublicSubscribersController extends AbstractController
+{
     public function __construct(
-        Request $request,
-        View $view,
-        private SubscribersService $service,
-        private CsrfMiddleware $csrfMiddleware,
-        private Notifier $notifier
-    ) {
-        parent::__construct($request, $view);
+        private readonly SubscribersService $service,
+        private readonly Notifier           $notifier,
+        ContextController                   $contextController,
+    )
+    {
+        parent::__construct($contextController);
     }
 
     /**
      * @throws InvalidCsrfTokenException
      * @throws RandomException
      */
-    public function subscribeAction(): void {
-        $this->csrfMiddleware->verify('public');
+    public function subscribeAction(): void
+    {
+        $this->csrfMiddleware->verify();
 
         $email = $this->request->validate('email', true, 'email');
 
         $consent = $this->request->getFormParam('terms_consent');
 
-        if($this->request->getErrors()) {
+        if ($this->request->getErrors()) {
             $this->setFlash('warning', 'Niepoprawny adres email.', 'public');
             $this->redirect('/');
             return;
@@ -54,8 +54,8 @@ class PublicSubscribersController extends AbstractController {
             $this->notifier->sendConfirmationEmail($email, $token);
 
             $this->setFlash('success', 'Dziękujemy za zapisanie się!', 'public');
-            
-        }catch(ServiceException $e) { 
+
+        } catch (ServiceException $e) {
             $this->setFlash('warning', $e->getMessage(), 'public');
         }
 
@@ -63,26 +63,28 @@ class PublicSubscribersController extends AbstractController {
     }
 
 
-    public function confirmAction(): void {
+    public function confirmAction(): void
+    {
         $token = $this->request->getQueryParam('token');
-        
+
         if (!$token) {
             $this->redirect('/?error=invalid_token');
             return;
         }
 
         try {
-            
+
             $this->service->activateSubscriber($token);
             $this->setFlash('success', 'Subskrypcja została potwierdzona! Oss!', 'public');
-        } catch (\Exception $e) {
+        } catch (Exception) {
             $this->setFlash('warning', 'Link aktywacyjny jest nieprawidłowy.', 'public');
         }
 
         $this->redirect('/');
     }
 
-    public function unsubscribeAction(): void {
+    public function unsubscribeAction(): void
+    {
         $token = $this->request->getQueryParam('token');
 
         if (!$token) {
@@ -94,7 +96,7 @@ class PublicSubscribersController extends AbstractController {
         try {
             $this->service->unsubscribe($token);
             $this->setFlash('success', 'Twoje dane zostały usunięte. Nie będziesz już otrzymywać powiadomień.', 'public');
-        } catch (ServiceException $e) {
+        } catch (ServiceException) {
             $this->setFlash('warning', 'Nie udało się przetworzyć prośby o wypisanie.', 'public');
         }
 

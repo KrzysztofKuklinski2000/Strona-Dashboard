@@ -6,6 +6,7 @@ namespace App\Factories\ControllerFactories\Dashboard;
 
 use App\Controller\AbstractController;
 use App\Controller\Dashboard\CampController;
+use App\Core\ContextController;
 use App\Core\Request;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\CampServiceFactory;
@@ -23,18 +24,13 @@ class CampControllerFactory implements ControllerFactoryInterface
     $this->serviceFactory = new CampServiceFactory($pdo);
   }
 
-  public function createController(Request $request, EasyCSRF $easyCSRF): AbstractController
+  public function createController(ContextController $contextController): AbstractController
   {
     $service = $this->serviceFactory->createService();
 
-    $view = new View();
-    $csrfMiddleware = new CsrfMiddleware($easyCSRF, $request);
-
     return new CampController(
       $service,
-      $request,
-      $view,
-      $csrfMiddleware
+      $contextController
     );
   }
 }

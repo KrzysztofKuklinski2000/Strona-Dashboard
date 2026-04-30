@@ -1,11 +1,14 @@
 <?php
 declare(strict_types=1);
 
+use App\Core\ContextController;
 use App\Core\Database;
 use App\Core\ErrorHandler;
 use App\Core\Request;
 use App\Core\Router;
 use App\Exception\NotFoundException;
+use App\Middleware\CsrfMiddleware;
+use App\View;
 use EasyCSRF\EasyCSRF;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 use EasyCSRF\NativeSessionProvider;
@@ -42,7 +45,7 @@ try {
 	[$controllerClass, $action] = $router->dispatch($request);
 
 	if(!isset($factories[$controllerClass])) {
-		throw new \Exception("Błąd konfiguracji: Brak fabryki dla kontrolera " . $controllerClass);
+		throw new Exception("Błąd konfiguracji: Brak fabryki dla kontrolera " . $controllerClass);
 	}
 
 	$factoryClass = $factories[$controllerClass];
@@ -50,8 +53,12 @@ try {
 	$database = new Database($configuration['db']);
 	$pdo = $database->connect();
 
+    $view = new View();
+    $csrfMiddleware = new CsrfMiddleware($easyCSRF, $request);
+    $contextController = new ContextController($request, $view, $csrfMiddleware);
+
 	$controllerFactory = new $factoryClass($pdo);
-	$controller = $controllerFactory->createController($request, $easyCSRF);
+	$controller = $controllerFactory->createController($contextController);
 
 	$uri = $request->getServerParam('REQUEST_URI');
 	$isDashboardRoute = str_starts_with($uri, '/dashboard');
@@ -62,7 +69,7 @@ try {
 	}
 
 	if (!method_exists($controller, $action)) {
-		throw new \Exception("Metoda $action nie istnieje w kontrolerze $controllerClass");
+		throw new Exception("Metoda $action nie istnieje w kontrolerze $controllerClass");
 	}
 
 	$controller->$action();
@@ -76,6 +83,6 @@ try {
 } catch (NotFoundException $e) {
 	http_response_code(404);
 	$errorHandler->renderErrorPage('404.php', $e);
-} catch (\Throwable $e) {
+} catch (Throwable $e) {
 	$errorHandler->handle($e);
 }

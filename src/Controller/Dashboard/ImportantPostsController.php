@@ -8,6 +8,7 @@ use App\Controller\Dashboard\Traits\HasPublishedAction;
 use App\Controller\Dashboard\Traits\HasSingleData;
 use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
+use App\Core\ContextController;
 use App\Exception\NotFoundException;
 use App\View;
 use App\Core\Request;
@@ -21,12 +22,10 @@ class ImportantPostsController extends AbstractDashboardController
 
     public function __construct(
         public ImportantPostsManagementServiceInterface $service,
-        Request                                         $request,
-        View                                            $view,
-        CsrfMiddleware                                  $csrfMiddleware
+        ContextController                               $contextController,
     )
     {
-        parent::__construct($request, $service, $view, $csrfMiddleware);
+        parent::__construct($contextController);
     }
 
     public function indexAction(): void

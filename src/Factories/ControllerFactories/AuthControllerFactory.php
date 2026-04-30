@@ -1,8 +1,9 @@
-<?php 
+<?php
 declare(strict_types=1);
 
 namespace App\Factories\ControllerFactories;
 
+use App\Core\ContextController;
 use PDO;
 use App\View;
 use App\Core\Request;
@@ -13,25 +14,23 @@ use App\Controller\AbstractController;
 use App\Factories\ServiceFactories\AuthServiceFactory;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 
-class AuthControllerFactory implements ControllerFactoryInterface {
-  private AuthServiceFactory $serviceFactory;
+class AuthControllerFactory implements ControllerFactoryInterface
+{
+    private AuthServiceFactory $serviceFactory;
 
 
-  public function __construct(PDO $pdo){
-    $this->serviceFactory = new AuthServiceFactory($pdo);
-  }
+    public function __construct(PDO $pdo)
+    {
+        $this->serviceFactory = new AuthServiceFactory($pdo);
+    }
 
-  public function createController(Request $request, EasyCSRF $easyCSRF): AbstractController {
-    $authService = $this->serviceFactory->createService();
+    public function createController(ContextController $contextController): AbstractController
+    {
+        $authService = $this->serviceFactory->createService();
 
-    $view = new View();
-    $csrfMidleware = new CsrfMiddleware($easyCSRF, $request);
-
-    return new AuthController(
-      $request,
-      $authService, 
-      $view,
-      $csrfMidleware
-    );
-  }
+        return new AuthController(
+            $authService,
+            $contextController,
+        );
+    }
 }

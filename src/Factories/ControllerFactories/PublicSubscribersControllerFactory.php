@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Factories\ControllerFactories;
 
 use App\Controller\PublicSubscribersController;
+use App\Core\ContextController;
 use App\Factories\ServiceFactories\Dashboard\SubscribersServiceFactory;
 use App\Middleware\CsrfMiddleware;
 use App\Core\Request;
@@ -10,26 +12,26 @@ use App\View;
 use EasyCSRF\EasyCSRF;
 use PDO;
 
-class PublicSubscribersControllerFactory {
+class PublicSubscribersControllerFactory implements ControllerFactoryInterface
+{
     private SubscribersServiceFactory $serviceFactory;
 
-    public function __construct(private PDO $pdo) {
+    public function __construct(private PDO $pdo)
+    {
         $this->serviceFactory = new SubscribersServiceFactory($this->pdo);
     }
 
-    public function createController(Request $request, EasyCSRF $easyCSRF): PublicSubscribersController {
+    public function createController(ContextController $contextController): PublicSubscribersController
+    {
         $service = $this->serviceFactory->createService();
-        $csrfMiddleware = new CsrfMiddleware($easyCSRF, $request);
-        $view = new View();
+
         $notifierFactory = new NotifierFactory($this->pdo);
         $notifier = $notifierFactory->createService();
 
         return new PublicSubscribersController(
-            $request,
-            $view,
             $service,
-            $csrfMiddleware,
-            $notifier
+            $notifier,
+            $contextController,
         );
     }
 }
