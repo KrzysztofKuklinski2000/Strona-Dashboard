@@ -1,140 +1,78 @@
-<?php 
+<?php
 declare(strict_types=1);
 
 namespace App\Core;
 
-class Request {
-	private array $errors = [];
-	private array $routeParams = [];
+class Request
+{
+    private array $routeParams = [];
 
-	public function __construct(
-		private array $get, 
-		private array $post, 
-		private array $server, 
-		private array $session) {}
+    public function __construct(
+        private readonly array $get,
+        private readonly array $post,
+        private readonly array $server,
+        private array          $session)
+    {
+    }
 
-	public function getSession(string $param, $default = null) {
-		return $this->session[$param] ?? $default;
-	}
+    public function getSession(string $param, $default = null): mixed
+    {
+        return $this->session[$param] ?? $default;
+    }
 
-	public function setSession(string $key, mixed $value): void {
-		$_SESSION[$key] = $value;
-		$this->session[$key] = $value;
-	}
+    public function setSession(string $key, mixed $value): void
+    {
+        $_SESSION[$key] = $value;
+        $this->session[$key] = $value;
+    }
 
-	public function removeSession(string $key): void{
-		unset($_SESSION[$key]);
-		unset($this->session[$key]);
-	}
+    public function removeSession(string $key): void
+    {
+        unset($_SESSION[$key]);
+        unset($this->session[$key]);
+    }
 
-	public function getQueryParam(string $name, $default = null): mixed {
-		return $this->get[$name] ?? $default;
-	}
+    public function getQueryParam(string $name, $default = null): mixed
+    {
+        return $this->get[$name] ?? $default;
+    }
 
-	public function getFormParam(string $name, $default = null): mixed {
-		return $this->post[$name] ?? $default;
-	}
+    public function getFormParam(string $name, $default = null): mixed
+    {
+        return $this->post[$name] ?? $default;
+    }
 
-	public function getServerParam(string $key, $default = null): mixed
-	{
-		return $this->server[$key] ?? $default;
-	}
+    public function getServerParam(string $key, $default = null): mixed
+    {
+        return $this->server[$key] ?? $default;
+    }
 
-	public function getMethod(): string {
-		return $this->server['REQUEST_METHOD'] ?? 'GET';
-	}
+    public function getFile(string $name, $default = null): mixed {
+        return $_FILES[$name] ?? $default;
+    }
 
-	public function isPost(): bool {
-		return $this->getMethod()=== 'POST';
-	}
+    public function getMethod(): string
+    {
+        return $this->server['REQUEST_METHOD'] ?? 'GET';
+    }
 
-	public function hasPost(): bool {
-		return !empty($this->post);
-	}
+    public function isPost(): bool
+    {
+        return $this->getMethod() === 'POST';
+    }
 
-	public function getErrors():array {
-		return $this->errors;
-	}
+    public function hasPost(): bool
+    {
+        return !empty($this->post);
+    }
 
-	public function validate(
-		string $param,
-		bool $required,
-		string $type = 'string',
-		?int $maxLength = null,
-		?int $minLength = null
-	): mixed {
-		$value = $this->getFormParam($param);
+    public function setRouteParams(array $params): void
+    {
+        $this->routeParams = $params;
+    }
 
-		if ($required && ($value === null || $value === '')) {
-			$this->errors[$param] = "To pole jest wymagane.";
-			return null;
-		}
-
-		if ($type === 'email') {
-			if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-				$this->errors[$param] = "Podany adres email jest nieprawidłowy.";
-				return null;
-			}
-		} elseif ($type === 'int') {
-			if (!is_numeric($value)) {
-				$this->errors[$param] = "Pole musi zawierać tylko liczby całkowite.";
-				return null;
-			}
-			$value = (int)$value;
-		} else {
-			$value = (string) $value;
-		}
-
-		if ($maxLength !== null && strlen((string)$value) > $maxLength) {
-			$this->errors[$param] = "Długość pola nie może być większa niż $maxLength znaków.";
-			return null;
-		}
-
-		if ($minLength !== null && strlen((string)$value) < $minLength) {
-			$this->errors[$param] = "Długość pola musi być większa niż $minLength znaków.";
-			return null;
-		}
-
-		if ($type === 'int') {
-			return (int) $value;
-		}
-
-		return (string) $value;
-	}
-
-	public function validateFile(string $field, array $allowedTypes = ['image/jpeg', 'image/png'], int $maxSize = 2_000_000): ?array {
-		if (!isset($_FILES[$field])) {
-			$this->errors[$field] = "Plik nie został przesłany";
-			return null;
-		}
-
-		$file = $_FILES[$field];
-
-		if ($file['error'] !== UPLOAD_ERR_OK) {
-			$this->errors[$field] = "Błąd przesyłania pliku";
-			return null;
-		}
-
-		if (!in_array(mime_content_type($file['tmp_name']), $allowedTypes)) {
-			$this->errors[$field] = "Nieprawidłowy typ pliku";
-			return null;
-		}
-
-		if ($file['size'] > $maxSize) {
-			$this->errors[$field] = "Plik jest zbyt duży (max ".($maxSize/1_000_000)." MB)";
-			return null;
-		}
-
-		return $file;
-	}
-
-	public function setRouteParams(array $params): void {
-		$this->routeParams = $params;
-	}
-
-	public function getRouteParam(string $key, $default = null): mixed {
-		return $this->routeParams[$key] ?? $default;
-	}
-
-	
+    public function getRouteParam(string $key, $default = null): mixed
+    {
+        return $this->routeParams[$key] ?? $default;
+    }
 }
