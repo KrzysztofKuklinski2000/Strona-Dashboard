@@ -6,6 +6,7 @@ use App\Core\Database;
 use App\Core\ErrorHandler;
 use App\Core\Request;
 use App\Core\Router;
+use App\Core\Validator;
 use App\Exception\NotFoundException;
 use App\Middleware\CsrfMiddleware;
 use App\View;
@@ -55,7 +56,8 @@ try {
 
     $view = new View();
     $csrfMiddleware = new CsrfMiddleware($easyCSRF, $request);
-    $contextController = new ContextController($request, $view, $csrfMiddleware);
+    $validator = new Validator();
+    $contextController = new ContextController($request, $view, $csrfMiddleware, $validator);
 
 	$controllerFactory = new $factoryClass($pdo);
 	$controller = $controllerFactory->createController($contextController);

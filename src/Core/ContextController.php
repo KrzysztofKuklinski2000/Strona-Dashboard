@@ -10,7 +10,8 @@ readonly class ContextController
     public function __construct(
         public Request        $request,
         public View           $view,
-        public CsrfMiddleware $csrfMiddleware
+        public CsrfMiddleware $csrfMiddleware,
+        public Validator      $validator,
     )
     {
     }
