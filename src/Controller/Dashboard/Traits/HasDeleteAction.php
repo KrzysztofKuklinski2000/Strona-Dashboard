@@ -31,7 +31,7 @@ trait HasDeleteAction
         $this->csrfMiddleware->verify('admin');
         $id = (int)$this->request->getFormParam('postId');
         $this->handleDelete($id);
-        $this->setFlash('success', 'Udało się usunąć', 'dashboard');
+        $this->setFlash('success', 'Udało się usunąć');
         $this->redirect('/dashboard/' . $this->getModuleName());
     }
 }

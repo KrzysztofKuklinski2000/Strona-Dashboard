@@ -5,6 +5,7 @@ namespace App\Controller\Dashboard\Traits;
 use App\Core\Request;
 use App\Middleware\CsrfMiddleware;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
+use JetBrains\PhpStorm\NoReturn;
 
 /**
  * @property Request $request
@@ -22,6 +23,7 @@ trait HasStoreAction
     /**
      * @throws InvalidCsrfTokenException
      */
+    #[NoReturn]
     public function storeAction(): void
     {
         if (!$this->request->isPost()) {
@@ -32,14 +34,14 @@ trait HasStoreAction
         $this->csrfMiddleware->verify('admin');
         $data = $this->getDataToCreate();
 
-        if (!$this->request->getErrors()) {
+        if (!$this->validator->getErrors()) {
             $this->handleCreate($data);
-            $this->setFlash("success", "Udało się utworzyć nowy wpis", 'dashboard');
+            $this->setFlash("success", "Udało się utworzyć nowy wpis");
             $this->redirect("/dashboard/" . $this->getModuleName());
             return;
         }
 
-        $this->setFlash("warning", $this->request->getErrors(), 'dashboard');
+        $this->setFlash("warning", $this->validator->getErrors());
         $this->redirect('/dashboard/' . $this->getModuleName() . '/create');
     }
 }

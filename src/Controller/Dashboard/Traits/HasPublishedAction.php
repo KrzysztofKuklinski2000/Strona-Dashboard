@@ -6,6 +6,7 @@ namespace App\Controller\Dashboard\Traits;
 use App\Core\Request;
 use App\Middleware\CsrfMiddleware;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
+use JetBrains\PhpStorm\NoReturn;
 
 /**
  * @property Request $request
@@ -22,6 +23,7 @@ trait HasPublishedAction
     /**
      * @throws InvalidCsrfTokenException
      */
+    #[NoReturn]
     public function publishedAction(): void
     {
         if (!$this->request->isPost()) {
@@ -33,7 +35,7 @@ trait HasPublishedAction
         $data = $this->getDataToPublished();
         $this->handlePublish($data);
 
-        $this->setFlash('info', 'Udało się zmienić status', 'dashboard');
+        $this->setFlash('info', 'Udało się zmienić status');
         $this->redirect('/dashboard/' . $this->getModuleName());
     }
 }

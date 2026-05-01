@@ -1,160 +1,532 @@
-<?php 
+<?php
 declare(strict_types=1);
+
 namespace App\Traits;
 
-trait GetDataMethods {
+use App\Core\Request;
+use App\Core\Validator;
 
-  protected function getDataToChangePostPosition(): array {
-    return [
-      'id' => $this->request->validate(param: 'id', required: true, type: 'int'),
-      'dir' => $this->request->validate(param:'dir', required: true, type:'string')
-    ];
-  }
+/**
+ * @property Request $request
+ * @property Validator $validator
+ */
+trait GetDataMethods
+{
+    protected function getDataToChangePostPosition(): array
+    {
+        return [
+            'id' => $this->validator->validate(
+                name: 'id',
+                value: $this->request->getFormParam('id'),
+                required: true,
+                type: 'int'
+            ),
 
-  protected function getPostDataToEdit(): array
-  {
-    return [
-      'id' => $this->request->validate(param: 'postId', required: true, type: 'int'),
-      'title' => $this->request->validate(param: 'postTitle', required:true, type: 'string', maxLength: 60, minLength:10),
-      'description' => $this->request->validate(param: 'postDescription', required: true,  type: 'string', maxLength:1000, minLength:20),
-      'updated' => date('Y-m-d')
-    ];
-  }
+            'dir' => $this->validator->validate(
+                name: 'dir',
+                value: $this->request->getFormParam('dir'),
+                required: true
+            ),
+        ];
+    }
 
-  protected function getDataToPublished() {
-    
-    return [
-      'published' => $this->request->validate(param: 'postPublished', required: true),
-      'id' => $this->request->validate(param: 'postId', required: true)
-    ];
-  }
+    protected function getPostDataToEdit(): array
+    {
+        return [
+            'id' => $this->validator->validate(
+                name: 'postId',
+                value: $this->request->getFormParam('postId'),
+                required: true,
+                type: 'int'
+            ),
 
-  
+            'title' => $this->validator->validate(
+                name: 'postTitle',
+                value: $this->request->getFormParam('postTitle'),
+                required: true,
+                minLength: 10,
+                maxLength: 60
+            ),
 
-  protected function getPostDataToCreate(): array
-  {
-    return [
-      'title' => $this->request->validate(param: 'postTitle', required:true, type: 'string', maxLength: 60, minLength:10),
-      'description' => $this->request->validate(param: 'postDescription', required: true,  type: 'string', maxLength:1000, minLength:20),
-      'created' => date('Y-m-d'),
-      'updated' => date('Y-m-d'),
-      'status' => 1,
-    ];
-  }
+            'description' => $this->validator->validate(
+                name: 'postDescription',
+                value: $this->request->getFormParam('postDescription'),
+                required: true,
+                minLength: 20,
+                maxLength: 1000
+            ),
 
-  protected function getDataToCampEdit(): array
-  {
-    return [
-      'city' => $this->request->validate(param: 'town', required: true, type:'string', maxLength:50),
-      'guesthouse' => $this->request->validate(param:'guesthouse', required: true, type: 'string', maxLength:70),
-      'city_start' => $this->request->validate(param:'townStart', required: true, type: 'string', maxLength:50),
-      'date_start' => $this->request->validate(param: 'dateStart', required: true),
-      'date_end' => $this->request->validate(param: 'dateEnd', required:true),
-      'time_start' => $this->request->validate(param: 'timeStart', required:true),
-      'time_end' => $this->request->validate(param: 'timeEnd', required:true),
-      'place' => $this->request->validate(param: 'place', required:true, type: 'string', maxLength:100),
-      'accommodation' => $this->request->validate(param: 'accommodation', required:true, type: 'string', maxLength:500),
-      'meals' => $this->request->validate(param: 'meals', required:true, type: 'string', maxLength:500),
-      'trips' => $this->request->validate(param: 'trips', required:true, type:'string', maxLength:500),
-      'staff' => $this->request->validate(param: 'staff', required:true, type: 'string', maxLength:500),
-      'transport' => $this->request->validate(param: 'transport', required:true, type: 'string', maxLength:500),
-      'training' => $this->request->validate(param: 'training', required:true, type: 'string', maxLength:500),
-      'insurance' => $this->request->validate(param: 'insurance', required:true, type: 'string', maxLength:500),
-      'cost' => $this->request->validate(param: 'cost', required:true, type: 'int'),
-      'advancePayment' => $this->request->validate(param: 'advancePayment', required:true, type:'int'),
-      'advanceDate' => $this->request->validate(param: 'advanceDate', required:true, type:'string'),
-    ];
-  }
+            'updated' => date('Y-m-d')
+        ];
+    }
 
-  protected function getDataToFeesEdit(): array
-  {
-    return [
-      'reduced_contribution_1_month' => $this->request->validate(param: 'n1', required:true, type:'int'),
-      'reduced_contribution_2_month' => $this->request->validate(param: 'n2', required:true, type:'int'),
-      'family_contribution_month' => $this->request->validate(param: 'n3', required:true, type:'int'),
-      'reduced_contribution_1_year' => $this->request->validate(param: 'n6', required:true, type:'int'),
-      'reduced_contribution_2_year' => $this->request->validate(param: 'n7', required:true, type:'int'),
-      'family_contribution_year' => $this->request->validate(param: 'n8', required:true, type:'int'),
-      'extra_information' => $this->request->validate(param: 'n10', required:true, type:'string'),
-      'fees_information' => $this->request->validate(param: 'n11', required:true, type:'string'),
-    ];
-  }
+    protected function getDataToPublished(): array
+    {
+        return [
+            'published' => $this->validator->validate(
+                name: 'postPublished',
+                value: $this->request->getFormParam('postPublished'),
+                required: true
+            ),
 
-  protected function getDataToContactEdit(): array
-  {
-    return [
-      'email' => $this->request->validate(param:'email', required: true, type:'string', maxLength:100),
-      'phone' => $this->request->validate('phone', required: true, type:'string', maxLength:9),
-      'address' => $this->request->validate(param: 'address', required: true, type:'string'),
-    ];
-  }
+            'id' => $this->validator->validate(
+                name: 'postId',
+                value: $this->request->getFormParam('postId'),
+                required: true
+            )
+        ];
+    }
 
-  protected function getDataToAddTimetable(): array
-  {
-    return [
-      'day' => $this->request->validate(param: 'day', required: true, type:'string', maxLength:20),
-      'city' => $this->request->validate(param: 'city', required: true, type:'string', maxLength:40),
-      'advancement_group' => $this->request->validate(param: 'group', required: true, type:'string', maxLength:40),
-      'place' => $this->request->validate(param: 'place', required: true, type:'string', maxLength:100),
-      'start' => $this->request->validate(param: 'startTime', required: true, type:'string'),
-      'end' => $this->request->validate(param: 'endTime', required: true, type:'string'),
-      'is_notify' => $this->request->getFormParam('is_notify')
-    ];
-  }
+    protected function getPostDataToCreate(): array
+    {
+        return [
+            'title' => $this->validator->validate(
+                name: 'postTitle',
+                value: $this->request->getFormParam('postTitle'),
+                required: true,
+                minLength: 10,
+                maxLength: 60
+            ),
 
-  protected function getDataToEditTimetable(): array
-  {
-    return [
-      "id" => $this->request->validate(param: 'id', required: true, type:'int'),
-      'day' => $this->request->validate(param: 'day', required: true, type:'string', maxLength:20),
-      'city' => $this->request->validate(param: 'city', required: true, type:'string', maxLength:40),
-      'advancement_group' => $this->request->validate(param: 'group', required: true, type:'string', maxLength:40),
-      'place' => $this->request->validate(param: 'place', required: true, type:'string', maxLength:100),
-      'start' => $this->request->validate(param: 'startTime', required: true, type:'string'),
-      'end' => $this->request->validate(param: 'endTime', required: true, type:'string'),
-      'is_notify' => $this->request->getFormParam('is_notify')
-    ];
-  }
+            'description' => $this->validator->validate(
+                name: 'postDescription',
+                value: $this->request->getFormParam('postDescription'),
+                required: true,
+                minLength: 20,
+                maxLength: 1000
+            ),
 
-  protected function getDataToPublishedTimetable() {
-    
-    return [
-      'published' => $this->request->validate(param: 'postPublished', required: true),
-      'id' => $this->request->validate(param: 'postId', required: true),
-      'is_notify' => $this->request->getFormParam('is_notify')
-    ];
-  }
+            'created' => date('Y-m-d'),
 
-  protected function getDataToAddImage():array {
-    return [
-      'category' => $this->request->validate(param: 'category', required: true, type:'string', maxLength:8),
-      'description' => $this->request->validate(param: 'description', required:  true, type: 'string', maxLength: 50, minLength: 10),
-      'image_name' => $this->request->validateFile('image_name'),
-      'created_at' => date('Y-m-d'),
-      'updated_at' => date('Y-m-d'),
-    ];
-  }
+            'updated' => date('Y-m-d'),
 
-  protected function getDataToEditImage():array {
-    return [
-      "id" => $this->request->validate(param: 'id', required: true, type:'int'),
-      'category' => $this->request->validate(param: 'category', required: true, type:'string', maxLength:8),
-      'description' => $this->request->validate(param: 'description', required:  true, type: 'string', maxLength: 50, minLength: 10),
-      'updated_at' => date('Y-m-d'),
-    ];
-  }
+            'status' => 1,
+        ];
+    }
 
-  protected function getEmailToCreate(): array {
-    return [
-      'email' => $this->request->validate(param: 'email', required: true, type: 'email', maxLength: 100)
-    ];
-  }
+    protected function getDataToCampEdit(): array
+    {
+        return [
+            'city' => $this->validator->validate(
+                name: 'town',
+                value: $this->request->getFormParam('town'),
+                required: true,
+                maxLength: 50
+            ),
 
-  protected function getEmailToUpdate(): array {
-    return [
-      'id' => $this->request->validate(param: 'id', required: true, type:'int'),
-      'email' => $this->request->validate(param: 'email', required: true, type: 'email', maxLength: 100),
-      'is_active' => (int) $this->request->validate(param: 'is_active', required: false)
-    ];
-  }
+            'guesthouse' => $this->validator->validate(
+                name: 'guesthouse',
+                value: $this->request->getFormParam('guesthouse'),
+                required: true,
+                maxLength: 70
+            ),
+
+            'city_start' => $this->validator->validate(
+                name: 'townStart',
+                value: $this->request->getFormParam('townStart'),
+                required: true,
+                maxLength: 50
+            ),
+
+            'date_start' => $this->validator->validate(
+                name: 'dateStart',
+                value: $this->request->getFormParam('dateStart'),
+                required: true
+            ),
+
+            'date_end' => $this->validator->validate(
+                name: 'dateEnd',
+                value: $this->request->getFormParam('dateEnd'),
+                required: true
+            ),
+
+            'time_start' => $this->validator->validate(
+                name: 'timeStart',
+                value: $this->request->getFormParam('timeStart'),
+                required: true
+            ),
+
+            'time_end' => $this->validator->validate(
+                name: 'timeEnd',
+                value: $this->request->getFormParam('timeEnd'),
+                required: true
+            ),
+
+            'place' => $this->validator->validate(
+                name: 'place',
+                value: $this->request->getFormParam('place'),
+                required: true,
+                maxLength: 100
+            ),
+
+            'accommodation' => $this->validator->validate(
+                name: 'accommodation',
+                value: $this->request->getFormParam('accommodation'),
+                required: true,
+                maxLength: 500
+            ),
+
+            'meals' => $this->validator->validate(
+                name: 'meals',
+                value: $this->request->getFormParam('meals'),
+                required: true,
+                maxLength: 500
+            ),
+
+            'trips' => $this->validator->validate(
+                name: 'trips',
+                value: $this->request->getFormParam('trips'),
+                required: true,
+                maxLength: 500
+            ),
+
+            'staff' => $this->validator->validate(
+                name: 'staff',
+                value: $this->request->getFormParam('staff'),
+                required: true,
+                maxLength: 500
+            ),
+
+            'transport' => $this->validator->validate(
+                name: 'transport',
+                value: $this->request->getFormParam('transport'),
+                required: true,
+                maxLength: 500
+            ),
+
+            'training' => $this->validator->validate(
+                name: 'training',
+                value: $this->request->getFormParam('training'),
+                required: true,
+                maxLength: 500
+            ),
+
+            'insurance' => $this->validator->validate(
+                name: 'insurance',
+                value: $this->request->getFormParam('insurance'),
+                required: true,
+                maxLength: 500
+            ),
+
+            'cost' => $this->validator->validate(
+                name: 'cost',
+                value: $this->request->getFormParam('cost'),
+                required: true,
+                type: 'int'
+            ),
+
+            'advancePayment' => $this->validator->validate(
+                name: 'advancePayment',
+                value: $this->request->getFormParam('advancePayment'),
+                required: true,
+                type: 'int'
+            ),
+
+            'advanceDate' => $this->validator->validate(
+                name: 'advanceDate',
+                value: $this->request->getFormParam('advanceDate'),
+                required: true,
+            ),
+        ];
+    }
+
+    protected function getDataToFeesEdit(): array
+    {
+        return [
+            'reduced_contribution_1_month' => $this->validator->validate(
+                name: 'n1',
+                value: $this->request->getFormParam('n1'),
+                required: true,
+                type: 'int'
+            ),
+
+            'reduced_contribution_2_month' => $this->validator->validate(
+                name: 'n2',
+                value: $this->request->getFormParam('n2'),
+                required: true,
+                type: 'int'
+            ),
+
+            'family_contribution_month' => $this->validator->validate(
+                name: 'n3',
+                value: $this->request->getFormParam('n3'),
+                required: true,
+                type: 'int'
+            ),
+
+            'reduced_contribution_1_year' => $this->validator->validate(
+                name: 'n6',
+                value: $this->request->getFormParam('n6'),
+                required: true,
+                type: 'int'
+            ),
+
+            'reduced_contribution_2_year' => $this->validator->validate(
+                name: 'n7',
+                value: $this->request->getFormParam('n7'),
+                required: true,
+                type: 'int'
+            ),
+
+            'family_contribution_year' => $this->validator->validate(
+                name: 'n8',
+                value: $this->request->getFormParam('n8'),
+                required: true,
+                type: 'int'
+            ),
+
+            'extra_information' => $this->validator->validate(
+                name: 'n10',
+                value: $this->request->getFormParam('n10'),
+                required: true,
+            ),
+
+            'fees_information' => $this->validator->validate(
+                name: 'n11',
+                value: $this->request->getFormParam('n11'),
+                required: true,
+            ),
+        ];
+    }
+
+    protected function getDataToContactEdit(): array
+    {
+        return [
+            'email' => $this->validator->validate(
+                name: 'email',
+                value: $this->request->getFormParam('email'),
+                required: true,
+                maxLength: 100
+            ),
+
+            'phone' => $this->validator->validate(
+                name: 'phone',
+                value: $this->request->getFormParam('phone'),
+                required: true,
+                maxLength: 9
+            ),
+
+            'address' => $this->validator->validate(
+                name: 'address',
+                value: $this->request->getFormParam('address'),
+                required: true,
+            ),
+        ];
+    }
+
+    protected function getDataToAddTimetable(): array
+    {
+        return [
+            'day' => $this->validator->validate(
+                name: 'day',
+                value: $this->request->getFormParam('day'),
+                required: true,
+                maxLength: 20
+            ),
+
+            'city' => $this->validator->validate(
+                name: 'city',
+                value: $this->request->getFormParam('city'),
+                required: true,
+                maxLength: 40
+            ),
+
+            'advancement_group' => $this->validator->validate(
+                name: 'group',
+                value: $this->request->getFormParam('group'),
+                required: true,
+                maxLength: 40
+            ),
+
+            'place' => $this->validator->validate(
+                name: 'place',
+                value: $this->request->getFormParam('place'),
+                required: true,
+                maxLength: 100
+            ),
+
+            'start' => $this->validator->validate(
+                name: 'startTime',
+                value: $this->request->getFormParam('startTime'),
+                required: true,
+            ),
+
+            'end' => $this->validator->validate(
+                name: 'endTime',
+                value: $this->request->getFormParam('endTime'),
+                required: true,
+            ),
+
+            'is_notify' => $this->request->getFormParam('is_notify')
+        ];
+    }
+
+    protected function getDataToEditTimetable(): array
+    {
+        return [
+            'id' => $this->validator->validate(
+                name: 'id',
+                value: $this->request->getFormParam('id'),
+                required: true,
+                type: 'int'
+            ),
+
+            'day' => $this->validator->validate(
+                name: 'day',
+                value: $this->request->getFormParam('day'),
+                required: true,
+                maxLength: 20
+            ),
+
+            'city' => $this->validator->validate(
+                name: 'city',
+                value: $this->request->getFormParam('city'),
+                required: true,
+                maxLength: 40
+            ),
+
+            'advancement_group' => $this->validator->validate(
+                name: 'group',
+                value: $this->request->getFormParam('group'),
+                required: true,
+                maxLength: 40
+            ),
+
+            'place' => $this->validator->validate(
+                name: 'place',
+                value: $this->request->getFormParam('place'),
+                required: true,
+                maxLength: 100
+            ),
+
+            'start' => $this->validator->validate(
+                name: 'startTime',
+                value: $this->request->getFormParam('startTime'),
+                required: true,
+            ),
+
+            'end' => $this->validator->validate(
+                name: 'endTime',
+                value: $this->request->getFormParam('endTime'),
+                required: true,
+            ),
+
+            'is_notify' => $this->request->getFormParam('is_notify')
+        ];
+    }
+
+    protected function getDataToPublishedTimetable(): array
+    {
+        return [
+            'published' => $this->validator->validate(
+                name: 'postPublished',
+                value: $this->request->getFormParam('postPublished'),
+                required: true
+            ),
+
+            'id' => $this->validator->validate(
+                name: 'postId',
+                value: $this->request->getFormParam('postId'),
+                required: true
+            ),
+
+            'is_notify' => $this->request->getFormParam('is_notify')
+        ];
+    }
+
+    protected function getDataToAddImage(): array
+    {
+        return [
+            'category' => $this->validator->validate(
+                name: 'category',
+                value: $this->request->getFormParam('category'),
+                required: true,
+                maxLength: 8
+            ),
+
+            'description' => $this->validator->validate(
+                name: 'description',
+                value: $this->request->getFormParam('description'),
+                required: true,
+                minLength: 10,
+                maxLength: 50
+            ),
+
+            'image_name' => $this->validator->validateFile(
+                field: 'image_name',
+                file: $this->request->getFile('image_name')
+            ),
+
+            'created_at' => date('Y-m-d'),
+
+            'updated_at' => date('Y-m-d'),
+        ];
+    }
+
+    protected function getDataToEditImage(): array
+    {
+        return [
+            'id' => $this->validator->validate(
+                name: 'id',
+                value: $this->request->getFormParam('id'),
+                required: true,
+                type: 'int'
+            ),
+
+            'category' => $this->validator->validate(
+                name: 'category',
+                value: $this->request->getFormParam('category'),
+                required: true,
+                maxLength: 8
+            ),
+
+            'description' => $this->validator->validate(
+                name: 'description',
+                value: $this->request->getFormParam('description'),
+                required: true,
+                minLength: 10,
+                maxLength: 50
+            ),
+
+            'updated_at' => date('Y-m-d'),
+        ];
+    }
+
+    protected function getEmailToCreate(): array
+    {
+        return [
+            'email' => $this->validator->validate(
+                name: 'email',
+                value: $this->request->getFormParam('email'),
+                required: true,
+                type: 'email',
+                maxLength: 100
+            )
+        ];
+    }
+
+    protected function getEmailToUpdate(): array
+    {
+        return [
+            'id' => $this->validator->validate(
+                name: 'id',
+                value: $this->request->getFormParam('id'),
+                required: true,
+                type: 'int'
+            ),
+
+            'email' => $this->validator->validate(
+                name: 'email',
+                value: $this->request->getFormParam('email'),
+                required: true,
+                type: 'email',
+                maxLength: 100
+            ),
+
+            'is_active' => (int) $this->validator->validate(
+                name: 'is_active',
+                value: $this->request->getFormParam('is_active')
+            )
+        ];
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Controller\Dashboard\Traits;
 use App\Core\Request;
 use App\Middleware\CsrfMiddleware;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
+use JetBrains\PhpStorm\NoReturn;
 
 /**
  * @property Request $request
@@ -22,6 +23,7 @@ trait HasUpdateAction
     /**
      * @throws InvalidCsrfTokenException
      */
+    #[NoReturn]
     public function updateAction(): void
     {
         if (!$this->request->isPost()) {
@@ -32,14 +34,14 @@ trait HasUpdateAction
         $this->csrfMiddleware->verify('admin');
         $data = $this->getDataToUpdate();
 
-        if (!$this->request->getErrors()) {
+        if (!$this->validator->getErrors()) {
             $this->handleUpdate($data);
-            $this->setFlash("success", "Udało się edytować", 'dashboard');
+            $this->setFlash("success", "Udało się edytować");
             $this->redirect('/dashboard/' . $this->getModuleName());
             return;
         }
 
-        $this->setFlash("warning", $this->request->getErrors(), 'dashboard');
+        $this->setFlash("warning", $this->validator->getErrors());
         $redirectUrl = '/dashboard/' . $this->getModuleName() . '/edit';
 
         if (isset($data['id']) && $data['id'] !== '') {

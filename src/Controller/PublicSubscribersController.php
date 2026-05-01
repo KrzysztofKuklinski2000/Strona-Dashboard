@@ -29,11 +29,11 @@ class PublicSubscribersController extends AbstractController
     {
         $this->csrfMiddleware->verify();
 
-        $email = $this->request->validate('email', true, 'email');
+        $email = $this->validator->validate('email', true, 'email');
 
         $consent = $this->request->getFormParam('terms_consent');
 
-        if ($this->request->getErrors()) {
+        if ($this->validator->getErrors()) {
             $this->setFlash('warning', 'Niepoprawny adres email.', 'public');
             $this->redirect('/');
             return;
