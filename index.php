@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use App\Core\Config;
 use App\Core\ContextController;
 use App\Core\Database;
 use App\Core\ErrorHandler;
@@ -16,8 +17,10 @@ use EasyCSRF\NativeSessionProvider;
 
 session_start();
 
-$configuration = require_once('config/config.php');
-$isDev = ($configuration['env'] ?? 'prod') === 'dev';
+$configurationArray = require_once('config/config.php');
+$config = new Config($configurationArray);
+
+$isDev = $config->getEnv() === 'dev';
 
 if($isDev) {
 	ini_set('display_errors', '1');
@@ -51,7 +54,7 @@ try {
 
 	$factoryClass = $factories[$controllerClass];
 
-	$database = new Database($configuration['db']);
+	$database = new Database($config->getDbConfig());
 	$pdo = $database->connect();
 
     $view = new View();
