@@ -17,6 +17,10 @@ use EasyCSRF\NativeSessionProvider;
 
 session_start();
 
+require_once 'vendor/autoload.php';
+
+
+
 $configurationArray = require_once('config/config.php');
 $config = new Config($configurationArray);
 
@@ -32,7 +36,7 @@ if($isDev) {
 	error_reporting(0);
 }
 
-require_once 'vendor/autoload.php';
+
 
 
 
