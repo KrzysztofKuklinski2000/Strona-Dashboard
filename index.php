@@ -37,10 +37,6 @@ if($isDev) {
 }
 
 
-
-
-
-
 $errorHandler = new ErrorHandler($isDev, __DIR__."/templates/errors");
 $request = new Request($_GET, $_POST, $_SERVER, $_SESSION);
 $easyCSRF = new EasyCSRF(new NativeSessionProvider());
