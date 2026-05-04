@@ -29,7 +29,7 @@ class PublicSubscribersController extends AbstractController
     {
         $this->csrfMiddleware->verify();
 
-        $email = $this->validator->validate('email', true, 'email');
+        $email = $this->validator->validate(name: 'email', value: $this->request->getFormParam('email'), required: true, type: 'email');
 
         $consent = $this->request->getFormParam('terms_consent');
 

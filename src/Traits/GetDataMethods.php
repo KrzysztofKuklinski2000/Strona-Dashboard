@@ -454,7 +454,8 @@ trait GetDataMethods
 
             'image_name' => $this->validator->validateFile(
                 field: 'image_name',
-                file: $this->request->getFile('image_name')
+                file: $this->request->getFile('image_name'),
+                maxSize: 5_000_000
             ),
 
             'created_at' => date('Y-m-d'),
