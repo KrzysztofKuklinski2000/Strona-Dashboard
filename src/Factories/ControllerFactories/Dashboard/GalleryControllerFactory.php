@@ -6,6 +6,7 @@ namespace App\Factories\ControllerFactories\Dashboard;
 
 use App\Controller\AbstractController;
 use App\Controller\Dashboard\GalleryController;
+use App\Core\Config;
 use App\Core\ContextController;
 use App\Core\Request;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
@@ -15,18 +16,17 @@ use App\View;
 use EasyCSRF\EasyCSRF;
 use PDO;
 
-class GalleryControllerFactory implements ControllerFactoryInterface
+readonly class GalleryControllerFactory implements ControllerFactoryInterface
 {
-    private GalleryServiceFactory $serviceFactory;
-
-    public function __construct(PDO $pdo)
+    public function __construct(private PDO $pdo)
     {
-        $this->serviceFactory = new GalleryServiceFactory($pdo);
+
     }
 
     public function createController(ContextController $contextController): AbstractController
     {
-        $service = $this->serviceFactory->createService();
+        $serviceFactory = new GalleryServiceFactory($this->pdo, $contextController->config);
+        $service = $serviceFactory->createService();
 
         return new GalleryController(
             $service,
