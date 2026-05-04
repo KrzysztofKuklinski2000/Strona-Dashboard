@@ -12,6 +12,7 @@ readonly class ContextController
         public View           $view,
         public CsrfMiddleware $csrfMiddleware,
         public Validator      $validator,
+        public Config         $config,
     )
     {
     }

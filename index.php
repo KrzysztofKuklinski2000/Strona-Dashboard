@@ -60,7 +60,7 @@ try {
     $view = new View();
     $csrfMiddleware = new CsrfMiddleware($easyCSRF, $request);
     $validator = new Validator();
-    $contextController = new ContextController($request, $view, $csrfMiddleware, $validator);
+    $contextController = new ContextController($request, $view, $csrfMiddleware, $validator, $config);
 
 	$controllerFactory = new $factoryClass($pdo);
 	$controller = $controllerFactory->createController($contextController);
