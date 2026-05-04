@@ -3,6 +3,7 @@
 namespace App\Factories\ControllerFactories;
 
 use App\Controller\PublicSubscribersController;
+use App\Core\Config;
 use App\Core\ContextController;
 use App\Factories\ServiceFactories\Dashboard\SubscribersServiceFactory;
 use App\Middleware\CsrfMiddleware;
@@ -16,7 +17,7 @@ class PublicSubscribersControllerFactory implements ControllerFactoryInterface
 {
     private SubscribersServiceFactory $serviceFactory;
 
-    public function __construct(private PDO $pdo)
+    public function __construct(private readonly PDO $pdo)
     {
         $this->serviceFactory = new SubscribersServiceFactory($this->pdo);
     }
@@ -25,7 +26,7 @@ class PublicSubscribersControllerFactory implements ControllerFactoryInterface
     {
         $service = $this->serviceFactory->createService();
 
-        $notifierFactory = new NotifierFactory($this->pdo);
+        $notifierFactory = new NotifierFactory($this->pdo, $contextController->config);
         $notifier = $notifierFactory->createService();
 
         return new PublicSubscribersController(

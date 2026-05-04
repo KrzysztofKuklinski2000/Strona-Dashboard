@@ -18,17 +18,16 @@ use PDO;
 
 class TimetableControllerFactory implements ControllerFactoryInterface
 {
-    private TimetableServiceFactory $serviceFactory;
-
-
-    public function __construct(PDO $pdo)
+    public function __construct(private PDO $pdo)
     {
-        $this->serviceFactory = new TimetableServiceFactory($pdo);
+
     }
 
     public function createController(ContextController $contextController): AbstractController
     {
-        $timetableService = $this->serviceFactory->createService();
+        $serviceFactory = new TimetableServiceFactory($this->pdo, $contextController->config);
+        $timetableService = $serviceFactory->createService();
+
 
         return new TimetableController(
             $timetableService,
