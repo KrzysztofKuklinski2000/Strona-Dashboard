@@ -27,7 +27,7 @@ trait HasPublishedAction
     public function publishedAction(): void
     {
         if (!$this->request->isPost()) {
-            $this->redirect('/dashboard/' . $this->getModuleName());
+            $this->redirect("{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}");
             return;
         }
 
@@ -36,6 +36,6 @@ trait HasPublishedAction
         $this->handlePublish($data);
 
         $this->setFlash('info', 'Udało się zmienić status');
-        $this->redirect('/dashboard/' . $this->getModuleName());
+        $this->redirect("{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}");
     }
 }

@@ -27,7 +27,7 @@ trait HasUpdateAction
     public function updateAction(): void
     {
         if (!$this->request->isPost()) {
-            $this->redirect('/dashboard/' . $this->getModuleName());
+            $this->redirect("{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}");
             return;
         }
 
@@ -37,12 +37,12 @@ trait HasUpdateAction
         if (!$this->validator->getErrors()) {
             $this->handleUpdate($data);
             $this->setFlash("success", "Udało się edytować");
-            $this->redirect('/dashboard/' . $this->getModuleName());
+            $this->redirect("{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}");
             return;
         }
 
         $this->setFlash("warning", $this->validator->getErrors());
-        $redirectUrl = '/dashboard/' . $this->getModuleName() . '/edit';
+        $redirectUrl = "{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}/edit";
 
         if (isset($data['id']) && $data['id'] !== '') {
             $redirectUrl .= '/' . $data['id'];

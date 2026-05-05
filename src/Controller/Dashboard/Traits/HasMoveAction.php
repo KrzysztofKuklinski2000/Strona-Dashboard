@@ -27,7 +27,7 @@ trait HasMoveAction
             $this->csrfMiddleware->verify('admin');
             $data = $this->getDataToChangePostPosition();
             $this->handleMove($data);
-            $this->redirect("/dashboard/" . $this->getModuleName());
+            $this->redirect("{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}");
         }
     }
 }

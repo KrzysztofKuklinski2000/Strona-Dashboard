@@ -35,13 +35,13 @@ class PublicSubscribersController extends AbstractController
 
         if ($this->validator->getErrors()) {
             $this->setFlash('warning', 'Niepoprawny adres email.', 'public');
-            $this->redirect('/');
+            $this->redirect($this->contextController->config->getHomeRoute());
             return;
         }
 
         if (!$consent) {
             $this->setFlash('warning', 'Musisz zaakceptować zgodę na przetwarzanie danych.', 'public');
-            $this->redirect('/');
+            $this->redirect($this->contextController->config->getHomeRoute());
             return;
         }
 
@@ -59,7 +59,7 @@ class PublicSubscribersController extends AbstractController
             $this->setFlash('warning', $e->getMessage(), 'public');
         }
 
-        $this->redirect('/');
+        $this->redirect($this->contextController->config->getHomeRoute());
     }
 
 
@@ -68,7 +68,7 @@ class PublicSubscribersController extends AbstractController
         $token = $this->request->getQueryParam('token');
 
         if (!$token) {
-            $this->redirect('/?error=invalid_token');
+            $this->redirect("{$this->contextController->config->getHomeRoute()}?error=invalid_token");
             return;
         }
 
@@ -80,7 +80,7 @@ class PublicSubscribersController extends AbstractController
             $this->setFlash('warning', 'Link aktywacyjny jest nieprawidłowy.', 'public');
         }
 
-        $this->redirect('/');
+        $this->redirect($this->contextController->config->getHomeRoute());
     }
 
     public function unsubscribeAction(): void
@@ -89,7 +89,7 @@ class PublicSubscribersController extends AbstractController
 
         if (!$token) {
             $this->setFlash('warning', 'Brak klucza wypisania.', 'public');
-            $this->redirect('/');
+            $this->redirect($this->contextController->config->getHomeRoute());
             return;
         }
 
@@ -100,6 +100,6 @@ class PublicSubscribersController extends AbstractController
             $this->setFlash('warning', 'Nie udało się przetworzyć prośby o wypisanie.', 'public');
         }
 
-        $this->redirect('/');
+        $this->redirect($this->contextController->config->getHomeRoute());
     }
 }

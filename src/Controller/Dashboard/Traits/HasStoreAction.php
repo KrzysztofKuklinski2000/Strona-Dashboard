@@ -27,7 +27,7 @@ trait HasStoreAction
     public function storeAction(): void
     {
         if (!$this->request->isPost()) {
-            $this->redirect('/dashboard/' . $this->getModuleName());
+            $this->redirect("{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}");
             return;
         }
 
@@ -37,11 +37,11 @@ trait HasStoreAction
         if (!$this->validator->getErrors()) {
             $this->handleCreate($data);
             $this->setFlash("success", "Udało się utworzyć nowy wpis");
-            $this->redirect("/dashboard/" . $this->getModuleName());
+            $this->redirect("{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}");
             return;
         }
 
         $this->setFlash("warning", $this->validator->getErrors());
-        $this->redirect('/dashboard/' . $this->getModuleName() . '/create');
+        $this->redirect("{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}/create");
     }
 }

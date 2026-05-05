@@ -49,4 +49,8 @@ readonly class Config
         return $this->config['app_settings']['login_route'] ?? '/auth/login';
     }
 
+    public function getHomeRoute(): string{
+        return $this->config['app_settings']['home_route'] ?? '/';
+    }
+
 }

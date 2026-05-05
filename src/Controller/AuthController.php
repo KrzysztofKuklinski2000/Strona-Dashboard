@@ -25,7 +25,7 @@ class AuthController extends AbstractController
     public function loginAction(): void
     {
         if (!empty($this->request->getSession('user'))) {
-            $this->redirect('/dashboard');
+            $this->redirect($this->contextController->config->getDashboardRoute());
             return;
         }
 
@@ -41,7 +41,7 @@ class AuthController extends AbstractController
 
                 if (empty($errors)) {
                     $this->setFlash('info', 'Udało się zalogować');
-                    $this->redirect('/dashboard');
+                    $this->redirect($this->contextController->config->getDashboardRoute());
                 }
 
             } catch (ServiceException $e) {
@@ -60,6 +60,6 @@ class AuthController extends AbstractController
     public function logoutAction(): void
     {
         $this->request->removeSession('user');
-        $this->redirect('/auth/login');
+        $this->redirect($this->contextController->config->getLoginRoute());
     }
 }

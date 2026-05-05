@@ -24,7 +24,7 @@ trait HasDeleteAction
     public function deleteAction(): void
     {
         if (!$this->request->isPost()) {
-            $this->redirect('/dashboard/' . $this->getModuleName());
+            $this->redirect("{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}");
             return;
         }
 
@@ -32,6 +32,6 @@ trait HasDeleteAction
         $id = (int)$this->request->getFormParam('postId');
         $this->handleDelete($id);
         $this->setFlash('success', 'Udało się usunąć');
-        $this->redirect('/dashboard/' . $this->getModuleName());
+        $this->redirect("{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}");
     }
 }
