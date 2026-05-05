@@ -16,6 +16,6 @@ readonly class NotifierFactory implements ServiceFactoryInterface {
     $subscriberRepository = new SubscriberRepository($this->pdo);
     $mailer = (new MailerFactory())->createService();
 
-    return new Notifier($mailer, $subscriberRepository, $this->config->getUrl());
+    return new Notifier($mailer, $subscriberRepository, $this->config->getUrl(), $this->config->getTemplatesPath());
   }
 }

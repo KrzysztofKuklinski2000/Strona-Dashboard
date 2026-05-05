@@ -5,7 +5,7 @@ namespace App\Core;
 use App\Exception\FileException;
 
 readonly class FileHandler {
-    public function __construct(private string $uploadDir) {}
+    public function __construct(private string $uploadDir, private string $filePrefix) {}
 
     /**
      * @throws FileException
@@ -25,7 +25,7 @@ readonly class FileHandler {
                 mkdir($dir,0755, true);
             }
 
-            $imageName = uniqid('karate_', true). '.'.pathinfo($file['name'], PATHINFO_EXTENSION);
+            $imageName = uniqid($this->filePrefix, true). '.'.pathinfo($file['name'], PATHINFO_EXTENSION);
             $imagePath = $dir . $imageName;
             if(!move_uploaded_file($file['tmp_name'], $imagePath)) {
                 throw new FileException('Nie udało się przesłać obrazka');

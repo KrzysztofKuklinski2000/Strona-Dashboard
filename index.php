@@ -37,7 +37,7 @@ if($isDev) {
 }
 
 
-$errorHandler = new ErrorHandler($isDev, __DIR__."/templates/errors");
+$errorHandler = new ErrorHandler($isDev, "{$config->getTemplatesPath()}/errors");
 $request = new Request($_GET, $_POST, $_SERVER, $_SESSION);
 $easyCSRF = new EasyCSRF(new NativeSessionProvider());
 $router = new Router();
@@ -66,10 +66,10 @@ try {
 	$controller = $controllerFactory->createController($contextController);
 
 	$uri = $request->getServerParam('REQUEST_URI');
-	$isDashboardRoute = str_starts_with($uri, '/dashboard');
+	$isDashboardRoute = str_starts_with($uri, $config->getDashboardRoute());
 
 	if ($isDashboardRoute && empty($request->getSession('user'))) {
-		header('Location: /auth/login');
+		header("Location: {$this->config->getLoginRoute()}");
 		exit;
 	}
 
@@ -81,7 +81,7 @@ try {
 
 } catch (InvalidCsrfTokenException $e) {
 	$uri = $_SERVER['REQUEST_URI'];
-    $redirectPath = str_contains($uri, '/dashboard') ? '/dashboard?error=csrf' : '/?error=csrf';
+    $redirectPath = str_contains($uri, $config->getDashboardRoute()) ? "{$config->getDashboardRoute()}?error=csrf" : '/?error=csrf';
     
     header("Location: $redirectPath");
     exit;

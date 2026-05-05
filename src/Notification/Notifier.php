@@ -13,6 +13,7 @@ readonly class Notifier
         private Mailer               $mailer,
         private SubscriberRepository $subscriberRepository,
         private string               $appUrl,
+        private string               $templatePath,
     )
     {
     }
@@ -37,7 +38,7 @@ readonly class Notifier
             $unsubscribeUrl = "$baseUrl/unsubscribe?token=$token";
 
             ob_start();
-            require dirname(__DIR__, 2) . '/templates/emails/timetable_updated.php';
+            require "$this->templatePath/emails/timetable_updated.php";
             $htmlContent = ob_get_clean();
             $htmlContent .= "<br><br><hr><p style='font-size: 12px;'>Chcesz zrezygnować? <a href='$unsubscribeUrl'>Wypisz się tutaj</a></p>";
 
@@ -53,7 +54,7 @@ readonly class Notifier
         $confirmUrl = "$baseUrl/confirm-subscription?token=$token";
 
         ob_start();
-        require dirname(__DIR__, 2) . '/templates/emails/active_email.php';
+        require "$this->templatePath/templates/emails/active_email.php";
         $htmlContent = ob_get_clean();
 
         $this->mailer->send($email, $subject, $htmlContent);
