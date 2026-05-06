@@ -1,20 +1,27 @@
-<?php 
+<?php
 
 namespace App\Factories\ServiceFactories\Notification;
 
+use App\Core\Config;
 use App\Factories\ServiceFactories\ServiceFactoryInterface;
 use App\Notification\Email\Mailer;
 use Symfony\Component\Mailer\Mailer as SymfonyMailer;
 use Symfony\Component\Mailer\Transport;
 
-class MailerFactory implements ServiceFactoryInterface{
-  public function createService(){
-    $config = require dirname(__DIR__, 4) . '/config/mail.php';
+readonly class MailerFactory implements ServiceFactoryInterface
+{
+    public function __construct(private Config $config)
+    {
+    }
 
-    $dsn = sprintf('smtp://%s:%d', $config['host'], $config['port']);
+    public function createService(): Mailer
+    {
+        $mailConfig = $this->config->getMailConfig();
 
-    $transport = Transport::fromDsn($dsn);
+        $dsn = sprintf('smtp://%s:%d', $mailConfig['host'], $mailConfig['port']);
 
-    return new Mailer(new SymfonyMailer($transport), $config);
-  }
+        $transport = Transport::fromDsn($dsn);
+
+        return new Mailer(new SymfonyMailer($transport), $mailConfig);
+    }
 }

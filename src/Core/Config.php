@@ -57,4 +57,8 @@ readonly class Config
         return $this->config['paths']['routes'] ?? dirname(__DIR__, 2) . '/config/routes.php';
     }
 
+    public function getMailConfig(): array{
+        return $this->config['mail'] ?? [];
+    }
+
 }
