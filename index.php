@@ -57,7 +57,7 @@ try {
 	$database = new Database($config->getDbConfig());
 	$pdo = $database->connect();
 
-    $view = new View();
+    $view = new View($config->getTemplatesPath());
 
     $csrfMiddleware = new CsrfMiddleware(
         $easyCSRF,
