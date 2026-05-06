@@ -12,18 +12,20 @@ use PDO;
 
 readonly class TimetableServiceFactory implements ServiceFactoryInterface
 {
-  public function __construct(private PDO $pdo, private Config $config) {}
+    public function __construct(private PDO $pdo, private Config $config)
+    {
+    }
 
-  public function createService(): TimetableService
-  {
-    $timetableRepository = new TimetableRepository($this->pdo);
-    $timetableService = new TimetableService($timetableRepository);
+    public function createService(): TimetableService
+    {
+        $timetableRepository = new TimetableRepository($this->pdo);
+        $timetableService = new TimetableService($timetableRepository, $this->config->getNotificationMessages());
 
-    $notifier = (new NotifierFactory($this->pdo, $this->config))->createService();
-    $emailObserver = new EmailNotificationObserver($notifier);
-    $timetableService->attach($emailObserver);
+        $notifier = (new NotifierFactory($this->pdo, $this->config))->createService();
+        $emailObserver = new EmailNotificationObserver($notifier);
+        $timetableService->attach($emailObserver);
 
 
-    return $timetableService;
-  }
+        return $timetableService;
+    }
 }

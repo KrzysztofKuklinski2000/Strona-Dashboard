@@ -1,18 +1,23 @@
 <?php
+
 namespace App\Factories\ServiceFactories;
 
+use App\Core\Config;
 use App\Repository\Dashboard\TimetableRepository;
 use PDO;
 use App\Service\SiteService;
 use App\Repository\SiteRepository;
 
-class SiteServiceFactory implements ServiceFactoryInterface
+readonly class SiteServiceFactory implements ServiceFactoryInterface
 {
-  public function __construct(private PDO $pdo) {}
+    public function __construct(private PDO $pdo, private Config $config)
+    {
+    }
 
-  public function createService(){
-    $repository = new SiteRepository($this->pdo);
-    $timetableRepository = new TimetableRepository($this->pdo);
-    return new SiteService($repository, $timetableRepository);
-  }
+    public function createService(): SiteService
+    {
+        $repository = new SiteRepository($this->pdo);
+        $timetableRepository = new TimetableRepository($this->pdo);
+        return new SiteService($repository, $timetableRepository, $this->config->getItemsPerPage());
+    }
 }

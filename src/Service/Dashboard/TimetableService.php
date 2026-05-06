@@ -2,6 +2,7 @@
 
 namespace App\Service\Dashboard;
 
+use App\Core\Config;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\TimetableRepository;
@@ -16,8 +17,10 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
     private const TABLE = 'timetable';
 
     public function __construct(
-        private readonly TimetableRepository $timetableRepository
-    ) {
+        private readonly TimetableRepository $timetableRepository,
+        private readonly array               $notifications,
+    )
+    {
         parent::__construct($timetableRepository);
     }
 
@@ -48,18 +51,21 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
     {
         $this->handleActionWithNotification(
             $data,
-            "Wprowadziliśmy zmiany w istniejącym grafiku treningów. Odwiedz strone aby zobaczyć zmiany!",
+            $this->notifications['timetable_updated'],
             function ($cleanData) {
 
                 $this->edit(self::TABLE, $cleanData);
             });
     }
 
+    /**
+     * @throws ServiceException
+     */
     public function createTimetable(array $data): void
     {
         $this->handleActionWithNotification(
             $data,
-            "Do grafiku dodano nowe zajęcia! Sprawdź szczegóły na stronie.",
+            $this->notifications['timetable_created'],
             function ($cleanData) {
 
                 $this->create(self::TABLE, $cleanData);
@@ -73,7 +79,7 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
     {
         $this->handleActionWithNotification(
             $data,
-            "Grafik został zaktualizowany. Odwiedz strone aby zobaczyć zmiany!",
+            $this->notifications['timetable_published'],
             function ($cleanData) {
 
                 $this->published(self::TABLE, $cleanData);
@@ -86,7 +92,7 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
         $this->delete(self::TABLE, $id);
 
         if ($shouldNotify) {
-            $this->notify("Pewne zajęcia zostały usunięte z grafiku. Odwiedz strone aby zobaczyć zmiany!");
+            $this->notify($this->notifications['timetable_deleted']);
         }
     }
 

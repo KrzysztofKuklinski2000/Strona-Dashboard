@@ -10,19 +10,17 @@ use App\Core\ContextController;
 use App\Factories\ServiceFactories\SiteServiceFactory;
 use PDO;
 
-class SiteControllerFactory implements ControllerFactoryInterface
+readonly class SiteControllerFactory implements ControllerFactoryInterface
 {
-    private SiteServiceFactory $serviceFactory;
-
-    public function __construct(PDO $pdo)
+    public function __construct(private PDO $pdo)
     {
-        $this->serviceFactory = new SiteServiceFactory($pdo);
+
     }
 
     public function createController(ContextController $contextController): AbstractController
     {
-        $siteService = $this->serviceFactory->createService();
-
+        $serviceFactory = new SiteServiceFactory($this->pdo, $contextController->config);
+        $siteService = $serviceFactory->createService();
 
         return new SiteController(
             $siteService,

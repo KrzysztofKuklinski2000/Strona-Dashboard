@@ -69,4 +69,12 @@ readonly class Config
         return $this->config['app_settings']['csrf_prefix'] ?? 'csrf_token_';
     }
 
+    public function getNotificationMessages(): array {
+        return $this->config['notifications'] ?? [];
+    }
+
+    public function getItemsPerPage(): int {
+        return $this->config['app_settings']['items_per_page'] ?? 10;
+    }
+
 }
