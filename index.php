@@ -58,7 +58,14 @@ try {
 	$pdo = $database->connect();
 
     $view = new View();
-    $csrfMiddleware = new CsrfMiddleware($easyCSRF, $request);
+
+    $csrfMiddleware = new CsrfMiddleware(
+        $easyCSRF,
+        $request,
+        $config->getCsrfPrefix(),
+        $config->getCsrfTokenName()
+    );
+
     $validator = new Validator();
     $contextController = new ContextController($request, $view, $csrfMiddleware, $validator, $config);
 

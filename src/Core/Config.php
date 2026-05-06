@@ -61,4 +61,12 @@ readonly class Config
         return $this->config['mail'] ?? [];
     }
 
+    public function getCsrfTokenName(): string{
+        return $this->config['app_settings']['csrf_token_name'] ?? 'csrf_token';
+    }
+
+    public function getCsrfPrefix(): string{
+        return $this->config['app_settings']['csrf_prefix'] ?? 'csrf_token_';
+    }
+
 }

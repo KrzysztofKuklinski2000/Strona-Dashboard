@@ -1,35 +1,47 @@
-<?php 
-declare(strict_types= 1);
+<?php
+declare(strict_types=1);
+
 namespace App\Middleware;
 
 use App\Core\Request;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 use EasyCSRF\EasyCSRF;
+use Exception;
 
-class CsrfMiddleware {
+readonly class CsrfMiddleware
+{
 
-    public function __construct(public EasyCSRF $easyCSRF, public Request $request) {}
+    public function __construct(
+        private EasyCSRF $easyCSRF,
+        private Request  $request,
+        private string   $csrfPrefix,
+        private string   $csrfTokenName,
+    )
+    {
+    }
 
-    public function verify(string $context = 'public'): void {
+    /**
+     * @throws InvalidCsrfTokenException
+     */
+    public function verify(string $context = 'public'): void
+    {
         if (!$this->request->isPost()) {
-            return; 
-        }   
+            return;
+        }
 
-        $key = 'csrf_token_'.$context;
-        $tokenFromForm = $this->request->getFormParam('csrf_token');
-        
+        $key = "$this->csrfPrefix$context";
+        $tokenFromForm = $this->request->getFormParam($this->csrfTokenName);
+
         try {
             $this->easyCSRF->check($key, $tokenFromForm);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new InvalidCsrfTokenException($e->getMessage());
         }
     }
 
-    public function generateToken(string $context = 'public'): string 
+    public function generateToken(string $context = 'public'): string
     {
-        $key = 'csrf_token_' . $context;
-
-
+        $key = "$this->csrfPrefix$context";
         return $this->easyCSRF->generate($key);
     }
 }
