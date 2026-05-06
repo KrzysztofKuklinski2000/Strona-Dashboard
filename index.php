@@ -40,12 +40,12 @@ if($isDev) {
 $errorHandler = new ErrorHandler($isDev, "{$config->getTemplatesPath()}/errors");
 $request = new Request($_GET, $_POST, $_SERVER, $_SESSION);
 $easyCSRF = new EasyCSRF(new NativeSessionProvider());
-$router = new Router();
 
 $factories = require_once('config/factories.php');
 
 
 try {
+    $router = new Router($config->getRoutesPath());
 	[$controllerClass, $action] = $router->dispatch($request);
 
 	if(!isset($factories[$controllerClass])) {

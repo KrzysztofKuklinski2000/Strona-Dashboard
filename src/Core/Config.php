@@ -53,4 +53,8 @@ readonly class Config
         return $this->config['app_settings']['home_route'] ?? '/';
     }
 
+    public function getRoutesPath(): string{
+        return $this->config['paths']['routes'] ?? dirname(__DIR__, 2) . '/config/routes.php';
+    }
+
 }
