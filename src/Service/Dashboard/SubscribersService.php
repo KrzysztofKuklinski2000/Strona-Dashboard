@@ -3,15 +3,23 @@
 namespace App\Service\Dashboard;
 
 use App\Exception\ServiceException;
+use App\Repository\Dashboard\BaseDashboardRepository;
+use App\Security\TokenGeneratorInterface;
 use App\Service\Dashboard\Traits\StandardCrudTrait;
 use Random\RandomException;
 
 class SubscribersService extends AbstractDashboardService implements SubscribersManagementServiceInterface
 {
-
     use StandardCrudTrait;
 
     private const TABLE = 'subscribers';
+
+    public function __construct(
+        BaseDashboardRepository                  $repository,
+        private readonly TokenGeneratorInterface $tokenGenerator)
+    {
+        parent::__construct($repository);
+    }
 
     /**
      * @throws ServiceException
@@ -31,7 +39,7 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
             throw new ServiceException("Ten adres email jest już zapisany w bazie.", 409);
         }
 
-        $token = bin2hex(random_bytes(32));
+        $token = $this->tokenGenerator->generate();
         $data['token'] = $token;
 
         if (!isset($data['is_active'])) {
@@ -68,7 +76,7 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
             throw new ServiceException("Nieprawidłowy lub wygasły token.", 404);
         }
 
-        $unsubscribeToken = bin2hex(random_bytes(32));
+        $unsubscribeToken = $this->tokenGenerator->generate();
 
         $this->edit(self::TABLE, [
             'id' => $subscriber['id'],
