@@ -4,16 +4,17 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Core\ContextController;
+use App\Security\Authenticator;
+use JetBrains\PhpStorm\NoReturn;
 use Throwable;
-use App\Service\AuthService;
 use App\Exception\ServiceException;
 
 class AuthController extends AbstractController
 {
 
     public function __construct(
-        public AuthService $authService,
-        ContextController  $contextController,
+        private readonly Authenticator $authenticator,
+        ContextController              $contextController,
     )
     {
         parent::__construct($contextController);
@@ -37,17 +38,22 @@ class AuthController extends AbstractController
                 $login = $this->request->getFormParam('login');
                 $password = $this->request->getFormParam('password');
 
-                $errors = $this->authService->login($login, $password);
+                if (empty($login) || empty($password)) {
+                    $errors['general'] = "Podaj login i hasło.";
+                } else {
+                    $user = $this->authenticator->authenticate($login, $password);
 
-                if (empty($errors)) {
+                    $this->sessionManager->set('user', $user);
                     $this->setFlash('info', 'Udało się zalogować');
+
                     $this->redirect($this->contextController->config->getDashboardRoute());
+                    return;
                 }
 
             } catch (ServiceException $e) {
-                throw new ServiceException('Nie udało się zalogować', 400, $e);
+                $errors['general'] = $e->getMessage();
             } catch (Throwable $e) {
-                throw new ServiceException('Wystąpił nieznany błąd ', 500, $e);
+                $errors['general'] = 'Wystąpił nieznany błąd serwera.';
             }
         }
         $this->view->renderDashboardView([
@@ -57,6 +63,7 @@ class AuthController extends AbstractController
         ]);
     }
 
+    #[NoReturn]
     public function logoutAction(): void
     {
         $this->sessionManager->remove('user');
