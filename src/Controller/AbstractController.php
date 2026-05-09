@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Core\ContextController;
 use App\Core\Request;
+use App\Core\SessionManager;
 use App\Core\Validator;
 use App\Middleware\CsrfMiddleware;
 use App\View;
@@ -15,6 +16,7 @@ class AbstractController
     protected Request $request;
     protected View $view;
     protected CsrfMiddleware $csrfMiddleware;
+    protected SessionManager $sessionManager;
     protected Validator $validator;
 
     public function __construct(
@@ -25,6 +27,7 @@ class AbstractController
         $this->view = $this->contextController->view;
         $this->csrfMiddleware = $this->contextController->csrfMiddleware;
         $this->validator = $this->contextController->validator;
+        $this->sessionManager = $this->contextController->sessionManager;
     }
 
     /**
@@ -40,13 +43,13 @@ class AbstractController
     protected function getFlash(string $prefix = 'dashboard'): ?array
     {
         $key = "flash_$prefix";
-        $flash = $this->request->getSession($key) ?? null;
-        if ($flash) $this->request->removeSession($key);
+        $flash = $this->sessionManager->get($key) ?? null;
+        if ($flash) $this->sessionManager->remove($key);
         return $flash;
     }
 
     protected function setFlash(string $type, string|array $message, string $prefix = 'dashboard'): void
     {
-        $this->request->setSession("flash_$prefix", ["type" => $type, "message" => $message]);
+        $this->sessionManager->set("flash_$prefix", ["type" => $type, "message" => $message]);
     }
 }

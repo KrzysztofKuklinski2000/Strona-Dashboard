@@ -13,6 +13,7 @@ readonly class ContextController
         public CsrfMiddleware $csrfMiddleware,
         public Validator      $validator,
         public Config         $config,
+        public SessionManager $sessionManager,
     )
     {
     }

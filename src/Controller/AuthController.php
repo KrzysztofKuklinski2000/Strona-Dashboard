@@ -24,7 +24,7 @@ class AuthController extends AbstractController
      */
     public function loginAction(): void
     {
-        if (!empty($this->request->getSession('user'))) {
+        if (!empty($this->sessionManager->get('user'))) {
             $this->redirect($this->contextController->config->getDashboardRoute());
             return;
         }
@@ -59,7 +59,7 @@ class AuthController extends AbstractController
 
     public function logoutAction(): void
     {
-        $this->request->removeSession('user');
+        $this->sessionManager->remove('user');
         $this->redirect($this->contextController->config->getLoginRoute());
     }
 }

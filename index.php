@@ -7,6 +7,7 @@ use App\Core\Database;
 use App\Core\ErrorHandler;
 use App\Core\Request;
 use App\Core\Router;
+use App\Core\SessionManager;
 use App\Core\Validator;
 use App\Exception\NotFoundException;
 use App\Middleware\CsrfMiddleware;
@@ -14,8 +15,6 @@ use App\View;
 use EasyCSRF\EasyCSRF;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 use EasyCSRF\NativeSessionProvider;
-
-session_start();
 
 require_once 'vendor/autoload.php';
 
@@ -38,8 +37,9 @@ if($isDev) {
 
 
 $errorHandler = new ErrorHandler($isDev, "{$config->getTemplatesPath()}/errors");
-$request = new Request($_GET, $_POST, $_SERVER, $_SESSION);
+$request = new Request($_GET, $_POST, $_SERVER);
 $easyCSRF = new EasyCSRF(new NativeSessionProvider());
+$sessionManager = new SessionManager();
 
 $factories = require_once('config/factories.php');
 
@@ -67,7 +67,7 @@ try {
     );
 
     $validator = new Validator();
-    $contextController = new ContextController($request, $view, $csrfMiddleware, $validator, $config);
+    $contextController = new ContextController($request, $view, $csrfMiddleware, $validator, $config, $sessionManager);
 
 	$controllerFactory = new $factoryClass($pdo);
 	$controller = $controllerFactory->createController($contextController);
@@ -75,8 +75,8 @@ try {
 	$uri = $request->getServerParam('REQUEST_URI');
 	$isDashboardRoute = str_starts_with($uri, $config->getDashboardRoute());
 
-	if ($isDashboardRoute && empty($request->getSession('user'))) {
-		header("Location: {$this->config->getLoginRoute()}");
+	if ($isDashboardRoute && empty($sessionManager->get('user'))) {
+		header("Location: {$config->getLoginRoute()}");
 		exit;
 	}
 
