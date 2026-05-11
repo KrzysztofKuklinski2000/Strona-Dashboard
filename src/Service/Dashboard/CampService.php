@@ -3,6 +3,7 @@
 namespace App\Service\Dashboard;
 
 
+use App\DTO\Dashboard\CampDto;
 use App\Exception\ServiceException;
 use App\Service\Dashboard\Traits\CanEdit;
 
@@ -15,17 +16,19 @@ class CampService extends AbstractDashboardService implements CampManagementServ
     /**
      * @throws ServiceException
      */
-    public function updateCamp(array $data): void
+    public function updateCamp(CampDto $campDto): void
     {
-        $this->edit(self::TABLE, $data);
+        $this->edit(self::TABLE, $campDto->toArray());
     }
 
     /**
      * @throws ServiceException
      */
-    public function getCamp(): array
+    public function getCamp(): CampDto
     {
-        return $this->getAll(self::TABLE)[0];
+        $data = $this->getAll(self::TABLE)[0];
+
+        return CampDto::fromArray($data);
     }
 
 }

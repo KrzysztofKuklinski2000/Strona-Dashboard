@@ -4,9 +4,7 @@ namespace App\Controller\Dashboard;
 
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
-use App\View;
-use App\Core\Request;
-use App\Middleware\CsrfMiddleware;
+use App\DTO\Dashboard\CampDto;
 use App\Service\Dashboard\CampManagementServiceInterface;
 
 class CampController extends AbstractDashboardController
@@ -33,12 +31,12 @@ class CampController extends AbstractDashboardController
         return 'camp';
     }
 
-    protected function getDataToUpdate(): array
+    protected function getDataToUpdate(): CampDto
     {
         return $this->getDataToCampEdit();
     }
 
-    protected function handleUpdate(array $data): void
+    protected function handleUpdate(array|object $data): void
     {
         $this->service->updateCamp($data);
     }

@@ -5,6 +5,7 @@ namespace App\Traits;
 
 use App\Core\Request;
 use App\Core\Validator;
+use App\DTO\Dashboard\CampDto;
 
 /**
  * @property Request $request
@@ -104,9 +105,9 @@ trait GetDataMethods
         ];
     }
 
-    protected function getDataToCampEdit(): array
+    protected function getDataToCampEdit(): CampDto
     {
-        return [
+        $data = [
             'city' => $this->validator->validate(
                 name: 'town',
                 value: $this->request->getFormParam('town'),
@@ -228,6 +229,8 @@ trait GetDataMethods
                 required: true,
             ),
         ];
+
+        return CampDto::fromArray($data);
     }
 
     protected function getDataToFeesEdit(): array
