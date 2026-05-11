@@ -99,7 +99,7 @@ class TimetableController extends AbstractDashboardController
         $this->service->createTimetable($data);
     }
 
-    protected function handleUpdate(array $data): void
+    protected function handleUpdate(array|object $data): void
     {
         $this->service->updateTimetable($data);
     }

@@ -16,9 +16,9 @@ use JetBrains\PhpStorm\NoReturn;
  */
 trait HasUpdateAction
 {
-    abstract protected function handleUpdate(array $data): void;
+    abstract protected function handleUpdate(array|object $data): void;
 
-    abstract protected function getDataToUpdate(): array;
+    abstract protected function getDataToUpdate(): array|object;
 
     /**
      * @throws InvalidCsrfTokenException

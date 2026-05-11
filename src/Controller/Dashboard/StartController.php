@@ -101,7 +101,7 @@ class StartController extends AbstractDashboardController
         $this->service->createMain($data);
     }
 
-    protected function handleUpdate(array $data): void
+    protected function handleUpdate(array|object $data): void
     {
         $this->service->updateMain($data);
     }

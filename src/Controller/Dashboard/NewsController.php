@@ -85,7 +85,7 @@ class NewsController extends AbstractDashboardController
         $this->service->createNews($data);
     }
 
-    protected function handleUpdate(array $data): void
+    protected function handleUpdate(array|object $data): void
     {
         $this->service->updateNews($data);
     }

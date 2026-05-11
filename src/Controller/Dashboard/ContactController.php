@@ -34,12 +34,12 @@ class ContactController extends AbstractDashboardController
         ]);
     }
 
-    protected function getDataToUpdate(): array
+    protected function getDataToUpdate(): array|object
     {
         return $this->getDataToContactEdit();
     }
 
-    protected function handleUpdate(array $data): void
+    protected function handleUpdate(array|object $data): void
     {
         $this->service->updateContact($data);
     }

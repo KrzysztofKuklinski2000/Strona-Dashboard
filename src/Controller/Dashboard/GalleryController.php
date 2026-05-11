@@ -75,7 +75,7 @@ class GalleryController extends AbstractDashboardController {
     $this->service->createGallery($data);
   }
 
-  protected function handleUpdate(array $data): void {
+  protected function handleUpdate(array|object $data): void {
     $this->service->updateGallery($data);
   }
 

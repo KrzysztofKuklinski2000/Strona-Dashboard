@@ -94,7 +94,7 @@ class SubscribersController extends AbstractDashboardController
         $this->service->createSubscriber($data);
     }
 
-    protected function handleUpdate(array $data): void
+    protected function handleUpdate(array|object $data): void
     {
         $this->service->updateSubscriber($data);
     }

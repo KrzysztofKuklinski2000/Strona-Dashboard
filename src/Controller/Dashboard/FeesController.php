@@ -39,7 +39,7 @@ class FeesController extends AbstractDashboardController
         return $this->getDataToFeesEdit();
     }
 
-    protected function handleUpdate(array $data): void
+    protected function handleUpdate(array|object $data): void
     {
         $this->service->updateFees($data);
     }
