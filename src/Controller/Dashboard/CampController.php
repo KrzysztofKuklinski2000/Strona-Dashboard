@@ -38,6 +38,7 @@ class CampController extends AbstractDashboardController
 
     protected function handleUpdate(array|object $data): void
     {
+        /** @var CampDto $data */
         $this->service->updateCamp($data);
     }
 }

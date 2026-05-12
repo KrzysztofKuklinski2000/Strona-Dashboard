@@ -2,6 +2,7 @@
 
 namespace App\Service\Dashboard;
 
+use App\DTO\Dashboard\FeesDto;
 use App\Exception\ServiceException;
 use App\Service\Dashboard\Traits\CanEdit;
 
@@ -14,16 +15,18 @@ class FeesService extends AbstractDashboardService implements FeesManagementServ
     /**
      * @throws ServiceException
      */
-    public function updateFees(array $data): void
+    public function updateFees(FeesDto $feesDto): void
     {
-        $this->edit(self::TABLE, $data);
+        $this->edit(self::TABLE, $feesDto->toArray());
     }
 
     /**
      * @throws ServiceException
      */
-    public function getFees(): array
+    public function getFees(): FeesDto
     {
-        return $this->getAll(self::TABLE)[0];
+        $data = $this->getAll(self::TABLE)[0];
+
+        return FeesDto::fromArray($data);
     }
 }

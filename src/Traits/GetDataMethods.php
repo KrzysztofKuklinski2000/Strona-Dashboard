@@ -6,6 +6,7 @@ namespace App\Traits;
 use App\Core\Request;
 use App\Core\Validator;
 use App\DTO\Dashboard\CampDto;
+use App\DTO\Dashboard\FeesDto;
 
 /**
  * @property Request $request
@@ -233,9 +234,9 @@ trait GetDataMethods
         return CampDto::fromArray($data);
     }
 
-    protected function getDataToFeesEdit(): array
+    protected function getDataToFeesEdit(): FeesDto
     {
-        return [
+        $data = [
             'reduced_contribution_1_month' => $this->validator->validate(
                 name: 'n1',
                 value: $this->request->getFormParam('n1'),
@@ -290,6 +291,8 @@ trait GetDataMethods
                 required: true,
             ),
         ];
+
+        return FeesDto::fromArray($data);
     }
 
     protected function getDataToContactEdit(): array

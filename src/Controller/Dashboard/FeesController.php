@@ -4,9 +4,7 @@ namespace App\Controller\Dashboard;
 
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
-use App\View;
-use App\Core\Request;
-use App\Middleware\CsrfMiddleware;
+use App\DTO\Dashboard\FeesDto;
 use App\Service\Dashboard\FeesManagementServiceInterface;
 
 class FeesController extends AbstractDashboardController
@@ -34,13 +32,14 @@ class FeesController extends AbstractDashboardController
         return 'fees';
     }
 
-    protected function getDataToUpdate(): array
+    protected function getDataToUpdate(): FeesDto
     {
         return $this->getDataToFeesEdit();
     }
 
     protected function handleUpdate(array|object $data): void
     {
+        /** @var FeesDto $data */
         $this->service->updateFees($data);
     }
 }
