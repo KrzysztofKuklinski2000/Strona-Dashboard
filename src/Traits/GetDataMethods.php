@@ -6,6 +6,7 @@ namespace App\Traits;
 use App\Core\Request;
 use App\Core\Validator;
 use App\DTO\Dashboard\CampDto;
+use App\DTO\Dashboard\ContactDto;
 use App\DTO\Dashboard\FeesDto;
 
 /**
@@ -295,9 +296,9 @@ trait GetDataMethods
         return FeesDto::fromArray($data);
     }
 
-    protected function getDataToContactEdit(): array
+    protected function getDataToContactEdit(): ContactDto
     {
-        return [
+        $data = [
             'email' => $this->validator->validate(
                 name: 'email',
                 value: $this->request->getFormParam('email'),
@@ -318,6 +319,8 @@ trait GetDataMethods
                 required: true,
             ),
         ];
+
+        return ContactDto::fromArray($data);
     }
 
     protected function getDataToAddTimetable(): array

@@ -2,6 +2,7 @@
 
 namespace App\Service\Dashboard;
 
+use App\DTO\Dashboard\ContactDto;
 use App\Exception\ServiceException;
 use App\Service\Dashboard\Traits\CanEdit;
 
@@ -14,16 +15,16 @@ class ContactService extends AbstractDashboardService implements ContactManageme
     /**
      * @throws ServiceException
      */
-    public function updateContact(array $data): void
+    public function updateContact(ContactDto $contactDto ): void
     {
-        $this->edit(self::TABLE, $data);
+        $this->edit(self::TABLE, $contactDto->toArray());
     }
 
     /**
      * @throws ServiceException
      */
-    public function getContact(): array
+    public function getContact(): ContactDto
     {
-        return $this->getAll(self::TABLE)[0];
+        return ContactDto::fromArray($this->getAll(self::TABLE)[0]);
     }
 }

@@ -12,17 +12,17 @@ $errors = $params['flash_dashboard']['message'] ?? [];
   <input type="hidden" name="csrf_token" value="<?= $csrf ?>">
   <label>
     <span>E-mail:</span>
-    <input type="email" name="email" value="<?= $data['email'] ?>">
+    <input type="email" name="email" value="<?= $data->email ?>">
   </label>
   <p class="validation-error"><?= $errors['email'] ?? ""  ?></p>
   <label>
     <span>Telefon: </span>
-    <input type="tel" name="phone" value="<?= $data['phone'] ?>">
+    <input type="tel" name="phone" value="<?= $data->phone ?>">
   </label>
   <p class="validation-error"><?= $errors['phone'] ?? ""  ?></p>
   <label>
     <span>Adres: </span>
-    <input type="text" name="address" value="<?= $data['address'] ?>">
+    <input type="text" name="address" value="<?= $data->address ?>">
   </label>
   <p class="validation-error"><?= $errors['address'] ?? ""  ?></p>
   <input type="submit" value="Zapisz">

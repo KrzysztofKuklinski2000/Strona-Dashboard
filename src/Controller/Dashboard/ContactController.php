@@ -4,6 +4,7 @@ namespace App\Controller\Dashboard;
 
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
+use App\DTO\Dashboard\ContactDto;
 use App\View;
 use App\Core\Request;
 use App\Middleware\CsrfMiddleware;
@@ -41,6 +42,7 @@ class ContactController extends AbstractDashboardController
 
     protected function handleUpdate(array|object $data): void
     {
+        /** @var ContactDto $data */
         $this->service->updateContact($data);
     }
 }
