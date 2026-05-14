@@ -7,7 +7,7 @@ use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\BaseDashboardRepository;
 
-abstract class AbstractDashboardService implements SharedGetDataServiceInterface
+abstract class AbstractDashboardService
 {
     public function __construct(protected BaseDashboardRepository $repository)
     {
@@ -17,7 +17,7 @@ abstract class AbstractDashboardService implements SharedGetDataServiceInterface
      * @throws ServiceException
      * @throws NotFoundException
      */
-    public function getPost(string $table, int $id): ?array
+    public function getRow(string $table, int $id): ?array
     {
         try {
             return $this->repository->getPost($table, $id);

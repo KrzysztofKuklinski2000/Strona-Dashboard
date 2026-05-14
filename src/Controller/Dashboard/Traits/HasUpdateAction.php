@@ -3,6 +3,8 @@
 namespace App\Controller\Dashboard\Traits;
 
 use App\Core\Request;
+use App\DTO\Dashboard\UpdatePostDto;
+use App\DTO\DataTransferObjectInterface;
 use App\Middleware\CsrfMiddleware;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 use JetBrains\PhpStorm\NoReturn;
@@ -16,9 +18,9 @@ use JetBrains\PhpStorm\NoReturn;
  */
 trait HasUpdateAction
 {
-    abstract protected function handleUpdate(array|object $data): void;
+    abstract protected function handleUpdate(DataTransferObjectInterface $data): void;
 
-    abstract protected function getDataToUpdate(): array|object;
+    abstract protected function getDataToUpdate(): DataTransferObjectInterface;
 
     /**
      * @throws InvalidCsrfTokenException
@@ -44,8 +46,8 @@ trait HasUpdateAction
         $this->setFlash("warning", $this->validator->getErrors());
         $redirectUrl = "{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}/edit";
 
-        if (isset($data['id']) && $data['id'] !== '') {
-            $redirectUrl .= '/' . $data['id'];
+        if (isset($data->id) && $data->id !== '') {
+            $redirectUrl .= '/' . $data->id;
         }
 
         $this->redirect($redirectUrl);

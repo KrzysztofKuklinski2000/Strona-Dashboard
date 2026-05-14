@@ -3,6 +3,7 @@
 namespace App\Controller\Dashboard\Traits;
 
 use App\Core\Request;
+use App\DTO\DataTransferObjectInterface;
 use App\Middleware\CsrfMiddleware;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 use JetBrains\PhpStorm\NoReturn;
@@ -16,9 +17,9 @@ use JetBrains\PhpStorm\NoReturn;
  */
 trait HasStoreAction
 {
-    abstract protected function handleCreate(array $data): void;
+    abstract protected function handleCreate(DataTransferObjectInterface $data): void;
 
-    abstract protected function getDataToCreate(): array;
+    abstract protected function getDataToCreate(): DataTransferObjectInterface;
 
     /**
      * @throws InvalidCsrfTokenException

@@ -4,6 +4,7 @@ namespace App\Controller\Dashboard\Traits;
 
 
 use App\Core\Request;
+use App\DTO\Dashboard\ChangePositionDto;
 use App\Middleware\CsrfMiddleware;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 
@@ -16,7 +17,7 @@ use EasyCSRF\Exceptions\InvalidCsrfTokenException;
  */
 trait HasMoveAction
 {
-    abstract protected function handleMove(array $data): void;
+    abstract protected function handleMove(ChangePositionDto $changePositionDto): void;
 
     /**
      * @throws InvalidCsrfTokenException

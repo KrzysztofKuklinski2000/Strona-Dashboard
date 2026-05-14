@@ -4,6 +4,7 @@ namespace App\Controller\Dashboard\Traits;
 
 
 use App\Core\Request;
+use App\DTO\DataTransferObjectInterface;
 use App\Middleware\CsrfMiddleware;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 use JetBrains\PhpStorm\NoReturn;
@@ -18,7 +19,7 @@ use JetBrains\PhpStorm\NoReturn;
  */
 trait HasPublishedAction
 {
-    abstract protected function handlePublish(array $data): void;
+    abstract protected function handlePublish(DataTransferObjectInterface $data): void;
 
     /**
      * @throws InvalidCsrfTokenException
