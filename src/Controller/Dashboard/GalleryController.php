@@ -9,85 +9,99 @@ use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Controller\Dashboard\Traits\HasSingleData;
 use App\Core\ContextController;
-use App\View;
-use App\Core\Request;
-use App\Middleware\CsrfMiddleware;
+use App\DTO\Dashboard\ChangePositionDto;
+use App\DTO\DataTransferObjectInterface;
 use App\Service\Dashboard\GalleryManagementServiceInterface;
 
-class GalleryController extends AbstractDashboardController {
+class GalleryController extends AbstractDashboardController
+{
     use HasStoreAction, HasDeleteAction, HasUpdateAction, HasPublishedAction, HasMoveAction, HasSingleData;
 
-  public function __construct(
-    public GalleryManagementServiceInterface $service,
-    ContextController $contextController,
-  ) {
-    parent::__construct($contextController);
-  }
+    public function __construct(
+        public GalleryManagementServiceInterface $service,
+        ContextController                        $contextController,
+    )
+    {
+        parent::__construct($contextController);
+    }
 
-  public function indexAction(): void {
-    $this->renderPage([
-      'page' => 'gallery/index',
-      'data' => $this->service->getAllGallery(),
-    ]);
-  }
+    public function indexAction(): void
+    {
+        $this->renderPage([
+            'page' => 'gallery/index',
+            'data' => $this->service->getAllGallery(),
+        ]);
+    }
 
-  public function editAction(): void {
-    $this->renderPage([
-      'page' => 'gallery/edit',
-      'data' => $this->getSingleData(),
-    ]);
-  }
+    public function editAction(): void
+    {
+        $this->renderPage([
+            'page' => 'gallery/edit',
+            'data' => $this->getSingleData(),
+        ]);
+    }
 
-  public function createAction(): void {
-    $this->renderPage([
-      'page' => 'gallery/create',
-    ]);
-  }
+    public function createAction(): void
+    {
+        $this->renderPage([
+            'page' => 'gallery/create',
+        ]);
+    }
 
-  public function showAction(): void {
-    $this->renderPage([
-      'page' => 'gallery/show',
-      'data' => $this->getSingleData(),
-    ]);
-  }
+    public function showAction(): void
+    {
+        $this->renderPage([
+            'page' => 'gallery/show',
+            'data' => $this->getSingleData(),
+        ]);
+    }
 
-  public function confirmDeleteAction(): void {
-    $this->renderPage([
-      'page' => 'gallery/delete',
-      'data' => $this->getSingleData(),
-    ]);
-  }
+    public function confirmDeleteAction(): void
+    {
+        $this->renderPage([
+            'page' => 'gallery/delete',
+            'data' => $this->getSingleData(),
+        ]);
+    }
 
-  protected function getModuleName(): string {
-    return 'gallery';
-  }
+    protected function getModuleName(): string
+    {
+        return 'gallery';
+    }
 
-  protected function getDataToCreate(): array {
-    return $this->getDataToAddImage();
-  }
+    protected function getDataToCreate(): DataTransferObjectInterface
+    {
+        return $this->getDataToAddImage();
+    }
 
-  protected function getDataToUpdate(): array{
-    return $this->getDataToEditImage();
-  }
-  
+    protected function getDataToUpdate(): DataTransferObjectInterface
+    {
+        return $this->getDataToEditImage();
+    }
 
-  protected function handleCreate(array $data): void {
-    $this->service->createGallery($data);
-  }
 
-  protected function handleUpdate(array|object $data): void {
-    $this->service->updateGallery($data);
-  }
+    protected function handleCreate(DataTransferObjectInterface $data): void
+    {
+        $this->service->createGallery($data);
+    }
 
-  protected function handleDelete(int $id): void {
-    $this->service->deleteGallery($id);
-  }
+    protected function handleUpdate(DataTransferObjectInterface $data): void
+    {
+        $this->service->updateGallery($data);
+    }
 
-  protected function handlePublish(array $data): void {
-    $this->service->publishedGallery($data);
-  }
+    protected function handleDelete(int $id): void
+    {
+        $this->service->deleteGallery($id);
+    }
 
-  protected function handleMove(array $data): void {
-    $this->service->moveGallery($data);
-  }
+    protected function handlePublish(DataTransferObjectInterface $data): void
+    {
+        $this->service->publishedGallery($data);
+    }
+
+    protected function handleMove(ChangePositionDto $changePositionDto): void
+    {
+        $this->service->moveGallery($changePositionDto);
+    }
 }

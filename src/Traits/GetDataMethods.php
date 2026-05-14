@@ -6,8 +6,13 @@ namespace App\Traits;
 use App\Core\Request;
 use App\Core\Validator;
 use App\DTO\Dashboard\CampDto;
+use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\ContactDto;
+use App\DTO\Dashboard\CreateGalleryDto;
 use App\DTO\Dashboard\FeesDto;
+use App\DTO\Dashboard\PublishedDto;
+use App\DTO\Dashboard\UpdateGalleryDto;
+use App\DTO\Dashboard\UpdatePostDto;
 
 /**
  * @property Request $request
@@ -15,9 +20,9 @@ use App\DTO\Dashboard\FeesDto;
  */
 trait GetDataMethods
 {
-    protected function getDataToChangePostPosition(): array
+    protected function getDataToChangePostPosition(): ChangePositionDto
     {
-        return [
+        $data = [
             'id' => $this->validator->validate(
                 name: 'id',
                 value: $this->request->getFormParam('id'),
@@ -31,11 +36,13 @@ trait GetDataMethods
                 required: true
             ),
         ];
+
+        return ChangePositionDto::fromArray($data);
     }
 
-    protected function getPostDataToEdit(): array
+    protected function getPostDataToEdit(): UpdatePostDto
     {
-        return [
+        $data = [
             'id' => $this->validator->validate(
                 name: 'postId',
                 value: $this->request->getFormParam('postId'),
@@ -61,11 +68,13 @@ trait GetDataMethods
 
             'updated' => date('Y-m-d')
         ];
+
+        return UpdatePostDto::fromArray($data);
     }
 
-    protected function getDataToPublished(): array
+    protected function getDataToPublished(): PublishedDto
     {
-        return [
+        $data = [
             'published' => $this->validator->validate(
                 name: 'postPublished',
                 value: $this->request->getFormParam('postPublished'),
@@ -78,6 +87,8 @@ trait GetDataMethods
                 required: true
             )
         ];
+
+        return PublishedDto::fromArray($data);
     }
 
     protected function getPostDataToCreate(): array
@@ -443,9 +454,9 @@ trait GetDataMethods
         ];
     }
 
-    protected function getDataToAddImage(): array
+    protected function getDataToAddImage(): CreateGalleryDto
     {
-        return [
+        $data = [
             'category' => $this->validator->validate(
                 name: 'category',
                 value: $this->request->getFormParam('category'),
@@ -471,11 +482,13 @@ trait GetDataMethods
 
             'updated_at' => date('Y-m-d'),
         ];
+
+        return CreateGalleryDto::fromArray($data);
     }
 
-    protected function getDataToEditImage(): array
+    protected function getDataToEditImage(): UpdateGalleryDto
     {
-        return [
+        $data = [
             'id' => $this->validator->validate(
                 name: 'id',
                 value: $this->request->getFormParam('id'),
@@ -500,6 +513,8 @@ trait GetDataMethods
 
             'updated_at' => date('Y-m-d'),
         ];
+
+        return UpdateGalleryDto::fromArray($data);
     }
 
     protected function getEmailToCreate(): array
