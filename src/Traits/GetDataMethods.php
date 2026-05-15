@@ -9,10 +9,12 @@ use App\DTO\Dashboard\CampDto;
 use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\ContactDto;
 use App\DTO\Dashboard\CreateGalleryDto;
+use App\DTO\Dashboard\CreatePostDto;
 use App\DTO\Dashboard\FeesDto;
 use App\DTO\Dashboard\PublishedDto;
 use App\DTO\Dashboard\UpdateGalleryDto;
 use App\DTO\Dashboard\UpdatePostDto;
+use App\DTO\DataTransferObjectInterface;
 
 /**
  * @property Request $request
@@ -91,9 +93,9 @@ trait GetDataMethods
         return PublishedDto::fromArray($data);
     }
 
-    protected function getPostDataToCreate(): array
+    protected function getPostDataToCreate(): DataTransferObjectInterface
     {
-        return [
+        $data =  [
             'title' => $this->validator->validate(
                 name: 'postTitle',
                 value: $this->request->getFormParam('postTitle'),
@@ -116,6 +118,8 @@ trait GetDataMethods
 
             'status' => 1,
         ];
+
+        return CreatePostDto::fromArray($data);
     }
 
     protected function getDataToCampEdit(): CampDto
