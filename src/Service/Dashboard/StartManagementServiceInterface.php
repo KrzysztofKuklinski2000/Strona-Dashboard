@@ -4,37 +4,39 @@ declare(strict_types=1);
 
 namespace App\Service\Dashboard;
 
+use App\DTO\DataTransferObjectInterface;
+
 /**
  * Interfejs definiujący operacje wyłącznie dla modułu Aktualności.
  */
 interface StartManagementServiceInterface extends SharedGetDataServiceInterface
 {
-  /**
-   * Pobiera wszystkie wpisy Strony Głownej.
-   * @return array
-   */
+    /**
+     * Pobiera wszystkie wpisy Strony Głownej.
+     * @return DataTransferObjectInterface
+     */
   public function getAllMain(): array;
 
-  /**
-   * Aktualizuje istniejący wpis Strony Głownej.
-   * @param array $data Nowe dane z formularza.
-   * @return void
-   */
-  public function updateMain(array $data): void;
+    /**
+     * Aktualizuje istniejący wpis Strony Głownej.
+     * @param DataTransferObjectInterface $data Nowe dane z formularza.
+     * @return void
+     */
+  public function updateMain(DataTransferObjectInterface $data): void;
 
-  /**
-   * Tworzy nowy wpis Strony Głownej.
-   * @param array $data Dane posta z formularza.
-   * @return void
-   */
-  public function createMain(array $data): void;
+    /**
+     * Tworzy nowy wpis Strony Głownej.
+     * @param DataTransferObjectInterface $data Dane posta z formularza.
+     * @return void
+     */
+  public function createMain(DataTransferObjectInterface $data): void;
 
-  /**
-   * Zmienia status publikacji Strony Głownej.
-   * @param array $data Dane posta z formularza.
-   * @return void
-   */
-  public function publishedMain(array $data): void;
+    /**
+     * Zmienia status publikacji Strony Głownej.
+     * @param DataTransferObjectInterface $data Dane posta z formularza.
+     * @return void
+     */
+  public function publishedMain(DataTransferObjectInterface $data): void;
 
   /**
    * Usuwa wpis na Stronie Głownej.
@@ -43,10 +45,10 @@ interface StartManagementServiceInterface extends SharedGetDataServiceInterface
    */
   public function deleteMain(int $id): void;
 
-  /**
-   * Zmienia pozycje posta na Stronie Głownej.
-   * @param array $data Dane posta z formularza.
-   * @return void
-   */
-  public function moveMain(array $data): void;
+    /**
+     * Zmienia pozycje posta na Stronie Głownej.
+     * @param DataTransferObjectInterface $data Dane posta z formularza.
+     * @return void
+     */
+  public function moveMain(DataTransferObjectInterface $data): void;
 }

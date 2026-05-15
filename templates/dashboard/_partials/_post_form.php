@@ -4,15 +4,15 @@
 <form action="<?= $action ?? "" ?>" method="POST">
   <input type="hidden" name="csrf_token" value="<?= $csrf ?? '' ?>">
 
-  <?php if (isset($data['id'])): ?>
-    <input type="hidden" name="postId" value="<?= $data['id'] ?? "" ?>">
+  <?php if (isset($data->id)): ?>
+    <input type="hidden" name="postId" value="<?= $data->id ?? "" ?>">
   <?php endif; ?>
 
-  <input type="text" name="postTitle" maxlength="100" value="<?= $data['title'] ?? "" ?>" placeholder="Tytuł posta">
+  <input type="text" name="postTitle" maxlength="100" value="<?= $data->title ?? "" ?>" placeholder="Tytuł posta">
   <p class="validation-error"><?= $errors['postTitle'] ?? ""  ?></p>
 
   <textarea name="postDescription" placeholder="Wpisz treść posta">
-    <?= $data['description'] ?? "" ?>
+    <?= $data->description ?? "" ?>
   </textarea>
   <p class="validation-error"><?= $errors['postDescription'] ?? ""  ?></p>
 

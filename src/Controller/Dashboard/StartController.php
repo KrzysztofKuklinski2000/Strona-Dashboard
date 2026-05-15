@@ -9,10 +9,8 @@ use App\Controller\Dashboard\Traits\HasSingleData;
 use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
+use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
-use App\View;
-use App\Core\Request;
-use App\Middleware\CsrfMiddleware;
 use App\Service\Dashboard\StartManagementServiceInterface;
 
 class StartController extends AbstractDashboardController
@@ -85,23 +83,22 @@ class StartController extends AbstractDashboardController
         return 'main_page_posts';
     }
 
-    protected function getDataToCreate(): array
+    protected function getDataToCreate(): DataTransferObjectInterface
     {
         return $this->getPostDataToCreate();
     }
 
-    protected function getDataToUpdate(): array
+    protected function getDataToUpdate(): DataTransferObjectInterface
     {
         return $this->getPostDataToEdit();
     }
 
-
-    protected function handleCreate(array $data): void
+    protected function handleCreate(DataTransferObjectInterface $data): void
     {
         $this->service->createMain($data);
     }
 
-    protected function handleUpdate(array|object $data): void
+    protected function handleUpdate(DataTransferObjectInterface $data): void
     {
         $this->service->updateMain($data);
     }
@@ -111,12 +108,12 @@ class StartController extends AbstractDashboardController
         $this->service->deleteMain($id);
     }
 
-    protected function handlePublish(array $data): void
+    protected function handlePublish(DataTransferObjectInterface $data): void
     {
         $this->service->publishedMain($data);
     }
 
-    protected function handleMove(array $data): void
+    protected function handleMove(DataTransferObjectInterface $data): void
     {
         $this->service->moveMain($data);
     }
