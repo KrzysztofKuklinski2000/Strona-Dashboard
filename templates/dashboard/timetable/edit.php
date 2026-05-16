@@ -1,7 +1,6 @@
 <?php 
 	$data = $params['data'];
-	$data['day'] = trim($data['day']);
-	$action = "/dashboard/timetable/update/" . ($data['id'] ?? '');
+	$action = "/dashboard/timetable/update/" . ($data->id ?? '');
 	$csrf = $params['csrf_token'] ?? '';
 	$error = $params['flash_dashboard']['message'] ?? [];
 	$formTitle = "Edytuj Post z grafiku";
