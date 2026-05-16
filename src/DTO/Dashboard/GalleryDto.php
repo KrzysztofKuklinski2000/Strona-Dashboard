@@ -4,7 +4,7 @@ namespace App\DTO\Dashboard;
 
 use App\DTO\DataTransferObjectInterface;
 
-readonly  class GalleryDto implements DataTransferObjectInterface
+readonly class GalleryDto implements DataTransferObjectInterface
 {
 
     public function __construct(

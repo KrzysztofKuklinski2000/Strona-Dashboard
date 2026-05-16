@@ -4,7 +4,7 @@ namespace App\DTO\Dashboard;
 
 use App\DTO\DataTransferObjectInterface;
 
-class PublishedDto implements DataTransferObjectInterface
+readonly class PublishedDto implements DataTransferObjectInterface
 {
     public function __construct(
         public int $id,

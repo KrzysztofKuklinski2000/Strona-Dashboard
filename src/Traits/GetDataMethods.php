@@ -10,10 +10,13 @@ use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\ContactDto;
 use App\DTO\Dashboard\CreateGalleryDto;
 use App\DTO\Dashboard\CreatePostDto;
+use App\DTO\Dashboard\CreateTimetableDto;
 use App\DTO\Dashboard\FeesDto;
 use App\DTO\Dashboard\PublishedDto;
+use App\DTO\Dashboard\PublishedTimetableDto;
 use App\DTO\Dashboard\UpdateGalleryDto;
 use App\DTO\Dashboard\UpdatePostDto;
+use App\DTO\Dashboard\UpdateTimetableDto;
 use App\DTO\DataTransferObjectInterface;
 
 /**
@@ -22,7 +25,7 @@ use App\DTO\DataTransferObjectInterface;
  */
 trait GetDataMethods
 {
-    protected function getDataToChangePostPosition(): ChangePositionDto
+    protected function getDataToChangePostPosition(): DataTransferObjectInterface
     {
         $data = [
             'id' => $this->validator->validate(
@@ -74,7 +77,7 @@ trait GetDataMethods
         return UpdatePostDto::fromArray($data);
     }
 
-    protected function getDataToPublished(): PublishedDto
+    protected function getDataToPublished(): DataTransferObjectInterface
     {
         $data = [
             'published' => $this->validator->validate(
@@ -338,9 +341,9 @@ trait GetDataMethods
         return ContactDto::fromArray($data);
     }
 
-    protected function getDataToAddTimetable(): array
+    protected function getDataToAddTimetable(): DataTransferObjectInterface
     {
-        return [
+        $data = [
             'day' => $this->validator->validate(
                 name: 'day',
                 value: $this->request->getFormParam('day'),
@@ -383,11 +386,13 @@ trait GetDataMethods
 
             'is_notify' => $this->request->getFormParam('is_notify')
         ];
+
+        return CreateTimetableDto::fromArray($data);
     }
 
-    protected function getDataToEditTimetable(): array
+    protected function getDataToEditTimetable(): DataTransferObjectInterface
     {
-        return [
+        $data = [
             'id' => $this->validator->validate(
                 name: 'id',
                 value: $this->request->getFormParam('id'),
@@ -437,11 +442,13 @@ trait GetDataMethods
 
             'is_notify' => $this->request->getFormParam('is_notify')
         ];
+
+        return UpdateTimetableDto::fromArray($data);
     }
 
-    protected function getDataToPublishedTimetable(): array
+    protected function getDataToPublishedTimetable(): DataTransferObjectInterface
     {
-        return [
+        $data = [
             'published' => $this->validator->validate(
                 name: 'postPublished',
                 value: $this->request->getFormParam('postPublished'),
@@ -456,6 +463,8 @@ trait GetDataMethods
 
             'is_notify' => $this->request->getFormParam('is_notify')
         ];
+
+        return PublishedTimetableDto::fromArray($data);
     }
 
     protected function getDataToAddImage(): CreateGalleryDto

@@ -4,7 +4,7 @@ namespace App\DTO\Dashboard;
 
 use App\DTO\DataTransferObjectInterface;
 
-class CreatePostDto implements DataTransferObjectInterface
+readonly class CreatePostDto implements DataTransferObjectInterface
 {
 
     public function __construct(

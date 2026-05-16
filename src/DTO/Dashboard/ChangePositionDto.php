@@ -4,7 +4,7 @@ namespace App\DTO\Dashboard;
 
 use App\DTO\DataTransferObjectInterface;
 
-readonly  class ChangePositionDto implements DataTransferObjectInterface
+readonly class ChangePositionDto implements DataTransferObjectInterface
 {
     public function __construct(
         public int $id,
