@@ -3,6 +3,9 @@
 namespace App\Service\Dashboard;
 
 use App\Core\Config;
+use App\DTO\Dashboard\TimetableDto;
+use App\DTO\DataTransferObjectInterface;
+use App\Exception\NotFoundException;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\TimetableRepository;
@@ -41,19 +44,27 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
      */
     public function getAllTimetable(): array
     {
-        return $this->timetablePageData();
+        return array_map(fn(array $row) => TimetableDto::fromArray($row), $this->timetablePageData());
+    }
+
+    /**
+     * @throws ServiceException
+     * @throws NotFoundException
+     */
+    public function getPost(string $table, int $id): ?DataTransferObjectInterface
+    {
+        return TimetableDto::fromArray($this->getRow($table, $id));
     }
 
     /**
      * @throws ServiceException
      */
-    public function updateTimetable(array $data): void
+    public function updateTimetable(DataTransferObjectInterface $data): void
     {
         $this->handleActionWithNotification(
-            $data,
+            $data->toArray(),
             $this->notifications['timetable_updated'],
             function ($cleanData) {
-
                 $this->edit(self::TABLE, $cleanData);
             });
     }
@@ -61,10 +72,10 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
     /**
      * @throws ServiceException
      */
-    public function createTimetable(array $data): void
+    public function createTimetable(DataTransferObjectInterface $data): void
     {
         $this->handleActionWithNotification(
-            $data,
+            $data->toArray(),
             $this->notifications['timetable_created'],
             function ($cleanData) {
 
@@ -75,10 +86,10 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
     /**
      * @throws ServiceException
      */
-    public function publishedTimetable(array $data): void
+    public function publishedTimetable(DataTransferObjectInterface $data): void
     {
         $this->handleActionWithNotification(
-            $data,
+            $data->toArray(),
             $this->notifications['timetable_published'],
             function ($cleanData) {
 

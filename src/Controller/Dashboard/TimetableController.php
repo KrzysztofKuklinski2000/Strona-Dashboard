@@ -8,11 +8,9 @@ use App\Controller\Dashboard\Traits\HasSingleData;
 use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
-use App\Core\Request;
+use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
-use App\Middleware\CsrfMiddleware;
 use App\Service\Dashboard\TimetableManagementServiceInterface;
-use App\View;
 
 class TimetableController extends AbstractDashboardController
 {
@@ -79,27 +77,27 @@ class TimetableController extends AbstractDashboardController
         return 'timetable';
     }
 
-    protected function getDataToCreate(): array
+    protected function getDataToCreate(): DataTransferObjectInterface
     {
         return $this->getDataToAddTimetable();
     }
 
-    protected function getDataToUpdate(): array
+    protected function getDataToUpdate(): DataTransferObjectInterface
     {
         return $this->getDataToEditTimetable();
     }
 
-    protected function getDataToPublished(): array
+    protected function getDataToPublished(): DataTransferObjectInterface
     {
         return $this->getDataToPublishedTimetable();
     }
 
-    protected function handleCreate(array $data): void
+    protected function handleCreate(DataTransferObjectInterface $data): void
     {
         $this->service->createTimetable($data);
     }
 
-    protected function handleUpdate(array|object $data): void
+    protected function handleUpdate(DataTransferObjectInterface $data): void
     {
         $this->service->updateTimetable($data);
     }
@@ -110,7 +108,7 @@ class TimetableController extends AbstractDashboardController
         $this->service->deleteTimetable($id, $shouldNotify);
     }
 
-    protected function handlePublish(array $data): void
+    protected function handlePublish(DataTransferObjectInterface $data): void
     {
         $this->service->publishedTimetable($data);
     }
