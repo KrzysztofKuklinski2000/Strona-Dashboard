@@ -9,9 +9,9 @@ use App\Controller\Dashboard\Traits\HasSingleData;
 use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
-use App\View;
-use App\Core\Request;
-use App\Middleware\CsrfMiddleware;
+use App\DTO\Dashboard\ChangePositionDto;
+use App\DTO\DataTransferObjectInterface;
+use App\Exception\NotFoundException;
 use App\Service\Dashboard\NewsManagementServiceInterface;
 
 class NewsController extends AbstractDashboardController
@@ -20,7 +20,7 @@ class NewsController extends AbstractDashboardController
 
     public function __construct(
         public NewsManagementServiceInterface $service,
-        ContextController $contextController
+        ContextController                     $contextController
     )
     {
         parent::__construct($contextController);
@@ -34,6 +34,9 @@ class NewsController extends AbstractDashboardController
         ]);
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function editAction(): void
     {
         $this->renderPage([
@@ -49,6 +52,9 @@ class NewsController extends AbstractDashboardController
         ]);
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function showAction(): void
     {
         $this->renderPage([
@@ -57,6 +63,9 @@ class NewsController extends AbstractDashboardController
         ]);
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function confirmDeleteAction(): void
     {
         $this->renderPage([
@@ -70,22 +79,22 @@ class NewsController extends AbstractDashboardController
         return 'news';
     }
 
-    protected function getDataToCreate(): array
+    protected function getDataToCreate(): DataTransferObjectInterface
     {
         return $this->getPostDataToCreate();
     }
 
-    protected function getDataToUpdate(): array
+    protected function getDataToUpdate(): DataTransferObjectInterface
     {
         return $this->getPostDataToEdit();
     }
 
-    protected function handleCreate(array $data): void
+    protected function handleCreate(DataTransferObjectInterface $data): void
     {
         $this->service->createNews($data);
     }
 
-    protected function handleUpdate(array|object $data): void
+    protected function handleUpdate(DataTransferObjectInterface $data): void
     {
         $this->service->updateNews($data);
     }
@@ -95,13 +104,13 @@ class NewsController extends AbstractDashboardController
         $this->service->deleteNews($id);
     }
 
-    protected function handlePublish(array $data): void
+    protected function handlePublish(DataTransferObjectInterface $data): void
     {
         $this->service->publishedNews($data);
     }
 
-    protected function handleMove(array $data): void
+    protected function handleMove(ChangePositionDto $changePositionDto): void
     {
-        $this->service->moveNews($data);
+        $this->service->moveNews($changePositionDto);
     }
 }

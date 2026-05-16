@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\Dashboard;
 
+use App\DTO\DataTransferObjectInterface;
+
 /**
  * Interfejs definiujący operacje wyłącznie dla modułu Aktualności.
  */
@@ -15,26 +17,26 @@ interface NewsManagementServiceInterface extends SharedGetDataServiceInterface
    */
   public function getAllNews(): array;
 
-  /**
-   * Aktualizuje istniejący wpis aktualności.
-   * @param array $data Nowe dane z formularza.
-   * @return void
-   */
-  public function updateNews(array $data): void;
+    /**
+     * Aktualizuje istniejący wpis aktualności.
+     * @param DataTransferObjectInterface $data Nowe dane z formularza.
+     * @return void
+     */
+  public function updateNews(DataTransferObjectInterface $data): void;
 
-  /**
-   * Tworzy nowy wpis aktualności.
-   * @param array $data Dane posta z formularza.
-   * @return void
-   */
-  public function createNews(array $data): void;
+    /**
+     * Tworzy nowy wpis aktualności.
+     * @param DataTransferObjectInterface $data Dane posta z formularza.
+     * @return void
+     */
+  public function createNews(DataTransferObjectInterface $data): void;
 
-  /**
-   * Zmienia status publikacji wpisu.
-   * @param array $data Dane posta z formularza.
-   * @return void
-   */
-  public function publishedNews(array $data): void;
+    /**
+     * Zmienia status publikacji wpisu.
+     * @param DataTransferObjectInterface $data Dane posta z formularza.
+     * @return void
+     */
+  public function publishedNews(DataTransferObjectInterface $data): void;
 
   /**
    * Usuwa wpis aktualności.
@@ -43,11 +45,11 @@ interface NewsManagementServiceInterface extends SharedGetDataServiceInterface
    */
   public function deleteNews(int $id): void;
 
-  /**
-   * Zmienia pozycje wpisu.
-   * @param array $data Dane posta z formularza.
-   * @return void
-   */
-  public function moveNews(array $data): void;
+    /**
+     * Zmienia pozycje wpisu.
+     * @param DataTransferObjectInterface $data Dane posta z formularza.
+     * @return void
+     */
+  public function moveNews(DataTransferObjectInterface $data): void;
 
 }
