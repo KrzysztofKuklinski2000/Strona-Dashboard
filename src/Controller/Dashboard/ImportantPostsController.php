@@ -9,6 +9,7 @@ use App\Controller\Dashboard\Traits\HasSingleData;
 use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
+use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\View;
 use App\Core\Request;
@@ -81,22 +82,22 @@ class ImportantPostsController extends AbstractDashboardController
         return 'important_posts';
     }
 
-    protected function getDataToCreate(): array
+    protected function getDataToCreate(): DataTransferObjectInterface
     {
         return $this->getPostDataToCreate();
     }
 
-    protected function getDataToUpdate(): array
+    protected function getDataToUpdate(): DataTransferObjectInterface
     {
         return $this->getPostDataToEdit();
     }
 
-    protected function handleCreate(array $data): void
+    protected function handleCreate(DataTransferObjectInterface $data): void
     {
         $this->service->createImportantPost($data);
     }
 
-    protected function handleUpdate(array|object $data): void
+    protected function handleUpdate(DataTransferObjectInterface $data): void
     {
         $this->service->updateImportantPost($data);
     }
@@ -106,12 +107,12 @@ class ImportantPostsController extends AbstractDashboardController
         $this->service->deleteImportantPost($id);
     }
 
-    protected function handlePublish(array $data): void
+    protected function handlePublish(DataTransferObjectInterface $data): void
     {
         $this->service->publishedImportantPost($data);
     }
 
-    protected function handleMove(array $data): void
+    protected function handleMove(DataTransferObjectInterface $data): void
     {
         $this->service->moveImportantPost($data);
     }
