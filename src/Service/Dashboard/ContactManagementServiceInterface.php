@@ -9,7 +9,7 @@ use App\DTO\Dashboard\ContactDto;
 /**
  * Interfejs definiujący operacje wyłącznie dla modułu Aktualności.
  */
-interface ContactManagementServiceInterface extends SharedGetDataServiceInterface
+interface ContactManagementServiceInterface
 {
     /**
      * Pobiera wszystkie wpisy opłat.

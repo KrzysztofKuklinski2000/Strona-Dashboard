@@ -5,9 +5,7 @@ namespace App\Controller\Dashboard;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
 use App\DTO\Dashboard\ContactDto;
-use App\View;
-use App\Core\Request;
-use App\Middleware\CsrfMiddleware;
+use App\DTO\DataTransferObjectInterface;
 use App\Service\Dashboard\ContactManagementServiceInterface;
 
 class ContactController extends AbstractDashboardController
@@ -35,12 +33,12 @@ class ContactController extends AbstractDashboardController
         ]);
     }
 
-    protected function getDataToUpdate(): array|object
+    protected function getDataToUpdate(): DataTransferObjectInterface
     {
         return $this->getDataToContactEdit();
     }
 
-    protected function handleUpdate(array|object $data): void
+    protected function handleUpdate(DataTransferObjectInterface $data): void
     {
         /** @var ContactDto $data */
         $this->service->updateContact($data);
