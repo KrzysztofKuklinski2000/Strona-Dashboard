@@ -5,6 +5,7 @@ namespace App\Controller\Dashboard;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
 use App\DTO\Dashboard\FeesDto;
+use App\DTO\DataTransferObjectInterface;
 use App\Service\Dashboard\FeesManagementServiceInterface;
 
 class FeesController extends AbstractDashboardController
@@ -32,12 +33,12 @@ class FeesController extends AbstractDashboardController
         return 'fees';
     }
 
-    protected function getDataToUpdate(): FeesDto
+    protected function getDataToUpdate(): DataTransferObjectInterface
     {
         return $this->getDataToFeesEdit();
     }
 
-    protected function handleUpdate(array|object $data): void
+    protected function handleUpdate(DataTransferObjectInterface $data): void
     {
         /** @var FeesDto $data */
         $this->service->updateFees($data);

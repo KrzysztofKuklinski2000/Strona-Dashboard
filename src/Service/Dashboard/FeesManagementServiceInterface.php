@@ -9,7 +9,7 @@ use App\DTO\Dashboard\FeesDto;
 /**
  * Interfejs definiujący operacje wyłącznie dla modułu Aktualności.
  */
-interface FeesManagementServiceInterface extends SharedGetDataServiceInterface
+interface FeesManagementServiceInterface
 {
   /**
    * Pobiera wszystkie wpisy opłat.
