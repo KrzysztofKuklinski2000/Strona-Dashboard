@@ -7,10 +7,8 @@ use App\Controller\Dashboard\Traits\HasSingleData;
 use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
-use App\Core\Request;
+use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
-use App\View;
-use App\Middleware\CsrfMiddleware;
 use App\Service\Dashboard\SubscribersManagementServiceInterface;
 
 class SubscribersController extends AbstractDashboardController
@@ -79,22 +77,22 @@ class SubscribersController extends AbstractDashboardController
         return 'subscribers';
     }
 
-    protected function getDataToCreate(): array
+    protected function getDataToCreate(): DataTransferObjectInterface
     {
         return $this->getEmailToCreate();
     }
 
-    protected function getDataToUpdate(): array
+    protected function getDataToUpdate(): DataTransferObjectInterface
     {
         return $this->getEmailToUpdate();
     }
 
-    protected function handleCreate(array $data): void
+    protected function handleCreate(DataTransferObjectInterface $data): void
     {
         $this->service->createSubscriber($data);
     }
 
-    protected function handleUpdate(array|object $data): void
+    protected function handleUpdate(DataTransferObjectInterface $data): void
     {
         $this->service->updateSubscriber($data);
     }
