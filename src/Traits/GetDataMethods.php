@@ -10,12 +10,14 @@ use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\ContactDto;
 use App\DTO\Dashboard\CreateGalleryDto;
 use App\DTO\Dashboard\CreatePostDto;
+use App\DTO\Dashboard\CreateSubscriberDto;
 use App\DTO\Dashboard\CreateTimetableDto;
 use App\DTO\Dashboard\FeesDto;
 use App\DTO\Dashboard\PublishedDto;
 use App\DTO\Dashboard\PublishedTimetableDto;
 use App\DTO\Dashboard\UpdateGalleryDto;
 use App\DTO\Dashboard\UpdatePostDto;
+use App\DTO\Dashboard\UpdateSubscriberDto;
 use App\DTO\Dashboard\UpdateTimetableDto;
 use App\DTO\DataTransferObjectInterface;
 
@@ -530,9 +532,9 @@ trait GetDataMethods
         return UpdateGalleryDto::fromArray($data);
     }
 
-    protected function getEmailToCreate(): array
+    protected function getEmailToCreate(): DataTransferObjectInterface
     {
-        return [
+        $data = [
             'email' => $this->validator->validate(
                 name: 'email',
                 value: $this->request->getFormParam('email'),
@@ -541,11 +543,14 @@ trait GetDataMethods
                 maxLength: 100
             )
         ];
+
+        return CreateSubscriberDto::fromArray($data);
     }
 
-    protected function getEmailToUpdate(): array
+    protected function getEmailToUpdate(): DataTransferObjectInterface
     {
-        return [
+        $data = [
+
             'id' => $this->validator->validate(
                 name: 'id',
                 value: $this->request->getFormParam('id'),
@@ -566,5 +571,6 @@ trait GetDataMethods
                 value: $this->request->getFormParam('is_active')
             )
         ];
+        return UpdateSubscriberDto::fromArray($data);
     }
 }
