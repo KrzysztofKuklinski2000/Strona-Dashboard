@@ -1,13 +1,17 @@
+<?php
+$first = $params['content'][2];
+?>
+
 <div class="respons-container arrows-container">
     <div class="important-info">
         <?php foreach($params['content'][1] ?? [] as $post): ?>
-            <?php if($post['status']): ?>
+            <?php if($post->status): ?>
                 <div class="info-box">
                     <div class="info-icon info-neg">
                         <i class="fa-solid fa-exclamation"></i>
                     </div>
-                    <h2 class="info-title"> <?= $post['title'] ?> </h2>
-                    <p class="info-description"> <?= $post['description'] ?> </p>
+                    <h2 class="info-title"> <?= $post->title ?> </h2>
+                    <p class="info-description"> <?= $post->description ?> </p>
                 </div>
             <?php endif ?>
         <?php endforeach ?>
@@ -18,33 +22,33 @@
     </div>
 </div>
 <div class="padding-top">
-    <?php if($params['content'][2]): ?>
+    <?php if($first): ?>
         <div class="post-free">
             <div class="post">
                 <div class="left-side-post">
                     <?php 
-                        $text = $params['content'][2]['title']; 
+                        $text = $first->title;
                         require('templates/components/post_header.php'); 
                     ?>
                 </div>
                 <div class="post-content flex-item-center">
                     <span>zajęcia za darmo</span>
-                    <p><?= $params['content'][2]['description']; ?></p><br/>
+                    <p><?= $first->description; ?></p><br/>
                     <a class="text-uppercase" href="/zapisy">Zapisz się</a>
                 </div>
             </div>
         </div>
     <?php endif ?>
         <?php foreach($params['content'][0] ?? [] as  $content): ?>
-            <?php if($content['status']): ?>
-                <?php $class = $content['id'] % 2 === 0 ? "dark-post" : 'light-post'  ?>
+            <?php if($content->status): ?>
+                <?php $class = $content->id % 2 === 0 ? "dark-post" : 'light-post'  ?>
                 <div class="post">
                     <?php
-                        $text = $content['title']; 
+                        $text = $content->title;
                         require('templates/components/post_header.php');
                     ?>
                     <div class="post-content flex-item-center <?= $class ?>">
-                        <p> <?= $content['description']; ?></p>
+                        <p> <?= $content->description; ?></p>
                     </div>
                 </div>
             <?php endif ?>

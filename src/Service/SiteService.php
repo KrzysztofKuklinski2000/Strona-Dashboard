@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\DTO\Dashboard\ImportantPostsDto;
+use App\DTO\Dashboard\MainPageDto;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\TimetableRepository;
@@ -46,17 +48,20 @@ readonly class SiteService
     public function getFrontPage(): array
     {
         try {
-            $firstPost = [];
+            $firstPost = null;
             $posts = $this->siteRepository->getData("main_page_posts");
             $importantPosts = $this->siteRepository->getData("important_posts");
 
             foreach ($posts as $key => $post) {
                 if ($post['id'] === 1) {
-                    $firstPost = $post;
+                    $firstPost = MainPageDto::fromArray($post);
                     unset($posts[$key]);
                     break;
                 }
             }
+
+            $posts = array_map(fn(array $row) => MainPageDto::fromArray($row), $posts);
+            $importantPosts =  array_map(fn(array $row) => ImportantPostsDto::fromArray($row), $importantPosts);
 
             return [$posts, $importantPosts, $firstPost];
 
