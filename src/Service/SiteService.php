@@ -5,6 +5,7 @@ namespace App\Service;
 
 use App\DTO\Dashboard\ImportantPostsDto;
 use App\DTO\Dashboard\MainPageDto;
+use App\DTO\Dashboard\NewsDto;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\TimetableRepository;
@@ -31,6 +32,8 @@ readonly class SiteService
             $page = max(1, min($page, $totalPages));
             $offset = (int)(($page - 1) * $limit);
             $news = $this->siteRepository->getNews($limit, $offset);
+
+            $news = array_map(fn(array $row) => NewsDto::fromArray($row), $news);
 
             return [
                 'data' => $news,

@@ -10,12 +10,12 @@ $currentPage = $params['currentNumberOfPage'];
 		</div>
 		<div class="news">
 			<?php foreach ($params['content'] ?? [] as $content): ?>
-				<?php if ($content['status']): ?>
+				<?php if ($content->status): ?>
 					<div class="news-box">
 						<div class="news-line"></div>
 						<div>
-							<h3><?= $content['title']; ?></h3>
-							<p><?= $content['description']; ?></p>
+							<h3><?= $content->title; ?></h3>
+							<p><?= $content->description; ?></p>
 						</div>
 					</div>
 				<?php endif ?>
