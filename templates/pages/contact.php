@@ -12,15 +12,15 @@
 	<div class="contact-information">
 		<div class="flex-item-center">
 			<i class="fa-solid fa-map-pin"></i>
-			<p><?= $contact['address'] ?? ''; ?></p>
+			<p><?= $contact->address ?? ''; ?></p>
 		</div>
 		<div class="flex-item-center">
 			<i class="fa-solid fa-mobile-screen-button"></i>
-			<p><?= $contact['phone'] ?? ''; ?></p>
+			<p><?= $contact->phone ?? ''; ?></p>
 		</div>
 		<div class="flex-item-center">
 			<i class="fa-regular fa-envelope"></i>
-			<p><?= $contact['email'] ?? ''; ?></p>
+			<p><?= $contact->email ?? ''; ?></p>
 		</div>
 	</div>
 	<br><br>

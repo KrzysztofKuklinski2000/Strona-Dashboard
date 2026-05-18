@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\DTO\Dashboard\CampDto;
+use App\DTO\Dashboard\ContactDto;
 use App\DTO\Dashboard\FeesDto;
 use App\DTO\Dashboard\GalleryDto;
 use App\DTO\Dashboard\ImportantPostsDto;
@@ -106,10 +107,10 @@ readonly class SiteService
     /**
      * @throws ServiceException
      */
-    public function getContact(): array
+    public function getContact(): DataTransferObjectInterface
     {
         try {
-            return $this->siteRepository->getSingleRecord('contact');
+            return ContactDto::fromArray($this->siteRepository->getSingleRecord('contact'));
         } catch (RepositoryException $e) {
             throw new ServiceException("Nie udało się pobrać danych kontaktowych", 500, $e);
         }
