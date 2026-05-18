@@ -3,11 +3,13 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\DTO\Dashboard\CampDto;
 use App\DTO\Dashboard\GalleryDto;
 use App\DTO\Dashboard\ImportantPostsDto;
 use App\DTO\Dashboard\MainPageDto;
 use App\DTO\Dashboard\NewsDto;
 use App\DTO\Dashboard\TimetableDto;
+use App\DTO\DataTransferObjectInterface;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\TimetableRepository;
@@ -115,10 +117,10 @@ readonly class SiteService
     /**
      * @throws ServiceException
      */
-    public function getCamp(): array
+    public function getCamp(): DataTransferObjectInterface
     {
         try {
-            return $this->siteRepository->getSingleRecord('camp');
+            return CampDto::fromArray($this->siteRepository->getSingleRecord('camp'));
         } catch (RepositoryException $e) {
             throw new ServiceException("Nie udało się pobrać danych o obozach", 500, $e);
         }

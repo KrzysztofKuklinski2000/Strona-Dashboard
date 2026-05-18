@@ -26,31 +26,31 @@ $errors = $params['flash_dashboard']['message'] ?? [];
 
     <label>
         <span>Miejsce wyjazdu: </span>
-        <input type="text" name="townStart" value="<?= $data->city_start ?>">
+        <input type="text" name="townStart" value="<?= $data->cityStart ?>">
     </label>
     <p class="validation-error"><?= $errors['townStart'] ?? ""  ?></p>
 
     <label>
         <span>Data wyjazdu: </span>
-        <input type="date" name="dateStart" value="<?= $data->date_start ?>">
+        <input type="date" name="dateStart" value="<?= $data->dateStart ?>">
     </label>
     <p class="validation-error"><?= $errors['dateStart'] ?? ""  ?></p>
 
     <label>
         <span>Data powrotu: </span>
-        <input type="date" name="dateEnd" value="<?= $data->date_end ?>">
+        <input type="date" name="dateEnd" value="<?= $data->dateEnd ?>">
     </label>
     <p class="validation-error"><?= $errors['dateEnd'] ?? ""  ?></p>
 
     <label>
         <span>Godzina wyjazdu: </span>
-        <input type="time" name="timeStart" value="<?= $data->time_start ?>">
+        <input type="time" name="timeStart" value="<?= $data->timeStart ?>">
     </label>
     <p class="validation-error"><?= $errors['timeStart'] ?? ""  ?></p>
 
     <label>
         <span>Godzina powrotu: </span>
-        <input type="time" name="timeEnd" value="<?= $data->time_end ?>">
+        <input type="time" name="timeEnd" value="<?= $data->timeEnd ?>">
     </label>
     <p class="validation-error"><?= $errors['timeEnd'] ?? ""  ?></p>
 
