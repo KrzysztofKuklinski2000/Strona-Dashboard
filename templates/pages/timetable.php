@@ -9,11 +9,11 @@ $prevDay = null;
 		</div>
 		<div>
 			<?php foreach ($params['content'] ?? [] as $content): ?>
-				<?php if ($content['status']): ?>
+				<?php if ($content->status): ?>
 					<div class="timetable-day-header">
 						<?php
-						if ($prevDay !== trim($content['day'])) {
-							switch (trim($content['day'])) {
+						if ($prevDay !== trim($content->day)) {
+							switch (trim($content->day)) {
 								case 'PON':
 									echo 'Poniedziałek';
 									break;
@@ -36,7 +36,7 @@ $prevDay = null;
 									echo 'Niedziela';
 									break;
 							}
-							$prevDay = $content['day'];
+							$prevDay = $content->day;
 						}
 						?>
 					</div>
@@ -44,12 +44,12 @@ $prevDay = null;
 						<div class="timetable-line"></div>
 						<div class="box-content">
 							<div>
-								<h3><?= $content['city'] ?> </h3>
+								<h3><?= $content->city ?> </h3>
 								<a href="#addresses">adres</a>
 							</div>
-							<p><i class="fa-regular fa-clock"></i> <?= $content['start'] . ' - ' . $content['end']; ?></p>
-							<p>Grupa: <?= $content['advancement_group']; ?></p>
-							<p style="font-weight: 100;"> <?= $content['place']; ?></p>
+							<p><i class="fa-regular fa-clock"></i> <?= $content->start . ' - ' . $content->end; ?></p>
+							<p>Grupa: <?= $content->advancementGroup; ?></p>
+							<p style="font-weight: 100;"> <?= $content->place; ?></p>
 						</div>
 					</div>
 				<?php endif ?>
