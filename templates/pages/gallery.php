@@ -36,8 +36,8 @@
 	<div class="gallery">
 		<?php foreach ($params['content'] as $content): ?>
 			<div class="img-box">
-				<img src="/public/uploads/<?= $content['image_name'] ?>" alt="<?= $content['description'] ?>" loading="lazy">
-				<p><?= $content['description'] ?></p>
+				<img src="/public/uploads/<?= $content->imageName ?>" alt="<?= $content->description ?>" loading="lazy">
+				<p><?= $content->description ?></p>
 			</div>
 		<?php endforeach; ?>
 	</div>

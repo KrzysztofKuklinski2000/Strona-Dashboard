@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\DTO\Dashboard\GalleryDto;
 use App\DTO\Dashboard\ImportantPostsDto;
 use App\DTO\Dashboard\MainPageDto;
 use App\DTO\Dashboard\NewsDto;
@@ -80,7 +81,7 @@ readonly class SiteService
     public function getGallery(?string $category = null): array
     {
         try {
-            return $this->siteRepository->getGallery($category);
+            return array_map(fn(array $row) => GalleryDto::fromArray($row), $this->siteRepository->getGallery($category));
         } catch (RepositoryException $e) {
             throw new ServiceException("Nie udało się pobrać galeri", 500, $e);
         }
