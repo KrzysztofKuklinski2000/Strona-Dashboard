@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\DTO\Dashboard\CampDto;
+use App\DTO\Dashboard\FeesDto;
 use App\DTO\Dashboard\GalleryDto;
 use App\DTO\Dashboard\ImportantPostsDto;
 use App\DTO\Dashboard\MainPageDto;
@@ -129,10 +130,10 @@ readonly class SiteService
     /**
      * @throws ServiceException
      */
-    public function getFees(): array
+    public function getFees(): DataTransferObjectInterface
     {
         try {
-            return $this->siteRepository->getSingleRecord('fees');
+            return FeesDto::fromArray($this->siteRepository->getSingleRecord('fees'));
         } catch (RepositoryException $e) {
             throw new ServiceException("Nie udało się pobrać danych o składkach", 500, $e);
         }

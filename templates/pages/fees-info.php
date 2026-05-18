@@ -9,7 +9,7 @@ $content = $params['content'];
 		require('templates/components/post_header.php');
 		?>
 		<p>
-			<?= $content['extra_information'] ?>
+			<?= $content->extraInformation ?>
 		</p>
 	</div>
 	<br><br>
@@ -21,19 +21,19 @@ $content = $params['content'];
 	<div class="price-container respons-container" id="price">
 		<div class="price-box">
 			<h2>Składka ulgowa</h2>
-			<strong><?php echo $content['reduced_contribution_1_month']; ?>zł <br> Jedna osoba</strong>
+			<strong><?php echo $content->reducedContribution1Month; ?>zł <br> Jedna osoba</strong>
 			<p>za miesiąc</p>
 			<div class="break"></div>
 		</div>
 		<div class="price-box">
 			<h2>Składka ulgowa</h2>
-			<strong><?php echo $content['reduced_contribution_2_month']; ?>zł <br> Dwie osoby</strong>
+			<strong><?php echo $content->reducedContribution2Month; ?>zł <br> Dwie osoby</strong>
 			<p>za miesiąc</p>
 			<div class="break"></div>
 		</div>
 		<div class="price-box">
 			<h2>Składka Rodzinna</h2>
-			<strong><?php echo $content['family_contribution_month']; ?>zł <br> trzy i więcej osób</strong>
+			<strong><?php echo $content->familyContributionMonth; ?>zł <br> trzy i więcej osób</strong>
 			<p>za miesiąc</p>
 			<div class="break"></div>
 		</div>
@@ -52,19 +52,19 @@ $content = $params['content'];
 <div class="price-container respons-container">
 	<div class="price-box">
 		<h2>Składka ulgowa</h2>
-		<strong><?php echo $content['reduced_contribution_1_year'] ?>zł <br> Jedna osoba</strong>
+		<strong><?php echo $content->reducedContribution1Year ?>zł <br> Jedna osoba</strong>
 		<p>za rok</p>
 		<div class="break"></div>
 	</div>
 	<div class="price-box">
 		<h2>Składka ulgowa</h2>
-		<strong><?php echo $content['reduced_contribution_2_year'] ?>zł <br> Dwie osoby</strong>
+		<strong><?php echo $content->reducedContribution2Year ?>zł <br> Dwie osoby</strong>
 		<p>za rok</p>
 		<div class="break"></div>
 	</div>
 	<div class="price-box">
 		<h2>Składka Rodzinna</h2>
-		<strong><?php echo $content['family_contribution_year'] ?>zł <br> trzy i więcej osób</strong>
+		<strong><?php echo $content->familyContributionYear ?>zł <br> trzy i więcej osób</strong>
 		<p>za rok</p>
 		<div class="break"></div>
 		<br>
@@ -84,7 +84,7 @@ $content = $params['content'];
 		?>
 		<br>
 		<p>
-			<?= $content['fees_information'] ?>
+			<?= $content->feesInformation ?>
 		</p>
 	</div>
 	<div>
