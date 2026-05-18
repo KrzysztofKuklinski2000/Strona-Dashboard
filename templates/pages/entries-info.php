@@ -12,9 +12,9 @@
 				<div class="flex-center">Składka ulgowa <br/> (trzy i więcej osób)</div>
 			</div>
 			<div class="row flex-center" style="font-weight: 700; border-top:1px solid #282E39">
-				<div class="flex-center" style="color:#333;"><?php echo $content['reduced_contribution_1_month'] ?>zł/msc </div>
-				<div class="flex-center" style="color:#333;"><?php echo $content['reduced_contribution_2_month'] ?>zł/msc</div>
-				<div class="flex-center" style="color:#333;"><?php echo $content['family_contribution_month'] ?>zł/msc</div>
+				<div class="flex-center" style="color:#333;"><?php echo $content->reducedContribution1Month ?>zł/msc </div>
+				<div class="flex-center" style="color:#333;"><?php echo $content->reducedContribution2Month ?>zł/msc</div>
+				<div class="flex-center" style="color:#333;"><?php echo $content->familyContributionMonth ?>zł/msc</div>
 			</div>
 		</div>
 		<br>
@@ -26,9 +26,9 @@
 				<div class="flex-center">Składka ulgowa <br/> (trzy i więcej osób)</div>
 			</div>
 			<div class="row flex-center" style="font-weight: 700; border-top:1px solid #282E39">
-				<div class="flex-center" style="color:#333;"><?php echo $content['reduced_contribution_1_year'] ?>zł/msc </div>
-				<div class="flex-center" style="color:#333;"><?php echo $content['reduced_contribution_2_year'] ?>zł/msc</div>
-				<div class="flex-center" style="color:#333;"><?php echo $content['family_contribution_year'] ?>zł/msc</div>
+				<div class="flex-center" style="color:#333;"><?php echo $content->reducedContribution1Year ?>zł/msc </div>
+				<div class="flex-center" style="color:#333;"><?php echo $content->reducedContribution2Year ?>zł/msc</div>
+				<div class="flex-center" style="color:#333;"><?php echo $content->familyContributionYear ?>zł/msc</div>
 			</div>
 		</div>
 		<br>
