@@ -2,6 +2,8 @@
 
 namespace App\Security;
 
+use App\DTO\Auth\UserCredentialsDto;
+use App\DTO\Auth\UserDto;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\AuthRepository;
@@ -15,17 +17,26 @@ class Authenticator
     /**
      * @throws ServiceException
      */
-    public function authenticate(string $login, string $password): array
+    public function authenticate(string $login, string $password): UserDto
     {
         try {
-            $user = $this->authRepository->getUser($login);
+            $userData = $this->authRepository->getUser($login);
 
-            if (!$user || !password_verify($password, $user['password'])) {
+            if (!$userData) {
                 throw new ServiceException("Nieprawidłowy login lub hasło.", 401);
             }
 
-            unset($user['password']);
-            return $user;
+            $credentials = UserCredentialsDto::fromArray($userData);
+
+            if (!password_verify($password, $credentials->passwordHash)) {
+                throw new ServiceException("Nieprawidłowy login lub hasło.", 401);
+            }
+
+            return new UserDto(
+                id: $credentials->id,
+                login: $credentials->login
+            );
+
         } catch (RepositoryException $e) {
             throw new ServiceException("Wystąpił błąd podczas autoryzacji", 500, $e);
         }

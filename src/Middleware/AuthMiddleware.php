@@ -5,13 +5,15 @@ namespace App\Middleware;
 use App\Core\Config;
 use App\Core\Request;
 use App\Core\SessionManager;
+use App\DTO\Auth\UserDto;
 use JetBrains\PhpStorm\NoReturn;
 
-readonly  class AuthMiddleware
+readonly class AuthMiddleware
 {
     public function __construct(
         private SessionManager $sessionManager,
-        private Config         $config)
+        private Config         $config
+    )
     {
     }
 
@@ -34,10 +36,10 @@ readonly  class AuthMiddleware
             return;
         }
 
-        if (empty($this->sessionManager->get('user'))) {
+        $user = $this->sessionManager->get('user');
+
+        if (!$user instanceof UserDto) {
             $this->redirect($this->config->getLoginRoute());
         }
     }
-
-
 }

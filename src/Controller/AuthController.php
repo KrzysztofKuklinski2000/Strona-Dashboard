@@ -35,15 +35,15 @@ class AuthController extends AbstractController
         if ($this->request->hasPost()) {
             try {
                 $this->csrfMiddleware->verify('admin');
-                $login = $this->request->getFormParam('login');
-                $password = $this->request->getFormParam('password');
+                $login = (string) $this->request->getFormParam('login');
+                $password = (string) $this->request->getFormParam('password');
 
                 if (empty($login) || empty($password)) {
                     $errors['general'] = "Podaj login i hasło.";
                 } else {
-                    $user = $this->authenticator->authenticate($login, $password);
+                    $userDto = $this->authenticator->authenticate($login, $password);
 
-                    $this->sessionManager->set('user', $user);
+                    $this->sessionManager->set('user', $userDto);
                     $this->setFlash('info', 'Udało się zalogować');
 
                     $this->redirect($this->contextController->config->getDashboardRoute());
