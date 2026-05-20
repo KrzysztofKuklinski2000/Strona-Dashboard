@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Core\ContextController;
+use App\DTO\Dashboard\CreateSubscriberDto;
 use App\Exception\ServiceException;
 use App\Notification\Notifier;
 use App\Service\Dashboard\SubscribersService;
@@ -29,7 +30,7 @@ class PublicSubscribersController extends AbstractController
     {
         $this->csrfMiddleware->verify();
 
-        $email = $this->validator->validate(name: 'email', value: $this->request->getFormParam('email'), required: true, type: 'email');
+        $email = (string) $this->validator->validate(name: 'email', value: $this->request->getFormParam('email'), required: true, type: 'email');
 
         $consent = $this->request->getFormParam('terms_consent');
 
@@ -46,10 +47,8 @@ class PublicSubscribersController extends AbstractController
         }
 
         try {
-            $token = $this->service->createSubscriber([
-                'email' => $email,
-                'is_active' => 0
-            ]);
+            $dto = CreateSubscriberDto::fromArray(['email' => $email]);
+            $token = $this->service->createSubscriber($dto);
 
             $this->notifier->sendConfirmationEmail($email, $token);
 
@@ -61,7 +60,6 @@ class PublicSubscribersController extends AbstractController
 
         $this->redirect($this->contextController->config->getHomeRoute());
     }
-
 
     public function confirmAction(): void
     {

@@ -54,7 +54,7 @@ readonly class Notifier
         $confirmUrl = "$baseUrl/confirm-subscription?token=$token";
 
         ob_start();
-        require "$this->templatePath/templates/emails/active_email.php";
+        require "$this->templatePath/emails/active_email.php";
         $htmlContent = ob_get_clean();
 
         $this->mailer->send($email, $subject, $htmlContent);
