@@ -6,12 +6,7 @@ namespace App\Service;
 use App\DTO\Dashboard\CampDto;
 use App\DTO\Dashboard\ContactDto;
 use App\DTO\Dashboard\FeesDto;
-use App\DTO\Dashboard\GalleryDto;
-use App\DTO\Dashboard\ImportantPostsDto;
-use App\DTO\Dashboard\MainPageDto;
-use App\DTO\Dashboard\NewsDto;
 use App\DTO\Dashboard\TimetableDto;
-use App\DTO\DataTransferObjectInterface;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\TimetableRepository;
@@ -37,9 +32,8 @@ readonly class SiteService
             $totalPages = ceil($this->siteRepository->countData('news') / $limit);
             $page = max(1, min($page, $totalPages));
             $offset = (int)(($page - 1) * $limit);
-            $news = $this->siteRepository->getNews($limit, $offset);
 
-            $news = array_map(fn(array $row) => NewsDto::fromArray($row), $news);
+            $news = $this->siteRepository->getNews($limit, $offset);
 
             return [
                 'data' => $news,
@@ -58,19 +52,16 @@ readonly class SiteService
     {
         try {
             $firstPost = null;
-            $posts = $this->siteRepository->getData("main_page_posts");
-            $importantPosts = $this->siteRepository->getData("important_posts");
+            $posts = $this->siteRepository->getMainPagePosts();
+            $importantPosts = $this->siteRepository->getImportantPosts();
 
             foreach ($posts as $key => $post) {
-                if ($post['id'] === 1) {
-                    $firstPost = MainPageDto::fromArray($post);
+                if ($post->id === 1) {
+                    $firstPost = $post;
                     unset($posts[$key]);
                     break;
                 }
             }
-
-            $posts = array_map(fn(array $row) => MainPageDto::fromArray($row), $posts);
-            $importantPosts =  array_map(fn(array $row) => ImportantPostsDto::fromArray($row), $importantPosts);
 
             return [$posts, $importantPosts, $firstPost];
 
@@ -85,7 +76,7 @@ readonly class SiteService
     public function getGallery(?string $category = null): array
     {
         try {
-            return array_map(fn(array $row) => GalleryDto::fromArray($row), $this->siteRepository->getGallery($category));
+            return $this->siteRepository->getGallery($category);
         } catch (RepositoryException $e) {
             throw new ServiceException("Nie udało się pobrać galeri", 500, $e);
         }
@@ -107,10 +98,10 @@ readonly class SiteService
     /**
      * @throws ServiceException
      */
-    public function getContact(): DataTransferObjectInterface
+    public function getContact(): ContactDto
     {
         try {
-            return ContactDto::fromArray($this->siteRepository->getSingleRecord('contact'));
+            return $this->siteRepository->getContact();
         } catch (RepositoryException $e) {
             throw new ServiceException("Nie udało się pobrać danych kontaktowych", 500, $e);
         }
@@ -119,10 +110,10 @@ readonly class SiteService
     /**
      * @throws ServiceException
      */
-    public function getCamp(): DataTransferObjectInterface
+    public function getCamp(): CampDto
     {
         try {
-            return CampDto::fromArray($this->siteRepository->getSingleRecord('camp'));
+            return $this->siteRepository->getCamp();
         } catch (RepositoryException $e) {
             throw new ServiceException("Nie udało się pobrać danych o obozach", 500, $e);
         }
@@ -131,13 +122,12 @@ readonly class SiteService
     /**
      * @throws ServiceException
      */
-    public function getFees(): DataTransferObjectInterface
+    public function getFees(): FeesDto
     {
         try {
-            return FeesDto::fromArray($this->siteRepository->getSingleRecord('fees'));
+            return $this->siteRepository->getFees();
         } catch (RepositoryException $e) {
             throw new ServiceException("Nie udało się pobrać danych o składkach", 500, $e);
         }
     }
-
 }
