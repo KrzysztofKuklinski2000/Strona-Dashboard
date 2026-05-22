@@ -20,13 +20,12 @@ class Authenticator
     public function authenticate(string $login, string $password): UserDto
     {
         try {
-            $userData = $this->authRepository->getUser($login);
+            $credentials = $this->authRepository->getUser($login);
 
-            if (!$userData) {
+            if (!$credentials) {
                 throw new ServiceException("Nieprawidłowy login lub hasło.", 401);
             }
 
-            $credentials = UserCredentialsDto::fromArray($userData);
 
             if (!password_verify($password, $credentials->passwordHash)) {
                 throw new ServiceException("Nieprawidłowy login lub hasło.", 401);
