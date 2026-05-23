@@ -6,7 +6,6 @@ namespace App\Service;
 use App\DTO\Dashboard\CampDto;
 use App\DTO\Dashboard\ContactDto;
 use App\DTO\Dashboard\FeesDto;
-use App\DTO\Dashboard\TimetableDto;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\TimetableRepository;
@@ -88,8 +87,7 @@ readonly class SiteService
     public function getTimetable(): array
     {
         try {
-
-            return array_map(fn(array $row) => TimetableDto::fromArray($row), $this->timetableRepository->timetablePageData());
+            return $this->timetableRepository->timetablePageData();
         } catch (RepositoryException $e) {
             throw new ServiceException("Nie udało się pobrać grafiku", 500, $e);
         }

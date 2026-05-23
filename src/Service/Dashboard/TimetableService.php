@@ -2,8 +2,6 @@
 
 namespace App\Service\Dashboard;
 
-use App\Core\Config;
-use App\DTO\Dashboard\TimetableDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Exception\RepositoryException;
@@ -12,6 +10,9 @@ use App\Repository\Dashboard\TimetableRepository;
 use App\Traits\Observable;
 use App\Service\Dashboard\Traits\StandardCrudTrait;
 
+/**
+ * @property TimetableRepository $repository
+ */
 class TimetableService extends AbstractDashboardService implements TimetableManagementServiceInterface
 {
     use Observable;
@@ -20,23 +21,11 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
     private const TABLE = 'timetable';
 
     public function __construct(
-        private readonly TimetableRepository $timetableRepository,
-        private readonly array               $notifications,
+        TimetableRepository          $repository,
+        private readonly array       $notifications,
     )
     {
-        parent::__construct($timetableRepository);
-    }
-
-    /**
-     * @throws ServiceException
-     */
-    private function timetablePageData(): array
-    {
-        try {
-            return $this->timetableRepository->timetablePageData();
-        } catch (RepositoryException $e) {
-            throw new ServiceException("Nie udało się pobrać grafiku", 500, $e);
-        }
+        parent::__construct($repository);
     }
 
     /**
@@ -44,7 +33,11 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
      */
     public function getAllTimetable(): array
     {
-        return array_map(fn(array $row) => TimetableDto::fromArray($row), $this->timetablePageData());
+        try {
+            return $this->repository->timetablePageData();
+        } catch (RepositoryException $e) {
+            throw new ServiceException("Nie udało się pobrać grafiku", 500, $e);
+        }
     }
 
     /**
@@ -53,7 +46,7 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
      */
     public function getPost(string $table, int $id): ?DataTransferObjectInterface
     {
-        return TimetableDto::fromArray($this->getRow($table, $id));
+        return $this->getRow($table, $id);
     }
 
     /**
@@ -62,11 +55,10 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
     public function updateTimetable(DataTransferObjectInterface $data): void
     {
         $this->handleActionWithNotification(
-            $data->toArray(),
+            $data,
             $this->notifications['timetable_updated'],
-            function ($cleanData) {
-                $this->edit(self::TABLE, $cleanData);
-            });
+            fn(DataTransferObjectInterface $dto) => $this->edit(self::TABLE, $dto)
+        );
     }
 
     /**
@@ -75,12 +67,10 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
     public function createTimetable(DataTransferObjectInterface $data): void
     {
         $this->handleActionWithNotification(
-            $data->toArray(),
+            $data,
             $this->notifications['timetable_created'],
-            function ($cleanData) {
-
-                $this->create(self::TABLE, $cleanData);
-            });
+            fn(DataTransferObjectInterface $dto) => $this->create(self::TABLE, $dto)
+        );
     }
 
     /**
@@ -89,17 +79,14 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
     public function publishedTimetable(DataTransferObjectInterface $data): void
     {
         $this->handleActionWithNotification(
-            $data->toArray(),
+            $data,
             $this->notifications['timetable_published'],
-            function ($cleanData) {
-
-                $this->published(self::TABLE, $cleanData);
-            });
+            fn(DataTransferObjectInterface $dto) => $this->published(self::TABLE, $dto)
+        );
     }
 
     public function deleteTimetable(int $id, bool $shouldNotify): void
     {
-
         $this->delete(self::TABLE, $id);
 
         if ($shouldNotify) {
@@ -107,11 +94,9 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
         }
     }
 
-    private function handleActionWithNotification(array $data, string $message, callable $action): void
+    private function handleActionWithNotification(DataTransferObjectInterface $data, string $message, callable $action): void
     {
-        $shouldNotify = !empty($data['is_notify']);
-
-        unset($data['is_notify']);
+        $shouldNotify = (bool) ($data->isNotify ?? false);
 
         $action($data);
 

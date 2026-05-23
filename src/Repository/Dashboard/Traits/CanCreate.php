@@ -4,6 +4,7 @@ namespace App\Repository\Dashboard\Traits;
 
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\RepositoryException;
+use Exception;
 use PDOStatement;
 
 /**
@@ -14,18 +15,26 @@ trait CanCreate
     /**
      * @throws RepositoryException
      */
-    public function create(string $table, DataTransferObjectInterface $data ): void {
+    public function create(string $table, DataTransferObjectInterface $data): void
+    {
         try {
-            $arrayData = $data->toArray();
-            $col = implode(", ", array_map(fn($k) => "$k", array_filter(array_keys($arrayData), fn($k) => $k !== "id")));
-            $val = implode(", ", array_map(fn($k) => ":$k", array_filter(array_keys($arrayData), fn($k) => $k !== "id")));
-            $result = array_combine(array_map(fn($k) => ":$k", array_keys($arrayData)), $arrayData);
+            $payload = $data->toArray();
 
-            $sql = "INSERT INTO $table ($col) VALUES ($val)";
+            unset($payload['id']);
 
-            $this->runQuery($sql,$result);
-        }catch(RepositoryException $e) {
-            throw new RepositoryException("Nie udało się utworzyć posta", 500, $e);
+            $columns = implode(", ", array_keys($payload));
+            $placeholders = implode(", ", array_map(fn($key) => ":$key", array_keys($payload)));
+
+            $bindings = [];
+            foreach ($payload as $key => $value) {
+                $bindings[":$key"] = $value;
+            }
+
+            $sql = "INSERT INTO $table ($columns) VALUES ($placeholders)";
+
+            $this->runQuery($sql, $bindings);
+        } catch (Exception $e) {
+            throw new RepositoryException("Failed to create record", 500, $e);
         }
     }
 }

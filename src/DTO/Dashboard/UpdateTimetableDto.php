@@ -43,7 +43,6 @@ readonly class UpdateTimetableDto implements DataTransferObjectInterface
             'place' => $this->place,
             'start' => $this->start,
             'end' => $this->end,
-            'is_notify' => $this->isNotify,
         ];
     }
 }
