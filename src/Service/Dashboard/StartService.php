@@ -2,14 +2,18 @@
 
 namespace App\Service\Dashboard;
 
-use App\DTO\Dashboard\MainPageDto;
+use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
+use App\Repository\Dashboard\StartRepository;
 use App\Service\Dashboard\Traits\CanEdit;
 use App\Service\Dashboard\Traits\CanPublished;
 use App\Service\Dashboard\Traits\PositionableTrait;
 
+/**
+ * @property StartRepository $repository
+ */
 class StartService extends AbstractDashboardService implements StartManagementServiceInterface
 {
     use CanPublished, CanEdit, PositionableTrait;
@@ -21,7 +25,7 @@ class StartService extends AbstractDashboardService implements StartManagementSe
      */
     public function getAllMain(): array
     {
-        return array_map(fn(array $row) => MainPageDto::fromArray($row), $this->getAll(self::TABLE));
+        return $this->getAll(self::TABLE);
     }
 
     /**
@@ -30,7 +34,7 @@ class StartService extends AbstractDashboardService implements StartManagementSe
      */
     public function getPost(string $table, int $id): ?DataTransferObjectInterface
     {
-        return MainPageDto::fromArray($this->getRow($table, $id));
+        return $this->getRow(self::TABLE, $id);
     }
 
     /**
@@ -38,12 +42,12 @@ class StartService extends AbstractDashboardService implements StartManagementSe
      */
     public function updateMain(DataTransferObjectInterface $data): void
     {
-        $this->edit(self::TABLE, $data->toArray());
+        $this->edit(self::TABLE, $data);
     }
 
     public function createMain(DataTransferObjectInterface $data): void
     {
-        $this->create(self::TABLE, $data->toArray());
+        $this->create(self::TABLE, $data);
     }
 
     /**
@@ -51,7 +55,7 @@ class StartService extends AbstractDashboardService implements StartManagementSe
      */
     public function publishedMain(DataTransferObjectInterface $data): void
     {
-        $this->published(self::TABLE, $data->toArray());
+        $this->published(self::TABLE, $data);
     }
 
     public function deleteMain(int $id): void
@@ -59,8 +63,8 @@ class StartService extends AbstractDashboardService implements StartManagementSe
         $this->delete(self::TABLE, $id);
     }
 
-    public function moveMain(DataTransferObjectInterface $data): void
+    public function moveMain(ChangePositionDto $data): void
     {
-        $this->move(self::TABLE, $data->toArray());
+        $this->move(self::TABLE, $data);
     }
 }

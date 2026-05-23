@@ -9,6 +9,7 @@ use App\Controller\Dashboard\Traits\HasSingleData;
 use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
+use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Service\Dashboard\StartManagementServiceInterface;
@@ -113,8 +114,8 @@ class StartController extends AbstractDashboardController
         $this->service->publishedMain($data);
     }
 
-    protected function handleMove(DataTransferObjectInterface $data): void
+    protected function handleMove(ChangePositionDto$changePositionDto): void
     {
-        $this->service->moveMain($data);
+        $this->service->moveMain($changePositionDto);
     }
 }
