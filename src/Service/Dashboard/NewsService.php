@@ -2,14 +2,18 @@
 
 namespace App\Service\Dashboard;
 
-use App\DTO\Dashboard\NewsDto;
+use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
+use App\Repository\Dashboard\NewsRepository;
 use App\Service\Dashboard\Traits\CanEdit;
 use App\Service\Dashboard\Traits\CanPublished;
 use App\Service\Dashboard\Traits\PositionableTrait;
 
+/**
+ * @property NewsRepository $repository
+ */
 class NewsService extends AbstractDashboardService implements NewsManagementServiceInterface
 {
     use PositionableTrait, CanPublished, CanEdit;
@@ -21,7 +25,7 @@ class NewsService extends AbstractDashboardService implements NewsManagementServ
      */
     public function getAllNews(): array
     {
-        return array_map(fn(array $row) => NewsDto::fromArray($row), $this->getAll(self::TABLE));
+        return $this->getAll(self::TABLE);
     }
 
     /**
@@ -30,8 +34,7 @@ class NewsService extends AbstractDashboardService implements NewsManagementServ
      */
     public function getPost(string $table, int $id): ?DataTransferObjectInterface
     {
-
-        return NewsDto::fromArray($this->getRow($table, $id));
+        return $this->getRow(self::TABLE, $id);
     }
 
     /**
@@ -39,12 +42,12 @@ class NewsService extends AbstractDashboardService implements NewsManagementServ
      */
     public function updateNews(DataTransferObjectInterface $data): void
     {
-        $this->edit(self::TABLE, $data->toArray());
+        $this->edit(self::TABLE, $data);
     }
 
     public function createNews(DataTransferObjectInterface $data): void
     {
-        $this->create(self::TABLE, $data->toArray());
+        $this->create(self::TABLE, $data);
     }
 
     /**
@@ -52,7 +55,7 @@ class NewsService extends AbstractDashboardService implements NewsManagementServ
      */
     public function publishedNews(DataTransferObjectInterface $data): void
     {
-        $this->published(self::TABLE, $data->toArray());
+        $this->published(self::TABLE, $data);
     }
 
     public function deleteNews(int $id): void
@@ -60,10 +63,8 @@ class NewsService extends AbstractDashboardService implements NewsManagementServ
         $this->delete(self::TABLE, $id);
     }
 
-    public function moveNews(DataTransferObjectInterface $data): void
+    public function moveNews(ChangePositionDto $data): void
     {
-        $this->move(self::TABLE, $data->toArray());
+        $this->move(self::TABLE, $data);
     }
-
-
 }
