@@ -3,6 +3,7 @@
 namespace App\Service\Dashboard;
 
 use App\DTO\Dashboard\FeesDto;
+use App\DTO\DataTransferObjectInterface;
 use App\Exception\ServiceException;
 use App\Service\Dashboard\Traits\CanEdit;
 
@@ -15,18 +16,16 @@ class FeesService extends AbstractDashboardService implements FeesManagementServ
     /**
      * @throws ServiceException
      */
-    public function updateFees(FeesDto $feesDto): void
+    public function updateFees(DataTransferObjectInterface $feesDto): void
     {
-        $this->edit(self::TABLE, $feesDto->toArray());
+        $this->edit(self::TABLE, $feesDto);
     }
 
     /**
      * @throws ServiceException
      */
-    public function getFees(): FeesDto
+    public function getFees(): DataTransferObjectInterface
     {
-        $data = $this->getAll(self::TABLE)[0];
-
-        return FeesDto::fromArray($data);
+        return $this->getAll(self::TABLE)[0];
     }
 }
