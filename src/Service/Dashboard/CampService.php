@@ -2,11 +2,14 @@
 
 namespace App\Service\Dashboard;
 
-
-use App\DTO\Dashboard\CampDto;
+use App\DTO\DataTransferObjectInterface;
 use App\Exception\ServiceException;
+use App\Repository\Dashboard\CampRepository;
 use App\Service\Dashboard\Traits\CanEdit;
 
+/**
+ * @property CampRepository $repository
+ */
 class CampService extends AbstractDashboardService implements CampManagementServiceInterface
 {
     use CanEdit;
@@ -16,19 +19,17 @@ class CampService extends AbstractDashboardService implements CampManagementServ
     /**
      * @throws ServiceException
      */
-    public function updateCamp(CampDto $campDto): void
+    public function updateCamp(DataTransferObjectInterface $campDto): void
     {
-        $this->edit(self::TABLE, $campDto->toArray());
+        $this->edit(self::TABLE, $campDto);
     }
 
     /**
      * @throws ServiceException
      */
-    public function getCamp(): CampDto
+    public function getCamp(): DataTransferObjectInterface
     {
-        $data = $this->getAll(self::TABLE)[0];
-
-        return CampDto::fromArray($data);
+        $data = $this->getAll(self::TABLE);
+        return $data[0];
     }
-
 }
