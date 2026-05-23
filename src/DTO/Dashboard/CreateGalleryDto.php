@@ -9,7 +9,7 @@ readonly class CreateGalleryDto implements DataTransferObjectInterface
     public function __construct(
         public string $category,
         public string $description,
-        public array $imageName,
+        public array|string|null $imageName,
         public string $createdAt,
         public string $updatedAt,
     )
@@ -19,11 +19,11 @@ readonly class CreateGalleryDto implements DataTransferObjectInterface
     public static function fromArray(array $data): self
     {
         return new self(
-            category: (string) $data['category'],
-            description: (string) $data['description'],
-            imageName: $data['image_name'],
-            createdAt: (string) $data['created_at'],
-            updatedAt: (string) $data['updated_at'],
+            category: (string) ($data['category'] ?? ''),
+            description: (string) ($data['description'] ?? ''),
+            imageName: $data['image_name'] ?? null,
+            createdAt: (string) ($data['created_at'] ?? ''),
+            updatedAt: (string) ($data['updated_at'] ?? ''),
         );
     }
 

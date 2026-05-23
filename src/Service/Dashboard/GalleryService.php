@@ -3,18 +3,20 @@
 namespace App\Service\Dashboard;
 
 use App\Core\FileHandler;
+use App\DTO\Dashboard\CreateGalleryDto;
 use App\DTO\Dashboard\ChangePositionDto;
-use App\DTO\Dashboard\GalleryDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\FileException;
 use App\Exception\NotFoundException;
-use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\GalleryRepository;
 use App\Service\Dashboard\Traits\CanEdit;
 use App\Service\Dashboard\Traits\CanPublished;
 use App\Service\Dashboard\Traits\PositionableTrait;
 
+/**
+ * @property GalleryRepository $repository
+ */
 class GalleryService extends AbstractDashboardService implements GalleryManagementServiceInterface
 {
     use PositionableTrait, CanPublished, CanEdit;
@@ -32,29 +34,9 @@ class GalleryService extends AbstractDashboardService implements GalleryManageme
     /**
      * @throws ServiceException
      */
-    private function addImage(array $data): void
-    {
-        try {
-            $this->repository->beginTransaction();
-            $imageName = $this->fileHandler->uploadImage($data['image_name']);
-            $this->repository->incrementPosition('gallery');
-            $data['image_name'] = $imageName;
-            $this->repository->addImage($data);
-            $this->repository->commit();
-        } catch (RepositoryException|FileException $e) {
-            $this->repository->rollBack();
-            throw new ServiceException("Nie udało się dodać zdjęcia", 500, $e);
-        }
-    }
-
-    /**
-     * @throws ServiceException
-     */
     public function getAllGallery(): array
     {
-        $data = $this->getAll(self::TABLE);
-
-        return array_map(fn(array $row) => GalleryDto::fromArray($row), $data);
+        return $this->getAll(self::TABLE);
     }
 
     /**
@@ -63,9 +45,7 @@ class GalleryService extends AbstractDashboardService implements GalleryManageme
      */
     public function getPost(string $table, int $id): ?DataTransferObjectInterface
     {
-        $data = $this->getRow($table, $id);
-
-        return $data ? GalleryDto::fromArray($data) : null;
+        return $this->getRow($table, $id);
     }
 
     /**
@@ -73,7 +53,7 @@ class GalleryService extends AbstractDashboardService implements GalleryManageme
      */
     public function updateGallery(DataTransferObjectInterface $galleryDto): void
     {
-        $this->edit(self::TABLE, $galleryDto->toArray());
+        $this->edit(self::TABLE, $galleryDto);
     }
 
     /**
@@ -81,7 +61,24 @@ class GalleryService extends AbstractDashboardService implements GalleryManageme
      */
     public function createGallery(DataTransferObjectInterface $galleryDto): void
     {
-        $this->addImage($galleryDto->toArray());
+        try {
+
+            /** @var CreateGalleryDto $galleryDto */
+            $imageName = $this->fileHandler->uploadImage($galleryDto->imageName);
+
+            $updatedDto = CreateGalleryDto::fromArray([
+                'category' => $galleryDto->category,
+                'description' => $galleryDto->description,
+                'image_name' => $imageName,
+                'created_at' => $galleryDto->createdAt,
+                'updated_at' => $galleryDto->updatedAt,
+            ]);
+
+            $this->create(self::TABLE, $updatedDto);
+
+        } catch (FileException $e) {
+            throw new ServiceException("Nie udało się wgrać zdjęcia na serwer", 500, $e);
+        }
     }
 
     /**
@@ -89,7 +86,7 @@ class GalleryService extends AbstractDashboardService implements GalleryManageme
      */
     public function publishedGallery(DataTransferObjectInterface $galleryDto): void
     {
-        $this->published(self::TABLE, $galleryDto->toArray());
+        $this->published(self::TABLE, $galleryDto);
     }
 
     public function deleteGallery(int $id): void
@@ -99,8 +96,6 @@ class GalleryService extends AbstractDashboardService implements GalleryManageme
 
     public function moveGallery(ChangePositionDto $changePositionDto): void
     {
-        $this->move(self::TABLE, $changePositionDto->toArray());
+        $this->move(self::TABLE, $changePositionDto);
     }
-
-
 }
