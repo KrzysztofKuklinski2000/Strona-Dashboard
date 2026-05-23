@@ -2,6 +2,7 @@
 
 namespace App\Service\Dashboard;
 
+use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
@@ -17,7 +18,7 @@ abstract class AbstractDashboardService
      * @throws ServiceException
      * @throws NotFoundException
      */
-    public function getRow(string $table, int $id): ?array
+    public function getRow(string $table, int $id): ?DataTransferObjectInterface
     {
         try {
             return $this->repository->getPost($table, $id);
@@ -27,6 +28,7 @@ abstract class AbstractDashboardService
     }
 
     /**
+     * @return DataTransferObjectInterface[]
      * @throws ServiceException
      */
     protected function getAll(string $table): array

@@ -6,7 +6,7 @@ use App\DTO\Dashboard\SubscribersDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
-use App\Repository\Dashboard\BaseDashboardRepository;
+use App\Repository\Dashboard\SubscriberRepository;
 use App\Security\TokenGeneratorInterface;
 use App\Service\Dashboard\Traits\StandardCrudTrait;
 use Random\RandomException;
@@ -18,7 +18,7 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
     private const TABLE = 'subscribers';
 
     public function __construct(
-        BaseDashboardRepository                  $repository,
+        SubscriberRepository $repository,
         private readonly TokenGeneratorInterface $tokenGenerator)
     {
         parent::__construct($repository);
@@ -29,9 +29,8 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
      */
     public function getAllSubscribers(): array
     {
-        return array_map(fn(array $row) => SubscribersDto::fromArray($row), $this->getAll(self::TABLE));
+        return $this->getAll(self::TABLE);
     }
-
 
     /**
      * @throws ServiceException
@@ -39,7 +38,7 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
      */
     public function getPost(string $table, int $id): ?DataTransferObjectInterface
     {
-        return SubscribersDto::fromArray($this->getRow($table, $id));
+        return $this->getRow($table, $id);
     }
 
     /**
@@ -54,12 +53,14 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
 
         $token = $this->tokenGenerator->generate();
 
-        $saveData = $data->toArray();
+        $saveDto = SubscribersDto::fromArray([
+            'id' => 0,
+            'email' => $data->email,
+            'is_active' => 0,
+            'token' => $token,
+        ]);
 
-        $saveData['token'] = $token;
-        $saveData['is_active'] = 0;
-
-        $this->create(self::TABLE, $saveData);
+        $this->create(self::TABLE, $saveDto);
 
         return $token;
     }
@@ -69,7 +70,7 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
      */
     public function updateSubscriber(DataTransferObjectInterface $data): void
     {
-        $this->edit(self::TABLE, $data->toArray());
+        $this->edit(self::TABLE, $data);
     }
 
     public function deleteSubscriber(int $id): void
@@ -84,18 +85,16 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
     public function activateSubscriber(string $token): void
     {
         $subscriber = $this->repository->getSubscriberByToken(self::TABLE, $token);
-
-        if (!$subscriber) {
-            throw new ServiceException("Nieprawidłowy lub wygasły token.", 404);
-        }
-
         $unsubscribeToken = $this->tokenGenerator->generate();
 
-        $this->edit(self::TABLE, [
-            'id' => $subscriber['id'],
+        $updateDto = SubscribersDto::fromArray([
+            'id' => $subscriber->id,
+            'email' => $subscriber->email,
             'is_active' => 1,
             'token' => $unsubscribeToken
         ]);
+
+        $this->edit(self::TABLE, $updateDto);
     }
 
     /**
@@ -105,10 +104,6 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
     {
         $subscriber = $this->repository->getSubscriberByToken(self::TABLE, $token);
 
-        if (!$subscriber) {
-            throw new ServiceException("Nieprawidłowy lub wygasły token.", 404);
-        }
-
-        $this->deleteSubscriber((int)$subscriber['id']);
+        $this->deleteSubscriber($subscriber->id);
     }
 }

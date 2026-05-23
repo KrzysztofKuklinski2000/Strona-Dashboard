@@ -2,6 +2,7 @@
 
 namespace App\Repository\Dashboard\Traits;
 
+use App\DTO\DataTransferObjectInterface;
 use App\Exception\RepositoryException;
 use PDOStatement;
 
@@ -12,14 +13,14 @@ trait CanEdit
 {
     /**
      * @throws RepositoryException
-     *
      */
-    public function edit(string $table, array $data):void {
+    public function edit(string $table, DataTransferObjectInterface $data): void {
         try {
-            $sql = "UPDATE $table SET ". implode(", ", array_map(fn($k) => "$k = :$k", array_filter(array_keys($data), fn($k)=> $k !== "id")));
+            $arrayData = $data->toArray();
+            $sql = "UPDATE $table SET ". implode(", ", array_map(fn($k) => "$k = :$k", array_filter(array_keys($arrayData), fn($k)=> $k !== "id")));
 
             if(in_array($table, ['news', 'main_page_posts', 'important_posts', 'timetable', 'gallery', 'subscribers'])) $sql .= " WHERE id = :id";
-            $result = array_combine(array_map(fn($k) => ":$k", array_keys($data)), $data);
+            $result = array_combine(array_map(fn($k) => ":$k", array_keys($arrayData)), $arrayData);
 
             $this->runQuery($sql, $result);
         }catch(RepositoryException $e) {
