@@ -6,7 +6,6 @@ use App\Exception\RepositoryException;
 use App\Notification\Email\Mailer;
 use App\Repository\Dashboard\SubscriberRepository;
 
-
 readonly class Notifier
 {
     public function __construct(
@@ -32,8 +31,8 @@ readonly class Notifier
         $baseUrl = rtrim($this->appUrl, '/');
 
         foreach ($subscribers as $subscriber) {
-            $email = $subscriber['email'];
-            $token = $subscriber['token'];
+            $email = $subscriber->email;
+            $token = $subscriber->token;
 
             $unsubscribeUrl = "$baseUrl/unsubscribe?token=$token";
 
@@ -41,7 +40,6 @@ readonly class Notifier
             require "$this->templatePath/emails/timetable_updated.php";
             $htmlContent = ob_get_clean();
             $htmlContent .= "<br><br><hr><p style='font-size: 12px;'>Chcesz zrezygnować? <a href='$unsubscribeUrl'>Wypisz się tutaj</a></p>";
-
 
             $this->mailer->send($email, 'Aktualizacja grafiku', $htmlContent);
         }

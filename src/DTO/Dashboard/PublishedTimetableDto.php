@@ -19,7 +19,7 @@ readonly  class PublishedTimetableDto implements DataTransferObjectInterface
         return new self(
             id: (int) $data['id'],
             published: (int) $data['published'],
-            isNotify: (int) $data['is_notify'],
+            isNotify: !empty($data['is_notify']) ? 1 : 0,
         );
     }
 
@@ -27,7 +27,6 @@ readonly  class PublishedTimetableDto implements DataTransferObjectInterface
         return [
             'id' => $this->id,
             'published' => $this->published,
-            'is_notify' => $this->isNotify,
         ];
     }
 }

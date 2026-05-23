@@ -28,7 +28,7 @@ readonly class CreateTimetableDto implements DataTransferObjectInterface
             place: (string) $data['place'],
             start: (string) $data['start'],
             end: (string) $data['end'],
-            isNotify: (int) $data['is_notify'],
+            isNotify: !empty($data['is_notify']) ? 1 : 0,
         );
     }
 
@@ -40,7 +40,6 @@ readonly class CreateTimetableDto implements DataTransferObjectInterface
             'place' => $this->place,
             'start' => $this->start,
             'end' => $this->end,
-            'is_notify' => $this->isNotify,
         ];
     }
 }

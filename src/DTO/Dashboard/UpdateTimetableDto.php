@@ -30,7 +30,7 @@ readonly class UpdateTimetableDto implements DataTransferObjectInterface
             place: (string) $data['place'],
             start: (string) $data['start'],
             end: (string) $data['end'],
-            isNotify: (int) $data['is_notify'],
+            isNotify: !empty($data['is_notify']) ? 1 : 0,
         );
     }
 
