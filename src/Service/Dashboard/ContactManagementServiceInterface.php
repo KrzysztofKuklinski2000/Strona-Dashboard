@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Dashboard;
 
-use App\DTO\Dashboard\ContactDto;
+use App\DTO\DataTransferObjectInterface;
 
 /**
  * Interfejs definiujący operacje wyłącznie dla modułu Aktualności.
@@ -13,14 +13,14 @@ interface ContactManagementServiceInterface
 {
     /**
      * Pobiera wszystkie wpisy opłat.
-     * @return ContactDto
+     * @return DataTransferObjectInterface
      */
-  public function getContact(): ContactDto;
+  public function getContact(): DataTransferObjectInterface;
 
     /**
      * Aktualizuje istniejący wpis opłat.
-     * @param ContactDto $data Nowe dane z formularza.
+     * @param DataTransferObjectInterface $contactDto
      * @return void
      */
-  public function updateContact(ContactDto $contactDto): void;
+  public function updateContact(DataTransferObjectInterface $contactDto): void;
 }

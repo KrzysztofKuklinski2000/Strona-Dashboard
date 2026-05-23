@@ -2,10 +2,14 @@
 
 namespace App\Service\Dashboard;
 
-use App\DTO\Dashboard\ContactDto;
+use App\DTO\DataTransferObjectInterface;
 use App\Exception\ServiceException;
+use App\Repository\Dashboard\ContactRepository;
 use App\Service\Dashboard\Traits\CanEdit;
 
+/**
+ * @property ContactRepository $repository
+ */
 class ContactService extends AbstractDashboardService implements ContactManagementServiceInterface
 {
     use CanEdit;
@@ -15,16 +19,16 @@ class ContactService extends AbstractDashboardService implements ContactManageme
     /**
      * @throws ServiceException
      */
-    public function updateContact(ContactDto $contactDto ): void
+    public function updateContact(DataTransferObjectInterface $contactDto ): void
     {
-        $this->edit(self::TABLE, $contactDto->toArray());
+        $this->edit(self::TABLE, $contactDto);
     }
 
     /**
      * @throws ServiceException
      */
-    public function getContact(): ContactDto
+    public function getContact(): DataTransferObjectInterface
     {
-        return ContactDto::fromArray($this->getAll(self::TABLE)[0]);
+        return $this->getAll(self::TABLE)[0];
     }
 }
