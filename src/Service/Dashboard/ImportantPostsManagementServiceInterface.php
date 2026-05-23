@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Dashboard;
 
+use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\DataTransferObjectInterface;
 
 /**
@@ -13,7 +14,7 @@ interface ImportantPostsManagementServiceInterface extends SharedGetDataServiceI
 {
     /**
      * Pobiera wszystkie ważnych postów.
-     * @return array
+     * @return DataTransferObjectInterface[]
      */
     public function getAllImportantPosts(): array;
 
@@ -47,8 +48,8 @@ interface ImportantPostsManagementServiceInterface extends SharedGetDataServiceI
 
     /**
      * Zmienia pozycje wpisu.
-     * @param DataTransferObjectInterface $data Dane posta z formularza.
+     * @param ChangePositionDto $data Dane posta z formularza.
      * @return void
      */
-    public function moveImportantPost(DataTransferObjectInterface $data): void;
+    public function moveImportantPost(ChangePositionDto $data): void;
 }

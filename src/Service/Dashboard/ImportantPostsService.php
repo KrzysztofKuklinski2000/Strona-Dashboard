@@ -2,6 +2,7 @@
 
 namespace App\Service\Dashboard;
 
+use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\ImportantPostsDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
@@ -23,7 +24,7 @@ class ImportantPostsService extends AbstractDashboardService implements Importan
     public function getAllImportantPosts(): array
     {
 
-        return array_map(fn(array $row) => ImportantPostsDto::fromArray($row), $this->getAll(self::TABLE));
+        return $this->getAll(self::TABLE);
     }
 
     /**
@@ -31,8 +32,7 @@ class ImportantPostsService extends AbstractDashboardService implements Importan
      * @throws NotFoundException
      */
     public function getPost(string $table, int $id): ?DataTransferObjectInterface {
-        $data = $this->getRow(self::TABLE, $id);
-        return ImportantPostsDto::fromArray($data);
+        return $this->getRow(self::TABLE, $id);
     }
 
     /**
@@ -40,12 +40,12 @@ class ImportantPostsService extends AbstractDashboardService implements Importan
      */
     public function updateImportantPost(DataTransferObjectInterface $data): void
     {
-        $this->edit(self::TABLE, $data->toArray());
+        $this->edit(self::TABLE, $data);
     }
 
     public function createImportantPost(DataTransferObjectInterface $data): void
     {
-        $this->create(self::TABLE, $data->toArray());
+        $this->create(self::TABLE, $data);
     }
 
     /**
@@ -53,7 +53,7 @@ class ImportantPostsService extends AbstractDashboardService implements Importan
      */
     public function publishedImportantPost(DataTransferObjectInterface $data): void
     {
-        $this->published(self::TABLE, $data->toArray());
+        $this->published(self::TABLE, $data);
     }
 
     public function deleteImportantPost(int $id): void
@@ -61,8 +61,8 @@ class ImportantPostsService extends AbstractDashboardService implements Importan
         $this->delete(self::TABLE, $id);
     }
 
-    public function moveImportantPost(DataTransferObjectInterface $data): void
+    public function moveImportantPost(ChangePositionDto $data): void
     {
-        $this->move(self::TABLE, $data->toArray());
+        $this->move(self::TABLE, $data);
     }
 }

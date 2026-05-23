@@ -9,11 +9,9 @@ use App\Controller\Dashboard\Traits\HasSingleData;
 use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
+use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
-use App\View;
-use App\Core\Request;
-use App\Middleware\CsrfMiddleware;
 use App\Service\Dashboard\ImportantPostsManagementServiceInterface;
 
 class ImportantPostsController extends AbstractDashboardController
@@ -112,8 +110,8 @@ class ImportantPostsController extends AbstractDashboardController
         $this->service->publishedImportantPost($data);
     }
 
-    protected function handleMove(DataTransferObjectInterface $data): void
+    protected function handleMove(ChangePositionDto $changePositionDto): void
     {
-        $this->service->moveImportantPost($data);
+        $this->service->moveImportantPost($changePositionDto);
     }
 }
