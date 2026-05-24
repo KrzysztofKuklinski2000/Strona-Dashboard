@@ -14,17 +14,31 @@ trait CanEdit
     /**
      * @throws RepositoryException
      */
-    public function edit(string $table, DataTransferObjectInterface $data): void {
+    public function edit(string $table, DataTransferObjectInterface $data): void
+    {
         try {
-            $arrayData = $data->toArray();
-            $sql = "UPDATE $table SET ". implode(", ", array_map(fn($k) => "$k = :$k", array_filter(array_keys($arrayData), fn($k)=> $k !== "id")));
+            $payload = $data->toArray();
 
-            if(in_array($table, ['news', 'main_page_posts', 'important_posts', 'timetable', 'gallery', 'subscribers'])) $sql .= " WHERE id = :id";
-            $result = array_combine(array_map(fn($k) => ":$k", array_keys($arrayData)), $arrayData);
+            $hasId = array_key_exists('id', $payload);
 
-            $this->runQuery($sql, $result);
-        }catch(RepositoryException $e) {
-            throw new RepositoryException("Nie udało się edytować posta", 500, $e);
+            $updateFields = $payload;
+            unset($updateFields['id']);
+
+            $setClause = implode(", ", array_map(fn($key) => "$key = :$key", array_keys($updateFields)));
+            $sql = "UPDATE $table SET $setClause";
+
+            if ($hasId) {
+                $sql .= " WHERE id = :id";
+            }
+
+            $bindings = [];
+            foreach ($payload as $key => $value) {
+                $bindings[":$key"] = $value;
+            }
+
+            $this->runQuery($sql, $bindings);
+        } catch (RepositoryException $e) {
+            throw new RepositoryException("Failed to edit record", 500, $e);
         }
     }
 }
