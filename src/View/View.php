@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-namespace App;
+namespace App\View;
 
 readonly class View {
 	public function __construct(private string $templatePath){}

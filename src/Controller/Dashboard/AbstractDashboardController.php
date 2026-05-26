@@ -2,11 +2,9 @@
 
 namespace App\Controller\Dashboard;
 
-use App\Core\ContextController;
-use App\View;
-use App\Traits\GetDataMethods;
-use App\Middleware\CsrfMiddleware;
 use App\Controller\AbstractController;
+use App\Core\ContextController;
+use App\Traits\GetDataMethods;
 
 abstract class AbstractDashboardController extends AbstractController
 {

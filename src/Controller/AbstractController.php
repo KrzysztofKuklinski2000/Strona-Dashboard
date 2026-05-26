@@ -8,7 +8,7 @@ use App\Core\Request;
 use App\Core\SessionManager;
 use App\Core\Validator;
 use App\Middleware\CsrfMiddleware;
-use App\View;
+use App\View\View;
 use JetBrains\PhpStorm\NoReturn;
 
 class AbstractController

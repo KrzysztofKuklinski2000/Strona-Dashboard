@@ -7,12 +7,8 @@ namespace App\Factories\ControllerFactories\Dashboard;
 use App\Controller\AbstractController;
 use App\Controller\Dashboard\StartController;
 use App\Core\ContextController;
-use App\Core\Request;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\StartServiceFactory;
-use App\Middleware\CsrfMiddleware;
-use App\View;
-use EasyCSRF\EasyCSRF;
 use PDO;
 
 class StartControllerFactory implements ControllerFactoryInterface

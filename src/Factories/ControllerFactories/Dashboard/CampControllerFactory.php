@@ -7,12 +7,8 @@ namespace App\Factories\ControllerFactories\Dashboard;
 use App\Controller\AbstractController;
 use App\Controller\Dashboard\CampController;
 use App\Core\ContextController;
-use App\Core\Request;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\CampServiceFactory;
-use App\Middleware\CsrfMiddleware;
-use App\View;
-use EasyCSRF\EasyCSRF;
 use PDO;
 
 class CampControllerFactory implements ControllerFactoryInterface

@@ -3,7 +3,7 @@
 namespace App\Core;
 
 use App\Middleware\CsrfMiddleware;
-use App\View;
+use App\View\View;
 
 readonly class ContextController
 {

@@ -12,7 +12,7 @@ use App\Core\Validator;
 use App\Exception\NotFoundException;
 use App\Middleware\AuthMiddleware;
 use App\Middleware\CsrfMiddleware;
-use App\View;
+use App\View\View;
 use EasyCSRF\EasyCSRF;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 use EasyCSRF\NativeSessionProvider;

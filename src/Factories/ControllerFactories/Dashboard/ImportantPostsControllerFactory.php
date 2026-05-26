@@ -5,16 +5,12 @@ declare(strict_types=1);
 namespace App\Factories\ControllerFactories\Dashboard;
 
 
-use App\Core\ContextController;
-use PDO;
-use App\View;
-use App\Core\Request;
-use EasyCSRF\EasyCSRF;
-use App\Middleware\CsrfMiddleware;
 use App\Controller\AbstractController;
 use App\Controller\Dashboard\ImportantPostsController;
+use App\Core\ContextController;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\ImportantPostsServiceFactory;
+use PDO;
 
 class ImportantPostsControllerFactory implements ControllerFactoryInterface
 {
