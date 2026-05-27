@@ -27,4 +27,21 @@ class SessionManager
         session_destroy();
         $_SESSION = [];
     }
+
+    public function getFlash(string $prefix = 'dashboard'): ?array
+    {
+        $key = "flash_$prefix";
+        $flash = $this->get($key) ?? null;
+
+        if ($flash) {
+            $this->remove($key);
+        }
+
+        return $flash;
+    }
+
+    public function setFlash(string $type, string|array $message, string $prefix = 'dashboard'): void
+    {
+        $this->set("flash_$prefix", ["type" => $type, "message" => $message]);
+    }
 }

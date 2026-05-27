@@ -36,7 +36,7 @@ trait HasPublishedAction
         $data = $this->getDataToPublished();
         $this->handlePublish($data);
 
-        $this->setFlash('info', 'Udało się zmienić status');
+        $this->sessionManager->setFlash('info', 'Udało się zmienić status');
         $this->redirect("{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}");
     }
 }

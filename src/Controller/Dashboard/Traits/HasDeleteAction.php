@@ -5,6 +5,7 @@ namespace App\Controller\Dashboard\Traits;
 use App\Core\Request;
 use App\Middleware\CsrfMiddleware;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
+use JetBrains\PhpStorm\NoReturn;
 
 /**
  * @property Request $request
@@ -21,6 +22,7 @@ trait HasDeleteAction
     /**
      * @throws InvalidCsrfTokenException
      */
+    #[NoReturn]
     public function deleteAction(): void
     {
         if (!$this->request->isPost()) {
@@ -31,7 +33,7 @@ trait HasDeleteAction
         $this->csrfMiddleware->verify('admin');
         $id = (int) $this->request->getFormParam('postId');
         $this->handleDelete($id);
-        $this->setFlash('success', 'Udało się usunąć');
+        $this->sessionManager->setFlash('success', 'Udało się usunąć');
         $this->redirect("{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}");
     }
 }

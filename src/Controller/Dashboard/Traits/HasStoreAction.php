@@ -37,12 +37,12 @@ trait HasStoreAction
 
         if (!$this->validator->getErrors()) {
             $this->handleCreate($data);
-            $this->setFlash("success", "Udało się utworzyć nowy wpis");
+            $this->sessionManager->setFlash("success", "Udało się utworzyć nowy wpis");
             $this->redirect("{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}");
             return;
         }
 
-        $this->setFlash("warning", $this->validator->getErrors());
+        $this->sessionManager->setFlash("warning", $this->validator->getErrors());
         $this->redirect("{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}/create");
     }
 }

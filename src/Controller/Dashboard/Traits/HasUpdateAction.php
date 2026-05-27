@@ -38,12 +38,12 @@ trait HasUpdateAction
 
         if (!$this->validator->getErrors()) {
             $this->handleUpdate($data);
-            $this->setFlash("success", "Udało się edytować");
+            $this->sessionManager->setFlash("success", "Udało się edytować");
             $this->redirect("{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}");
             return;
         }
 
-        $this->setFlash("warning", $this->validator->getErrors());
+        $this->sessionManager->setFlash("warning", $this->validator->getErrors());
         $redirectUrl = "{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}/edit";
 
         if (isset($data->id) && $data->id !== '') {

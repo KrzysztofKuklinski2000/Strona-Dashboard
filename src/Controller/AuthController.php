@@ -44,7 +44,7 @@ class AuthController extends AbstractController
                     $userDto = $this->authenticator->authenticate($login, $password);
 
                     $this->sessionManager->set('user', $userDto);
-                    $this->setFlash('info', 'Udało się zalogować');
+                    $this->sessionManager->setFlash('info', 'Udało się zalogować');
 
                     $this->redirect($this->contextController->config->getDashboardRoute());
                     return;

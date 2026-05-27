@@ -153,7 +153,7 @@ class SiteController extends AbstractController
     {
         $params['contact'] = $this->siteService->getContact();
         $params['csrf_token'] = $this->csrfMiddleware->generateToken('public');
-        $params['flash_public'] = $this->getFlash('public');
+        $params['flash_public'] = $this->sessionManager->getFlash('public');
 
         $this->view->renderPageView($params);
     }

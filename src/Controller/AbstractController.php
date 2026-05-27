@@ -39,17 +39,4 @@ class AbstractController
         header("Location: $to", true, $statusCode);
         exit();
     }
-
-    protected function getFlash(string $prefix = 'dashboard'): ?array
-    {
-        $key = "flash_$prefix";
-        $flash = $this->sessionManager->get($key) ?? null;
-        if ($flash) $this->sessionManager->remove($key);
-        return $flash;
-    }
-
-    protected function setFlash(string $type, string|array $message, string $prefix = 'dashboard'): void
-    {
-        $this->sessionManager->set("flash_$prefix", ["type" => $type, "message" => $message]);
-    }
 }

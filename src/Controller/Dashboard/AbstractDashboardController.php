@@ -27,7 +27,7 @@ abstract class AbstractDashboardController extends AbstractController
 
     protected function renderPage(array $params): void
     {
-        $params['flash_dashboard'] = $this->getFlash();
+        $params['flash_dashboard'] = $this->sessionManager->getFlash();
         $params['csrf_token'] = $this->csrfMiddleware->generateToken('admin');
         $this->view->renderDashboardView($params);
     }

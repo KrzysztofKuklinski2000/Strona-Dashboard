@@ -35,13 +35,13 @@ class PublicSubscribersController extends AbstractController
         $consent = $this->request->getFormParam('terms_consent');
 
         if ($this->validator->getErrors()) {
-            $this->setFlash('warning', 'Niepoprawny adres email.', 'public');
+            $this->sessionManager->setFlash('warning', 'Niepoprawny adres email.', 'public');
             $this->redirect($this->contextController->config->getHomeRoute());
             return;
         }
 
         if (!$consent) {
-            $this->setFlash('warning', 'Musisz zaakceptować zgodę na przetwarzanie danych.', 'public');
+            $this->sessionManager->setFlash('warning', 'Musisz zaakceptować zgodę na przetwarzanie danych.', 'public');
             $this->redirect($this->contextController->config->getHomeRoute());
             return;
         }
@@ -52,10 +52,10 @@ class PublicSubscribersController extends AbstractController
 
             $this->notifier->sendConfirmationEmail($email, $token);
 
-            $this->setFlash('success', 'Dziękujemy za zapisanie się!', 'public');
+            $this->sessionManager->setFlash('success', 'Dziękujemy za zapisanie się!', 'public');
 
         } catch (ServiceException $e) {
-            $this->setFlash('warning', $e->getMessage(), 'public');
+            $this->sessionManager->setFlash('warning', $e->getMessage(), 'public');
         }
 
         $this->redirect($this->contextController->config->getHomeRoute());
@@ -73,9 +73,9 @@ class PublicSubscribersController extends AbstractController
         try {
 
             $this->service->activateSubscriber($token);
-            $this->setFlash('success', 'Subskrypcja została potwierdzona! Oss!', 'public');
+            $this->sessionManager->setFlash('success', 'Subskrypcja została potwierdzona! Oss!', 'public');
         } catch (Exception) {
-            $this->setFlash('warning', 'Link aktywacyjny jest nieprawidłowy.', 'public');
+            $this->sessionManager->setFlash('warning', 'Link aktywacyjny jest nieprawidłowy.', 'public');
         }
 
         $this->redirect($this->contextController->config->getHomeRoute());
@@ -86,16 +86,16 @@ class PublicSubscribersController extends AbstractController
         $token = $this->request->getQueryParam('token');
 
         if (!$token) {
-            $this->setFlash('warning', 'Brak klucza wypisania.', 'public');
+            $this->sessionManager->setFlash('warning', 'Brak klucza wypisania.', 'public');
             $this->redirect($this->contextController->config->getHomeRoute());
             return;
         }
 
         try {
             $this->service->unsubscribe($token);
-            $this->setFlash('success', 'Twoje dane zostały usunięte. Nie będziesz już otrzymywać powiadomień.', 'public');
+            $this->sessionManager->setFlash('success', 'Twoje dane zostały usunięte. Nie będziesz już otrzymywać powiadomień.', 'public');
         } catch (ServiceException) {
-            $this->setFlash('warning', 'Nie udało się przetworzyć prośby o wypisanie.', 'public');
+            $this->sessionManager->setFlash('warning', 'Nie udało się przetworzyć prośby o wypisanie.', 'public');
         }
 
         $this->redirect($this->contextController->config->getHomeRoute());
