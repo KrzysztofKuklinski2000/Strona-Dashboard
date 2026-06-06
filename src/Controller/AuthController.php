@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Core\ContextController;
 use App\Security\Authenticator;
+use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 use JetBrains\PhpStorm\NoReturn;
 use Throwable;
 use App\Exception\ServiceException;
@@ -43,6 +44,7 @@ class AuthController extends AbstractController
                 } else {
                     $userDto = $this->authenticator->authenticate($login, $password);
 
+                    $this->sessionManager->regenerate();
                     $this->sessionManager->set('user', $userDto);
                     $this->sessionManager->setFlash('info', 'Udało się zalogować');
 
@@ -63,10 +65,19 @@ class AuthController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws InvalidCsrfTokenException
+     */
     #[NoReturn]
     public function logoutAction(): void
     {
-        $this->sessionManager->remove('user');
+        if (!$this->request->isPost()) {
+            $this->redirect($this->contextController->config->getDashboardRoute());
+        }
+
+        $this->csrfMiddleware->verify('admin');
+        $this->sessionManager->destroy();
+
         $this->redirect($this->contextController->config->getLoginRoute());
     }
 }

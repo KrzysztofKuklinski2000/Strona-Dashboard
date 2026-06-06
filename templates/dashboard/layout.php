@@ -2,17 +2,17 @@
 <html lang="pl">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="/templates/dashboard/public/style.css">
-	<script src="https://kit.fontawesome.com/062ebc24f8.js" crossorigin="anonymous"></script>
-	<title>Panel Administracyjny - Karate Kyokushin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/templates/dashboard/public/style.css">
+    <script src="https://kit.fontawesome.com/062ebc24f8.js" crossorigin="anonymous"></script>
+    <title>Panel Administracyjny - Karate Kyokushin</title>
 </head>
 
 <body>
-	<?php if (isset($params['flash_dashboard'])): ?>
-    <?php 
-        $flash = $params['flash_dashboard'];
+<?php if (isset($params['flash_dashboard'])): ?>
+    <?php
+    $flash = $params['flash_dashboard'];
     ?>
     <?php if (is_string($flash['message'])): ?>
         <div class="flash <?= htmlspecialchars($flash['type']) ?>">
@@ -21,72 +21,75 @@
         </div>
     <?php endif; ?>
 <?php endif; ?>
-	<header>
-		<h2><i style="margin-right: 10px;" class="fa-solid fa-gear"></i>Panel Administracyjny</h2>
-	</header>
-	<div class="container">
-		<?php if (!in_array($params['page'], ['login', 'register'])): ?>
-			<aside>
-				<ul>
-					<a href="/dashboard/start">
-						<i class="fa-solid fa-house"></i>
-						<p>Strona Główna</p>
-					</a>
+<header>
+    <h2><i style="margin-right: 10px;" class="fa-solid fa-gear"></i>Panel Administracyjny</h2>
+</header>
+<div class="container">
+    <?php if (!in_array($params['page'], ['login', 'register'])): ?>
+        <aside>
+            <ul>
+                <a href="/dashboard/start">
+                    <i class="fa-solid fa-house"></i>
+                    <p>Strona Główna</p>
+                </a>
 
-					<a href="/dashboard/important_posts">
-						<i class="fa-solid fa-exclamation"></i>
-						<p>Ważne Info</p>
-					</a>
+                <a href="/dashboard/important_posts">
+                    <i class="fa-solid fa-exclamation"></i>
+                    <p>Ważne Info</p>
+                </a>
 
-					<a href="/dashboard/timetable">
-						<i class="fa-regular fa-calendar"></i>
-						<p>Grafik</p>
-					</a>
+                <a href="/dashboard/timetable">
+                    <i class="fa-regular fa-calendar"></i>
+                    <p>Grafik</p>
+                </a>
 
-					<a href="/dashboard/news">
-						<i class="fa-solid fa-info"></i>
-						<p>Aktualności</p>
-					</a>
+                <a href="/dashboard/news">
+                    <i class="fa-solid fa-info"></i>
+                    <p>Aktualności</p>
+                </a>
 
-					<a href="/dashboard/gallery">
-						<i class="fa-solid fa-image"></i>
-						<p>Galeria</p>
-					</a>
+                <a href="/dashboard/gallery">
+                    <i class="fa-solid fa-image"></i>
+                    <p>Galeria</p>
+                </a>
 
-					<a href="/dashboard/camp">
-						<i class="fa-solid fa-campground"></i>
-						<p>Obozy</p>
-					</a>
+                <a href="/dashboard/camp">
+                    <i class="fa-solid fa-campground"></i>
+                    <p>Obozy</p>
+                </a>
 
-					<a href="/dashboard/fees">
-						<i class="fa-solid fa-money-check-dollar"></i>
-						<p>Składki</p>
-					</a>
-					<a href="/dashboard/contact">
-						<i class="fa-regular fa-address-book"></i>
-						<p>Kontakt</p>
-					</a>
-					<a href="/dashboard/subscribers">
-						<i class="fa-regular fa-bell"></i>
-						<p>Subskrybenci</p>
-					</a>
-					<a href="/auth/logout">
-						<i class="fa-solid fa-arrow-right-from-bracket"></i>
-						<p>Wyloguj</p>
-					</a>
-					
-				</ul>
-			</aside>
-		<?php endif; ?>
-		<main>
-			<div class="<?= $params['page'] !== 'login' ? 'content-container' : ''?>">
-				<?php require_once('templates/dashboard/' . $params['page'] . '.php'); ?>
-			</div>
-		</main>
-	</div>
+                <a href="/dashboard/fees">
+                    <i class="fa-solid fa-money-check-dollar"></i>
+                    <p>Składki</p>
+                </a>
+                <a href="/dashboard/contact">
+                    <i class="fa-regular fa-address-book"></i>
+                    <p>Kontakt</p>
+                </a>
+                <a href="/dashboard/subscribers">
+                    <i class="fa-regular fa-bell"></i>
+                    <p>Subskrybenci</p>
+                </a>
+                <form action="/auth/logout" method="POST" class="logout-form">
+                    <input type="hidden" name="csrf_token" value="<?= e($params['csrf_token'] ?? '') ?>">
+                    <button type="submit">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <p>Wyloguj</p>
+                    </button>
+                </form>
+
+            </ul>
+        </aside>
+    <?php endif; ?>
+    <main>
+        <div class="<?= $params['page'] !== 'login' ? 'content-container' : '' ?>">
+            <?php require_once('templates/dashboard/' . $params['page'] . '.php'); ?>
+        </div>
+    </main>
+</div>
 </body>
 <?php if (isset($params['flash_dashboard']) && in_array($params['flash_dashboard']['type'], ['success', 'info', 'warning'])): ?>
-	<script src="/templates/dashboard/public/main.js"></script>
+    <script src="/templates/dashboard/public/main.js"></script>
 <?php endif; ?>
 
 </html>

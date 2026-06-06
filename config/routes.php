@@ -36,7 +36,7 @@ return function (RouteCollector $r) {
 
     $r->get('/auth/login', [AuthController::class, 'loginAction']);
     $r->post('/auth/login', [AuthController::class, 'loginAction']);
-    $r->get('/auth/logout', [AuthController::class, 'logoutAction']);
+    $r->post('/auth/logout', [AuthController::class, 'logoutAction']);
 
     $r->get('/dashboard', [StartController::class, 'indexAction']);
 
