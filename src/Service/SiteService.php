@@ -28,7 +28,8 @@ readonly class SiteService
     {
         try {
             $limit = $perPage ?? $this->itemsPerPage;
-            $totalPages = ceil($this->siteRepository->countData('news') / $limit);
+            $totalPages = (int) ceil($this->siteRepository->countPublishedNews() / $limit);
+            $totalPages = max(1, $totalPages);
             $page = max(1, min($page, $totalPages));
             $offset = (int)(($page - 1) * $limit);
 

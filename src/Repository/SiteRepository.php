@@ -133,4 +133,17 @@ class SiteRepository extends AbstractRepository {
             throw new RepositoryException("Nie udało się pobrać liczby rekordów", 500, $e);
         }
     }
+
+    /**
+     * @throws RepositoryException
+     */
+    public function countPublishedNews(): int
+    {
+        try {
+            $stmt = $this->runQuery('SELECT COUNT(*) FROM news WHERE status = 1');
+            return (int) $stmt->fetchColumn();
+        } catch (RepositoryException $e) {
+            throw new RepositoryException('Nie udało się pobrać liczby aktualności', 500, $e);
+        }
+    }
 }
