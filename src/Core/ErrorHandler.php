@@ -10,14 +10,18 @@ class ErrorHandler {
         $this->errorPath = rtrim($errorPath, '/');
     }
 
-    public function handle(\Throwable $e): void {
-        // error_log($e->getMessage());
+    public function handle(\Throwable $e): void
+    {
+        error_log($e->getMessage());
 
-        if($e instanceof NotFoundException) {
+        if ($e instanceof NotFoundException) {
+            http_response_code(404);
             $this->renderErrorPage('404.php', $e);
-        }else {
+        } else {
+            http_response_code(500);
             $this->renderErrorPage('500.php', $e);
         }
+
         $this->terminate();
     }
 
