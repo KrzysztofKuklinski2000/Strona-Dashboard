@@ -354,56 +354,70 @@ let content2 = [
 
 
 
-document.querySelector('.nav-bar-icon')
-.addEventListener('click', ()=>{
-	menu.style.display = 'block';
-}, false);
+const navIcon = document.querySelector('.nav-bar-icon');
+const closeIcon = document.querySelector('#times-icon');
 
-document.querySelector('#times-icon')
-.addEventListener('click', () => {
-	menu.style.display = 'none';
-}, false)
+if (menu && navIcon) {
+	navIcon.addEventListener('click', () => {
+		menu.style.display = 'block';
+	}, false);
+}
 
+if (menu && closeIcon) {
+	closeIcon.addEventListener('click', () => {
+		menu.style.display = 'none';
+	}, false);
+}
 
-document.addEventListener("DOMContentLoaded", ()=>{
-    // Nowa, oddzielna zmienna dla pierwszej sekcji
-    let text1 = "";
-    content[0].forEach(el => {
-        text1 += `<div class='content'><h3>${el[0]}</h3><p>${el[1]}</p><p class="content-justify">${el[2]}</p></div>`
-    });
-    choice[0].style.color = "white";
-    contentDiv.innerHTML = text1;
+if (contentDiv && contentDiv2 && choice.length > 0 && choice2.length > 0) {
+	document.addEventListener("DOMContentLoaded", () => {
+		let text1 = "";
 
-    // Nowa, oddzielna zmienna dla drugiej sekcji
-    let text2 = "";
-    content2[0][0].forEach(el => {
-        text2 += `<div class='content'><h3>${el[0]}</h3><p>${el[1]}</p><p class="content-justify">${el[2]}</p></div>`
-    });
-    choice2[0].style.color = "white";
-    contentDiv2.innerHTML = text2;
-});
+		content[0].forEach(el => {
+			text1 += `<div class='content'><h3>${el[0]}</h3><p>${el[1]}</p><p class="content-justify">${el[2]}</p></div>`;
+		});
 
-choice.forEach((el) => el.addEventListener('click', changeContent, false))
-choice2.forEach((el) => el.addEventListener('click', changeContent2, false))
+		choice[0].style.color = "white";
+		contentDiv.innerHTML = text1;
 
-function changeContent(){
+		let text2 = "";
+
+		content2[0][0].forEach(el => {
+			text2 += `<div class='content'><h3>${el[0]}</h3><p>${el[1]}</p><p class="content-justify">${el[2]}</p></div>`;
+		});
+
+		choice2[0].style.color = "white";
+		contentDiv2.innerHTML = text2;
+	});
+
+	choice.forEach((el) => el.addEventListener('click', changeContent, false));
+	choice2.forEach((el) => el.addEventListener('click', changeContent2, false));
+}
+
+function changeContent() {
 	choice.forEach(el => el.style.color = "#BDBDBD");
 	this.style.color = 'white';
+
 	let i = choice.indexOf(this);
 	let text = '';
+
 	content[i].forEach(el => {
-		text += `<div class='content'><h3>${el[0]}</h3><p>${el[1]}</p><p class="content-justify">${el[2]}</p></div>`
-	})
+		text += `<div class='content'><h3>${el[0]}</h3><p>${el[1]}</p><p class="content-justify">${el[2]}</p></div>`;
+	});
+
 	contentDiv.innerHTML = text;
 }
 
-function changeContent2(){
+function changeContent2() {
 	choice2.forEach(el => el.style.color = "#BDBDBD");
 	this.style.color = 'white';
+
 	let i = choice2.indexOf(this);
 	let text = '';
+
 	content2[0][i].forEach(el => {
-		text += `<div class='content'><h3>${el[0]}</h3><p>${el[1]}</p><p class="content-justify">${el[2]}</p></div>`
-	})
+		text += `<div class='content'><h3>${el[0]}</h3><p>${el[1]}</p><p class="content-justify">${el[2]}</p></div>`;
+	});
+
 	contentDiv2.innerHTML = text;
 }
