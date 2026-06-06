@@ -26,14 +26,16 @@ class TimetableRepository extends BaseDashboardRepository {
     {
         try {
             $sql = "SELECT * FROM timetable ORDER BY 
-                    CASE 
-                        WHEN day = 'PON' THEN 1
-                        WHEN day = 'WT' THEN 2
-                        WHEN day = 'ŚR' THEN 3
-                        WHEN day = 'CZW' THEN 4
-                        WHEN day = 'PT' THEN 5
-                        WHEN day = 'SOB' THEN 6
-                    END ASC, start ASC";
+        CASE 
+            WHEN TRIM(day) = 'PON' THEN 1
+            WHEN TRIM(day) = 'WT' THEN 2
+            WHEN TRIM(day) = 'ŚR' THEN 3
+            WHEN TRIM(day) = 'CZW' THEN 4
+            WHEN TRIM(day) = 'PT' THEN 5
+            WHEN TRIM(day) = 'SOB' THEN 6
+            WHEN TRIM(day) = 'NIEDZ' THEN 7
+            ELSE 8
+        END ASC, start ASC";
 
             $result = $this->runQuery($sql)->fetchAll(PDO::FETCH_ASSOC);
 
