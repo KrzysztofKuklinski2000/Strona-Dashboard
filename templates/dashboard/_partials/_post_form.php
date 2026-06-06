@@ -1,27 +1,23 @@
-<br>
-<h3><?= $formTitle ?? "Nowy Post" ?></h3>
-<br>
-<form action="<?= $action ?? "" ?>" method="POST">
-  <input type="hidden" name="csrf_token" value="<?= $csrf ?? '' ?>">
+<h3><?= e($formTitle ?? 'Nowy Post') ?></h3>
 
-  <?php if (isset($data->id)): ?>
-    <input type="hidden" name="postId" value="<?= $data->id ?? "" ?>">
-  <?php endif; ?>
+<form action="<?= e($action ?? '') ?>" method="POST">
+    <input type="hidden" name="csrf_token" value="<?= e($csrf ?? '') ?>">
 
-  <input type="text" name="postTitle" maxlength="100" value="<?= $data->title ?? "" ?>" placeholder="Tytuł posta">
-  <p class="validation-error"><?= $errors['postTitle'] ?? ""  ?></p>
+    <?php if (isset($data->id)): ?>
+        <input type="hidden" name="postId" value="<?= e($data->id) ?>">
+    <?php endif; ?>
 
-  <textarea name="postDescription" placeholder="Wpisz treść posta">
-    <?= $data->description ?? "" ?>
-  </textarea>
-  <p class="validation-error"><?= $errors['postDescription'] ?? ""  ?></p>
+    <input type="text" name="postTitle" maxlength="100" value="<?= e($data->title ?? '') ?>" placeholder="Tytuł posta">
+    <p class="validation-error"><?= e($errors['postTitle'] ?? '') ?></p>
 
-  <!-- Dodatkowe pola formularza -->
-  <?php
-  if (isset($extraFieldsHtml) && is_string($extraFieldsHtml)) {
-    echo $extraFieldsHtml;
-  }
-  ?>
+    <textarea name="postDescription" placeholder="Wpisz treść posta"><?= e($data->description ?? '') ?></textarea>
+    <p class="validation-error"><?= e($errors['postDescription'] ?? '') ?></p>
 
-  <input type="submit" value="<?= $buttonTitle ?? "Stwórz" ?>">
+    <?php
+    if (isset($extraFieldsHtml) && is_string($extraFieldsHtml)) {
+        echo $extraFieldsHtml;
+    }
+    ?>
+
+    <input type="submit" value="<?= e($buttonTitle ?? 'Stwórz') ?>">
 </form>

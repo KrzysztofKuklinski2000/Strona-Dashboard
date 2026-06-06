@@ -23,7 +23,7 @@
 	<p class="validation-error"><?= $params['flash_dashboard']['message']['description'] ?? ""  ?></p>
 	<label>
 		<span>Zdjęcie:</span>
-		<img class="dashboard-image" src="public/images/uploads/<?= $data->imageName ?>" alt="">
+		<img class="dashboard-image" src="/public/uploads/<?= rawurlencode($data->imageName) ?>" alt="<?= e($data->description) ?>">
 	</label>
 	<input type="submit" value="Zapisz">
 </form>

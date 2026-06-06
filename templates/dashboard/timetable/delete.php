@@ -10,7 +10,7 @@ $csrf = $params['csrf_token'] ?? '';
 <p><b>Dzień:</b> <?= $data->day?> </p>
 <p><b>Miasto:</b> <?= $data->city?> </p>
 <p><b>Grupa:</b> <?= $data->advancementGroup?></p>
-<p><b>Szczegóły:</b> <?= $data->place?>/p>
+<p><b>Szczegóły:</b> <?= e($data->place) ?></p>
 <p><b>Start:</b> <?= $data->start?></p>
 <p><b>Koniec:</b> <?= $data->end ?></p>
 <form action="<?= $action ?>" method="POST">

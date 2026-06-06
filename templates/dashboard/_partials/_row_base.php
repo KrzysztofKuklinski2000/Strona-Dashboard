@@ -4,12 +4,12 @@ $statusClass = $isPublished ? 'published' : 'no-published';
 $statusText = $isPublished ? 'Publiczny' : 'Niepubliczny';
 ?>
 <tr>
-  <td><?= $key + 1 ?>.</td>
-  <td><?= $row->title ?></td>
-  <td><?= $row->created ?></td>
-  <td class="<?= $row->status == 1 ? 'published' : 'no-published' ?>">
-    <?= $row->status == 1 ? 'Publiczny' : 'Nie publiczny' ?>
-  </td>
+    <td><?= e($key + 1) ?>.</td>
+    <td><?= e($row->title) ?></td>
+    <td><?= e($row->created) ?></td>
+    <td class="<?= e($row->status == 1 ? 'published' : 'no-published') ?>">
+        <?= $row->status == 1 ? 'Publiczny' : 'Niepubliczny' ?>
+    </td>
   <?php require "templates/dashboard/_partials/_action_links.php"; ?>
   <td>
     <div>
@@ -25,5 +25,4 @@ $statusText = $isPublished ? 'Publiczny' : 'Niepubliczny';
       ?>
     </div>
   </td>
-</tr>
 </tr>
