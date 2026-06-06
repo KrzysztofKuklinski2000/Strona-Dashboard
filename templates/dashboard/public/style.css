@@ -53,17 +53,41 @@ aside ul a {
 	letter-spacing: 2px;
 }
 
-aside ul a:hover {
+.logout-form {
+	margin: 0;
+}
+
+.logout-form button {
+	width:100%;
+	height:40px;
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+	color:#171D29;
+	padding-left:20px;
+	font-weight: 700;
+	letter-spacing: 2px;
+	background: transparent;
+	border: 0;
+	cursor: pointer;
+	font-family: inherit;
+	font-size: inherit;
+}
+
+aside ul a:hover,
+.logout-form button:hover {
 	background: #171D29;
 	color:#fff;
 }
 
-aside ul a i {
+aside ul a i,
+.logout-form button i {
 	text-align: center;
 	width: 30px;
 }
 
-aside ul a p {
+aside ul a p,
+.logout-form button p {
 	margin-left:10px;
 }
 

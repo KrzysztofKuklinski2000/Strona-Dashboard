@@ -3,6 +3,7 @@
 namespace App\Core;
 
 use App\Core\Request;
+use App\Exception\MethodNotAllowedException;
 use App\Exception\NotFoundException;
 use Exception;
 use FastRoute\Dispatcher;
@@ -45,7 +46,7 @@ class Router
                 throw new NotFoundException("Strona nie istnieje");
 
             case Dispatcher::METHOD_NOT_ALLOWED:
-                throw new Exception("Metoda HTTP niedozwolona");
+                throw new MethodNotAllowedException("Metoda HTTP niedozwolona");
 
             case Dispatcher::FOUND:
                 $handler = $routeInfo[1];

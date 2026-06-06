@@ -1,12 +1,17 @@
-<?php 
-declare(strict_types= 1);
+<?php
+declare(strict_types=1);
+
 namespace App\Core;
+
+use App\Exception\MethodNotAllowedException;
 use App\Exception\NotFoundException;
 
-class ErrorHandler {
+class ErrorHandler
+{
     private string $errorPath;
 
-    public function __construct(private bool $isDev, string $errorPath) {
+    public function __construct(private bool $isDev, string $errorPath)
+    {
         $this->errorPath = rtrim($errorPath, '/');
     }
 
@@ -17,6 +22,9 @@ class ErrorHandler {
         if ($e instanceof NotFoundException) {
             http_response_code(404);
             $this->renderErrorPage('404.php', $e);
+        } elseif ($e instanceof MethodNotAllowedException) {
+            http_response_code(405);
+            $this->renderErrorPage('405.php', $e);
         } else {
             http_response_code(500);
             $this->renderErrorPage('500.php', $e);
@@ -25,16 +33,18 @@ class ErrorHandler {
         $this->terminate();
     }
 
-    public function renderErrorPage(string $file, \Throwable $e): void {
-        if($this->isDev) {
-            echo "<pre>" . get_class($e) .": ". $e->getMessage() ."\n";
-            echo $e->getTraceAsString(). "</pre>";
-        }else {
-            $path = $this->errorPath."/".$file;
-            if(file_exists($path)) {
+    public function renderErrorPage(string $file, \Throwable $e): void
+    {
+        if ($this->isDev) {
+            echo '<pre>' . get_class($e) . ': ' . $e->getMessage() . "\n";
+            echo $e->getTraceAsString() . '</pre>';
+        } else {
+            $path = $this->errorPath . '/' . $file;
+
+            if (file_exists($path)) {
                 include $path;
-            }else {
-                echo "Wystąpił błąd. Spróbuj później";
+            } else {
+                echo 'Wystąpił błąd. Spróbuj później';
             }
         }
     }
