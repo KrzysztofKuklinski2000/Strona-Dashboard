@@ -10,8 +10,8 @@ $first = $params['content'][2];
                     <div class="info-icon info-neg">
                         <i class="fa-solid fa-exclamation"></i>
                     </div>
-                    <h2 class="info-title"> <?= $post->title ?> </h2>
-                    <p class="info-description"> <?= $post->description ?> </p>
+                    <h2 class="info-title"><?= e($post->title) ?></h2>
+                    <p class="info-description"><?= e_br($post->description) ?></p>
                 </div>
             <?php endif ?>
         <?php endforeach ?>
@@ -33,7 +33,7 @@ $first = $params['content'][2];
                 </div>
                 <div class="post-content flex-item-center">
                     <span>zajęcia za darmo</span>
-                    <p><?= $first->description; ?></p><br/>
+                    <p><?= e_br($first->description) ?></p><br/>
                     <a class="text-uppercase" href="/zapisy">Zapisz się</a>
                 </div>
             </div>
@@ -48,11 +48,11 @@ $first = $params['content'][2];
                         require('templates/components/post_header.php');
                     ?>
                     <div class="post-content flex-item-center <?= $class ?>">
-                        <p> <?= $content->description; ?></p>
+                        <p><?= e_br($content->description) ?></p>
                     </div>
                 </div>
             <?php endif ?>
         <?php endforeach ?>
     </div>
 
-    <script src="public/js/scroll.js"></script>
+<script src="/public/js/scroll.js"></script>

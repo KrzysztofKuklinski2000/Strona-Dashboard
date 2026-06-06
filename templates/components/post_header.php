@@ -1,4 +1,4 @@
 <div class="post-header">
-	<h2><?php echo $text ?? null ?></h2>
-	<p></p>
+    <h2><?= $titleHtml ?? e($text ?? '') ?></h2>
+    <span></span>
 </div>

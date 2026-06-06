@@ -44,12 +44,12 @@ $prevDay = null;
 						<div class="timetable-line"></div>
 						<div class="box-content">
 							<div>
-								<h3><?= $content->city ?> </h3>
+                                <h3><?= e($content->city) ?></h3>
 								<a href="#addresses">adres</a>
 							</div>
-							<p><i class="fa-regular fa-clock"></i> <?= $content->start . ' - ' . $content->end; ?></p>
-							<p>Grupa: <?= $content->advancementGroup; ?></p>
-							<p style="font-weight: 100;"> <?= $content->place; ?></p>
+                            <p><i class="fa-regular fa-clock"></i> <?= e($content->start . ' - ' . $content->end) ?></p>
+                            <p>Grupa: <?= e($content->advancementGroup) ?></p>
+                            <p style="font-weight: 100;"><?= e($content->place) ?></p>
 						</div>
 					</div>
 				<?php endif ?>

@@ -25,10 +25,11 @@
 			<div class="black-filter"></div>
 		</div>
 	</div><br><br>
-	<?php
-	$text = '<i style="color:#1C2331" class="fa-regular fa-image"></i> Zdjęcia ';
-	require('templates/components/post_header.php');
-	?>
+    <?php
+    $titleHtml = '<i style="color:#1C2331" class="fa-regular fa-image"></i> Zdjęcia';
+    require('templates/components/post_header.php');
+    unset($titleHtml);
+    ?>
 	<div class="filter">
 		<a href="/galeria/training">Treningi</a>
 		<a href="/galeria/camp">Obozy</a>
@@ -36,8 +37,8 @@
 	<div class="gallery">
 		<?php foreach ($params['content'] as $content): ?>
 			<div class="img-box">
-				<img src="/public/uploads/<?= $content->imageName ?>" alt="<?= $content->description ?>" loading="lazy">
-				<p><?= $content->description ?></p>
+                <img src="/public/uploads/<?= rawurlencode($content->imageName) ?>" alt="<?= e($content->description) ?>" loading="lazy">
+                <p><?= e($content->description) ?></p>
 			</div>
 		<?php endforeach; ?>
 	</div>

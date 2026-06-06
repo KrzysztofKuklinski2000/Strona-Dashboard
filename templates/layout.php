@@ -9,27 +9,28 @@
 	<link rel="stylesheet" type="text/css" href="/public/style-res.css">
 	<link rel="icon" type="image/x-icon" href="/public/images/logo.png">
 	<script src="https://kit.fontawesome.com/062ebc24f8.js" crossorigin="anonymous"></script>
-	<?php
-	$page = $params['page'] ?? 'start';
-	$canonicalSlug = match ($page) {
-		'camp-info' => 'obozy',
-		'contact' => 'kontakt',
-		'dojo-oath' => 'przysięga-dojo',
-		'entries-info' => 'zapisy',
-		'fees-info' => 'składki',
-		'gallery' => 'galeria',
-		'news' => 'aktualności',
-		'oyama' => 'matsutatsu-oyama',
-		'requirements' => 'wymagania-egzaminacyjne',
-		'statute' => 'regulamin',
-		'timetable' => 'grafik',
-		default => ''
-	};
-	$baseUrl = 'http://karatetestkyokushin.atwebpages.com/';
-	$canonicalUrl = rtrim($baseUrl, '/') . '/' . $canonicalSlug;
-	$canonicalUrl = str_replace('//', '/', $canonicalUrl)
-	?>
-	<link rel="canonical" href="<?= htmlspecialchars($canonicalUrl) ?>" />
+    <?php
+    $page = $params['page'] ?? 'start';
+
+    $canonicalPath = match ($page) {
+        'camp-info' => '/obozy',
+        'contact' => '/kontakt',
+        'dojo-oath' => '/dojo-oath',
+        'entries-info' => '/zapisy',
+        'fees-info' => '/skladki',
+        'gallery' => '/galeria',
+        'news' => '/aktualnosci',
+        'oyama' => '/oyama',
+        'requirements' => '/wymagania-egzaminacyjne',
+        'statute' => '/status',
+        'timetable' => '/grafik',
+        default => '/',
+    };
+
+    $baseUrl = rtrim((string) ($params['base_url'] ?? ''), '/');
+    $canonicalUrl = $baseUrl . $canonicalPath;
+    ?>
+    <link rel="canonical" href="<?= e($canonicalUrl) ?>">
 	<title>
 		<?php
 		echo match ($page) {
@@ -54,7 +55,7 @@
 <body>
 	<?php if (isset($params['flash_public']) && in_array($params['flash_public']['type'], ['success', 'info', 'warning'])): ?>
 		<div class="flash <?= htmlspecialchars($params['flash_public']['type']) ?>">
-			<?= $params['flash_public']['message'] ?>
+            <?= e($params['flash_public']['message']) ?>
 			<i class="flash-close fa-solid fa-xmark"></i>
 		</div>
 	<?php endif ?>

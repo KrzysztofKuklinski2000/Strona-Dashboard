@@ -59,9 +59,9 @@
                 <p></p>
                 <ul class="contact">
                     <li>Klub Karate Kyokushin i Sportów Walki</li>
-                    <li><i class="fa-solid fa-map-pin"></i> <?= $params['contact']->address ?></li>
-                    <li><i class="fa-solid fa-mobile-screen-button"></i> <?= $params['contact']->phone ?></li>
-                    <li><i class="fa-regular fa-envelope"></i> <?= $params['contact']->email ?></li>
+                    <li><i class="fa-solid fa-map-pin"></i> <?= e($params['contact']->address ?? '') ?></li>
+                    <li><i class="fa-solid fa-mobile-screen-button"></i> <?= e($params['contact']->phone ?? '') ?></li>
+                    <li><i class="fa-regular fa-envelope"></i> <?= e($params['contact']->email ?? '') ?></li>
                 </ul>
             </div>
 

@@ -14,8 +14,8 @@ $currentPage = $params['currentNumberOfPage'];
 					<div class="news-box">
 						<div class="news-line"></div>
 						<div>
-							<h3><?= $content->title; ?></h3>
-							<p><?= $content->description; ?></p>
+							<h3><?= e($content->title) ?></h3>
+                            <p><?= e_br($content->description) ?></p>
 						</div>
 					</div>
 				<?php endif ?>

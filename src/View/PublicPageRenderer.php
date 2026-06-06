@@ -25,6 +25,7 @@ readonly class PublicPageRenderer
             'contact'      => $this->siteService->getContact(),
             'csrf_token'   => $this->context->csrfMiddleware->generateToken(),
             'flash_public' => $this->context->sessionManager->getFlash('public'),
+            'base_url'     => $this->context->config->getUrl(),
         ];
 
         $finalParams = array_merge($globalParams, $pageSpecificParams);
