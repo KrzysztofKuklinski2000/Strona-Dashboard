@@ -357,16 +357,36 @@ let content2 = [
 const navIcon = document.querySelector('.nav-bar-icon');
 const closeIcon = document.querySelector('#times-icon');
 
+const openMobileMenu = () => {
+	menu.classList.add('is-open');
+	menu.setAttribute('aria-hidden', 'false');
+	document.body.classList.add('is-menu-open');
+};
+
+const closeMobileMenu = () => {
+	menu.classList.remove('is-open');
+	menu.setAttribute('aria-hidden', 'true');
+	document.body.classList.remove('is-menu-open');
+};
+
 if (menu && navIcon) {
-	navIcon.addEventListener('click', () => {
-		menu.style.display = 'block';
-	}, false);
+	navIcon.addEventListener('click', openMobileMenu, false);
 }
 
 if (menu && closeIcon) {
-	closeIcon.addEventListener('click', () => {
-		menu.style.display = 'none';
-	}, false);
+	closeIcon.addEventListener('click', closeMobileMenu, false);
+}
+
+if (menu) {
+	menu.querySelectorAll('a').forEach((link) => {
+		link.addEventListener('click', closeMobileMenu);
+	});
+
+	document.addEventListener('keydown', (event) => {
+		if (event.key === 'Escape' && menu.classList.contains('is-open')) {
+			closeMobileMenu();
+		}
+	});
 }
 
 if (contentDiv && contentDiv2 && choice.length > 0 && choice2.length > 0) {

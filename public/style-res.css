@@ -98,7 +98,8 @@
 		opacity: .2;
 	}
 
-	.full-screen-menu , a{
+	.full-screen-menu,
+	.full-screen-menu a {
 		z-index: 1;
 	}
 
@@ -422,5 +423,190 @@
 
 	.header-content p {
 		font-size:1.2em;
+	}
+}
+/* Redesign foundation: desktop navigation */
+@media only screen and (min-width: 1100px) {
+	.nav-container-full-screen.site-desktop-nav {
+		position: sticky;
+		top: 0;
+		z-index: 40;
+		width: 100%;
+		height: 86px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 28px;
+		padding: 0 clamp(28px, 5vw, 72px);
+		background: rgba(255, 253, 248, .96);
+		border-bottom: 1px solid var(--color-line);
+		box-shadow: 0 10px 40px rgba(31, 24, 17, .06);
+		backdrop-filter: blur(18px);
+	}
+
+	.site-desktop-nav .site-brand__icons {
+		height: 48px;
+	}
+
+	.site-desktop-nav .site-brand__emblem {
+		width: 32px;
+		height: 32px;
+	}
+
+	.site-desktop-nav .site-brand__calligraphy {
+		width: 17px;
+		height: 46px;
+	}
+
+	.site-desktop-nav .site-brand__text strong {
+		font-size: 1.08rem;
+	}
+
+	.site-desktop-nav .site-brand__text small {
+		font-size: .62rem;
+	}
+
+	.site-desktop-nav__links {
+		flex: 1;
+		display: flex;
+		justify-content: center;
+	}
+
+	.site-desktop-nav__links ul {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: clamp(14px, 2.2vw, 34px);
+		margin: 0;
+	}
+
+	.site-desktop-nav__links a,
+	.site-desktop-nav__dropdown button {
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		gap: 7px;
+		padding: 34px 0 30px;
+		border: 0;
+		background: transparent;
+		color: var(--color-ink);
+		font-family: var(--font-sans);
+		font-size: .82rem;
+		font-weight: 700;
+		letter-spacing: .01em;
+		white-space: nowrap;
+		cursor: pointer;
+	}
+
+	.site-desktop-nav__links a::after,
+	.site-desktop-nav__dropdown button::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		bottom: 22px;
+		width: 100%;
+		height: 2px;
+		background: var(--color-accent);
+		transform: scaleX(0);
+		transform-origin: left;
+		transition: transform .2s ease;
+	}
+
+	.site-desktop-nav__links a:hover::after,
+	.site-desktop-nav__links a.is-active::after,
+	.site-desktop-nav__dropdown button:hover::after,
+	.site-desktop-nav__dropdown button.is-active::after {
+		transform: scaleX(1);
+	}
+
+	.site-desktop-nav__dropdown {
+		position: relative;
+	}
+
+	.site-desktop-nav__dropdown-menu {
+		position: absolute;
+		right: 50%;
+		top: calc(100% - 8px);
+		min-width: 250px;
+		padding: 12px;
+		border: 1px solid var(--color-line);
+		border-radius: 14px;
+		background: var(--color-paper);
+		box-shadow: var(--shadow-soft);
+		opacity: 0;
+		visibility: hidden;
+		transform: translate(50%, 8px);
+		transition: opacity .18s ease, transform .18s ease, visibility .18s ease;
+	}
+
+	.site-desktop-nav__dropdown:hover .site-desktop-nav__dropdown-menu,
+	.site-desktop-nav__dropdown:focus-within .site-desktop-nav__dropdown-menu {
+		opacity: 1;
+		visibility: visible;
+		transform: translate(50%, 0);
+	}
+
+	.site-desktop-nav__dropdown-menu a {
+		display: block;
+		padding: 11px 12px;
+		border-radius: 9px;
+		color: var(--color-muted);
+		font-size: .86rem;
+		font-weight: 700;
+	}
+
+	.site-desktop-nav__dropdown-menu a::after {
+		display: none;
+	}
+
+	.site-desktop-nav__dropdown-menu a:hover {
+		background: var(--color-ivory);
+		color: var(--color-ink);
+	}
+
+	.site-nav-cta {
+		padding: 14px 22px;
+		font-size: .82rem;
+		white-space: nowrap;
+	}
+
+	.header-container {
+		height: calc(100vh - 86px);
+		min-height: 620px;
+		background-position-x: 50%;
+	}
+}
+
+@media only screen and (max-width: 1240px) and (min-width: 1100px) {
+	.nav-container-full-screen.site-desktop-nav {
+		gap: 18px;
+		padding: 0 24px;
+	}
+
+	.site-desktop-nav .site-brand__text strong {
+		font-size: .82rem;
+	}
+
+	.site-desktop-nav__links ul {
+		gap: 16px;
+	}
+
+	.site-desktop-nav__links a,
+	.site-desktop-nav__dropdown button {
+		font-size: .74rem;
+	}
+
+	.site-nav-cta {
+		padding: 12px 16px;
+	}
+}
+
+@media only screen and (max-width: 1099px) {
+	.nav-container.site-mobile-nav {
+		display: flex;
+	}
+
+	.nav-container-full-screen.site-desktop-nav {
+		display: none;
 	}
 }

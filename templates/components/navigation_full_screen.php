@@ -1,93 +1,64 @@
-<div class="nav-container-full-screen" style="<?php if ($params['page'] !== 'start') {
-																								echo ("position: static; background: #171D29;");
-																							} ?>">
-	<div class="black" style="<?php if ($params['page'] !== 'start') {
-															echo ("display: none");
-														} ?>"></div>
-	<div class="nav" style="<?php if ($params['page'] === 'start') {
-														echo "border:none";
-													} ?>">
-		<a href="/">
-			<div class="logo">
-				<img src="/public/images/logo1.png" alt="logo">
-				<span>
-					<p style="font-size:1.1em;  color:#fff">Karate</p>
-					<p style="font-size:1.1em;  color:#CC0000;">Kyokushin</p>
-					<p style="font-size:.9em;  color:#fff">Wejherowo / Reda</p>
-				</span>
-			</div>
-		</a>
-		<div class="full-screen-menu">
-			<ul>
-				<a href="/">
-					<li>
-						<i class="fa-solid fa-house"></i>
-						<p>start</p>
-					</li>
-				</a>
-				<a href="/skladki">
-					<li>
-						<i class="fa-solid fa-money-check-dollar"></i>
-						<p>Składki</p>
-					</li>
-				</a>
-				<a href="/grafik">
-					<li>
-						<i class="fa-regular fa-calendar"></i>
-						<p>grafik</p>
-					</li>
-				</a>
-				<a href="/zapisy">
-					<li>
-						<i class="fa-solid fa-plus"></i>
-						<p>zapisy</p>
-					</li>
-				</a>
-				<a href="/kontakt">
-					<li>
-						<i class="fa-regular fa-address-book"></i>
-						<p>kontakt</p>
-					</li>
-				</a>
-				<a href="/aktualnosci">
-					<li>
-						<i class="fa-solid fa-info"></i>
-						<p>aktualności</p>
-					</li>
-				</a>
-				<a href="/galeria">
-					<li>
-						<i class="fa-regular fa-images"></i>
-						<p>galleria</p>
-					</li>
-				</a>
-				<a href="/obozy">
-					<li>
-						<i class="fa-solid fa-campground"></i>
-						<p>obozy</p>
-					</li>
-				</a>
-				<li class="onmouse">
-					<i class="fa-regular fa-hand-back-fist"></i>
-					<p>karate <i class="fa-solid fa-caret-down"></i> </p>
-					<div class="dropdown">
-						<ul>
-							<a href="/oyama">
-								<li>Matsutatsu Oyama</li>
-							</a>
-							<a href="/dojo-oath">
-								<li>przysiega dojo</li>
-							</a>
-							<a href="/wymagania-egzaminacyjne">
-								<li>wymagania egzaminacyjne</li>
-							</a>
-							<a href="/status">
-								<li>regulamin</li>
-							</a>
-						</ul>
-					</div>
-				</li>
-			</ul>
-		</div>
-	</div>
+<?php
+$currentPage = $params['page'] ?? 'start';
+
+$mainNavItems = [
+    'start' => ['label' => 'Strona główna', 'href' => '/'],
+    'news' => ['label' => 'Aktualności', 'href' => '/aktualnosci'],
+    'timetable' => ['label' => 'Grafik zajęć', 'href' => '/grafik'],
+    'gallery' => ['label' => 'Galeria', 'href' => '/galeria'],
+    'fees-info' => ['label' => 'Składki', 'href' => '/skladki'],
+    'contact' => ['label' => 'Kontakt', 'href' => '/kontakt'],
+];
+
+$karatePages = ['oyama', 'dojo-oath', 'requirements', 'statute'];
+?>
+
+<div class="nav-container-full-screen site-desktop-nav">
+    <a class="site-brand" href="/" aria-label="Strona główna Karate Kyokushin Wejherowo / Reda">
+        <span class="site-brand__icons" aria-hidden="true">
+            <img class="site-brand__emblem" src="/public/images/logo.png" alt="">
+            <img class="site-brand__calligraphy" src="/public/images/logo.gif" alt="">
+        </span>
+        <span class="site-brand__text">
+            <strong>
+                <span>Karate</span>
+                <span>Kyokushin</span>
+            </strong>
+            <small>Wejherowo / Reda</small>
+        </span>
+    </a>
+
+    <nav class="site-desktop-nav__links" aria-label="Główna nawigacja">
+        <ul>
+            <?php foreach ($mainNavItems as $page => $item): ?>
+                <li>
+                    <a
+                        class="<?= $currentPage === $page ? 'is-active' : '' ?>"
+                        href="<?= e($item['href']) ?>"
+                    >
+                        <?= e($item['label']) ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+
+            <li class="site-desktop-nav__dropdown">
+                <button
+                    class="<?= in_array($currentPage, $karatePages, true) ? 'is-active' : '' ?>"
+                    type="button"
+                >
+                    Karate <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                </button>
+                <div class="site-desktop-nav__dropdown-menu">
+                    <a href="/oyama">Matsutatsu Oyama</a>
+                    <a href="/dojo-oath">Przysięga Dojo</a>
+                    <a href="/wymagania-egzaminacyjne">Wymagania egzaminacyjne</a>
+                    <a href="/status">Regulamin</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <a class="site-nav-cta" href="/zapisy">
+        Zapisz się <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+    </a>
 </div>

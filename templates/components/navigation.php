@@ -1,20 +1,21 @@
-<div style="<?php if($params['page'] !== 'start'){echo 'background: #171D29;';} ?>">
-	<div class="nav-container margin-auto <?php if($params['page'] !== 'start'){echo 'border-bottom-for-nav';} ?>">
-		<a href="/">
-			<div class="logo">
-                <img src="/public/images/<?php if($params['page'] !== 'start'){echo 'logo1.png';}else {echo 'logo.gif';} ?>" alt="logo">				<span>
-					<p style="font-size:.9em;  <?php if($params['page'] !== 'start'){echo 'color: #fff;';}else {echo 'color:#111;';} ?>">Karate</p>
-					<p style="font-size:.9em; color:#CC0000;">Kyokushin</p>
-					<p style="font-size:.9em; <?php if($params['page'] !== 'start'){echo 'color: #fff;';}else {echo 'color:#111;';} ?>">Wejherowo/Reda</p>
-				</span>
-			</div>
-		</a>
-		<div class="flex-item-center">
-			<div  style="cursor: pointer;" class="nav-bar-icon">
-				<p style="<?php if($params['page'] !== 'start') echo 'background: #fff'; ?>"></p>
-				<p style="<?php if($params['page'] !== 'start') echo 'background: #fff'; ?>"></p>
-				<p style="<?php if($params['page'] !== 'start') echo 'background: #fff'; ?>"></p>
-			</div>
-		</div>
-	</div>
+<div class="nav-container site-mobile-nav">
+    <a class="site-brand" href="/" aria-label="Strona główna Karate Kyokushin Wejherowo / Reda">
+        <span class="site-brand__icons" aria-hidden="true">
+            <img class="site-brand__emblem" src="/public/images/logo.png" alt="">
+            <img class="site-brand__calligraphy" src="/public/images/logo.gif" alt="">
+        </span>
+        <span class="site-brand__text">
+            <strong>
+                <span>Karate</span>
+                <span>Kyokushin</span>
+            </strong>
+            <small>Wejherowo / Reda</small>
+        </span>
+    </a>
+
+    <button class="nav-bar-icon" type="button" aria-label="Otwórz menu" aria-controls="mobile-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
 </div>

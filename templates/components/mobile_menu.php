@@ -1,57 +1,40 @@
-<div class="menu">
-	<div class="nav-container margin-auto border-bottom-for-nav">
-		<a href="/">
-			<div class="logo">
-				<img src="/public/images/logo1.png" alt="logo">
-				<span>
-					<p style="font-size:.9em;  color:#fff;">Karate</p>
-					<p style="font-size:.9em;  color:#CC0000;">Kyokushin</p>
-					<p style="font-size:.9em; color:#fff">Wejherowo / Reda</p>
-				</span>
-			</div>
-		</a>
-		<div class="flex-item-center">
-			<i id="times-icon" style="color:white; font-size:2em; margin-right: 10px;  cursor:pointer;" class="fa-solid fa-xmark"></i>
-		</div>
-	</div>
-	<ul>
-		<a href="/">
-			<li>
-				Strona Główna
-			</li>
-		</a>
-		<a href="/skladki">
-			<li>Składki</li>
-		</a>
-		<a href="/grafik">
-			<li>Grafik</li>
-		</a>
-		<a href="/zapisy">
-			<li>Zapisy</li>
-		</a>
-		<a href="/kontakt">
-			<li>Kontakt</li>
-		</a>
-		<a href="/aktualnosci">
-			<li>Aktualności</li>
-		</a>
-		<a href="/galeria">
-			<li>Galeria</li>
-		</a>
-		<a href="/obozy">
-			<li>Obozy</li>
-		</a>
-		<a href="/oyama">
-			<li>Matsutatsu Oyama</li>
-		</a>
-		<a href="/dojo-oath">
-			<li>Przysięga Dojo</li>
-		</a>
-		<a href="/wymagania-egzaminacyjne">
-			<li>Wymagania Egzaminacyjne</li>
-		</a>
-		<a href="/status">
-			<li>Regulamin</li>
-		</a>
-	</ul>
+<div class="menu mobile-menu" id="mobile-menu" aria-hidden="true">
+    <div class="mobile-menu__top">
+        <a class="site-brand" href="/" aria-label="Strona główna Karate Kyokushin Wejherowo / Reda">
+            <span class="site-brand__icons" aria-hidden="true">
+                <img class="site-brand__emblem" src="/public/images/logo.png" alt="">
+                <img class="site-brand__calligraphy" src="/public/images/logo.gif" alt="">
+            </span>
+            <span class="site-brand__text">
+                <strong>
+                    <span>Karate</span>
+                    <span>Kyokushin</span>
+                </strong>
+                <small>Wejherowo / Reda</small>
+            </span>
+        </a>
+
+        <button id="times-icon" class="mobile-menu__close" type="button" aria-label="Zamknij menu">
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <nav class="mobile-menu__nav" aria-label="Menu mobilne">
+        <ul>
+            <li><a href="/">Strona główna</a></li>
+            <li><a href="/aktualnosci">Aktualności</a></li>
+            <li><a href="/grafik">Grafik zajęć</a></li>
+            <li><a href="/galeria">Galeria</a></li>
+            <li><a href="/skladki">Składki</a></li>
+            <li><a href="/zapisy">Zapisy</a></li>
+            <li><a href="/kontakt">Kontakt</a></li>
+            <li><a href="/obozy">Obozy</a></li>
+            <li><a href="/oyama">Matsutatsu Oyama</a></li>
+            <li><a href="/dojo-oath">Przysięga Dojo</a></li>
+            <li><a href="/wymagania-egzaminacyjne">Wymagania egzaminacyjne</a></li>
+            <li><a href="/status">Regulamin</a></li>
+        </ul>
+    </nav>
+
+    <a class="mobile-menu__cta" href="/zapisy">Zapisz się na trening</a>
 </div>
