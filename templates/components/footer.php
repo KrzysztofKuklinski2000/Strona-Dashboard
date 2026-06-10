@@ -1,74 +1,116 @@
-<footer>
-    <div class="footer-header margin-auto">
-        <h2>Karate Kyokushin</h2>
-        <p>Wejherowo / Reda</p>
-    </div>
+<section id="newsletter" class="site-newsletter" aria-labelledby="newsletter-title">
+	<div class="site-newsletter__inner">
+		<div class="site-newsletter__intro">
+			<span class="site-newsletter__icon" aria-hidden="true">
+				<i class="fa-regular fa-envelope"></i>
+			</span>
 
-    <div class="footer-container">
-        <div class="footer-content-wrapper">
-            
-            <div class="newsletter-box">
-                <div class="newsletter-title">
-                    <h3>Powiadomienia o grafiku</h3>
-                    <p></p>
-                </div>
-                <p class="newsletter-desc">Zapisz się, aby otrzymywać aktualizacje grafiku.</p>
-                <form action="/subscribe" method="POST" class="newsletter-form">
-                    <input type="hidden" name="csrf_token" value="<?= $params['csrf_token'] ?? '' ?>">
-                    <div class="input-container">
-                        <div class="input-group">
-                            <i class="fa-regular fa-envelope"></i>
-                            <input type="email" name="email" required placeholder="Twój adres email">
-                        </div>
-                        <button type="submit">Zapisz się <i class="fa-solid fa-paper-plane"></i></button>
-                    </div>
+			<div>
+				<p class="site-newsletter__eyebrow">Bądź na bieżąco</p>
+				<h2 id="newsletter-title">Zapisz się do newslettera</h2>
+				<p>
+					Otrzymuj informacje o zmianach w grafiku, wydarzeniach klubowych i ważnych
+					komunikatach dla trenujących.
+				</p>
+			</div>
+		</div>
 
-                    <div class="consent-wrapper">
-                        <label class="consent-label">
-                            <input type="checkbox" name="terms_consent" required>
-                            <span>Wyrażam zgodę na przetwarzanie mojego adresu e-mail w celu otrzymywania powiadomień o aktualizacjach grafiku.</span>
-                        </label>
-                    </div>
-                </form>
-            </div>
+		<form action="/subscribe" method="POST" class="site-newsletter__form">
+			<input type="hidden" name="csrf_token" value="<?= e($params['csrf_token'] ?? '') ?>">
 
-            <div class="footer-nav">
-                <h3>Zajecia</h3>
-                <p></p>
-                <ul>
-                    <a href="/zapisy"><li>Zapisy</li></a>
-                    <a href="/grafik"><li>Grafik</li></a>
-                    <a href="/skladki#price"><li>Cennik</li></a>
-                    <a href="/wymagania-egzaminacyjne"><li>Wymagania Egzaminacyjne</li></a>
-                </ul>
-            </div>
+			<div class="site-newsletter__field">
+				<label class="visually-hidden" for="newsletter-email">Adres e-mail</label>
+				<input id="newsletter-email" type="email" name="email" required maxlength="100" placeholder="Twój adres e-mail">
+				<button type="submit">
+					Zapisz się
+					<i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+				</button>
+			</div>
 
-            <div class="footer-nav">
-                <h3>Dlaczego karate</h3>
-                <p></p>
-                <ul>
-                    <a href="/oyama"><li>Matsutatsu Oyama</li></a>
-                    <a href="/dojo-oath"><li>Przysięga Dojo</li></a>
-                    <a href="/status"><li>Regulamin</li></a>
-                    <a href="/aktualnosci"><li>Aktualności</li></a>
-                </ul>
-            </div>
+			<label class="site-newsletter__consent">
+				<input type="checkbox" name="terms_consent" required>
+				<span>Wyrażam zgodę na otrzymywanie powiadomień o aktualizacjach grafiku.</span>
+			</label>
+		</form>
 
-            <div class="footer-nav">
-                <h3>Kontakt</h3>
-                <p></p>
-                <ul class="contact">
-                    <li>Klub Karate Kyokushin i Sportów Walki</li>
-                    <li><i class="fa-solid fa-map-pin"></i> <?= e($params['contact']->address ?? '') ?></li>
-                    <li><i class="fa-solid fa-mobile-screen-button"></i> <?= e($params['contact']->phone ?? '') ?></li>
-                    <li><i class="fa-regular fa-envelope"></i> <?= e($params['contact']->email ?? '') ?></li>
-                </ul>
-            </div>
+		<img class="site-newsletter__decor" src="/public/images/decor-bamboo.png" alt="" aria-hidden="true">
+	</div>
+</section>
 
-        </div>
-    </div>
+<div id="site-footer" class="site-footer-main">
+	<div class="site-footer-main__inner">
+		<div class="site-footer-brand">
+			<a class="site-brand site-brand--footer" href="/" aria-label="Strona główna Karate Kyokushin Wejherowo / Reda">
+				<span class="site-brand__icons" aria-hidden="true">
+					<img class="site-brand__emblem" src="/public/images/logo.png" alt="">
+					<img class="site-brand__calligraphy" src="/public/images/logo.gif" alt="">
+				</span>
+				<span class="site-brand__text">
+					<strong>
+						<span>Karate</span>
+						<span>Kyokushin</span>
+					</strong>
+					<small>Wejherowo / Reda</small>
+				</span>
+			</a>
 
-    <div class="copy">
-        <p>2021 Klub Karate Kyokushin i Sportów Walki, Wejherowo wszelkie prawa zastrzeżone.</p>
-    </div>
-</footer>
+			<p>
+				Tradycyjne karate, które aktualizuje ciało, charakter i sposób działania.
+			</p>
+		</div>
+
+		<nav class="site-footer-nav" aria-label="Nawigacja w stopce">
+			<div>
+				<h3>Nawigacja</h3>
+				<ul>
+					<li><a href="/">Strona główna</a></li>
+					<li><a href="/aktualnosci">Aktualności</a></li>
+					<li><a href="/grafik">Grafik zajęć</a></li>
+					<li><a href="/galeria">Galeria</a></li>
+					<li><a href="/kontakt">Kontakt</a></li>
+				</ul>
+			</div>
+
+			<div>
+				<h3>Karate</h3>
+				<ul>
+					<li><a href="/zapisy">Zapisy</a></li>
+					<li><a href="/skladki">Składki</a></li>
+					<li><a href="/wymagania-egzaminacyjne">Wymagania egzaminacyjne</a></li>
+					<li><a href="/dojo-oath">Przysięga dojo</a></li>
+					<li><a href="/status">Regulamin</a></li>
+				</ul>
+			</div>
+
+			<div>
+				<h3>Kontakt</h3>
+				<ul class="site-footer-contact">
+					<li>
+						<i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+						<span><?= e($params['contact']->address ?? 'Wejherowo / Reda') ?></span>
+					</li>
+					<li>
+						<i class="fa-solid fa-phone" aria-hidden="true"></i>
+						<a href="tel:<?= e(preg_replace('/\s+/', '', $params['contact']->phone ?? '')) ?>">
+							<?= e($params['contact']->phone ?? '') ?>
+						</a>
+					</li>
+					<li>
+						<i class="fa-regular fa-envelope" aria-hidden="true"></i>
+						<a href="mailto:<?= e($params['contact']->email ?? '') ?>">
+							<?= e($params['contact']->email ?? '') ?>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+
+	<div class="site-footer-bottom">
+		<p>&copy; <?= date('Y') ?> Klub Karate Kyokushin Wejherowo / Reda. Wszelkie prawa zastrzeżone.</p>
+		<div>
+			<a href="/status">Regulamin</a>
+			<a href="/kontakt">Kontakt</a>
+		</div>
+	</div>
+</div>
