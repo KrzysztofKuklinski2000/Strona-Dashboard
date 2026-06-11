@@ -52,24 +52,30 @@ $importantPosts = array_values(array_filter(
     </section>
 <?php endif ?>
 
-<div class="padding-top">
-    <?php if($first): ?>
-        <div class="post-free">
-            <div class="post">
-                <div class="left-side-post">
-                    <?php 
-                        $text = $first->title;
-                        require('templates/components/post_header.php'); 
-                    ?>
-                </div>
-                <div class="post-content flex-item-center">
-                    <span>zajęcia za darmo</span>
-                    <p><?= e_br($first->description) ?></p><br/>
-                    <a class="text-uppercase" href="/zapisy">Zapisz się</a>
-                </div>
+<?php if($first): ?>
+    <section class="first-class-section" aria-labelledby="first-class-title">
+        <div class="first-class-section__inner">
+            <div class="first-class-section__icon" aria-hidden="true">
+                <i class="fa-solid fa-gift"></i>
             </div>
+
+            <div class="first-class-section__content">
+                <h2 id="first-class-title"><?= e($first->title ?? 'Pierwsze zajęcia są bezpłatne') ?></h2>
+
+                <?php if (!empty($first->description)): ?>
+                    <p><?= e_br($first->description) ?></p>
+                <?php endif ?>
+            </div>
+
+            <a class="first-class-section__cta" href="/zapisy">
+                Umów się na trening próbny
+                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </a>
         </div>
-    <?php endif ?>
+    </section>
+<?php endif ?>
+
+<div class="padding-top">
         <?php foreach($params['content'][0] ?? [] as  $content): ?>
             <?php if($content->status): ?>
                 <?php $class = $content->id % 2 === 0 ? "dark-post" : 'light-post'  ?>
