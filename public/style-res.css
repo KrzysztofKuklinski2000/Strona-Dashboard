@@ -673,6 +673,11 @@
 
 /* Redesign foundation: newsletter and footer */
 @media only screen and (min-width: 640px) {
+	.important-card {
+		flex-basis: min(72%, 520px);
+		padding: 24px;
+	}
+
 	.site-newsletter__intro {
 		grid-template-columns: auto minmax(0, 1fr);
 		align-items: center;
@@ -700,6 +705,33 @@
 }
 
 @media only screen and (min-width: 900px) {
+	.important-section__inner {
+		padding-top: 54px;
+		padding-bottom: 58px;
+	}
+
+	.important-section__heading {
+		max-width: 720px;
+		margin-bottom: 24px;
+	}
+
+	.important-info {
+		gap: 18px;
+	}
+
+	.important-card {
+		flex-basis: clamp(380px, calc((100% - 48px) / 2.35), 520px);
+		min-height: 198px;
+		grid-template-columns: 64px minmax(0, 1fr);
+		gap: 18px;
+		padding: 28px;
+	}
+
+	.important-card__icon {
+		width: 58px;
+		height: 58px;
+	}
+
 	.site-newsletter__inner {
 		grid-template-columns: minmax(0, .95fr) minmax(360px, .85fr);
 		align-items: center;
