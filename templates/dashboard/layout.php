@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/templates/dashboard/public/style.css">
+    <link rel="stylesheet" href="/public/dashboard/style.css">
     <script src="https://kit.fontawesome.com/062ebc24f8.js" crossorigin="anonymous"></script>
     <title>Panel Administracyjny - Karate Kyokushin</title>
 </head>
@@ -89,7 +89,7 @@
 </div>
 </body>
 <?php if (isset($params['flash_dashboard']) && in_array($params['flash_dashboard']['type'], ['success', 'info', 'warning'])): ?>
-    <script src="/templates/dashboard/public/main.js"></script>
+    <script src="/public/dashboard/main.js"></script>
 <?php endif; ?>
 
 </html>
