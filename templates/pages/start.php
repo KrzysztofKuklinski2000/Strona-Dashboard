@@ -1,9 +1,34 @@
 <?php
 $first = $params['content'][2] ?? null;
+$homePosts = array_values(array_filter(
+    $params['content'][0] ?? [],
+    static fn($post): bool => (bool) ($post->status ?? false)
+));
+$legacyHomePosts = array_values(array_filter(
+    $homePosts,
+    static fn($post): bool => !preg_match('/dlaczego\s+karate/i', (string) ($post->title ?? ''))
+));
 $importantPosts = array_values(array_filter(
     $params['content'][1] ?? [],
     static fn($post): bool => (bool) ($post->status ?? false)
 ));
+$whyKarateCards = [
+    [
+        'icon' => 'fa-solid fa-child-reaching',
+        'title' => 'Siła i sprawność',
+        'description' => 'Poprawiamy kondycję, gibkość i koordynację. Budujemy zdrowe nawyki na całe życie.',
+    ],
+    [
+        'icon' => 'fa-solid fa-shield-halved',
+        'title' => 'Charakter i dyscyplina',
+        'description' => 'Uczymy szacunku, wytrwałości i odpowiedzialności - na macie i poza nią.',
+    ],
+    [
+        'icon' => 'fa-solid fa-people-group',
+        'title' => 'Społeczność',
+        'description' => 'Trenujemy razem, wspieramy się i tworzymy przyjazną atmosferę w każdym wieku.',
+    ],
+];
 ?>
 
 <?php if ($importantPosts): ?>
@@ -75,9 +100,32 @@ $importantPosts = array_values(array_filter(
     </section>
 <?php endif ?>
 
+<section class="why-karate-section" aria-labelledby="why-karate-title">
+    <div class="why-karate-section__inner">
+        <div class="why-karate-section__heading">
+            <p>Dlaczego karate?</p>
+            <h2 id="why-karate-title">Więcej niż sport</h2>
+        </div>
+
+        <div class="why-karate-grid">
+            <?php foreach ($whyKarateCards as $card): ?>
+                <article class="why-karate-card">
+                    <div class="why-karate-card__icon" aria-hidden="true">
+                        <i class="<?= e($card['icon']) ?>"></i>
+                    </div>
+
+                    <div>
+                        <h3><?= e($card['title']) ?></h3>
+                        <p><?= e($card['description']) ?></p>
+                    </div>
+                </article>
+            <?php endforeach ?>
+        </div>
+    </div>
+</section>
+
 <div class="padding-top">
-        <?php foreach($params['content'][0] ?? [] as  $content): ?>
-            <?php if($content->status): ?>
+        <?php foreach($legacyHomePosts as  $content): ?>
                 <?php $class = $content->id % 2 === 0 ? "dark-post" : 'light-post'  ?>
                 <div class="post">
                     <?php
@@ -88,7 +136,6 @@ $importantPosts = array_values(array_filter(
                         <p><?= e_br($content->description) ?></p>
                     </div>
                 </div>
-            <?php endif ?>
         <?php endforeach ?>
     </div>
 

@@ -675,6 +675,100 @@ main {
 	color: #fff;
 }
 
+.why-karate-section {
+	position: relative;
+	background: var(--color-paper);
+	border-bottom: 1px solid var(--color-line);
+}
+
+.why-karate-section__inner {
+	width: min(calc(100% - 40px), var(--container-width));
+	margin: 0 auto;
+	padding: 44px 0 52px;
+}
+
+.why-karate-section__heading {
+	max-width: 620px;
+	margin: 0 auto 28px;
+	text-align: center;
+}
+
+.why-karate-section__heading p {
+	margin-bottom: 8px;
+	color: var(--color-accent);
+	font-size: .66rem;
+	font-weight: 900;
+	letter-spacing: .18em;
+	text-transform: uppercase;
+}
+
+.why-karate-section__heading h2 {
+	margin: 0;
+	color: var(--color-ink);
+	font-size: clamp(2rem, 8vw, 3rem);
+	font-weight: 800;
+	letter-spacing: -.055em;
+	line-height: 1.05;
+}
+
+.why-karate-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 14px;
+}
+
+.why-karate-card {
+	min-width: 0;
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 16px;
+	align-items: start;
+	padding: 22px;
+	border: 1px solid var(--color-line);
+	border-radius: 2px;
+	background: rgba(255, 253, 248, .9);
+	box-shadow: 0 18px 48px rgba(31, 24, 17, .045);
+}
+
+.why-karate-card__icon {
+	width: 58px;
+	height: 58px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 999px;
+	background: #f7eeee;
+}
+
+.why-karate-card__icon i {
+	color: var(--color-accent);
+	font-size: 1.26rem;
+}
+
+.why-karate-card > div:not(.why-karate-card__icon) {
+	min-width: 0;
+}
+
+.why-karate-card h3 {
+	margin: 0;
+	color: var(--color-ink);
+	font-size: 1rem;
+	font-weight: 900;
+	letter-spacing: -.02em;
+	line-height: 1.25;
+	overflow-wrap: break-word;
+}
+
+.why-karate-card p {
+	max-width: 34ch;
+	margin-top: 8px;
+	color: var(--color-muted);
+	font-size: .86rem;
+	font-weight: 500;
+	line-height: 1.55;
+	overflow-wrap: break-word;
+}
+
 
 .post {
 	width: 100%;

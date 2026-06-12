@@ -778,6 +778,28 @@
 		padding: 0 24px;
 	}
 
+	.why-karate-section__inner {
+		padding-top: 54px;
+		padding-bottom: 60px;
+	}
+
+	.why-karate-section__heading {
+		margin-bottom: 34px;
+	}
+
+	.why-karate-grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 22px;
+	}
+
+	.why-karate-card {
+		min-height: 148px;
+		grid-template-columns: 62px minmax(0, 1fr);
+		gap: 18px;
+		align-items: center;
+		padding: 26px;
+	}
+
 	.site-newsletter__inner {
 		grid-template-columns: minmax(0, .95fr) minmax(360px, .85fr);
 		align-items: center;
