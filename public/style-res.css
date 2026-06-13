@@ -706,13 +706,13 @@
 
 @media only screen and (min-width: 900px) {
 	.important-section__inner {
-		padding-top: 54px;
-		padding-bottom: 58px;
+		padding-top: 48px;
+		padding-bottom: 52px;
 	}
 
 	.important-section__heading {
-		max-width: 720px;
-		margin-bottom: 24px;
+		max-width: 620px;
+		margin-bottom: 22px;
 	}
 
 	.important-info {
@@ -721,10 +721,10 @@
 
 	.important-card {
 		flex-basis: clamp(380px, calc((100% - 48px) / 2.35), 520px);
-		min-height: 198px;
+		min-height: 188px;
 		grid-template-columns: 64px minmax(0, 1fr);
 		gap: 18px;
-		padding: 28px;
+		padding: 26px;
 	}
 
 	.important-card__icon {
