@@ -6,12 +6,26 @@ $homePosts = array_values(array_filter(
 ));
 $legacyHomePosts = array_values(array_filter(
     $homePosts,
-    static fn($post): bool => !preg_match('/dlaczego\s+karate/i', (string) ($post->title ?? ''))
+    static fn($post): bool => !preg_match('/(dlaczego\s+karate|trening\s+rodzinny)/i', (string) ($post->title ?? ''))
 ));
 $importantPosts = array_values(array_filter(
     $params['content'][1] ?? [],
     static fn($post): bool => (bool) ($post->status ?? false)
 ));
+// TODO: Move hardcoded homepage section content to dashboard once selectable post layouts are implemented.
+// This should become a "family_training" layout with editable title, lead, checklist items, image, and CTA.
+$familyTraining = [
+    'eyebrow' => 'Trening dla każdego',
+    'title' => 'Trening rodzinny',
+    'description' => 'Karate to idealna forma aktywności dla całych rodzin. Dzieci, młodzież i dorośli - każdy znajdzie coś dla siebie.',
+    'ctaLabel' => 'Dołącz do naszej rodziny',
+    'ctaUrl' => '/zapisy',
+    'items' => [
+        'Zajęcia dopasowane do wieku i możliwości',
+        'Bezpieczne i prowadzone przez doświadczonych instruktorów',
+        'Wspólna droga rozwoju i budowania relacji',
+    ],
+];
 $whyKarateCards = [
     [
         'icon' => 'fa-solid fa-child-reaching',
@@ -120,6 +134,34 @@ $whyKarateCards = [
                     </div>
                 </article>
             <?php endforeach ?>
+        </div>
+    </div>
+</section>
+
+<section id="family-training-section" class="family-training-section" aria-labelledby="family-training-title">
+    <div class="family-training-section__inner">
+        <div class="family-training-section__media">
+            <img src="/public/images/family-training.png" alt="Rodzina podczas treningu karate">
+        </div>
+
+        <div class="family-training-section__content">
+            <p class="family-training-section__eyebrow"><?= e($familyTraining['eyebrow']) ?></p>
+            <h2 id="family-training-title"><?= e($familyTraining['title']) ?></h2>
+            <p class="family-training-section__lead"><?= e($familyTraining['description']) ?></p>
+
+            <ul class="family-training-section__list">
+                <?php foreach ($familyTraining['items'] as $item): ?>
+                    <li>
+                        <i class="fa-solid fa-check" aria-hidden="true"></i>
+                        <?= e($item) ?>
+                    </li>
+                <?php endforeach ?>
+            </ul>
+
+            <a class="family-training-section__cta" href="<?= e($familyTraining['ctaUrl']) ?>">
+                <?= e($familyTraining['ctaLabel']) ?>
+                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </a>
         </div>
     </div>
 </section>
