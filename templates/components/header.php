@@ -1,6 +1,5 @@
 <section class="hero-section" aria-labelledby="hero-title">
 	<div class="hero-section__background" aria-hidden="true"></div>
-	<img class="hero-section__symbol" src="/public/images/logo1.png" alt="" aria-hidden="true">
 
 	<div class="hero-section__content">
 		<p class="hero-section__eyebrow">Dyscyplina &middot; Szacunek &middot; Siła</p>

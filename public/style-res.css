@@ -1,4 +1,9 @@
 @media only screen and (max-width: 639px) {
+	.hero-section__background::before,
+	.hero-section__background::after {
+		left: 0;
+	}
+
 	.hero-section__lead,
 	.hero-section__actions {
 		max-width: 330px;
@@ -18,12 +23,12 @@
 
 @media only screen and (max-width: 479px) {
 	.hero-section {
-		min-height: 520px;
+		min-height: 600px;
 	}
 
 	.hero-section__content {
-		padding-top: 64px;
-		padding-bottom: 64px;
+		padding-top: 82px;
+		padding-bottom: 104px;
 	}
 
 	.hero-section__title {
@@ -105,21 +110,21 @@
 	}
 
 	.hero-section {
-		min-height: 540px;
+		min-height: 640px;
 	}
 
 	.hero-section__background::after {
-		display: block;
+		display: none;
 		background-size: auto clamp(740px, 56vw, 900px);
 	}
 
 	.hero-section__content {
-		padding-top: clamp(82px, 9vw, 112px);
-		padding-bottom: clamp(82px, 9vw, 112px);
+		padding-top: clamp(102px, 9vw, 132px);
+		padding-bottom: clamp(118px, 10vw, 152px);
 	}
 
 	.hero-section__title {
-		font-size: clamp(2.8rem, 4.2vw, 3.35rem);
+		font-size: clamp(2.35rem, 3.25vw, 2.85rem);
 	}
 
 	.hero-section__mobile-break {
@@ -380,16 +385,16 @@
 
 @media only screen and (min-width: 1024px) {
 	.hero-section {
-		min-height: 560px;
+		min-height: 680px;
 	}
 
 	.hero-section__content {
 		max-width: 620px;
-		padding: clamp(92px, 8vw, 118px) 0 clamp(92px, 8vw, 118px) clamp(54px, 6vw, 92px);
+		padding: clamp(118px, 8vw, 148px) 0 clamp(138px, 9vw, 168px) clamp(54px, 6vw, 92px);
 	}
 
 	.hero-section__title {
-		font-size: clamp(3rem, 3.8vw, 3.55rem);
+		font-size: clamp(2.45rem, 3vw, 2.95rem);
 	}
 
 	.hero-section__lead {
@@ -633,7 +638,7 @@
 	}
 
 	.hero-section {
-		min-height: 540px;
+		min-height: 680px;
 	}
 }
 
@@ -736,7 +741,7 @@
 		inset: 0 0 0 auto;
 		width: 68%;
 		height: 100%;
-		background-position: center right;
+		background-position: right center;
 	}
 
 	.first-class-section::after {
