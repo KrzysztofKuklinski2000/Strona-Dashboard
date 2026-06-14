@@ -416,16 +416,25 @@ main {
 	scrollbar-width: none;
 }
 
+.important-info::before,
 .important-info::after {
 	content: '';
 	position: sticky;
-	right: 0;
 	z-index: 2;
-	flex: 0 0 72px;
-	width: 72px;
-	margin-left: -72px;
-	background: linear-gradient(90deg, rgba(255, 255, 255, 0), #fff 78%);
+	flex: 0 0 56px;
+	width: 56px;
 	pointer-events: none;
+}
+
+.important-info::before {
+	left: 0;
+	order: -1;
+	background: linear-gradient(90deg, #fff 22%, rgba(255, 255, 255, 0));
+}
+
+.important-info::after {
+	right: 0;
+	background: linear-gradient(90deg, rgba(255, 255, 255, 0), #fff 78%);
 }
 
 .important-info::-webkit-scrollbar {
