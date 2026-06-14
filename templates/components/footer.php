@@ -7,7 +7,7 @@
 
 			<div>
 				<p class="site-newsletter__eyebrow">Bądź na bieżąco</p>
-				<h2 id="newsletter-title">Zapisz się do newslettera</h2>
+				<h2 id="newsletter-title">Dołącz do listy informacji</h2>
 				<p>
 					Otrzymuj informacje o zmianach w grafiku, wydarzeniach klubowych i ważnych
 					komunikatach dla trenujących.

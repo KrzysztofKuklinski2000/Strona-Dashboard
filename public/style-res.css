@@ -852,8 +852,8 @@
 	.site-newsletter__inner {
 		grid-template-columns: minmax(0, .95fr) minmax(360px, .85fr);
 		align-items: center;
-		padding-top: 66px;
-		padding-bottom: 70px;
+		padding-top: 34px;
+		padding-bottom: 36px;
 	}
 
 	.site-newsletter__form {
@@ -862,10 +862,10 @@
 	}
 
 	.site-newsletter__decor {
-		right: -44px;
-		bottom: -70px;
-		width: min(32vw, 390px);
-		opacity: .34;
+		right: -72px;
+		bottom: -48px;
+		width: min(18vw, 210px);
+		opacity: .38;
 	}
 
 	.site-footer-main__inner {
@@ -877,6 +877,6 @@
 
 @media only screen and (min-width: 1180px) {
 	.site-newsletter__decor {
-		right: -18px;
+		right: -62px;
 	}
 }
