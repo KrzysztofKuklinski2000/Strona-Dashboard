@@ -364,7 +364,6 @@ main {
 .important-section {
 	position: relative;
 	background: #fff;
-	border-bottom: 1px solid var(--color-line);
 	scroll-margin-top: 96px;
 }
 
@@ -564,8 +563,7 @@ main {
 .first-class-section {
 	position: relative;
 	overflow: hidden;
-	background: #fff;
-	border-bottom: 1px solid var(--color-line);
+	background: #f9f7f4;
 }
 
 .first-class-section::before {
@@ -582,8 +580,8 @@ main {
 	position: absolute;
 	inset: 0;
 	background:
-		linear-gradient(180deg, rgba(255, 255, 255, .98) 0%, rgba(255, 255, 255, .82) 52%, rgba(255, 255, 255, .08) 100%),
-		linear-gradient(90deg, rgba(255, 255, 255, .95), rgba(255, 255, 255, .48) 60%, rgba(255, 255, 255, .04));
+		linear-gradient(180deg, rgba(249, 247, 244, .98) 0%, rgba(249, 247, 244, .82) 52%, rgba(249, 247, 244, .08) 100%),
+		linear-gradient(90deg, rgba(249, 247, 244, .96), rgba(249, 247, 244, .5) 60%, rgba(249, 247, 244, .04));
 	pointer-events: none;
 }
 

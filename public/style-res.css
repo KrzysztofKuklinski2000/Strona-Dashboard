@@ -745,7 +745,7 @@
 	}
 
 	.first-class-section::after {
-		background: linear-gradient(90deg, #fff 0%, rgba(255, 255, 255, .94) 34%, rgba(255, 255, 255, .28) 62%, rgba(255, 255, 255, .04) 100%);
+		background: linear-gradient(90deg, #f9f7f4 0%, rgba(249, 247, 244, .94) 34%, rgba(249, 247, 244, .28) 62%, rgba(249, 247, 244, .04) 100%);
 	}
 
 	.first-class-section__inner {
