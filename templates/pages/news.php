@@ -1,51 +1,79 @@
 <?php
-$numberOfRows = $params['numberOfRows'];
-$currentPage = $params['currentNumberOfPage'];
+$numberOfRows = (int) ($params['numberOfRows'] ?? 1);
+$currentPage = (int) ($params['currentNumberOfPage'] ?? 1);
+$newsPosts = array_values(array_filter(
+    $params['content'] ?? [],
+    static fn($post): bool => (bool) ($post->status ?? false)
+));
 ?>
-<div class="respons-container">
-	<div class="news-contianer">
-		<div class="line flex-item-center">
-			<div></div>
-			<p></p>
-		</div>
-		<div class="news">
-			<?php foreach ($params['content'] ?? [] as $content): ?>
-				<?php if ($content->status): ?>
-					<div class="news-box">
-						<div class="news-line"></div>
-						<div>
-							<h3><?= e($content->title) ?></h3>
+
+<section class="news-page" aria-labelledby="news-page-title">
+    <div class="news-page__inner">
+        <div class="news-page__heading">
+            <p>Aktualności</p>
+            <h2 id="news-page-title">Co nowego w klubie?</h2>
+        </div>
+
+        <?php if ($newsPosts): ?>
+            <div class="news-page__grid">
+                <?php foreach ($newsPosts as $index => $content): ?>
+                    <?php
+                    $createdTimestamp = strtotime($content->created ?? '');
+                    $createdDate = $createdTimestamp ? date('d.m.Y', $createdTimestamp) : '';
+                    $createdDateTime = $createdTimestamp ? date('Y-m-d', $createdTimestamp) : '';
+                    $imageName = $content->imageName ?? $content->image_name ?? null;
+                    ?>
+
+                    <article class="news-card <?= $index === 0 ? 'news-card--featured' : '' ?>">
+                        <?php if ($imageName): ?>
+                            <div class="news-card__media">
+                                <img src="/public/uploads/<?= rawurlencode((string) $imageName) ?>" alt="<?= e($content->title) ?>" loading="lazy">
+                            </div>
+                        <?php else: ?>
+                            <div class="news-card__media news-card__media--fallback" aria-hidden="true">
+                                <i class="fa-regular fa-newspaper"></i>
+                            </div>
+                        <?php endif ?>
+
+                        <div class="news-card__content">
+                            <?php if ($createdDate): ?>
+                                <time datetime="<?= e($createdDateTime) ?>"><?= e($createdDate) ?></time>
+                            <?php endif ?>
+
+                            <h3><?= e($content->title) ?></h3>
                             <p><?= e_br($content->description) ?></p>
-						</div>
-					</div>
-				<?php endif ?>
-			<?php endforeach; ?>
-		</div>
-	</div>
-	<div class="pagination">
-		<div class="pagination-box">
-			<?php if($currentPage > 1): ?>
-				<a href="/aktualnosci/<?= $currentPage - 1 ?>">
-					<i class="fa-regular fa-square-caret-left"></i>
-				</a>
-			<?php endif ?>
+                        </div>
+                    </article>
+                <?php endforeach ?>
+            </div>
+        <?php else: ?>
+            <div class="news-page__empty">
+                <i class="fa-regular fa-newspaper" aria-hidden="true"></i>
+                <h2>Brak aktualności</h2>
+                <p>Aktualne informacje klubowe pojawią się w tym miejscu po publikacji.</p>
+            </div>
+        <?php endif ?>
 
-			<?php for ($i = 1; $i <= $numberOfRows; $i++):	?>
-				<?php if ($currentPage <= 0): ?>
-					<a <?= $i === 1 ? "class=current" : "" ?> href="/aktualnosci/<?= $i ?>"><?= $i ?></a>
-				<?php elseif ($currentPage > $numberOfRows ): ?>
-					<a <?= $i == $numberOfRows  ? "class=current" : "" ?> href="/aktualnosci/<?= $i ?>"><?= $i ?></a>
-				<?php else: ?>
-					<a <?= $i === $currentPage ? "class=current" : "" ?> href="/aktualnosci/<?= $i ?>"><?= $i ?></a>
-				<?php endif; ?>
+        <?php if ($numberOfRows > 1): ?>
+            <nav class="news-pagination" aria-label="Paginacja aktualności">
+                <?php if ($currentPage > 1): ?>
+                    <a class="news-pagination__arrow" href="/aktualnosci/<?= $currentPage - 1 ?>" aria-label="Poprzednia strona">
+                        <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                    </a>
+                <?php endif ?>
 
-			<?php endfor; ?>
+                <?php for ($i = 1; $i <= $numberOfRows; $i++): ?>
+                    <a class="<?= $i === $currentPage ? 'is-active' : '' ?>" href="/aktualnosci/<?= $i ?>">
+                        <?= $i ?>
+                    </a>
+                <?php endfor ?>
 
-			<?php if($currentPage < $numberOfRows): ?>
-			<a href="/aktualnosci/<?= $currentPage + 1 ?>">
-				<i class="fa-regular fa-square-caret-right"></i>
-			</a>
-			<?php endif; ?>
-		</div>
-	</div>
-</div>
+                <?php if ($currentPage < $numberOfRows): ?>
+                    <a class="news-pagination__arrow" href="/aktualnosci/<?= $currentPage + 1 ?>" aria-label="Następna strona">
+                        <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                <?php endif ?>
+            </nav>
+        <?php endif ?>
+    </div>
+</section>
