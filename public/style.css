@@ -1051,7 +1051,7 @@ footer .copy {
 
 .subpage-header {
 	position: relative;
-	min-height: 300px;
+	min-height: 380px;
 	display: flex;
 	align-items: center;
 	overflow: hidden;
@@ -1064,21 +1064,41 @@ footer .copy {
 	position: absolute;
 	inset: 0;
 	z-index: -1;
-	background: linear-gradient(90deg, rgba(241, 241, 239, .99) 0%, rgba(241, 241, 239, .96) 34%, rgba(241, 241, 239, .68) 48%, rgba(241, 241, 239, .18) 64%, rgba(241, 241, 239, 0) 76%);
+	background:
+		linear-gradient(90deg, rgba(241, 241, 239, .98) 0%, rgba(241, 241, 239, .94) 28%, rgba(241, 241, 239, .64) 42%, rgba(241, 241, 239, .18) 55%, rgba(241, 241, 239, 0) 66%),
+		linear-gradient(90deg, transparent 45%, rgba(232, 174, 92, .2) 72%, rgba(232, 174, 92, .16) 100%);
+}
+
+.subpage-header::after {
+	content: '';
+	position: absolute;
+	left: clamp(-28px, 3vw, 64px);
+	top: 50%;
+	z-index: 0;
+	width: clamp(300px, 39vw, 560px);
+	aspect-ratio: 1;
+	background: url('/public/images/circle-decoration.png') center / contain no-repeat;
+	filter: invert(1) grayscale(1);
+	mix-blend-mode: multiply;
+	opacity: .13;
+	pointer-events: none;
+	transform: translateY(-50%) rotate(-8deg);
 }
 
 .subpage-header__background {
 	position: absolute;
 	inset: 0;
 	z-index: -2;
-	background: url('/public/images/hero-dojo.png')  right center / cover no-repeat;
-	filter: saturate(1.02) contrast(1.02);
+	background: url('/public/images/subpage-header-dojo.png') right center / cover no-repeat;
+	filter: sepia(.34) saturate(1.42) hue-rotate(-12deg) brightness(1.06) contrast(1.04);
 }
 
 .subpage-header__inner {
+	position: relative;
+	z-index: 1;
 	width: min(calc(100% - 40px), var(--container-width));
 	margin: 0 auto;
-	padding: 68px 0 72px;
+	padding: 92px 0 96px;
 }
 
 .subpage-header__eyebrow {
