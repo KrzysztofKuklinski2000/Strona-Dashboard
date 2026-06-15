@@ -66,8 +66,13 @@
 }
 
 @media only screen and (min-width: 768px) {
-	.subpage-header h1 {
-		font-size: 2em;
+	.subpage-header {
+		min-height: 340px;
+	}
+
+	.subpage-header__inner {
+		padding-top: 84px;
+		padding-bottom: 88px;
 	}
 
 	.timetable-box {
