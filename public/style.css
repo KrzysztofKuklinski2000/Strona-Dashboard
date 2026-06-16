@@ -1481,103 +1481,286 @@ footer .copy {
 	margin-top:10px;
 }
 
-.timetable-box {
-	width:100%;
-	display: flex;
-	background-color: #171D29;
-	border-radius: 5px;
+.timetable-page {
+	background: #fff;
 }
 
-.timetable-contianer {
-	display: flex;
-	justify-content: center;
-	margin-top: 30px;
+.timetable-page__inner {
+	width: min(calc(100% - 40px), var(--container-width));
+	margin: 0 auto;
+	padding: 62px 0 82px;
+	overflow: hidden;
 }
 
-.timetable-day-header {
-	width: 100%;
-	text-align: center;
-	font-weight: 700;
-	font-size: .8em;
-	padding:10px 0px;
-	color:#171D29;
+.timetable-intro {
+	max-width: 680px;
+	margin-bottom: 34px;
 }
 
-.timetable-line {
-	max-width:100px;
-	height:1px;
-	background:#BDBDBD;
-	position: relative;
-	top:30px;
-	left:-10px;
-	padding: 0px 5px;
-}
-
-.timetable-box .box-content {
-	padding:10px;
-	display: flex;
-	flex-direction: column;
-	gap:5px;
-	width: 100%;
-}
-
-
-.timetable-box .box-content a {
-	font-size: .7em;
-	color:#FF3366;
-	font-weight: 400;
-	text-transform: capitalize;
-}
-
-.timetable-box .box-content h3 {
-	margin:0px;
-	padding:5px 0px;
-	color:#fff;
+.timetable-intro p,
+.timetable-section-heading p {
+	margin-bottom: 8px;
+	color: var(--color-accent);
+	font-size: .62rem;
+	font-weight: 900;
+	letter-spacing: .2em;
 	text-transform: uppercase;
-	font-size:.9em;
 }
 
-.timetable-box .box-content div {
-	width:100%;
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	box-shadow: 0px 0px 30px black;
-	border-radius: 5px;
-	margin-bottom: 5px;
+.timetable-intro h2,
+.timetable-section-heading h2 {
+	margin: 0;
+	color: var(--color-ink);
+	font-size: clamp(1.85rem, 5vw, 2.75rem);
+	font-weight: 800;
+	letter-spacing: -.045em;
+	line-height: 1.05;
 }
 
-.timetable-box .box-content i {
-	color:#FF3366;
-}
-
-.timetable-box .box-content p {
-	color:#fff;
-	font-size: .8em;
-}
-
-.addresses {
-	display: flex;
-	flex-direction: column;
-	gap: 15px;
-}
-
-.addresses span {
-	min-width: 10px;
-	height:10px;
-	background:#FF3366;
-	border-radius: 100%;
+.timetable-intro span {
 	display: block;
+	max-width: 560px;
+	margin-top: 14px;
+	color: var(--color-muted);
+	font-size: .95rem;
+	font-weight: 500;
+	line-height: 1.7;
 }
 
-.addresses div {
-	gap:10px;
+.timetable-board {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 18px;
 }
 
-.addresses a {
-	text-decoration: underline;
-	font-style: italic;
-	color:#4F4F4F;
+.timetable-day {
+	position: relative;
+	min-width: 0;
+	padding: 22px;
+	border: 1px solid var(--color-line);
+	background:
+		linear-gradient(180deg, rgba(250, 247, 244, .72), rgba(255, 255, 255, 0) 128px),
+		#fff;
+	overflow: hidden;
+}
+
+.timetable-day::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 3px;
+	height: 100%;
+	background: var(--color-accent);
+	opacity: .9;
+}
+
+.timetable-day__header {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 18px;
+	margin-bottom: 20px;
+}
+
+.timetable-day__header span {
+	display: block;
+	margin-bottom: 7px;
+	color: var(--color-accent);
+	font-size: .58rem;
+	font-weight: 900;
+	letter-spacing: .18em;
+	text-transform: uppercase;
+}
+
+.timetable-day__header h3 {
+	margin: 0;
+	color: var(--color-ink);
+	font-size: clamp(1.35rem, 5vw, 1.8rem);
+	font-weight: 800;
+	letter-spacing: -.04em;
+	line-height: 1;
+}
+
+.timetable-day__header strong {
+	width: 42px;
+	height: 42px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	background: #f7f1f0;
+	color: var(--color-accent);
+	font-size: .95rem;
+	font-weight: 900;
+}
+
+.timetable-day__sessions {
+	display: grid;
+	gap: 12px;
+}
+
+.timetable-session {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: 16px;
+	padding: 16px;
+	border: 1px solid var(--color-line);
+	background: rgba(255, 255, 255, .88);
+}
+
+.timetable-session time {
+	min-width: 92px;
+	padding-top: 2px;
+	color: var(--color-accent);
+	font-size: .78rem;
+	font-weight: 900;
+	line-height: 1.4;
+}
+
+.timetable-session__body {
+	min-width: 0;
+}
+
+.timetable-session__body h4 {
+	margin: 0;
+	color: var(--color-ink);
+	font-size: 1rem;
+	font-weight: 800;
+	line-height: 1.3;
+	overflow-wrap: break-word;
+}
+
+.timetable-session__body p {
+	display: flex;
+	gap: 7px;
+	align-items: center;
+	margin-top: 8px;
+	color: var(--color-muted);
+	font-size: .84rem;
+	font-weight: 700;
+	line-height: 1.45;
+}
+
+.timetable-session__body i {
+	color: var(--color-accent);
+	font-size: .78rem;
+}
+
+.timetable-session__body span {
+	display: block;
+	margin-top: 5px;
+	color: var(--color-muted);
+	font-size: .8rem;
+	font-weight: 500;
+	line-height: 1.55;
+	overflow-wrap: break-word;
+}
+
+.timetable-support {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 22px;
+	margin-top: 36px;
+}
+
+.timetable-places,
+.timetable-notes {
+	padding: 24px;
+	border: 1px solid var(--color-line);
+	background: #fff;
+}
+
+.timetable-section-heading {
+	margin-bottom: 20px;
+}
+
+.timetable-section-heading h2 {
+	font-size: clamp(1.4rem, 4vw, 2rem);
+}
+
+.timetable-places__grid,
+.timetable-notes__grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 14px;
+}
+
+.timetable-place,
+.timetable-note {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: 14px;
+	align-items: start;
+	padding-top: 14px;
+	border-top: 1px solid var(--color-line);
+}
+
+.timetable-place:first-child,
+.timetable-note:first-child {
+	padding-top: 0;
+	border-top: 0;
+}
+
+.timetable-place > span,
+.timetable-note i {
+	width: 42px;
+	height: 42px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	background: #f7f1f0;
+	color: var(--color-accent);
+	font-size: .95rem;
+}
+
+.timetable-place h3,
+.timetable-note h3 {
+	margin: 0;
+	color: var(--color-ink);
+	font-size: .98rem;
+	font-weight: 800;
+}
+
+.timetable-place p,
+.timetable-note p {
+	margin-top: 6px;
+	color: var(--color-muted);
+	font-size: .84rem;
+	font-weight: 500;
+	line-height: 1.55;
+	overflow-wrap: break-word;
+}
+
+.timetable-place small {
+	display: block;
+	margin-top: 8px;
+	color: var(--color-accent);
+	font-size: .72rem;
+	font-weight: 800;
+	text-transform: uppercase;
+	letter-spacing: .08em;
+}
+
+.timetable-empty {
+	display: grid;
+	place-items: center;
+	gap: 12px;
+	padding: 56px 20px;
+	border: 1px solid var(--color-line);
+	background: #fff;
+	text-align: center;
+}
+
+.timetable-empty i {
+	color: var(--color-accent);
+	font-size: 2rem;
+}
+
+.timetable-empty h2,
+.timetable-empty p {
+	margin: 0;
 }
 
 
