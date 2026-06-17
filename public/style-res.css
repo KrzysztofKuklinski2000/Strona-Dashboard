@@ -910,8 +910,7 @@
 	.site-newsletter__inner {
 		grid-template-columns: minmax(0, .95fr) minmax(360px, .85fr);
 		align-items: center;
-		padding-top: 34px;
-		padding-bottom: 36px;
+		padding: 36px 44px 38px;
 	}
 
 	.site-newsletter__form {
