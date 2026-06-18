@@ -363,6 +363,30 @@
 		background: none;
 	}
 
+	.fees-page__inner {
+		padding-top: 72px;
+		padding-bottom: 96px;
+	}
+
+	.fees-membership {
+		padding: 0;
+	}
+
+	.fees-grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.fees-details {
+		grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr);
+		align-items: start;
+		gap: 22px;
+	}
+
+	.fees-info-card,
+	.fees-bank-card {
+		padding: 34px;
+	}
+
 	.respons-container .content-container {
 		width: 100%;
 	}

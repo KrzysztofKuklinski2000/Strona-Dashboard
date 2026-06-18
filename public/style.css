@@ -1447,6 +1447,254 @@ footer .copy {
 	margin: auto;
 }
 
+.fees-page {
+	background: #fff;
+}
+
+.fees-page__inner {
+	width: min(calc(100% - 40px), var(--container-width));
+	margin: 0 auto;
+	padding: 62px 0 74px;
+}
+
+.fees-membership {
+	margin-bottom: 52px;
+}
+
+.fees-membership h2,
+.fees-section > h2,
+.fees-info-card h2,
+.fees-bank-card h2 {
+	display: flex;
+	align-items: center;
+	gap: 18px;
+	margin: 0;
+	color: var(--color-ink);
+	font-family: var(--font-display);
+	font-size: clamp(1.55rem, 4vw, 2rem);
+	font-weight: 600;
+	letter-spacing: -.025em;
+	line-height: 1.15;
+}
+
+.fees-membership h2::before,
+.fees-section > h2::before,
+.fees-info-card h2::before,
+.fees-bank-card h2::before {
+	content: '';
+	flex: 0 0 34px;
+	width: 34px;
+	height: 2px;
+	background: var(--color-accent);
+}
+
+.fees-membership p {
+	max-width: 1120px;
+	margin-top: 28px;
+	color: #303030;
+	font-size: .94rem;
+	font-weight: 500;
+	line-height: 1.8;
+	overflow-wrap: break-word;
+}
+
+.fees-section {
+	margin-top: 54px;
+}
+
+.fees-section__cta {
+	min-width: 210px;
+	min-height: 60px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	padding: 0 30px;
+	border-radius: 4px;
+	background: var(--color-accent);
+	color: #fff;
+	font-size: .92rem;
+	font-weight: 900;
+	box-shadow: 0 16px 34px rgba(191, 31, 26, .2);
+}
+
+.fees-section__cta i {
+	color: inherit;
+	font-size: .78rem;
+}
+
+.fees-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 24px;
+	margin-top: 32px;
+}
+
+.fees-card {
+	position: relative;
+	min-width: 0;
+	min-height: 252px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 34px 24px;
+	border: 1px solid var(--color-line);
+	background: #fff;
+	text-align: center;
+	box-shadow: 0 18px 60px rgba(31, 24, 17, .035);
+}
+
+.fees-card p {
+	margin: 0;
+	color: var(--color-ink);
+	font-family: var(--font-display);
+	font-size: 1.1rem;
+	font-weight: 600;
+	letter-spacing: -.015em;
+}
+
+.fees-card p::after {
+	content: '';
+	width: 44px;
+	height: 2px;
+	display: block;
+	margin: 17px auto 0;
+	background: var(--color-accent);
+}
+
+.fees-card strong {
+	display: block;
+	margin-top: 32px;
+	color: var(--color-ink);
+	font-family: var(--font-display);
+	font-size: clamp(2.2rem, 8vw, 3rem);
+	font-weight: 600;
+	letter-spacing: -.045em;
+	line-height: 1;
+}
+
+.fees-card span {
+	display: block;
+	margin-top: 18px;
+	color: var(--color-ink);
+	font-size: .95rem;
+	font-weight: 600;
+}
+
+.fees-card small {
+	display: block;
+	margin-top: 8px;
+	color: var(--color-ink);
+	font-size: .92rem;
+	font-weight: 600;
+}
+
+.fees-cta {
+	margin: 38px 0 0;
+	text-align: center;
+}
+
+.fees-details {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 22px;
+	margin-top: 48px;
+}
+
+.fees-info-card,
+.fees-bank-card {
+	position: relative;
+	min-width: 0;
+	padding: 34px;
+	border: 1px solid var(--color-line);
+	background: #fff;
+	overflow: hidden;
+}
+
+.fees-info-card::after {
+	content: '';
+	position: absolute;
+	right: -54px;
+	bottom: -82px;
+	width: 190px;
+	aspect-ratio: 1;
+	background: url('/public/images/decor-bamboo.png') center / contain no-repeat;
+	opacity: .14;
+	pointer-events: none;
+}
+
+.fees-info-card ul {
+	position: relative;
+	z-index: 1;
+	display: grid;
+	gap: 13px;
+	margin: 26px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.fees-info-card li {
+	position: relative;
+	padding-left: 18px;
+	color: var(--color-ink);
+	font-size: .9rem;
+	font-weight: 500;
+	line-height: 1.65;
+}
+
+.fees-info-card li::before {
+	content: '';
+	position: absolute;
+	top: .72em;
+	left: 0;
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	background: var(--color-accent);
+}
+
+.fees-bank-list {
+	display: grid;
+	gap: 24px;
+	margin-top: 28px;
+}
+
+.fees-bank-row {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: 18px;
+	align-items: start;
+}
+
+.fees-bank-row i {
+	width: 32px;
+	display: inline-flex;
+	justify-content: center;
+	color: var(--color-ink);
+	font-size: 1.45rem;
+}
+
+.fees-bank-row p {
+	margin: 0;
+	color: var(--color-ink);
+	font-size: .95rem;
+	font-weight: 700;
+	line-height: 1.55;
+	overflow-wrap: break-word;
+}
+
+.fees-bank-row strong,
+.fees-bank-row span {
+	display: block;
+}
+
+.fees-bank-row span {
+	margin-top: 2px;
+	font-size: .86rem;
+	font-weight: 500;
+}
+
 .oyama-img {
 	width:150px;
 	height: 150px;
