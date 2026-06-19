@@ -56,6 +56,8 @@ $karatePages = ['oyama', 'dojo-oath', 'requirements', 'statute'];
                 </div>
             </li>
         </ul>
+
+        <span class="site-desktop-nav__indicator" aria-hidden="true"></span>
     </nav>
 
     <a class="site-nav-cta" href="/zapisy">

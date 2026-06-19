@@ -85,6 +85,7 @@
 	</footer>
 
 	<script type="text/javascript" src="/public/js/main.js"></script>
+	<script type="text/javascript" src="/public/js/nav-indicator.js"></script>
 </body>
 
 </html>
