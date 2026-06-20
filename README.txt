@@ -58,27 +58,52 @@ Projekt zawiera **publiczną stronę** (aktualności, galeria, grafik, obozy, op
 
 ## Instalacja
 
-1. **Sklonuj repozytorium**:  
+1. **Sklonuj repozytorium**:
+   ```bash
    git clone https://github.com/KrzysztofKuklinski2000/Strona-Dashboard.git
+   cd Strona-Dashboard
+   ```
 
-2. Instalacja Zależności:
-  composer install
+2. **Utwórz lokalny plik konfiguracyjny**:
+   ```bash
+   cp config/config.example.php config/config.php
+   ```
 
-3. Plik konfigracyjny do bazy danych w głównym katalogu projektu dodaj config/config.php:
-<?php 
-return [
-	'env' => 'dev',
-	'db' => [
-		'host' => 'localhost',
-		'database' => 'karate_test',
-		'user' => 'karate_user',
-		'password' => 'haslo123'
-	]
-];
+   Plik `config/config.php` jest ignorowany przez Git, dlatego trzeba utworzyć go lokalnie po sklonowaniu projektu.
 
-4. Zaimportuj plik 'database.sql' w swojej lokalnej bazie danych
-5. Skonfiguruj serwer lokalny (np. XAMPP, MAMP) i otwórz w przeglądarce adres: http://localhost/<NAZWA_FOLDERU>
+3. **Uruchom projekt w Dockerze**:
+   ```bash
+   docker compose up --build -d
+   ```
 
-dashboard dane do logowania (http://localhost/?dashboard=start)
+   Kontener PHP instaluje zależności Composera automatycznie, jeśli katalog `vendor/` nie istnieje.
+
+4. **Otwórz aplikację w przeglądarce**:
+   - strona: http://localhost:8000
+   - panel administracyjny: http://localhost:8000/dashboard/start
+   - phpMyAdmin: http://localhost:8080
+   - Mailpit: http://localhost:8025
+
+5. **Dane bazy danych w Dockerze**:
+   - host: `db`
+   - baza: `karate`
+   - użytkownik: `user_karate`
+   - hasło: `haslo`
+   - port MySQL na hoście: `3307`
+
+   Baza inicjalizuje się automatycznie z pliku `docker/db/init.sql` przy pierwszym uruchomieniu kontenerów.
+
+6. **Zatrzymanie projektu**:
+   ```bash
+   docker compose down
+   ```
+
+   Jeśli chcesz odtworzyć bazę od zera z pliku `docker/db/init.sql`, usuń również wolumen:
+   ```bash
+   docker compose down -v
+   docker compose up --build -d
+   ```
+
+dashboard dane do logowania (http://localhost/dashboard/start)
 login: test
 hasło: test123
