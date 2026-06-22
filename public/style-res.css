@@ -120,6 +120,36 @@
 		padding: 28px;
 	}
 
+	.contact-page__inner {
+		padding-top: 72px;
+		padding-bottom: 96px;
+	}
+
+	.contact-page__grid {
+		grid-template-columns: minmax(0, 1fr) minmax(320px, .72fr);
+		align-items: stretch;
+	}
+
+	.contact-panel,
+	.contact-info-box,
+	.contact-map-section {
+		padding: 34px;
+	}
+
+	.contact-list {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 16px;
+	}
+
+	.contact-card {
+		grid-template-columns: minmax(0, 1fr);
+		align-content: start;
+	}
+
+	.contact-map iframe {
+		min-height: 390px;
+	}
+
 	.nav-container {
 		display: none;
 	}
@@ -566,6 +596,10 @@
 @media only screen and (min-width: 1100px) {
 	.timetable-board {
 		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.contact-page__grid {
+		grid-template-columns: minmax(0, .98fr) minmax(360px, .42fr);
 	}
 
 	.news-page__grid {
