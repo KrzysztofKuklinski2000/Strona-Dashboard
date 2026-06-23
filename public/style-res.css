@@ -150,6 +150,42 @@
 		min-height: 390px;
 	}
 
+	.oyama-page__inner {
+		padding-top: 72px;
+		padding-bottom: 96px;
+	}
+
+	.oyama-hero {
+		grid-template-columns: minmax(300px, .42fr) minmax(0, .58fr);
+		align-items: stretch;
+	}
+
+	.oyama-hero__media {
+		min-height: 520px;
+	}
+
+	.oyama-hero__content,
+	.oyama-story,
+	.oyama-quote,
+	.oyama-timeline,
+	.oyama-principles {
+		padding: 34px;
+	}
+
+	.oyama-hero__facts {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.oyama-content-grid {
+		grid-template-columns: minmax(0, 1fr) minmax(300px, .42fr);
+		align-items: stretch;
+	}
+
+	.oyama-timeline__grid,
+	.oyama-principles__grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
 	.nav-container {
 		display: none;
 	}

@@ -1997,6 +1997,307 @@ footer .copy {
 	margin-top:10px;
 }
 
+.oyama-page {
+	background: #fff;
+}
+
+.oyama-page__inner {
+	width: min(calc(100% - 40px), var(--container-width));
+	margin: 0 auto;
+	padding: 62px 0 82px;
+}
+
+.oyama-hero {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 0;
+	border: 1px solid var(--color-line);
+	background:
+		linear-gradient(180deg, rgba(250, 247, 244, .78), rgba(255, 255, 255, 0) 190px),
+		#fff;
+	overflow: hidden;
+}
+
+.oyama-hero__media {
+	min-height: 280px;
+	background: #f9f7f4;
+	overflow: hidden;
+}
+
+.oyama-hero__media img {
+	width: 100%;
+	height: 100%;
+	display: block;
+	object-fit: cover;
+	object-position: center;
+}
+
+.oyama-hero__content {
+	position: relative;
+	min-width: 0;
+	padding: 30px;
+	overflow: hidden;
+}
+
+.oyama-hero__content::after {
+	content: '';
+	position: absolute;
+	right: -70px;
+	bottom: -110px;
+	width: 260px;
+	aspect-ratio: 1;
+	background: url('/public/images/decor-bamboo.png') center / contain no-repeat;
+	opacity: .12;
+	pointer-events: none;
+}
+
+.oyama-hero__content > * {
+	position: relative;
+	z-index: 1;
+}
+
+.oyama-hero__content > p,
+.oyama-story > p,
+.oyama-section-heading p {
+	margin-bottom: 8px;
+	color: var(--color-accent);
+	font-size: .62rem;
+	font-weight: 900;
+	letter-spacing: .2em;
+	text-transform: uppercase;
+}
+
+.oyama-hero__content h2,
+.oyama-story h2,
+.oyama-section-heading h2 {
+	margin: 0;
+	color: var(--color-ink);
+	font-size: clamp(1.85rem, 6vw, 3rem);
+	font-weight: 800;
+	letter-spacing: -.045em;
+	line-height: 1.05;
+}
+
+.oyama-hero__content > span {
+	display: block;
+	max-width: 660px;
+	margin-top: 16px;
+	color: var(--color-muted);
+	font-size: .96rem;
+	font-weight: 500;
+	line-height: 1.75;
+}
+
+.oyama-hero__facts {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 12px;
+	margin-top: 28px;
+}
+
+.oyama-hero__facts div {
+	padding: 18px;
+	border: 1px solid var(--color-line);
+	background: rgba(255, 255, 255, .88);
+}
+
+.oyama-hero__facts strong,
+.oyama-hero__facts small {
+	display: block;
+}
+
+.oyama-hero__facts strong {
+	color: var(--color-ink);
+	font-size: 1.05rem;
+	font-weight: 900;
+	line-height: 1.2;
+}
+
+.oyama-hero__facts small {
+	margin-top: 7px;
+	color: var(--color-muted);
+	font-size: .72rem;
+	font-weight: 800;
+	letter-spacing: .08em;
+	text-transform: uppercase;
+}
+
+.oyama-content-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 22px;
+	margin-top: 28px;
+}
+
+.oyama-story,
+.oyama-quote,
+.oyama-timeline,
+.oyama-principles {
+	border: 1px solid var(--color-line);
+	background: #fff;
+}
+
+.oyama-story,
+.oyama-quote,
+.oyama-timeline,
+.oyama-principles {
+	padding: 28px;
+}
+
+.oyama-story h2,
+.oyama-section-heading h2 {
+	font-size: clamp(1.45rem, 4vw, 2rem);
+}
+
+.oyama-story__text {
+	display: grid;
+	gap: 16px;
+	margin-top: 24px;
+}
+
+.oyama-story__text p {
+	color: #303030;
+	font-size: .94rem;
+	font-weight: 500;
+	line-height: 1.8;
+	overflow-wrap: break-word;
+}
+
+.oyama-quote {
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+	background:
+		linear-gradient(180deg, rgba(250, 247, 244, .72), rgba(255, 255, 255, 0) 150px),
+		#fff;
+}
+
+.oyama-quote > span {
+	width: 62px;
+	height: 62px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	background: var(--color-ink);
+	color: #fff;
+	font-size: 1.35rem;
+}
+
+.oyama-quote i {
+	color: inherit;
+}
+
+.oyama-quote p {
+	margin: 0;
+	color: var(--color-ink);
+	font-family: var(--font-display);
+	font-size: clamp(1.35rem, 5vw, 1.9rem);
+	font-weight: 600;
+	letter-spacing: -.025em;
+	line-height: 1.2;
+}
+
+.oyama-quote small {
+	margin-top: auto;
+	color: var(--color-accent);
+	font-size: .72rem;
+	font-weight: 900;
+	letter-spacing: .12em;
+	text-transform: uppercase;
+}
+
+.oyama-timeline,
+.oyama-principles {
+	margin-top: 28px;
+}
+
+.oyama-section-heading {
+	max-width: 700px;
+	margin-bottom: 24px;
+}
+
+.oyama-timeline__grid,
+.oyama-principles__grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 16px;
+}
+
+.oyama-timeline-card {
+	position: relative;
+	min-width: 0;
+	padding: 22px;
+	border: 1px solid var(--color-line);
+	background: #fff;
+	overflow: hidden;
+}
+
+.oyama-timeline-card::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 3px;
+	height: 100%;
+	background: var(--color-accent);
+}
+
+.oyama-timeline-card strong {
+	display: inline-flex;
+	margin-bottom: 14px;
+	color: var(--color-accent);
+	font-size: .72rem;
+	font-weight: 900;
+	letter-spacing: .14em;
+	text-transform: uppercase;
+}
+
+.oyama-timeline-card h3,
+.oyama-principle h3 {
+	margin: 0;
+	color: var(--color-ink);
+	font-size: 1.05rem;
+	font-weight: 800;
+	line-height: 1.25;
+}
+
+.oyama-timeline-card p,
+.oyama-principle p {
+	margin-top: 10px;
+	color: var(--color-muted);
+	font-size: .86rem;
+	font-weight: 500;
+	line-height: 1.65;
+	overflow-wrap: break-word;
+}
+
+.oyama-principle {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: 16px;
+	align-items: start;
+	padding: 20px;
+	border: 1px solid var(--color-line);
+	background: rgba(255, 255, 255, .9);
+}
+
+.oyama-principle > span {
+	width: 48px;
+	height: 48px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	background: #f7f1f0;
+	color: var(--color-accent);
+	font-size: 1rem;
+}
+
+.oyama-principle i {
+	color: inherit;
+}
+
 .timetable-page {
 	background: #fff;
 }
