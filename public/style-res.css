@@ -186,6 +186,39 @@
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 	}
 
+	.dojo-oath-page__inner {
+		padding-top: 72px;
+		padding-bottom: 96px;
+	}
+
+	.dojo-oath-intro {
+		grid-template-columns: minmax(0, 1fr) minmax(320px, .44fr);
+		align-items: stretch;
+		padding: 34px;
+	}
+
+	.dojo-oath-intro__note {
+		align-content: start;
+	}
+
+	.dojo-oath-list-section,
+	.dojo-oath-principles {
+		padding: 34px;
+	}
+
+	.dojo-oath-list {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 16px;
+	}
+
+	.dojo-oath-card:last-child {
+		grid-column: 1 / -1;
+	}
+
+	.dojo-oath-principles__grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
 	.nav-container {
 		display: none;
 	}
