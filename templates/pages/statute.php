@@ -1,120 +1,182 @@
-<div class="respons-container nt padding-top">
-	<div>
-		<?php 
-			$text = 'Informacje ogólne';
-			require('templates/components/post_header.php');
-		?>
-		<p>
-			<strong>1.</strong>
-			Klub jest stowarzyszeniem wpisanym do rejestru przy Staroście Wejherowskim pod nrem 58 i działa na podstawie STATUTU <br> <br>
-			<strong>2.</strong>
-			Klub nie prowadzi działalności gospodarczej. <br> <br>
-			<strong>3.</strong>
-	 		Klub jest członkiem Polskiego Związku Karate <br> <br>
-			<strong>4.</strong>
-			Zajęcia są prowadzone zgodnie z zasadami przyjętymi dla stylu KYOKUSHIN lub kick boxing K1 z zachowaniem wszelkich zasad bezpieczeństwa <br> <br>
-			<strong>5.</strong>
-			Zajęcia prowadzą instruktorzy posiadający kwalifikacje wymagane do prowadzenia zajęć nabyte w trakcie kursów instruktorskich, bądź poprzez praktykę ( min 10 lat treningów i stopień 3 kyu) <br> <br>
-			<strong>6.</strong>
-			Dzieci, młodzież oraz dorośli uczestniczą w treningach w wymiarze czasowym odpowiednim dla wieku i stopnia zaawansowania 
-			<br> <br>
-			<strong>7.</strong>
-			Ilość zajęć nie jest limitowana, jedynym czynnikiem ograniczającym jest stopień zaawansowania i wiek ( w przypadku dzieci do lat 6 - zajęcia dedykowane są dla tej grupy wiekowej, ale mogą one uczestniczyć w zajęciach zarówno w Redzie jak też w Wejherowie) <br> <br>
-			<strong>8.</strong>
-			W przypadku , gdy liczebność grupy się zmniejszy, ( poniżej 12 osób ) może ona zostać połączona z inną grupą, bądź zajęcia przeniesione do innej lokalizacji <br><br>
-			<strong>9.</strong>
-			Klub prowadzi zajęcia przez cały rok, od 1 września do 31 sierpnia <br><br>
-			<strong>10.</strong>
-			W okresie wakacji letnich Klub organizuje obóz wypoczynkowo - sportowy, równolegle prowadzone są zajęcia dla osób pozostających w miejscu zamieszkania <br><br>
-			<strong>11.</strong>
-			Klub posiada polisę ubezpieczenia OC <br><br>
-		</p>
-		<br><br>
-		<?php 
-			$text = 'Warunki Uczestnictwa <br> w Zajęciach';
-			require('templates/components/post_header.php');
-		?>
+<?php
+$statuteSections = [
+    [
+        'id' => 'general',
+        'eyebrow' => 'Podstawy',
+        'title' => 'Informacje ogólne',
+        'icon' => 'fa-solid fa-scale-balanced',
+        'items' => [
+            'Klub jest stowarzyszeniem wpisanym do rejestru przy Staroście Wejherowskim pod numerem 58 i działa na podstawie statutu.',
+            'Klub nie prowadzi działalności gospodarczej.',
+            'Klub jest członkiem Polskiego Związku Karate.',
+            'Zajęcia są prowadzone zgodnie z zasadami przyjętymi dla stylu Kyokushin lub kick boxing K1, z zachowaniem wszelkich zasad bezpieczeństwa.',
+            'Zajęcia prowadzą instruktorzy posiadający kwalifikacje wymagane do prowadzenia zajęć, nabyte w trakcie kursów instruktorskich lub poprzez praktykę.',
+            'Dzieci, młodzież oraz dorośli uczestniczą w treningach w wymiarze czasowym odpowiednim dla wieku i stopnia zaawansowania.',
+            'Liczba zajęć nie jest limitowana. Ograniczeniem może być stopień zaawansowania i wiek uczestnika.',
+            'W przypadku zmniejszenia liczebności grupy poniżej 12 osób może ona zostać połączona z inną grupą lub przeniesiona do innej lokalizacji.',
+            'Klub prowadzi zajęcia przez cały rok, od 1 września do 31 sierpnia.',
+            'W okresie wakacji letnich Klub organizuje obóz wypoczynkowo-sportowy, a równolegle prowadzone są zajęcia dla osób pozostających w miejscu zamieszkania.',
+            'Klub posiada polisę ubezpieczenia OC.',
+        ],
+    ],
+    [
+        'id' => 'participation',
+        'eyebrow' => 'Członkostwo',
+        'title' => 'Warunki uczestnictwa w zajęciach',
+        'icon' => 'fa-solid fa-clipboard-check',
+        'items' => [
+            'Wniesienie wpisowego i składki członkowskiej. Wpłata składki jest jednoznaczna z akceptacją regulaminu i wstąpieniem do Klubu.',
+            'Złożenie deklaracji członkowskiej.',
+            'Zgoda rodziców lub opiekunów prawnych w przypadku osób niepełnoletnich.',
+            'Rezygnacja z członkostwa następuje po 3-miesięcznym okresie wypowiedzenia na pisemny wniosek członka lub rodziców/opiekunów.',
+        ],
+    ],
+    [
+        'id' => 'rights',
+        'eyebrow' => 'Uprawnienia',
+        'title' => 'Prawa członka Klubu',
+        'icon' => 'fa-solid fa-medal',
+        'items' => [
+            'Członek Klubu ma prawo uczestniczyć w treningach i obozie wypoczynkowo-sportowym, przystępować do egzaminów na stopnie kyu i dan oraz reprezentować Klub na zawodach sportowych i pokazach.',
+            'W szczególnych przypadkach, takich jak choroba, wyjazd lub czasowa zmiana miejsca zamieszkania, członek Klubu lub rodzice/opiekunowie mają prawo zawiesić członkostwo. Okres zawieszenia nie może być krótszy niż 6 miesięcy.',
+        ],
+    ],
+    [
+        'id' => 'member-duties',
+        'eyebrow' => 'Odpowiedzialność',
+        'title' => 'Obowiązki członka Klubu',
+        'icon' => 'fa-solid fa-user-shield',
+        'items' => [
+            'Terminowe opłacanie składek.',
+            'Przestrzeganie statutu, regulaminu oraz uchwał władz Klubu.',
+            'Posiadanie aktualnych badań lekarskich dla sportowców w przypadku zawodników kontaktowych sportów walki.',
+            'Posiadanie odpowiedniego stroju: białe karate-gi z kanji na lewej piersi. Nie obowiązuje to osób początkujących do pierwszego egzaminu.',
+            'Posiadanie białych ochraniaczy na goleń-stopę oraz białych ochraniaczy piersi w przypadku kobiet i krocza w przypadku mężczyzn.',
+            'Dbanie o higienę osobistą. Włosy powinny być krótkie lub spięte, a w czasie treningu nie wolno nosić biżuterii.',
+            'Znajomość i przestrzeganie etykiety Dojo.',
+            'Stosowanie się do poleceń trenera, instruktora oraz innych osób odpowiedzialnych za bezpieczeństwo na terenie obiektów sportowych.',
+            'Przestrzeganie zasad bezpiecznego korzystania z obiektów sportowych udostępnionych do zajęć.',
+            'Dbanie o sprzęt sportowy Klubu i sprzęt udostępniony wraz z wynajmowanymi obiektami. W przypadku spowodowania szkody członek jest zobowiązany ją naprawić.',
+        ],
+    ],
+    [
+        'id' => 'parent-duties',
+        'eyebrow' => 'Opiekunowie',
+        'title' => 'Obowiązki rodziców i opiekunów prawnych',
+        'icon' => 'fa-solid fa-people-roof',
+        'items' => [
+            'Terminowe opłacanie składek za dziecko.',
+            'Zapewnienie systematycznego udziału dziecka w zajęciach przewidzianych dla jego grupy wiekowej i stopnia zaawansowania.',
+            'Zapewnienie dziecku punktualnego przybycia na zajęcia.',
+            'Punktualne odbieranie dziecka po treningu.',
+            'Naprawienie szkód spowodowanych umyślnym działaniem dziecka.',
+        ],
+    ],
+    [
+        'id' => 'other',
+        'eyebrow' => 'Pozostałe',
+        'title' => 'Zasady końcowe',
+        'icon' => 'fa-solid fa-circle-info',
+        'items' => [
+            'W przypadku rażącego naruszenia zasad, statutu i regulaminu Zarząd Klubu może zawiesić członkostwo na czas jednego miesiąca. W czasie zawieszenia obowiązuje wnoszenie składki. W przypadku rezygnacji z członkostwa w czasie zawieszenia okres zawieszenia jest zaliczany do okresu wypowiedzenia.',
+            'W przypadku gdy obecność członka zakłóca lub uniemożliwia prowadzenie zajęć albo zagraża bezpieczeństwu pozostałych uczestników, Zarząd Klubu może pozbawić daną osobę członkostwa w trybie natychmiastowym.',
+            'Klub nie ponosi odpowiedzialności za rzeczy pozostawione w szatni i innych częściach obiektów, w których prowadzone są zajęcia.',
+        ],
+    ],
+];
 
-		<p>
-			<strong>1.</strong>
-			Wniesienie wpisowego ( obecnie obowiązuje przy ponownym wstąpieniu do Klubu )  i składki członkowskiej  ( wpłata składki jest jednoznaczna z akceptacją regulaminu i wstąpieniem do Klubu ) <br><br>
-			<strong>2.</strong>
-			Złożenie deklaracji członkowskiej <br><br>
-			<strong>3.</strong>
-			Zgoda rodziców ( opiekunów  prawnych ) w przypadku osób niepełnoletnich <br><br>
-			<strong>4.</strong>
-			Rezygnacja z członkostwa następuje po 3 - miesięcznym okresie wypowiedzenia na pisemny wniosek Członka lub rodziców ( opiekunów ) 
-		</p>
-		<br> <br>
-		<?php 
-			$text = 'Prawa Członka Klubu';
-			require('templates/components/post_header.php');
-		?>
-		<p>
-			<strong>1.</strong>
-			Członek Klubu ma prawo uczestniczyć w treningach, w  obozie wypoczynkowo - sportowym, przystępować do egzaminów na stopnie szkoleniowe kyu i dan, oraz reprezentować Klub na zawodach sportowych i pokazach <br><br>
-			<strong>2.</strong>
-			W szczególnych przypadkach ( choroba, wyjazd, czasowa zmiana miejsca zamieszkania)  Członek Klubu ( lub rodzice/opiekunowie) ma prawo zawiesić członkostwo. Okres zawieszenia nie może być jednak krótszy niż 6 miesięcy <br><br>
-		</p>
-		<br><br>
-	</div>
-	<div>
-		<?php 
-			$text = 'Obowiązki Członka Klubu';
-			require('templates/components/post_header.php');
-		?>
-		<p>
-			<strong>1.</strong>
-			Terminowe opłacanie składek ( patrz składki ) <br> <br>
-			<strong>2.</strong>
-			Przestrzeganie Statutu i Regulaminu, oraz uchwał Władz Klubu <br><br>
-			<strong>3.</strong>
-			Posiadanie aktualnych badań lekarskich dla sportowców ( kontaktowe sporty walki ) - zawodnicy <br><br>
-			<strong>4.</strong>
-			Posiadanie odpowiedniego stroju: białe karate - gi z kanji na lewej piersi ( nie obowiązuje osób początkujących - do pierwszego egzaminu ) <br><br>
-			<strong>5.</strong>
-			Posiadanie białych ochraniaczy na goleń - stopę, oraz białych  ochraniaczy piersi ( Panie ) oraz krocza ( Panowie ) <br><br>
-			<strong>6.</strong>
-			Należy dbać o higienę osobistą, włosy powinny być krótkie lub spięte, nie wolno nosić na sobie biżuterii w czasie treningu <br><br>
-			<strong>7.</strong>
-			Należy znać i  przestrzegać  etykietę Dojo ( właściwego zachowania się  w  sali ćwiczeń ) <br><br>
-			<strong>8.</strong>
-			Stosować się do poleceń trenera, instruktora oraz innych osób odpowiedzialnych za bezpieczeństwo na terenie obiektów sportowych, w których odbywają się zajęcia <br><br>
-			<strong>9.</strong>
-			Przestrzegać zasad bezpiecznego korzystania ( regulaminu ) z udostępnionych do zajęć obiektów sportowych <br><br>
-			<strong>10.</strong>
-			Dbanie o sprzęt sportowy Klubu i udostępniony wraz z wynajmowanymi obiektami. W przypadku spowodowania szkody Członek jest zobowiązany naprawić ją 
-		</p>
-		<br><br>
-		<?php 
-			$text = 'Obowiązki rodziców <br> (opiekunów prawnych)';
-			require('templates/components/post_header.php');
-		?>
-		<p>
-			<strong>1.</strong>
-			Terminowe opłacanie składek za dziecko ( patrz składki ) <br><br>
-			<strong>2.</strong>
-			Zapewnienie systematycznego udziału dziecka w zajęciach przewidzianych dla jego grupy wiekowej i stopnia zaawansowania <br><br>
-			<strong>3.</strong>
-			Zapewnienie dziecku punktualnego przybycia na zajęcia <br><br>
-			<strong>4.</strong>
-			Punktualne odbieranie dziecka po treningu <br><br>
-			<strong>5.</strong>
-			Naprawie szkód spowodowanych umyślnym działaniem dziecka <br><br>
-		</p>
-		<br><br>
-		<?php 
-			$text = 'Pozostałe';
-			require('templates/components/post_header.php');
-		?>
-		<p>
-			<strong>1.</strong>
-			 W przypadku rażącego naruszenia zasad , Statutu i Regulaminu, Zarząd Klubu może zawiesić członkostwo na czas jednego miesiąca. W czasie zawieszenia obowiązuje wnoszenie składki ( patrz składki ) W przypadku rezygnacji z członkostwa w czasie zawieszenia, okres zawieszenia jest zaliczany do okresu wypowiedzenia członkostwa 
-			 <br><br>
-			 <strong>2.</strong>
-			 W przypadku gdy obecność Członka zakłóca lub uniemożliwia prowadzenie zajęć, albo zagraża bezpieczeństwu pozostałych uczestników zajęć, Zarząd Klubu może pozbawić daną osobę członkostwa w trybie natychmiastowym <br><br>
-			 <strong>3.</strong>
-			 Klub nie ponosi odpowiedzialności za rzeczy pozostawione w szatni i innych częściach obiektów w których prowadzone są zajęcia
-		</p>
-	</div>
-</div>
+$summaryCards = [
+    [
+        'icon' => 'fa-solid fa-calendar-check',
+        'title' => 'Cały rok treningów',
+        'description' => 'Zajęcia klubowe są prowadzone od 1 września do 31 sierpnia.',
+    ],
+    [
+        'icon' => 'fa-solid fa-file-signature',
+        'title' => 'Deklaracja i składka',
+        'description' => 'Udział w zajęciach wymaga akceptacji zasad oraz spełnienia warunków członkostwa.',
+    ],
+    [
+        'icon' => 'fa-solid fa-shield-halved',
+        'title' => 'Bezpieczeństwo',
+        'description' => 'Regulamin porządkuje zasady treningu, stroju, higieny i odpowiedzialności.',
+    ],
+];
+?>
+
+<section class="statute-page" aria-labelledby="statute-title">
+    <div class="statute-page__inner">
+        <section class="statute-intro" aria-labelledby="statute-title">
+            <div class="statute-intro__content">
+                <p>Zasady klubu</p>
+                <h2 id="statute-title">Regulamin</h2>
+                <span>
+                    Najważniejsze informacje organizacyjne dla członków Klubu, rodziców i opiekunów. Regulamin
+                    porządkuje zasady uczestnictwa, bezpieczeństwa oraz odpowiedzialności podczas treningów.
+                </span>
+            </div>
+
+            <aside class="statute-intro__note" aria-labelledby="statute-note-title">
+                <span aria-hidden="true">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                </span>
+                <div>
+                    <p>Ważne</p>
+                    <h3 id="statute-note-title">Przed rozpoczęciem treningów</h3>
+                    <small>Zapoznaj się z zasadami członkostwa, obowiązkami i wymaganiami organizacyjnymi Klubu.</small>
+                </div>
+            </aside>
+        </section>
+
+        <section class="statute-summary" aria-labelledby="statute-summary-title">
+            <div class="statute-section-heading">
+                <p>W skrócie</p>
+                <h2 id="statute-summary-title">Co warto zapamiętać?</h2>
+            </div>
+
+            <div class="statute-summary__grid">
+                <?php foreach ($summaryCards as $card): ?>
+                    <article class="statute-summary-card">
+                        <span aria-hidden="true">
+                            <i class="<?= e($card['icon']) ?>"></i>
+                        </span>
+                        <div>
+                            <h3><?= e($card['title']) ?></h3>
+                            <p><?= e($card['description']) ?></p>
+                        </div>
+                    </article>
+                <?php endforeach ?>
+            </div>
+        </section>
+
+        <section class="statute-sections" aria-labelledby="statute-sections-title">
+            <div class="statute-section-heading">
+                <p>Pełna treść</p>
+                <h2 id="statute-sections-title">Zasady członkostwa i treningu</h2>
+            </div>
+
+            <div class="statute-sections__grid">
+                <?php foreach ($statuteSections as $section): ?>
+                    <article id="<?= e($section['id']) ?>" class="statute-card">
+                        <header class="statute-card__header">
+                            <span aria-hidden="true">
+                                <i class="<?= e($section['icon']) ?>"></i>
+                            </span>
+
+                            <div>
+                                <p><?= e($section['eyebrow']) ?></p>
+                                <h3><?= e($section['title']) ?></h3>
+                            </div>
+                        </header>
+
+                        <ol class="statute-card__list">
+                            <?php foreach ($section['items'] as $item): ?>
+                                <li><?= e($item) ?></li>
+                            <?php endforeach ?>
+                        </ol>
+                    </article>
+                <?php endforeach ?>
+            </div>
+        </section>
+    </div>
+</section>

@@ -219,6 +219,40 @@
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 	}
 
+	.statute-page__inner {
+		padding-top: 72px;
+		padding-bottom: 96px;
+	}
+
+	.statute-intro {
+		grid-template-columns: minmax(0, 1fr) minmax(320px, .44fr);
+		align-items: stretch;
+		padding: 34px;
+	}
+
+	.statute-intro__note {
+		align-content: start;
+	}
+
+	.statute-summary,
+	.statute-sections {
+		padding: 34px;
+	}
+
+	.statute-summary__grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.statute-sections__grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		align-items: start;
+	}
+
+	.statute-card:first-child,
+	.statute-card:nth-child(4) {
+		grid-row: span 2;
+	}
+
 	.nav-container {
 		display: none;
 	}
