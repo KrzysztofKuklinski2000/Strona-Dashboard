@@ -532,22 +532,48 @@
 		width:200px;
 		height: 200px;
 	}
-	.table-requirements {
-		width: 50%;
-		position: static;
-		margin: auto;
+
+	.requirements-page__inner {
+		padding-top: 72px;
+		padding-bottom: 96px;
 	}
 
-	.show-content {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 30px;
-		justify-items: center;
-		align-items: center;
+	.requirements-intro {
+		grid-template-columns: minmax(0, 1fr) minmax(320px, .44fr);
+		align-items: stretch;
+		padding: 34px;
 	}
 
-	.show-content .content {
-		flex: 1 0 calc(33.33% - 30px);
+	.requirements-intro__note {
+		align-content: start;
+	}
+
+	.requirements-summary,
+	.requirements-section {
+		padding: 34px;
+	}
+
+	.requirements-summary__grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 18px;
+	}
+
+	.requirements-summary-card {
+		grid-template-columns: minmax(0, 1fr);
+		padding-top: 0;
+		border-top: 0;
+	}
+
+	.requirements-grade-list {
+		grid-template-columns: repeat(5, minmax(0, 1fr));
+	}
+
+	.requirements-results {
+		grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+	}
+
+	.requirements-result-card {
+		padding: 26px;
 	}
 
 /* GALLERY	*/

@@ -389,55 +389,48 @@ if (menu) {
 	});
 }
 
+const renderRequirementCards = (items) => items.map((item) => `
+	<article class="requirements-result-card">
+		<header class="requirements-result-card__header">
+			<strong>${item[0]}</strong>
+			<p>${item[1]}</p>
+		</header>
+		<p class="requirements-result-card__body">${item[2]}</p>
+	</article>
+`).join('');
+
+const setActiveRequirementChoice = (items, activeItem) => {
+	items.forEach((item) => {
+		const isActive = item === activeItem;
+
+		item.classList.toggle('is-active', isActive);
+		item.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+	});
+};
+
 if (contentDiv && contentDiv2 && choice.length > 0 && choice2.length > 0) {
-	document.addEventListener("DOMContentLoaded", () => {
-		let text1 = "";
+	document.addEventListener('DOMContentLoaded', () => {
+		contentDiv.innerHTML = renderRequirementCards(content[0]);
+		contentDiv2.innerHTML = renderRequirementCards(content2[0][0]);
 
-		content[0].forEach(el => {
-			text1 += `<div class='content'><h3>${el[0]}</h3><p>${el[1]}</p><p class="content-justify">${el[2]}</p></div>`;
-		});
-
-		choice[0].style.color = "white";
-		contentDiv.innerHTML = text1;
-
-		let text2 = "";
-
-		content2[0][0].forEach(el => {
-			text2 += `<div class='content'><h3>${el[0]}</h3><p>${el[1]}</p><p class="content-justify">${el[2]}</p></div>`;
-		});
-
-		choice2[0].style.color = "white";
-		contentDiv2.innerHTML = text2;
+		setActiveRequirementChoice(choice, choice[0]);
+		setActiveRequirementChoice(choice2, choice2[0]);
 	});
 
-	choice.forEach((el) => el.addEventListener('click', changeContent, false));
-	choice2.forEach((el) => el.addEventListener('click', changeContent2, false));
+	choice.forEach((item) => item.addEventListener('click', changeContent, false));
+	choice2.forEach((item) => item.addEventListener('click', changeContent2, false));
 }
 
 function changeContent() {
-	choice.forEach(el => el.style.color = "#BDBDBD");
-	this.style.color = 'white';
+	const index = choice.indexOf(this);
 
-	let i = choice.indexOf(this);
-	let text = '';
-
-	content[i].forEach(el => {
-		text += `<div class='content'><h3>${el[0]}</h3><p>${el[1]}</p><p class="content-justify">${el[2]}</p></div>`;
-	});
-
-	contentDiv.innerHTML = text;
+	contentDiv.innerHTML = renderRequirementCards(content[index]);
+	setActiveRequirementChoice(choice, this);
 }
 
 function changeContent2() {
-	choice2.forEach(el => el.style.color = "#BDBDBD");
-	this.style.color = 'white';
+	const index = choice2.indexOf(this);
 
-	let i = choice2.indexOf(this);
-	let text = '';
-
-	content2[0][i].forEach(el => {
-		text += `<div class='content'><h3>${el[0]}</h3><p>${el[1]}</p><p class="content-justify">${el[2]}</p></div>`;
-	});
-
-	contentDiv2.innerHTML = text;
+	contentDiv2.innerHTML = renderRequirementCards(content2[0][index]);
+	setActiveRequirementChoice(choice2, this);
 }
