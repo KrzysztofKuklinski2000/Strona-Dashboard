@@ -62,9 +62,13 @@ class SiteController extends AbstractController
      */
     public function galleryAction(): void
     {
+        $category = $this->request->getRouteParam('category');
+        $category = in_array($category, ['training', 'camp'], true) ? $category : null;
+
         $this->renderer->render([
             'page' => 'gallery',
-            'content' => $this->siteService->getGallery($this->request->getRouteParam('category')),
+            'content' => $this->siteService->getGallery($category),
+            'category' => $category,
         ]);
     }
 
