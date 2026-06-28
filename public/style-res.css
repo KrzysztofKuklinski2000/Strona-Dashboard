@@ -383,34 +383,45 @@
 	}
 
 
-	/*ZAPISY*/
-	.price-list {
-		width: 100%;
-		margin: auto;
-		display: flex;
-		justify-content: center;
-		position: static;
-	}
-
-	.price-content {
-		width: 100%;
-	}
-
 	.respons-container {
 		width: 90%;
 		margin: auto;
 	}
 
-	.price-list .row {
-		width: 90%;
-		padding:0px 10px;
+	.entries-page__inner {
+		padding-top: 72px;
+		padding-bottom: 96px;
 	}
 
-	.price-list .row div {
-		padding:0px 5px;
+	.entries-intro {
+		grid-template-columns: minmax(0, 1fr) minmax(320px, .44fr);
+		align-items: stretch;
+		padding: 34px;
 	}
 
-/*OBÓZ*/
+	.entries-intro__note {
+		align-content: start;
+	}
+
+	.entries-steps,
+	.entries-contact-panel,
+	.entries-fees-panel,
+	.entries-before-first {
+		padding: 34px;
+	}
+
+	.entries-step-grid,
+	.entries-before-first__grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 18px;
+	}
+
+	.entries-main-grid {
+		grid-template-columns: minmax(0, 1fr) minmax(320px, .46fr);
+		align-items: start;
+	}
+
+	/*OBÓZ*/
 
 	.camp-header {
 		width:100%;
@@ -477,23 +488,8 @@
 		height:300px;
 	}
 /*OPLATY*/
-	.price-container {
-		display: flex;
-		flex-wrap: wrap;
-		row-gap: 20px;
-	}
-
-	.price-box {
-		width: calc(33.33% - 3px);
-		border-right: 1px solid #282E39;
-	}
-
 	.break {
 		display: none;
-	}
-
-	.join  {
-		background: none;
 	}
 
 	.fees-page__inner {
@@ -722,6 +718,20 @@
 
 	.contact-page__grid {
 		grid-template-columns: minmax(0, .98fr) minmax(360px, .42fr);
+	}
+
+	.entries-main-grid {
+		grid-template-columns: minmax(0, .98fr) minmax(360px, .42fr);
+	}
+
+	.entries-contact-list {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 16px;
+	}
+
+	.entries-contact-card {
+		grid-template-columns: minmax(0, 1fr);
+		align-content: start;
 	}
 
 	.news-page__grid {
