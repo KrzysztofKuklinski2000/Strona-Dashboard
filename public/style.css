@@ -399,6 +399,40 @@ main {
 	overflow-wrap: break-word;
 }
 
+.important-info-shell {
+	position: relative;
+	max-width: 100%;
+}
+
+.important-info-shell::before,
+.important-info-shell::after {
+	content: '';
+	position: absolute;
+	top: 8px;
+	bottom: 18px;
+	z-index: 2;
+	width: 42px;
+	pointer-events: none;
+	opacity: 0;
+	transition: opacity .18s ease;
+}
+
+.important-info-shell::before {
+	left: 0;
+	display: none;
+	background: linear-gradient(90deg, #fff 18%, rgba(255, 255, 255, 0));
+}
+
+.important-info-shell::after {
+	right: 0;
+	background: linear-gradient(90deg, rgba(255, 255, 255, 0), #fff 82%);
+}
+
+.important-info-shell.has-left-fade::before,
+.important-info-shell.has-right-fade::after {
+	opacity: 1;
+}
+
 .important-info {
 	width: 100%;
 	max-width: 100%;
@@ -414,27 +448,6 @@ main {
 	scroll-padding-inline: 2px;
 	-ms-overflow-style: none;
 	scrollbar-width: none;
-}
-
-.important-info::before,
-.important-info::after {
-	content: '';
-	position: sticky;
-	z-index: 2;
-	flex: 0 0 56px;
-	width: 56px;
-	pointer-events: none;
-}
-
-.important-info::before {
-	left: 0;
-	order: -1;
-	background: linear-gradient(90deg, #fff 22%, rgba(255, 255, 255, 0));
-}
-
-.important-info::after {
-	right: 0;
-	background: linear-gradient(90deg, rgba(255, 255, 255, 0), #fff 78%);
 }
 
 .important-info::-webkit-scrollbar {

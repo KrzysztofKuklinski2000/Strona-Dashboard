@@ -1,5 +1,6 @@
 (() => {
 	const scrollElement = document.querySelector('.important-info');
+	const scrollShell = document.querySelector('.important-info-shell');
 	const leftArrow = document.querySelector('.left-arrow');
 	const rightArrow = document.querySelector('.right-arrow');
 
@@ -25,16 +26,20 @@
 	function updateArrowVisibility() {
 		const hasMultipleCards = scrollElement.querySelectorAll('.important-card').length > 1;
 		const maxScrollLeft = scrollElement.scrollWidth - scrollElement.clientWidth;
+		const isAtStart = scrollElement.scrollLeft <= TOLERANCE;
+		const isAtEnd = maxScrollLeft <= TOLERANCE || scrollElement.scrollLeft >= maxScrollLeft - TOLERANCE;
 
 		if (!hasMultipleCards) {
 			leftArrow.style.visibility = 'hidden';
 			rightArrow.style.visibility = 'hidden';
+			scrollShell?.classList.remove('has-left-fade', 'has-right-fade');
 			return;
 		}
 
-		leftArrow.style.visibility = scrollElement.scrollLeft <= TOLERANCE ? 'hidden' : 'visible';
-		rightArrow.style.visibility =
-			maxScrollLeft > TOLERANCE && scrollElement.scrollLeft >= maxScrollLeft - TOLERANCE ? 'hidden' : 'visible';
+		leftArrow.style.visibility = isAtStart ? 'hidden' : 'visible';
+		rightArrow.style.visibility = isAtEnd ? 'hidden' : 'visible';
+		scrollShell?.classList.toggle('has-left-fade', !isAtStart);
+		scrollShell?.classList.toggle('has-right-fade', !isAtEnd);
 	}
 
 	function init() {

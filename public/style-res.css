@@ -981,6 +981,15 @@
 		gap: 18px;
 	}
 
+	.important-info-shell::before,
+	.important-info-shell::after {
+		width: 56px;
+	}
+
+	.important-info-shell::before {
+		display: block;
+	}
+
 	.important-card {
 		flex-basis: clamp(380px, calc((100% - 48px) / 2.35), 520px);
 		min-height: 188px;
