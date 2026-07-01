@@ -741,11 +741,13 @@ main {
 	grid-template-columns: 1fr;
 	gap: 16px;
 	align-items: start;
+	justify-items: center;
 	padding: 22px;
 	border: 1px solid var(--color-line);
 	border-radius: 2px;
 	background: #fff;
 	box-shadow: 0 18px 48px rgba(31, 24, 17, .045);
+	text-align: center;
 }
 
 .why-karate-card__icon {
@@ -765,6 +767,7 @@ main {
 
 .why-karate-card > div:not(.why-karate-card__icon) {
 	min-width: 0;
+	max-width: 34ch;
 }
 
 .why-karate-card h3 {
@@ -779,7 +782,7 @@ main {
 
 .why-karate-card p {
 	max-width: 34ch;
-	margin-top: 8px;
+	margin: 8px auto 0;
 	color: var(--color-muted);
 	font-size: .86rem;
 	font-weight: 500;
@@ -823,6 +826,7 @@ main {
 	min-width: 0;
 	z-index: 1;
 	background: var(--family-section-bg);
+	text-align: center;
 }
 
 .family-training-section__content::after {
@@ -865,7 +869,7 @@ main {
 
 .family-training-section__lead {
 	max-width: 36ch;
-	margin-top: 14px;
+	margin: 14px auto 0;
 	color: var(--color-muted);
 	font-size: .92rem;
 	font-weight: 500;
@@ -885,6 +889,8 @@ main {
 	display: flex;
 	align-items: flex-start;
 	gap: 10px;
+	margin: 0 auto;
+	text-align: left;
 	color: var(--color-ink);
 	font-size: .88rem;
 	font-weight: 700;
@@ -4453,14 +4459,19 @@ body > footer {
 
 .site-newsletter__intro {
 	min-width: 0;
+	width: 100%;
+	max-width: 640px;
+	margin: 0 auto;
 	display: grid;
 	grid-template-columns: minmax(0, 1fr);
 	gap: 18px;
 	align-items: start;
-	max-width: 620px;
+	justify-items: center;
+	text-align: center;
 }
 
 .site-newsletter__intro > div {
+	width: 100%;
 	min-width: 0;
 }
 
@@ -4491,7 +4502,10 @@ body > footer {
 }
 
 .site-newsletter h2 {
+	max-width: 14ch;
 	margin: 0;
+	margin-left: auto;
+	margin-right: auto;
 	color: var(--color-ink);
 	font-size: clamp(1.7rem, 6vw, 2.25rem);
 	font-weight: 800;
@@ -4500,8 +4514,9 @@ body > footer {
 }
 
 .site-newsletter__intro p:not(.site-newsletter__eyebrow) {
-	max-width: 430px;
-	margin-top: 12px;
+	max-width: 34ch;
+	margin: 12px auto 0;
+	text-align: center;
 	color: var(--color-muted);
 	font-size: .95rem;
 	font-weight: 500;
@@ -4517,6 +4532,7 @@ body > footer {
 	display: grid;
 	gap: 14px;
 	max-width: 640px;
+	margin: 0 auto;
 }
 
 .site-newsletter__field {
@@ -4579,7 +4595,9 @@ body > footer {
 	min-width: 0;
 	display: flex;
 	align-items: flex-start;
+	justify-content: flex-start;
 	gap: 10px;
+	text-align: left;
 	color: var(--color-muted);
 	font-size: .78rem;
 	font-weight: 600;
@@ -4616,15 +4634,21 @@ body > footer {
 }
 
 .site-footer-main__inner {
-	width: min(100% - 40px, var(--container-width));
+	width: min(100% - 32px, 460px);
 	margin: 0 auto;
-	padding: 46px 0 34px;
+	padding: 42px 0 34px;
 	display: grid;
-	gap: 36px;
+	gap: 30px;
 }
 
 .site-footer-brand {
 	max-width: 320px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.site-footer-brand .site-brand {
+	justify-content: center;
 }
 
 .site-brand--footer {
@@ -4651,7 +4675,15 @@ body > footer {
 
 .site-footer-nav {
 	display: grid;
-	gap: 28px;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 28px 22px;
+	text-align: left;
+}
+
+.site-footer-nav > div:last-child {
+	grid-column: 1 / -1;
+	padding-top: 6px;
+	border-top: 1px solid rgba(255, 253, 248, .1);
 }
 
 .site-footer-nav h3 {
@@ -4691,6 +4723,9 @@ body > footer {
 	grid-template-columns: 18px minmax(0, 1fr);
 	gap: 10px;
 	align-items: start;
+	max-width: 320px;
+	margin: 0;
+	text-align: left;
 }
 
 .site-footer-contact i {
@@ -4706,6 +4741,7 @@ body > footer {
 	display: grid;
 	gap: 12px;
 	border-top: 1px solid rgba(255, 253, 248, .1);
+	text-align: center;
 }
 
 .site-footer-bottom p,
@@ -4718,6 +4754,7 @@ body > footer {
 .site-footer-bottom div {
 	display: flex;
 	flex-wrap: wrap;
+	justify-content: center;
 	gap: 18px;
 }
 
