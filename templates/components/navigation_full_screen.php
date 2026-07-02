@@ -7,6 +7,7 @@ $mainNavItems = [
     'timetable' => ['label' => 'Grafik zajęć', 'href' => '/grafik'],
     'gallery' => ['label' => 'Galeria', 'href' => '/galeria'],
     'fees-info' => ['label' => 'Składki', 'href' => '/skladki'],
+    'camp-info' => ['label' => 'Obozy', 'href' => '/obozy'],
     'contact' => ['label' => 'Kontakt', 'href' => '/kontakt'],
 ];
 
