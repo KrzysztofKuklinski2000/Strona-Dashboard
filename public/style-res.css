@@ -431,6 +431,40 @@
 
 	/*OBÓZ*/
 
+	.camp-page__inner {
+		padding-top: 72px;
+		padding-bottom: 96px;
+	}
+
+	.camp-intro {
+		grid-template-columns: minmax(0, 1fr) minmax(300px, .38fr);
+		align-items: stretch;
+		padding: 34px;
+	}
+
+	.camp-price-panel {
+		align-content: center;
+	}
+
+	.camp-details {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 18px;
+	}
+
+	.camp-detail-card {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.camp-place,
+	.camp-offer {
+		padding: 34px;
+	}
+
+	.camp-offer__grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 18px;
+	}
+
 	.camp-header {
 		width:100%;
 		height:350px;

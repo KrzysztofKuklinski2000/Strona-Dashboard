@@ -1681,6 +1681,198 @@ footer .copy {
 	display: none;
 }
 
+.camp-page {
+	background: #fff;
+}
+
+.camp-page__inner {
+	width: min(calc(100% - 40px), var(--container-width));
+	margin: 0 auto;
+	padding: 62px 0 82px;
+}
+
+.camp-intro {
+	position: relative;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 22px;
+	padding: 28px;
+	border: 1px solid var(--color-line);
+	background:
+		linear-gradient(180deg, rgba(250, 247, 244, .72), rgba(255, 255, 255, 0) 170px),
+		#fff;
+	overflow: hidden;
+}
+
+.camp-intro::after {
+	content: '';
+	position: absolute;
+	right: -70px;
+	bottom: -112px;
+	width: 270px;
+	aspect-ratio: 1;
+	background: url('/public/images/decor-bamboo.png') center / contain no-repeat;
+	opacity: .12;
+	pointer-events: none;
+}
+
+.camp-intro__content,
+.camp-price-panel {
+	position: relative;
+	z-index: 1;
+}
+
+.camp-intro__content p,
+.camp-price-panel p,
+.camp-detail-card p,
+.camp-section-heading p {
+	margin-bottom: 8px;
+	color: var(--color-accent);
+	font-size: .62rem;
+	font-weight: 900;
+	letter-spacing: .2em;
+	text-transform: uppercase;
+}
+
+.camp-intro__content h2,
+.camp-section-heading h2 {
+	margin: 0;
+	color: var(--color-ink);
+	font-size: clamp(1.85rem, 5vw, 2.75rem);
+	font-weight: 800;
+	letter-spacing: -.045em;
+	line-height: 1.05;
+}
+
+.camp-intro__content span {
+	display: block;
+	max-width: 640px;
+	margin-top: 14px;
+	color: var(--color-muted);
+	font-size: .95rem;
+	font-weight: 500;
+	line-height: 1.7;
+}
+
+.camp-price-panel {
+	padding: 22px;
+	border: 1px solid var(--color-line);
+	background: rgba(255, 255, 255, .9);
+}
+
+.camp-price-panel h3 {
+	margin: 0;
+	color: var(--color-ink);
+	font-family: var(--font-display);
+	font-size: clamp(2.15rem, 7vw, 3rem);
+	font-weight: 600;
+	letter-spacing: -.045em;
+	line-height: 1;
+}
+
+.camp-price-panel small {
+	display: block;
+	margin-top: 13px;
+	color: var(--color-muted);
+	font-size: .88rem;
+	font-weight: 600;
+	line-height: 1.55;
+}
+
+.camp-details {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 14px;
+	margin-top: 34px;
+}
+
+.camp-detail-card,
+.camp-offer-card {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: 16px;
+	align-items: start;
+	padding: 18px;
+	border: 1px solid var(--color-line);
+	background: #fff;
+	box-shadow: 0 18px 60px rgba(31, 24, 17, .035);
+}
+
+.camp-detail-card > span,
+.camp-offer-card > span,
+.camp-place__content i {
+	width: 52px;
+	height: 52px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	background: #f7f1f0;
+	color: var(--color-accent);
+	font-size: 1.05rem;
+}
+
+.camp-detail-card i,
+.camp-offer-card i,
+.camp-place__content i {
+	color: inherit;
+}
+
+.camp-detail-card strong {
+	display: block;
+	color: var(--color-ink);
+	font-size: clamp(1rem, 4vw, 1.18rem);
+	font-weight: 800;
+	line-height: 1.25;
+	overflow-wrap: anywhere;
+}
+
+.camp-place,
+.camp-offer {
+	margin-top: 34px;
+	padding: 24px;
+	border: 1px solid var(--color-line);
+	background: #fff;
+}
+
+.camp-place__content {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: 16px;
+	align-items: start;
+	margin-top: 24px;
+	padding: 22px;
+	border: 1px solid var(--color-line);
+	background:
+		linear-gradient(180deg, rgba(250, 247, 244, .72), rgba(255, 255, 255, 0) 120px),
+		#fff;
+}
+
+.camp-place__content p,
+.camp-offer-card p {
+	margin: 0;
+	color: var(--color-muted);
+	font-size: .88rem;
+	font-weight: 500;
+	line-height: 1.65;
+	overflow-wrap: break-word;
+}
+
+.camp-offer__grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 14px;
+	margin-top: 24px;
+}
+
+.camp-offer-card h3 {
+	margin: 0 0 7px;
+	color: var(--color-ink);
+	font-size: 1rem;
+	font-weight: 800;
+	line-height: 1.25;
+}
+
 .respons-container {
 	width:90%;
 	margin: auto;
