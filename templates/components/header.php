@@ -20,7 +20,7 @@
 				<i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
 			</a>
 			<a class="hero-button hero-button--secondary" href="/grafik">
-				<i class="fa-solid fa-play" aria-hidden="true"></i>
+				<i class="fa-regular fa-calendar" aria-hidden="true"></i>
 				Zobacz grafik
 			</a>
 		</div>
