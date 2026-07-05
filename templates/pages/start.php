@@ -14,33 +14,47 @@ $importantPosts = array_values(array_filter(
 ));
 // TODO: Move hardcoded homepage section content to dashboard once selectable post layouts are implemented.
 // This should become a "family_training" layout with editable title, lead, checklist items, image, and CTA.
-$familyTraining = [
+$familyTrainingBlock = [
+    'sectionId' => 'family-training-section',
+    'titleId' => 'family-training-title',
     'eyebrow' => 'Trening dla każdego',
     'title' => 'Trening rodzinny',
     'description' => 'Karate to idealna forma aktywności dla całych rodzin. Dzieci, młodzież i dorośli - każdy znajdzie coś dla siebie.',
-    'ctaLabel' => 'Dołącz do naszej rodziny',
-    'ctaUrl' => '/zapisy',
+    'image' => [
+        'src' => '/public/images/family-training.png',
+        'alt' => 'Rodzina podczas treningu karate',
+    ],
     'items' => [
         'Zajęcia dopasowane do wieku i możliwości',
         'Bezpieczne i prowadzone przez doświadczonych instruktorów',
         'Wspólna droga rozwoju i budowania relacji',
     ],
+    'link' => [
+        'label' => 'Dołącz do naszej rodziny',
+        'url' => '/zapisy',
+    ],
 ];
-$whyKarateCards = [
-    [
-        'icon' => 'fa-solid fa-child-reaching',
-        'title' => 'Siła i sprawność',
-        'description' => 'Poprawiamy kondycję, gibkość i koordynację. Budujemy zdrowe nawyki na całe życie.',
-    ],
-    [
-        'icon' => 'fa-solid fa-shield-halved',
-        'title' => 'Charakter i dyscyplina',
-        'description' => 'Uczymy szacunku, wytrwałości i odpowiedzialności - na macie i poza nią.',
-    ],
-    [
-        'icon' => 'fa-solid fa-people-group',
-        'title' => 'Społeczność',
-        'description' => 'Trenujemy razem, wspieramy się i tworzymy przyjazną atmosferę w każdym wieku.',
+$whyKarateBlock = [
+    'sectionId' => 'why-karate-section',
+    'titleId' => 'why-karate-title',
+    'eyebrow' => 'Dlaczego karate?',
+    'title' => 'Więcej niż sport',
+    'cards' => [
+        [
+            'icon' => 'fa-solid fa-child-reaching',
+            'title' => 'Siła i sprawność',
+            'description' => 'Poprawiamy kondycję, gibkość i koordynację. Budujemy zdrowe nawyki na całe życie.',
+        ],
+        [
+            'icon' => 'fa-solid fa-shield-halved',
+            'title' => 'Charakter i dyscyplina',
+            'description' => 'Uczymy szacunku, wytrwałości i odpowiedzialności - na macie i poza nią.',
+        ],
+        [
+            'icon' => 'fa-solid fa-people-group',
+            'title' => 'Społeczność',
+            'description' => 'Trenujemy razem, wspieramy się i tworzymy przyjazną atmosferę w każdym wieku.',
+        ],
     ],
 ];
 ?>
@@ -116,70 +130,17 @@ $whyKarateCards = [
     </section>
 <?php endif ?>
 
-<section class="why-karate-section" aria-labelledby="why-karate-title">
-    <div class="why-karate-section__inner">
-        <div class="why-karate-section__heading">
-            <p>Dlaczego karate?</p>
-            <h2 id="why-karate-title">Więcej niż sport</h2>
-        </div>
+<?php
+    $block = $whyKarateBlock;
+    require 'templates/pages/start_posts/cards_grid.php';
 
-        <div class="why-karate-grid">
-            <?php foreach ($whyKarateCards as $card): ?>
-                <article class="why-karate-card">
-                    <div class="why-karate-card__icon" aria-hidden="true">
-                        <i class="<?= e($card['icon']) ?>"></i>
-                    </div>
-
-                    <div>
-                        <h3><?= e($card['title']) ?></h3>
-                        <p><?= e($card['description']) ?></p>
-                    </div>
-                </article>
-            <?php endforeach ?>
-        </div>
-    </div>
-</section>
-
-<section id="family-training-section" class="family-training-section" aria-labelledby="family-training-title">
-    <div class="family-training-section__inner">
-        <div class="family-training-section__media">
-            <img src="/public/images/family-training.png" alt="Rodzina podczas treningu karate">
-        </div>
-
-        <div class="family-training-section__content">
-            <p class="family-training-section__eyebrow"><?= e($familyTraining['eyebrow']) ?></p>
-            <h2 id="family-training-title"><?= e($familyTraining['title']) ?></h2>
-            <p class="family-training-section__lead"><?= e($familyTraining['description']) ?></p>
-
-            <ul class="family-training-section__list">
-                <?php foreach ($familyTraining['items'] as $item): ?>
-                    <li>
-                        <i class="fa-solid fa-check" aria-hidden="true"></i>
-                        <?= e($item) ?>
-                    </li>
-                <?php endforeach ?>
-            </ul>
-
-            <a class="family-training-section__cta" href="<?= e($familyTraining['ctaUrl']) ?>">
-                <?= e($familyTraining['ctaLabel']) ?>
-                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-            </a>
-        </div>
-    </div>
-</section>
+    $block = $familyTrainingBlock;
+    require 'templates/pages/start_posts/image_text_list.php';
+?>
 
 <div class="padding-top">
-        <?php foreach($legacyHomePosts as  $content): ?>
-                <?php $class = $content->id % 2 === 0 ? "dark-post" : 'light-post'  ?>
-                <div class="post">
-                    <?php
-                        $text = $content->title;
-                        require('templates/components/post_header.php');
-                    ?>
-                    <div class="post-content flex-item-center <?= $class ?>">
-                        <p><?= e_br($content->description) ?></p>
-                    </div>
-                </div>
+        <?php foreach($legacyHomePosts as $post): ?>
+            <?php require 'templates/pages/start_posts/simple_text.php'; ?>
         <?php endforeach ?>
     </div>
 
