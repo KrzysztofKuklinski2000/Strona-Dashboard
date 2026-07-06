@@ -14,6 +14,8 @@ readonly class MainPageDto implements DataTransferObjectInterface
         public string $updated,
         public int $status,
         public int $position,
+        public string $type,
+        public ?string $payload
     )
     {
     }
@@ -29,6 +31,8 @@ readonly class MainPageDto implements DataTransferObjectInterface
             updated: (string) $data['updated'],
             status: (int) $data['status'],
             position: (int) $data['position'],
+            type: (string) ($data['type'] ?? 'simple_text'),
+            payload: isset($data['payload']) ? (string) $data['payload'] : null,
         );
     }
 
@@ -40,7 +44,9 @@ readonly class MainPageDto implements DataTransferObjectInterface
             "created" => $this->created,
             "updated" => $this->updated,
             "status" => $this->status,
-            "position" => $this->position
+            "position" => $this->position,
+            "type" => $this->type,
+            "payload" => $this->payload
         ];
     }
 }
