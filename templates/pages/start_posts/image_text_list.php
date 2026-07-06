@@ -2,8 +2,8 @@
 $sectionId = $block['sectionId'] ?? 'image-text-list-section';
 $titleId = $block['titleId'] ?? $sectionId . '-title';
 $eyebrow = $block['eyebrow'] ?? '';
-$title = $block['title'] ?? '';
-$description = $block['description'] ?? '';
+$title = $post->title ?? '';
+$description = $post->description ?? '';
 $image = $block['image'] ?? null;
 $items = $block['items'] ?? [];
 $link = $block['link'] ?? null;

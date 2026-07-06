@@ -2,7 +2,7 @@
 $sectionId = $block['sectionId'] ?? 'cards-grid-section';
 $titleId = $block['titleId'] ?? $sectionId . '-title';
 $eyebrow = $block['eyebrow'] ?? '';
-$title = $block['title'] ?? '';
+$title = $post->title ?? '';
 $cards = $block['cards'] ?? [];
 ?>
 
