@@ -1,62 +1,9 @@
 <?php
+use App\Content\MainPagePostTypes;
+
 $first = $params['content'][2] ?? null;
-$homePosts = array_values(array_filter(
-    $params['content'][0] ?? [],
-    static fn($post): bool => (bool) ($post->status ?? false)
-));
-$legacyHomePosts = array_values(array_filter(
-    $homePosts,
-    static fn($post): bool => !preg_match('/(dlaczego\s+karate|trening\s+rodzinny)/i', (string) ($post->title ?? ''))
-));
-$importantPosts = array_values(array_filter(
-    $params['content'][1] ?? [],
-    static fn($post): bool => (bool) ($post->status ?? false)
-));
-// TODO: Move hardcoded homepage section content to dashboard once selectable post layouts are implemented.
-// This should become a "family_training" layout with editable title, lead, checklist items, image, and CTA.
-$familyTrainingBlock = [
-    'sectionId' => 'family-training-section',
-    'titleId' => 'family-training-title',
-    'eyebrow' => 'Trening dla każdego',
-    'title' => 'Trening rodzinny',
-    'description' => 'Karate to idealna forma aktywności dla całych rodzin. Dzieci, młodzież i dorośli - każdy znajdzie coś dla siebie.',
-    'image' => [
-        'src' => '/public/images/family-training.png',
-        'alt' => 'Rodzina podczas treningu karate',
-    ],
-    'items' => [
-        'Zajęcia dopasowane do wieku i możliwości',
-        'Bezpieczne i prowadzone przez doświadczonych instruktorów',
-        'Wspólna droga rozwoju i budowania relacji',
-    ],
-    'link' => [
-        'label' => 'Dołącz do naszej rodziny',
-        'url' => '/zapisy',
-    ],
-];
-$whyKarateBlock = [
-    'sectionId' => 'why-karate-section',
-    'titleId' => 'why-karate-title',
-    'eyebrow' => 'Dlaczego karate?',
-    'title' => 'Więcej niż sport',
-    'cards' => [
-        [
-            'icon' => 'fa-solid fa-child-reaching',
-            'title' => 'Siła i sprawność',
-            'description' => 'Poprawiamy kondycję, gibkość i koordynację. Budujemy zdrowe nawyki na całe życie.',
-        ],
-        [
-            'icon' => 'fa-solid fa-shield-halved',
-            'title' => 'Charakter i dyscyplina',
-            'description' => 'Uczymy szacunku, wytrwałości i odpowiedzialności - na macie i poza nią.',
-        ],
-        [
-            'icon' => 'fa-solid fa-people-group',
-            'title' => 'Społeczność',
-            'description' => 'Trenujemy razem, wspieramy się i tworzymy przyjazną atmosferę w każdym wieku.',
-        ],
-    ],
-];
+$homePosts = $params['content'][0] ?? [];
+$importantPosts = $params['content'][1] ?? [];
 ?>
 
 <?php if ($importantPosts): ?>
@@ -69,10 +16,10 @@ $whyKarateBlock = [
 
             <div class="important-info-shell">
                 <div class="important-info" tabindex="0" aria-label="Lista ważnych informacji">
-                    <?php foreach($importantPosts as $key => $post): ?>
+                    <?php foreach ($importantPosts as $key => $post): ?>
                         <?php
-                            $createdTimestamp = strtotime($post->created ?? '');
-                            $createdDate = $createdTimestamp ? date('d.m.Y', $createdTimestamp) : '';
+                        $createdTimestamp = strtotime($post->created ?? '');
+                        $createdDate = $createdTimestamp ? date('d.m.Y', $createdTimestamp) : '';
                         ?>
                         <article class="important-card">
                             <div class="important-card__icon" aria-hidden="true">
@@ -107,7 +54,7 @@ $whyKarateBlock = [
     </section>
 <?php endif ?>
 
-<?php if($first): ?>
+<?php if ($first): ?>
     <section class="first-class-section" aria-labelledby="first-class-title">
         <div class="first-class-section__inner">
             <div class="first-class-section__icon" aria-hidden="true">
@@ -130,18 +77,28 @@ $whyKarateBlock = [
     </section>
 <?php endif ?>
 
-<?php
-    $block = $whyKarateBlock;
-    require 'templates/pages/start_posts/cards_grid.php';
+<?php foreach ($homePosts as $post): ?>
+    <?php
+        $type = (string) ($post->type ?? MainPagePostTypes::SIMPLE_TEXT);
+        $partial = MainPagePostTypes::partial($type);
 
-    $block = $familyTrainingBlock;
-    require 'templates/pages/start_posts/image_text_list.php';
-?>
+        if ($partial === null) {
+            $type = MainPagePostTypes::SIMPLE_TEXT;
+            $partial = MainPagePostTypes::partial($type);
+        }
 
-<div class="padding-top">
-        <?php foreach($legacyHomePosts as $post): ?>
-            <?php require 'templates/pages/start_posts/simple_text.php'; ?>
-        <?php endforeach ?>
-    </div>
+        $partialPath = 'templates/pages/start_posts/' . $partial;
+        $payload = json_decode((string) ($post->payload ?? ''), true) ?: [];
+        $block = $payload;
+    ?>
+
+    <?php if ($type === MainPagePostTypes::SIMPLE_TEXT): ?>
+        <div class="padding-top">
+            <?php require $partialPath; ?>
+        </div>
+    <?php else: ?>
+        <?php require $partialPath; ?>
+    <?php endif ?>
+<?php endforeach ?>
 
 <script src="/public/js/scroll.js"></script>
