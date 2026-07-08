@@ -9,6 +9,7 @@ use App\DTO\Dashboard\CampDto;
 use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\ContactDto;
 use App\DTO\Dashboard\CreateGalleryDto;
+use App\DTO\Dashboard\CreateMainPagePostDto;
 use App\DTO\Dashboard\CreatePostDto;
 use App\DTO\Dashboard\CreateSubscriberDto;
 use App\DTO\Dashboard\CreateTimetableDto;
@@ -125,6 +126,43 @@ trait GetDataMethods
         ];
 
         return CreatePostDto::fromArray($data);
+    }
+
+    protected function getMainPagePostDataToCreate(): DataTransferObjectInterface
+    {
+        $data =  [
+            'title' => $this->validator->validate(
+                name: 'postTitle',
+                value: $this->request->getFormParam('postTitle'),
+                required: true,
+                minLength: 10,
+                maxLength: 60
+            ),
+
+            'description' => $this->validator->validate(
+                name: 'postDescription',
+                value: $this->request->getFormParam('postDescription'),
+                required: true,
+                minLength: 20,
+                maxLength: 1000
+            ),
+
+            'created' => date('Y-m-d'),
+
+            'updated' => date('Y-m-d'),
+
+            'status' => 1,
+
+            'type' => $this->validator->validate(
+                name: 'postType',
+                value: $this->request->getFormParam('postType'),
+                required: true,
+            ),
+
+            'payload' => null
+        ];
+
+        return CreateMainPagePostDto::fromArray($data);
     }
 
     protected function getDataToCampEdit(): CampDto
