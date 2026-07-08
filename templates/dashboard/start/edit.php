@@ -7,4 +7,4 @@ $errors = $params['flash_dashboard']['message'] ?? [];
 $csrf = $params['csrf_token'] ?? '';
 
 
-require "templates/dashboard/_partials/_post_form.php";
+require "templates/dashboard/start/_form.php";

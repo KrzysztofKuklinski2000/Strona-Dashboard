@@ -2,6 +2,7 @@
 
 namespace App\Controller\Dashboard;
 
+use App\Content\MainPagePostTypes;
 use App\Controller\Dashboard\Traits\HasDeleteAction;
 use App\Controller\Dashboard\Traits\HasMoveAction;
 use App\Controller\Dashboard\Traits\HasPublishedAction;
@@ -42,6 +43,7 @@ class StartController extends AbstractDashboardController
         $this->renderPage([
             'page' => 'start/edit',
             'data' => $this->getSingleData(),
+            'postTypes' => MainPagePostTypes::all()
         ]);
     }
 
@@ -49,6 +51,7 @@ class StartController extends AbstractDashboardController
     {
         $this->renderPage([
             'page' => 'start/create',
+            'postTypes' => MainPagePostTypes::all()
         ]);
     }
 
@@ -86,7 +89,7 @@ class StartController extends AbstractDashboardController
 
     protected function getDataToCreate(): DataTransferObjectInterface
     {
-        return $this->getPostDataToCreate();
+        return $this->getMainPagePostDataToCreate();
     }
 
     protected function getDataToUpdate(): DataTransferObjectInterface
