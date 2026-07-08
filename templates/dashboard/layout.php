@@ -88,8 +88,6 @@
     </main>
 </div>
 </body>
-<?php if (isset($params['flash_dashboard']) && in_array($params['flash_dashboard']['type'], ['success', 'info', 'warning'])): ?>
-    <script src="/public/dashboard/main.js"></script>
-<?php endif; ?>
+<script src="/public/dashboard/main.js"></script>
 
 </html>
