@@ -130,6 +130,20 @@ trait GetDataMethods
 
     protected function getMainPagePostDataToCreate(): DataTransferObjectInterface
     {
+        $type = $this->validator->validate(
+            name: 'postType',
+            value: $this->request->getFormParam('postType'),
+            required: true,
+        );
+
+        $rawPayload = $this->request->getFormParam('payload') ?? [];
+
+        if (!is_array($rawPayload)) {
+            $rawPayload = [];
+        }
+
+        $payload = $this->normalizeMainPagePayload($type, $rawPayload);
+
         $data =  [
             'title' => $this->validator->validate(
                 name: 'postTitle',
@@ -153,13 +167,9 @@ trait GetDataMethods
 
             'status' => 1,
 
-            'type' => $this->validator->validate(
-                name: 'postType',
-                value: $this->request->getFormParam('postType'),
-                required: true,
-            ),
+            'type' => $type,
 
-            'payload' => null
+            'payload' => $payload
         ];
 
         return CreateMainPagePostDto::fromArray($data);
@@ -610,5 +620,36 @@ trait GetDataMethods
             )
         ];
         return UpdateSubscriberDto::fromArray($data);
+    }
+
+    private function normalizeMainPagePayload(string $type, array $rawPayload): ?string
+    {
+        if ($type === 'simple_text') {
+            return null;
+        }
+
+        if ($type === 'cards_grid') {
+            return json_encode([
+                'eyebrow' => $rawPayload['eyebrow'] ?? '',
+                'cards' => $rawPayload['cards'] ?? [],
+            ], JSON_UNESCAPED_UNICODE);
+        }
+
+        if ($type === 'image_text_list') {
+            return json_encode([
+                'eyebrow' => $rawPayload['eyebrow'] ?? '',
+                'image' => [
+                    'src' => $rawPayload['image']['src'] ?? '',
+                    'alt' => $rawPayload['image']['alt'] ?? '',
+                ],
+                'items' => $rawPayload['items'] ?? [],
+                'link' => [
+                    'label' => $rawPayload['link']['label'] ?? '',
+                    'url' => $rawPayload['link']['url'] ?? '',
+                ],
+            ], JSON_UNESCAPED_UNICODE);
+        }
+
+        return null;
     }
 }
