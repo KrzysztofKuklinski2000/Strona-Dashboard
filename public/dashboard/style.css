@@ -214,6 +214,29 @@ main {
 	border:1px solid #171D29;
 }
 
+.content-container select {
+	width: 422px;
+	height: 34px;
+	outline: none;
+	font-weight: 700;
+	color: #171D29;
+	padding: 0 36px 0 10px;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	border: 1px solid #171D29;
+	background:
+		linear-gradient(45deg, transparent 50%, #171D29 50%) calc(100% - 18px) 13px / 6px 6px no-repeat,
+		linear-gradient(135deg, #171D29 50%, transparent 50%) calc(100% - 13px) 13px / 6px 6px no-repeat,
+		#fff;
+	appearance: none;
+	cursor: pointer;
+}
+
+.content-container select:focus {
+	border-color: #FF3366;
+	box-shadow: 0 0 0 2px rgba(255, 51, 102, .14);
+}
+
 .content-container textarea {
 	width: 90%;
 	height:200px;
