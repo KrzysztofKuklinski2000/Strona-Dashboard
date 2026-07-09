@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
+use App\Content\MainPagePostTypes;
 use App\Core\Request;
 use App\Core\Validator;
 use App\DTO\Dashboard\CampDto;
@@ -135,6 +136,10 @@ trait GetDataMethods
             value: $this->request->getFormParam('postType'),
             required: true,
         );
+
+        if (!MainPagePostTypes::isAllowed((string) $type)) {
+            $type = MainPagePostTypes::SIMPLE_TEXT;
+        }
 
         $rawPayload = $this->request->getFormParam('payload') ?? [];
 

@@ -12,7 +12,7 @@ readonly class CreateMainPagePostDto implements DataTransferObjectInterface
         public string $description,
         public string $created,
         public string $updated,
-        public string $status,
+        public int $status,
         public string $type,
         public ?string $payload,
     )
@@ -26,7 +26,7 @@ readonly class CreateMainPagePostDto implements DataTransferObjectInterface
             description: (string) $data['description'],
             created: (string) $data['created'],
             updated: (string) $data['updated'],
-            status: (string) $data['status'],
+            status: (int) $data['status'],
             type: (string) ($data['type'] ?? 'simple_text'),
             payload: isset($data['payload']) ? (string) $data['payload'] : null,
         );
