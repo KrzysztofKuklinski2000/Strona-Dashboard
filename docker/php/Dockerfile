@@ -6,7 +6,8 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     libmariadb-dev \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-install pdo_mysql \
     && docker-php-ext-enable pdo_mysql
@@ -19,7 +20,9 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /app
 
 COPY docker/php/entrypoint.sh /usr/local/bin/docker-entrypoint
-RUN chmod +x /usr/local/bin/docker-entrypoint
+
+RUN sed -i 's/\r$//' /usr/local/bin/docker-entrypoint \
+    && chmod +x /usr/local/bin/docker-entrypoint
 
 RUN git config --global --add safe.directory /app
 
@@ -27,6 +30,8 @@ COPY composer.json composer.lock ./
 RUN composer install --no-scripts --no-autoloader
 
 COPY . .
+
 RUN composer dump-autoload --optimize
 
-ENTRYPOINT ["docker-entrypoint"]
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint"]
+CMD ["php-fpm"]

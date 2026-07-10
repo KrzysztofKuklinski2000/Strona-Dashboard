@@ -1,7 +1,11 @@
 #!/bin/sh
 
-if [ ! -d "vendor" ]; then
+set -e
+
+cd /app
+
+if [ ! -d "/app/vendor" ]; then
     composer install
 fi
 
-exec php-fpm
+exec "$@"
