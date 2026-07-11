@@ -18,6 +18,7 @@ use App\DTO\Dashboard\FeesDto;
 use App\DTO\Dashboard\PublishedDto;
 use App\DTO\Dashboard\PublishedTimetableDto;
 use App\DTO\Dashboard\UpdateGalleryDto;
+use App\DTO\Dashboard\UpdateMainPageDto;
 use App\DTO\Dashboard\UpdatePostDto;
 use App\DTO\Dashboard\UpdateSubscriberDto;
 use App\DTO\Dashboard\UpdateTimetableDto;
@@ -150,6 +151,8 @@ trait GetDataMethods
         $payload = $this->normalizeMainPagePayload($type, $rawPayload);
 
         $data =  [
+
+
             'title' => $this->validator->validate(
                 name: 'postTitle',
                 value: $this->request->getFormParam('postTitle'),
@@ -178,6 +181,60 @@ trait GetDataMethods
         ];
 
         return CreateMainPagePostDto::fromArray($data);
+    }
+
+    protected function getMainPagePostDataToUpdate(): DataTransferObjectInterface
+    {
+        $type = $this->validator->validate(
+            name: 'postType',
+            value: $this->request->getFormParam('postType'),
+            required: true,
+        );
+
+        if (!MainPagePostTypes::isAllowed((string) $type)) {
+            $type = MainPagePostTypes::SIMPLE_TEXT;
+        }
+
+        $rawPayload = $this->request->getFormParam('payload') ?? [];
+
+        if (!is_array($rawPayload)) {
+            $rawPayload = [];
+        }
+
+        $payload = $this->normalizeMainPagePayload($type, $rawPayload);
+
+        $data =  [
+            'id' => $this->validator->validate(
+                name: 'id',
+                value: $this->request->getFormParam('postId'),
+                required: true,
+                type: 'int'
+            ),
+
+            'title' => $this->validator->validate(
+                name: 'postTitle',
+                value: $this->request->getFormParam('postTitle'),
+                required: true,
+                minLength: 10,
+                maxLength: 60
+            ),
+
+            'description' => $this->validator->validate(
+                name: 'postDescription',
+                value: $this->request->getFormParam('postDescription'),
+                required: true,
+                minLength: 20,
+                maxLength: 1000
+            ),
+
+            'updated' => date('Y-m-d'),
+
+            'type' => $type,
+
+            'payload' => $payload
+        ];
+
+        return UpdateMainPageDto::fromArray($data);
     }
 
     protected function getDataToCampEdit(): CampDto

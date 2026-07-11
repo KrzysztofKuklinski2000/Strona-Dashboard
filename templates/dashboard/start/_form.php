@@ -1,6 +1,6 @@
 <?php
 $postTypes = $params['postTypes'] ?? [];
-$defaultType = (string) (array_key_first($postTypes) ?? '');
+$defaultType = (string)(array_key_first($postTypes) ?? '');
 ?>
 
 <h3><?= e($formTitle ?? 'Nowy Post') ?></h3>
@@ -10,7 +10,7 @@ $defaultType = (string) (array_key_first($postTypes) ?? '');
 
     <select name="postType" data-post-type-select>
         <?php foreach ($postTypes as $typeName => $typeProperties): ?>
-            <option value="<?= e($typeName) ?>">
+            <option value="<?= e($typeName) ?>" <?= ($data->type ?? null) && $data->type === $typeName ? 'selected' : '' ?>>
                 <?= e($typeProperties['label'] ?? $typeName) ?>
             </option>
         <?php endforeach; ?>
@@ -26,22 +26,33 @@ $defaultType = (string) (array_key_first($postTypes) ?? '');
 
     <textarea name="postDescription" placeholder="Wpisz treść posta"><?= e($data->description ?? '') ?></textarea>
     <p class="validation-error"><?= e($errors['postDescription'] ?? '') ?></p>
+    <?php
+    $currentType = $data->type ?? $defaultType;
+
+    if (!isset($postTypes[$currentType])) {
+        $currentType = $defaultType;
+    }
+
+    ?>
 
     <?php foreach ($postTypes as $typeName => $typeProperties): ?>
         <?php
-            $payload = [];
-            $partial = $typeProperties['partial'] ?? null;
+        $partial = $typeProperties['partial'] ?? null;
+
+        if (!$partial) {
+            continue;
+        }
+
+        $isActive = $currentType === $typeName;
         ?>
 
-        <?php if ($partial): ?>
-            <div
-                class="post-type-fields"
-                data-post-type-form="<?= e($typeName) ?>"
-                <?= $defaultType !== $typeName ? 'hidden' : '' ?>
-            >
-                <?php require 'templates/dashboard/start/post_forms/' . $partial; ?>
-            </div>
-        <?php endif ?>
+        <div
+            class="post-type-fields"
+            data-post-type-form="<?= e($typeName) ?>"
+            <?= !$isActive ? 'hidden' : '' ?>
+        >
+            <?php require 'templates/dashboard/start/post_forms/' . $partial; ?>
+        </div>
     <?php endforeach ?>
 
     <input type="submit" value="<?= e($buttonTitle ?? 'Stwórz') ?>">

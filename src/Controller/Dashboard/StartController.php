@@ -94,7 +94,7 @@ class StartController extends AbstractDashboardController
 
     protected function getDataToUpdate(): DataTransferObjectInterface
     {
-        return $this->getPostDataToEdit();
+        return $this->getMainPagePostDataToUpdate();
     }
 
     protected function handleCreate(DataTransferObjectInterface $data): void
