@@ -198,19 +198,55 @@ CREATE TABLE `main_page_posts`
 -- Zrzut danych tabeli `main_page_posts`
 --
 
-INSERT INTO `main_page_posts` (`id`, `title`, `description`, `created`, `updated`, `status`, `position`)
+INSERT INTO `main_page_posts` (`id`, `title`, `description`, `created`, `updated`, `status`, `position`, `type`, `payload`)
 VALUES (1, 'Pierwsze zajęcia są bezpłatne',
         'Chcesz spróbować, zanim się zdecydujesz? Zapraszamy na pierwsze zajęcia całkowicie bezpłatnie!\r\nPrzekonaj się sam, jak ciekawa i wartościowa może być nauka z nami.\r\nNie przegap okazji – zapisz się już dziś!\r\n\r\n',
-        '2025-08-02', '2025-08-02', 1, 4),
-       (2, 'DLACZEGO KARATE ?',
-        '        Karate daje dzieciom i młodzieży poczucie przynależności do grupy, gdzie łączy ich wspólne zainteresowanie sportami walki, pokonywanie trudności i własnych słabości. Daje możliwość indywidualnego rozwoju, bez potrzeby rywalizacji o miejsce w drużynie, jak dzieje się to w innych dyscyplinach sportowych . Każdy z trenujących bierze udział w treningu bez ryzyka, że zostanie zepchnięty na ławkę rezerwowych.\r\n\r\n\r\n        ',
-        '2025-08-02', '2026-01-29', 1, 1),
+        '2025-08-02', '2025-08-02', 1, 4, 'simple_text', NULL),
+       (2, 'Więcej niż sport',
+        '',
+        '2025-08-02', '2026-01-29', 1, 1, 'cards_grid',
+        '{
+          "eyebrow": "Dlaczego karate?",
+          "cards": [
+            {
+              "icon": "fa-solid fa-child-reaching",
+              "title": "Siła i sprawność",
+              "description": "Poprawiamy kondycję, gibkość i koordynację. Budujemy zdrowe nawyki na całe życie."
+            },
+            {
+              "icon": "fa-solid fa-shield-halved",
+              "title": "Charakter i dyscyplina",
+              "description": "Uczymy szacunku, wytrwałości i odpowiedzialności - na macie i poza nią."
+            },
+            {
+              "icon": "fa-solid fa-people-group",
+              "title": "Społeczność",
+              "description": "Trenujemy razem, wspieramy się i tworzymy przyjazną atmosferę w każdym wieku."
+            }
+          ]
+        }'),
        (3, 'DOTACJAAAA',
         '   Zajęcia dla dzieci i młodzieży\r\n\r\nw WEJHEROWIE\r\n\r\nsą prowadzone w ramach  zadania publicznego\r\n\r\n\" Szkolenie karate Kyokushin \"\r\n\r\nrealizowanego przez nasz Klub, dofinansowanego przez\r\n\r\nGminę Miasta Wejherowa. ',
-        '2025-08-02', '2025-09-25', 1, 3),
-       (4, 'TRENING RODZINNY',
-        '           Zapraszamy na wspólne treningi rodzinne, w których obok dzieci i młodzieży uczestniczą rodzice. Możecie wspólnie spędzać czas na realizowaniu wspólnych pasji, odświeżając wcześniej nabyte umiejętności lub zacząć  przygodę z karate od samego początku ze swoimi dziećmi. Zajęcia są realizowane w w trzech formach: trening wspólny, trening dla dzieci, trening  rodziców                                     ',
-        '2025-08-02', '2025-10-16', 1, 2);
+        '2025-08-02', '2025-09-25', 1, 3, 'simple_text', NULL),
+       (4, 'Trening rodzinny',
+        'Karate to idealna forma aktywności dla całych rodzin. Dzieci, młodzież i dorośli - każdy znajdzie coś dla siebie.',
+        '2025-08-02', '2025-10-16', 1, 2, 'image_text_list',
+        '{
+          "eyebrow": "Trening dla każdego",
+          "image": {
+            "src": "/public/images/family-training.png",
+            "alt": "Rodzina podczas treningu karate"
+          },
+          "items": [
+            "Zajęcia dopasowane do wieku i możliwości",
+            "Bezpieczne i prowadzone przez doświadczonych instruktorów",
+            "Wspólna droga rozwoju i budowania relacji"
+          ],
+          "link": {
+            "label": "Dołącz do naszej rodziny",
+            "url": "/zapisy"
+          }
+        }');
 
 -- --------------------------------------------------------
 

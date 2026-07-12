@@ -4,7 +4,7 @@ namespace App\DTO\Dashboard;
 
 use App\DTO\DataTransferObjectInterface;
 
-readonly class UpdateMainPageDto implements DataTransferObjectInterface
+readonly class UpdateMainPagePostDto implements DataTransferObjectInterface
 {
     public function __construct(
         public int $id,

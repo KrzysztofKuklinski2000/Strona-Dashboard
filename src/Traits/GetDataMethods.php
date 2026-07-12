@@ -18,7 +18,7 @@ use App\DTO\Dashboard\FeesDto;
 use App\DTO\Dashboard\PublishedDto;
 use App\DTO\Dashboard\PublishedTimetableDto;
 use App\DTO\Dashboard\UpdateGalleryDto;
-use App\DTO\Dashboard\UpdateMainPageDto;
+use App\DTO\Dashboard\UpdateMainPagePostDto;
 use App\DTO\Dashboard\UpdatePostDto;
 use App\DTO\Dashboard\UpdateSubscriberDto;
 use App\DTO\Dashboard\UpdateTimetableDto;
@@ -205,7 +205,7 @@ trait GetDataMethods
 
         $data =  [
             'id' => $this->validator->validate(
-                name: 'id',
+                name: 'postId',
                 value: $this->request->getFormParam('postId'),
                 required: true,
                 type: 'int'
@@ -234,7 +234,7 @@ trait GetDataMethods
             'payload' => $payload
         ];
 
-        return UpdateMainPageDto::fromArray($data);
+        return UpdateMainPagePostDto::fromArray($data);
     }
 
     protected function getDataToCampEdit(): CampDto
