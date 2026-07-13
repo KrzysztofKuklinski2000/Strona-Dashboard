@@ -504,3 +504,134 @@ main {
 .dashboard-image {
 	width:300px;
 }
+
+/* Homepage typed post form */
+.content-container .homepage-post-form__type-panel,
+.content-container .homepage-post-form__preview-panel {
+	width: auto;
+	border: 1px solid #d8dbe2;
+	border-radius: 8px;
+	background: #fff;
+}
+
+.content-container .homepage-post-form { gap: 24px; }
+.content-container .homepage-post-form__type-panel { padding: 24px 20px; }
+
+.content-container .homepage-post-form__type-row {
+	display: grid;
+	grid-template-columns: 130px minmax(260px, 360px);
+	gap: 18px;
+	align-items: center;
+}
+
+.content-container .homepage-post-form__type-row label,
+.content-container .homepage-post-form span,
+.content-container .cards-grid-form span {
+	color: #171D29;
+	font-weight: 700;
+}
+
+.content-container .homepage-post-form__type-row select { width: 100%; margin: 0; }
+
+.content-container .homepage-post-form__preview-panel {
+	display: grid;
+	grid-template-columns: 270px minmax(0, 1fr);
+	gap: 22px;
+	padding: 30px 18px 26px;
+}
+
+.content-container .homepage-post-form__preview-note {
+	width: auto;
+	padding-right: 26px;
+	border-right: 1px solid #d8dbe2;
+}
+
+.content-container .homepage-post-form__preview-note h4 { margin: 0; }
+.content-container .homepage-post-form__preview-note p { margin: 12px 0 0; color: #5f6877; line-height: 1.5; }
+
+.content-container .homepage-post-form__preview-content,
+.content-container .homepage-post-form__base-fields,
+.content-container .cards-grid-form {
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+}
+
+.content-container .homepage-post-form__base-fields label,
+.content-container .cards-grid-form label { display: flex; flex-direction: column; align-items: stretch; gap: 8px; }
+
+.content-container .homepage-post-form input:not([type=submit]),
+.content-container .homepage-post-form textarea,
+.content-container .cards-grid-form input,
+.content-container .cards-grid-form textarea {
+	width: calc(100% - 24px);
+	min-height: 38px;
+	border: 1px solid #bfc7d4;
+	font-size: .96rem;
+	font-weight: 500;
+}
+
+.content-container .homepage-post-form textarea { height: 86px; margin: 0; }
+
+.content-container .post-type-fields {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: transparent;
+}
+
+.content-container .post-type-fields[hidden] { display: none; }
+
+.content-container .cards-grid-form__cards {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 16px;
+}
+
+.content-container .cards-grid-form__card {
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	margin: 0;
+	padding: 20px 16px 18px;
+	border: 1px solid #d8dbe2;
+	border-radius: 6px;
+	background: #fff;
+}
+
+.content-container .cards-grid-form__card legend { display: flex; align-items: center; gap: 12px; padding: 0 8px; color: #171D29; font-weight: 700; }
+
+.content-container .cards-grid-form__card legend span {
+	width: 28px;
+	height: 28px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	background: #FF3366;
+	color: #fff;
+}
+
+.content-container .homepage-post-form[data-active-post-type="cards_grid"] .cards-grid-form__eyebrow { order: 1; }
+.content-container .homepage-post-form[data-active-post-type="cards_grid"] .homepage-post-form__title-field { order: 2; margin-top: 16px; }
+.content-container .homepage-post-form[data-active-post-type="cards_grid"] .cards-grid-form__cards { order: 3; margin-top: 28px; }
+
+.content-container .homepage-post-form[data-active-post-type="cards_grid"] .homepage-post-form__base-fields,
+.content-container .homepage-post-form[data-active-post-type="cards_grid"] .post-type-fields:not([hidden]),
+.content-container .homepage-post-form[data-active-post-type="cards_grid"] .cards-grid-form {
+	display: contents;
+}
+
+.content-container .homepage-post-form[data-active-post-type="cards_grid"] .homepage-post-form__description-field,
+.content-container .homepage-post-form[data-active-post-type="cards_grid"] .homepage-post-form__description-field + .validation-error {
+	display: none;
+}
+
+.content-container .homepage-post-form__actions {
+	width: auto;
+	padding-top: 18px;
+	border-top: 1px solid #d8dbe2;
+}

@@ -15,6 +15,10 @@ function syncPostTypeForms() {
         return;
     }
 
+    if (postTypeSelect.form) {
+        postTypeSelect.form.dataset.activePostType = postTypeSelect.value;
+    }
+
     postTypeForms.forEach((form) => {
         const isActive = form.dataset.postTypeForm === postTypeSelect.value;
 

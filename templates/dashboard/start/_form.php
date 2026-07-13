@@ -1,59 +1,81 @@
 <?php
 $postTypes = $params['postTypes'] ?? [];
 $defaultType = (string)(array_key_first($postTypes) ?? '');
+$currentType = $data->type ?? $defaultType;
+
+if (!isset($postTypes[$currentType])) {
+    $currentType = $defaultType;
+}
 ?>
 
 <h3><?= e($formTitle ?? 'Nowy Post') ?></h3>
 
-<form action="<?= e($action ?? '') ?>" method="POST">
+<form class="homepage-post-form" action="<?= e($action ?? '') ?>" method="POST">
     <input type="hidden" name="csrf_token" value="<?= e($csrf ?? '') ?>">
 
-    <select name="postType" data-post-type-select>
-        <?php foreach ($postTypes as $typeName => $typeProperties): ?>
-            <option value="<?= e($typeName) ?>" <?= ($data->type ?? null) && $data->type === $typeName ? 'selected' : '' ?>>
-                <?= e($typeProperties['label'] ?? $typeName) ?>
-            </option>
-        <?php endforeach; ?>
-    </select>
+    <section class="homepage-post-form__type-panel">
+        <div class="homepage-post-form__type-row">
+            <label for="post-type-select">Typ posta</label>
+
+            <select id="post-type-select" name="postType" data-post-type-select>
+                <?php foreach ($postTypes as $typeName => $typeProperties): ?>
+                    <option value="<?= e($typeName) ?>" <?= $currentType === $typeName ? 'selected' : '' ?>>
+                        <?= e($typeProperties['label'] ?? $typeName) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </section>
 
     <?php if (isset($data->id)): ?>
         <input type="hidden" name="postId" value="<?= e($data->id) ?>">
     <?php endif; ?>
     <p class="validation-error"><?= e($errors['postType'] ?? '') ?></p>
 
-    <input type="text" name="postTitle" maxlength="100" value="<?= e($data->title ?? '') ?>" placeholder="Tytuł posta">
-    <p class="validation-error"><?= e($errors['postTitle'] ?? '') ?></p>
+    <section class="homepage-post-form__preview-panel">
+        <aside class="homepage-post-form__preview-note">
+            <h4>Podgląd na stronie głównej</h4>
+            <p>Formularz odzwierciedla układ posta tak jak będzie widoczny na stronie.</p>
+        </aside>
 
-    <textarea name="postDescription" placeholder="Wpisz treść posta"><?= e($data->description ?? '') ?></textarea>
-    <p class="validation-error"><?= e($errors['postDescription'] ?? '') ?></p>
-    <?php
-    $currentType = $data->type ?? $defaultType;
+        <div class="homepage-post-form__preview-content">
+            <div class="homepage-post-form__base-fields">
+                <label class="homepage-post-form__title-field">
+                    <span>Tytuł sekcji</span>
+                    <input type="text" name="postTitle" maxlength="100" value="<?= e($data->title ?? '') ?>" placeholder="np. Więcej niż sport">
+                </label>
+                <p class="validation-error"><?= e($errors['postTitle'] ?? '') ?></p>
 
-    if (!isset($postTypes[$currentType])) {
-        $currentType = $defaultType;
-    }
+                <label class="homepage-post-form__description-field">
+                    <span>Opis sekcji</span>
+                    <textarea name="postDescription" placeholder="Krótki opis sekcji, jeśli ten typ posta go używa..."><?= e($data->description ?? '') ?></textarea>
+                </label>
+                <p class="validation-error"><?= e($errors['postDescription'] ?? '') ?></p>
+            </div>
 
-    ?>
+            <?php foreach ($postTypes as $typeName => $typeProperties): ?>
+                <?php
+                $partial = $typeProperties['partial'] ?? null;
 
-    <?php foreach ($postTypes as $typeName => $typeProperties): ?>
-        <?php
-        $partial = $typeProperties['partial'] ?? null;
+                if (!$partial) {
+                    continue;
+                }
 
-        if (!$partial) {
-            continue;
-        }
+                $isActive = $currentType === $typeName;
+                ?>
 
-        $isActive = $currentType === $typeName;
-        ?>
-
-        <div
-            class="post-type-fields"
-            data-post-type-form="<?= e($typeName) ?>"
-            <?= !$isActive ? 'hidden' : '' ?>
-        >
-            <?php require 'templates/dashboard/start/post_forms/' . $partial; ?>
+                <div
+                    class="post-type-fields"
+                    data-post-type-form="<?= e($typeName) ?>"
+                    <?= !$isActive ? 'hidden' : '' ?>
+                >
+                    <?php require 'templates/dashboard/start/post_forms/' . $partial; ?>
+                </div>
+            <?php endforeach ?>
         </div>
-    <?php endforeach ?>
+    </section>
 
-    <input type="submit" value="<?= e($buttonTitle ?? 'Stwórz') ?>">
+    <div class="homepage-post-form__actions">
+        <input type="submit" value="<?= e($buttonTitle ?? 'Stwórz') ?>">
+    </div>
 </form>
