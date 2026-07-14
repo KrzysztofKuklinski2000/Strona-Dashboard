@@ -10,7 +10,7 @@ if (!isset($postTypes[$currentType])) {
 
 <h3><?= e($formTitle ?? 'Nowy Post') ?></h3>
 
-<form class="homepage-post-form" action="<?= e($action ?? '') ?>" method="POST">
+<form class="homepage-post-form" action="<?= e($action ?? '') ?>" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="csrf_token" value="<?= e($csrf ?? '') ?>">
 
     <section class="homepage-post-form__type-panel">
@@ -33,11 +33,6 @@ if (!isset($postTypes[$currentType])) {
     <p class="validation-error"><?= e($errors['postType'] ?? '') ?></p>
 
     <section class="homepage-post-form__preview-panel">
-        <aside class="homepage-post-form__preview-note">
-            <h4>Podgląd na stronie głównej</h4>
-            <p>Formularz odzwierciedla układ posta tak jak będzie widoczny na stronie.</p>
-        </aside>
-
         <div class="homepage-post-form__preview-content">
             <div class="homepage-post-form__base-fields">
                 <label class="homepage-post-form__title-field">
