@@ -29,18 +29,22 @@ if (!$cards) {
         <p class="validation-error"><?= e($errors['payload.eyebrow'] ?? '') ?></p>
     </div>
 
-    <div class="cards-grid-form__cards">
+    <div class="cards-grid-form__cards" data-cards-container>
         <?php foreach ($cards as $index => $card): ?>
-            <fieldset class="cards-grid-form__card">
+            <fieldset class="cards-grid-form__card" data-card>
                 <legend>
-                    <span><?= (int) $index + 1 ?></span>
-                    Kafelek <?= (int) $index + 1 ?>
+                    <span data-card-number><?= (int) $index + 1 ?></span>
+                    <strong data-card-title>Kafelek <?= (int) $index + 1 ?></strong>
+                    <button type="button" class="cards-grid-form__remove" data-remove-card aria-label="Usuń kafelek <?= (int) $index + 1 ?>">
+                        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                    </button>
                 </legend>
 
                 <label>
                     <span>Ikona</span>
                     <input
                         type="text"
+                        data-card-field="icon"
                         name="payload[cards][<?= (int) $index ?>][icon]"
                         maxlength="80"
                         value="<?= e($card['icon'] ?? '') ?>"
@@ -53,6 +57,7 @@ if (!$cards) {
                     <span>Tytuł kafelka</span>
                     <input
                         type="text"
+                        data-card-field="title"
                         name="payload[cards][<?= (int) $index ?>][title]"
                         maxlength="80"
                         value="<?= e($card['title'] ?? '') ?>"
@@ -64,6 +69,7 @@ if (!$cards) {
                 <label>
                     <span>Opis kafelka</span>
                     <textarea
+                        data-card-field="description"
                         name="payload[cards][<?= (int) $index ?>][description]"
                         maxlength="500"
                         placeholder="<?= e($index === 0 ? 'Poprawiamy kondycję...' : ($index === 1 ? 'Uczymy szacunku...' : 'Trenujemy razem...')) ?>"
@@ -73,4 +79,36 @@ if (!$cards) {
             </fieldset>
         <?php endforeach ?>
     </div>
+
+    <button type="button" class="cards-grid-form__add" data-add-card>
+        <i class="fa-solid fa-plus" aria-hidden="true"></i>
+        Dodaj kafelek
+    </button>
+
+    <template data-card-template>
+        <fieldset class="cards-grid-form__card" data-card>
+            <legend>
+                <span data-card-number></span>
+                <strong data-card-title></strong>
+                <button type="button" class="cards-grid-form__remove" data-remove-card aria-label="Usuń kafelek">
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                </button>
+            </legend>
+
+            <label>
+                <span>Ikona</span>
+                <input type="text" data-card-field="icon" maxlength="80" placeholder="np. fa-solid fa-star">
+            </label>
+
+            <label>
+                <span>Tytuł kafelka</span>
+                <input type="text" data-card-field="title" maxlength="80" placeholder="Tytuł nowego kafelka">
+            </label>
+
+            <label>
+                <span>Opis kafelka</span>
+                <textarea data-card-field="description" maxlength="500" placeholder="Opis nowego kafelka"></textarea>
+            </label>
+        </fieldset>
+    </template>
 </div>

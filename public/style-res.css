@@ -23,6 +23,12 @@
 }
 
 @media only screen and (min-width: 640px) and (max-width: 899px) {
+	.why-karate-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media only screen and (min-width: 640px) and (max-width: 899px) {
 	.hero-section__background::before,
 	.hero-section__background::after {
 		background-position: 63% center;
@@ -1246,5 +1252,11 @@
 @media only screen and (min-width: 1180px) {
 	.site-newsletter__decor {
 		right: -62px;
+	}
+}
+
+@media only screen and (min-width: 2200px) {
+	.why-karate-grid {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
 	}
 }
