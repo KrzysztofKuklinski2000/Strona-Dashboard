@@ -2,11 +2,10 @@
 $data = $params['data'];
 $action = "/dashboard/start/published/" . ($data->id ?? '');
 $csrf = $params['csrf_token'] ?? '';
-$formTitle = "Szczegóły posta Strona główna";
+$formTitle = "Szczegóły posta strony głównej";
 
-$postDetailsHtml = <<<HTML
-  <h4>Tytuł: $data->title </h4>
-  <p>$data->description </p>
-HTML;
+ob_start();
+require "templates/dashboard/start/_post_details.php";
+$postDetailsHtml = ob_get_clean();
 
 require "templates/dashboard/_partials/_show_form.php";

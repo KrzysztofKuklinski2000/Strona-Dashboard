@@ -1,11 +1,11 @@
 <?php
 $data = $params['data'];
 $action = "/dashboard/start/delete/" . ($data->id ?? '');
-$formTitle = "Usuń posta z strony głównej";
+$formTitle = "Usuwanie posta ze strony głównej";
 $csrf = $params['csrf_token'] ?? '';
 
-$postDetailsHtml = <<<HTML
-  <h4>Tytuł posta: $data->title </h4>
-HTML;
+ob_start();
+require "templates/dashboard/start/_post_details.php";
+$postDetailsHtml = ob_get_clean();
 
 require "templates/dashboard/_partials/_delete_form.php";
