@@ -2,9 +2,7 @@
 	$data = $params['data'];
 	$action = "/dashboard/gallery/update/" . ($data->id ?? '');
 ?>
-<br>
-<h3>Edytuj Zdjęcie</h3>
-<br>
+<h3 class="dashboard-action-header">Edytowanie zdjęcia</h3>
 <form action="<?= $action ?>" method="POST" enctype="multipart/form-data" class="timetable-create-form">
 	<input type="hidden" name="csrf_token" value="<?= $params['csrf_token'] ?? '' ?>">
     <input type="hidden" name="id" value = "<?= $data->id ?>">

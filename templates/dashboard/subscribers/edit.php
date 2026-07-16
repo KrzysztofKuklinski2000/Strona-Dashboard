@@ -5,9 +5,7 @@ $action = "/dashboard/subscribers/update/" . ($data->id ?? '');
 $errors = $params['flash_dashboard']['message'] ?? [];
 ?>
 
-<br>
-<h3>Edytuj email subskrybenta</h3>
-<br>
+<h3 class="dashboard-action-header">Edytowanie adresu e-mail subskrybenta</h3>
 <form action="<?= $action ?? "" ?>" method="POST">
   <input type="hidden" name="csrf_token" value="<?= $csrf ?? '' ?>">
 

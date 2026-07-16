@@ -1,6 +1,4 @@
-<br>
-<h3><?= $formTitle ?? "" ?></h3>
-<br>
+<h3 class="dashboard-action-header"><?= e($formTitle ?? '') ?></h3>
 <form action="<?= $action ?>" method="POST" class="timetable-create-form">
   <input type="hidden" name="csrf_token" value="<?= $csrf ?? '' ?>">
   <?php if(isset($data->id)): ?>

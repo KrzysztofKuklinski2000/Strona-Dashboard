@@ -1,5 +1,5 @@
 <?php
-$formTitle = "Tworzenie nowego posta Strona Główna";
+$formTitle = "Tworzenie nowego posta strony głównej";
 $action = "/dashboard/start/store";
 $buttonTitle = "Stwórz";
 $errors = $params['flash_dashboard']['message'] ?? [];

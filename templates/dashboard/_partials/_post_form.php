@@ -1,4 +1,4 @@
-<h3><?= e($formTitle ?? 'Nowy Post') ?></h3>
+<h3 class="dashboard-action-header"><?= e($formTitle ?? 'Nowy Post') ?></h3>
 
 <form action="<?= e($action ?? '') ?>" method="POST">
     <input type="hidden" name="csrf_token" value="<?= e($csrf ?? '') ?>">

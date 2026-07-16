@@ -1,9 +1,7 @@
 <?php
 $data = $params['data'];
 ?>
-<br>
-<h3>Szczegóły subskrybenta</h3>
-<br>
+<h3 class="dashboard-action-header">Szczegóły subskrybenta</h3>
 <div class="post-content">
     <h4>Email: <?= $data->email ?></h4>
 </div>

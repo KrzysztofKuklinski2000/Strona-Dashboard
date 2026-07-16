@@ -1,6 +1,4 @@
-<br>
-<h3>Nowe Zdjęcie do galerii</h3>
-<br>
+<h3 class="dashboard-action-header">Dodawanie zdjęcia do galerii</h3>
 <form action="/dashboard/gallery/store" method="POST" enctype="multipart/form-data" class="timetable-create-form">
 	<input type="hidden" name="csrf_token" value="<?= $params['csrf_token'] ?? '' ?>">
 	<label>

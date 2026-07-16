@@ -4,9 +4,7 @@ $action = "/dashboard/timetable/delete/" . ($data->id ?? '');
 $csrf = $params['csrf_token'] ?? '';
 ?>
 
-<br>
-<h3>Usuń posta z grafiku"</h3>
-<br>
+<h3 class="dashboard-action-header">Usuwanie wpisu z grafiku</h3>
 <p><b>Dzień:</b> <?= $data->day?> </p>
 <p><b>Miasto:</b> <?= $data->city?> </p>
 <p><b>Grupa:</b> <?= $data->advancementGroup?></p>

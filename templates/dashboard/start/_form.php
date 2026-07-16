@@ -8,7 +8,7 @@ if (!isset($postTypes[$currentType])) {
 }
 ?>
 
-<h3><?= e($formTitle ?? 'Nowy Post') ?></h3>
+<h3 class="dashboard-action-header"><?= e($formTitle ?? 'Nowy Post') ?></h3>
 
 <form class="homepage-post-form" action="<?= e($action ?? '') ?>" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="csrf_token" value="<?= e($csrf ?? '') ?>">

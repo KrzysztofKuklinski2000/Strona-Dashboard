@@ -1,9 +1,7 @@
 <?php 
 $errors = $params['flash_dashboard']['message'] ?? [];
 ?>
-<br>
-<h3>Dodaj nowego użytkownika</h3>
-<br>
+<h3 class="dashboard-action-header">Dodawanie nowego subskrybenta</h3>
 <form action="/dashboard/subscribers/store" method="POST">
 	<input type="hidden" name="csrf_token" value="<?= $params['csrf_token'] ?? '' ?>">
 

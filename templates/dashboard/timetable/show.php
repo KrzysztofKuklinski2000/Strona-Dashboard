@@ -4,9 +4,7 @@
 	$csrf = $params['csrf_token'] ?? '';
 ?>
 
-<br>
-<h3>Szczegóły posta ważnych informacji</h3>
-<br>
+<h3 class="dashboard-action-header">Szczegóły wpisu w grafiku</h3>
 <div class="post-content">
  <h4>Dzień: <?= $data->day ?></h4>
 	<h4>Miasto: <?= $data->city?></h4>
