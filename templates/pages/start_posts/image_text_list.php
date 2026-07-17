@@ -5,7 +5,10 @@ $eyebrow = $block['eyebrow'] ?? '';
 $title = $post->title ?? '';
 $description = $post->description ?? '';
 $image = $block['image'] ?? null;
-$items = $block['items'] ?? [];
+$items = array_values(array_filter(
+    is_array($block['items'] ?? null) ? $block['items'] : [],
+    static fn(mixed $item): bool => is_scalar($item) && trim((string) $item) !== '',
+));
 $link = $block['link'] ?? null;
 ?>
 

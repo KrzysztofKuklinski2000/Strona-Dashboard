@@ -2,10 +2,15 @@
 $payload = json_decode((string) ($data->payload ?? ''), true);
 $payload = is_array($payload) ? $payload : [];
 $type = (string) ($data->type ?? 'simple_text');
+$detailItems = array_values(array_filter(
+    is_array($payload['items'] ?? null) ? $payload['items'] : [],
+    static fn(mixed $item): bool => is_scalar($item) && trim((string) $item) !== '',
+));
+$hasDetailLink = !empty($payload['link']['label']) && !empty($payload['link']['url']);
 $typeLabels = [
     'simple_text' => 'Prosty tekst',
     'cards_grid' => 'Kafelki',
-    'image_text_list' => 'Obrazek + tekst + lista',
+    'image_text_list' => 'Obrazek + tekst',
 ];
 ?>
 
@@ -39,7 +44,7 @@ $typeLabels = [
                 <?php endforeach ?>
             </div>
         <?php elseif ($type === 'image_text_list'): ?>
-            <div class="homepage-post-details__image-list">
+            <div class="homepage-post-details__image-list <?= !$detailItems && !$hasDetailLink ? 'is-image-only' : '' ?>">
                 <div class="homepage-post-details__image">
                     <?php if (!empty($payload['image']['src'])): ?>
                         <img src="<?= e($payload['image']['src']) ?>" alt="<?= e($payload['image']['alt'] ?? '') ?>">
@@ -49,19 +54,21 @@ $typeLabels = [
                     <?php endif ?>
                 </div>
 
-                <div>
-                    <?php if (!empty($payload['items'])): ?>
+                <?php if ($detailItems || $hasDetailLink): ?>
+                    <div>
+                    <?php if ($detailItems): ?>
                         <ul>
-                            <?php foreach ($payload['items'] as $item): ?>
+                            <?php foreach ($detailItems as $item): ?>
                                 <li><i class="fa-solid fa-check" aria-hidden="true"></i><?= e($item) ?></li>
                             <?php endforeach ?>
                         </ul>
                     <?php endif ?>
 
-                    <?php if (!empty($payload['link']['label'])): ?>
+                    <?php if ($hasDetailLink): ?>
                         <p class="homepage-post-details__link"><i class="fa-solid fa-link" aria-hidden="true"></i><?= e($payload['link']['label']) ?> — <?= e($payload['link']['url'] ?? '') ?></p>
                     <?php endif ?>
-                </div>
+                    </div>
+                <?php endif ?>
             </div>
         <?php endif ?>
     </section>

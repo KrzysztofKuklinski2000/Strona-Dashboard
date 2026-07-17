@@ -698,16 +698,42 @@ trait GetDataMethods
         }
 
         if ($type === 'image_text_list') {
+            $items = [];
+            $rawItems = $rawPayload['items'] ?? [];
+
+            if (is_array($rawItems)) {
+                foreach ($rawItems as $item) {
+                    if (!is_scalar($item)) {
+                        continue;
+                    }
+
+                    $item = trim((string) $item);
+
+                    if ($item !== '') {
+                        $items[] = $item;
+                    }
+                }
+            }
+
+            $rawLink = is_array($rawPayload['link'] ?? null) ? $rawPayload['link'] : [];
+            $linkLabel = trim((string) ($rawLink['label'] ?? ''));
+            $linkUrl = trim((string) ($rawLink['url'] ?? ''));
+
+            if ($linkLabel === '' || $linkUrl === '') {
+                $linkLabel = '';
+                $linkUrl = '';
+            }
+
             return json_encode([
                 'eyebrow' => $rawPayload['eyebrow'] ?? '',
                 'image' => [
                     'src' => $rawPayload['image']['src'] ?? '',
                     'alt' => $rawPayload['image']['alt'] ?? '',
                 ],
-                'items' => $rawPayload['items'] ?? [],
+                'items' => $items,
                 'link' => [
-                    'label' => $rawPayload['link']['label'] ?? '',
-                    'url' => $rawPayload['link']['url'] ?? '',
+                    'label' => $linkLabel,
+                    'url' => $linkUrl,
                 ],
             ], JSON_UNESCAPED_UNICODE);
         }
