@@ -23,8 +23,13 @@
 }
 
 @media only screen and (min-width: 640px) and (max-width: 899px) {
-	.why-karate-grid {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
+	.why-karate-card {
+		flex-basis: calc((100% - 14px) / 2);
+	}
+
+	.why-karate-grid--count-1 .why-karate-card {
+		flex-basis: 560px;
+		max-width: 100%;
 	}
 }
 
@@ -1084,6 +1089,35 @@
 		padding: 0 24px;
 	}
 
+	.simple-text-section__inner {
+		grid-template-columns: minmax(220px, .65fr) minmax(0, 1.35fr);
+		gap: 64px;
+		align-items: start;
+		padding-top: 72px;
+		padding-bottom: 76px;
+	}
+
+	.simple-text-section__heading {
+		align-items: flex-start;
+		text-align: left;
+	}
+
+	.simple-text-section__heading::before {
+		width: 44px;
+	}
+
+	.simple-text-section__content {
+		max-width: none;
+		margin: 0;
+		padding: 2px 0 2px 42px;
+		border-top: 0;
+		border-left: 1px solid var(--color-line);
+	}
+
+	.simple-text-section__content p {
+		font-size: 1rem;
+	}
+
 	.why-karate-section__inner {
 		padding-top: 54px;
 		padding-bottom: 60px;
@@ -1094,11 +1128,11 @@
 	}
 
 	.why-karate-grid {
-		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: 22px;
 	}
 
 	.why-karate-card {
+		flex-basis: calc((100% - 44px) / 3);
 		min-height: 148px;
 		grid-template-columns: 62px minmax(0, 1fr);
 		gap: 18px;
@@ -1106,6 +1140,16 @@
 		justify-items: start;
 		padding: 26px;
 		text-align: left;
+	}
+
+	.why-karate-grid--count-1 .why-karate-card {
+		flex-basis: 620px;
+		max-width: 100%;
+	}
+
+	.why-karate-grid--count-2 .why-karate-card {
+		flex-basis: 440px;
+		max-width: calc((100% - 22px) / 2);
 	}
 
 	.why-karate-card > div:not(.why-karate-card__icon) {
@@ -1256,7 +1300,7 @@
 }
 
 @media only screen and (min-width: 2200px) {
-	.why-karate-grid {
-		grid-template-columns: repeat(4, minmax(0, 1fr));
+	.why-karate-grid--many .why-karate-card {
+		flex-basis: calc((100% - 66px) / 4);
 	}
 }

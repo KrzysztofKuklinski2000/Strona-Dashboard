@@ -77,7 +77,7 @@ $importantPosts = $params['content'][1] ?? [];
     </section>
 <?php endif ?>
 
-<?php foreach ($homePosts as $post): ?>
+<?php foreach ($homePosts as $postIndex => $post): ?>
     <?php
         $type = (string) ($post->type ?? MainPagePostTypes::SIMPLE_TEXT);
         $partial = MainPagePostTypes::partial($type);
@@ -90,15 +90,12 @@ $importantPosts = $params['content'][1] ?? [];
         $partialPath = 'templates/pages/start_posts/' . $partial;
         $payload = json_decode((string) ($post->payload ?? ''), true) ?: [];
         $block = $payload;
+        $sectionTone = $postIndex % 2 === 0
+            ? 'home-post-section--soft'
+            : 'home-post-section--paper';
     ?>
 
-    <?php if ($type === MainPagePostTypes::SIMPLE_TEXT): ?>
-        <div class="padding-top">
-            <?php require $partialPath; ?>
-        </div>
-    <?php else: ?>
-        <?php require $partialPath; ?>
-    <?php endif ?>
+    <?php require $partialPath; ?>
 <?php endforeach ?>
 
 <script src="/public/js/scroll.js"></script>

@@ -12,7 +12,7 @@ $items = array_values(array_filter(
 $link = $block['link'] ?? null;
 ?>
 
-<section id="<?= e($sectionId) ?>" class="family-training-section" aria-labelledby="<?= e($titleId) ?>">
+<section id="<?= e($sectionId) ?>" class="family-training-section home-post-section <?= e($sectionTone ?? 'home-post-section--soft') ?>" aria-labelledby="<?= e($titleId) ?>">
     <div class="family-training-section__inner">
         <?php if (!empty($image['src'])): ?>
             <div class="family-training-section__media">

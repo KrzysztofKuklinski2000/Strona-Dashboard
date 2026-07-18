@@ -4,10 +4,14 @@ $titleId = $block['titleId'] ?? $sectionId . '-title';
 $eyebrow = $block['eyebrow'] ?? '';
 $title = $post->title ?? '';
 $cards = $block['cards'] ?? [];
+$cardCount = count($cards);
+$gridSizeClass = $cardCount <= 2
+    ? 'why-karate-grid--count-' . $cardCount
+    : ($cardCount >= 4 ? 'why-karate-grid--many' : '');
 ?>
 
 <?php if ($cards): ?>
-    <section class="why-karate-section" aria-labelledby="<?= e($titleId) ?>">
+    <section class="why-karate-section home-post-section <?= e($sectionTone ?? 'home-post-section--paper') ?>" aria-labelledby="<?= e($titleId) ?>">
         <div class="why-karate-section__inner">
             <div class="why-karate-section__heading">
                 <?php if ($eyebrow !== ''): ?>
@@ -19,7 +23,7 @@ $cards = $block['cards'] ?? [];
                 <?php endif ?>
             </div>
 
-            <div class="why-karate-grid">
+            <div class="why-karate-grid <?= e($gridSizeClass) ?>">
                 <?php foreach ($cards as $card): ?>
                     <article class="why-karate-card">
                         <?php if (!empty($card['icon'])): ?>

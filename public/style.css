@@ -693,6 +693,60 @@ main {
 	color: #fff;
 }
 
+.simple-text-section {
+	background: var(--color-paper);
+}
+
+.simple-text-section__inner {
+	width: min(calc(100% - 40px), 1120px);
+	display: grid;
+	gap: 30px;
+	margin: 0 auto;
+	padding: 56px 0 60px;
+}
+
+.simple-text-section__heading {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 18px;
+	text-align: center;
+}
+
+.simple-text-section__heading::before {
+	content: '';
+	width: 36px;
+	height: 3px;
+	background: var(--color-accent);
+}
+
+.simple-text-section h2 {
+	max-width: 16ch;
+	margin: 0;
+	color: var(--color-ink);
+	font-size: clamp(1.8rem, 7vw, 2.65rem);
+	font-weight: 800;
+	letter-spacing: -.045em;
+	line-height: 1.08;
+	overflow-wrap: break-word;
+}
+
+.simple-text-section__content {
+	max-width: 68ch;
+	margin: 0 auto;
+	padding-top: 24px;
+	border-top: 1px solid var(--color-line);
+}
+
+.simple-text-section__content p {
+	margin: 0;
+	color: var(--color-muted);
+	font-size: .95rem;
+	font-weight: 500;
+	line-height: 1.8;
+	overflow-wrap: break-word;
+}
+
 .why-karate-section {
 	position: relative;
 	background: var(--color-paper);
@@ -730,12 +784,14 @@ main {
 }
 
 .why-karate-grid {
-	display: grid;
-	grid-template-columns: minmax(0, 1fr);
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
 	gap: 14px;
 }
 
 .why-karate-card {
+	flex: 0 1 100%;
 	min-width: 0;
 	display: grid;
 	grid-template-columns: 1fr;
@@ -935,6 +991,29 @@ main {
 
 .family-training-section__cta i {
 	color: #fff;
+}
+
+.home-post-section {
+	border-bottom: 0;
+	transition: background-color .25s ease;
+}
+
+.simple-text-section.home-post-section--paper,
+.why-karate-section.home-post-section--paper {
+	background: var(--color-paper);
+}
+
+.simple-text-section.home-post-section--soft,
+.why-karate-section.home-post-section--soft {
+	background: #f6f6f4;
+}
+
+.family-training-section.home-post-section--paper {
+	--family-section-bg: var(--color-paper);
+}
+
+.family-training-section.home-post-section--soft {
+	--family-section-bg: #f6f6f4;
 }
 
 

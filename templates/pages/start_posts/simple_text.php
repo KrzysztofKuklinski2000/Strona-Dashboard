@@ -1,14 +1,22 @@
 <?php
-$class = ($post->id ?? 0) % 2 === 0 ? 'dark-post' : 'light-post';
+$sectionId = 'simple-text-section-' . (int) ($post->id ?? 0);
+$titleId = $sectionId . '-title';
+$title = $post->title ?? '';
+$description = $post->description ?? '';
 ?>
 
-<div class="post">
-    <?php
-        $text = $post->title ?? '';
-        require('templates/components/post_header.php');
-    ?>
+<section id="<?= e($sectionId) ?>" class="simple-text-section home-post-section <?= e($sectionTone ?? 'home-post-section--soft') ?>" aria-labelledby="<?= e($titleId) ?>">
+    <div class="simple-text-section__inner">
+        <div class="simple-text-section__heading">
+            <?php if ($title !== ''): ?>
+                <h2 id="<?= e($titleId) ?>"><?= e($title) ?></h2>
+            <?php endif ?>
+        </div>
 
-    <div class="post-content flex-item-center <?= e($class) ?>">
-        <p><?= e_br($post->description ?? '') ?></p>
+        <?php if ($description !== ''): ?>
+            <div class="simple-text-section__content">
+                <p><?= e_br($description) ?></p>
+            </div>
+        <?php endif ?>
     </div>
-</div>
+</section>
