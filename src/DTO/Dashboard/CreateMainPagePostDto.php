@@ -15,6 +15,7 @@ readonly class CreateMainPagePostDto implements DataTransferObjectInterface
         public int $status,
         public string $type,
         public ?string $payload,
+        public ?array $imageFile,
     )
     {
     }
@@ -29,6 +30,7 @@ readonly class CreateMainPagePostDto implements DataTransferObjectInterface
             status: (int) $data['status'],
             type: (string) ($data['type'] ?? 'simple_text'),
             payload: isset($data['payload']) ? (string) $data['payload'] : null,
+            imageFile: $data['imageFile'] ?? null,
         );
     }
 

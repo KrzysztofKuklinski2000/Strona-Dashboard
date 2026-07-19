@@ -40,6 +40,7 @@ if ($hasItems && !$items) {
             <span><?= !empty($image['src']) ? 'Zmień obraz' : 'Dodaj obraz' ?></span>
             <input type="file" name="postImage" accept="image/jpeg,image/png,image/gif">
         </label>
+        <p class="validation-error"><?= e($errors['postImage'] ?? '') ?></p>
 
         <label>
             <span>Opis alternatywny</span>

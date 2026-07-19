@@ -142,6 +142,16 @@ trait GetDataMethods
             $type = MainPagePostTypes::SIMPLE_TEXT;
         }
 
+        $imageFile = null;
+
+        if($type === MainPagePostTypes::IMAGE_TEXT_LIST) {
+            $imageFile = $this->validator->validateFile(
+                field: 'postImage',
+                file: $this->request->getFile('postImage'),
+                maxSize: $this->contextController->config->getMaxUploadSize()
+            ) ?? null;
+        }
+
         $rawPayload = $this->request->getFormParam('payload') ?? [];
 
         if (!is_array($rawPayload)) {
@@ -177,7 +187,9 @@ trait GetDataMethods
 
             'type' => $type,
 
-            'payload' => $payload
+            'payload' => $payload,
+
+            'imageFile' => $imageFile
         ];
 
         return CreateMainPagePostDto::fromArray($data);
