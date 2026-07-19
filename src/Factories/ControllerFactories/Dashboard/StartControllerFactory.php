@@ -13,16 +13,15 @@ use PDO;
 
 class StartControllerFactory implements ControllerFactoryInterface
 {
-    private StartServiceFactory $serviceFactory;
-
-    public function __construct(PDO $pdo)
+    public function __construct(private PDO $pdo)
     {
-        $this->serviceFactory = new StartServiceFactory($pdo);
+
     }
 
     public function createController(ContextController $contextController): AbstractController
     {
-        $service = $this->serviceFactory->createService();
+        $serviceFactory = new StartServiceFactory($this->pdo, $contextController->config);
+        $service = $serviceFactory->createService();
 
         return new StartController(
             $service,
