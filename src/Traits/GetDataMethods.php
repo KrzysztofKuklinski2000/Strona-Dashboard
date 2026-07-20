@@ -171,14 +171,6 @@ trait GetDataMethods
                 maxLength: 60
             ),
 
-            'description' => $this->validator->validate(
-                name: 'postDescription',
-                value: $this->request->getFormParam('postDescription'),
-                required: true,
-                minLength: 20,
-                maxLength: 1000
-            ),
-
             'created' => date('Y-m-d'),
 
             'updated' => date('Y-m-d'),
@@ -229,14 +221,6 @@ trait GetDataMethods
                 required: true,
                 minLength: 10,
                 maxLength: 60
-            ),
-
-            'description' => $this->validator->validate(
-                name: 'postDescription',
-                value: $this->request->getFormParam('postDescription'),
-                required: true,
-                minLength: 20,
-                maxLength: 1000
             ),
 
             'updated' => date('Y-m-d'),
@@ -698,18 +682,26 @@ trait GetDataMethods
 
     private function normalizeMainPagePayload(string $type, array $rawPayload): ?string
     {
-        if ($type === 'simple_text') {
-            return null;
+        if ($type === MainPagePostTypes::SIMPLE_TEXT) {
+            return json_encode([
+                'description' => $this->validator->validate(
+                    name: 'payload.description',
+                    value: $rawPayload['description'] ?? null,
+                    required: true,
+                    minLength: 20,
+                    maxLength: 1000,
+                ),
+            ], JSON_UNESCAPED_UNICODE);
         }
 
-        if ($type === 'cards_grid') {
+        if ($type === MainPagePostTypes::CARDS_GRID) {
             return json_encode([
                 'eyebrow' => $rawPayload['eyebrow'] ?? '',
                 'cards' => $rawPayload['cards'] ?? [],
             ], JSON_UNESCAPED_UNICODE);
         }
 
-        if ($type === 'image_text_list') {
+        if ($type === MainPagePostTypes::IMAGE_TEXT_LIST) {
             $items = [];
             $rawItems = $rawPayload['items'] ?? [];
 
@@ -738,6 +730,13 @@ trait GetDataMethods
 
             return json_encode([
                 'eyebrow' => $rawPayload['eyebrow'] ?? '',
+                'description' => $this->validator->validate(
+                    name: 'payload.description',
+                    value: $rawPayload['description'] ?? null,
+                    required: true,
+                    minLength: 20,
+                    maxLength: 1000,
+                ),
                 'image' => [
                     'src' => $rawPayload['image']['src'] ?? '',
                     'alt' => $rawPayload['image']['alt'] ?? '',

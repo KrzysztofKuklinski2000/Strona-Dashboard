@@ -758,6 +758,7 @@ main {
 }
 
 .content-container .homepage-post-form__base-fields label,
+.content-container .homepage-post-form__description-field,
 .content-container .cards-grid-form label { display: flex; flex-direction: column; align-items: stretch; gap: 8px; }
 
 .content-container .homepage-post-form input:not([type=submit]),
@@ -1052,13 +1053,14 @@ main {
 
 .content-container .homepage-post-form[data-active-post-type="image_text_list"] .image-text-list-form__image {
 	grid-column: 1;
-	grid-row: 1 / span 4;
+	grid-row: 1 / span 5;
 }
 
 .content-container .homepage-post-form[data-active-post-type="image_text_list"] .image-text-list-form__eyebrow { grid-column: 2; grid-row: 1; }
 .content-container .homepage-post-form[data-active-post-type="image_text_list"] .homepage-post-form__base-fields { grid-column: 2; grid-row: 2; }
-.content-container .homepage-post-form[data-active-post-type="image_text_list"] .image-text-list-form__list-slot { grid-column: 2; grid-row: 3; }
-.content-container .homepage-post-form[data-active-post-type="image_text_list"] .image-text-list-form__link-slot { grid-column: 2; grid-row: 4; }
+.content-container .homepage-post-form[data-active-post-type="image_text_list"] .image-text-list-form__description { grid-column: 2; grid-row: 3; }
+.content-container .homepage-post-form[data-active-post-type="image_text_list"] .image-text-list-form__list-slot { grid-column: 2; grid-row: 4; }
+.content-container .homepage-post-form[data-active-post-type="image_text_list"] .image-text-list-form__link-slot { grid-column: 2; grid-row: 5; }
 
 @media (max-width: 900px) {
 	.content-container .cards-grid-form__cards {
@@ -1091,6 +1093,7 @@ main {
 	.content-container .homepage-post-form[data-active-post-type="image_text_list"] .image-text-list-form__image,
 	.content-container .homepage-post-form[data-active-post-type="image_text_list"] .image-text-list-form__eyebrow,
 	.content-container .homepage-post-form[data-active-post-type="image_text_list"] .homepage-post-form__base-fields,
+	.content-container .homepage-post-form[data-active-post-type="image_text_list"] .image-text-list-form__description,
 	.content-container .homepage-post-form[data-active-post-type="image_text_list"] .image-text-list-form__list-slot,
 	.content-container .homepage-post-form[data-active-post-type="image_text_list"] .image-text-list-form__link-slot {
 		grid-column: 1;

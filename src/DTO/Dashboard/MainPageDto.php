@@ -9,7 +9,6 @@ readonly class MainPageDto implements DataTransferObjectInterface
     public function __construct(
         public int $id,
         public string $title,
-        public string $description,
         public string $created,
         public string $updated,
         public int $status,
@@ -26,7 +25,6 @@ readonly class MainPageDto implements DataTransferObjectInterface
         return new self(
             id: (int) $data['id'],
             title: (string) $data['title'],
-            description: (string) $data['description'],
             created: (string) $data['created'],
             updated: (string) $data['updated'],
             status: (int) $data['status'],
@@ -40,7 +38,6 @@ readonly class MainPageDto implements DataTransferObjectInterface
         return [
             "id" => $this->id,
             "title" => $this->title,
-            "description" => $this->description,
             "created" => $this->created,
             "updated" => $this->updated,
             "status" => $this->status,

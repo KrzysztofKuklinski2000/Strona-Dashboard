@@ -185,7 +185,6 @@ CREATE TABLE `main_page_posts`
 (
     `id`          int                                   NOT NULL,
     `title`       varchar(60) COLLATE utf8mb4_polish_ci NOT NULL,
-    `description` text COLLATE utf8mb4_polish_ci        NOT NULL,
     `created`     date                                  NOT NULL,
     `updated`     date                                  NOT NULL,
     `status`      tinyint                               NOT NULL,
@@ -198,14 +197,9 @@ CREATE TABLE `main_page_posts`
 -- Zrzut danych tabeli `main_page_posts`
 --
 
-INSERT INTO `main_page_posts` (`id`, `title`, `description`, `created`, `updated`, `status`, `position`, `type`, `payload`)
-VALUES (1, 'Pierwsze zajęcia są bezpłatne',
-        'Chcesz spróbować, zanim się zdecydujesz? Zapraszamy na pierwsze zajęcia całkowicie bezpłatnie!\r\nPrzekonaj się sam, jak ciekawa i wartościowa może być nauka z nami.\r\nNie przegap okazji – zapisz się już dziś!\r\n\r\n',
-        '2025-08-02', '2025-08-02', 1, 4, 'simple_text', NULL),
-       (2, 'Więcej niż sport',
-        '',
-        '2025-08-02', '2026-01-29', 1, 1, 'cards_grid',
-        '{
+INSERT INTO `main_page_posts` (`id`, `title`, `created`, `updated`, `status`, `position`, `type`, `payload`)
+VALUES (1, 'Pierwsze zajęcia są bezpłatne', '2025-08-02', '2025-08-02', 1, 4, 'simple_text', JSON_SET(COALESCE(NULL, JSON_OBJECT()), '$.description', 'Chcesz spróbować, zanim się zdecydujesz? Zapraszamy na pierwsze zajęcia całkowicie bezpłatnie!\r\nPrzekonaj się sam, jak ciekawa i wartościowa może być nauka z nami.\r\nNie przegap okazji – zapisz się już dziś!\r\n\r\n')),
+       (2, 'Więcej niż sport', '2025-08-02', '2026-01-29', 1, 1, 'cards_grid', '{
           "eyebrow": "Dlaczego karate?",
           "cards": [
             {
@@ -225,13 +219,8 @@ VALUES (1, 'Pierwsze zajęcia są bezpłatne',
             }
           ]
         }'),
-       (3, 'DOTACJAAAA',
-        '   Zajęcia dla dzieci i młodzieży\r\n\r\nw WEJHEROWIE\r\n\r\nsą prowadzone w ramach  zadania publicznego\r\n\r\n\" Szkolenie karate Kyokushin \"\r\n\r\nrealizowanego przez nasz Klub, dofinansowanego przez\r\n\r\nGminę Miasta Wejherowa. ',
-        '2025-08-02', '2025-09-25', 1, 3, 'simple_text', NULL),
-       (4, 'Trening rodzinny',
-        'Karate to idealna forma aktywności dla całych rodzin. Dzieci, młodzież i dorośli - każdy znajdzie coś dla siebie.',
-        '2025-08-02', '2025-10-16', 1, 2, 'image_text_list',
-        '{
+       (3, 'DOTACJAAAA', '2025-08-02', '2025-09-25', 1, 3, 'simple_text', JSON_SET(COALESCE(NULL, JSON_OBJECT()), '$.description', '   Zajęcia dla dzieci i młodzieży\r\n\r\nw WEJHEROWIE\r\n\r\nsą prowadzone w ramach  zadania publicznego\r\n\r\n\" Szkolenie karate Kyokushin \"\r\n\r\nrealizowanego przez nasz Klub, dofinansowanego przez\r\n\r\nGminę Miasta Wejherowa. ')),
+       (4, 'Trening rodzinny', '2025-08-02', '2025-10-16', 1, 2, 'image_text_list', JSON_SET(COALESCE('{
           "eyebrow": "Trening dla każdego",
           "image": {
             "src": "/public/images/family-training.png",
@@ -246,7 +235,7 @@ VALUES (1, 'Pierwsze zajęcia są bezpłatne',
             "label": "Dołącz do naszej rodziny",
             "url": "/zapisy"
           }
-        }');
+        }', JSON_OBJECT()), '$.description', 'Karate to idealna forma aktywności dla całych rodzin. Dzieci, młodzież i dorośli - każdy znajdzie coś dla siebie.'));
 
 -- --------------------------------------------------------
 

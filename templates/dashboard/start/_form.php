@@ -40,12 +40,6 @@ if (!isset($postTypes[$currentType])) {
                     <input type="text" name="postTitle" maxlength="100" value="<?= e($data->title ?? '') ?>" placeholder="np. Więcej niż sport">
                 </label>
                 <p class="validation-error"><?= e($errors['postTitle'] ?? '') ?></p>
-
-                <label class="homepage-post-form__description-field">
-                    <span>Opis sekcji</span>
-                    <textarea name="postDescription" placeholder="Krótki opis sekcji, jeśli ten typ posta go używa..."><?= e($data->description ?? '') ?></textarea>
-                </label>
-                <p class="validation-error"><?= e($errors['postDescription'] ?? '') ?></p>
             </div>
 
             <?php foreach ($postTypes as $typeName => $typeProperties): ?>

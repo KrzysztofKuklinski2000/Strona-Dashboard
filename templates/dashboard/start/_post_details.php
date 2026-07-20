@@ -29,8 +29,8 @@ $typeLabels = [
 
         <h4><?= e($data->title ?? '') ?></h4>
 
-        <?php if (!empty($data->description)): ?>
-            <p class="homepage-post-details__description"><?= nl2br(e($data->description)) ?></p>
+        <?php if (!empty($payload['description'])): ?>
+            <p class="homepage-post-details__description"><?= nl2br(e($payload['description'])) ?></p>
         <?php endif ?>
 
         <?php if ($type === 'cards_grid' && !empty($payload['cards'])): ?>

@@ -9,7 +9,6 @@ readonly class CreateMainPagePostDto implements DataTransferObjectInterface
 
     public function __construct(
         public string $title,
-        public string $description,
         public string $created,
         public string $updated,
         public int $status,
@@ -24,7 +23,6 @@ readonly class CreateMainPagePostDto implements DataTransferObjectInterface
     {
         return new self(
             title: (string) $data['title'],
-            description: (string) $data['description'],
             created: (string) $data['created'],
             updated: (string) $data['updated'],
             status: (int) $data['status'],
@@ -37,7 +35,6 @@ readonly class CreateMainPagePostDto implements DataTransferObjectInterface
     public function toArray(): array {
         return [
             'title' => $this->title,
-            'description' => $this->description,
             'created' => $this->created,
             'updated' => $this->updated,
             'status' => $this->status,

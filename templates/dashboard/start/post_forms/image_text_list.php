@@ -58,6 +58,18 @@ if ($hasItems && !$items) {
             <p class="validation-error"><?= e($errors['payload.eyebrow'] ?? '') ?></p>
         </div>
 
+        <div class="image-text-list-form__description">
+            <label class="homepage-post-form__description-field">
+                <span>Opis sekcji</span>
+                <textarea
+                    name="payload[description]"
+                    maxlength="1000"
+                    placeholder="Krótki opis sekcji..."
+                ><?= e($payload['description'] ?? '') ?></textarea>
+            </label>
+            <p class="validation-error"><?= e($errors['payload.description'] ?? '') ?></p>
+        </div>
+
         <div class="image-text-list-form__optional-slot image-text-list-form__list-slot">
             <fieldset class="cards-grid-form__card image-text-list-form__group" data-list-section <?= !$hasItems ? 'hidden' : '' ?>>
                 <legend>

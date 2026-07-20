@@ -2,7 +2,7 @@
 $sectionId = 'simple-text-section-' . (int) ($post->id ?? 0);
 $titleId = $sectionId . '-title';
 $title = $post->title ?? '';
-$description = $post->description ?? '';
+$description = $block['description'] ?? '';
 ?>
 
 <section id="<?= e($sectionId) ?>" class="simple-text-section home-post-section <?= e($sectionTone ?? 'home-post-section--soft') ?>" aria-labelledby="<?= e($titleId) ?>">

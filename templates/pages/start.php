@@ -55,6 +55,11 @@ $importantPosts = $params['content'][1] ?? [];
 <?php endif ?>
 
 <?php if ($first): ?>
+    <?php
+    $firstPayload = json_decode((string) ($first->payload ?? ''), true);
+    $firstPayload = is_array($firstPayload) ? $firstPayload : [];
+    $firstDescription = (string) ($firstPayload['description'] ?? '');
+    ?>
     <section class="first-class-section" aria-labelledby="first-class-title">
         <div class="first-class-section__inner">
             <div class="first-class-section__icon" aria-hidden="true">
@@ -64,8 +69,8 @@ $importantPosts = $params['content'][1] ?? [];
             <div class="first-class-section__content">
                 <h2 id="first-class-title"><?= e($first->title ?? 'Pierwsze zajęcia są bezpłatne') ?></h2>
 
-                <?php if (!empty($first->description)): ?>
-                    <p><?= e_br($first->description) ?></p>
+                <?php if ($firstDescription !== ''): ?>
+                    <p><?= e_br($firstDescription) ?></p>
                 <?php endif ?>
             </div>
 

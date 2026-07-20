@@ -3,7 +3,7 @@ $sectionId = $block['sectionId'] ?? 'image-text-list-section';
 $titleId = $block['titleId'] ?? $sectionId . '-title';
 $eyebrow = $block['eyebrow'] ?? '';
 $title = $post->title ?? '';
-$description = $post->description ?? '';
+$description = $block['description'] ?? '';
 $image = $block['image'] ?? null;
 $items = array_values(array_filter(
     is_array($block['items'] ?? null) ? $block['items'] : [],

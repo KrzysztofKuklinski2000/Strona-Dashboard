@@ -59,7 +59,6 @@ class StartService extends AbstractDashboardService implements StartManagementSe
     }
 
     /**
-     * @throws FileException
      * @throws ServiceException
      */
     public function createMain(DataTransferObjectInterface $data): void
@@ -78,7 +77,6 @@ class StartService extends AbstractDashboardService implements StartManagementSe
 
                 $dataToUpload = CreateMainPagePostDto::fromArray([
                     'title' => $data->title,
-                    'description' => $data->description,
                     'created' => $data->created,
                     'updated' => $data->updated,
                     'status' => $data->status,
