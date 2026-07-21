@@ -205,6 +205,25 @@ trait GetDataMethods
             $rawPayload = [];
         }
 
+        $imageFile = null;
+        $file = $this->request->getFile('postImage');
+        $rawImage = is_array($rawPayload['image'] ?? null) ? $rawPayload['image'] : [];
+        $hasImage = !empty($rawImage['src']);
+
+        if (
+            $type === MainPagePostTypes::IMAGE_TEXT_LIST
+            && (
+                !$hasImage
+                || ($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE
+            )
+        ) {
+            $imageFile = $this->validator->validateFile(
+                field: 'postImage',
+                file: $file,
+                maxSize: $this->contextController->config->getMaxUploadSize()
+            );
+        }
+
         $payload = $this->normalizeMainPagePayload($type, $rawPayload);
 
         $data =  [
@@ -227,7 +246,10 @@ trait GetDataMethods
 
             'type' => $type,
 
-            'payload' => $payload
+            'payload' => $payload,
+
+            'imageFile' => $imageFile
+
         ];
 
         return UpdateMainPagePostDto::fromArray($data);

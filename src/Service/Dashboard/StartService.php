@@ -6,6 +6,7 @@ use App\Content\MainPagePostTypes;
 use App\Core\FileHandler;
 use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\CreateMainPagePostDto;
+use App\DTO\Dashboard\UpdateMainPagePostDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\FileException;
 use App\Exception\NotFoundException;
@@ -55,7 +56,34 @@ class StartService extends AbstractDashboardService implements StartManagementSe
      */
     public function updateMain(DataTransferObjectInterface $data): void
     {
-        $this->edit(self::TABLE, $data);
+        $dataToUpload = $data;
+
+        try {
+            if (
+                $data->type === MainPagePostTypes::IMAGE_TEXT_LIST
+                && $data->imageFile !== null
+            ) {
+                $imageName = $this->fileHandler->uploadImage($data->imageFile);
+                $dir = $this->uploadUrl .'/'. $imageName;
+
+                $payload = json_decode($data->payload, true);
+                $payload['image']['src'] = $dir;
+
+                $payload = json_encode($payload, JSON_UNESCAPED_UNICODE);
+
+                $dataToUpload = UpdateMainPagePostDto::fromArray([
+                    'id' => $data->id,
+                    'title' => $data->title,
+                    'updated' => $data->updated,
+                    'type' => $data->type,
+                    'payload' => $payload,
+                ]);
+            }
+        }catch (FileException $e) {
+            throw new ServiceException("Nie udało się wgrać zdjęcia na serwer", 500, $e);
+        }
+
+        $this->edit(self::TABLE, $dataToUpload);
     }
 
     /**

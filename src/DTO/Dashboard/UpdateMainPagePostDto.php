@@ -12,6 +12,7 @@ readonly class UpdateMainPagePostDto implements DataTransferObjectInterface
         public string $updated,
         public string $type,
         public ?string $payload,
+        public ?array $imageFile,
     )
     {
     }
@@ -24,6 +25,7 @@ readonly class UpdateMainPagePostDto implements DataTransferObjectInterface
             updated: (string) $data['updated'],
             type: (string) ($data['type'] ?? 'simple_text'),
             payload: isset($data['payload']) ? (string) $data['payload'] : null,
+            imageFile: $data['imageFile'] ?? null,
         );
     }
 
