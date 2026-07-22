@@ -1,6 +1,6 @@
 <?php
-$sectionId = $block['sectionId'] ?? 'cards-grid-section';
-$titleId = $block['titleId'] ?? $sectionId . '-title';
+$sectionId = 'cards-grid-section-' . (int) ($post->id ?? 0);
+$titleId = $sectionId . '-title';
 $eyebrow = $block['eyebrow'] ?? '';
 $title = $post->title ?? '';
 $cards = $block['cards'] ?? [];

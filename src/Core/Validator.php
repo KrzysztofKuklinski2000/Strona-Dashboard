@@ -10,6 +10,11 @@ class Validator
         return $this->errors;
     }
 
+    public function addError(string $name, string $message): void
+    {
+        $this->errors[$name] = $message;
+    }
+
     public function validate(
         string $name,
         mixed $value,

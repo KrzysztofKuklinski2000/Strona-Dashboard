@@ -29,7 +29,7 @@ if (!$cards) {
         <p class="validation-error"><?= e($errors['payload.eyebrow'] ?? '') ?></p>
     </div>
 
-    <div class="cards-grid-form__cards" data-cards-container>
+    <div class="cards-grid-form__cards" data-cards-container data-max-cards="12">
         <?php foreach ($cards as $index => $card): ?>
             <fieldset class="cards-grid-form__card" data-card>
                 <legend>
@@ -79,6 +79,7 @@ if (!$cards) {
             </fieldset>
         <?php endforeach ?>
     </div>
+    <p class="validation-error"><?= e($errors['payload.cards'] ?? '') ?></p>
 
     <button type="button" class="cards-grid-form__add" data-add-card>
         <i class="fa-solid fa-plus" aria-hidden="true"></i>

@@ -40,6 +40,10 @@ function getCards() {
     return cardsContainer ? [...cardsContainer.querySelectorAll('[data-card]')] : [];
 }
 
+function getMaxCards() {
+    return Number(cardsContainer?.dataset.maxCards) || 12;
+}
+
 function reindexCards() {
     getCards().forEach((card, index) => {
         const number = index + 1;
@@ -64,10 +68,18 @@ function syncCardRemoveButtons() {
     cards.forEach((card) => {
         card.querySelector('[data-remove-card]').disabled = cards.length <= 1 || isInactive;
     });
+
+    if (addCardButton) {
+        addCardButton.disabled = isInactive || cards.length >= getMaxCards();
+    }
 }
 
 if (cardsContainer && cardTemplate && addCardButton) {
     addCardButton.addEventListener('click', () => {
+        if (getCards().length >= getMaxCards()) {
+            return;
+        }
+
         const newCard = cardTemplate.content.firstElementChild.cloneNode(true);
 
         cardsContainer.appendChild(newCard);
@@ -103,6 +115,10 @@ function getListItems() {
     return listItemsContainer ? [...listItemsContainer.querySelectorAll('[data-list-item]')] : [];
 }
 
+function getMaxListItems() {
+    return Number(listItemsContainer?.dataset.maxItems) || 20;
+}
+
 function reindexListItems() {
     getListItems().forEach((item, index) => {
         const number = index + 1;
@@ -117,7 +133,7 @@ function reindexListItems() {
 }
 
 function addListItem() {
-    if (!listItemsContainer || !listItemTemplate) {
+    if (!listItemsContainer || !listItemTemplate || getListItems().length >= getMaxListItems()) {
         return;
     }
 
@@ -187,6 +203,12 @@ function syncImageTextOptionalSections() {
             button.disabled = isInactive;
         }
     });
+
+    if (addListItemButton) {
+        addListItemButton.disabled = isInactive
+            || Boolean(listSection?.hidden)
+            || getListItems().length >= getMaxListItems();
+    }
 }
 
 if (listSection && listItemsContainer && addListButton && addListItemButton && removeListButton) {

@@ -1,6 +1,6 @@
 <?php
-$sectionId = $block['sectionId'] ?? 'image-text-list-section';
-$titleId = $block['titleId'] ?? $sectionId . '-title';
+$sectionId = 'image-text-list-section-' . (int) ($post->id ?? 0);
+$titleId = $sectionId . '-title';
 $eyebrow = $block['eyebrow'] ?? '';
 $title = $post->title ?? '';
 $description = $block['description'] ?? '';

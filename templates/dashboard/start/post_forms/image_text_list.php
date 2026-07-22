@@ -80,7 +80,7 @@ if ($hasItems && !$items) {
                     </button>
                 </legend>
 
-                <div class="image-text-list-form__items" data-list-items>
+                <div class="image-text-list-form__items" data-list-items data-max-items="20">
                     <?php foreach ($items as $index => $item): ?>
                         <div class="image-text-list-form__item" data-list-item>
                             <label>
@@ -101,6 +101,7 @@ if ($hasItems && !$items) {
                         </div>
                     <?php endforeach ?>
                 </div>
+                <p class="validation-error"><?= e($errors['payload.items'] ?? '') ?></p>
 
                 <button type="button" class="cards-grid-form__add image-text-list-form__add-item" data-add-list-item>
                     <i class="fa-solid fa-plus" aria-hidden="true"></i>
