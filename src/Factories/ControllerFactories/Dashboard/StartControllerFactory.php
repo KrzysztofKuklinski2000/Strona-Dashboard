@@ -9,6 +9,8 @@ use App\Controller\Dashboard\StartController;
 use App\Core\ContextController;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\StartServiceFactory;
+use App\Mapper\Dashboard\MainPage\MainPagePayloadNormalizer;
+use App\Mapper\Dashboard\MainPage\MainPagePostRequestMapper;
 use PDO;
 
 class StartControllerFactory implements ControllerFactoryInterface
@@ -23,8 +25,18 @@ class StartControllerFactory implements ControllerFactoryInterface
         $serviceFactory = new StartServiceFactory($this->pdo, $contextController->config);
         $service = $serviceFactory->createService();
 
+        $payloadNormalizer = new MainPagePayloadNormalizer($contextController->validator);
+
+        $requestMapper = new MainPagePostRequestMapper(
+            $contextController->request,
+            $contextController->validator,
+            $contextController->config,
+            $payloadNormalizer
+        );
+
         return new StartController(
             $service,
+            $requestMapper,
             $contextController,
         );
     }

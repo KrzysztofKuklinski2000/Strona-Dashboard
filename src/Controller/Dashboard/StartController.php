@@ -13,6 +13,7 @@ use App\Core\ContextController;
 use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
+use App\Mapper\Dashboard\MainPage\MainPagePostRequestMapper;
 use App\Service\Dashboard\StartManagementServiceInterface;
 
 class StartController extends AbstractDashboardController
@@ -21,6 +22,7 @@ class StartController extends AbstractDashboardController
 
     public function __construct(
         public StartManagementServiceInterface $service,
+        private readonly MainPagePostRequestMapper $requestMapper,
         ContextController                      $contextController,
     )
     {
@@ -89,12 +91,12 @@ class StartController extends AbstractDashboardController
 
     protected function getDataToCreate(): DataTransferObjectInterface
     {
-        return $this->getMainPagePostDataToCreate();
+        return $this->requestMapper->mapCreate();
     }
 
     protected function getDataToUpdate(): DataTransferObjectInterface
     {
-        return $this->getMainPagePostDataToUpdate();
+        return $this->requestMapper->mapUpdate();
     }
 
     protected function handleCreate(DataTransferObjectInterface $data): void
