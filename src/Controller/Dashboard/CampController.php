@@ -5,6 +5,7 @@ namespace App\Controller\Dashboard;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
 use App\DTO\Dashboard\CampDto;
+use App\Mapper\Dashboard\CampRequestMapper;
 use App\Service\Dashboard\CampManagementServiceInterface;
 
 class CampController extends AbstractDashboardController
@@ -12,7 +13,8 @@ class CampController extends AbstractDashboardController
     use HasUpdateAction;
     public function __construct(
         public CampManagementServiceInterface $service,
-        ContextController $contextController,
+        private readonly CampRequestMapper    $campRequestMapper,
+        ContextController                     $contextController,
     )
     {
         parent::__construct($contextController);
@@ -33,7 +35,7 @@ class CampController extends AbstractDashboardController
 
     protected function getDataToUpdate(): CampDto
     {
-        return $this->getDataToCampEdit();
+        return $this->campRequestMapper->mapUpdate();
     }
 
     protected function handleUpdate(array|object $data): void

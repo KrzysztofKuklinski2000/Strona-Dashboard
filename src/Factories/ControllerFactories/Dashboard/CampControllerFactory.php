@@ -9,6 +9,7 @@ use App\Controller\Dashboard\CampController;
 use App\Core\ContextController;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\CampServiceFactory;
+use App\Mapper\Dashboard\CampRequestMapper;
 use PDO;
 
 class CampControllerFactory implements ControllerFactoryInterface
@@ -24,8 +25,14 @@ class CampControllerFactory implements ControllerFactoryInterface
   {
     $service = $this->serviceFactory->createService();
 
+    $campRequestMapper = new CampRequestMapper(
+        $contextController->request,
+        $contextController->validator,
+    );
+
     return new CampController(
       $service,
+      $campRequestMapper,
       $contextController
     );
   }
