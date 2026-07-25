@@ -6,6 +6,7 @@ use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
 use App\DTO\Dashboard\FeesDto;
 use App\DTO\DataTransferObjectInterface;
+use App\Mapper\Dashboard\FeesRequestMapper;
 use App\Service\Dashboard\FeesManagementServiceInterface;
 
 class FeesController extends AbstractDashboardController
@@ -14,6 +15,7 @@ class FeesController extends AbstractDashboardController
 
     public function __construct(
         public FeesManagementServiceInterface $service,
+        private FeesRequestMapper $feesRequestMapper,
         ContextController                     $contextController,
     )
     {
@@ -35,7 +37,7 @@ class FeesController extends AbstractDashboardController
 
     protected function getDataToUpdate(): DataTransferObjectInterface
     {
-        return $this->getDataToFeesEdit();
+        return $this->feesRequestMapper->mapUpdate();
     }
 
     protected function handleUpdate(DataTransferObjectInterface $data): void

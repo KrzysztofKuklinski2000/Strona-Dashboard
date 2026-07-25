@@ -9,6 +9,7 @@ use App\Controller\Dashboard\FeesController;
 use App\Core\ContextController;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\FeesServiceFactory;
+use App\Mapper\Dashboard\FeesRequestMapper;
 use PDO;
 
 class FeesControllerFactory implements ControllerFactoryInterface
@@ -23,9 +24,14 @@ class FeesControllerFactory implements ControllerFactoryInterface
     public function createController(ContextController $contextController): AbstractController
     {
         $service = $this->serviceFactory->createService();
+        $feesReqeustMapper = new FeesRequestMapper(
+            $contextController->request,
+            $contextController->validator
+        );
 
         return new FeesController(
             $service,
+            $feesReqeustMapper,
             $contextController
         );
     }
