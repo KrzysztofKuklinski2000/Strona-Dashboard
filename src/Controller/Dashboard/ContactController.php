@@ -6,6 +6,8 @@ use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
 use App\DTO\Dashboard\ContactDto;
 use App\DTO\DataTransferObjectInterface;
+use App\Factories\ServiceFactories\Dashboard\ContactServiceFactory;
+use App\Mapper\Dashboard\ContactRequestMapper;
 use App\Service\Dashboard\ContactManagementServiceInterface;
 
 class ContactController extends AbstractDashboardController
@@ -14,6 +16,7 @@ class ContactController extends AbstractDashboardController
 
     public function __construct(
         public ContactManagementServiceInterface $service,
+        private ContactRequestMapper $contactRequestMapper,
         ContextController                        $contextController,
     )
     {
@@ -35,7 +38,7 @@ class ContactController extends AbstractDashboardController
 
     protected function getDataToUpdate(): DataTransferObjectInterface
     {
-        return $this->getDataToContactEdit();
+        return $this->contactRequestMapper->mapUpdate();
     }
 
     protected function handleUpdate(DataTransferObjectInterface $data): void

@@ -8,8 +8,10 @@ namespace App\Factories\ControllerFactories\Dashboard;
 use App\Controller\AbstractController;
 use App\Controller\Dashboard\ContactController;
 use App\Core\ContextController;
+use App\DTO\Dashboard\ContactDto;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\ContactServiceFactory;
+use App\Mapper\Dashboard\ContactRequestMapper;
 use PDO;
 
 class ContactControllerFactory implements ControllerFactoryInterface
@@ -24,9 +26,14 @@ class ContactControllerFactory implements ControllerFactoryInterface
     public function createController(ContextController $contextController): AbstractController
     {
         $service = $this->serviceFactory->createService();
+        $contactRequestMapper = new ContactRequestMapper(
+            $contextController->request,
+            $contextController->validator,
+        );
 
         return new ContactController(
             $service,
+            $contactRequestMapper,
             $contextController
         );
     }
