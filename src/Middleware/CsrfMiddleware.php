@@ -9,6 +9,9 @@ use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 use EasyCSRF\EasyCSRF;
 use Exception;
 
+/**
+ * Generates, stores and verifies reusable CSRF tokens.
+ */
 readonly class CsrfMiddleware
 {
     private const SESSION_TOKEN_PREFIX = 'cached_csrf_token_';
@@ -24,6 +27,8 @@ readonly class CsrfMiddleware
     }
 
     /**
+     * Verifies the CSRF token sent with a POST request.
+     *
      * @throws InvalidCsrfTokenException
      */
     public function verify(string $context = 'public'): void
@@ -46,6 +51,9 @@ readonly class CsrfMiddleware
         }
     }
 
+    /**
+     * Returns an existing session token or creates a new one.
+     */
     public function generateToken(string $context = 'public'): string
     {
         $sessionKey = $this->getSessionKey($context);
@@ -58,12 +66,18 @@ readonly class CsrfMiddleware
         return $this->createToken($context);
     }
 
+    /**
+     * Replaces the current token with a newly generated one.
+     */
     public function regenerateToken(string $context = 'public'): string {
         $this->sessionManager->remove($this->getSessionKey($context));
 
         return $this->createToken($context);
     }
 
+    /**
+     * Generates a token and stores its copy in the application session.
+     */
     private function createToken(string $context): string {
         $token = $this->easyCSRF->generate(
             $this->getEasyCsrfKey($context)
@@ -77,10 +91,16 @@ readonly class CsrfMiddleware
         return $token;
     }
 
+    /**
+     * Builds the token key used by EasyCSRF.
+     */
     private function getEasyCSRFKey(string $context): string {
         return $this->csrfPrefix . $context;
     }
 
+    /**
+     * Builds the key used to cache the token in the application session.
+     */
     private function getSessionKey(string $context): string {
         return self::SESSION_TOKEN_PREFIX . $context;
     }
