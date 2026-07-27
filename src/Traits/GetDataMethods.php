@@ -252,69 +252,6 @@ trait GetDataMethods
         return PublishedTimetableDto::fromArray($data);
     }
 
-    protected function getDataToAddImage(): CreateGalleryDto
-    {
-        $data = [
-            'category' => $this->validator->validate(
-                name: 'category',
-                value: $this->request->getFormParam('category'),
-                required: true,
-                maxLength: 8
-            ),
-
-            'description' => $this->validator->validate(
-                name: 'description',
-                value: $this->request->getFormParam('description'),
-                required: true,
-                minLength: 10,
-                maxLength: 50
-            ),
-
-            'image_name' => $this->validator->validateFile(
-                field: 'image_name',
-                file: $this->request->getFile('image_name'),
-                maxSize: $this->contextController->config->getMaxUploadSize()
-            ),
-
-            'created_at' => date('Y-m-d'),
-
-            'updated_at' => date('Y-m-d'),
-        ];
-
-        return CreateGalleryDto::fromArray($data);
-    }
-
-    protected function getDataToEditImage(): UpdateGalleryDto
-    {
-        $data = [
-            'id' => $this->validator->validate(
-                name: 'id',
-                value: $this->request->getFormParam('id'),
-                required: true,
-                type: 'int'
-            ),
-
-            'category' => $this->validator->validate(
-                name: 'category',
-                value: $this->request->getFormParam('category'),
-                required: true,
-                maxLength: 8
-            ),
-
-            'description' => $this->validator->validate(
-                name: 'description',
-                value: $this->request->getFormParam('description'),
-                required: true,
-                minLength: 10,
-                maxLength: 50
-            ),
-
-            'updated_at' => date('Y-m-d'),
-        ];
-
-        return UpdateGalleryDto::fromArray($data);
-    }
-
     protected function getEmailToCreate(): DataTransferObjectInterface
     {
         $data = [

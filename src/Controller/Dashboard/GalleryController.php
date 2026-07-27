@@ -11,6 +11,7 @@ use App\Controller\Dashboard\Traits\HasSingleData;
 use App\Core\ContextController;
 use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\DataTransferObjectInterface;
+use App\Mapper\Dashboard\GalleryRequestMapper;
 use App\Service\Dashboard\GalleryManagementServiceInterface;
 
 class GalleryController extends AbstractDashboardController
@@ -19,6 +20,7 @@ class GalleryController extends AbstractDashboardController
 
     public function __construct(
         public GalleryManagementServiceInterface $service,
+        private GalleryRequestMapper $galleryRequestMapper,
         ContextController                        $contextController,
     )
     {
@@ -71,12 +73,12 @@ class GalleryController extends AbstractDashboardController
 
     protected function getDataToCreate(): DataTransferObjectInterface
     {
-        return $this->getDataToAddImage();
+        return $this->galleryRequestMapper->mapCreate();
     }
 
     protected function getDataToUpdate(): DataTransferObjectInterface
     {
-        return $this->getDataToEditImage();
+        return $this->galleryRequestMapper->mapUpdate();
     }
 
 
