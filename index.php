@@ -66,6 +66,7 @@ try {
     $csrfMiddleware = new CsrfMiddleware(
         $easyCSRF,
         $request,
+        $sessionManager,
         $config->getCsrfPrefix(),
         $config->getCsrfTokenName()
     );

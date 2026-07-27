@@ -45,6 +45,8 @@ class AuthController extends AbstractController
                     $userDto = $this->authenticator->authenticate($login, $password);
 
                     $this->sessionManager->regenerate();
+                    $this->csrfMiddleware->regenerateToken('admin');
+
                     $this->sessionManager->set('user', $userDto);
                     $this->sessionManager->setFlash('info', 'Udało się zalogować');
 
