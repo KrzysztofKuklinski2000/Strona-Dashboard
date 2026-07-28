@@ -10,6 +10,7 @@ use App\Controller\Dashboard\TimetableController;
 use App\Core\ContextController;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\TimetableServiceFactory;
+use App\Mapper\Dashboard\TimetableRequestMapper;
 use PDO;
 
 class TimetableControllerFactory implements ControllerFactoryInterface
@@ -24,9 +25,15 @@ class TimetableControllerFactory implements ControllerFactoryInterface
         $serviceFactory = new TimetableServiceFactory($this->pdo, $contextController->config);
         $timetableService = $serviceFactory->createService();
 
+        $timetableRequestMapper = new TimetableRequestMapper(
+            $contextController->request,
+            $contextController->validator
+        );
+
 
         return new TimetableController(
             $timetableService,
+            $timetableRequestMapper,
             $contextController
         );
     }

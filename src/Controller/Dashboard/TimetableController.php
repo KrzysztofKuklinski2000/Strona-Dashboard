@@ -10,6 +10,7 @@ use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
+use App\Mapper\Dashboard\TimetableRequestMapper;
 use App\Service\Dashboard\TimetableManagementServiceInterface;
 
 class TimetableController extends AbstractDashboardController
@@ -18,6 +19,7 @@ class TimetableController extends AbstractDashboardController
 
     public function __construct(
         private readonly TimetableManagementServiceInterface $service,
+        private readonly TimetableRequestMapper $timetableRequestMapper,
         ContextController                                    $contextController
     )
     {
@@ -79,17 +81,17 @@ class TimetableController extends AbstractDashboardController
 
     protected function getDataToCreate(): DataTransferObjectInterface
     {
-        return $this->getDataToAddTimetable();
+        return $this->timetableRequestMapper->mapCreate();
     }
 
     protected function getDataToUpdate(): DataTransferObjectInterface
     {
-        return $this->getDataToEditTimetable();
+        return $this->timetableRequestMapper->mapUpdate();
     }
 
     protected function getDataToPublished(): DataTransferObjectInterface
     {
-        return $this->getDataToPublishedTimetable();
+        return $this->timetableRequestMapper->mapPublish();
     }
 
     protected function handleCreate(DataTransferObjectInterface $data): void
