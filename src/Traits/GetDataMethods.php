@@ -125,45 +125,5 @@ trait GetDataMethods
 
         return CreatePostDto::fromArray($data);
     }
-    protected function getEmailToCreate(): DataTransferObjectInterface
-    {
-        $data = [
-            'email' => $this->validator->validate(
-                name: 'email',
-                value: $this->request->getFormParam('email'),
-                required: true,
-                type: 'email',
-                maxLength: 100
-            )
-        ];
 
-        return CreateSubscriberDto::fromArray($data);
-    }
-
-    protected function getEmailToUpdate(): DataTransferObjectInterface
-    {
-        $data = [
-
-            'id' => $this->validator->validate(
-                name: 'id',
-                value: $this->request->getFormParam('id'),
-                required: true,
-                type: 'int'
-            ),
-
-            'email' => $this->validator->validate(
-                name: 'email',
-                value: $this->request->getFormParam('email'),
-                required: true,
-                type: 'email',
-                maxLength: 100
-            ),
-
-            'is_active' => (int) $this->validator->validate(
-                name: 'is_active',
-                value: $this->request->getFormParam('is_active')
-            )
-        ];
-        return UpdateSubscriberDto::fromArray($data);
-    }
 }

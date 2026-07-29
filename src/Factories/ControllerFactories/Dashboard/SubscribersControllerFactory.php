@@ -10,6 +10,7 @@ use App\Controller\Dashboard\SubscribersController;
 use App\Core\ContextController;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\SubscribersServiceFactory;
+use App\Mapper\Dashboard\SubscriberRequestMapper;
 use PDO;
 
 class SubscribersControllerFactory implements ControllerFactoryInterface
@@ -24,9 +25,14 @@ class SubscribersControllerFactory implements ControllerFactoryInterface
     public function createController(ContextController $contextController): AbstractController
     {
         $service = $this->serviceFactory->createService();
+        $subscriberRequestMapper = new SubscriberRequestMapper(
+            $contextController->request,
+            $contextController->validator,
+        );
 
         return new SubscribersController(
             $service,
+            $subscriberRequestMapper,
             $contextController
         );
     }

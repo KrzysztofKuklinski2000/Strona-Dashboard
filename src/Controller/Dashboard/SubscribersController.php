@@ -9,6 +9,7 @@ use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
+use App\Mapper\Dashboard\SubscriberRequestMapper;
 use App\Service\Dashboard\SubscribersManagementServiceInterface;
 
 class SubscribersController extends AbstractDashboardController
@@ -17,6 +18,7 @@ class SubscribersController extends AbstractDashboardController
 
     public function __construct(
         private readonly SubscribersManagementServiceInterface $service,
+        private readonly SubscriberRequestMapper $subscriberRequestMapper,
         ContextController                                      $contextController
     )
     {
@@ -79,12 +81,12 @@ class SubscribersController extends AbstractDashboardController
 
     protected function getDataToCreate(): DataTransferObjectInterface
     {
-        return $this->getEmailToCreate();
+        return $this->subscriberRequestMapper->mapCreate();
     }
 
     protected function getDataToUpdate(): DataTransferObjectInterface
     {
-        return $this->getEmailToUpdate();
+        return $this->subscriberRequestMapper->mapUpdate();
     }
 
     protected function handleCreate(DataTransferObjectInterface $data): void
