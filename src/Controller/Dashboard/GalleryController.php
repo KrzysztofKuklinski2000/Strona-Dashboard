@@ -10,8 +10,10 @@ use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Controller\Dashboard\Traits\HasSingleData;
 use App\Core\ContextController;
 use App\DTO\Dashboard\ChangePositionDto;
+use App\DTO\Dashboard\PublishedDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Mapper\Dashboard\GalleryRequestMapper;
+use App\Mapper\Dashboard\PublicationRequestMapper;
 use App\Service\Dashboard\GalleryManagementServiceInterface;
 
 class GalleryController extends AbstractDashboardController
@@ -21,6 +23,7 @@ class GalleryController extends AbstractDashboardController
     public function __construct(
         public GalleryManagementServiceInterface $service,
         private GalleryRequestMapper $galleryRequestMapper,
+        private readonly PublicationRequestMapper $publicationRequestMapper,
         ContextController                        $contextController,
     )
     {
@@ -81,6 +84,10 @@ class GalleryController extends AbstractDashboardController
         return $this->galleryRequestMapper->mapUpdate();
     }
 
+    protected function getDataToPublished(): PublishedDto
+    {
+        return $this->publicationRequestMapper->map();
+    }
 
     protected function handleCreate(DataTransferObjectInterface $data): void
     {

@@ -10,6 +10,7 @@ use App\Core\ContextController;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\GalleryServiceFactory;
 use App\Mapper\Dashboard\GalleryRequestMapper;
+use App\Mapper\Dashboard\PublicationRequestMapper;
 use PDO;
 
 readonly class GalleryControllerFactory implements ControllerFactoryInterface
@@ -30,9 +31,15 @@ readonly class GalleryControllerFactory implements ControllerFactoryInterface
             $contextController->config
         );
 
+        $publicationRequestMapper = new PublicationRequestMapper(
+            $contextController->request,
+            $contextController->validator,
+        );
+
         return new GalleryController(
             $service,
             $galleryRequestMapper,
+            $publicationRequestMapper,
             $contextController
         );
     }

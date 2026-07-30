@@ -10,8 +10,10 @@ use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
 use App\DTO\Dashboard\ChangePositionDto;
+use App\DTO\Dashboard\PublishedDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
+use App\Mapper\Dashboard\PublicationRequestMapper;
 use App\Service\Dashboard\ImportantPostsManagementServiceInterface;
 
 class ImportantPostsController extends AbstractDashboardController
@@ -21,6 +23,7 @@ class ImportantPostsController extends AbstractDashboardController
 
     public function __construct(
         public ImportantPostsManagementServiceInterface $service,
+        private readonly PublicationRequestMapper $publicationRequestMapper,
         ContextController                               $contextController,
     )
     {
@@ -88,6 +91,11 @@ class ImportantPostsController extends AbstractDashboardController
     protected function getDataToUpdate(): DataTransferObjectInterface
     {
         return $this->getPostDataToEdit();
+    }
+
+    protected function getDataToPublished(): PublishedDto
+    {
+        return $this->publicationRequestMapper->map();
     }
 
     protected function handleCreate(DataTransferObjectInterface $data): void

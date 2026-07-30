@@ -4,6 +4,7 @@ namespace App\Controller\Dashboard\Traits;
 
 
 use App\Core\Request;
+use App\Core\Validator;
 use App\DTO\DataTransferObjectInterface;
 use App\Middleware\CsrfMiddleware;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
@@ -11,14 +12,16 @@ use JetBrains\PhpStorm\NoReturn;
 
 /**
  * @property Request $request
+ * @property Validator $validator
  * @property CsrfMiddleware $csrfMiddleware
  * @method void redirect(string $to)
  * @method void setFlash(string $type, $message, string $prefix = 'dashboard')
  * @method string getModuleName()
- * @method array getDataToPublished()
  */
 trait HasPublishedAction
 {
+    abstract protected function getDataToPublished(): DataTransferObjectInterface;
+
     abstract protected function handlePublish(DataTransferObjectInterface $data): void;
 
     /**
@@ -34,6 +37,19 @@ trait HasPublishedAction
 
         $this->csrfMiddleware->verify('admin');
         $data = $this->getDataToPublished();
+
+        if ($this->validator->getErrors()) {
+            $this->sessionManager->setFlash(
+                'warning',
+                $this->validator->getErrors(),
+            );
+
+            $this->redirect(
+                "{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}"
+            );
+            return;
+        }
+
         $this->handlePublish($data);
 
         $this->sessionManager->setFlash('info', 'Udało się zmienić status');

@@ -8,8 +8,10 @@ use App\Controller\Dashboard\Traits\HasSingleData;
 use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
+use App\DTO\Dashboard\PublishedDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
+use App\Mapper\Dashboard\PublicationRequestMapper;
 use App\Mapper\Dashboard\TimetableRequestMapper;
 use App\Service\Dashboard\TimetableManagementServiceInterface;
 
@@ -20,6 +22,7 @@ class TimetableController extends AbstractDashboardController
     public function __construct(
         private readonly TimetableManagementServiceInterface $service,
         private readonly TimetableRequestMapper $timetableRequestMapper,
+        private readonly PublicationRequestMapper $publicationRequestMapper,
         ContextController                                    $contextController
     )
     {
@@ -89,9 +92,9 @@ class TimetableController extends AbstractDashboardController
         return $this->timetableRequestMapper->mapUpdate();
     }
 
-    protected function getDataToPublished(): DataTransferObjectInterface
+    protected function getDataToPublished(): PublishedDto
     {
-        return $this->timetableRequestMapper->mapPublish();
+        return $this->publicationRequestMapper->map();
     }
 
     protected function handleCreate(DataTransferObjectInterface $data): void

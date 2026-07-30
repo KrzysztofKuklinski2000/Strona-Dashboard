@@ -12,8 +12,6 @@ use App\DTO\Dashboard\CreatePostDto;
 use App\DTO\Dashboard\CreateSubscriberDto;
 use App\DTO\Dashboard\CreateTimetableDto;
 use App\DTO\Dashboard\FeesDto;
-use App\DTO\Dashboard\PublishedDto;
-use App\DTO\Dashboard\PublishedTimetableDto;
 use App\DTO\Dashboard\UpdateGalleryDto;
 use App\DTO\Dashboard\UpdatePostDto;
 use App\DTO\Dashboard\UpdateSubscriberDto;
@@ -76,25 +74,6 @@ trait GetDataMethods
         ];
 
         return UpdatePostDto::fromArray($data);
-    }
-
-    protected function getDataToPublished(): DataTransferObjectInterface
-    {
-        $data = [
-            'published' => $this->validator->validate(
-                name: 'postPublished',
-                value: $this->request->getFormParam('postPublished'),
-                required: true
-            ),
-
-            'id' => $this->validator->validate(
-                name: 'postId',
-                value: $this->request->getFormParam('postId'),
-                required: true
-            )
-        ];
-
-        return PublishedDto::fromArray($data);
     }
 
     protected function getPostDataToCreate(): DataTransferObjectInterface

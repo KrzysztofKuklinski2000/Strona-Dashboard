@@ -5,7 +5,6 @@ namespace App\Mapper\Dashboard;
 use App\Core\Request;
 use App\Core\Validator;
 use App\DTO\Dashboard\CreateTimetableDto;
-use App\DTO\Dashboard\PublishedTimetableDto;
 use App\DTO\Dashboard\UpdateTimetableDto;
 use App\DTO\DataTransferObjectInterface;
 
@@ -121,27 +120,6 @@ readonly class TimetableRequestMapper
         ];
 
         return UpdateTimetableDto::fromArray($data);
-    }
-
-    public function mapPublish(): DataTransferObjectInterface
-    {
-        $data = [
-            'published' => $this->validator->validate(
-                name: 'postPublished',
-                value: $this->request->getFormParam('postPublished'),
-                required: true
-            ),
-
-            'id' => $this->validator->validate(
-                name: 'postId',
-                value: $this->request->getFormParam('postId'),
-                required: true
-            ),
-
-            'is_notify' => $this->request->getFormParam('is_notify')
-        ];
-
-        return PublishedTimetableDto::fromArray($data);
     }
 
 }
