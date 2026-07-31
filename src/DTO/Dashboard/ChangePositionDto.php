@@ -16,8 +16,8 @@ readonly class ChangePositionDto implements DataTransferObjectInterface
     public static function fromArray(array $data): self
     {
         return new self(
-            id: $data['id'],
-            dir: $data['dir']
+            id: (int) ($data['id'] ?? 0),
+            dir: (string) ($data['dir'] ?? '')
         );
     }
 
