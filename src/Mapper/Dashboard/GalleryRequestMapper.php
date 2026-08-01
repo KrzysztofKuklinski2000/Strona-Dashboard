@@ -5,16 +5,20 @@ namespace App\Mapper\Dashboard;
 use App\Core\Config;
 use App\Core\Request;
 use App\Core\Validator;
+use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\CreateGalleryDto;
+use App\DTO\Dashboard\PublishedDto;
 use App\DTO\Dashboard\UpdateGalleryDto;
 
 class GalleryRequestMapper
 {
 
     public function __construct(
-        private Request $request,
-        private Validator $validator,
-        private Config $config
+        private Request                     $request,
+        private Validator                   $validator,
+        private Config                      $config,
+        private ChangePositionRequestMapper $changePositionRequestMapper,
+        private PublicationRequestMapper    $publicationRequestMapper,
     )
     {
     }
@@ -80,5 +84,15 @@ class GalleryRequestMapper
         ];
 
         return UpdateGalleryDto::fromArray($data);
+    }
+
+    public function mapPublication(): PublishedDto
+    {
+        return $this->publicationRequestMapper->map();
+    }
+
+    public function mapChangePosition(): ChangePositionDto
+    {
+        return $this->changePositionRequestMapper->map();
     }
 }
