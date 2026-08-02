@@ -15,7 +15,6 @@ use App\DTO\Dashboard\PublishedDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Mapper\Dashboard\MainPage\MainPagePostRequestMapper;
-use App\Mapper\Dashboard\PublicationRequestMapper;
 use App\Service\Dashboard\StartManagementServiceInterface;
 
 class StartController extends AbstractDashboardController
@@ -23,10 +22,9 @@ class StartController extends AbstractDashboardController
     use HasStoreAction, HasDeleteAction, HasUpdateAction, HasPublishedAction, HasMoveAction, HasSingleData;
 
     public function __construct(
-        public StartManagementServiceInterface $service,
+        public StartManagementServiceInterface     $service,
         private readonly MainPagePostRequestMapper $requestMapper,
-        private readonly PublicationRequestMapper $publicationRequestMapper,
-        ContextController                      $contextController,
+        ContextController                          $contextController,
     )
     {
         parent::__construct($contextController);
@@ -104,7 +102,12 @@ class StartController extends AbstractDashboardController
 
     protected function getDataToPublished(): PublishedDto
     {
-        return $this->publicationRequestMapper->map();
+        return $this->requestMapper->mapPublication();
+    }
+
+    protected function getDataToChangePostPosition(): ChangePositionDto
+    {
+        return $this->requestMapper->mapChangePosition();
     }
 
     protected function handleCreate(DataTransferObjectInterface $data): void
@@ -127,7 +130,7 @@ class StartController extends AbstractDashboardController
         $this->service->publishedMain($data);
     }
 
-    protected function handleMove(ChangePositionDto$changePositionDto): void
+    protected function handleMove(ChangePositionDto $changePositionDto): void
     {
         $this->service->moveMain($changePositionDto);
     }

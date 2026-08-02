@@ -6,21 +6,28 @@ use App\Content\MainPagePostTypes;
 use App\Core\Config;
 use App\Core\Request;
 use App\Core\Validator;
+use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\CreateMainPagePostDto;
+use App\DTO\Dashboard\PublishedDto;
 use App\DTO\Dashboard\UpdateMainPagePostDto;
+use App\Mapper\Dashboard\ChangePositionRequestMapper;
+use App\Mapper\Dashboard\PublicationRequestMapper;
 
 class MainPagePostRequestMapper
 {
     public function __construct(
-        private readonly Request $request,
-        private readonly Validator $validator,
-        private readonly Config $config,
-        private readonly MainPagePayloadNormalizer $payloadNormalizer
+        private readonly Request                     $request,
+        private readonly Validator                   $validator,
+        private readonly Config                      $config,
+        private readonly MainPagePayloadNormalizer   $payloadNormalizer,
+        private readonly ChangePositionRequestMapper $changePositionRequestMapper,
+        private readonly PublicationRequestMapper    $publicationRequestMapper,
     )
     {
     }
 
-    public function mapCreate(): CreateMainPagePostDto {
+    public function mapCreate(): CreateMainPagePostDto
+    {
 
         $type = $this->validator->validate(
             name: 'postType',
@@ -28,13 +35,13 @@ class MainPagePostRequestMapper
             required: true,
         );
 
-        if (!MainPagePostTypes::isAllowed((string) $type)) {
+        if (!MainPagePostTypes::isAllowed((string)$type)) {
             $type = MainPagePostTypes::SIMPLE_TEXT;
         }
 
         $imageFile = null;
 
-        if($type === MainPagePostTypes::IMAGE_TEXT_LIST) {
+        if ($type === MainPagePostTypes::IMAGE_TEXT_LIST) {
             $imageFile = $this->validator->validateFile(
                 field: 'postImage',
                 file: $this->request->getFile('postImage'),
@@ -50,7 +57,7 @@ class MainPagePostRequestMapper
 
         $payload = $this->payloadNormalizer->normalize($type, $rawPayload);
 
-        $data =  [
+        $data = [
 
 
             'title' => $this->validator->validate(
@@ -77,14 +84,15 @@ class MainPagePostRequestMapper
         return CreateMainPagePostDto::fromArray($data);
     }
 
-    public function mapUpdate(): UpdateMainPagePostDto {
+    public function mapUpdate(): UpdateMainPagePostDto
+    {
         $type = $this->validator->validate(
             name: 'postType',
             value: $this->request->getFormParam('postType'),
             required: true,
         );
 
-        if (!MainPagePostTypes::isAllowed((string) $type)) {
+        if (!MainPagePostTypes::isAllowed((string)$type)) {
             $type = MainPagePostTypes::SIMPLE_TEXT;
         }
 
@@ -115,7 +123,7 @@ class MainPagePostRequestMapper
 
         $payload = $this->payloadNormalizer->normalize($type, $rawPayload);
 
-        $data =  [
+        $data = [
             'id' => $this->validator->validate(
                 name: 'postId',
                 value: $this->request->getFormParam('postId'),
@@ -142,5 +150,15 @@ class MainPagePostRequestMapper
         ];
 
         return UpdateMainPagePostDto::fromArray($data);
+    }
+
+    public function mapChangePosition(): ChangePositionDto
+    {
+        return $this->changePositionRequestMapper->map();
+    }
+
+    public function mapPublication(): PublishedDto
+    {
+        return $this->publicationRequestMapper->map();
     }
 }

@@ -9,6 +9,7 @@ use App\Controller\Dashboard\StartController;
 use App\Core\ContextController;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\StartServiceFactory;
+use App\Mapper\Dashboard\ChangePositionRequestMapper;
 use App\Mapper\Dashboard\MainPage\MainPagePayloadNormalizer;
 use App\Mapper\Dashboard\MainPage\MainPagePostRequestMapper;
 use App\Mapper\Dashboard\PublicationRequestMapper;
@@ -32,18 +33,20 @@ class StartControllerFactory implements ControllerFactoryInterface
             $contextController->request,
             $contextController->validator,
             $contextController->config,
-            $payloadNormalizer
-        );
-
-        $publicationRequestMapper = new PublicationRequestMapper(
-            $contextController->request,
-            $contextController->validator,
+            $payloadNormalizer,
+            new ChangePositionRequestMapper(
+                $contextController->request,
+                $contextController->validator,
+            ),
+            new PublicationRequestMapper(
+                $contextController->request,
+                $contextController->validator,
+            )
         );
 
         return new StartController(
             $service,
             $requestMapper,
-            $publicationRequestMapper,
             $contextController,
         );
     }
