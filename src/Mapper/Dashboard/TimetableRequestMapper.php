@@ -5,14 +5,16 @@ namespace App\Mapper\Dashboard;
 use App\Core\Request;
 use App\Core\Validator;
 use App\DTO\Dashboard\CreateTimetableDto;
+use App\DTO\Dashboard\PublishedDto;
 use App\DTO\Dashboard\UpdateTimetableDto;
 use App\DTO\DataTransferObjectInterface;
 
 readonly class TimetableRequestMapper
 {
     public function __construct(
-        private Request $request,
-        private Validator $validator,
+        private Request                  $request,
+        private Validator                $validator,
+        private PublicationRequestMapper $publicationRequestMapper,
     )
     {
     }
@@ -120,6 +122,11 @@ readonly class TimetableRequestMapper
         ];
 
         return UpdateTimetableDto::fromArray($data);
+    }
+
+    public function mapPublication(): PublishedDto
+    {
+        return $this->publicationRequestMapper->map();
     }
 
 }

@@ -28,18 +28,16 @@ class TimetableControllerFactory implements ControllerFactoryInterface
 
         $timetableRequestMapper = new TimetableRequestMapper(
             $contextController->request,
-            $contextController->validator
-        );
-
-        $publicationRequestMapper = new PublicationRequestMapper(
-            $contextController->request,
             $contextController->validator,
+            new PublicationRequestMapper(
+                $contextController->request,
+                $contextController->validator,
+            )
         );
 
         return new TimetableController(
             $timetableService,
             $timetableRequestMapper,
-            $publicationRequestMapper,
             $contextController
         );
     }
