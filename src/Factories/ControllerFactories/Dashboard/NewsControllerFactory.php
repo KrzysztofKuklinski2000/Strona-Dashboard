@@ -10,6 +10,8 @@ use App\Controller\Dashboard\NewsController;
 use App\Core\ContextController;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\NewsServiceFactory;
+use App\Mapper\Dashboard\ChangePositionRequestMapper;
+use App\Mapper\Dashboard\NewsRequestMapper;
 use App\Mapper\Dashboard\PublicationRequestMapper;
 use PDO;
 
@@ -26,15 +28,23 @@ class NewsControllerFactory implements ControllerFactoryInterface
     {
         $service = $this->serviceFactory->createService();
 
-        $publicationRequestMapper = new PublicationRequestMapper(
+        $requestMapper = new NewsRequestMapper(
             $contextController->request,
             $contextController->validator,
+            new ChangePositionRequestMapper(
+                $contextController->request,
+                $contextController->validator,
+            ),
+            new PublicationRequestMapper(
+                $contextController->request,
+                $contextController->validator,
+            ),
         );
 
         return new NewsController(
             $service,
-            $publicationRequestMapper,
-            $contextController
+            $requestMapper,
+            $contextController,
         );
     }
 }
