@@ -3,7 +3,6 @@
 namespace App\Controller\Dashboard\Traits;
 
 use App\Core\Request;
-use App\DTO\Dashboard\UpdatePostDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Middleware\CsrfMiddleware;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;

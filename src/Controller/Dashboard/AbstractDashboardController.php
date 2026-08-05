@@ -4,12 +4,9 @@ namespace App\Controller\Dashboard;
 
 use App\Controller\AbstractController;
 use App\Core\ContextController;
-use App\Traits\GetDataMethods;
 
 abstract class AbstractDashboardController extends AbstractController
 {
-
-    use GetDataMethods;
 
     public function __construct(
         ContextController $contextController,
