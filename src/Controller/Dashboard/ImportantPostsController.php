@@ -13,7 +13,7 @@ use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\PublishedDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
-use App\Mapper\Dashboard\PublicationRequestMapper;
+use App\Mapper\Dashboard\ImportantPostsRequestMapper;
 use App\Service\Dashboard\ImportantPostsManagementServiceInterface;
 
 class ImportantPostsController extends AbstractDashboardController
@@ -23,7 +23,7 @@ class ImportantPostsController extends AbstractDashboardController
 
     public function __construct(
         public ImportantPostsManagementServiceInterface $service,
-        private readonly PublicationRequestMapper $publicationRequestMapper,
+        private readonly ImportantPostsRequestMapper $importantPostsRequestMapper,
         ContextController                               $contextController,
     )
     {
@@ -85,17 +85,22 @@ class ImportantPostsController extends AbstractDashboardController
 
     protected function getDataToCreate(): DataTransferObjectInterface
     {
-        return $this->getPostDataToCreate();
+        return $this->importantPostsRequestMapper->mapCreate();
     }
 
     protected function getDataToUpdate(): DataTransferObjectInterface
     {
-        return $this->getPostDataToEdit();
+        return $this->importantPostsRequestMapper->mapUpdate();
     }
 
     protected function getDataToPublished(): PublishedDto
     {
-        return $this->publicationRequestMapper->map();
+        return $this->importantPostsRequestMapper->mapPublication();
+    }
+
+    protected function getDataToChangePostPosition(): ChangePositionDto
+    {
+        return $this->importantPostsRequestMapper->mapChangePosition();
     }
 
     protected function handleCreate(DataTransferObjectInterface $data): void

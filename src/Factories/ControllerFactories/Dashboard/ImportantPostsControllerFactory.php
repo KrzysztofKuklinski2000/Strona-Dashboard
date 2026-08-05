@@ -10,6 +10,8 @@ use App\Controller\Dashboard\ImportantPostsController;
 use App\Core\ContextController;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\ImportantPostsServiceFactory;
+use App\Mapper\Dashboard\ChangePositionRequestMapper;
+use App\Mapper\Dashboard\ImportantPostsRequestMapper;
 use App\Mapper\Dashboard\PublicationRequestMapper;
 use PDO;
 
@@ -26,14 +28,22 @@ class ImportantPostsControllerFactory implements ControllerFactoryInterface
     {
         $service = $this->serviceFactory->createService();
 
-        $publicationRequestMapper = new PublicationRequestMapper(
+        $requestMapper = new ImportantPostsRequestMapper(
             $contextController->request,
             $contextController->validator,
+            new ChangePositionRequestMapper(
+                $contextController->request,
+                $contextController->validator,
+            ),
+            new PublicationRequestMapper(
+                $contextController->request,
+                $contextController->validator,
+            ),
         );
 
         return new ImportantPostsController(
             $service,
-            $publicationRequestMapper,
+            $requestMapper,
             $contextController,
         );
     }

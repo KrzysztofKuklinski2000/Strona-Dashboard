@@ -3,11 +3,9 @@
 namespace App\Service\Dashboard;
 
 use App\DTO\Dashboard\ChangePositionDto;
-use App\DTO\Dashboard\ImportantPostsDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
-
 use App\Service\Dashboard\Traits\CanEdit;
 use App\Service\Dashboard\Traits\CanPublished;
 use App\Service\Dashboard\Traits\PositionableTrait;
