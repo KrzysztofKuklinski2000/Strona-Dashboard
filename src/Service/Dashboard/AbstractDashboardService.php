@@ -7,6 +7,7 @@ use App\Exception\NotFoundException;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\BaseDashboardRepository;
+use Throwable;
 
 abstract class AbstractDashboardService
 {
@@ -49,7 +50,7 @@ abstract class AbstractDashboardService
             $this->repository->beginTransaction();
             $action();
             $this->repository->commit();
-        } catch (RepositoryException $e) {
+        } catch (Throwable $e) {
             $this->repository->rollBack();
             throw new ServiceException($errorMessage, 500, $e);
         }
