@@ -24,12 +24,21 @@ class Validator
         ?int $maxLength = null,
     ): mixed {
 
+        if (is_string($value)) {
+            $value = trim($value);
+        }
+
         if ($required && ($value === null || $value === '')) {
             $this->errors[$name] = 'To pole jest wymagane.';
             return null;
         }
 
         if ($value === null || $value === '') {
+            return null;
+        }
+
+        if (!is_scalar($value)) {
+            $this->errors[$name] = 'Nieprawidłowa wartość pola.';
             return null;
         }
 
@@ -48,15 +57,15 @@ class Validator
                 return null;
             }
         } else {
-            $value = trim((string) $value);
+            $value = (string) $value;
         }
 
-        if ($maxLength !== null && strlen((string) $value) > $maxLength) {
+        if ($maxLength !== null && mb_strlen((string) $value, 'UTF-8') > $maxLength) {
             $this->errors[$name] = "Długość pola nie może być większa niż $maxLength znaków.";
             return null;
         }
 
-        if ($minLength !== null && strlen((string) $value) < $minLength) {
+        if ($minLength !== null && mb_strlen((string) $value, 'UTF-8') < $minLength) {
             $this->errors[$name] = "Długość pola musi być większa niż $minLength znaków.";
             return null;
         }

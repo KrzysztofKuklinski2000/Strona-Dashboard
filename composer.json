@@ -7,6 +7,7 @@
         "php": "^8.2",
         "ext-ctype": "*",
         "ext-fileinfo": "*",
+        "ext-mbstring": "*",
         "ext-pdo": "*",
         "gilbitron/easycsrf": "^1.5",
         "nikic/fast-route": "^1.3",
