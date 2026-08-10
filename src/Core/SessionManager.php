@@ -61,8 +61,19 @@ class SessionManager
         return $flash;
     }
 
-    public function setFlash(string $type, string|array $message, string $prefix = 'dashboard'): void
+    public function setFlash(
+        string $type,
+        string|array $message,
+        string $prefix = 'dashboard',
+        array $context = []
+    ): void
     {
-        $this->set("flash_$prefix", ["type" => $type, "message" => $message]);
+        $this->set(
+            "flash_$prefix", [
+                "type" => $type,
+                "message" => $message,
+                'context' => $context
+            ]
+        );
     }
 }

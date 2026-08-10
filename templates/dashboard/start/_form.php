@@ -1,11 +1,28 @@
 <?php
+$data = $data ?? null;
 $postTypes = $params['postTypes'] ?? [];
 $defaultType = (string)(array_key_first($postTypes) ?? '');
-$currentType = $data->type ?? $defaultType;
+$oldInput = $params['flash_dashboard']['context']['oldInput'] ?? [];
+$currentType = $oldInput['postType']
+        ?? $data->type
+        ?? $defaultType;
 
 if (!isset($postTypes[$currentType])) {
     $currentType = $defaultType;
 }
+
+$postId = $oldInput['postId']
+        ?? $data->id
+        ?? null;
+
+$titleValue = $oldInput['postTitle']
+        ?? $data->title
+        ?? '';
+
+$payload = $oldInput['payload']
+        ?? json_decode((string) ($data->payload ?? ''), true)
+        ?? [];
+
 ?>
 
 <h3 class="dashboard-action-header"><?= e($formTitle ?? 'Nowy Post') ?></h3>
@@ -27,8 +44,8 @@ if (!isset($postTypes[$currentType])) {
         </div>
     </section>
 
-    <?php if (isset($data->id)): ?>
-        <input type="hidden" name="postId" value="<?= e($data->id) ?>">
+    <?php if ($postId !== null): ?>
+        <input type="hidden" name="postId" value="<?= e($postId) ?>">
     <?php endif; ?>
     <p class="validation-error"><?= e($errors['postType'] ?? '') ?></p>
 
@@ -37,7 +54,7 @@ if (!isset($postTypes[$currentType])) {
             <div class="homepage-post-form__base-fields">
                 <label class="homepage-post-form__title-field">
                     <span>Tytuł sekcji</span>
-                    <input type="text" name="postTitle" maxlength="100" value="<?= e($data->title ?? '') ?>" placeholder="np. Więcej niż sport">
+                    <input type="text" name="postTitle" maxlength="100" value="<?= e($titleValue) ?>" placeholder="np. Więcej niż sport">
                 </label>
                 <p class="validation-error"><?= e($errors['postTitle'] ?? '') ?></p>
             </div>

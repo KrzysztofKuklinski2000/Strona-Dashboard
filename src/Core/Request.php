@@ -24,6 +24,10 @@ class Request
         return $this->post[$name] ?? $default;
     }
 
+    public function getFormData(): array {
+        return $this->post;
+    }
+
     public function getServerParam(string $key, $default = null): mixed
     {
         return $this->server[$key] ?? $default;

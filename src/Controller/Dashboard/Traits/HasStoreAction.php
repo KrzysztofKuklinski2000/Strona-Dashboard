@@ -42,7 +42,19 @@ trait HasStoreAction
             return;
         }
 
-        $this->sessionManager->setFlash("warning", $this->validator->getErrors());
+        $oldInput = $this->request->getFormData();
+        // musimy usunąć token, żeby nie wypełnił nam formularzu starym tokenem
+        unset($oldInput['csrf_token']);
+
+
+        $this->sessionManager->setFlash(
+            type:"warning",
+            message: $this->validator->getErrors(),
+            context: [
+                'oldInput' => $oldInput,
+            ]
+        );
+
         $this->redirect("{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}/create");
     }
 }
