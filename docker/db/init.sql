@@ -198,8 +198,8 @@ CREATE TABLE `main_page_posts`
 --
 
 INSERT INTO `main_page_posts` (`id`, `title`, `created`, `updated`, `status`, `position`, `type`, `payload`)
-VALUES (1, 'Pierwsze zajęcia są bezpłatne', '2025-08-02', '2025-08-02', 1, 4, 'simple_text', JSON_SET(COALESCE(NULL, JSON_OBJECT()), '$.description', 'Chcesz spróbować, zanim się zdecydujesz? Zapraszamy na pierwsze zajęcia całkowicie bezpłatnie!\r\nPrzekonaj się sam, jak ciekawa i wartościowa może być nauka z nami.\r\nNie przegap okazji – zapisz się już dziś!\r\n\r\n')),
-       (2, 'Więcej niż sport', '2025-08-02', '2026-01-29', 1, 1, 'cards_grid', '{
+VALUES (1, 'Pierwsze zajęcia są bezpłatne', '2025-08-02', '2025-08-02', 1, 1, 'trial_banner', JSON_SET(COALESCE(NULL, JSON_OBJECT()), '$.description', 'Chcesz spróbować, zanim się zdecydujesz? Zapraszamy na pierwsze zajęcia całkowicie bezpłatnie!\r\nPrzekonaj się sam, jak ciekawa i wartościowa może być nauka z nami.\r\nNie przegap okazji – zapisz się już dziś!\r\n\r\n')),
+       (2, 'Więcej niż sport', '2025-08-02', '2026-01-29', 1, 2, 'cards_grid', '{
           "eyebrow": "Dlaczego karate?",
           "cards": [
             {
@@ -220,7 +220,7 @@ VALUES (1, 'Pierwsze zajęcia są bezpłatne', '2025-08-02', '2025-08-02', 1, 4,
           ]
         }'),
        (3, 'DOTACJAAAA', '2025-08-02', '2025-09-25', 1, 3, 'simple_text', JSON_SET(COALESCE(NULL, JSON_OBJECT()), '$.description', '   Zajęcia dla dzieci i młodzieży\r\n\r\nw WEJHEROWIE\r\n\r\nsą prowadzone w ramach  zadania publicznego\r\n\r\n\" Szkolenie karate Kyokushin \"\r\n\r\nrealizowanego przez nasz Klub, dofinansowanego przez\r\n\r\nGminę Miasta Wejherowa. ')),
-       (4, 'Trening rodzinny', '2025-08-02', '2025-10-16', 1, 2, 'image_text_list', JSON_SET(COALESCE('{
+       (4, 'Trening rodzinny', '2025-08-02', '2025-10-16', 1, 4, 'image_text_list', JSON_SET(COALESCE('{
           "eyebrow": "Trening dla każdego",
           "image": {
             "src": "/public/images/family-training.png",

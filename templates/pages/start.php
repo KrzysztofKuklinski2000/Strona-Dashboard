@@ -1,9 +1,10 @@
 <?php
 use App\Content\MainPagePostTypes;
 
-$first = $params['content'][2] ?? null;
-$homePosts = $params['content'][0] ?? [];
-$importantPosts = $params['content'][1] ?? [];
+$content = $params['content'] ?? [];
+
+$homePosts = $content['homePosts'] ?? [];
+$importantPosts = $content['importantPosts'] ?? [];
 ?>
 
 <?php if ($importantPosts): ?>
@@ -50,34 +51,6 @@ $importantPosts = $params['content'][1] ?? [];
                     </button>
                 </div>
             <?php endif ?>
-        </div>
-    </section>
-<?php endif ?>
-
-<?php if ($first): ?>
-    <?php
-    $firstPayload = json_decode((string) ($first->payload ?? ''), true);
-    $firstPayload = is_array($firstPayload) ? $firstPayload : [];
-    $firstDescription = (string) ($firstPayload['description'] ?? '');
-    ?>
-    <section class="first-class-section" aria-labelledby="first-class-title">
-        <div class="first-class-section__inner">
-            <div class="first-class-section__icon" aria-hidden="true">
-                <i class="fa-solid fa-gift"></i>
-            </div>
-
-            <div class="first-class-section__content">
-                <h2 id="first-class-title"><?= e($first->title ?? 'Pierwsze zajęcia są bezpłatne') ?></h2>
-
-                <?php if ($firstDescription !== ''): ?>
-                    <p><?= e_br($firstDescription) ?></p>
-                <?php endif ?>
-            </div>
-
-            <a class="first-class-section__cta" href="/zapisy">
-                Umów się na trening próbny
-                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-            </a>
         </div>
     </section>
 <?php endif ?>

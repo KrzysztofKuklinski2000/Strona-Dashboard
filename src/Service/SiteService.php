@@ -51,19 +51,14 @@ readonly class SiteService
     public function getFrontPage(): array
     {
         try {
-            $firstPost = null;
             $posts = $this->siteRepository->getMainPagePosts();
             $importantPosts = $this->siteRepository->getImportantPosts();
 
-            foreach ($posts as $key => $post) {
-                if ($post->id === 1) {
-                    $firstPost = $post;
-                    unset($posts[$key]);
-                    break;
-                }
-            }
 
-            return [$posts, $importantPosts, $firstPost];
+            return [
+                'homePosts' => $posts,
+                'importantPosts' => $importantPosts
+            ];
 
         } catch (RepositoryException $e) {
             throw new ServiceException("Nie udało się pobrać danych", 500, $e);
