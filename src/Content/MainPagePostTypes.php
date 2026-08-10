@@ -8,6 +8,8 @@ final class MainPagePostTypes
     public const CARDS_GRID = 'cards_grid';
     public const IMAGE_TEXT_LIST = 'image_text_list';
 
+    public const TRIAL_BANNER = 'trial_banner';
+
     private const TYPES = [
         self::SIMPLE_TEXT => [
             'label' => 'Prosty tekst',
@@ -20,6 +22,10 @@ final class MainPagePostTypes
         self::IMAGE_TEXT_LIST => [
             'label' => 'Obrazek + tekst + lista',
             'partial' => 'image_text_list.php',
+        ],
+        self::TRIAL_BANNER => [
+            'label' =>'Baner pierwszego treningu',
+            'partial' => 'trial_banner.php',
         ]
     ];
 

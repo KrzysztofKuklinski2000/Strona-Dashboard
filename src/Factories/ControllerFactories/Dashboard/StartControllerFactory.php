@@ -43,6 +43,9 @@ class StartControllerFactory implements ControllerFactoryInterface
                 MainPagePostTypes::IMAGE_TEXT_LIST => new ImageTextListNormalizer(
                     $contextController->validator,
                 ),
+                MainPagePostTypes::TRIAL_BANNER => new SimpleTextNormalizer(
+                    $contextController->validator,
+                )
             ],
         );
 

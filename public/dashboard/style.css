@@ -871,7 +871,8 @@ main {
 	display: none;
 }
 
-.content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__preview-content {
+.content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__preview-content,
+.content-container .homepage-post-form[data-active-post-type="trial_banner"] .homepage-post-form__preview-content {
 	display: grid;
 	grid-template-columns: minmax(260px, .75fr) minmax(360px, 1.25fr);
 	gap: 18px;
@@ -879,38 +880,47 @@ main {
 }
 
 .content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__base-fields,
-.content-container .homepage-post-form[data-active-post-type="simple_text"] .post-type-fields:not([hidden]) {
+.content-container .homepage-post-form[data-active-post-type="simple_text"] .post-type-fields:not([hidden]),
+.content-container .homepage-post-form[data-active-post-type="trial_banner"] .homepage-post-form__base-fields,
+.content-container .homepage-post-form[data-active-post-type="trial_banner"] .post-type-fields:not([hidden]){
 	display: contents;
 }
 
 .content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__title-field,
-.content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__description-field {
+.content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__description-field,
+.content-container .homepage-post-form[data-active-post-type="trial_banner"] .homepage-post-form__title-field,
+.content-container .homepage-post-form[data-active-post-type="trial_banner"] .homepage-post-form__description-field {
 	padding: 8px 0;
 }
 
-.content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__title-field {
+.content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__title-field,
+.content-container .homepage-post-form[data-active-post-type="trial_banner"] .homepage-post-form__title-field {
 	grid-column: 1;
 	grid-row: 1;
 }
 
-.content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__title-field + .validation-error {
+.content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__title-field + .validation-error,
+.content-container .homepage-post-form[data-active-post-type="trial_banner"] .homepage-post-form__title-field + .validation-error{
 	grid-column: 1;
 	grid-row: 2;
 }
 
-.content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__description-field {
+.content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__description-field,
+.content-container .homepage-post-form[data-active-post-type="trial_banner"] .homepage-post-form__description-field {
 	grid-column: 2;
 	grid-row: 1;
 	padding-left: 24px;
 	border-left: 1px solid #d8dbe2;
 }
 
-.content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__description-field + .validation-error {
+.content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__description-field + .validation-error,
+.content-container .homepage-post-form[data-active-post-type="trial_banner"] .homepage-post-form__description-field + .validation-error {
 	grid-column: 2;
 	grid-row: 2;
 }
 
-.content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__description-field textarea {
+.content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__description-field textarea,
+.content-container .homepage-post-form[data-active-post-type="trial_banner"] .homepage-post-form__description-field textarea {
 	height: 150px;
 }
 
@@ -1067,19 +1077,25 @@ main {
 		grid-template-columns: minmax(0, 1fr);
 	}
 
-	.content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__preview-content {
+	.content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__preview-content,
+	.content-container .homepage-post-form[data-active-post-type="trial_banner"] .homepage-post-form__preview-content {
 		grid-template-columns: minmax(0, 1fr);
 	}
 
 	.content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__title-field,
 	.content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__title-field + .validation-error,
 	.content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__description-field,
-	.content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__description-field + .validation-error {
+	.content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__description-field + .validation-error,
+	.content-container .homepage-post-form[data-active-post-type="trial_banner"] .homepage-post-form__title-field,
+	.content-container .homepage-post-form[data-active-post-type="trial_banner"] .homepage-post-form__title-field + .validation-error,
+	.content-container .homepage-post-form[data-active-post-type="trial_banner"] .homepage-post-form__description-field,
+	.content-container .homepage-post-form[data-active-post-type="trial_banner"] .homepage-post-form__description-field + .validation-error {
 		grid-column: 1;
 		grid-row: auto;
 	}
 
-	.content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__description-field {
+	.content-container .homepage-post-form[data-active-post-type="simple_text"] .homepage-post-form__description-field,
+	.content-container .homepage-post-form[data-active-post-type="trial_banner"] .homepage-post-form__description-field{
 		padding-left: 0;
 		border-left: 0;
 	}
