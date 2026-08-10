@@ -3,7 +3,6 @@
 namespace App\Service\Dashboard;
 
 use App\Content\MainPagePostTypes;
-use App\Core\FileHandler;
 use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\CreateMainPagePostDto;
 use App\DTO\Dashboard\UpdateMainPagePostDto;
@@ -12,9 +11,11 @@ use App\Exception\FileException;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\StartRepository;
+use App\Service\Dashboard\MainPage\ImageTextListUploadProcessor;
 use App\Service\Dashboard\Traits\CanEdit;
 use App\Service\Dashboard\Traits\CanPublished;
 use App\Service\Dashboard\Traits\PositionableTrait;
+use JsonException;
 
 /**
  * @property StartRepository $repository
@@ -27,8 +28,7 @@ class StartService extends AbstractDashboardService implements StartManagementSe
 
     public function __construct(
         StartRepository            $repository,
-        private readonly FileHandler $fileHandler,
-        private readonly string $uploadUrl
+        private readonly ImageTextListUploadProcessor $uploadProcessor,
     )
     {
         parent::__construct($repository);
@@ -56,32 +56,13 @@ class StartService extends AbstractDashboardService implements StartManagementSe
      */
     public function updateMain(DataTransferObjectInterface $data): void
     {
-        $dataToUpload = $data;
-
-        try {
-            if (
-                $data->type === MainPagePostTypes::IMAGE_TEXT_LIST
-                && $data->imageFile !== null
-            ) {
-                $imageName = $this->fileHandler->uploadImage($data->imageFile);
-                $dir = $this->uploadUrl .'/'. $imageName;
-
-                $payload = json_decode($data->payload, true);
-                $payload['image']['src'] = $dir;
-
-                $payload = json_encode($payload, JSON_UNESCAPED_UNICODE);
-
-                $dataToUpload = UpdateMainPagePostDto::fromArray([
-                    'id' => $data->id,
-                    'title' => $data->title,
-                    'updated' => $data->updated,
-                    'type' => $data->type,
-                    'payload' => $payload,
-                ]);
-            }
-        }catch (FileException $e) {
-            throw new ServiceException("Nie udało się wgrać zdjęcia na serwer", 500, $e);
-        }
+        $dataToUpload = UpdateMainPagePostDto::fromArray([
+            'id' => $data->id,
+            'title' => $data->title,
+            'updated' => $data->updated,
+            'type' => $data->type,
+            'payload' => $this->preparePayloadForPersistence($data)
+        ]);
 
         $this->edit(self::TABLE, $dataToUpload);
     }
@@ -91,30 +72,14 @@ class StartService extends AbstractDashboardService implements StartManagementSe
      */
     public function createMain(DataTransferObjectInterface $data): void
     {
-        $dataToUpload = $data;
-
-        try {
-            if($data->type === MainPagePostTypes::IMAGE_TEXT_LIST) {
-                $imageName = $this->fileHandler->uploadImage($data->imageFile);
-                $dir = $this->uploadUrl .'/'. $imageName;
-
-                $payload = json_decode($data->payload, true);
-                $payload['image']['src'] = $dir;
-
-                $payload = json_encode($payload, JSON_UNESCAPED_UNICODE);
-
-                $dataToUpload = CreateMainPagePostDto::fromArray([
-                    'title' => $data->title,
-                    'created' => $data->created,
-                    'updated' => $data->updated,
-                    'status' => $data->status,
-                    'type' => $data->type,
-                    'payload' => $payload,
-                ]);
-            }
-        }catch (FileException $e) {
-            throw new ServiceException("Nie udało się wgrać zdjęcia na serwer", 500, $e);
-        }
+        $dataToUpload = CreateMainPagePostDto::fromArray([
+            'title' => $data->title,
+            'created' => $data->created,
+            'updated' => $data->updated,
+            'status' => $data->status,
+            'type' => $data->type,
+            'payload' => $this->preparePayloadForPersistence($data)
+        ]);
 
         $this->create(self::TABLE, $dataToUpload);
     }
@@ -135,5 +100,30 @@ class StartService extends AbstractDashboardService implements StartManagementSe
     public function moveMain(ChangePositionDto $data): void
     {
         $this->move(self::TABLE, $data);
+    }
+
+    /**
+     * @throws ServiceException
+     */
+    private function preparePayloadForPersistence(DataTransferObjectInterface $data): ?string {
+        if(
+            $data->type !== MainPagePostTypes::IMAGE_TEXT_LIST
+            || $data->imageFile === null
+            || $data->payload === null
+        ) {
+            return $data->payload;
+        }
+
+        try {
+            return $this->uploadProcessor->process($data->payload, $data->imageFile);
+        }catch (FileException $e) {
+            throw new ServiceException("Nie udało się wgrać zdjęcia na serwer", 500, $e);
+        }catch (JsonException $e) {
+            throw new ServiceException(
+                'Nie udało się przygotować danych obrazu',
+                500,
+                $e,
+            );
+        }
     }
 }
