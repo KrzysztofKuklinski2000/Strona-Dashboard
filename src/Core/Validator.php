@@ -85,7 +85,21 @@ class Validator
         }
 
         if ($file['error'] !== UPLOAD_ERR_OK) {
-            $this->errors[$field] = 'Błąd przesyłania pliku.';
+            $maxSizeMb = $maxSize / 1_000_000;
+
+            $this->errors[$field] = match ((int) $file['error']) {
+                UPLOAD_ERR_INI_SIZE,
+                UPLOAD_ERR_FORM_SIZE => "Plik jest zbyt duży. Maksymalny rozmiar to $maxSizeMb MB.",
+
+                UPLOAD_ERR_PARTIAL => 'Plik został przesłany tylko częściowo. Spróbuj ponownie.',
+
+                UPLOAD_ERR_NO_TMP_DIR,
+                UPLOAD_ERR_CANT_WRITE,
+                UPLOAD_ERR_EXTENSION => 'Nie udało się zapisać pliku na serwerze.',
+
+                default => 'Nie udało się przesłać pliku. Spróbuj ponownie.',
+            };
+
             return null;
         }
 
