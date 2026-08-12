@@ -25,6 +25,7 @@ class StartService extends AbstractDashboardService implements StartManagementSe
     use CanPublished, CanEdit, PositionableTrait;
 
     private const TABLE = 'main_page_posts';
+    private const NEW_POST_POSITION = 2;
 
     public function __construct(
         StartRepository            $repository,
@@ -77,11 +78,16 @@ class StartService extends AbstractDashboardService implements StartManagementSe
             'created' => $data->created,
             'updated' => $data->updated,
             'status' => $data->status,
+            'position' => self::NEW_POST_POSITION,
             'type' => $data->type,
             'payload' => $this->preparePayloadForPersistence($data)
         ]);
 
-        $this->create(self::TABLE, $dataToUpload);
+        $this->create(
+            self::TABLE,
+            $dataToUpload,
+            self::NEW_POST_POSITION,
+        );
     }
 
     /**

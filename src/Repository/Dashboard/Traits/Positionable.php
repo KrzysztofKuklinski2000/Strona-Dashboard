@@ -37,9 +37,12 @@ trait Positionable {
     /**
      * @throws RepositoryException
      */
-    public function incrementPosition(string $table):void {
+    public function incrementPosition(string $table, int $fromPosition = 1):void {
         try{
-            $this->runQuery("UPDATE $table SET position = position + 1");
+            $this->runQuery(
+                "UPDATE $table SET position = position + 1 WHERE position >= :fromPosition",
+                [':fromPosition' => $fromPosition]
+            );
         }catch(RepositoryException $e) {
             throw new RepositoryException("Nie udało się zmienić pozycji", 500, $e);
         }

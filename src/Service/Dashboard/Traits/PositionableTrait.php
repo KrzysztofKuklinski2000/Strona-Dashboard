@@ -21,9 +21,13 @@ trait PositionableTrait
         }, "Błąd zmiany pozycji");
     }
 
-    protected function create(string $table, DataTransferObjectInterface $data): void {
-        $this->execute(function () use ($table, $data) {
-            $this->repository->incrementPosition($table);
+    protected function create(
+        string $table,
+        DataTransferObjectInterface $data,
+        int $position = 1,
+    ): void {
+        $this->execute(function () use ($table, $data, $position) {
+            $this->repository->incrementPosition($table, $position);
             $this->repository->create($table, $data);
         }, "Błąd tworzenia pozycji");
     }
