@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace App\Service\Dashboard\Contracts;
 
-use App\DTO\DataTransferObjectInterface;
+use App\DTO\Dashboard\FeesDto;
 
 /**
- * Interfejs definiujący operacje wyłącznie dla modułu Aktualności.
+ * Interfejs definiujący operacje wyłącznie dla modułu Opłat.
  */
 interface FeesManagementServiceInterface
 {
-  /**
-   * Pobiera wszystkie wpisy opłat.
-   * @return DataTransferObjectInterface object
-   */
-  public function getFees(): DataTransferObjectInterface;
+    /**
+     * Pobiera wszystkie wpisy opłat.
+     * @return FeesDto
+     */
+    public function getFees(): FeesDto;
 
-  /**
-   * Aktualizuje istniejący wpis opłat.
-   * @param DataTransferObjectInterface $feesDto object $data Nowe dane z formularza.
-   * @return void
-   */
-  public function updateFees(DataTransferObjectInterface $feesDto): void;
+    /**
+     * Aktualizuje istniejący wpis opłat.
+     * @param FeesDto $feesDto
+     * @return void
+     */
+    public function updateFees(FeesDto $feesDto): void;
 }

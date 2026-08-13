@@ -2,7 +2,7 @@
 
 namespace App\Service\Dashboard;
 
-use App\DTO\DataTransferObjectInterface;
+use App\DTO\Dashboard\FeesDto;
 use App\Exception\ServiceException;
 use App\Service\Dashboard\Contracts\FeesManagementServiceInterface;
 use App\Service\Dashboard\Traits\CanEdit;
@@ -16,7 +16,7 @@ class FeesService extends AbstractDashboardService implements FeesManagementServ
     /**
      * @throws ServiceException
      */
-    public function updateFees(DataTransferObjectInterface $feesDto): void
+    public function updateFees(FeesDto $feesDto): void
     {
         $this->edit(self::TABLE, $feesDto);
     }
@@ -24,8 +24,14 @@ class FeesService extends AbstractDashboardService implements FeesManagementServ
     /**
      * @throws ServiceException
      */
-    public function getFees(): DataTransferObjectInterface
+    public function getFees(): FeesDto
     {
-        return $this->getAll(self::TABLE)[0];
+        $fees = $this->getAll(self::TABLE)[0] ?? null;
+
+        if (!$fees instanceof FeesDto) {
+            throw new ServiceException('Nie udało się pobrać danych o opłatach');
+        }
+
+        return $fees;
     }
 }

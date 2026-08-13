@@ -15,7 +15,7 @@ class FeesController extends AbstractDashboardController
 
     public function __construct(
         public FeesManagementServiceInterface $service,
-        private FeesRequestMapper $feesRequestMapper,
+        private readonly FeesRequestMapper    $feesRequestMapper,
         ContextController                     $contextController,
     )
     {
@@ -35,7 +35,7 @@ class FeesController extends AbstractDashboardController
         return 'fees';
     }
 
-    protected function getDataToUpdate(): DataTransferObjectInterface
+    protected function getDataToUpdate(): FeesDto
     {
         return $this->feesRequestMapper->mapUpdate();
     }
