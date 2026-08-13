@@ -2,7 +2,7 @@
 
 namespace App\Service\Dashboard;
 
-use App\DTO\DataTransferObjectInterface;
+use App\DTO\Dashboard\CampDto;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\CampRepository;
 use App\Service\Dashboard\Contracts\CampManagementServiceInterface;
@@ -20,7 +20,7 @@ class CampService extends AbstractDashboardService implements CampManagementServ
     /**
      * @throws ServiceException
      */
-    public function updateCamp(DataTransferObjectInterface $campDto): void
+    public function updateCamp(CampDto $campDto): void
     {
         $this->edit(self::TABLE, $campDto);
     }
@@ -28,9 +28,14 @@ class CampService extends AbstractDashboardService implements CampManagementServ
     /**
      * @throws ServiceException
      */
-    public function getCamp(): DataTransferObjectInterface
+    public function getCamp(): CampDto
     {
-        $data = $this->getAll(self::TABLE);
-        return $data[0];
+        $camp = $this->getAll(self::TABLE)[0] ?? null;
+
+        if (!$camp instanceof CampDto) {
+            throw new ServiceException('Nie udało się pobrać danych obozu.');
+        }
+
+        return $camp;
     }
 }

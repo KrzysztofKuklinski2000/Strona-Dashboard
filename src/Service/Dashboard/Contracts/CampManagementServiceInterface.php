@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace App\Service\Dashboard\Contracts;
 
-use App\DTO\DataTransferObjectInterface;
+use App\DTO\Dashboard\CampDto;
 
 /**
- * Interfejs definiujący operacje wyłącznie dla modułu Aktualności.
+ * Interfejs definiujący operacje wyłącznie dla modułu Obozu.
  */
 interface CampManagementServiceInterface
 {
     /**
-     * Pobiera wszystkie wpisy opłat.
-     * @return DataTransferObjectInterface
+     * Pobiera wszystkie wpisy Obozu.
+     * @return CampDto
      */
-  public function getCamp(): DataTransferObjectInterface;
+  public function getCamp(): CampDto;
 
     /**
-     * Aktualizuje istniejący wpis opłat.
-     * @param DataTransferObjectInterface $campDto
+     * Aktualizuje istniejący wpis Obozu.
+     * @param CampDto $campDto
      * @return void
      */
-  public function updateCamp(DataTransferObjectInterface $campDto): void;
+  public function updateCamp(CampDto $campDto): void;
 }
