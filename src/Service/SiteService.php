@@ -11,7 +11,7 @@ use App\Exception\ServiceException;
 use App\Repository\Dashboard\TimetableRepository;
 use App\Repository\SiteRepository;
 
-readonly class SiteService
+readonly class SiteService implements ContactProviderInterface
 {
     public function __construct(
         private SiteRepository      $siteRepository,

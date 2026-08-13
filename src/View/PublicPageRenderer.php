@@ -4,28 +4,24 @@ declare(strict_types=1);
 namespace App\View;
 
 use App\Core\ContextController;
-use App\Exception\ServiceException;
-use App\Service\SiteService;
+use App\Service\ContactProviderInterface;
 
 readonly class PublicPageRenderer
 {
     public function __construct(
-        private ContextController $context,
-        private SiteService       $siteService
+        private ContextController        $context,
+        private ContactProviderInterface $contactProvider,
     )
     {
     }
 
-    /**
-     * @throws ServiceException
-     */
     public function render(array $pageSpecificParams): void
     {
         $globalParams = [
-            'contact'      => $this->siteService->getContact(),
-            'csrf_token'   => $this->context->csrfMiddleware->generateToken(),
+            'contact' => $this->contactProvider->getContact(),
+            'csrf_token' => $this->context->csrfMiddleware->generateToken(),
             'flash_public' => $this->context->sessionManager->getFlash('public'),
-            'base_url'     => $this->context->config->getUrl(),
+            'base_url' => $this->context->config->getUrl(),
         ];
 
         $finalParams = array_merge($globalParams, $pageSpecificParams);
