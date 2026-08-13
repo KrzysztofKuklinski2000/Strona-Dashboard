@@ -2,7 +2,9 @@
 
 namespace App\Service\Dashboard;
 
+use App\DTO\Dashboard\CreateSubscriberDto;
 use App\DTO\Dashboard\SubscribersDto;
+use App\DTO\Dashboard\UpdateSubscriberDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
@@ -46,7 +48,7 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
      * @throws ServiceException
      * @throws RandomException
      */
-    public function createSubscriber(DataTransferObjectInterface $data): string
+    public function createSubscriber(CreateSubscriberDto $data): string
     {
         if ($this->repository->emailExists($data->email)) {
             throw new ServiceException("Ten adres email jest już zapisany w bazie.", 409);
@@ -69,7 +71,7 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
     /**
      * @throws ServiceException
      */
-    public function updateSubscriber(DataTransferObjectInterface $data): void
+    public function updateSubscriber(UpdateSubscriberDto $data): void
     {
         $this->edit(self::TABLE, $data);
     }

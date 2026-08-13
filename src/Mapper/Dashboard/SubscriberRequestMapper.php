@@ -6,7 +6,6 @@ use App\Core\Request;
 use App\Core\Validator;
 use App\DTO\Dashboard\CreateSubscriberDto;
 use App\DTO\Dashboard\UpdateSubscriberDto;
-use App\DTO\DataTransferObjectInterface;
 
 readonly class SubscriberRequestMapper
 {
@@ -18,7 +17,7 @@ readonly class SubscriberRequestMapper
     {
     }
 
-    public function mapCreate(): DataTransferObjectInterface
+    public function mapCreate(): CreateSubscriberDto
     {
         $data = [
             'email' => $this->validator->validate(
@@ -33,7 +32,7 @@ readonly class SubscriberRequestMapper
         return CreateSubscriberDto::fromArray($data);
     }
 
-    public function mapUpdate(): DataTransferObjectInterface
+    public function mapUpdate(): UpdateSubscriberDto
     {
         $data = [
 

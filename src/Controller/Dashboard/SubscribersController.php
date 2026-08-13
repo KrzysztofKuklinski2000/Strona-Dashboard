@@ -7,6 +7,8 @@ use App\Controller\Dashboard\Traits\HasSingleData;
 use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
+use App\DTO\Dashboard\CreateSubscriberDto;
+use App\DTO\Dashboard\UpdateSubscriberDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Mapper\Dashboard\SubscriberRequestMapper;
@@ -79,23 +81,25 @@ class SubscribersController extends AbstractDashboardController
         return 'subscribers';
     }
 
-    protected function getDataToCreate(): DataTransferObjectInterface
+    protected function getDataToCreate(): CreateSubscriberDto
     {
         return $this->subscriberRequestMapper->mapCreate();
     }
 
-    protected function getDataToUpdate(): DataTransferObjectInterface
+    protected function getDataToUpdate(): UpdateSubscriberDto
     {
         return $this->subscriberRequestMapper->mapUpdate();
     }
 
     protected function handleCreate(DataTransferObjectInterface $data): void
     {
+        /** @var CreateSubscriberDto $data */
         $this->service->createSubscriber($data);
     }
 
     protected function handleUpdate(DataTransferObjectInterface $data): void
     {
+        /** @var UpdateSubscriberDto $data */
         $this->service->updateSubscriber($data);
     }
 
