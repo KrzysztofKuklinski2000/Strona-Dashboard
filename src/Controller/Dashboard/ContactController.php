@@ -15,7 +15,7 @@ class ContactController extends AbstractDashboardController
 
     public function __construct(
         public ContactManagementServiceInterface $service,
-        private ContactRequestMapper $contactRequestMapper,
+        private readonly ContactRequestMapper    $contactRequestMapper,
         ContextController                        $contextController,
     )
     {
@@ -35,7 +35,7 @@ class ContactController extends AbstractDashboardController
         ]);
     }
 
-    protected function getDataToUpdate(): DataTransferObjectInterface
+    protected function getDataToUpdate(): ContactDto
     {
         return $this->contactRequestMapper->mapUpdate();
     }

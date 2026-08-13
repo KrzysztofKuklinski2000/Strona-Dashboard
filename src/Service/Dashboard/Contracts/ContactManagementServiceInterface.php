@@ -4,23 +4,18 @@ declare(strict_types=1);
 
 namespace App\Service\Dashboard\Contracts;
 
-use App\DTO\DataTransferObjectInterface;
+use App\DTO\Dashboard\ContactDto;
+use App\Service\Contracts\ContactProviderInterface;
 
 /**
- * Interfejs definiujący operacje wyłącznie dla modułu Aktualności.
+ * Interfejs definiujący operacje wyłącznie dla modułu Kontaktu.
  */
-interface ContactManagementServiceInterface
+interface ContactManagementServiceInterface extends ContactProviderInterface
 {
     /**
-     * Pobiera wszystkie wpisy opłat.
-     * @return DataTransferObjectInterface
-     */
-  public function getContact(): DataTransferObjectInterface;
-
-    /**
-     * Aktualizuje istniejący wpis opłat.
-     * @param DataTransferObjectInterface $contactDto
+     * Aktualizuje istniejący wpis Kontaktu.
+     * @param ContactDto $contactDto
      * @return void
      */
-  public function updateContact(DataTransferObjectInterface $contactDto): void;
+    public function updateContact(ContactDto $contactDto): void;
 }

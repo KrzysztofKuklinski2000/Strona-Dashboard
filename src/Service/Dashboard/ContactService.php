@@ -2,7 +2,7 @@
 
 namespace App\Service\Dashboard;
 
-use App\DTO\DataTransferObjectInterface;
+use App\DTO\Dashboard\ContactDto;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\ContactRepository;
 use App\Service\Dashboard\Contracts\ContactManagementServiceInterface;
@@ -20,7 +20,7 @@ class ContactService extends AbstractDashboardService implements ContactManageme
     /**
      * @throws ServiceException
      */
-    public function updateContact(DataTransferObjectInterface $contactDto ): void
+    public function updateContact(ContactDto $contactDto): void
     {
         $this->edit(self::TABLE, $contactDto);
     }
@@ -28,8 +28,14 @@ class ContactService extends AbstractDashboardService implements ContactManageme
     /**
      * @throws ServiceException
      */
-    public function getContact(): DataTransferObjectInterface
+    public function getContact(): ContactDto
     {
-        return $this->getAll(self::TABLE)[0];
+        $contact = $this->getAll(self::TABLE)[0] ?? null;
+
+        if (!$contact instanceof ContactDto) {
+            throw new ServiceException('Nie udało się pobrać danych kontaktowych.');
+        }
+
+        return $contact;
     }
 }
