@@ -4,44 +4,47 @@ declare(strict_types=1);
 
 namespace App\Service\Dashboard\Contracts;
 
-use App\DTO\DataTransferObjectInterface;
+use App\DTO\Dashboard\CreateTimetableDto;
+use App\DTO\Dashboard\PublishedDto;
+use App\DTO\Dashboard\TimetableDto;
+use App\DTO\Dashboard\UpdateTimetableDto;
 
 /**
- * Interfejs definiujący operacje wyłącznie dla modułu Timetable.
+ * Interfejs definiujący operacje wyłącznie dla modułu Grafiku.
  */
 interface TimetableManagementServiceInterface extends SharedGetDataServiceInterface
 {
-  /**
-   * Pobiera wszystkie wpisy.
-   * @return array
-   */
-  public function getAllTimetable(): array;
+    /**
+     * Pobiera wszystkie wpisy.
+     * @return TimetableDto[]
+     */
+    public function getAllTimetable(): array;
 
     /**
      * Aktualizuje istniejący wpis.
-     * @param DataTransferObjectInterface $data Nowe dane z formularza.
+     * @param UpdateTimetableDto $data
      * @return void
      */
-  public function updateTimetable(DataTransferObjectInterface $data): void;
+    public function updateTimetable(UpdateTimetableDto $data): void;
 
     /**
      * Tworzy nowy wpis.
-     * @param DataTransferObjectInterface $data Dane posta z formularza.
+     * @param CreateTimetableDto $data
      * @return void
      */
-  public function createTimetable(DataTransferObjectInterface $data): void;
+    public function createTimetable(CreateTimetableDto $data): void;
 
     /**
      * Zmienia status publikacji.
-     * @param DataTransferObjectInterface $data Dane posta z formularza.
+     * @param PublishedDto $data
      * @return void
      */
-  public function publishedTimetable(DataTransferObjectInterface $data): void;
+    public function publishedTimetable(PublishedDto $data): void;
 
-  /**
-   * Usuwa wpis.
-   * @param int $id ID posta do usunięcia.
-   * @return void
-   */
-  public function deleteTimetable(int $id, bool $shouldNotify): void;
+    /**
+     * Usuwa wpis.
+     * @param int $id
+     * @return void
+     */
+    public function deleteTimetable(int $id, bool $shouldNotify): void;
 }

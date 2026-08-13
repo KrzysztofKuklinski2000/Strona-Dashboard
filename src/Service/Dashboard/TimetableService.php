@@ -2,6 +2,9 @@
 
 namespace App\Service\Dashboard;
 
+use App\DTO\Dashboard\CreateTimetableDto;
+use App\DTO\Dashboard\PublishedDto;
+use App\DTO\Dashboard\UpdateTimetableDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Exception\RepositoryException;
@@ -22,8 +25,8 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
     private const TABLE = 'timetable';
 
     public function __construct(
-        TimetableRepository          $repository,
-        private readonly array       $notifications,
+        TimetableRepository    $repository,
+        private readonly array $notifications,
     )
     {
         parent::__construct($repository);
@@ -53,7 +56,7 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
     /**
      * @throws ServiceException
      */
-    public function updateTimetable(DataTransferObjectInterface $data): void
+    public function updateTimetable(UpdateTimetableDto $data): void
     {
         $this->handleActionWithNotification(
             $data,
@@ -65,7 +68,7 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
     /**
      * @throws ServiceException
      */
-    public function createTimetable(DataTransferObjectInterface $data): void
+    public function createTimetable(CreateTimetableDto $data): void
     {
         $this->handleActionWithNotification(
             $data,
@@ -77,7 +80,7 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
     /**
      * @throws ServiceException
      */
-    public function publishedTimetable(DataTransferObjectInterface $data): void
+    public function publishedTimetable(PublishedDto $data): void
     {
         $this->handleActionWithNotification(
             $data,
@@ -95,7 +98,11 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
         }
     }
 
-    private function handleActionWithNotification(DataTransferObjectInterface $data, string $message, callable $action): void
+    private function handleActionWithNotification(
+        CreateTimetableDto|UpdateTimetableDto|PublishedDto $data,
+        string                                             $message,
+        callable                                           $action
+    ): void
     {
         $shouldNotify = (bool) ($data->isNotify ?? false);
 

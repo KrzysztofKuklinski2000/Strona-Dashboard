@@ -7,7 +7,6 @@ use App\Core\Validator;
 use App\DTO\Dashboard\CreateTimetableDto;
 use App\DTO\Dashboard\PublishedDto;
 use App\DTO\Dashboard\UpdateTimetableDto;
-use App\DTO\DataTransferObjectInterface;
 
 readonly class TimetableRequestMapper
 {
@@ -19,7 +18,7 @@ readonly class TimetableRequestMapper
     {
     }
 
-    public function mapCreate(): DataTransferObjectInterface
+    public function mapCreate(): CreateTimetableDto
     {
         $data = [
             'day' => $this->validator->validate(
@@ -68,7 +67,7 @@ readonly class TimetableRequestMapper
         return CreateTimetableDto::fromArray($data);
     }
 
-    public function mapUpdate(): DataTransferObjectInterface
+    public function mapUpdate(): UpdateTimetableDto
     {
         $data = [
             'id' => $this->validator->validate(
