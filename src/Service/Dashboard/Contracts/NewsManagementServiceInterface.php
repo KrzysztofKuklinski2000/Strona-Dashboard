@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace App\Service\Dashboard\Contracts;
 
 use App\DTO\Dashboard\ChangePositionDto;
-use App\DTO\DataTransferObjectInterface;
+use App\DTO\Dashboard\CreateNewsDto;
+use App\DTO\Dashboard\NewsDto;
+use App\DTO\Dashboard\PublishedDto;
+use App\DTO\Dashboard\UpdateNewsDto;
 
 /**
  * Interfejs definiujący operacje wyłącznie dla modułu Aktualności.
@@ -14,30 +17,30 @@ interface NewsManagementServiceInterface extends SharedGetDataServiceInterface
 {
     /**
      * Pobiera wszystkie wpisy aktualności.
-     * @return DataTransferObjectInterface[]
+     * @return NewsDto[]
      */
     public function getAllNews(): array;
 
     /**
      * Aktualizuje istniejący wpis aktualności.
-     * @param DataTransferObjectInterface $data Nowe dane z formularza.
+     * @param UpdateNewsDto $data
      * @return void
      */
-    public function updateNews(DataTransferObjectInterface $data): void;
+    public function updateNews(UpdateNewsDto $data): void;
 
     /**
      * Tworzy nowy wpis aktualności.
-     * @param DataTransferObjectInterface $data Dane posta z formularza.
+     * @param CreateNewsDto $data
      * @return void
      */
-    public function createNews(DataTransferObjectInterface $data): void;
+    public function createNews(CreateNewsDto $data): void;
 
     /**
      * Zmienia status publikacji wpisu.
-     * @param DataTransferObjectInterface $data Dane posta z formularza.
+     * @param PublishedDto $data
      * @return void
      */
-    public function publishedNews(DataTransferObjectInterface $data): void;
+    public function publishedNews(PublishedDto $data): void;
 
     /**
      * Usuwa wpis aktualności.

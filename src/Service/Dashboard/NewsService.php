@@ -3,6 +3,9 @@
 namespace App\Service\Dashboard;
 
 use App\DTO\Dashboard\ChangePositionDto;
+use App\DTO\Dashboard\CreateNewsDto;
+use App\DTO\Dashboard\PublishedDto;
+use App\DTO\Dashboard\UpdateNewsDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
@@ -41,12 +44,12 @@ class NewsService extends AbstractDashboardService implements NewsManagementServ
     /**
      * @throws ServiceException
      */
-    public function updateNews(DataTransferObjectInterface $data): void
+    public function updateNews(UpdateNewsDto $data): void
     {
         $this->edit(self::TABLE, $data);
     }
 
-    public function createNews(DataTransferObjectInterface $data): void
+    public function createNews(CreateNewsDto $data): void
     {
         $this->create(self::TABLE, $data);
     }
@@ -54,7 +57,7 @@ class NewsService extends AbstractDashboardService implements NewsManagementServ
     /**
      * @throws ServiceException
      */
-    public function publishedNews(DataTransferObjectInterface $data): void
+    public function publishedNews(PublishedDto $data): void
     {
         $this->published(self::TABLE, $data);
     }

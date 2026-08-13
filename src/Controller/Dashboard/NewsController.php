@@ -10,7 +10,9 @@ use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
 use App\DTO\Dashboard\ChangePositionDto;
+use App\DTO\Dashboard\CreateNewsDto;
 use App\DTO\Dashboard\PublishedDto;
+use App\DTO\Dashboard\UpdateNewsDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Mapper\Dashboard\NewsRequestMapper;
@@ -22,8 +24,8 @@ class NewsController extends AbstractDashboardController
 
     public function __construct(
         public NewsManagementServiceInterface $service,
-        private readonly NewsRequestMapper $requestMapper,
-        ContextController $contextController,
+        private readonly NewsRequestMapper    $requestMapper,
+        ContextController                     $contextController,
     )
     {
         parent::__construct($contextController);
@@ -82,12 +84,12 @@ class NewsController extends AbstractDashboardController
         return 'news';
     }
 
-    protected function getDataToCreate(): DataTransferObjectInterface
+    protected function getDataToCreate(): CreateNewsDto
     {
         return $this->requestMapper->mapCreate();
     }
 
-    protected function getDataToUpdate(): DataTransferObjectInterface
+    protected function getDataToUpdate(): UpdateNewsDto
     {
         return $this->requestMapper->mapUpdate();
     }
@@ -104,11 +106,13 @@ class NewsController extends AbstractDashboardController
 
     protected function handleCreate(DataTransferObjectInterface $data): void
     {
+        /** @var CreateNewsDto $data */
         $this->service->createNews($data);
     }
 
     protected function handleUpdate(DataTransferObjectInterface $data): void
     {
+        /** @var UpdateNewsDto $data */
         $this->service->updateNews($data);
     }
 
@@ -119,6 +123,7 @@ class NewsController extends AbstractDashboardController
 
     protected function handlePublish(DataTransferObjectInterface $data): void
     {
+        /** @var PublishedDto $data */
         $this->service->publishedNews($data);
     }
 
