@@ -15,7 +15,7 @@ use App\DTO\Dashboard\PublishedDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Mapper\Dashboard\MainPage\MainPagePostRequestMapper;
-use App\Service\Dashboard\StartManagementServiceInterface;
+use App\Service\Dashboard\Contracts\StartManagementServiceInterface;
 
 class StartController extends AbstractDashboardController
 {

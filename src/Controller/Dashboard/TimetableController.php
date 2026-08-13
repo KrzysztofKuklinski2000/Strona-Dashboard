@@ -12,7 +12,7 @@ use App\DTO\Dashboard\PublishedDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Mapper\Dashboard\TimetableRequestMapper;
-use App\Service\Dashboard\TimetableManagementServiceInterface;
+use App\Service\Dashboard\Contracts\TimetableManagementServiceInterface;
 
 class TimetableController extends AbstractDashboardController
 {

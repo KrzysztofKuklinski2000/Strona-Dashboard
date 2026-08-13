@@ -7,8 +7,9 @@ use App\Exception\NotFoundException;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\TimetableRepository;
-use App\Traits\Observable;
+use App\Service\Dashboard\Contracts\TimetableManagementServiceInterface;
 use App\Service\Dashboard\Traits\StandardCrudTrait;
+use App\Traits\Observable;
 
 /**
  * @property TimetableRepository $repository

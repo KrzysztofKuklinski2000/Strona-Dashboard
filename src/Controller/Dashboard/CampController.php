@@ -6,7 +6,7 @@ use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
 use App\DTO\Dashboard\CampDto;
 use App\Mapper\Dashboard\CampRequestMapper;
-use App\Service\Dashboard\CampManagementServiceInterface;
+use App\Service\Dashboard\Contracts\CampManagementServiceInterface;
 
 class CampController extends AbstractDashboardController
 {

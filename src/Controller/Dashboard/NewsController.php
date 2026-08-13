@@ -14,7 +14,7 @@ use App\DTO\Dashboard\PublishedDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Mapper\Dashboard\NewsRequestMapper;
-use App\Service\Dashboard\NewsManagementServiceInterface;
+use App\Service\Dashboard\Contracts\NewsManagementServiceInterface;
 
 class NewsController extends AbstractDashboardController
 {

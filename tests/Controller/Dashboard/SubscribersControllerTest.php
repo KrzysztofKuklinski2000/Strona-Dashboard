@@ -5,7 +5,7 @@ namespace Tests\Controller\Dashboard;
 use App\Controller\Dashboard\SubscribersController;
 use App\Core\Request;
 use App\Middleware\CsrfMiddleware;
-use App\Service\Dashboard\SubscribersManagementServiceInterface;
+use App\Service\Dashboard\Contracts\SubscribersManagementServiceInterface;
 use App\View;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

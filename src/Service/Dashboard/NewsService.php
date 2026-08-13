@@ -7,6 +7,7 @@ use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\NewsRepository;
+use App\Service\Dashboard\Contracts\NewsManagementServiceInterface;
 use App\Service\Dashboard\Traits\CanEdit;
 use App\Service\Dashboard\Traits\CanPublished;
 use App\Service\Dashboard\Traits\PositionableTrait;

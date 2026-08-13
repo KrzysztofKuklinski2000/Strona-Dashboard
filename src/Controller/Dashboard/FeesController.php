@@ -7,7 +7,7 @@ use App\Core\ContextController;
 use App\DTO\Dashboard\FeesDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Mapper\Dashboard\FeesRequestMapper;
-use App\Service\Dashboard\FeesManagementServiceInterface;
+use App\Service\Dashboard\Contracts\FeesManagementServiceInterface;
 
 class FeesController extends AbstractDashboardController
 {

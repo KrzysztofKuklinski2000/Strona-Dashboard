@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\View;
 
 use App\Core\ContextController;
-use App\Service\ContactProviderInterface;
+use App\Service\Contracts\ContactProviderInterface;
 
 readonly class PublicPageRenderer
 {

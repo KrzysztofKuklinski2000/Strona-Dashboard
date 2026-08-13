@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Dashboard;
+namespace App\Service\Dashboard\Contracts;
 
 use App\DTO\DataTransferObjectInterface;
 

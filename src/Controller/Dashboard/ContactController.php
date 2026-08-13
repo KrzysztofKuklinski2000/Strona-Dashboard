@@ -6,9 +6,8 @@ use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
 use App\DTO\Dashboard\ContactDto;
 use App\DTO\DataTransferObjectInterface;
-use App\Factories\ServiceFactories\Dashboard\ContactServiceFactory;
 use App\Mapper\Dashboard\ContactRequestMapper;
-use App\Service\Dashboard\ContactManagementServiceInterface;
+use App\Service\Dashboard\Contracts\ContactManagementServiceInterface;
 
 class ContactController extends AbstractDashboardController
 {

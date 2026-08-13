@@ -8,6 +8,7 @@ use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\SubscriberRepository;
 use App\Security\TokenGeneratorInterface;
+use App\Service\Dashboard\Contracts\SubscribersManagementServiceInterface;
 use App\Service\Dashboard\Traits\StandardCrudTrait;
 use Random\RandomException;
 

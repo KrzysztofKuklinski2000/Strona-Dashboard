@@ -5,15 +5,15 @@ namespace App\Controller\Dashboard;
 use App\Controller\Dashboard\Traits\HasDeleteAction;
 use App\Controller\Dashboard\Traits\HasMoveAction;
 use App\Controller\Dashboard\Traits\HasPublishedAction;
+use App\Controller\Dashboard\Traits\HasSingleData;
 use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
-use App\Controller\Dashboard\Traits\HasSingleData;
 use App\Core\ContextController;
 use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\PublishedDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Mapper\Dashboard\GalleryRequestMapper;
-use App\Service\Dashboard\GalleryManagementServiceInterface;
+use App\Service\Dashboard\Contracts\GalleryManagementServiceInterface;
 
 class GalleryController extends AbstractDashboardController
 {

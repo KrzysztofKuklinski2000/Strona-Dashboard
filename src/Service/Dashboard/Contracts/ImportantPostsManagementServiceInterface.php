@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Dashboard;
+namespace App\Service\Dashboard\Contracts;
 
 use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\DataTransferObjectInterface;
@@ -10,46 +10,46 @@ use App\DTO\DataTransferObjectInterface;
 /**
  * Interfejs definiujący operacje wyłącznie dla modułu Aktualności.
  */
-interface NewsManagementServiceInterface extends SharedGetDataServiceInterface
+interface ImportantPostsManagementServiceInterface extends SharedGetDataServiceInterface
 {
     /**
-     * Pobiera wszystkie wpisy aktualności.
+     * Pobiera wszystkie ważnych postów.
      * @return DataTransferObjectInterface[]
      */
-    public function getAllNews(): array;
+    public function getAllImportantPosts(): array;
 
     /**
-     * Aktualizuje istniejący wpis aktualności.
+     * Aktualizuje istniejący ważnych wpis.
      * @param DataTransferObjectInterface $data Nowe dane z formularza.
      * @return void
      */
-    public function updateNews(DataTransferObjectInterface $data): void;
+    public function updateImportantPost(DataTransferObjectInterface $data): void;
 
     /**
-     * Tworzy nowy wpis aktualności.
+     * Tworzy nowy ważnych wpis.
      * @param DataTransferObjectInterface $data Dane posta z formularza.
      * @return void
      */
-    public function createNews(DataTransferObjectInterface $data): void;
+    public function createImportantPost(DataTransferObjectInterface $data): void;
 
     /**
      * Zmienia status publikacji wpisu.
      * @param DataTransferObjectInterface $data Dane posta z formularza.
      * @return void
      */
-    public function publishedNews(DataTransferObjectInterface $data): void;
+    public function publishedImportantPost(DataTransferObjectInterface $data): void;
 
     /**
-     * Usuwa wpis aktualności.
+     * Usuwa ważnych wpis.
      * @param int $id ID posta do usunięcia.
      * @return void
      */
-    public function deleteNews(int $id): void;
+    public function deleteImportantPost(int $id): void;
 
     /**
      * Zmienia pozycje wpisu.
      * @param ChangePositionDto $data Dane posta z formularza.
      * @return void
      */
-    public function moveNews(ChangePositionDto $data): void;
+    public function moveImportantPost(ChangePositionDto $data): void;
 }

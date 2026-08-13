@@ -2,9 +2,9 @@
 
 namespace App\Service\Dashboard;
 
-use App\DTO\Dashboard\FeesDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\ServiceException;
+use App\Service\Dashboard\Contracts\FeesManagementServiceInterface;
 use App\Service\Dashboard\Traits\CanEdit;
 
 class FeesService extends AbstractDashboardService implements FeesManagementServiceInterface

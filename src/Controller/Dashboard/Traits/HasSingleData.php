@@ -5,7 +5,7 @@ namespace App\Controller\Dashboard\Traits;
 use App\Core\Request;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
-use App\Service\Dashboard\SharedGetDataServiceInterface;
+use App\Service\Dashboard\Contracts\SharedGetDataServiceInterface;
 
 /**
  * @property Request $request

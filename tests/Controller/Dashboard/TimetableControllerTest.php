@@ -5,7 +5,7 @@ namespace Tests\Controller\Dashboard;
 use App\Controller\Dashboard\TimetableController;
 use App\Core\Request;
 use App\Middleware\CsrfMiddleware;
-use App\Service\Dashboard\TimetableManagementServiceInterface;
+use App\Service\Dashboard\Contracts\TimetableManagementServiceInterface;
 use App\View;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

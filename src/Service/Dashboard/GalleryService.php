@@ -3,13 +3,14 @@
 namespace App\Service\Dashboard;
 
 use App\Core\FileHandler;
-use App\DTO\Dashboard\CreateGalleryDto;
 use App\DTO\Dashboard\ChangePositionDto;
+use App\DTO\Dashboard\CreateGalleryDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\FileException;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\GalleryRepository;
+use App\Service\Dashboard\Contracts\GalleryManagementServiceInterface;
 use App\Service\Dashboard\Traits\CanEdit;
 use App\Service\Dashboard\Traits\CanPublished;
 use App\Service\Dashboard\Traits\PositionableTrait;

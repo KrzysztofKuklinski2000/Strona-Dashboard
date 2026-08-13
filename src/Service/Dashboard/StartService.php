@@ -11,6 +11,7 @@ use App\Exception\FileException;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\StartRepository;
+use App\Service\Dashboard\Contracts\StartManagementServiceInterface;
 use App\Service\Dashboard\MainPage\ImageTextListUploadProcessor;
 use App\Service\Dashboard\Traits\CanEdit;
 use App\Service\Dashboard\Traits\CanPublished;

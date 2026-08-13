@@ -14,7 +14,7 @@ use App\DTO\Dashboard\PublishedDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Mapper\Dashboard\ImportantPostsRequestMapper;
-use App\Service\Dashboard\ImportantPostsManagementServiceInterface;
+use App\Service\Dashboard\Contracts\ImportantPostsManagementServiceInterface;
 
 class ImportantPostsController extends AbstractDashboardController
 {

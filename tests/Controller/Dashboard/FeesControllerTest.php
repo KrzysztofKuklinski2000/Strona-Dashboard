@@ -2,13 +2,13 @@
 
 namespace Tests\Controller\Dashboard;
 
-use App\View;
-use App\Core\Request;
-use PHPUnit\Framework\TestCase;
-use App\Middleware\CsrfMiddleware;
 use App\Controller\Dashboard\FeesController;
+use App\Core\Request;
+use App\Middleware\CsrfMiddleware;
+use App\Service\Dashboard\Contracts\FeesManagementServiceInterface;
+use App\View;
 use PHPUnit\Framework\MockObject\MockObject;
-use App\Service\Dashboard\FeesManagementServiceInterface;
+use PHPUnit\Framework\TestCase;
 
 class FeesControllerTest extends TestCase
 {

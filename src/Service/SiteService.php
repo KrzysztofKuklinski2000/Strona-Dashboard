@@ -10,6 +10,7 @@ use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\TimetableRepository;
 use App\Repository\SiteRepository;
+use App\Service\Contracts\ContactProviderInterface;
 
 readonly class SiteService implements ContactProviderInterface
 {

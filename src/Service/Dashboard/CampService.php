@@ -5,6 +5,7 @@ namespace App\Service\Dashboard;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\CampRepository;
+use App\Service\Dashboard\Contracts\CampManagementServiceInterface;
 use App\Service\Dashboard\Traits\CanEdit;
 
 /**

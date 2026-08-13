@@ -5,6 +5,7 @@ namespace App\Service\Dashboard;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\ContactRepository;
+use App\Service\Dashboard\Contracts\ContactManagementServiceInterface;
 use App\Service\Dashboard\Traits\CanEdit;
 
 /**

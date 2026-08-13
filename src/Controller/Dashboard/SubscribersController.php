@@ -10,7 +10,7 @@ use App\Core\ContextController;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Mapper\Dashboard\SubscriberRequestMapper;
-use App\Service\Dashboard\SubscribersManagementServiceInterface;
+use App\Service\Dashboard\Contracts\SubscribersManagementServiceInterface;
 
 class SubscribersController extends AbstractDashboardController
 {
