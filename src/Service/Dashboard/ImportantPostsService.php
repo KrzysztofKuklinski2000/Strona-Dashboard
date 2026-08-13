@@ -3,6 +3,9 @@
 namespace App\Service\Dashboard;
 
 use App\DTO\Dashboard\ChangePositionDto;
+use App\DTO\Dashboard\CreateImportantPostDto;
+use App\DTO\Dashboard\PublishedDto;
+use App\DTO\Dashboard\UpdateImportantPostDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
@@ -30,19 +33,20 @@ class ImportantPostsService extends AbstractDashboardService implements Importan
      * @throws ServiceException
      * @throws NotFoundException
      */
-    public function getPost(string $table, int $id): ?DataTransferObjectInterface {
+    public function getPost(string $table, int $id): ?DataTransferObjectInterface
+    {
         return $this->getRow(self::TABLE, $id);
     }
 
     /**
      * @throws ServiceException
      */
-    public function updateImportantPost(DataTransferObjectInterface $data): void
+    public function updateImportantPost(UpdateImportantPostDto $data): void
     {
         $this->edit(self::TABLE, $data);
     }
 
-    public function createImportantPost(DataTransferObjectInterface $data): void
+    public function createImportantPost(CreateImportantPostDto $data): void
     {
         $this->create(self::TABLE, $data);
     }
@@ -50,7 +54,7 @@ class ImportantPostsService extends AbstractDashboardService implements Importan
     /**
      * @throws ServiceException
      */
-    public function publishedImportantPost(DataTransferObjectInterface $data): void
+    public function publishedImportantPost(PublishedDto $data): void
     {
         $this->published(self::TABLE, $data);
     }

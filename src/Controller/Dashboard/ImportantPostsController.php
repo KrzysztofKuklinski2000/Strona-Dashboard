@@ -10,7 +10,9 @@ use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
 use App\DTO\Dashboard\ChangePositionDto;
+use App\DTO\Dashboard\CreateImportantPostDto;
 use App\DTO\Dashboard\PublishedDto;
+use App\DTO\Dashboard\UpdateImportantPostDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Mapper\Dashboard\ImportantPostsRequestMapper;
@@ -23,7 +25,7 @@ class ImportantPostsController extends AbstractDashboardController
 
     public function __construct(
         public ImportantPostsManagementServiceInterface $service,
-        private readonly ImportantPostsRequestMapper $importantPostsRequestMapper,
+        private readonly ImportantPostsRequestMapper    $importantPostsRequestMapper,
         ContextController                               $contextController,
     )
     {
@@ -83,12 +85,12 @@ class ImportantPostsController extends AbstractDashboardController
         return 'important_posts';
     }
 
-    protected function getDataToCreate(): DataTransferObjectInterface
+    protected function getDataToCreate(): CreateImportantPostDto
     {
         return $this->importantPostsRequestMapper->mapCreate();
     }
 
-    protected function getDataToUpdate(): DataTransferObjectInterface
+    protected function getDataToUpdate(): UpdateImportantPostDto
     {
         return $this->importantPostsRequestMapper->mapUpdate();
     }
@@ -105,11 +107,13 @@ class ImportantPostsController extends AbstractDashboardController
 
     protected function handleCreate(DataTransferObjectInterface $data): void
     {
+        /** @var CreateImportantPostDto $data */
         $this->service->createImportantPost($data);
     }
 
     protected function handleUpdate(DataTransferObjectInterface $data): void
     {
+        /** @var UpdateImportantPostDto $data */
         $this->service->updateImportantPost($data);
     }
 
@@ -120,6 +124,7 @@ class ImportantPostsController extends AbstractDashboardController
 
     protected function handlePublish(DataTransferObjectInterface $data): void
     {
+        /** @var PublishedDto $data */
         $this->service->publishedImportantPost($data);
     }
 
