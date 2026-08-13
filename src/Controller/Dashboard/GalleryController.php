@@ -10,8 +10,11 @@ use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
 use App\DTO\Dashboard\ChangePositionDto;
+use App\DTO\Dashboard\CreateGalleryDto;
 use App\DTO\Dashboard\PublishedDto;
+use App\DTO\Dashboard\UpdateGalleryDto;
 use App\DTO\DataTransferObjectInterface;
+use App\Exception\NotFoundException;
 use App\Mapper\Dashboard\GalleryRequestMapper;
 use App\Service\Dashboard\Contracts\GalleryManagementServiceInterface;
 
@@ -21,7 +24,7 @@ class GalleryController extends AbstractDashboardController
 
     public function __construct(
         public GalleryManagementServiceInterface $service,
-        private GalleryRequestMapper             $galleryRequestMapper,
+        private readonly GalleryRequestMapper    $galleryRequestMapper,
         ContextController                        $contextController,
     )
     {
@@ -36,6 +39,9 @@ class GalleryController extends AbstractDashboardController
         ]);
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function editAction(): void
     {
         $this->renderPage([
@@ -51,6 +57,9 @@ class GalleryController extends AbstractDashboardController
         ]);
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function showAction(): void
     {
         $this->renderPage([
@@ -59,6 +68,9 @@ class GalleryController extends AbstractDashboardController
         ]);
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function confirmDeleteAction(): void
     {
         $this->renderPage([
@@ -72,12 +84,12 @@ class GalleryController extends AbstractDashboardController
         return 'gallery';
     }
 
-    protected function getDataToCreate(): DataTransferObjectInterface
+    protected function getDataToCreate(): CreateGalleryDto
     {
         return $this->galleryRequestMapper->mapCreate();
     }
 
-    protected function getDataToUpdate(): DataTransferObjectInterface
+    protected function getDataToUpdate(): UpdateGalleryDto
     {
         return $this->galleryRequestMapper->mapUpdate();
     }
@@ -94,11 +106,13 @@ class GalleryController extends AbstractDashboardController
 
     protected function handleCreate(DataTransferObjectInterface $data): void
     {
+        /** @var CreateGalleryDto $data */
         $this->service->createGallery($data);
     }
 
     protected function handleUpdate(DataTransferObjectInterface $data): void
     {
+        /** @var UpdateGalleryDto $data */
         $this->service->updateGallery($data);
     }
 
@@ -109,6 +123,7 @@ class GalleryController extends AbstractDashboardController
 
     protected function handlePublish(DataTransferObjectInterface $data): void
     {
+        /** @var PublishedDto $data */
         $this->service->publishedGallery($data);
     }
 

@@ -5,36 +5,39 @@ declare(strict_types=1);
 namespace App\Service\Dashboard\Contracts;
 
 use App\DTO\Dashboard\ChangePositionDto;
-use App\DTO\DataTransferObjectInterface;
+use App\DTO\Dashboard\CreateGalleryDto;
+use App\DTO\Dashboard\GalleryDto;
+use App\DTO\Dashboard\PublishedDto;
+use App\DTO\Dashboard\UpdateGalleryDto;
 
 interface GalleryManagementServiceInterface extends SharedGetDataServiceInterface
 {
     /**
      * Pobiera wszystkie wpisy galerii.
-     * @return DataTransferObjectInterface[]
+     * @return GalleryDto[]
      */
     public function getAllGallery(): array;
 
     /**
      * Aktualizuje istniejący wpis galerii.
-     * @param DataTransferObjectInterface $galleryDto
+     * @param UpdateGalleryDto $galleryDto
      * @return void
      */
-    public function updateGallery(DataTransferObjectInterface $galleryDto): void;
+    public function updateGallery(UpdateGalleryDto $galleryDto): void;
 
     /**
      * Tworzy nowy wpis galerii.
-     * @param DataTransferObjectInterface $galleryDto
+     * @param CreateGalleryDto $galleryDto
      * @return void
      */
-    public function createGallery(DataTransferObjectInterface $galleryDto): void;
+    public function createGallery(CreateGalleryDto $galleryDto): void;
 
     /**
      * Zmienia status publikacji wpisu.
-     * @param DataTransferObjectInterface $galleryDto
+     * @param PublishedDto $galleryDto
      * @return void
      */
-    public function publishedGallery(DataTransferObjectInterface $galleryDto): void;
+    public function publishedGallery(PublishedDto $galleryDto): void;
 
     /**
      * Usuwa wpis w galerii.

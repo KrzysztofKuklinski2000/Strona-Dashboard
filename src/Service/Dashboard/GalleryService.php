@@ -5,6 +5,8 @@ namespace App\Service\Dashboard;
 use App\Core\FileHandler;
 use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\CreateGalleryDto;
+use App\DTO\Dashboard\PublishedDto;
+use App\DTO\Dashboard\UpdateGalleryDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\FileException;
 use App\Exception\NotFoundException;
@@ -52,7 +54,7 @@ class GalleryService extends AbstractDashboardService implements GalleryManageme
     /**
      * @throws ServiceException
      */
-    public function updateGallery(DataTransferObjectInterface $galleryDto): void
+    public function updateGallery(UpdateGalleryDto $galleryDto): void
     {
         $this->edit(self::TABLE, $galleryDto);
     }
@@ -60,11 +62,9 @@ class GalleryService extends AbstractDashboardService implements GalleryManageme
     /**
      * @throws ServiceException
      */
-    public function createGallery(DataTransferObjectInterface $galleryDto): void
+    public function createGallery(CreateGalleryDto $galleryDto): void
     {
         try {
-
-            /** @var CreateGalleryDto $galleryDto */
             $imageName = $this->fileHandler->uploadImage($galleryDto->imageName);
 
             $updatedDto = CreateGalleryDto::fromArray([
@@ -85,7 +85,7 @@ class GalleryService extends AbstractDashboardService implements GalleryManageme
     /**
      * @throws ServiceException
      */
-    public function publishedGallery(DataTransferObjectInterface $galleryDto): void
+    public function publishedGallery(PublishedDto $galleryDto): void
     {
         $this->published(self::TABLE, $galleryDto);
     }
