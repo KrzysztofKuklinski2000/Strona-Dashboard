@@ -5,6 +5,7 @@ namespace App\Service\Dashboard;
 use App\Content\MainPagePostTypes;
 use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\CreateMainPagePostDto;
+use App\DTO\Dashboard\PublishedDto;
 use App\DTO\Dashboard\UpdateMainPagePostDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\FileException;
@@ -29,7 +30,7 @@ class StartService extends AbstractDashboardService implements StartManagementSe
     private const NEW_POST_POSITION = 2;
 
     public function __construct(
-        StartRepository            $repository,
+        StartRepository                               $repository,
         private readonly ImageTextListUploadProcessor $uploadProcessor,
     )
     {
@@ -56,7 +57,7 @@ class StartService extends AbstractDashboardService implements StartManagementSe
     /**
      * @throws ServiceException
      */
-    public function updateMain(DataTransferObjectInterface $data): void
+    public function updateMain(UpdateMainPagePostDto $data): void
     {
         $dataToUpload = UpdateMainPagePostDto::fromArray([
             'id' => $data->id,
@@ -72,7 +73,7 @@ class StartService extends AbstractDashboardService implements StartManagementSe
     /**
      * @throws ServiceException
      */
-    public function createMain(DataTransferObjectInterface $data): void
+    public function createMain(CreateMainPagePostDto $data): void
     {
         $dataToUpload = CreateMainPagePostDto::fromArray([
             'title' => $data->title,
@@ -94,7 +95,7 @@ class StartService extends AbstractDashboardService implements StartManagementSe
     /**
      * @throws ServiceException
      */
-    public function publishedMain(DataTransferObjectInterface $data): void
+    public function publishedMain(PublishedDto $data): void
     {
         $this->published(self::TABLE, $data);
     }
@@ -112,8 +113,9 @@ class StartService extends AbstractDashboardService implements StartManagementSe
     /**
      * @throws ServiceException
      */
-    private function preparePayloadForPersistence(DataTransferObjectInterface $data): ?string {
-        if(
+    private function preparePayloadForPersistence(UpdateMainPagePostDto | CreateMainPagePostDto $data): ?string
+    {
+        if (
             $data->type !== MainPagePostTypes::IMAGE_TEXT_LIST
             || $data->imageFile === null
             || $data->payload === null
@@ -123,9 +125,9 @@ class StartService extends AbstractDashboardService implements StartManagementSe
 
         try {
             return $this->uploadProcessor->process($data->payload, $data->imageFile);
-        }catch (FileException $e) {
+        } catch (FileException $e) {
             throw new ServiceException("Nie udało się wgrać zdjęcia na serwer", 500, $e);
-        }catch (JsonException $e) {
+        } catch (JsonException $e) {
             throw new ServiceException(
                 'Nie udało się przygotować danych obrazu',
                 500,

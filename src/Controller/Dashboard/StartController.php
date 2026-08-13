@@ -11,7 +11,9 @@ use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
 use App\DTO\Dashboard\ChangePositionDto;
+use App\DTO\Dashboard\CreateMainPagePostDto;
 use App\DTO\Dashboard\PublishedDto;
+use App\DTO\Dashboard\UpdateMainPagePostDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Mapper\Dashboard\MainPage\MainPagePostRequestMapper;
@@ -90,12 +92,12 @@ class StartController extends AbstractDashboardController
         return 'main_page_posts';
     }
 
-    protected function getDataToCreate(): DataTransferObjectInterface
+    protected function getDataToCreate(): CreateMainPagePostDto
     {
         return $this->requestMapper->mapCreate();
     }
 
-    protected function getDataToUpdate(): DataTransferObjectInterface
+    protected function getDataToUpdate(): UpdateMainPagePostDto
     {
         return $this->requestMapper->mapUpdate();
     }
@@ -112,11 +114,13 @@ class StartController extends AbstractDashboardController
 
     protected function handleCreate(DataTransferObjectInterface $data): void
     {
+        /** @var CreateMainPagePostDto $data */
         $this->service->createMain($data);
     }
 
     protected function handleUpdate(DataTransferObjectInterface $data): void
     {
+        /** @var UpdateMainPagePostDto $data */
         $this->service->updateMain($data);
     }
 
@@ -127,6 +131,7 @@ class StartController extends AbstractDashboardController
 
     protected function handlePublish(DataTransferObjectInterface $data): void
     {
+        /** @var PublishedDto $data */
         $this->service->publishedMain($data);
     }
 
