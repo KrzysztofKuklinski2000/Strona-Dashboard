@@ -80,7 +80,7 @@ Projekt zawiera **publiczną stronę** (aktualności, galeria, grafik, obozy, op
 
 4. **Otwórz aplikację w przeglądarce**:
    - strona: http://localhost:8000
-   - panel administracyjny: http://localhost:8000/dashboard/start
+   - panel administracyjny: http://localhost:8000/dashboard/homepage
    - phpMyAdmin: http://localhost:8080
    - Mailpit: http://localhost:8025
 
@@ -104,6 +104,6 @@ Projekt zawiera **publiczną stronę** (aktualności, galeria, grafik, obozy, op
    docker compose up --build -d
    ```
 
-dashboard dane do logowania (http://localhost/dashboard/start)
+dashboard dane do logowania (http://localhost/dashboard/homepage)
 login: test
 hasło: test123

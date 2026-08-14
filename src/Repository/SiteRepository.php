@@ -7,7 +7,7 @@ use App\DTO\Dashboard\ContactDto;
 use App\DTO\Dashboard\FeesDto;
 use App\DTO\Dashboard\GalleryDto;
 use App\DTO\Dashboard\ImportantPostsDto;
-use App\DTO\Dashboard\MainPageDto;
+use App\DTO\Dashboard\HomepagePostDto;
 use App\DTO\Dashboard\NewsDto;
 use App\Exception\RepositoryException;
 use PDO;
@@ -44,12 +44,12 @@ class SiteRepository extends AbstractRepository {
     }
 
     /**
-     * @return MainPageDto[]
+     * @return HomepagePostDto[]
      * @throws RepositoryException
      */
-    public function getMainPagePosts(): array
+    public function getHomepagePosts(): array
     {
-        return array_map(fn(array $row) => MainPageDto::fromArray($row), $this->fetchCollection('main_page_posts'));
+        return array_map(fn(array $row) => HomepagePostDto::fromArray($row), $this->fetchCollection('homepage_posts'));
     }
 
     /**

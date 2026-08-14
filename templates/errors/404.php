@@ -9,7 +9,7 @@
     <div class="e404">
         <h1>404</h1>
         <p>Coś poszło nie tak. Czy na pewno wszedłeś w opdowiedni link? :)</p>
-        <a href="/?dashboard=start">Powrót</a>
+        <a href="/dashboard/homepage">Powrót</a>
     </div>
 </body>
 </html>

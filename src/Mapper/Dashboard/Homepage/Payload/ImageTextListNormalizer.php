@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Mapper\Dashboard\MainPage\Payload;
+namespace App\Mapper\Dashboard\Homepage\Payload;
 
 use App\Core\Validator;
 use App\Mapper\Dashboard\Payload\PayloadNormalizerInterface;

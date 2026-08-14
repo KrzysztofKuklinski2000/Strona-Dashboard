@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Mapper\Dashboard\MainPage;
+namespace App\Mapper\Dashboard\Homepage;
 
 use App\Core\Validator;
 use App\Mapper\Dashboard\Payload\PayloadNormalizerInterface;
 
-final readonly class MainPagePayloadNormalizer
+final readonly class HomepagePostPayloadNormalizer
 {
     /**
      * @param array<string, PayloadNormalizerInterface> $normalizers

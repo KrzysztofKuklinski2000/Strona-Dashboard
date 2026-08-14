@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Service\Dashboard\MainPage;
+namespace App\Service\Dashboard\Homepage;
 
 use App\Core\FileHandler;
 use App\Exception\FileException;

@@ -10,7 +10,7 @@
 	<link rel="icon" type="image/x-icon" href="/public/images/logo.png">
 	<script src="https://kit.fontawesome.com/062ebc24f8.js" crossorigin="anonymous"></script>
     <?php
-    $page = $params['page'] ?? 'start';
+    $page = $params['page'] ?? 'homepage';
 
     $canonicalPath = match ($page) {
         'camp-info' => '/obozy',
@@ -67,7 +67,7 @@
 		require_once('components/navigation.php');
 		require_once('components/navigation_full_screen.php');
 
-		if ($params['page'] === 'start') {
+		if ($params['page'] === 'homepage') {
 			require_once('components/header.php');
 		} else {
 			require_once('components/subpage_header.php');

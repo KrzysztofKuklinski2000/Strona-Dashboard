@@ -2,35 +2,35 @@
 
 namespace App\Service\Dashboard;
 
-use App\Content\MainPagePostTypes;
+use App\Content\HomepagePostTypes;
 use App\DTO\Dashboard\ChangePositionDto;
-use App\DTO\Dashboard\CreateMainPagePostDto;
+use App\DTO\Dashboard\CreateHomepagePostDto;
 use App\DTO\Dashboard\PublishedDto;
-use App\DTO\Dashboard\UpdateMainPagePostDto;
+use App\DTO\Dashboard\UpdateHomepagePostDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\FileException;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
-use App\Repository\Dashboard\StartRepository;
-use App\Service\Dashboard\Contracts\StartManagementServiceInterface;
-use App\Service\Dashboard\MainPage\ImageTextListUploadProcessor;
+use App\Repository\Dashboard\HomepageRepository;
+use App\Service\Dashboard\Contracts\HomepageManagementServiceInterface;
+use App\Service\Dashboard\Homepage\ImageTextListUploadProcessor;
 use App\Service\Dashboard\Traits\CanEdit;
 use App\Service\Dashboard\Traits\CanPublished;
 use App\Service\Dashboard\Traits\PositionableTrait;
 use JsonException;
 
 /**
- * @property StartRepository $repository
+ * @property HomepageRepository $repository
  */
-class StartService extends AbstractDashboardService implements StartManagementServiceInterface
+class HomepageService extends AbstractDashboardService implements HomepageManagementServiceInterface
 {
     use CanPublished, CanEdit, PositionableTrait;
 
-    private const TABLE = 'main_page_posts';
+    private const TABLE = 'homepage_posts';
     private const NEW_POST_POSITION = 2;
 
     public function __construct(
-        StartRepository                               $repository,
+        HomepageRepository                            $repository,
         private readonly ImageTextListUploadProcessor $uploadProcessor,
     )
     {
@@ -40,7 +40,7 @@ class StartService extends AbstractDashboardService implements StartManagementSe
     /**
      * @throws ServiceException
      */
-    public function getAllMain(): array
+    public function getAllHomepagePosts(): array
     {
         return $this->getAll(self::TABLE);
     }
@@ -57,9 +57,9 @@ class StartService extends AbstractDashboardService implements StartManagementSe
     /**
      * @throws ServiceException
      */
-    public function updateMain(UpdateMainPagePostDto $data): void
+    public function updateHomepagePost(UpdateHomepagePostDto $data): void
     {
-        $dataToUpload = UpdateMainPagePostDto::fromArray([
+        $dataToUpload = UpdateHomepagePostDto::fromArray([
             'id' => $data->id,
             'title' => $data->title,
             'updated' => $data->updated,
@@ -73,9 +73,9 @@ class StartService extends AbstractDashboardService implements StartManagementSe
     /**
      * @throws ServiceException
      */
-    public function createMain(CreateMainPagePostDto $data): void
+    public function createHomepagePost(CreateHomepagePostDto $data): void
     {
-        $dataToUpload = CreateMainPagePostDto::fromArray([
+        $dataToUpload = CreateHomepagePostDto::fromArray([
             'title' => $data->title,
             'created' => $data->created,
             'updated' => $data->updated,
@@ -95,17 +95,17 @@ class StartService extends AbstractDashboardService implements StartManagementSe
     /**
      * @throws ServiceException
      */
-    public function publishedMain(PublishedDto $data): void
+    public function publishedHomepagePost(PublishedDto $data): void
     {
         $this->published(self::TABLE, $data);
     }
 
-    public function deleteMain(int $id): void
+    public function deleteHomepagePost(int $id): void
     {
         $this->delete(self::TABLE, $id);
     }
 
-    public function moveMain(ChangePositionDto $data): void
+    public function moveHomepagePost(ChangePositionDto $data): void
     {
         $this->move(self::TABLE, $data);
     }
@@ -113,10 +113,10 @@ class StartService extends AbstractDashboardService implements StartManagementSe
     /**
      * @throws ServiceException
      */
-    private function preparePayloadForPersistence(UpdateMainPagePostDto | CreateMainPagePostDto $data): ?string
+    private function preparePayloadForPersistence(UpdateHomepagePostDto | CreateHomepagePostDto $data): ?string
     {
         if (
-            $data->type !== MainPagePostTypes::IMAGE_TEXT_LIST
+            $data->type !== HomepagePostTypes::IMAGE_TEXT_LIST
             || $data->imageFile === null
             || $data->payload === null
         ) {

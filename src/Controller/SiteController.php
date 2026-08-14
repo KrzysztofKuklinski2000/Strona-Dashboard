@@ -25,8 +25,8 @@ class SiteController extends AbstractController
     public function indexAction(): void
     {
         $this->renderer->render([
-            'page' => 'start',
-            'content' => $this->siteService->getFrontPage(),
+            'page' => 'homepage',
+            'content' => $this->siteService->getHomepageData(),
         ]);
     }
 

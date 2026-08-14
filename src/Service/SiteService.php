@@ -49,15 +49,15 @@ readonly class SiteService implements ContactProviderInterface
     /**
      * @throws ServiceException
      */
-    public function getFrontPage(): array
+    public function getHomepageData(): array
     {
         try {
-            $posts = $this->siteRepository->getMainPagePosts();
+            $posts = $this->siteRepository->getHomepagePosts();
             $importantPosts = $this->siteRepository->getImportantPosts();
 
 
             return [
-                'homePosts' => $posts,
+                'homepagePosts' => $posts,
                 'importantPosts' => $importantPosts
             ];
 

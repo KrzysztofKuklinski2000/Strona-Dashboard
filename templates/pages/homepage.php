@@ -1,9 +1,9 @@
 <?php
-use App\Content\MainPagePostTypes;
+use App\Content\HomepagePostTypes;
 
 $content = $params['content'] ?? [];
 
-$homePosts = $content['homePosts'] ?? [];
+$homepagePosts = $content['homepagePosts'] ?? [];
 $importantPosts = $content['importantPosts'] ?? [];
 ?>
 
@@ -55,17 +55,17 @@ $importantPosts = $content['importantPosts'] ?? [];
     </section>
 <?php endif ?>
 
-<?php foreach ($homePosts as $postIndex => $post): ?>
+<?php foreach ($homepagePosts as $postIndex => $post): ?>
     <?php
-        $type = (string) ($post->type ?? MainPagePostTypes::SIMPLE_TEXT);
-        $partial = MainPagePostTypes::partial($type);
+        $type = (string) ($post->type ?? HomepagePostTypes::SIMPLE_TEXT);
+        $partial = HomepagePostTypes::partial($type);
 
         if ($partial === null) {
-            $type = MainPagePostTypes::SIMPLE_TEXT;
-            $partial = MainPagePostTypes::partial($type);
+            $type = HomepagePostTypes::SIMPLE_TEXT;
+            $partial = HomepagePostTypes::partial($type);
         }
 
-        $partialPath = 'templates/pages/start_posts/' . $partial;
+        $partialPath = 'templates/pages/homepage_posts/' . $partial;
         $payload = json_decode((string) ($post->payload ?? ''), true) ?: [];
         $block = $payload;
         $sectionTone = $postIndex % 2 === 0

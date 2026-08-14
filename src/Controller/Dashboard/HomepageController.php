@@ -2,7 +2,7 @@
 
 namespace App\Controller\Dashboard;
 
-use App\Content\MainPagePostTypes;
+use App\Content\HomepagePostTypes;
 use App\Controller\Dashboard\Traits\HasDeleteAction;
 use App\Controller\Dashboard\Traits\HasMoveAction;
 use App\Controller\Dashboard\Traits\HasPublishedAction;
@@ -11,21 +11,21 @@ use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
 use App\DTO\Dashboard\ChangePositionDto;
-use App\DTO\Dashboard\CreateMainPagePostDto;
+use App\DTO\Dashboard\CreateHomepagePostDto;
 use App\DTO\Dashboard\PublishedDto;
-use App\DTO\Dashboard\UpdateMainPagePostDto;
+use App\DTO\Dashboard\UpdateHomepagePostDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
-use App\Mapper\Dashboard\MainPage\MainPagePostRequestMapper;
-use App\Service\Dashboard\Contracts\StartManagementServiceInterface;
+use App\Mapper\Dashboard\Homepage\HomepagePostRequestMapper;
+use App\Service\Dashboard\Contracts\HomepageManagementServiceInterface;
 
-class StartController extends AbstractDashboardController
+class HomepageController extends AbstractDashboardController
 {
     use HasStoreAction, HasDeleteAction, HasUpdateAction, HasPublishedAction, HasMoveAction, HasSingleData;
 
     public function __construct(
-        public StartManagementServiceInterface     $service,
-        private readonly MainPagePostRequestMapper $requestMapper,
+        public HomepageManagementServiceInterface  $service,
+        private readonly HomepagePostRequestMapper $requestMapper,
         ContextController                          $contextController,
     )
     {
@@ -35,8 +35,8 @@ class StartController extends AbstractDashboardController
     public function indexAction(): void
     {
         $this->renderPage([
-            'page' => 'start/index',
-            'data' => $this->service->getAllMain(),
+            'page' => 'homepage/index',
+            'data' => $this->service->getAllHomepagePosts(),
         ]);
     }
 
@@ -46,17 +46,17 @@ class StartController extends AbstractDashboardController
     public function editAction(): void
     {
         $this->renderPage([
-            'page' => 'start/edit',
+            'page' => 'homepage/edit',
             'data' => $this->getSingleData(),
-            'postTypes' => MainPagePostTypes::all()
+            'postTypes' => HomepagePostTypes::all()
         ]);
     }
 
     public function createAction(): void
     {
         $this->renderPage([
-            'page' => 'start/create',
-            'postTypes' => MainPagePostTypes::all()
+            'page' => 'homepage/create',
+            'postTypes' => HomepagePostTypes::all()
         ]);
     }
 
@@ -66,7 +66,7 @@ class StartController extends AbstractDashboardController
     public function showAction(): void
     {
         $this->renderPage([
-            'page' => 'start/show',
+            'page' => 'homepage/show',
             'data' => $this->getSingleData(),
         ]);
     }
@@ -77,27 +77,27 @@ class StartController extends AbstractDashboardController
     public function confirmDeleteAction(): void
     {
         $this->renderPage([
-            'page' => 'start/delete',
+            'page' => 'homepage/delete',
             'data' => $this->getSingleData(),
         ]);
     }
 
     protected function getModuleName(): string
     {
-        return 'start';
+        return 'homepage';
     }
 
     protected function getTableName(): string
     {
-        return 'main_page_posts';
+        return 'homepage_posts';
     }
 
-    protected function getDataToCreate(): CreateMainPagePostDto
+    protected function getDataToCreate(): CreateHomepagePostDto
     {
         return $this->requestMapper->mapCreate();
     }
 
-    protected function getDataToUpdate(): UpdateMainPagePostDto
+    protected function getDataToUpdate(): UpdateHomepagePostDto
     {
         return $this->requestMapper->mapUpdate();
     }
@@ -114,29 +114,29 @@ class StartController extends AbstractDashboardController
 
     protected function handleCreate(DataTransferObjectInterface $data): void
     {
-        /** @var CreateMainPagePostDto $data */
-        $this->service->createMain($data);
+        /** @var CreateHomepagePostDto $data */
+        $this->service->createHomepagePost($data);
     }
 
     protected function handleUpdate(DataTransferObjectInterface $data): void
     {
-        /** @var UpdateMainPagePostDto $data */
-        $this->service->updateMain($data);
+        /** @var UpdateHomepagePostDto $data */
+        $this->service->updateHomepagePost($data);
     }
 
     protected function handleDelete(int $id): void
     {
-        $this->service->deleteMain($id);
+        $this->service->deleteHomepagePost($id);
     }
 
     protected function handlePublish(DataTransferObjectInterface $data): void
     {
         /** @var PublishedDto $data */
-        $this->service->publishedMain($data);
+        $this->service->publishedHomepagePost($data);
     }
 
     protected function handleMove(ChangePositionDto $changePositionDto): void
     {
-        $this->service->moveMain($changePositionDto);
+        $this->service->moveHomepagePost($changePositionDto);
     }
 }

@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace App\Factories\ControllerFactories\Dashboard;
 
-use App\Content\MainPagePostTypes;
+use App\Content\HomepagePostTypes;
 use App\Controller\AbstractController;
-use App\Controller\Dashboard\StartController;
+use App\Controller\Dashboard\HomepageController;
 use App\Core\ContextController;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
-use App\Factories\ServiceFactories\Dashboard\StartServiceFactory;
+use App\Factories\ServiceFactories\Dashboard\HomepageServiceFactory;
 use App\Mapper\Dashboard\ChangePositionRequestMapper;
-use App\Mapper\Dashboard\MainPage\MainPagePayloadNormalizer;
-use App\Mapper\Dashboard\MainPage\MainPagePostRequestMapper;
-use App\Mapper\Dashboard\MainPage\Payload\CardsGridNormalizer;
-use App\Mapper\Dashboard\MainPage\Payload\ImageTextListNormalizer;
-use App\Mapper\Dashboard\MainPage\Payload\SimpleTextNormalizer;
+use App\Mapper\Dashboard\Homepage\HomepagePostPayloadNormalizer;
+use App\Mapper\Dashboard\Homepage\HomepagePostRequestMapper;
+use App\Mapper\Dashboard\Homepage\Payload\CardsGridNormalizer;
+use App\Mapper\Dashboard\Homepage\Payload\ImageTextListNormalizer;
+use App\Mapper\Dashboard\Homepage\Payload\SimpleTextNormalizer;
 use App\Mapper\Dashboard\PublicationRequestMapper;
 use PDO;
 
-class StartControllerFactory implements ControllerFactoryInterface
+class HomepageControllerFactory implements ControllerFactoryInterface
 {
     public function __construct(private PDO $pdo)
     {
@@ -28,28 +28,28 @@ class StartControllerFactory implements ControllerFactoryInterface
 
     public function createController(ContextController $contextController): AbstractController
     {
-        $serviceFactory = new StartServiceFactory($this->pdo, $contextController->config);
+        $serviceFactory = new HomepageServiceFactory($this->pdo, $contextController->config);
         $service = $serviceFactory->createService();
 
-        $payloadNormalizer = new MainPagePayloadNormalizer(
+        $payloadNormalizer = new HomepagePostPayloadNormalizer(
             validator: $contextController->validator,
             normalizers: [
-                MainPagePostTypes::SIMPLE_TEXT => new SimpleTextNormalizer(
+                HomepagePostTypes::SIMPLE_TEXT => new SimpleTextNormalizer(
                     $contextController->validator,
                 ),
-                MainPagePostTypes::CARDS_GRID => new CardsGridNormalizer(
+                HomepagePostTypes::CARDS_GRID => new CardsGridNormalizer(
                     $contextController->validator,
                 ),
-                MainPagePostTypes::IMAGE_TEXT_LIST => new ImageTextListNormalizer(
+                HomepagePostTypes::IMAGE_TEXT_LIST => new ImageTextListNormalizer(
                     $contextController->validator,
                 ),
-                MainPagePostTypes::TRIAL_BANNER => new SimpleTextNormalizer(
+                HomepagePostTypes::TRIAL_BANNER => new SimpleTextNormalizer(
                     $contextController->validator,
                 )
             ],
         );
 
-        $requestMapper = new MainPagePostRequestMapper(
+        $requestMapper = new HomepagePostRequestMapper(
             $contextController->request,
             $contextController->validator,
             $contextController->config,
@@ -64,7 +64,7 @@ class StartControllerFactory implements ControllerFactoryInterface
             )
         );
 
-        return new StartController(
+        return new HomepageController(
             $service,
             $requestMapper,
             $contextController,

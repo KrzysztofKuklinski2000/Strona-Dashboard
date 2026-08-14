@@ -1,32 +1,32 @@
 <?php
 
-namespace App\Mapper\Dashboard\MainPage;
+namespace App\Mapper\Dashboard\Homepage;
 
-use App\Content\MainPagePostTypes;
+use App\Content\HomepagePostTypes;
 use App\Core\Config;
 use App\Core\Request;
 use App\Core\Validator;
 use App\DTO\Dashboard\ChangePositionDto;
-use App\DTO\Dashboard\CreateMainPagePostDto;
+use App\DTO\Dashboard\CreateHomepagePostDto;
 use App\DTO\Dashboard\PublishedDto;
-use App\DTO\Dashboard\UpdateMainPagePostDto;
+use App\DTO\Dashboard\UpdateHomepagePostDto;
 use App\Mapper\Dashboard\ChangePositionRequestMapper;
 use App\Mapper\Dashboard\PublicationRequestMapper;
 
-class MainPagePostRequestMapper
+readonly class HomepagePostRequestMapper
 {
     public function __construct(
-        private readonly Request                     $request,
-        private readonly Validator                   $validator,
-        private readonly Config                      $config,
-        private readonly MainPagePayloadNormalizer   $payloadNormalizer,
-        private readonly ChangePositionRequestMapper $changePositionRequestMapper,
-        private readonly PublicationRequestMapper    $publicationRequestMapper,
+        private Request                       $request,
+        private Validator                     $validator,
+        private Config                        $config,
+        private HomepagePostPayloadNormalizer $payloadNormalizer,
+        private ChangePositionRequestMapper   $changePositionRequestMapper,
+        private PublicationRequestMapper      $publicationRequestMapper,
     )
     {
     }
 
-    public function mapCreate(): CreateMainPagePostDto
+    public function mapCreate(): CreateHomepagePostDto
     {
 
         $type = $this->validator->validate(
@@ -35,13 +35,13 @@ class MainPagePostRequestMapper
             required: true,
         );
 
-        if (!MainPagePostTypes::isAllowed((string)$type)) {
-            $type = MainPagePostTypes::SIMPLE_TEXT;
+        if (!HomepagePostTypes::isAllowed((string)$type)) {
+            $type = HomepagePostTypes::SIMPLE_TEXT;
         }
 
         $imageFile = null;
 
-        if ($type === MainPagePostTypes::IMAGE_TEXT_LIST) {
+        if ($type === HomepagePostTypes::IMAGE_TEXT_LIST) {
             $imageFile = $this->validator->validateFile(
                 field: 'postImage',
                 file: $this->request->getFile('postImage'),
@@ -81,10 +81,10 @@ class MainPagePostRequestMapper
             'imageFile' => $imageFile
         ];
 
-        return CreateMainPagePostDto::fromArray($data);
+        return CreateHomepagePostDto::fromArray($data);
     }
 
-    public function mapUpdate(): UpdateMainPagePostDto
+    public function mapUpdate(): UpdateHomepagePostDto
     {
         $type = $this->validator->validate(
             name: 'postType',
@@ -92,8 +92,8 @@ class MainPagePostRequestMapper
             required: true,
         );
 
-        if (!MainPagePostTypes::isAllowed((string)$type)) {
-            $type = MainPagePostTypes::SIMPLE_TEXT;
+        if (!HomepagePostTypes::isAllowed((string)$type)) {
+            $type = HomepagePostTypes::SIMPLE_TEXT;
         }
 
         $rawPayload = $this->request->getFormParam('payload') ?? [];
@@ -108,7 +108,7 @@ class MainPagePostRequestMapper
         $hasImage = !empty($rawImage['src']);
 
         if (
-            $type === MainPagePostTypes::IMAGE_TEXT_LIST
+            $type === HomepagePostTypes::IMAGE_TEXT_LIST
             && (
                 !$hasImage
                 || ($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE
@@ -149,7 +149,7 @@ class MainPagePostRequestMapper
 
         ];
 
-        return UpdateMainPagePostDto::fromArray($data);
+        return UpdateHomepagePostDto::fromArray($data);
     }
 
     public function mapChangePosition(): ChangePositionDto

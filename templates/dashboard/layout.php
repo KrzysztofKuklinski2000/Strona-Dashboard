@@ -28,7 +28,7 @@
     <?php if (!in_array($params['page'], ['login', 'register'])): ?>
         <aside>
             <ul>
-                <a href="/dashboard/start">
+                <a href="/dashboard/homepage">
                     <i class="fa-solid fa-house"></i>
                     <p>Strona Główna</p>
                 </a>

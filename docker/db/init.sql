@@ -178,10 +178,10 @@ VALUES (1, 'Remont Sal 01.07 - 31.07 ',
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `main_page_posts`
+-- Struktura tabeli dla tabeli `homepage_posts`
 --
 
-CREATE TABLE `main_page_posts`
+CREATE TABLE `homepage_posts`
 (
     `id`          int                                   NOT NULL,
     `title`       varchar(60) COLLATE utf8mb4_polish_ci NOT NULL,
@@ -194,10 +194,10 @@ CREATE TABLE `main_page_posts`
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
--- Zrzut danych tabeli `main_page_posts`
+-- Zrzut danych tabeli `homepage_posts`
 --
 
-INSERT INTO `main_page_posts` (`id`, `title`, `created`, `updated`, `status`, `position`, `type`, `payload`)
+INSERT INTO `homepage_posts` (`id`, `title`, `created`, `updated`, `status`, `position`, `type`, `payload`)
 VALUES (1, 'Pierwsze zajęcia są bezpłatne', '2025-08-02', '2025-08-02', 1, 1, 'trial_banner', JSON_SET(COALESCE(NULL, JSON_OBJECT()), '$.description', 'Chcesz spróbować, zanim się zdecydujesz? Zapraszamy na pierwsze zajęcia całkowicie bezpłatnie!\r\nPrzekonaj się sam, jak ciekawa i wartościowa może być nauka z nami.\r\nNie przegap okazji – zapisz się już dziś!\r\n\r\n')),
        (2, 'Więcej niż sport', '2025-08-02', '2026-01-29', 1, 2, 'cards_grid', '{
           "eyebrow": "Dlaczego karate?",
@@ -449,9 +449,9 @@ ALTER TABLE `important_posts`
     ADD PRIMARY KEY (`id`);
 
 --
--- Indeksy dla tabeli `main_page_posts`
+-- Indeksy dla tabeli `homepage_posts`
 --
-ALTER TABLE `main_page_posts`
+ALTER TABLE `homepage_posts`
     ADD PRIMARY KEY (`id`);
 
 --
@@ -497,9 +497,9 @@ ALTER TABLE `important_posts`
     MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT dla tabeli `main_page_posts`
+-- AUTO_INCREMENT dla tabeli `homepage_posts`
 --
-ALTER TABLE `main_page_posts`
+ALTER TABLE `homepage_posts`
     MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --

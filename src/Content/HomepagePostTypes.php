@@ -2,7 +2,7 @@
 
 namespace App\Content;
 
-final class MainPagePostTypes
+final class HomepagePostTypes
 {
     public const SIMPLE_TEXT = 'simple_text';
     public const CARDS_GRID = 'cards_grid';

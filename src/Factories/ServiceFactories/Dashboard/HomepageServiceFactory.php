@@ -5,24 +5,24 @@ namespace App\Factories\ServiceFactories\Dashboard;
 use App\Core\Config;
 use App\Core\FileHandler;
 use App\Factories\ServiceFactories\ServiceFactoryInterface;
-use App\Repository\Dashboard\StartRepository;
-use App\Service\Dashboard\MainPage\ImageTextListUploadProcessor;
-use App\Service\Dashboard\StartService;
+use App\Repository\Dashboard\HomepageRepository;
+use App\Service\Dashboard\Homepage\ImageTextListUploadProcessor;
+use App\Service\Dashboard\HomepageService;
 use PDO;
 
-readonly class StartServiceFactory implements ServiceFactoryInterface
+readonly class HomepageServiceFactory implements ServiceFactoryInterface
 {
     public function __construct(private PDO $pdo, private Config $config)
     {
     }
 
-    public function createService(): StartService
+    public function createService(): HomepageService
     {
-        $repository = new StartRepository($this->pdo);
+        $repository = new HomepageRepository($this->pdo);
         $fileHandler = new FileHandler($this->config->getUploadDir(), $this->config->getFilePrefix());
         $uploadProcessor = new ImageTextListUploadProcessor($fileHandler, $this->config->getUploadUrl());
 
 
-        return new StartService($repository, $uploadProcessor);
+        return new HomepageService($repository, $uploadProcessor);
     }
 }

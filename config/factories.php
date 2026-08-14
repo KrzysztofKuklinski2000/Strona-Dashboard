@@ -8,7 +8,7 @@ use App\Controller\Dashboard\FeesController;
 use App\Controller\Dashboard\GalleryController;
 use App\Controller\Dashboard\ImportantPostsController;
 use App\Controller\Dashboard\NewsController;
-use App\Controller\Dashboard\StartController;
+use App\Controller\Dashboard\HomepageController;
 use App\Controller\Dashboard\SubscribersController;
 use App\Controller\Dashboard\TimetableController;
 use App\Controller\PublicSubscribersController;
@@ -20,7 +20,7 @@ use App\Factories\ControllerFactories\Dashboard\FeesControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\GalleryControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\ImportantPostsControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\NewsControllerFactory;
-use App\Factories\ControllerFactories\Dashboard\StartControllerFactory;
+use App\Factories\ControllerFactories\Dashboard\HomepageControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\SubscribersControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\TimetableControllerFactory;
 use App\Factories\ControllerFactories\PublicSubscribersControllerFactory;
@@ -35,7 +35,7 @@ return [
   FeesController::class           => FeesControllerFactory::class,
   CampController::class           => CampControllerFactory::class,
   ContactController::class        => ContactControllerFactory::class,
-  StartController::class          => StartControllerFactory::class, // Dawny '_default'
+  HomepageController::class          => HomepageControllerFactory::class, // Dawny '_default'
   SubscribersController::class    => SubscribersControllerFactory::class,
   
 

@@ -1,8 +1,8 @@
 <?php
-$currentPage = $params['page'] ?? 'start';
+$currentPage = $params['page'] ?? 'homepage';
 
 $mainNavItems = [
-    'start' => ['label' => 'Strona główna', 'href' => '/'],
+    'homepage' => ['label' => 'Strona główna', 'href' => '/'],
     'news' => ['label' => 'Aktualności', 'href' => '/aktualnosci'],
     'timetable' => ['label' => 'Grafik zajęć', 'href' => '/grafik'],
     'gallery' => ['label' => 'Galeria', 'href' => '/galeria'],

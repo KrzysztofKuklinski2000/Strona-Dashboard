@@ -7,7 +7,7 @@ use App\Controller\Dashboard\FeesController;
 use App\Controller\Dashboard\GalleryController;
 use App\Controller\Dashboard\ImportantPostsController;
 use App\Controller\Dashboard\NewsController;
-use App\Controller\Dashboard\StartController;
+use App\Controller\Dashboard\HomepageController;
 use App\Controller\Dashboard\SubscribersController;
 use App\Controller\Dashboard\TimetableController;
 use App\Controller\PublicSubscribersController;
@@ -38,7 +38,7 @@ return function (RouteCollector $r) {
     $r->post('/auth/login', [AuthController::class, 'loginAction']);
     $r->post('/auth/logout', [AuthController::class, 'logoutAction']);
 
-    $r->get('/dashboard', [StartController::class, 'indexAction']);
+    $r->get('/dashboard', [HomepageController::class, 'indexAction']);
 
     $r->get('/dashboard/camp', [CampController::class, 'editAction']);
     $r->get('/dashboard/camp/edit', [CampController::class, 'editAction']);
@@ -85,16 +85,16 @@ return function (RouteCollector $r) {
     $r->get('/dashboard/news/confirmDelete/{id:\d+}', [NewsController::class, 'confirmDeleteAction']);
     $r->post('/dashboard/news/delete/{id:\d+}', [NewsController::class, 'deleteAction']);
 
-    $r->get('/dashboard/start', [StartController::class, 'indexAction']);
-    $r->post('/dashboard/start/move', [StartController::class, 'moveAction']);
-    $r->get('/dashboard/start/create', [StartController::class, 'createAction']);
-    $r->post('/dashboard/start/store', [StartController::class, 'storeAction']);
-    $r->get('/dashboard/start/edit/{id:\d+}', [StartController::class, 'editAction']);
-    $r->post('/dashboard/start/update/{id:\d+}', [StartController::class, 'updateAction']);
-    $r->get('/dashboard/start/show/{id:\d+}', [StartController::class, 'showAction']);
-    $r->post('/dashboard/start/published/{id:\d+}', [StartController::class, 'publishedAction']);
-    $r->get('/dashboard/start/confirmDelete/{id:\d+}', [StartController::class, 'confirmDeleteAction']);
-    $r->post('/dashboard/start/delete/{id:\d+}', [StartController::class, 'deleteAction']);
+    $r->get('/dashboard/homepage', [HomepageController::class, 'indexAction']);
+    $r->post('/dashboard/homepage/move', [HomepageController::class, 'moveAction']);
+    $r->get('/dashboard/homepage/create', [HomepageController::class, 'createAction']);
+    $r->post('/dashboard/homepage/store', [HomepageController::class, 'storeAction']);
+    $r->get('/dashboard/homepage/edit/{id:\d+}', [HomepageController::class, 'editAction']);
+    $r->post('/dashboard/homepage/update/{id:\d+}', [HomepageController::class, 'updateAction']);
+    $r->get('/dashboard/homepage/show/{id:\d+}', [HomepageController::class, 'showAction']);
+    $r->post('/dashboard/homepage/published/{id:\d+}', [HomepageController::class, 'publishedAction']);
+    $r->get('/dashboard/homepage/confirmDelete/{id:\d+}', [HomepageController::class, 'confirmDeleteAction']);
+    $r->post('/dashboard/homepage/delete/{id:\d+}', [HomepageController::class, 'deleteAction']);
 
     $r->get('/dashboard/timetable', [TimetableController::class, 'indexAction']);
     $r->post('/dashboard/timetable/move', [TimetableController::class, 'moveAction']);

@@ -1,9 +1,9 @@
 <?php
 $formTitle = "Tworzenie nowego posta strony głównej";
-$action = "/dashboard/start/store";
+$action = "/dashboard/homepage/store";
 $buttonTitle = "Stwórz";
 $errors = $params['flash_dashboard']['message'] ?? [];
 $csrf = $params['csrf_token'] ?? '';
 ?>
 
-<?php require_once "templates/dashboard/start/_form.php";
+<?php require_once "templates/dashboard/homepage/_form.php";

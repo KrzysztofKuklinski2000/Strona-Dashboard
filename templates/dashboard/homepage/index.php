@@ -1,7 +1,7 @@
 <?php
 $data = $params['data'] ?? [];
-$action = '/dashboard/start/move';
-$moduleName = 'start';
+$action = '/dashboard/homepage/move';
+$moduleName = 'homepage';
 $pageTitle = 'Strona główna - Lista postów';
 $csrf = $params['csrf_token'] ?? '';
 $showPosition = true;

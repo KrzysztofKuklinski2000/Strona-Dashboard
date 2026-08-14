@@ -75,7 +75,7 @@ $payload = $oldInput['payload']
                     data-post-type-form="<?= e($typeName) ?>"
                     <?= !$isActive ? 'hidden' : '' ?>
                 >
-                    <?php require 'templates/dashboard/start/post_forms/' . $partial; ?>
+                    <?php require 'templates/dashboard/homepage/post_forms/' . $partial; ?>
                 </div>
             <?php endforeach ?>
         </div>

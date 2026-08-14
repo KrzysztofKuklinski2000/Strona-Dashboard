@@ -1,17 +1,17 @@
 <?php
 
-use App\Content\MainPagePostTypes;
+use App\Content\HomepagePostTypes;
 
 $payload = json_decode((string) ($data->payload ?? ''), true);
 $payload = is_array($payload) ? $payload : [];
-$type = (string) ($data->type ?? MainPagePostTypes::SIMPLE_TEXT);
-$typeProperties = MainPagePostTypes::get($type);
+$type = (string) ($data->type ?? HomepagePostTypes::SIMPLE_TEXT);
+$typeProperties = HomepagePostTypes::get($type);
 $typeLabel = (string) ($typeProperties['label'] ?? $type);
-$detailsPartial = MainPagePostTypes::partial($type)
-    ?? MainPagePostTypes::partial(MainPagePostTypes::SIMPLE_TEXT);
+$detailsPartial = HomepagePostTypes::partial($type)
+    ?? HomepagePostTypes::partial(HomepagePostTypes::SIMPLE_TEXT);
 $detailsPartialPath = $detailsPartial === null
     ? null
-    : 'templates/dashboard/start/post_details/' . $detailsPartial;
+    : 'templates/dashboard/homepage/post_details/' . $detailsPartial;
 ?>
 
 <article class="homepage-post-details">
