@@ -36,7 +36,7 @@ class NewsService extends AbstractDashboardService implements NewsManagementServ
      * @throws ServiceException
      * @throws NotFoundException
      */
-    public function getPost(string $table, int $id): ?DataTransferObjectInterface
+    public function getPost(int $id): ?DataTransferObjectInterface
     {
         return $this->getRow(self::TABLE, $id);
     }

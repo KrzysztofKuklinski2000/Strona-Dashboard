@@ -39,9 +39,9 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
      * @throws ServiceException
      * @throws NotFoundException
      */
-    public function getPost(string $table, int $id): ?DataTransferObjectInterface
+    public function getPost(int $id): ?DataTransferObjectInterface
     {
-        return $this->getRow($table, $id);
+        return $this->getRow(self::TABLE, $id);
     }
 
     /**

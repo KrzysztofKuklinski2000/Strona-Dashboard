@@ -10,7 +10,6 @@ use App\Service\Dashboard\Contracts\SharedGetDataServiceInterface;
 /**
  * @property Request $request
  * @property SharedGetDataServiceInterface $service
- * @method string getTableName()
  */
 trait HasSingleData
 {
@@ -25,7 +24,7 @@ trait HasSingleData
         }
 
         $postId = (int)$postId;
-        $data = $this->service->getPost($this->getTableName(), $postId);
+        $data = $this->service->getPost($postId);
 
         if (!$data) {
             throw new NotFoundException("Nie znaleziono rekordu o ID: $postId");

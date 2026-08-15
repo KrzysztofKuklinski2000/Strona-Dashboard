@@ -87,11 +87,6 @@ class HomepageController extends AbstractDashboardController
         return 'homepage';
     }
 
-    protected function getTableName(): string
-    {
-        return 'homepage_posts';
-    }
-
     protected function getDataToCreate(): CreateHomepagePostDto
     {
         return $this->requestMapper->mapCreate();

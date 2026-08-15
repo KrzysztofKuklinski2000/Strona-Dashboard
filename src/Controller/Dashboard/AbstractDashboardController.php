@@ -17,11 +17,6 @@ abstract class AbstractDashboardController extends AbstractController
 
     abstract protected function getModuleName(): string;
 
-    protected function getTableName(): string
-    {
-        return $this->getModuleName();
-    }
-
     protected function renderPage(array $params): void
     {
         $params['flash_dashboard'] = $this->sessionManager->getFlash();
