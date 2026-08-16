@@ -4,8 +4,9 @@ $action = "/dashboard/subscribers/delete/" . ($data->id ?? '');
 $formTitle = "Usuń subskrybenta";
 $csrf = $params['csrf_token'] ?? '';
 
-$postDetailsHtml = <<<HTML
-  <h4>$data->email</h4>
-HTML;
+$postDetailsHtml = sprintf(
+    '<h4>%s</h4>',
+    e($data->email),
+);
 
 require "templates/dashboard/_partials/_delete_form.php";

@@ -21,10 +21,12 @@
                 <tr>
                     <td style="padding: 40px 30px; color: #333333; line-height: 1.6; font-size: 16px;">
                         <p style="margin-top: 0;">Cześć,</p>
-                        <p><?= $customMessage ?></p>
-
+                            <p>
+                                <?= nl2br(htmlspecialchars($customMessage, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8',)) ?>
+                            </p>
                         <div style="text-align: center; margin: 30px 0;">
-                            <a href="<?= $baseUrl ?? '/' ?>"
+                            <a href="<?= htmlspecialchars($baseUrl ?? '/', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')
+                                ?>"
                                style="background-color: #e53e3e; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 4px; font-weight: bold; display: inline-block;">
                                 Sprawdź nowy grafik
                             </a>
@@ -43,7 +45,8 @@
                             Otrzymujesz tę wiadomość, ponieważ jesteś zapisany do powiadomień.
                         </p>
                         <p style="margin: 0;">Chcesz zrezygnować?
-                            <a href="<?= $unsubscribeUrl ?>" style="color: #e53e3e; text-decoration: none;">
+
+                            <a href="<?= htmlspecialchars($unsubscribeUrl, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" style="color: #e53e3e; text-decoration: none;">
                                 Wypisz się tutaj
                             </a>
                         </p>

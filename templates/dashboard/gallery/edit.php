@@ -3,9 +3,9 @@
 	$action = "/dashboard/gallery/update/" . ($data->id ?? '');
 ?>
 <h3 class="dashboard-action-header">Edytowanie zdjęcia</h3>
-<form action="<?= $action ?>" method="POST" enctype="multipart/form-data" class="timetable-create-form">
-	<input type="hidden" name="csrf_token" value="<?= $params['csrf_token'] ?? '' ?>">
-    <input type="hidden" name="id" value = "<?= $data->id ?>">
+<form action="<?= e($action) ?>" method="POST" enctype="multipart/form-data" class="timetable-create-form">
+	<input type="hidden" name="csrf_token" value="<?= e($params['csrf_token'] ?? '') ?>">
+    <input type="hidden" name="id" value = "<?= e($data->id) ?>">
 	<label>
 		<span>Kategoria: </span>
 		<select name="category">
@@ -13,12 +13,12 @@
 			<option <?= $data->category === "camp"   ? 'selected' : '' ?> value="camp">Obóz</option>
 		</select>
 	</label>
-	<p class="validation-error"><?= $params['flash_dashboard']['message']['category'] ?? ""  ?></p>
+	<p class="validation-error"><?= e($params['flash_dashboard']['message']['category'] ?? "")  ?></p>
 	<label>
 		<span>Opis: </span>
-		<input type="text" name="description" maxlength="500" placeholder="Opis..." value="<?= $data->description ?>">
+		<input type="text" name="description" maxlength="500" placeholder="Opis..." value="<?= e($data->description) ?>">
 	</label>
-	<p class="validation-error"><?= $params['flash_dashboard']['message']['description'] ?? ""  ?></p>
+	<p class="validation-error"><?= e($params['flash_dashboard']['message']['description'] ?? "")  ?></p>
 	<label>
 		<span>Zdjęcie:</span>
 		<img class="dashboard-image" src="/public/uploads/<?= rawurlencode($data->imageName) ?>" alt="<?= e($data->description) ?>">

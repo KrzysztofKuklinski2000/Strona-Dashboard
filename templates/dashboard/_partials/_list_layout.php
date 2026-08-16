@@ -3,8 +3,8 @@ $data = $data ?? [];
 $csrfToken = $csrfToken ?? '';
 ?>
 <div class="list-header">
-  <h3><?= htmlspecialchars($pageTitle) ?></h3>
-  <a href="/dashboard/<?= htmlspecialchars($moduleName) ?>/create">
+  <h3><?= e($pageTitle) ?></h3>
+  <a href="/dashboard/<?= e($moduleName) ?>/create">
     <p>Nowy </p><i class="fa-solid fa-plus"></i>
   </a>
 </div>

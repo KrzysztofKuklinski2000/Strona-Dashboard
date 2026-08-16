@@ -1,8 +1,8 @@
 <h3 class="dashboard-action-header"><?= e($formTitle ?? '') ?></h3>
-<form action="<?= $action ?>" method="POST" class="timetable-create-form">
-  <input type="hidden" name="csrf_token" value="<?= $csrf ?? '' ?>">
+<form action="<?= e($action) ?>" method="POST" class="timetable-create-form">
+  <input type="hidden" name="csrf_token" value="<?= e($csrf ?? '') ?>">
   <?php if(isset($data->id)): ?>
-  <input type="hidden" name="id" value="<?= $data->id ?>">
+  <input type="hidden" name="id" value="<?= e($data->id) ?>">
   <?php endif; ?>
   <label>
     <span>Dzień: </span>
@@ -16,12 +16,12 @@
       <option <?= ($data->day ?? '') === 'NIEDZ' ? 'selected' : '' ?> value="NIEDZ"> Niedziela </option>
     </select>
   </label>
-  <p class="validation-error"><?= $error['day'] ?? ""  ?></p>
+  <p class="validation-error"><?= e($error['day'] ?? "")  ?></p>
   <label>
     <span>Miasto: </span>
-    <input type="text" name="city" maxlength="30" value="<?= $data->city ?? '' ?>" placeholder="Miasto">
+    <input type="text" name="city" maxlength="30" value="<?= e($data->city ?? '' )?>" placeholder="Miasto">
   </label>
-  <p class="validation-error"><?= $error['city'] ?? ""  ?></p>
+  <p class="validation-error"><?= e($error['city'] ?? "")  ?></p>
   <label>
     <span>Grupa</span>
     <select name="group">
@@ -33,22 +33,22 @@
       <option <?= ($data->advancementGroup ?? '') == "Początkująca dzieci" ? 'selected' : '' ?> value="Początkująca dzieci">Początkująca dzieci</option>
     </select>
   </label>
-  <p class="validation-error"><?= $error['group'] ?? ""  ?></p>
+  <p class="validation-error"><?= e($error['group'] ?? "")  ?></p>
   <label>
     <span>Opis miejsca: </span>
-    <input type="text" name="place" maxlength="100" value="<?= $data->place ?? '' ?>" placeholder="Miejsce">
+    <input type="text" name="place" maxlength="100" value="<?= e($data->place ?? '') ?>" placeholder="Miejsce">
   </label>
-  <p class="validation-error"><?= $error['place'] ?? ""  ?></p>
+  <p class="validation-error"><?= e($error['place'] ?? "")  ?></p>
   <label>
     <span>Start:</span>
-    <input type="time" name="startTime" value="<?= $data->start ?? '' ?>">
+    <input type="time" name="startTime" value="<?= e($data->start ?? '') ?>">
   </label>
-  <p class="validation-error"><?= $error['startTime'] ?? ""  ?></p>
+  <p class="validation-error"><?= e($error['startTime'] ?? "")  ?></p>
   <label>
     <span>Koniec:</span>
-    <input type="time" name="endTime" value="<?= $data->end ?? '' ?>">
+    <input type="time" name="endTime" value="<?= e($data->end ?? '') ?>">
   </label>
-  <p class="validation-error"><?= $error['endTime'] ?? ""  ?></p>
+  <p class="validation-error"><?= e($error['endTime'] ?? "")  ?></p>
 
   <label>
     <input type="checkbox" name="is_notify">

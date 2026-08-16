@@ -4,12 +4,12 @@ $errors = $params['messages'] ?? [];
 
 <div class="login-form">
     <form action="/auth/login" method="POST">
-        <input type="hidden" name="csrf_token" value="<?php echo $params['csrf_token'] ?? '' ?>">
+        <input type="hidden" name="csrf_token" value="<?= e($params['csrf_token'] ?? '') ?>">
         <h1>Logowanie</h1>
 
         <?php if ($errors['general'] ?? null): ?>
             <div class="error-box" style="color: red; margin-bottom: 15px; font-weight: bold; text-align: center;">
-                <?php echo $errors['general']; ?>
+                <?php echo e($errors['general'] ?? ''); ?>
             </div>
         <?php endif ?>
 

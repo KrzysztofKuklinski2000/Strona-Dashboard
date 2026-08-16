@@ -1,6 +1,6 @@
 <h3 class="dashboard-action-header">Dodawanie zdjęcia do galerii</h3>
 <form action="/dashboard/gallery/store" method="POST" enctype="multipart/form-data" class="timetable-create-form">
-	<input type="hidden" name="csrf_token" value="<?= $params['csrf_token'] ?? '' ?>">
+	<input type="hidden" name="csrf_token" value="<?= e($params['csrf_token'] ?? '') ?>">
 	<label>
 		<span>Kategoria: </span>
 		<select name="category">
@@ -8,16 +8,16 @@
 			<option value="camp">Obóz</option>
 		</select>
 	</label>
-	<p class="validation-error"><?= $params['flash_dashboard']['message']['category'] ?? ""  ?></p>
+	<p class="validation-error"><?= e($params['flash_dashboard']['message']['category'] ?? "")  ?></p>
 	<label>
 		<span>Opis: </span>
 		<input type="text" name="description" maxlength="50" placeholder="Opis...">
 	</label>
-	<p class="validation-error"><?= $params['flash_dashboard']['message']['description'] ?? ""  ?></p>
+	<p class="validation-error"><?= e($params['flash_dashboard']['message']['description'] ?? "")  ?></p>
 	<label>
 		<span>Zdjęcie:</span>
 		<input type="file" name="image_name">
 	</label>
-	<p class="validation-error"><?= $params['flash_dashboard']['message']['image_name'] ?? ""  ?></p>
+	<p class="validation-error"><?= e($params['flash_dashboard']['message']['image_name'] ?? "")  ?></p>
 	<input type="submit" value="Stwórz">
 </form>

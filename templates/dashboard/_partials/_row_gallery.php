@@ -5,11 +5,11 @@ $statusText = $isPublished ? 'Publiczny' : 'Niepubliczny';
 
 ?>
 <tr>
-  <td><?= $key + 1 ?>.</td>
-  <td><img class="dashboard-image-index" src="/public/uploads/<?= htmlspecialchars($row->imageName) ?>" alt="zdjecie" loading="lazy"></td>
-  <td><?= htmlspecialchars($row->description) ?></td>
-  <td><?= htmlspecialchars($row->createdAt) ?></td>
-  <td class="<?= $statusClass ?>"><?= $statusText ?></td>
+  <td><?= e($key + 1) ?>.</td>
+  <td><img class="dashboard-image-index" src="/public/uploads/<?= e(rawurlencode((string) $row->imageName)) ?>" alt="zdjecie" loading="lazy"></td>
+  <td><?= e($row->description) ?></td>
+  <td><?= e($row->createdAt) ?></td>
+  <td class="<?= e($statusClass) ?>"><?= e($statusText) ?></td>
   <?php require "templates/dashboard/_partials/_action_links.php"; ?>
   <td class="move-arrows">
     <div>

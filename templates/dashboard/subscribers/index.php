@@ -4,8 +4,8 @@ $moduleName = 'subscribers';
 $data = $params['data'] ?? [];
 ?>
 <div class="list-header">
-    <h3><?= htmlspecialchars($pageTitle) ?></h3>
-    <a href="/dashboard/<?= htmlspecialchars($moduleName) ?>/create">
+    <h3><?= e($pageTitle) ?></h3>
+    <a href="/dashboard/<?= e($moduleName) ?>/create">
         <p>Nowy </p><i class="fa-solid fa-plus"></i>
     </a>
 </div>
@@ -21,8 +21,8 @@ $data = $params['data'] ?? [];
     <tbody>
     <?php foreach ($data as $key => $row): ?>
         <tr>
-            <td><?= $row->id ?></td>
-            <td><?= htmlspecialchars($row->email) ?></td>
+            <td><?= e($row->id) ?></td>
+            <td><?= e($row->email) ?></td>
             <td>
                 <?php if ($row->isActive): ?>
                     <span style="color: #28a745; font-weight: bold;">

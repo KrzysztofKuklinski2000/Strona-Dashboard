@@ -8,7 +8,7 @@ $statusText = $isPublished ? 'Publiczny' : 'Niepubliczny';
     <td><?= e($row->title) ?></td>
     <td><?= e($row->created) ?></td>
     <td class="<?= e($row->status == 1 ? 'published' : 'no-published') ?>">
-        <?= $row->status == 1 ? 'Publiczny' : 'Niepubliczny' ?>
+        <?= e($row->status == 1 ? 'Publiczny' : 'Niepubliczny' )?>
     </td>
   <?php require "templates/dashboard/_partials/_action_links.php"; ?>
   <td>

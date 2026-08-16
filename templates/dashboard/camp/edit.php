@@ -1,5 +1,7 @@
 <?php
-/** @var \App\DTO\CampDto $data */
+use App\DTO\Dashboard\CampDto;
+
+/** @var CampDto $data */
 $data = $params['data'];
 $csrf = $params['csrf_token'];
 $errors = $params['flash_dashboard']['message'] ?? [];
@@ -10,115 +12,115 @@ $errors = $params['flash_dashboard']['message'] ?? [];
 </div>
 <br>
 <form action="/dashboard/camp/update" method="POST" class="camp-form ">
-    <input type="hidden" name="csrf_token" value="<?= $csrf  ?? '' ?>">
+    <input type="hidden" name="csrf_token" value="<?= e($csrf  ?? '') ?>">
 
     <label>
         <span>Miejscowość:</span>
-        <input type="text" name="town" value="<?= $data->city ?>">
+        <input type="text" name="town" value="<?= e($data->city) ?>">
     </label>
-    <p class="validation-error"><?= $errors['town'] ?? ""  ?></p>
+    <p class="validation-error"><?= e($errors['town'] ?? "")  ?></p>
 
     <label>
         <span>Nazwa Pensjonatu</span>
-        <input type="text" name="guesthouse" value="<?= $data->guesthouse ?>">
+        <input type="text" name="guesthouse" value="<?= e($data->guesthouse) ?>">
     </label>
-    <p class="validation-error"><?= $errors['guesthouse'] ?? ""  ?></p>
+    <p class="validation-error"><?= e($errors['guesthouse'] ?? "")  ?></p>
 
     <label>
         <span>Miejsce wyjazdu: </span>
-        <input type="text" name="townStart" value="<?= $data->cityStart ?>">
+        <input type="text" name="townStart" value="<?= e($data->cityStart) ?>">
     </label>
-    <p class="validation-error"><?= $errors['townStart'] ?? ""  ?></p>
+    <p class="validation-error"><?= e($errors['townStart'] ?? "")  ?></p>
 
     <label>
         <span>Data wyjazdu: </span>
-        <input type="date" name="dateStart" value="<?= $data->dateStart ?>">
+        <input type="date" name="dateStart" value="<?= e($data->dateStart) ?>">
     </label>
-    <p class="validation-error"><?= $errors['dateStart'] ?? ""  ?></p>
+    <p class="validation-error"><?= e($errors['dateStart'] ?? "")  ?></p>
 
     <label>
         <span>Data powrotu: </span>
-        <input type="date" name="dateEnd" value="<?= $data->dateEnd ?>">
+        <input type="date" name="dateEnd" value="<?= e($data->dateEnd) ?>">
     </label>
-    <p class="validation-error"><?= $errors['dateEnd'] ?? ""  ?></p>
+    <p class="validation-error"><?= e($errors['dateEnd'] ?? "")  ?></p>
 
     <label>
         <span>Godzina wyjazdu: </span>
-        <input type="time" name="timeStart" value="<?= $data->timeStart ?>">
+        <input type="time" name="timeStart" value="<?= e($data->timeStart) ?>">
     </label>
-    <p class="validation-error"><?= $errors['timeStart'] ?? ""  ?></p>
+    <p class="validation-error"><?= e($errors['timeStart'] ?? "")  ?></p>
 
     <label>
         <span>Godzina powrotu: </span>
-        <input type="time" name="timeEnd" value="<?= $data->timeEnd ?>">
+        <input type="time" name="timeEnd" value="<?= e($data->timeEnd) ?>">
     </label>
-    <p class="validation-error"><?= $errors['timeEnd'] ?? ""  ?></p>
+    <p class="validation-error"><?= e($errors['timeEnd'] ?? "")  ?></p>
 
     <label>
         <span>Pensjonat(nazwa/adres): </span>
-        <textarea name="place"><?= $data->place ?></textarea>
+        <textarea name="place"><?= e($data->place) ?></textarea>
     </label>
-    <p class="validation-error"><?= $errors['place'] ?? ""  ?></p>
+    <p class="validation-error"><?= e($errors['place'] ?? "")  ?></p>
 
     <label>
         <span>Zakwaterowanie: </span>
-        <textarea name="accommodation"><?= $data->accommodation ?></textarea>
+        <textarea name="accommodation"><?= e($data->accommodation) ?></textarea>
     </label>
-    <p class="validation-error"><?= $errors['accommodation'] ?? ""  ?></p>
+    <p class="validation-error"><?= e($errors['accommodation'] ?? "")  ?></p>
 
     <label>
         <span>Wyżywienie: </span>
-        <textarea name="meals"><?= $data->meals ?></textarea>
+        <textarea name="meals"><?= e($data->meals) ?></textarea>
     </label>
-    <p class="validation-error"><?= $errors['meals'] ?? ""  ?></p>
+    <p class="validation-error"><?= e($errors['meals'] ?? "")  ?></p>
 
     <label>
         <span>Wycieczki </span>
-        <textarea name="trips"><?= $data->trips ?></textarea>
+        <textarea name="trips"><?= e($data->trips) ?></textarea>
     </label>
-    <p class="validation-error"><?= $errors['trips'] ?? ""  ?></p>
+    <p class="validation-error"><?= e($errors['trips'] ?? "")  ?></p>
 
     <label>
         <span>Kadrę:</span>
-        <textarea name="staff"><?= $data->staff ?></textarea>
+        <textarea name="staff"><?= e($data->staff) ?></textarea>
     </label>
-    <p class="validation-error"><?= $errors['staff'] ?? ""  ?></p>
+    <p class="validation-error"><?= e($errors['staff'] ?? "")  ?></p>
 
     <label>
         <span>Transport PKP:</span>
-        <textarea name="transport"><?= $data->transport ?></textarea>
+        <textarea name="transport"><?= e($data->transport) ?></textarea>
     </label>
-    <p class="validation-error"><?= $errors['transport'] ?? ""  ?></p>
+    <p class="validation-error"><?= e($errors['transport'] ?? "")  ?></p>
 
     <label>
         <span>Treningi:</span>
-        <textarea name="training"><?= $data->training ?></textarea>
+        <textarea name="training"><?= e($data->training) ?></textarea>
     </label>
-    <p class="validation-error"><?= $errors['training'] ?? ""  ?></p>
+    <p class="validation-error"><?= e($errors['training'] ?? "")  ?></p>
 
     <label>
         <span>Ubezpieczenie:</span>
-        <textarea name="insurance"><?= $data->insurance ?></textarea>
+        <textarea name="insurance"><?= e($data->insurance) ?></textarea>
     </label>
-    <p class="validation-error"><?= $errors['insurance'] ?? ""  ?></p>
+    <p class="validation-error"><?= e($errors['insurance'] ?? "")  ?></p>
 
     <label>
         <span>Koszt:</span>
-        <input type="number" name="cost" value="<?= $data->cost ?>">
+        <input type="number" name="cost" value="<?= e($data->cost) ?>">
     </label>
-    <p class="validation-error"><?= $errors['cost'] ?? ""  ?></p>
+    <p class="validation-error"><?= e($errors['cost'] ?? "")  ?></p>
 
     <label>
         <span>Zaliczka:</span>
-        <input type="number" name="advancePayment" value="<?= $data->advancePayment ?>">
+        <input type="number" name="advancePayment" value="<?= e($data->advancePayment) ?>">
     </label>
-    <p class="validation-error"><?= $errors['advancePayment'] ?? ""  ?></p>
+    <p class="validation-error"><?= e($errors['advancePayment'] ?? "")  ?></p>
 
     <label>
         <span>Data zaliczki</span>
-        <input type="date" name="advanceDate" value="<?= $data->advanceDate ?>">
+        <input type="date" name="advanceDate" value="<?= e($data->advanceDate) ?>">
     </label>
-    <p class="validation-error"><?= $errors['advanceDate'] ?? ""  ?></p>
+    <p class="validation-error"><?= e($errors['advanceDate'] ?? "")  ?></p>
 
     <input type="submit" value="Zapisz">
 </form>

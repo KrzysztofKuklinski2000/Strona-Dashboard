@@ -23,11 +23,15 @@
                 </p>
               
               <div style="text-align: center; margin: 30px 0;">
-                <a href="<?= $confirmUrl ?>" style="background-color: #e53e3e; color: #ffffff; text-decoration: none; padding: 15px 30px; border-radius: 4px; font-weight: bold; display: inline-block;">POTWIERDZAM SUBSKRYPCJĘ</a>
+                <a href="<?= htmlspecialchars($confirmUrl, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" style="background-color: #e53e3e; color: #ffffff; text-decoration: none; padding: 15px 30px; border-radius: 4px; font-weight: bold; display: inline-block;">
+                    POTWIERDZAM SUBSKRYPCJĘ</a>
               </div>
 
               <p>Jeśli link powyżej nie działa, skopiuj go do przeglądarki:<br>
-              <small><?= $confirmUrl ?></small></p>
+                  <small>
+                      <?= htmlspecialchars($confirmUrl, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>
+                  </small>
+              </p>
 
               <p>Jeśli to nie Ty zapisywałeś się na naszej stronie, zignoruj tę wiadomość.</p>
               <p style="margin-bottom: 0;">Pozdrawiamy,<br><strong>Klub Karate Kyokushin</strong></p>

@@ -39,7 +39,6 @@ readonly class Notifier
             ob_start();
             require "$this->templatePath/emails/timetable_updated.php";
             $htmlContent = ob_get_clean();
-            $htmlContent .= "<br><br><hr><p style='font-size: 12px;'>Chcesz zrezygnować? <a href='$unsubscribeUrl'>Wypisz się tutaj</a></p>";
 
             $this->mailer->send($email, 'Aktualizacja grafiku', $htmlContent);
         }

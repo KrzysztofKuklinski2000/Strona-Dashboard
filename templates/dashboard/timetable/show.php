@@ -6,16 +6,16 @@
 
 <h3 class="dashboard-action-header">Szczegóły wpisu w grafiku</h3>
 <div class="post-content">
- <h4>Dzień: <?= $data->day ?></h4>
-	<h4>Miasto: <?= $data->city?></h4>
-	<h4>Grupa: <?= $data->advancementGroup?></h4>
-	<h4>Szczegóły: <?= $data->place?></h4>
-	<h4>Start: <?= $data->start?></h4>
-	<h4>Koniec: <?= $data->end?></h4>
+ <h4>Dzień: <?= e($data->day) ?></h4>
+	<h4>Miasto: <?= e($data->city) ?></h4>
+	<h4>Grupa: <?= e($data->advancementGroup) ?></h4>
+	<h4>Szczegóły: <?= e($data->place) ?></h4>
+	<h4>Start: <?= e($data->start) ?></h4>
+	<h4>Koniec: <?= e($data->end) ?></h4>
 </div>
-  <form action="<?= $action ?>" method="POST">
-    <input type="hidden" name="csrf_token" value="<?= $csrf ?? '' ?>">
-    <input type="hidden" name="postId" value="<?= $data->id ?? "" ?>">
+  <form action="<?= e($action) ?>" method="POST">
+    <input type="hidden" name="csrf_token" value="<?= e($csrf ?? '') ?>">
+    <input type="hidden" name="postId" value="<?= e($data->id ?? "") ?>">
     <label>
       <input type="radio" name="postPublished" value='1' <?= $data->status == 1 ? 'checked' : '' ?>> Publiczny
     </label>
