@@ -14,11 +14,13 @@ use App\DTO\Dashboard\UpdateImportantPostDto;
 readonly class ImportantPostsRequestMapper
 {
     public function __construct(
-        private Request $request,
-        private Validator $validator,
+        private Request                     $request,
+        private Validator                   $validator,
         private ChangePositionRequestMapper $changePositionRequestMapper,
-        private PublicationRequestMapper $publicationRequestMapper,
-    ) {
+        private PublicationRequestMapper    $publicationRequestMapper,
+        private DeleteRequestMapper         $deleteRequestMapper,
+    )
+    {
     }
 
     public function mapCreate(): CreateImportantPostDto
@@ -85,5 +87,9 @@ readonly class ImportantPostsRequestMapper
     public function mapChangePosition(): ChangePositionDto
     {
         return $this->changePositionRequestMapper->map();
+    }
+
+    public function mapDelete(): ?int {
+        return $this->deleteRequestMapper->map();
     }
 }

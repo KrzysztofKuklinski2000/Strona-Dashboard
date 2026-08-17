@@ -91,6 +91,11 @@ class SubscribersController extends AbstractDashboardController
         return $this->subscriberRequestMapper->mapUpdate();
     }
 
+    protected function getDataToDelete(): ?int
+    {
+        return $this->subscriberRequestMapper->mapDelete();
+    }
+
     protected function handleCreate(DataTransferObjectInterface $data): void
     {
         /** @var CreateSubscriberDto $data */

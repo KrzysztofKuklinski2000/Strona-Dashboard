@@ -13,7 +13,6 @@ $csrf = $params['csrf_token'] ?? '';
 <p><b>Koniec:</b> <?= e($data->end) ?></p>
 <form action="<?= e($action) ?>" method="POST">
   <input type="hidden" name="csrf_token" value="<?= e($csrf ?? "") ?>">
-  <input type="hidden" name="postId" value="<?= e($data->id ?? "") ?>">
   <label>
     <input type="checkbox" name="is_notify">
 		Powiadom

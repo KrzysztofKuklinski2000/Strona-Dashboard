@@ -97,6 +97,11 @@ class TimetableController extends AbstractDashboardController
         return $this->timetableRequestMapper->mapPublication();
     }
 
+    protected function getDataToDelete(): ?int
+    {
+        return $this->timetableRequestMapper->mapDelete();
+    }
+
     protected function handleCreate(DataTransferObjectInterface $data): void
     {
         /** @var CreateTimetableDto $data */

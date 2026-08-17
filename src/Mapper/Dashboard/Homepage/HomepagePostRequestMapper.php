@@ -11,6 +11,7 @@ use App\DTO\Dashboard\CreateHomepagePostDto;
 use App\DTO\Dashboard\PublishedDto;
 use App\DTO\Dashboard\UpdateHomepagePostDto;
 use App\Mapper\Dashboard\ChangePositionRequestMapper;
+use App\Mapper\Dashboard\DeleteRequestMapper;
 use App\Mapper\Dashboard\PublicationRequestMapper;
 
 readonly class HomepagePostRequestMapper
@@ -22,6 +23,7 @@ readonly class HomepagePostRequestMapper
         private HomepagePostPayloadNormalizer $payloadNormalizer,
         private ChangePositionRequestMapper   $changePositionRequestMapper,
         private PublicationRequestMapper      $publicationRequestMapper,
+        private DeleteRequestMapper           $deleteRequestMapper,
     )
     {
     }
@@ -160,5 +162,9 @@ readonly class HomepagePostRequestMapper
     public function mapPublication(): PublishedDto
     {
         return $this->publicationRequestMapper->map();
+    }
+
+    public function mapDelete(): ?int {
+        return $this->deleteRequestMapper->map();
     }
 }

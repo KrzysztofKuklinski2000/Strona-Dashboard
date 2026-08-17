@@ -10,6 +10,7 @@ use App\Controller\Dashboard\SubscribersController;
 use App\Core\ContextController;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\SubscribersServiceFactory;
+use App\Mapper\Dashboard\DeleteRequestMapper;
 use App\Mapper\Dashboard\SubscriberRequestMapper;
 use PDO;
 
@@ -28,6 +29,10 @@ class SubscribersControllerFactory implements ControllerFactoryInterface
         $subscriberRequestMapper = new SubscriberRequestMapper(
             $contextController->request,
             $contextController->validator,
+            new DeleteRequestMapper(
+                $contextController->request,
+                $contextController->validator,
+            )
         );
 
         return new SubscribersController(

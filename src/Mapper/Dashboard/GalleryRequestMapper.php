@@ -19,6 +19,7 @@ class GalleryRequestMapper
         private Config                      $config,
         private ChangePositionRequestMapper $changePositionRequestMapper,
         private PublicationRequestMapper    $publicationRequestMapper,
+        private DeleteRequestMapper         $deleteRequestMapper,
     )
     {
     }
@@ -94,5 +95,10 @@ class GalleryRequestMapper
     public function mapChangePosition(): ChangePositionDto
     {
         return $this->changePositionRequestMapper->map();
+    }
+
+    public function mapDelete(): ?int
+    {
+        return $this->deleteRequestMapper->map();
     }
 }

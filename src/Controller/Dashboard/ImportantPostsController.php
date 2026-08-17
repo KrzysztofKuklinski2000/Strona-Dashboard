@@ -105,6 +105,11 @@ class ImportantPostsController extends AbstractDashboardController
         return $this->importantPostsRequestMapper->mapChangePosition();
     }
 
+    protected function getDataToDelete(): ?int
+    {
+        return $this->importantPostsRequestMapper->mapDelete();
+    }
+
     protected function handleCreate(DataTransferObjectInterface $data): void
     {
         /** @var CreateImportantPostDto $data */

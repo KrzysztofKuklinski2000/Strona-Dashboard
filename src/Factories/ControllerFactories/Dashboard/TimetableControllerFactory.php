@@ -10,6 +10,7 @@ use App\Controller\Dashboard\TimetableController;
 use App\Core\ContextController;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\TimetableServiceFactory;
+use App\Mapper\Dashboard\DeleteRequestMapper;
 use App\Mapper\Dashboard\PublicationRequestMapper;
 use App\Mapper\Dashboard\TimetableRequestMapper;
 use PDO;
@@ -32,7 +33,11 @@ class TimetableControllerFactory implements ControllerFactoryInterface
             new PublicationRequestMapper(
                 $contextController->request,
                 $contextController->validator,
-            )
+            ),
+            new DeleteRequestMapper(
+                $contextController->request,
+                $contextController->validator,
+            ),
         );
 
         return new TimetableController(

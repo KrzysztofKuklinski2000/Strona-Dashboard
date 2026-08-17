@@ -11,6 +11,7 @@ use App\Core\ContextController;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\HomepageServiceFactory;
 use App\Mapper\Dashboard\ChangePositionRequestMapper;
+use App\Mapper\Dashboard\DeleteRequestMapper;
 use App\Mapper\Dashboard\Homepage\HomepagePostPayloadNormalizer;
 use App\Mapper\Dashboard\Homepage\HomepagePostRequestMapper;
 use App\Mapper\Dashboard\Homepage\Payload\CardsGridNormalizer;
@@ -59,6 +60,10 @@ class HomepageControllerFactory implements ControllerFactoryInterface
                 $contextController->validator,
             ),
             new PublicationRequestMapper(
+                $contextController->request,
+                $contextController->validator,
+            ),
+            new DeleteRequestMapper(
                 $contextController->request,
                 $contextController->validator,
             )

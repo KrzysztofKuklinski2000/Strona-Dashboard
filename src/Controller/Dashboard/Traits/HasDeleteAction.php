@@ -19,6 +19,8 @@ trait HasDeleteAction
 {
     abstract protected function handleDelete(int $id): void;
 
+    abstract protected function getDataToDelete(): ?int;
+
     /**
      * @throws InvalidCsrfTokenException
      */
@@ -31,7 +33,20 @@ trait HasDeleteAction
         }
 
         $this->csrfMiddleware->verify('admin');
-        $id = (int) $this->request->getFormParam('postId');
+        $id = $this->getDataToDelete();
+
+        if($id === null) {
+            $this->sessionManager->setFlash(
+                'warning',
+                'Nieprawidłowy identyfikator wpisu.'
+            );
+
+            $this->redirect(
+                "{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}"
+            );
+        }
+
+
         $this->handleDelete($id);
         $this->sessionManager->setFlash('success', 'Udało się usunąć');
         $this->redirect("{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}");

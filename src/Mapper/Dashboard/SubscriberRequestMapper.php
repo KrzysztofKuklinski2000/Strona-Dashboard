@@ -11,8 +11,9 @@ readonly class SubscriberRequestMapper
 {
 
     public function __construct(
-        private Request $request,
-        private Validator $validator
+        private Request             $request,
+        private Validator           $validator,
+        private DeleteRequestMapper $deleteRequestMapper,
     )
     {
     }
@@ -57,5 +58,10 @@ readonly class SubscriberRequestMapper
             )
         ];
         return UpdateSubscriberDto::fromArray($data);
+    }
+
+    public function mapDelete(): ?int
+    {
+        return $this->deleteRequestMapper->map();
     }
 }

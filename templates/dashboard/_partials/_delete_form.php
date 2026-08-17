@@ -15,7 +15,6 @@
 
   <form class="dashboard-delete-form" action="<?= e($action ?? '') ?>" method="POST">
     <input type="hidden" name="csrf_token" value="<?= e($csrf ?? '') ?>">
-    <input type="hidden" name="postId" value="<?= e($data->id ?? '') ?>">
     <input type="submit" value="Usuń">
   </form>
 </div>

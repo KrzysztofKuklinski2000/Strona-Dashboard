@@ -14,11 +14,13 @@ use App\DTO\Dashboard\UpdateNewsDto;
 readonly class NewsRequestMapper
 {
     public function __construct(
-        private Request $request,
-        private Validator $validator,
+        private Request                     $request,
+        private Validator                   $validator,
         private ChangePositionRequestMapper $changePositionRequestMapper,
-        private PublicationRequestMapper $publicationRequestMapper,
-    ) {
+        private PublicationRequestMapper    $publicationRequestMapper,
+        private DeleteRequestMapper         $deleteRequestMapper,
+    )
+    {
     }
 
     public function mapCreate(): CreateNewsDto
@@ -85,5 +87,10 @@ readonly class NewsRequestMapper
     public function mapChangePosition(): ChangePositionDto
     {
         return $this->changePositionRequestMapper->map();
+    }
+
+    public function mapDelete(): ?int
+    {
+        return $this->deleteRequestMapper->map();
     }
 }

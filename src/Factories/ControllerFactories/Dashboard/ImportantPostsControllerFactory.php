@@ -11,6 +11,7 @@ use App\Core\ContextController;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\ImportantPostsServiceFactory;
 use App\Mapper\Dashboard\ChangePositionRequestMapper;
+use App\Mapper\Dashboard\DeleteRequestMapper;
 use App\Mapper\Dashboard\ImportantPostsRequestMapper;
 use App\Mapper\Dashboard\PublicationRequestMapper;
 use PDO;
@@ -39,6 +40,10 @@ class ImportantPostsControllerFactory implements ControllerFactoryInterface
                 $contextController->request,
                 $contextController->validator,
             ),
+            new DeleteRequestMapper(
+                $contextController->request,
+                $contextController->validator,
+            )
         );
 
         return new ImportantPostsController(

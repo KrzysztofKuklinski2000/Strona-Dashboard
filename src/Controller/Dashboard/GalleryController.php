@@ -104,6 +104,11 @@ class GalleryController extends AbstractDashboardController
         return $this->galleryRequestMapper->mapChangePosition();
     }
 
+    protected function getDataToDelete(): ?int
+    {
+        return $this->galleryRequestMapper->mapDelete();
+    }
+
     protected function handleCreate(DataTransferObjectInterface $data): void
     {
         /** @var CreateGalleryDto $data */

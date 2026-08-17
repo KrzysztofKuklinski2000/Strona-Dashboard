@@ -104,6 +104,11 @@ class NewsController extends AbstractDashboardController
         return $this->requestMapper->mapChangePosition();
     }
 
+    protected function getDataToDelete(): ?int
+    {
+        return $this->requestMapper->mapDelete();
+    }
+
     protected function handleCreate(DataTransferObjectInterface $data): void
     {
         /** @var CreateNewsDto $data */

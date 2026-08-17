@@ -10,6 +10,7 @@ use App\Core\ContextController;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\GalleryServiceFactory;
 use App\Mapper\Dashboard\ChangePositionRequestMapper;
+use App\Mapper\Dashboard\DeleteRequestMapper;
 use App\Mapper\Dashboard\GalleryRequestMapper;
 use App\Mapper\Dashboard\PublicationRequestMapper;
 use PDO;
@@ -38,6 +39,10 @@ readonly class GalleryControllerFactory implements ControllerFactoryInterface
                 $contextController->request,
                 $contextController->validator,
             ),
+            new DeleteRequestMapper(
+                $contextController->request,
+                $contextController->validator
+            )
         );
 
         return new GalleryController(

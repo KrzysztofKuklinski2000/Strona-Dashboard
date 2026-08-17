@@ -14,6 +14,7 @@ readonly class TimetableRequestMapper
         private Request                  $request,
         private Validator                $validator,
         private PublicationRequestMapper $publicationRequestMapper,
+        private DeleteRequestMapper      $deleteRequestMapper,
     )
     {
     }
@@ -126,6 +127,11 @@ readonly class TimetableRequestMapper
     public function mapPublication(): PublishedDto
     {
         return $this->publicationRequestMapper->map();
+    }
+
+    public function mapDelete(): ?int
+    {
+        return $this->deleteRequestMapper->map();
     }
 
 }
