@@ -66,6 +66,26 @@ readonly class FileHandler
     /**
      * @throws FileException
      */
+    public function deleteImage(string $imageName): void
+    {
+        if ($imageName === '' || basename($imageName) !== $imageName) {
+            throw new FileException("Nieprawidłowa nazwa zdjęcia.");
+        }
+
+        $imagePath = $this->targetDir . $imageName;
+
+        if (!file_exists($imagePath)) {
+            return;
+        }
+
+        if(!unlink($imagePath)) {
+            throw new FileException('Nie udało się usunąć zdjęcia.');
+        }
+    }
+
+    /**
+     * @throws FileException
+     */
     private function ensureDirectoryExists(): void
     {
         if (!is_dir($this->targetDir) && !mkdir($this->targetDir, 0755, true)) {

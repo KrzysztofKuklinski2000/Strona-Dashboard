@@ -5,6 +5,7 @@ namespace App\Service\Dashboard;
 use App\Core\FileHandler;
 use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\CreateGalleryDto;
+use App\DTO\Dashboard\GalleryDto;
 use App\DTO\Dashboard\PublishedDto;
 use App\DTO\Dashboard\UpdateGalleryDto;
 use App\DTO\DataTransferObjectInterface;
@@ -90,9 +91,28 @@ class GalleryService extends AbstractDashboardService implements GalleryManageme
         $this->published(self::TABLE, $galleryDto);
     }
 
+    /**
+     * @throws ServiceException
+     * @throws NotFoundException
+     */
     public function deleteGallery(int $id): void
     {
+        /** @var GalleryDto $galleryPost */
+        $galleryPost = $this->getPost($id);
+
         $this->delete(self::TABLE, $id);
+
+        try {
+            $this->fileHandler->deleteImage($galleryPost->imageName);
+        } catch (FileException $e) {
+            throw new ServiceException(
+                'Wpis został usunięty, ale nie udało się usunąć pliku obrazu.',
+                500,
+                $e
+            );
+        }
+
+
     }
 
     public function moveGallery(ChangePositionDto $changePositionDto): void
