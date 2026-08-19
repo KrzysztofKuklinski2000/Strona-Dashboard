@@ -67,19 +67,32 @@ class GalleryService extends AbstractDashboardService implements GalleryManageme
     {
         try {
             $imageName = $this->fileHandler->uploadImage($galleryDto->imageName);
-
-            $updatedDto = CreateGalleryDto::fromArray([
-                'category' => $galleryDto->category,
-                'description' => $galleryDto->description,
-                'image_name' => $imageName,
-                'created_at' => $galleryDto->createdAt,
-                'updated_at' => $galleryDto->updatedAt,
-            ]);
-
-            $this->create(self::TABLE, $updatedDto);
-
         } catch (FileException $e) {
             throw new ServiceException("Nie udało się wgrać zdjęcia na serwer", 500, $e);
+        }
+
+        $updatedDto = CreateGalleryDto::fromArray([
+            'category' => $galleryDto->category,
+            'description' => $galleryDto->description,
+            'image_name' => $imageName,
+            'created_at' => $galleryDto->createdAt,
+            'updated_at' => $galleryDto->updatedAt,
+        ]);
+
+        try {
+            $this->create(self::TABLE, $updatedDto);
+        }catch (ServiceException $e){
+            try {
+                $this->fileHandler->deleteImage($imageName);
+            }catch (FileException $e){
+                throw new ServiceException(
+                    'Nie udało się zapisać wpisu galerii ani usunąć przesłanego pliku.',
+                    500,
+                    $e
+                );
+            }
+
+            throw $e;
         }
     }
 
