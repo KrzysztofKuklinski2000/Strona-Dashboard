@@ -10,7 +10,7 @@ use App\DTO\Dashboard\CreateGalleryDto;
 use App\DTO\Dashboard\PublishedDto;
 use App\DTO\Dashboard\UpdateGalleryDto;
 
-class GalleryRequestMapper
+readonly class GalleryRequestMapper
 {
 
     public function __construct(
@@ -79,6 +79,13 @@ class GalleryRequestMapper
                 required: true,
                 minLength: 10,
                 maxLength: 50
+            ),
+
+            'image_name' => $this->validator->validateFile(
+                field: 'image_name',
+                file: $this->request->getFile('image_name'),
+                maxSize: $this->config->getMaxUploadSize(),
+                required: false
             ),
 
             'updated_at' => date('Y-m-d'),

@@ -11,6 +11,7 @@ readonly class UpdateGalleryDto implements DataTransferObjectInterface
         public int $id,
         public string $category,
         public string $description,
+        public array|string|null $imageName,
         public string $updatedAt
     ) {}
 
@@ -20,17 +21,24 @@ readonly class UpdateGalleryDto implements DataTransferObjectInterface
             id: (int)($data['id'] ?? 0),
             category: (string)($data['category'] ?? ''),
             description: (string)($data['description'] ?? ''),
+            imageName: $data['image_name'] ?? null,
             updatedAt: (string)($data['updated_at'] ?? '')
         );
     }
 
     public function toArray(): array
     {
-        return [
+        $data = [
             'id' => $this->id,
             'category' => $this->category,
             'description' => $this->description,
             'updated_at' => $this->updatedAt
         ];
+
+        if (is_string($this->imageName) && $this->imageName !== '') {
+            $data['image_name'] = $this->imageName;
+        }
+
+        return $data;
     }
 }

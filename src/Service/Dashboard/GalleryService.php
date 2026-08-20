@@ -54,12 +54,64 @@ class GalleryService extends AbstractDashboardService implements GalleryManageme
 
     /**
      * @throws ServiceException
+     * @throws NotFoundException
      */
     public function updateGallery(UpdateGalleryDto $galleryDto): void
     {
-        $this->edit(self::TABLE, $galleryDto);
-    }
+        if (!is_array($galleryDto->imageName)) {
+            $this->edit(self::TABLE, $galleryDto);
+            return;
+        }
 
+        /** @var GalleryDto $oldGallery */
+        $oldGallery = $this->getPost($galleryDto->id);
+
+        try {
+            $newImageName = $this->fileHandler->uploadImage(
+                $galleryDto->imageName,
+            );
+        } catch (FileException $e) {
+            throw new ServiceException(
+                'Nie udało się wgrać nowego zdjęcia.',
+                500,
+                $e,
+            );
+        }
+
+        $updatedDto = UpdateGalleryDto::fromArray([
+            'id' => $galleryDto->id,
+            'category' => $galleryDto->category,
+            'description' => $galleryDto->description,
+            'image_name' => $newImageName,
+            'updated_at' => $galleryDto->updatedAt,
+        ]);
+
+        try {
+            $this->edit(self::TABLE, $updatedDto);
+        } catch (ServiceException $e) {
+            try {
+                $this->fileHandler->deleteImage($newImageName);
+            } catch (FileException $cleanupException) {
+                throw new ServiceException(
+                    'Nie udało się zapisać zmian ani usunąć nowego pliku.',
+                    500,
+                    $cleanupException,
+                );
+            }
+
+            throw $e;
+        }
+
+        try {
+            $this->fileHandler->deleteImage($oldGallery->imageName);
+        } catch (FileException $e) {
+            throw new ServiceException(
+                'Zmiany zapisano, ale nie udało się usunąć starego zdjęcia.',
+                500,
+                $e,
+            );
+        }
+    }
     /**
      * @throws ServiceException
      */

@@ -16,12 +16,13 @@
 	<p class="validation-error"><?= e($params['flash_dashboard']['message']['category'] ?? "")  ?></p>
 	<label>
 		<span>Opis: </span>
-		<input type="text" name="description" maxlength="500" placeholder="Opis..." value="<?= e($data->description) ?>">
+		<input type="text" name="description" maxlength="50" placeholder="Opis..." value="<?= e($data->description) ?>">
 	</label>
 	<p class="validation-error"><?= e($params['flash_dashboard']['message']['description'] ?? "")  ?></p>
-	<label>
-		<span>Zdjęcie:</span>
-		<img class="dashboard-image" src="/public/uploads/<?= rawurlencode($data->imageName) ?>" alt="<?= e($data->description) ?>">
-	</label>
+    <label>
+        <span>Zdjęcie:</span>
+        <input type="file" name="image_name" accept="image/jpeg,image/png,image/gif">
+    </label>
+    <p class="validation-error"><?= e($params['flash_dashboard']['message']['image_name'] ?? "")  ?></p>
 	<input type="submit" value="Zapisz">
 </form>
