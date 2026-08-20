@@ -78,9 +78,26 @@ class Validator
         ?array $file,
         array $allowedTypes = ['image/png', 'image/jpeg', 'image/gif'],
         int $maxSize = 2_000_000,
+        bool $required = true,
     ): ?array {
-        if (!$file || !isset($file['error']) || $file['error'] === UPLOAD_ERR_NO_FILE) {
-            $this->errors[$field] = 'Plik nie został przesłany.';
+        if ($file === null) {
+            if ($required) {
+                $this->errors[$field] = 'Plik nie został przesłany.';
+            }
+
+            return null;
+        }
+
+        if (!isset($file['error'])) {
+            $this->errors[$field] = 'Nieprawidłowe dane pliku.';
+            return null;
+        }
+
+        if ($file['error'] === UPLOAD_ERR_NO_FILE) {
+            if ($required) {
+                $this->errors[$field] = 'Plik nie został przesłany.';
+            }
+
             return null;
         }
 
