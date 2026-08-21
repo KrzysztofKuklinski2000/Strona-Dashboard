@@ -5,6 +5,7 @@ namespace App\Service\Dashboard;
 use App\Content\HomepagePostTypes;
 use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\CreateHomepagePostDto;
+use App\DTO\Dashboard\HomepagePostDto;
 use App\DTO\Dashboard\PublishedDto;
 use App\DTO\Dashboard\UpdateHomepagePostDto;
 use App\DTO\DataTransferObjectInterface;
@@ -13,7 +14,7 @@ use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\HomepageRepository;
 use App\Service\Dashboard\Contracts\HomepageManagementServiceInterface;
-use App\Service\Dashboard\Homepage\ImageTextListUploadProcessor;
+use App\Service\Dashboard\Homepage\ImageTextListImageProcessor;
 use App\Service\Dashboard\Traits\CanEdit;
 use App\Service\Dashboard\Traits\CanPublished;
 use App\Service\Dashboard\Traits\PositionableTrait;
@@ -30,8 +31,8 @@ class HomepageService extends AbstractDashboardService implements HomepageManage
     private const NEW_POST_POSITION = 2;
 
     public function __construct(
-        HomepageRepository                            $repository,
-        private readonly ImageTextListUploadProcessor $uploadProcessor,
+        HomepageRepository                           $repository,
+        private readonly ImageTextListImageProcessor $processor,
     )
     {
         parent::__construct($repository);
@@ -100,9 +101,28 @@ class HomepageService extends AbstractDashboardService implements HomepageManage
         $this->published(self::TABLE, $data);
     }
 
+    /**
+     * @throws ServiceException
+     * @throws NotFoundException
+     */
     public function deleteHomepagePost(int $id): void
     {
+        /** @var HomepagePostDto $post */
+        $post = $this->getPost($id);
+
+        $imageName = $this->prepareImageForDeletion($post);
+
         $this->delete(self::TABLE, $id);
+
+        if($imageName === null) {
+            return;
+        }
+
+        try {
+            $this->processor->deleteImage($imageName);
+        }catch (FileException $e) {
+            throw new ServiceException('Post został usunięty, ale nie udało się usunąć pliku obrazu.', 500, $e);
+        }
     }
 
     public function moveHomepagePost(ChangePositionDto $data): void
@@ -124,7 +144,7 @@ class HomepageService extends AbstractDashboardService implements HomepageManage
         }
 
         try {
-            return $this->uploadProcessor->process($data->payload, $data->imageFile);
+            return $this->processor->process($data->payload, $data->imageFile);
         } catch (FileException $e) {
             throw new ServiceException("Nie udało się wgrać zdjęcia na serwer", 500, $e);
         } catch (JsonException $e) {
@@ -133,6 +153,21 @@ class HomepageService extends AbstractDashboardService implements HomepageManage
                 500,
                 $e,
             );
+        }
+    }
+
+    /**
+     * @throws ServiceException
+     */
+    private function prepareImageForDeletion(HomepagePostDto $data): ?string {
+        if($data->type !== HomepagePostTypes::IMAGE_TEXT_LIST || $data->payload === null) {
+            return null;
+        }
+
+        try {
+            return $this->processor->extractImageName($data->payload);
+        } catch (JsonException $e) {
+            throw new ServiceException('Nie udało się odczytać danych obrazu.', 500, $e);
         }
     }
 }

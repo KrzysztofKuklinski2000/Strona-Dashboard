@@ -6,7 +6,7 @@ use App\Core\Config;
 use App\Core\FileHandler;
 use App\Factories\ServiceFactories\ServiceFactoryInterface;
 use App\Repository\Dashboard\HomepageRepository;
-use App\Service\Dashboard\Homepage\ImageTextListUploadProcessor;
+use App\Service\Dashboard\Homepage\ImageTextListImageProcessor;
 use App\Service\Dashboard\HomepageService;
 use PDO;
 
@@ -20,9 +20,9 @@ readonly class HomepageServiceFactory implements ServiceFactoryInterface
     {
         $repository = new HomepageRepository($this->pdo);
         $fileHandler = new FileHandler($this->config->getUploadDir(), $this->config->getFilePrefix());
-        $uploadProcessor = new ImageTextListUploadProcessor($fileHandler, $this->config->getUploadUrl());
+        $imageProcessor = new ImageTextListImageProcessor($fileHandler, $this->config->getUploadUrl());
 
 
-        return new HomepageService($repository, $uploadProcessor);
+        return new HomepageService($repository, $imageProcessor);
     }
 }
