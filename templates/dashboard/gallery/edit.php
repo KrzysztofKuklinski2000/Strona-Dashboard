@@ -19,8 +19,16 @@
 		<input type="text" name="description" maxlength="50" placeholder="Opis..." value="<?= e($data->description) ?>">
 	</label>
 	<p class="validation-error"><?= e($params['flash_dashboard']['message']['description'] ?? "")  ?></p>
+    <div>
+        <span>Aktualne zdjęcie:</span>
+        <img
+            class="dashboard-image"
+            src="/public/uploads/<?= e(rawurlencode((string) $data->imageName)) ?>"
+            alt="<?= e($data->description) ?>"
+        >
+    </div>
     <label>
-        <span>Zdjęcie:</span>
+        <span>Zmień zdjęcie (opcjonalnie):</span>
         <input type="file" name="image_name" accept="image/jpeg,image/png,image/gif">
     </label>
     <p class="validation-error"><?= e($params['flash_dashboard']['message']['image_name'] ?? "")  ?></p>
