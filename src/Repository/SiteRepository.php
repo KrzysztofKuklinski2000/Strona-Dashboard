@@ -30,8 +30,8 @@ class SiteRepository extends AbstractRepository {
     private function fetchSingleRecord(string $table): array
     {
         try {
-            $sql = "SELECT * FROM $table";
-            $result = $this->runQuery($sql)->fetch(PDO::FETCH_ASSOC);
+            $sql = "SELECT * FROM $table WHERE id = :id";
+            $result = $this->runQuery($sql, [':id' => 1])->fetch(PDO::FETCH_ASSOC);
 
             if (!$result) {
                 throw new RepositoryException("Brak danych w tabeli $table", 404);

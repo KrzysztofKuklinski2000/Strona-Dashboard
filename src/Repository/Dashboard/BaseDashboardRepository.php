@@ -20,7 +20,10 @@ abstract class BaseDashboardRepository extends AbstractRepository {
     {
         try {
             $sql = "SELECT * FROM $table";
-            if(!in_array($table, ['contact', 'fees', 'camp', 'subscribers'])) $sql .= " ORDER BY position ASC";
+
+            if ($table !== 'subscribers') {
+                $sql .= " ORDER BY position ASC";
+            }
 
             $result = $this->runQuery($sql)->fetchAll(PDO::FETCH_ASSOC);
             return array_map(fn(array $row) => $this->mapToDto($row), $result);
