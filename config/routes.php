@@ -97,7 +97,6 @@ return function (RouteCollector $r) {
     $r->post('/dashboard/homepage/delete/{id:\d+}', [HomepageController::class, 'deleteAction']);
 
     $r->get('/dashboard/timetable', [TimetableController::class, 'indexAction']);
-    $r->post('/dashboard/timetable/move', [TimetableController::class, 'moveAction']);
     $r->get('/dashboard/timetable/create', [TimetableController::class, 'createAction']);
     $r->post('/dashboard/timetable/store', [TimetableController::class, 'storeAction']);
     $r->get('/dashboard/timetable/edit/{id:\d+}', [TimetableController::class, 'editAction']);

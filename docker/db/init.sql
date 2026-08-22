@@ -400,25 +400,23 @@ CREATE TABLE `timetable`
     `place`             text COLLATE utf8mb4_polish_ci        NOT NULL,
     `start`             time                                  NOT NULL,
     `end`               time                                  NOT NULL,
-    `status`            tinyint(1) NOT NULL DEFAULT '1',
-    `position`          int                                   NOT NULL DEFAULT '1'
+    `status`            tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
 -- Zrzut danych tabeli `timetable`
 --
 
-INSERT INTO `timetable` (`id`, `day`, `city`, `advancement_group`, `place`, `start`, `end`, `status`, `position`)
-VALUES (2, 'ŚR', 'rekowo', 'Wszyscy', 'sala gimnastyczna', '17:00:00', '18:00:00', 1, 2),
-       (3, 'CZW', 'Reda SP6', 'Kadra', 'Treningi odbywają się na sali gimnastycznej', '17:30:00', '19:00:00', 1, 2),
-       (4, 'PT', 'REDA SP4', 'Początkująca dzieci', 'Treningi odbywają się na łączniku', '18:00:00', '18:45:00', 1, 2),
-       (5, 'SOB', 'Wejherowo ', 'Początkująca dzieci', 'Salka pod basenem', '11:00:00', '11:45:00', 1, 2),
+INSERT INTO `timetable` (`id`, `day`, `city`, `advancement_group`, `place`, `start`, `end`, `status`)
+VALUES (2, 'ŚR', 'rekowo', 'Wszyscy', 'sala gimnastyczna', '17:00:00', '18:00:00', 1),
+       (3, 'CZW', 'Reda SP6', 'Kadra', 'Treningi odbywają się na sali gimnastycznej', '17:30:00', '19:00:00', 1),
+       (4, 'PT', 'REDA SP4', 'Początkująca dzieci', 'Treningi odbywają się na łączniku', '18:00:00', '18:45:00', 1),
+       (5, 'SOB', 'Wejherowo ', 'Początkująca dzieci', 'Salka pod basenem', '11:00:00', '11:45:00', 1),
        (6, 'WT    ', 'Wejherowo', 'Początkująca', 'Treningi odbywają się na salce pod basenem ', '18:00:00', '19:00:00',
-        1, 2),
-       (7, 'SOB', 'Wejherowo', 'Zaawansowana', 'Treningi odbywają się na salce pod basenem', '11:45:00', '13:00:00', 1,
-        2),
-       (13, 'PON', 'Wejherowo', 'Zaawansowana', 'asdasd', '19:41:00', '22:44:00', 1, 2),
-       (16, 'PON', 'Rekowo', 'Zaawansowana', 'po basenem', '20:45:00', '23:48:00', 1, 1);
+        1),
+       (7, 'SOB', 'Wejherowo', 'Zaawansowana', 'Treningi odbywają się na salce pod basenem', '11:45:00', '13:00:00', 1),
+       (13, 'PON', 'Wejherowo', 'Zaawansowana', 'asdasd', '19:41:00', '22:44:00', 1),
+       (16, 'PON', 'Rekowo', 'Zaawansowana', 'po basenem', '20:45:00', '23:48:00', 1);
 
 -- --------------------------------------------------------
 
