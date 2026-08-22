@@ -4,9 +4,13 @@ namespace App\Service\Dashboard\Traits;
 
 use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\DataTransferObjectInterface;
+use App\Exception\ServiceException;
 
 trait PositionableTrait
 {
+    /**
+     * @throws ServiceException
+     */
     protected function move(string $table, ChangePositionDto $data): void {
         $this->execute(function () use ($table, $data) {
             $current = $this->repository->getPost($table, $data->id);
@@ -21,6 +25,9 @@ trait PositionableTrait
         }, "Błąd zmiany pozycji");
     }
 
+    /**
+     * @throws ServiceException
+     */
     protected function create(
         string $table,
         DataTransferObjectInterface $data,
@@ -32,6 +39,9 @@ trait PositionableTrait
         }, "Błąd tworzenia pozycji");
     }
 
+    /**
+     * @throws ServiceException
+     */
     protected function delete(string $table, int $id):void {
         $this->execute(function () use ($table, $id) {
             $currentPost = $this->repository->getPost($table, $id);
