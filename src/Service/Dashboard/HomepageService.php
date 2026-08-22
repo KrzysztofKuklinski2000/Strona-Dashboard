@@ -73,13 +73,13 @@ class HomepageService extends AbstractDashboardService implements HomepageManage
             'payload' => $this->preparePayloadForPersistence($data)
         ]);
 
-        if(!is_array($data->imageFile)){
+        if (!is_array($data->imageFile)) {
             $this->edit(self::TABLE, $dataToUpload);
 
-            if($data->type === HomepagePostTypes::IMAGE_TEXT_LIST) {
-                return ;
+            if ($data->type === HomepagePostTypes::IMAGE_TEXT_LIST) {
+                return;
             }
-        }else {
+        } else {
             try {
                 $this->edit(self::TABLE, $dataToUpload);
             } catch (ServiceException $e) {
@@ -95,12 +95,12 @@ class HomepageService extends AbstractDashboardService implements HomepageManage
         }
 
         try {
-            if($oldImageName === null){
+            if ($oldImageName === null) {
                 return;
             }
 
             $this->processor->deleteImage($oldImageName);
-        }catch (FileException $e){
+        } catch (FileException $e) {
             throw new ServiceException(
                 'Zmiany zapisano, ale nie udało się usunąć starego zdjęcia.',
                 500,
@@ -111,6 +111,7 @@ class HomepageService extends AbstractDashboardService implements HomepageManage
 
     /**
      * @throws ServiceException
+     * @throws FileException
      */
     public function createHomepagePost(CreateHomepagePostDto $data): void
     {
@@ -124,11 +125,23 @@ class HomepageService extends AbstractDashboardService implements HomepageManage
             'payload' => $this->preparePayloadForPersistence($data)
         ]);
 
-        $this->create(
-            self::TABLE,
-            $dataToUpload,
-            self::NEW_POST_POSITION,
-        );
+        try {
+            $this->create(self::TABLE, $dataToUpload, self::NEW_POST_POSITION);
+        } catch (ServiceException $e) {
+            try {
+                $imageName = $this->prepareImageForDeletion($dataToUpload);
+                if($imageName !== null) {
+                    $this->processor->deleteImage($imageName);
+                }
+            }catch (FileException $cleanupException) {
+                throw new ServiceException(
+                    'Nie udało się zapisać posta ani usunąć przesłanego obrazu.',
+                    500,
+                    $cleanupException,
+                );
+            }
+            throw $e;
+        }
     }
 
     /**
@@ -152,13 +165,13 @@ class HomepageService extends AbstractDashboardService implements HomepageManage
 
         $this->delete(self::TABLE, $id);
 
-        if($imageName === null) {
+        if ($imageName === null) {
             return;
         }
 
         try {
             $this->processor->deleteImage($imageName);
-        }catch (FileException $e) {
+        } catch (FileException $e) {
             throw new ServiceException('Post został usunięty, ale nie udało się usunąć pliku obrazu.', 500, $e);
         }
     }
@@ -171,7 +184,7 @@ class HomepageService extends AbstractDashboardService implements HomepageManage
     /**
      * @throws ServiceException
      */
-    private function preparePayloadForPersistence(UpdateHomepagePostDto | CreateHomepagePostDto $data): ?string
+    private function preparePayloadForPersistence(UpdateHomepagePostDto|CreateHomepagePostDto $data): ?string
     {
         if (
             $data->type !== HomepagePostTypes::IMAGE_TEXT_LIST
@@ -197,8 +210,11 @@ class HomepageService extends AbstractDashboardService implements HomepageManage
     /**
      * @throws ServiceException
      */
-    private function prepareImageForDeletion(HomepagePostDto | UpdateHomepagePostDto $data): ?string {
-        if($data->type !== HomepagePostTypes::IMAGE_TEXT_LIST || $data->payload === null) {
+    private function prepareImageForDeletion(
+        HomepagePostDto|UpdateHomepagePostDto|CreateHomepagePostDto $data
+    ): ?string
+    {
+        if ($data->type !== HomepagePostTypes::IMAGE_TEXT_LIST || $data->payload === null) {
             return null;
         }
 
