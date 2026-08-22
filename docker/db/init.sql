@@ -31,6 +31,7 @@ time_zone = "+00:00";
 
 CREATE TABLE `camp`
 (
+    `id`             tinyint unsigned NOT NULL DEFAULT 1,
     `city`           varchar(50) COLLATE utf8mb4_polish_ci  NOT NULL,
     `city_start`     varchar(50) COLLATE utf8mb4_polish_ci  NOT NULL,
     `date_start`     date                                   NOT NULL,
@@ -48,7 +49,9 @@ CREATE TABLE `camp`
     `cost`           int                                    NOT NULL,
     `advancePayment` int                                    NOT NULL,
     `advanceDate`    date                                   NOT NULL,
-    `guesthouse`     varchar(70) COLLATE utf8mb4_polish_ci  NOT NULL
+    `guesthouse`     varchar(70) COLLATE utf8mb4_polish_ci  NOT NULL,
+    PRIMARY KEY (`id`),
+    CONSTRAINT `chk_camp_singleton` CHECK (`id` = 1)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
@@ -77,9 +80,12 @@ VALUES ('CHEMIK  w Szczawnicy', 'Gdynia Główna.Os                             
 
 CREATE TABLE `contact`
 (
+    `id`      tinyint unsigned NOT NULL DEFAULT 1,
     `email`   text COLLATE utf8mb4_polish_ci NOT NULL,
     `phone`   int                            NOT NULL,
-    `address` text COLLATE utf8mb4_polish_ci NOT NULL
+    `address` text COLLATE utf8mb4_polish_ci NOT NULL,
+    PRIMARY KEY (`id`),
+    CONSTRAINT `chk_contact_singleton` CHECK (`id` = 1)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
@@ -97,6 +103,7 @@ VALUES ('kyokushin.wejherowo@gmail.com', 123456789, 'Ul. Nanicka 22, Wejherowo')
 
 CREATE TABLE `fees`
 (
+    `id`                           tinyint unsigned NOT NULL DEFAULT 1,
     `reduced_contribution_1_month` int                            NOT NULL,
     `reduced_contribution_2_month` int                            NOT NULL,
     `family_contribution_month`    int                            NOT NULL,
@@ -104,7 +111,9 @@ CREATE TABLE `fees`
     `reduced_contribution_2_year`  int                            NOT NULL,
     `family_contribution_year`     int                            NOT NULL,
     `extra_information`            text COLLATE utf8mb4_polish_ci NOT NULL,
-    `fees_information`             text COLLATE utf8mb4_polish_ci
+    `fees_information`             text COLLATE utf8mb4_polish_ci,
+    PRIMARY KEY (`id`),
+    CONSTRAINT `chk_fees_singleton` CHECK (`id` = 1)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
