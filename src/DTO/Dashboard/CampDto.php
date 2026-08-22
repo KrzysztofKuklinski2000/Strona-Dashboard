@@ -7,6 +7,7 @@ use App\DTO\DataTransferObjectInterface;
 readonly class CampDto implements DataTransferObjectInterface
 {
     public function __construct(
+        public int    $id,
         public string $city,
         public string $guesthouse,
         public string $cityStart,
@@ -33,6 +34,7 @@ readonly class CampDto implements DataTransferObjectInterface
     public static function fromArray(array $data): self
     {
         return new self(
+            id: (int) ($data['id'] ?? 1),
             city: (string)($data['city'] ?? ''),
             guesthouse: (string)($data['guesthouse'] ?? ''),
             cityStart: (string)($data['city_start'] ?? ''),
@@ -57,6 +59,7 @@ readonly class CampDto implements DataTransferObjectInterface
     public function toArray(): array
     {
         $data = [
+            'id' => $this->id,
             'city' => $this->city,
             'guesthouse' => $this->guesthouse,
             'city_start' => $this->cityStart,

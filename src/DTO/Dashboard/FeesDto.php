@@ -8,6 +8,7 @@ use App\DTO\DataTransferObjectInterface;
 readonly class FeesDto implements DataTransferObjectInterface
 {
     public function __construct(
+        public int    $id,
         public int    $reducedContribution1Month,
         public int    $reducedContribution2Month,
         public int    $familyContributionMonth,
@@ -16,11 +17,14 @@ readonly class FeesDto implements DataTransferObjectInterface
         public int    $familyContributionYear,
         public string $extraInformation,
         public string $feesInformation,
-    ) {}
+    )
+    {
+    }
 
     public static function fromArray(array $data): self
     {
         return new self(
+            id: (int) ($data['id'] ?? 1),
             reducedContribution1Month: (int)($data['reduced_contribution_1_month'] ?? 0),
             reducedContribution2Month: (int)($data['reduced_contribution_2_month'] ?? 0),
             familyContributionMonth: (int)($data['family_contribution_month'] ?? 0),
@@ -35,6 +39,7 @@ readonly class FeesDto implements DataTransferObjectInterface
     public function toArray(): array
     {
         return [
+            'id' => $this->id,
             'reduced_contribution_1_month' => $this->reducedContribution1Month,
             'reduced_contribution_2_month' => $this->reducedContribution2Month,
             'family_contribution_month' => $this->familyContributionMonth,

@@ -7,6 +7,7 @@ use App\DTO\DataTransferObjectInterface;
 readonly class ContactDto implements DataTransferObjectInterface
 {
     public function __construct(
+        public int    $id,
         public string $email,
         public string $phone,
         public string $address,
@@ -14,16 +15,20 @@ readonly class ContactDto implements DataTransferObjectInterface
     {
     }
 
-    public static function fromArray(array $data): self {
+    public static function fromArray(array $data): self
+    {
         return new self(
-            email: (string) $data['email'],
-            phone: (string) $data['phone'],
-            address: (string) $data['address'],
+            id: (int) ($data['id'] ?? 1),
+            email: (string)$data['email'],
+            phone: (string)$data['phone'],
+            address: (string)$data['address'],
         );
     }
 
-    public function toArray(): array {
+    public function toArray(): array
+    {
         return [
+            'id' => $this->id,
             'email' => $this->email,
             'phone' => $this->phone,
             'address' => $this->address,

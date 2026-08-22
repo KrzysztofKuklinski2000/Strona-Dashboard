@@ -19,17 +19,15 @@ trait CanEdit
         try {
             $payload = $data->toArray();
 
-            $hasId = array_key_exists('id', $payload);
+            if(!array_key_exists('id', $payload)) {
+                throw new RepositoryException('Brak identyfikatora edytowanego rekordu.');
+            }
 
             $updateFields = $payload;
             unset($updateFields['id']);
 
             $setClause = implode(", ", array_map(fn($key) => "$key = :$key", array_keys($updateFields)));
-            $sql = "UPDATE $table SET $setClause";
-
-            if ($hasId) {
-                $sql .= " WHERE id = :id";
-            }
+            $sql = "UPDATE $table SET $setClause WHERE id = :id";
 
             $bindings = [];
             foreach ($payload as $key => $value) {
