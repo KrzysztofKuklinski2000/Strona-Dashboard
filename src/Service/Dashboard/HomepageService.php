@@ -57,9 +57,14 @@ class HomepageService extends AbstractDashboardService implements HomepageManage
 
     /**
      * @throws ServiceException
+     * @throws NotFoundException
      */
     public function updateHomepagePost(UpdateHomepagePostDto $data): void
     {
+        /** @var HomepagePostDto $oldPost */
+        $oldPost = $this->getPost($data->id);
+        $oldImageName = $this->prepareImageForDeletion($oldPost);
+
         $dataToUpload = UpdateHomepagePostDto::fromArray([
             'id' => $data->id,
             'title' => $data->title,
@@ -68,7 +73,40 @@ class HomepageService extends AbstractDashboardService implements HomepageManage
             'payload' => $this->preparePayloadForPersistence($data)
         ]);
 
-        $this->edit(self::TABLE, $dataToUpload);
+        if(!is_array($data->imageFile)){
+            $this->edit(self::TABLE, $dataToUpload);
+
+            if($data->type === HomepagePostTypes::IMAGE_TEXT_LIST) {
+                return ;
+            }
+        }else {
+            try {
+                $this->edit(self::TABLE, $dataToUpload);
+            } catch (ServiceException $e) {
+                try {
+                    $newImageName = $this->prepareImageForDeletion($dataToUpload);
+                    $this->processor->deleteImage($newImageName);
+                } catch (FileException $e) {
+                    throw new ServiceException('Nie udało się usunać nowego zdjęcia');
+                }
+
+                throw $e;
+            }
+        }
+
+        try {
+            if($oldImageName === null){
+                return;
+            }
+
+            $this->processor->deleteImage($oldImageName);
+        }catch (FileException $e){
+            throw new ServiceException(
+                'Zmiany zapisano, ale nie udało się usunąć starego zdjęcia.',
+                500,
+                $e,
+            );
+        }
     }
 
     /**
@@ -159,7 +197,7 @@ class HomepageService extends AbstractDashboardService implements HomepageManage
     /**
      * @throws ServiceException
      */
-    private function prepareImageForDeletion(HomepagePostDto $data): ?string {
+    private function prepareImageForDeletion(HomepagePostDto | UpdateHomepagePostDto $data): ?string {
         if($data->type !== HomepagePostTypes::IMAGE_TEXT_LIST || $data->payload === null) {
             return null;
         }
