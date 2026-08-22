@@ -3,6 +3,7 @@
 namespace App\Service\Dashboard;
 
 use App\DTO\Dashboard\CampDto;
+use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\CampRepository;
 use App\Service\Dashboard\Contracts\CampManagementServiceInterface;
@@ -27,10 +28,11 @@ class CampService extends AbstractDashboardService implements CampManagementServ
 
     /**
      * @throws ServiceException
+     * @throws NotFoundException
      */
     public function getCamp(): CampDto
     {
-        $camp = $this->getAll(self::TABLE)[0] ?? null;
+        $camp = $this->getRow(self::TABLE, 1);
 
         if (!$camp instanceof CampDto) {
             throw new ServiceException('Nie udało się pobrać danych obozu.');

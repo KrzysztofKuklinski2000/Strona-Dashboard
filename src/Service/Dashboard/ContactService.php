@@ -3,6 +3,7 @@
 namespace App\Service\Dashboard;
 
 use App\DTO\Dashboard\ContactDto;
+use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\ContactRepository;
 use App\Service\Dashboard\Contracts\ContactManagementServiceInterface;
@@ -27,10 +28,11 @@ class ContactService extends AbstractDashboardService implements ContactManageme
 
     /**
      * @throws ServiceException
+     * @throws NotFoundException
      */
     public function getContact(): ContactDto
     {
-        $contact = $this->getAll(self::TABLE)[0] ?? null;
+        $contact = $this->getRow(self::TABLE, 1);
 
         if (!$contact instanceof ContactDto) {
             throw new ServiceException('Nie udało się pobrać danych kontaktowych.');
