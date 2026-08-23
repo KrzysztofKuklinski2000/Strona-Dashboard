@@ -19,7 +19,7 @@ abstract class AbstractDashboardService
      * @throws ServiceException
      * @throws NotFoundException
      */
-    public function getRow(string $table, int $id): ?DataTransferObjectInterface
+    public function getRow(string $table, int $id): DataTransferObjectInterface
     {
         try {
             return $this->repository->getPost($table, $id);

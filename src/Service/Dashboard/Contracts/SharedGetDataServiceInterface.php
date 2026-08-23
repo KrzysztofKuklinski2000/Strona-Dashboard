@@ -8,5 +8,5 @@ use App\DTO\DataTransferObjectInterface;
  * Interfejs definiujący operacje wspólne dla wszystkich modułów.
  */
 interface SharedGetDataServiceInterface {
-  public function getPost(int $id): ?DataTransferObjectInterface;
+  public function getPost(int $id): DataTransferObjectInterface;
 }

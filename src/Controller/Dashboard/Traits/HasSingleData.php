@@ -16,7 +16,7 @@ trait HasSingleData
     /**
      * @throws NotFoundException
      */
-    protected function getSingleData(): ?DataTransferObjectInterface
+    protected function getSingleData(): DataTransferObjectInterface
     {
         $postId = $this->request->getRouteParam('id');
         if ($postId === null || !ctype_digit((string)$postId)) {
@@ -24,12 +24,7 @@ trait HasSingleData
         }
 
         $postId = (int)$postId;
-        $data = $this->service->getPost($postId);
 
-        if (!$data) {
-            throw new NotFoundException("Nie znaleziono rekordu o ID: $postId");
-        }
-
-        return $data;
+        return $this->service->getPost($postId);
     }
 }

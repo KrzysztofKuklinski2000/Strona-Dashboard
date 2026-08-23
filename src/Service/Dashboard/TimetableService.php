@@ -48,7 +48,7 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
      * @throws ServiceException
      * @throws NotFoundException
      */
-    public function getPost(int $id): ?DataTransferObjectInterface
+    public function getPost(int $id): DataTransferObjectInterface
     {
         return $this->getRow(self::TABLE, $id);
     }
