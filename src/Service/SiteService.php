@@ -25,7 +25,7 @@ readonly class SiteService implements ContactProviderInterface
     /**
      * @throws ServiceException
      */
-    public function getNews(int $page, int $perPage = null): array
+    public function getNews(int $page, ?int $perPage = null): array
     {
         try {
             $limit = $perPage ?? $this->itemsPerPage;

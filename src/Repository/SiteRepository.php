@@ -125,18 +125,6 @@ class SiteRepository extends AbstractRepository {
     /**
      * @throws RepositoryException
      */
-    public function countData(string $table): int {
-        try {
-            $stmt = $this->runQuery("SELECT COUNT(*) FROM $table");
-            return (int) $stmt->fetchColumn();
-        }catch(RepositoryException $e){
-            throw new RepositoryException("Nie udało się pobrać liczby rekordów", 500, $e);
-        }
-    }
-
-    /**
-     * @throws RepositoryException
-     */
     public function countPublishedNews(): int
     {
         try {
