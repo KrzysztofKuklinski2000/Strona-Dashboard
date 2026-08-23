@@ -80,33 +80,4 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
     {
         $this->delete(self::TABLE, $id);
     }
-
-    /**
-     * @throws ServiceException
-     * @throws RandomException
-     */
-    public function activateSubscriber(string $token): void
-    {
-        $subscriber = $this->repository->getSubscriberByToken(self::TABLE, $token);
-        $unsubscribeToken = $this->tokenGenerator->generate();
-
-        $updateDto = SubscribersDto::fromArray([
-            'id' => $subscriber->id,
-            'email' => $subscriber->email,
-            'is_active' => 1,
-            'token' => $unsubscribeToken
-        ]);
-
-        $this->edit(self::TABLE, $updateDto);
-    }
-
-    /**
-     * @throws ServiceException
-     */
-    public function unsubscribe(string $token): void
-    {
-        $subscriber = $this->repository->getSubscriberByToken(self::TABLE, $token);
-
-        $this->deleteSubscriber($subscriber->id);
-    }
 }
