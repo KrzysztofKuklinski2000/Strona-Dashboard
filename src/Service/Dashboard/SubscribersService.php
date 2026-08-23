@@ -32,7 +32,7 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
      */
     public function getAllSubscribers(): array
     {
-        return $this->getAll(self::TABLE);
+        return $this->getAll(self::TABLE, 'id');
     }
 
     /**
@@ -48,7 +48,7 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
      * @throws ServiceException
      * @throws RandomException
      */
-    public function createSubscriber(CreateSubscriberDto $data): string
+    public function createSubscriber(CreateSubscriberDto $data): void
     {
         if ($this->repository->emailExists($data->email)) {
             throw new ServiceException("Ten adres email jest już zapisany w bazie.", 409);
@@ -59,13 +59,11 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
         $saveDto = SubscribersDto::fromArray([
             'id' => 0,
             'email' => $data->email,
-            'is_active' => 0,
+            'is_active' => 1,
             'token' => $token,
         ]);
 
         $this->create(self::TABLE, $saveDto);
-
-        return $token;
     }
 
     /**
