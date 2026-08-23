@@ -16,16 +16,12 @@ abstract class BaseDashboardRepository extends AbstractRepository {
      * @return DataTransferObjectInterface[]
      * @throws RepositoryException
      */
-    public function getDashboardData(string $table): array
+    public function getDashboardData(string $table, string $orderBy = 'position'): array
     {
         try {
-            $sql = "SELECT * FROM $table";
-
-            if ($table !== 'subscribers') {
-                $sql .= " ORDER BY position ASC";
-            }
-
+            $sql = "SELECT * FROM $table ORDER BY $orderBy ASC";
             $result = $this->runQuery($sql)->fetchAll(PDO::FETCH_ASSOC);
+
             return array_map(fn(array $row) => $this->mapToDto($row), $result);
         }catch(RepositoryException $e) {
             throw new RepositoryException("Nie udało się pobrać danych", 500, $e);

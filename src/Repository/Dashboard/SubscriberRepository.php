@@ -3,7 +3,6 @@
 namespace App\Repository\Dashboard;
 
 use App\DTO\Dashboard\SubscribersDto;
-use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Exception\RepositoryException;
 use App\Repository\Dashboard\Traits\StandardCrud;
@@ -13,7 +12,7 @@ class SubscriberRepository extends BaseDashboardRepository
 {
     use StandardCrud;
 
-    protected function mapToDto(array $data): DataTransferObjectInterface
+    protected function mapToDto(array $data): SubscribersDto
     {
         return SubscribersDto::fromArray($data);
     }
@@ -47,12 +46,12 @@ class SubscriberRepository extends BaseDashboardRepository
      * @throws NotFoundException
      * @throws RepositoryException
      */
-    public function getSubscriberByToken(string $table, string $token): DataTransferObjectInterface {
+    public function getSubscriberByToken(string $token): SubscribersDto {
         try {
-            $result = $this->runQuery("SELECT * FROM $table WHERE token = :token", [':token' => $token])
+            $result = $this->runQuery("SELECT * FROM subscribers WHERE token = :token", [':token' => $token])
                 ->fetch(PDO::FETCH_ASSOC);
         } catch (RepositoryException $e) {
-            throw new RepositoryException('Nie udało się pobrać posta', 500, $e);
+            throw new RepositoryException('Nie udało się pobrać subskrybenta', 500, $e);
         }
 
         if(!$result) {

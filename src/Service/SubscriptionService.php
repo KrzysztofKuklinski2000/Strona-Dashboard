@@ -29,8 +29,7 @@ class SubscriptionService implements SubscriptionServiceInterface
     public function confirm(string $token): void
     {
         try {
-            /** @var SubscribersDto $subscriber */
-            $subscriber = $this->subscriberRepository->getSubscriberByToken(self::TABLE, $token);
+            $subscriber = $this->subscriberRepository->getSubscriberByToken($token);
 
             $unsubscribeToken = $this->tokenGenerator->generate();
 
@@ -58,8 +57,7 @@ class SubscriptionService implements SubscriptionServiceInterface
     public function unsubscribe(string $token): void
     {
         try {
-            /** @var SubscribersDto $subscriber */
-            $subscriber = $this->subscriberRepository->getSubscriberByToken(self::TABLE, $token);
+            $subscriber = $this->subscriberRepository->getSubscriberByToken($token);
 
             $this->subscriberRepository->delete(self::TABLE, $subscriber->id);
         } catch (RepositoryException $e) {

@@ -32,10 +32,10 @@ abstract class AbstractDashboardService
      * @return DataTransferObjectInterface[]
      * @throws ServiceException
      */
-    protected function getAll(string $table): array
+    protected function getAll(string $table, string $orderBy = 'position'): array
     {
         try {
-            return $this->repository->getDashboardData($table);
+            return $this->repository->getDashboardData($table, $orderBy);
         } catch (RepositoryException $e) {
             throw new ServiceException("Nie udało się pobrać postów", 500, $e);
         }
