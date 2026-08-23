@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DTO\Dashboard;
 
 use App\DTO\DataTransferObjectInterface;
@@ -13,8 +15,7 @@ readonly class UpdateHomepagePostDto implements DataTransferObjectInterface
         public string $type,
         public ?string $payload,
         public ?array $imageFile,
-    )
-    {
+    ) {
     }
 
     public static function fromArray(array $data): self
@@ -29,7 +30,8 @@ readonly class UpdateHomepagePostDto implements DataTransferObjectInterface
         );
     }
 
-    public function toArray(): array {
+    public function toArray(): array
+    {
         return [
             'id' => $this->id,
             'title' => $this->title,

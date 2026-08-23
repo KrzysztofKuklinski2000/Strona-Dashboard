@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Dashboard;
 
 use App\DTO\Dashboard\CreateSubscriberDto;
@@ -22,8 +24,8 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
 
     public function __construct(
         SubscriberRepository $repository,
-        private readonly TokenGeneratorInterface $tokenGenerator)
-    {
+        private readonly TokenGeneratorInterface $tokenGenerator
+    ) {
         parent::__construct($repository);
     }
 

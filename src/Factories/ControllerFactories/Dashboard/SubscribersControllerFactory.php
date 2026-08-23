@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Factories\ControllerFactories\Dashboard;
 
-
 use App\Controller\AbstractController;
 use App\Controller\Dashboard\SubscribersController;
 use App\Core\ContextController;

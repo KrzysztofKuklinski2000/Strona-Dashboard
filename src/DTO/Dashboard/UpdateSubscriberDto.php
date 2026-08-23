@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\DTO\Dashboard;
@@ -11,7 +12,8 @@ readonly class UpdateSubscriberDto implements DataTransferObjectInterface
         public int $id,
         public string $email,
         public int $isActive
-    ) {}
+    ) {
+    }
 
     public static function fromArray(array $data): self
     {

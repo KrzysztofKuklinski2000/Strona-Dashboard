@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Mapper\Dashboard\Homepage;
@@ -14,8 +15,7 @@ final readonly class HomepagePostPayloadNormalizer
     public function __construct(
         private Validator $validator,
         private array     $normalizers
-    )
-    {
+    ) {
     }
 
     public function normalize(string $type, array $rawPayload): ?string

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Dashboard;
 
 use App\Controller\Dashboard\Traits\HasDeleteAction;
@@ -18,14 +20,17 @@ use App\Service\Dashboard\Contracts\TimetableManagementServiceInterface;
 
 class TimetableController extends AbstractDashboardController
 {
-    use HasStoreAction, HasPublishedAction, HasUpdateAction, HasDeleteAction, HasSingleData;
+    use HasStoreAction;
+    use HasPublishedAction;
+    use HasUpdateAction;
+    use HasDeleteAction;
+    use HasSingleData;
 
     public function __construct(
         private readonly TimetableManagementServiceInterface $service,
         private readonly TimetableRequestMapper              $timetableRequestMapper,
         ContextController                                    $contextController
-    )
-    {
+    ) {
         parent::__construct($contextController);
     }
 

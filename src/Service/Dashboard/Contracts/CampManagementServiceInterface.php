@@ -15,12 +15,12 @@ interface CampManagementServiceInterface
      * Pobiera wszystkie wpisy Obozu.
      * @return CampDto
      */
-  public function getCamp(): CampDto;
+    public function getCamp(): CampDto;
 
     /**
      * Aktualizuje istniejący wpis Obozu.
      * @param CampDto $campDto
      * @return void
      */
-  public function updateCamp(CampDto $campDto): void;
+    public function updateCamp(CampDto $campDto): void;
 }

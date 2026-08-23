@@ -19,8 +19,7 @@ readonly class ImportantPostsRequestMapper
         private ChangePositionRequestMapper $changePositionRequestMapper,
         private PublicationRequestMapper    $publicationRequestMapper,
         private DeleteRequestMapper         $deleteRequestMapper,
-    )
-    {
+    ) {
     }
 
     public function mapCreate(): CreateImportantPostDto
@@ -89,7 +88,8 @@ readonly class ImportantPostsRequestMapper
         return $this->changePositionRequestMapper->map();
     }
 
-    public function mapDelete(): ?int {
+    public function mapDelete(): ?int
+    {
         return $this->deleteRequestMapper->map();
     }
 }

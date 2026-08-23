@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Dashboard;
 
 use App\Content\HomepagePostTypes;
@@ -25,7 +27,9 @@ use JsonException;
  */
 class HomepageService extends AbstractDashboardService implements HomepageManagementServiceInterface
 {
-    use CanPublished, CanEdit, PositionableTrait;
+    use CanPublished;
+    use CanEdit;
+    use PositionableTrait;
 
     private const TABLE = 'homepage_posts';
     private const NEW_POST_POSITION = 2;
@@ -33,8 +37,7 @@ class HomepageService extends AbstractDashboardService implements HomepageManage
     public function __construct(
         HomepageRepository                           $repository,
         private readonly ImageTextListImageProcessor $processor,
-    )
-    {
+    ) {
         parent::__construct($repository);
     }
 
@@ -151,10 +154,10 @@ class HomepageService extends AbstractDashboardService implements HomepageManage
         } catch (ServiceException $e) {
             try {
                 $imageName = $this->prepareImageForDeletion($dataToUpload);
-                if($imageName !== null) {
+                if ($imageName !== null) {
                     $this->processor->deleteImage($imageName);
                 }
-            }catch (FileException $cleanupException) {
+            } catch (FileException $cleanupException) {
                 throw new ServiceException(
                     'Nie udało się zapisać posta ani usunąć przesłanego obrazu.',
                     500,
@@ -233,8 +236,7 @@ class HomepageService extends AbstractDashboardService implements HomepageManage
      */
     private function prepareImageForDeletion(
         HomepagePostDto|UpdateHomepagePostDto|CreateHomepagePostDto $data
-    ): ?string
-    {
+    ): ?string {
         if ($data->type !== HomepagePostTypes::IMAGE_TEXT_LIST || $data->payload === null) {
             return null;
         }

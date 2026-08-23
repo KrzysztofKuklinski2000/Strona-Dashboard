@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Core;
 
 use App\Core\Request;
@@ -7,6 +9,7 @@ use App\Exception\MethodNotAllowedException;
 use App\Exception\NotFoundException;
 use Exception;
 use FastRoute\Dispatcher;
+
 use function FastRoute\simpleDispatcher;
 
 class Router

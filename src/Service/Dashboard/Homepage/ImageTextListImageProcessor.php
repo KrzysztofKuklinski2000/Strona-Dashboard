@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Service\Dashboard\Homepage;
@@ -12,8 +13,7 @@ final readonly class ImageTextListImageProcessor
     public function __construct(
         private FileHandler $fileHandler,
         private string      $uploadUrl,
-    )
-    {
+    ) {
     }
 
     /**

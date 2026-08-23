@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -12,12 +13,10 @@ use App\Exception\ServiceException;
 
 class AuthController extends AbstractController
 {
-
     public function __construct(
         private readonly Authenticator $authenticator,
         ContextController              $contextController,
-    )
-    {
+    ) {
         parent::__construct($contextController);
     }
 

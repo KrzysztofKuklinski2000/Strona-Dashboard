@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Mapper\Dashboard;
@@ -12,8 +13,7 @@ readonly class ChangePositionRequestMapper
     public function __construct(
         private Request $request,
         private Validator $validator
-    )
-    {
+    ) {
     }
 
     public function map(): ChangePositionDto

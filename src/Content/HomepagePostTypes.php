@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Content;
 
 final class HomepagePostTypes
@@ -24,25 +26,29 @@ final class HomepagePostTypes
             'partial' => 'image_text_list.php',
         ],
         self::TRIAL_BANNER => [
-            'label' =>'Baner pierwszego treningu',
+            'label' => 'Baner pierwszego treningu',
             'partial' => 'trial_banner.php',
         ]
     ];
 
 
-    public static function all(): array {
+    public static function all(): array
+    {
         return self::TYPES;
     }
 
-    public static function get(string $type): ?array {
+    public static function get(string $type): ?array
+    {
         return self::TYPES[$type] ?? null;
     }
 
-    public static function isAllowed(string $key): bool {
+    public static function isAllowed(string $key): bool
+    {
         return array_key_exists($key, self::TYPES);
     }
 
-    public static function partial(string $type): ?string {
+    public static function partial(string $type): ?string
+    {
         return self::TYPES[$type]['partial'] ?? null;
     }
 }

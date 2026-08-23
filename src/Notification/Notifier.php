@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notification;
 
 use App\Exception\RepositoryException;
@@ -13,8 +15,7 @@ readonly class Notifier
         private SubscriberRepository $subscriberRepository,
         private string               $appUrl,
         private string               $templatePath,
-    )
-    {
+    ) {
     }
 
     /**

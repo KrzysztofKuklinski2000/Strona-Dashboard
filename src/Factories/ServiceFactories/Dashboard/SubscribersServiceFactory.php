@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Factories\ServiceFactories\Dashboard;
 
 use App\Factories\ServiceFactories\ServiceFactoryInterface;
@@ -10,13 +12,15 @@ use PDO;
 
 class SubscribersServiceFactory implements ServiceFactoryInterface
 {
-  public function __construct(private PDO $pdo) {}
+    public function __construct(private PDO $pdo)
+    {
+    }
 
-  public function createService(): SubscribersService
-  {
-    $repository = new SubscriberRepository($this->pdo);
-    $tokenGenerator = new TokenGenerator();
+    public function createService(): SubscribersService
+    {
+        $repository = new SubscriberRepository($this->pdo);
+        $tokenGenerator = new TokenGenerator();
 
-    return new SubscribersService($repository, $tokenGenerator);
-  }
+        return new SubscribersService($repository, $tokenGenerator);
+    }
 }

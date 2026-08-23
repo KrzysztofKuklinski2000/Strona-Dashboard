@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DTO\Dashboard;
 
 use App\DTO\DataTransferObjectInterface;
 
 readonly class GalleryDto implements DataTransferObjectInterface
 {
-
     public function __construct(
         public int $id,
         public string $imageName,
@@ -16,8 +17,7 @@ readonly class GalleryDto implements DataTransferObjectInterface
         public int $position,
         public ?string $category,
         public int $status,
-    )
-    {
+    ) {
     }
 
     public static function fromArray(array $data): self

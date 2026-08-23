@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Dashboard;
 
 use App\Controller\AbstractController;
@@ -7,11 +9,9 @@ use App\Core\ContextController;
 
 abstract class AbstractDashboardController extends AbstractController
 {
-
     public function __construct(
         ContextController $contextController,
-    )
-    {
+    ) {
         parent::__construct($contextController);
     }
 

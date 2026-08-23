@@ -1,5 +1,7 @@
 <?php
-declare(strict_types= 1);
+
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\DTO\Dashboard\CampDto;
@@ -12,8 +14,8 @@ use App\DTO\Dashboard\NewsDto;
 use App\Exception\RepositoryException;
 use PDO;
 
-class SiteRepository extends AbstractRepository {
-
+class SiteRepository extends AbstractRepository
+{
     private function fetchCollection(string $table): array
     {
         try {
@@ -49,7 +51,7 @@ class SiteRepository extends AbstractRepository {
      */
     public function getHomepagePosts(): array
     {
-        return array_map(fn(array $row) => HomepagePostDto::fromArray($row), $this->fetchCollection('homepage_posts'));
+        return array_map(fn (array $row) => HomepagePostDto::fromArray($row), $this->fetchCollection('homepage_posts'));
     }
 
     /**
@@ -57,7 +59,7 @@ class SiteRepository extends AbstractRepository {
      */
     public function getImportantPosts(): array
     {
-        return array_map(fn(array $row) => ImportantPostsDto::fromArray($row), $this->fetchCollection('important_posts'));
+        return array_map(fn (array $row) => ImportantPostsDto::fromArray($row), $this->fetchCollection('important_posts'));
     }
 
     /**
@@ -84,7 +86,8 @@ class SiteRepository extends AbstractRepository {
         return FeesDto::fromArray($this->fetchSingleRecord('fees'));
     }
 
-    public function getNews(int $limit, int $offset): array {
+    public function getNews(int $limit, int $offset): array
+    {
         try {
             $sql = "SELECT * FROM news WHERE status = 1 ORDER BY position ASC LIMIT :limit OFFSET :offset";
 
@@ -93,8 +96,8 @@ class SiteRepository extends AbstractRepository {
                 ':offset' => [$offset, PDO::PARAM_INT]
             ])->fetchAll(PDO::FETCH_ASSOC);
 
-            return array_map(fn(array $row) => NewsDto::fromArray($row), $result);
-        } catch(RepositoryException $e){
+            return array_map(fn (array $row) => NewsDto::fromArray($row), $result);
+        } catch (RepositoryException $e) {
             throw new RepositoryException('Nie udało się pobrać aktualności', 500, $e);
         }
     }
@@ -102,12 +105,13 @@ class SiteRepository extends AbstractRepository {
     /**
      * @throws RepositoryException
      */
-    public function getGallery(?string $category = null): array {
+    public function getGallery(?string $category = null): array
+    {
         try {
             $sql = "SELECT * FROM gallery WHERE status = 1";
             $params = [];
 
-            if($category && in_array($category, ["training","camp"])) {
+            if ($category && in_array($category, ["training","camp"])) {
                 $sql .= " AND category = :category";
                 $params[':category'] = $category;
             }
@@ -116,8 +120,8 @@ class SiteRepository extends AbstractRepository {
 
             $result = $this->runQuery($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
 
-            return array_map(fn(array $row) => GalleryDto::fromArray($row), $result);
-        } catch(RepositoryException $e){
+            return array_map(fn (array $row) => GalleryDto::fromArray($row), $result);
+        } catch (RepositoryException $e) {
             throw new RepositoryException('Nie udało się pobrać galeri', 500, $e);
         }
     }

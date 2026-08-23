@@ -13,8 +13,7 @@ readonly class PublicationRequestMapper
     public function __construct(
         private Request $request,
         private Validator $validator,
-    )
-    {
+    ) {
     }
 
     public function map(): PublishedDto

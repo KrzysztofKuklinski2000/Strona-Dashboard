@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Controller\Dashboard\Traits;
+declare(strict_types=1);
 
+namespace App\Controller\Dashboard\Traits;
 
 use App\Core\Request;
 use App\DTO\Dashboard\ChangePositionDto;

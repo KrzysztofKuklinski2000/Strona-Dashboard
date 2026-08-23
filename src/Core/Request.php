@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Core;
@@ -12,8 +13,7 @@ class Request
         private readonly array $post,
         private readonly array $server,
         private readonly array $files = [],
-    )
-    {
+    ) {
     }
 
     public function getQueryParam(string $name, $default = null): mixed

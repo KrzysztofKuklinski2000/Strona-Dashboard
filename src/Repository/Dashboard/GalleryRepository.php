@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository\Dashboard;
 
 use App\DTO\Dashboard\GalleryDto;
@@ -12,7 +14,11 @@ use App\Repository\Dashboard\Traits\Positionable;
 
 class GalleryRepository extends BaseDashboardRepository
 {
-    use Positionable, CanPublished, CanEdit, CanDelete, CanCreate;
+    use Positionable;
+    use CanPublished;
+    use CanEdit;
+    use CanDelete;
+    use CanCreate;
 
     protected function mapToDto(array $data): DataTransferObjectInterface
     {

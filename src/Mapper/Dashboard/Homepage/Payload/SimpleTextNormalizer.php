@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Mapper\Dashboard\Homepage\Payload;
@@ -8,7 +9,6 @@ use App\Mapper\Dashboard\Payload\PayloadNormalizerInterface;
 
 final readonly class SimpleTextNormalizer implements PayloadNormalizerInterface
 {
-
     public function __construct(private Validator $validator)
     {
     }

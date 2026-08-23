@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DTO\Dashboard;
 
 use App\DTO\DataTransferObjectInterface;
@@ -13,11 +15,12 @@ readonly class ImportantPostsDto implements DataTransferObjectInterface
         public string $created,
         public string $updated,
         public int    $status,
-        public int    $position)
-    {
+        public int    $position
+    ) {
     }
 
-    public static function fromArray(array $data): self {
+    public static function fromArray(array $data): self
+    {
         return new self(
             id: (int) $data['id'],
             title: (string) $data['title'],
@@ -29,7 +32,8 @@ readonly class ImportantPostsDto implements DataTransferObjectInterface
         );
     }
 
-    public function toArray(): array {
+    public function toArray(): array
+    {
         return [
             'id' => $this->id,
             'title' => $this->title,

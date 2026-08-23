@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository\Dashboard;
 
 use App\DTO\Dashboard\TimetableDto;
@@ -9,9 +11,10 @@ use App\Repository\Dashboard\Traits\CanPublished;
 use App\Repository\Dashboard\Traits\StandardCrud;
 use PDO;
 
-class TimetableRepository extends BaseDashboardRepository {
-
-    use StandardCrud, CanPublished;
+class TimetableRepository extends BaseDashboardRepository
+{
+    use StandardCrud;
+    use CanPublished;
 
     protected function mapToDto(array $data): DataTransferObjectInterface
     {
@@ -39,7 +42,7 @@ class TimetableRepository extends BaseDashboardRepository {
 
             $result = $this->runQuery($sql)->fetchAll(PDO::FETCH_ASSOC);
 
-            return array_map(fn(array $row) => $this->mapToDto($row), $result);
+            return array_map(fn (array $row) => $this->mapToDto($row), $result);
         } catch (RepositoryException $e) {
             throw new RepositoryException('Nie udało się pobrać danych grafiku.', 500, $e);
         }

@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository\Dashboard\Traits;
 
 trait StandardCrud
 {
-    use CanCreate, CanEdit, CanDelete;
+    use CanCreate;
+    use CanEdit;
+    use CanDelete;
 }

@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DTO\Dashboard;
 
 use App\DTO\DataTransferObjectInterface;
 
 readonly class CreateHomepagePostDto implements DataTransferObjectInterface
 {
-
     public function __construct(
         public string $title,
         public string $created,
@@ -16,8 +17,7 @@ readonly class CreateHomepagePostDto implements DataTransferObjectInterface
         public string $type,
         public ?string $payload,
         public ?array $imageFile,
-    )
-    {
+    ) {
     }
 
     public static function fromArray(array $data): self
@@ -34,7 +34,8 @@ readonly class CreateHomepagePostDto implements DataTransferObjectInterface
         );
     }
 
-    public function toArray(): array {
+    public function toArray(): array
+    {
         return [
             'title' => $this->title,
             'created' => $this->created,

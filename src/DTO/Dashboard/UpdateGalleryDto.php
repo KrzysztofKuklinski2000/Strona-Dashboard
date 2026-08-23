@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\DTO\Dashboard;
@@ -13,7 +14,8 @@ readonly class UpdateGalleryDto implements DataTransferObjectInterface
         public string $description,
         public array|string|null $imageName,
         public string $updatedAt
-    ) {}
+    ) {
+    }
 
     public static function fromArray(array $data): self
     {

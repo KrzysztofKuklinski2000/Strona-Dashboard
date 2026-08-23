@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\View;
@@ -11,8 +12,7 @@ readonly class PublicPageRenderer
     public function __construct(
         private ContextController        $context,
         private ContactProviderInterface $contactProvider,
-    )
-    {
+    ) {
     }
 
     public function render(array $pageSpecificParams): void

@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Factories\ControllerFactories;
+declare(strict_types=1);
 
+namespace App\Factories\ControllerFactories;
 
 use App\Core\ContextController;
 use App\Controller\AbstractController;
 
-interface ControllerFactoryInterface {
+interface ControllerFactoryInterface
+{
     public function createController(ContextController $contextController): AbstractController;
 }

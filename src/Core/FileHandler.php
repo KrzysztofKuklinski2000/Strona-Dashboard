@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Core;
@@ -78,7 +79,7 @@ readonly class FileHandler
             return;
         }
 
-        if(!unlink($imagePath)) {
+        if (!unlink($imagePath)) {
             throw new FileException('Nie udało się usunąć zdjęcia.');
         }
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository\Dashboard\Traits;
 
 use App\DTO\DataTransferObjectInterface;
@@ -19,14 +21,14 @@ trait CanEdit
         try {
             $payload = $data->toArray();
 
-            if(!array_key_exists('id', $payload)) {
+            if (!array_key_exists('id', $payload)) {
                 throw new RepositoryException('Brak identyfikatora edytowanego rekordu.');
             }
 
             $updateFields = $payload;
             unset($updateFields['id']);
 
-            $setClause = implode(", ", array_map(fn($key) => "$key = :$key", array_keys($updateFields)));
+            $setClause = implode(", ", array_map(fn ($key) => "$key = :$key", array_keys($updateFields)));
             $sql = "UPDATE $table SET $setClause WHERE id = :id";
 
             $bindings = [];

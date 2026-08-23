@@ -1,22 +1,24 @@
-<?php 
+<?php
+
+declare(strict_types=1);
 
 namespace App\Traits;
 
 use App\Notification\Observer\TimetableObserverInterface;
 
+trait Observable
+{
+    private array $observers = [];
 
-trait Observable {
-  private array $observers = [];
-
-  public function attach(TimetableObserverInterface $observer): void
-  {
-    $this->observers[] = $observer;
-  }
-
-  private function notify(string $customMessage): void
-  {
-    foreach ($this->observers as $observer) {
-      $observer->update($customMessage);
+    public function attach(TimetableObserverInterface $observer): void
+    {
+        $this->observers[] = $observer;
     }
-  }
+
+    private function notify(string $customMessage): void
+    {
+        foreach ($this->observers as $observer) {
+            $observer->update($customMessage);
+        }
+    }
 }

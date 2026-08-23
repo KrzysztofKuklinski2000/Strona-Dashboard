@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Mapper\Dashboard;
 
 use App\Core\Request;
@@ -15,8 +17,7 @@ readonly class TimetableRequestMapper
         private Validator                $validator,
         private PublicationRequestMapper $publicationRequestMapper,
         private DeleteRequestMapper      $deleteRequestMapper,
-    )
-    {
+    ) {
     }
 
     public function mapCreate(): CreateTimetableDto

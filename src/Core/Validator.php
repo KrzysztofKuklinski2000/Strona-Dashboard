@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Core;
 
 class Validator
 {
     private array $errors = [];
 
-    public function getErrors(): array {
+    public function getErrors(): array
+    {
         return $this->errors;
     }
 

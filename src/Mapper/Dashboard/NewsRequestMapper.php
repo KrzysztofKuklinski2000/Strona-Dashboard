@@ -19,8 +19,7 @@ readonly class NewsRequestMapper
         private ChangePositionRequestMapper $changePositionRequestMapper,
         private PublicationRequestMapper    $publicationRequestMapper,
         private DeleteRequestMapper         $deleteRequestMapper,
-    )
-    {
+    ) {
     }
 
     public function mapCreate(): CreateNewsDto

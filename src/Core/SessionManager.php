@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Core;
 
 class SessionManager
@@ -11,15 +13,18 @@ class SessionManager
         }
     }
 
-    public function get(string $key, mixed $default = null): mixed {
+    public function get(string $key, mixed $default = null): mixed
+    {
         return $_SESSION[$key] ?? $default;
     }
 
-    public function set(string $key, mixed $value): void {
+    public function set(string $key, mixed $value): void
+    {
         $_SESSION[$key] = $value;
     }
 
-    public function remove(string $key): void {
+    public function remove(string $key): void
+    {
         unset($_SESSION[$key]);
     }
 
@@ -66,10 +71,10 @@ class SessionManager
         string|array $message,
         string $prefix = 'dashboard',
         array $context = []
-    ): void
-    {
+    ): void {
         $this->set(
-            "flash_$prefix", [
+            "flash_$prefix",
+            [
                 "type" => $type,
                 "message" => $message,
                 'context' => $context

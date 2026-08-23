@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository\Dashboard;
 
 use App\DTO\Dashboard\SubscribersDto;
@@ -26,7 +28,7 @@ class SubscriberRepository extends BaseDashboardRepository
         try {
             $stmt = $this->runQuery("SELECT * FROM subscribers WHERE is_active = 1");
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
-            return array_map(fn(array $row) => $this->mapToDto($row), $result);
+            return array_map(fn (array $row) => $this->mapToDto($row), $result);
         } catch (RepositoryException $e) {
             throw new RepositoryException("Nie udało się pobrać subskrybentów", 500, $e);
         }

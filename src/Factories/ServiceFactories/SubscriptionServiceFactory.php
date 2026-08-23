@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Factories\ServiceFactories;
 
 use App\Core\Config;
@@ -14,8 +16,7 @@ readonly class SubscriptionServiceFactory implements ServiceFactoryInterface
     public function __construct(
         private PDO    $pdo,
         private Config $config
-    )
-    {
+    ) {
     }
 
     public function createService(): SubscriptionService

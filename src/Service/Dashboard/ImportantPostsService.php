@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Dashboard;
 
 use App\DTO\Dashboard\ChangePositionDto;
@@ -16,7 +18,9 @@ use App\Service\Dashboard\Traits\PositionableTrait;
 
 class ImportantPostsService extends AbstractDashboardService implements ImportantPostsManagementServiceInterface
 {
-    use PositionableTrait, CanPublished, CanEdit;
+    use PositionableTrait;
+    use CanPublished;
+    use CanEdit;
 
     private const TABLE = 'important_posts';
 

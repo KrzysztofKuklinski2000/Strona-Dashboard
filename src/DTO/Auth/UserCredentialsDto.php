@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\DTO\Auth;
@@ -11,7 +12,8 @@ readonly class UserCredentialsDto implements DataTransferObjectInterface
         public int $id,
         public string $login,
         public string $passwordHash
-    ) {}
+    ) {
+    }
 
     public static function fromArray(array $data): self
     {

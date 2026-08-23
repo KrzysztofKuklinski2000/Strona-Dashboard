@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Dashboard;
 
 use App\DTO\Dashboard\CreateTimetableDto;
@@ -27,8 +29,7 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
     public function __construct(
         TimetableRepository    $repository,
         private readonly array $notifications,
-    )
-    {
+    ) {
         parent::__construct($repository);
     }
 
@@ -61,7 +62,7 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
         $this->handleActionWithNotification(
             $data,
             $this->notifications['timetable_updated'],
-            fn(DataTransferObjectInterface $dto) => $this->edit(self::TABLE, $dto)
+            fn (DataTransferObjectInterface $dto) => $this->edit(self::TABLE, $dto)
         );
     }
 
@@ -73,7 +74,7 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
         $this->handleActionWithNotification(
             $data,
             $this->notifications['timetable_created'],
-            fn(DataTransferObjectInterface $dto) => $this->create(self::TABLE, $dto)
+            fn (DataTransferObjectInterface $dto) => $this->create(self::TABLE, $dto)
         );
     }
 
@@ -85,7 +86,7 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
         $this->handleActionWithNotification(
             $data,
             $this->notifications['timetable_published'],
-            fn(DataTransferObjectInterface $dto) => $this->published(self::TABLE, $dto)
+            fn (DataTransferObjectInterface $dto) => $this->published(self::TABLE, $dto)
         );
     }
 
@@ -102,8 +103,7 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
         CreateTimetableDto|UpdateTimetableDto|PublishedDto $data,
         string                                             $message,
         callable                                           $action
-    ): void
-    {
+    ): void {
         $shouldNotify = (bool) ($data->isNotify ?? false);
 
         $action($data);

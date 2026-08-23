@@ -1,14 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notification\Observer;
 
 use App\Notification\Notifier;
 
-class EmailNotificationObserver implements TimetableObserverInterface {
+class EmailNotificationObserver implements TimetableObserverInterface
+{
+    public function __construct(private Notifier $notification)
+    {
+    }
 
-  public function __construct(private Notifier $notification){}
-
-  public function update(string $customMessage = ''): void {
-    $this->notification->notifyAboutTimetableUpdate($customMessage);
-  }
+    public function update(string $customMessage = ''): void
+    {
+        $this->notification->notifyAboutTimetableUpdate($customMessage);
+    }
 }

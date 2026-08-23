@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use App\DTO\Dashboard\CreateSubscriberDto;
@@ -22,8 +24,7 @@ class SubscriptionService implements SubscriptionServiceInterface
         private readonly SubscriberRepository    $subscriberRepository,
         private readonly TokenGeneratorInterface $tokenGenerator,
         private readonly Notifier                $notifier,
-    )
-    {
+    ) {
     }
 
     /**

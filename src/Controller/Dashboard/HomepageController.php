@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Dashboard;
 
 use App\Content\HomepagePostTypes;
@@ -21,14 +23,18 @@ use App\Service\Dashboard\Contracts\HomepageManagementServiceInterface;
 
 class HomepageController extends AbstractDashboardController
 {
-    use HasStoreAction, HasDeleteAction, HasUpdateAction, HasPublishedAction, HasMoveAction, HasSingleData;
+    use HasStoreAction;
+    use HasDeleteAction;
+    use HasUpdateAction;
+    use HasPublishedAction;
+    use HasMoveAction;
+    use HasSingleData;
 
     public function __construct(
         public HomepageManagementServiceInterface  $service,
         private readonly HomepagePostRequestMapper $requestMapper,
         ContextController                          $contextController,
-    )
-    {
+    ) {
         parent::__construct($contextController);
     }
 

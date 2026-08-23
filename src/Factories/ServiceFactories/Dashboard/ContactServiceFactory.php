@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Factories\ServiceFactories\Dashboard;
 
 use App\Factories\ServiceFactories\ServiceFactoryInterface;
@@ -9,12 +11,14 @@ use PDO;
 
 class ContactServiceFactory implements ServiceFactoryInterface
 {
-  public function __construct(private PDO $pdo) {}
+    public function __construct(private PDO $pdo)
+    {
+    }
 
-  public function createService(): ContactService
-  {
-    $repository = new ContactRepository($this->pdo);
+    public function createService(): ContactService
+    {
+        $repository = new ContactRepository($this->pdo);
 
-    return new ContactService($repository);
-  }
+        return new ContactService($repository);
+    }
 }
