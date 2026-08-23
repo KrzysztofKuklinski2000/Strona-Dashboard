@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Factories\ControllerFactories;
 
 use App\Controller\PublicSubscribersController;
@@ -9,7 +11,6 @@ use PDO;
 
 readonly class PublicSubscribersControllerFactory implements ControllerFactoryInterface
 {
-
     public function __construct(private PDO $pdo)
     {
     }

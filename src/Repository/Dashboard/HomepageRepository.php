@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository\Dashboard;
 
 use App\DTO\Dashboard\HomepagePostDto;
@@ -10,7 +12,9 @@ use App\Repository\Dashboard\Traits\StandardCrud;
 
 class HomepageRepository extends BaseDashboardRepository
 {
-    use Positionable, StandardCrud, CanPublished;
+    use Positionable;
+    use StandardCrud;
+    use CanPublished;
 
     protected function mapToDto(array $data): DataTransferObjectInterface
     {

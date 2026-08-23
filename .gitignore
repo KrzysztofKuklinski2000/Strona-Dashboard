@@ -4,6 +4,7 @@
 /public/images/karate/
 /coverage-report/
 /.phpunit.cache/
+.php-cs-fixer.cache
 .vscode/
 .idea/
 .DS_Store

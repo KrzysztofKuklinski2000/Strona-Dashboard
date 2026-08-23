@@ -1,7 +1,11 @@
-<?php 
-declare(strict_types= 1);
-namespace  App\Exception;
+<?php
+
+declare(strict_types=1);
+
+namespace App\Exception;
 
 use App\Exception\AppException;
 
-class FileException extends AppException {}
+class FileException extends AppException
+{
+}

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Factories\ServiceFactories\Dashboard;
 
 use App\Factories\ServiceFactories\ServiceFactoryInterface;
@@ -9,12 +11,14 @@ use PDO;
 
 class NewsServiceFactory implements ServiceFactoryInterface
 {
-  public function __construct(private PDO $pdo) {}
+    public function __construct(private PDO $pdo)
+    {
+    }
 
-  public function createService(): NewsService
-  {
-    $repository = new NewsRepository($this->pdo);
+    public function createService(): NewsService
+    {
+        $repository = new NewsRepository($this->pdo);
 
-    return new NewsService($repository);
-  }
+        return new NewsService($repository);
+    }
 }

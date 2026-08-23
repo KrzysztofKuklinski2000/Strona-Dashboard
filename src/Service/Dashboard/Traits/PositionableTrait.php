@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Dashboard\Traits;
 
 use App\DTO\Dashboard\ChangePositionDto;
@@ -11,7 +13,8 @@ trait PositionableTrait
     /**
      * @throws ServiceException
      */
-    protected function move(string $table, ChangePositionDto $data): void {
+    protected function move(string $table, ChangePositionDto $data): void
+    {
         $this->execute(function () use ($table, $data) {
             $current = $this->repository->getPost($table, $data->id);
 
@@ -42,7 +45,8 @@ trait PositionableTrait
     /**
      * @throws ServiceException
      */
-    protected function delete(string $table, int $id):void {
+    protected function delete(string $table, int $id): void
+    {
         $this->execute(function () use ($table, $id) {
             $currentPost = $this->repository->getPost($table, $id);
             $this->repository->delete($table, $id);

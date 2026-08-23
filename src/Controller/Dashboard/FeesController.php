@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Dashboard;
 
 use App\Controller\Dashboard\Traits\HasUpdateAction;
@@ -17,8 +19,7 @@ class FeesController extends AbstractDashboardController
         public FeesManagementServiceInterface $service,
         private readonly FeesRequestMapper    $feesRequestMapper,
         ContextController                     $contextController,
-    )
-    {
+    ) {
         parent::__construct($contextController);
     }
 

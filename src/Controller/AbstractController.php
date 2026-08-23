@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -21,8 +22,7 @@ class AbstractController
 
     public function __construct(
         protected ContextController $contextController,
-    )
-    {
+    ) {
         $this->request = $this->contextController->request;
         $this->view = $this->contextController->view;
         $this->csrfMiddleware = $this->contextController->csrfMiddleware;

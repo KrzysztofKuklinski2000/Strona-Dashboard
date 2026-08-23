@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DTO\Dashboard;
 
 use App\DTO\DataTransferObjectInterface;
@@ -11,8 +13,7 @@ readonly class ContactDto implements DataTransferObjectInterface
         public string $email,
         public string $phone,
         public string $address,
-    )
-    {
+    ) {
     }
 
     public static function fromArray(array $data): self

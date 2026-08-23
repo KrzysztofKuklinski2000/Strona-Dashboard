@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Factories\ServiceFactories\Dashboard;
 
 use App\Core\Config;
@@ -11,13 +13,15 @@ use PDO;
 
 readonly class GalleryServiceFactory implements ServiceFactoryInterface
 {
-  public function __construct(private PDO $pdo, private Config $config) {}
+    public function __construct(private PDO $pdo, private Config $config)
+    {
+    }
 
-  public function createService(): GalleryService
-  {
-    $fileHandler = new FileHandler($this->config->getUploadDir(), $this->config->getFilePrefix());
-    $repository = new GalleryRepository($this->pdo);
+    public function createService(): GalleryService
+    {
+        $fileHandler = new FileHandler($this->config->getUploadDir(), $this->config->getFilePrefix());
+        $repository = new GalleryRepository($this->pdo);
 
-    return new GalleryService($repository, $fileHandler);
-  }
+        return new GalleryService($repository, $fileHandler);
+    }
 }

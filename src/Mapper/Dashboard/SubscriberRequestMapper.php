@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Mapper\Dashboard;
 
 use App\Core\Request;
@@ -9,13 +11,11 @@ use App\DTO\Dashboard\UpdateSubscriberDto;
 
 readonly class SubscriberRequestMapper
 {
-
     public function __construct(
         private Request             $request,
         private Validator           $validator,
         private DeleteRequestMapper $deleteRequestMapper,
-    )
-    {
+    ) {
     }
 
     public function mapCreate(): CreateSubscriberDto

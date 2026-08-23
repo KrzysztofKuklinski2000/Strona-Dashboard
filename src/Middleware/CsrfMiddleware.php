@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Middleware;
@@ -22,8 +23,7 @@ readonly class CsrfMiddleware
         private SessionManager $sessionManager,
         private string   $csrfPrefix,
         private string   $csrfTokenName,
-    )
-    {
+    ) {
     }
 
     /**
@@ -59,7 +59,7 @@ readonly class CsrfMiddleware
         $sessionKey = $this->getSessionKey($context);
         $existingToken = $this->sessionManager->get($sessionKey);
 
-        if(is_string($existingToken) && $existingToken !== '') {
+        if (is_string($existingToken) && $existingToken !== '') {
             return $existingToken;
         }
 
@@ -69,7 +69,8 @@ readonly class CsrfMiddleware
     /**
      * Replaces the current token with a newly generated one.
      */
-    public function regenerateToken(string $context = 'public'): string {
+    public function regenerateToken(string $context = 'public'): string
+    {
         $this->sessionManager->remove($this->getSessionKey($context));
 
         return $this->createToken($context);
@@ -78,7 +79,8 @@ readonly class CsrfMiddleware
     /**
      * Generates a token and stores its copy in the application session.
      */
-    private function createToken(string $context): string {
+    private function createToken(string $context): string
+    {
         $token = $this->easyCSRF->generate(
             $this->getEasyCsrfKey($context)
         );
@@ -94,14 +96,16 @@ readonly class CsrfMiddleware
     /**
      * Builds the token key used by EasyCSRF.
      */
-    private function getEasyCSRFKey(string $context): string {
+    private function getEasyCSRFKey(string $context): string
+    {
         return $this->csrfPrefix . $context;
     }
 
     /**
      * Builds the key used to cache the token in the application session.
      */
-    private function getSessionKey(string $context): string {
+    private function getSessionKey(string $context): string
+    {
         return self::SESSION_TOKEN_PREFIX . $context;
     }
 }

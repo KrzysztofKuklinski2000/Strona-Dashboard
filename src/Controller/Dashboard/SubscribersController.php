@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Dashboard;
 
 use App\Controller\Dashboard\Traits\HasDeleteAction;
@@ -16,14 +18,16 @@ use App\Service\Dashboard\Contracts\SubscribersManagementServiceInterface;
 
 class SubscribersController extends AbstractDashboardController
 {
-    use HasStoreAction, HasDeleteAction, HasUpdateAction, HasSingleData;
+    use HasStoreAction;
+    use HasDeleteAction;
+    use HasUpdateAction;
+    use HasSingleData;
 
     public function __construct(
         private readonly SubscribersManagementServiceInterface $service,
         private readonly SubscriberRequestMapper $subscriberRequestMapper,
         ContextController                                      $contextController
-    )
-    {
+    ) {
 
         parent::__construct($contextController);
     }
@@ -113,4 +117,3 @@ class SubscribersController extends AbstractDashboardController
         $this->service->deleteSubscriber($id);
     }
 }
-

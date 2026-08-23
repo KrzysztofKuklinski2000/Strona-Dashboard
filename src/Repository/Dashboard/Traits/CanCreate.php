@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository\Dashboard\Traits;
 
 use App\DTO\DataTransferObjectInterface;
@@ -23,7 +25,7 @@ trait CanCreate
             unset($payload['id']);
 
             $columns = implode(", ", array_keys($payload));
-            $placeholders = implode(", ", array_map(fn($key) => ":$key", array_keys($payload)));
+            $placeholders = implode(", ", array_map(fn ($key) => ":$key", array_keys($payload)));
 
             $bindings = [];
             foreach ($payload as $key => $value) {

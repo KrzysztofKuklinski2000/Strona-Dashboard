@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Middleware;
 
 use App\Core\Config;
@@ -13,8 +15,7 @@ readonly class AuthMiddleware
     public function __construct(
         private SessionManager $sessionManager,
         private Config         $config
-    )
-    {
+    ) {
     }
 
     /**

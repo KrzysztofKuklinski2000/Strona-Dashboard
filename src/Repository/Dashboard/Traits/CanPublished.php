@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository\Dashboard\Traits;
 
 use App\DTO\DataTransferObjectInterface;
@@ -17,7 +19,7 @@ trait CanPublished
                 ':published' => $data->toArray()['published'],
                 ':id' => $data->toArray()['id'],
             ]);
-        }catch(RepositoryException $e) {
+        } catch (RepositoryException $e) {
             throw new RepositoryException('Nie udało się zmienić statusu', 500, $e);
         }
     }

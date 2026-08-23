@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DTO\Dashboard;
 
 use App\DTO\DataTransferObjectInterface;
@@ -15,8 +17,7 @@ readonly class HomepagePostDto implements DataTransferObjectInterface
         public int $position,
         public string $type,
         public ?string $payload
-    )
-    {
+    ) {
     }
 
 
@@ -34,7 +35,8 @@ readonly class HomepagePostDto implements DataTransferObjectInterface
         );
     }
 
-    public function toArray(): array {
+    public function toArray(): array
+    {
         return [
             "id" => $this->id,
             "title" => $this->title,

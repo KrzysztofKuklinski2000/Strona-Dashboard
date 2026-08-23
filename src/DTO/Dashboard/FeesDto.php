@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\DTO\Dashboard;
@@ -17,8 +18,7 @@ readonly class FeesDto implements DataTransferObjectInterface
         public int    $familyContributionYear,
         public string $extraInformation,
         public string $feesInformation,
-    )
-    {
+    ) {
     }
 
     public static function fromArray(array $data): self

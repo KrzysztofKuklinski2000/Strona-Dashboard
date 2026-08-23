@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Mapper\Dashboard;
 
 use App\Core\Config;
@@ -12,7 +14,6 @@ use App\DTO\Dashboard\UpdateGalleryDto;
 
 readonly class GalleryRequestMapper
 {
-
     public function __construct(
         private Request                     $request,
         private Validator                   $validator,
@@ -20,8 +21,7 @@ readonly class GalleryRequestMapper
         private ChangePositionRequestMapper $changePositionRequestMapper,
         private PublicationRequestMapper    $publicationRequestMapper,
         private DeleteRequestMapper         $deleteRequestMapper,
-    )
-    {
+    ) {
     }
 
     public function mapCreate(): CreateGalleryDto

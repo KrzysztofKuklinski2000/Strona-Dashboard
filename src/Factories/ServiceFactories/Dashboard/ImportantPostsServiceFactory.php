@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Factories\ServiceFactories\Dashboard;
 
 use App\Factories\ServiceFactories\ServiceFactoryInterface;
@@ -9,12 +11,14 @@ use PDO;
 
 class ImportantPostsServiceFactory implements ServiceFactoryInterface
 {
-  public function __construct(private PDO $pdo) {}
+    public function __construct(private PDO $pdo)
+    {
+    }
 
-  public function createService(): ImportantPostsService
-  {
-    $repository = new ImportantPostsRepository($this->pdo);
+    public function createService(): ImportantPostsService
+    {
+        $repository = new ImportantPostsRepository($this->pdo);
 
-    return new ImportantPostsService($repository);
-  }
+        return new ImportantPostsService($repository);
+    }
 }

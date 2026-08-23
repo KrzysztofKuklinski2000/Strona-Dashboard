@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Dashboard;
 
 use App\Controller\Dashboard\Traits\HasDeleteAction;
@@ -20,14 +22,18 @@ use App\Service\Dashboard\Contracts\GalleryManagementServiceInterface;
 
 class GalleryController extends AbstractDashboardController
 {
-    use HasStoreAction, HasDeleteAction, HasUpdateAction, HasPublishedAction, HasMoveAction, HasSingleData;
+    use HasStoreAction;
+    use HasDeleteAction;
+    use HasUpdateAction;
+    use HasPublishedAction;
+    use HasMoveAction;
+    use HasSingleData;
 
     public function __construct(
         public GalleryManagementServiceInterface $service,
         private readonly GalleryRequestMapper    $galleryRequestMapper,
         ContextController                        $contextController,
-    )
-    {
+    ) {
         parent::__construct($contextController);
     }
 

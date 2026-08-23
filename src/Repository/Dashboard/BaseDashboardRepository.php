@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository\Dashboard;
 
 use App\DTO\DataTransferObjectInterface;
@@ -8,8 +10,8 @@ use App\Exception\RepositoryException;
 use App\Repository\AbstractRepository;
 use PDO;
 
-abstract class BaseDashboardRepository extends AbstractRepository {
-
+abstract class BaseDashboardRepository extends AbstractRepository
+{
     abstract protected function mapToDto(array $data): DataTransferObjectInterface;
 
     /**
@@ -22,8 +24,8 @@ abstract class BaseDashboardRepository extends AbstractRepository {
             $sql = "SELECT * FROM $table ORDER BY $orderBy ASC";
             $result = $this->runQuery($sql)->fetchAll(PDO::FETCH_ASSOC);
 
-            return array_map(fn(array $row) => $this->mapToDto($row), $result);
-        }catch(RepositoryException $e) {
+            return array_map(fn (array $row) => $this->mapToDto($row), $result);
+        } catch (RepositoryException $e) {
             throw new RepositoryException("Nie udało się pobrać danych", 500, $e);
         }
     }
@@ -32,14 +34,15 @@ abstract class BaseDashboardRepository extends AbstractRepository {
      * @throws RepositoryException
      * @throws NotFoundException
      */
-    public function getPost(string $table, int $id): DataTransferObjectInterface {
+    public function getPost(string $table, int $id): DataTransferObjectInterface
+    {
         try {
             $result = $this->runQuery("SELECT * FROM $table WHERE id = :id", [':id' => $id])->fetch(PDO::FETCH_ASSOC);
         } catch (RepositoryException $e) {
             throw new RepositoryException('Nie udało się pobrać posta', 500, $e);
         }
 
-        if(!$result) {
+        if (!$result) {
             throw new NotFoundException('Nie ma takiego posta', 404);
         }
 

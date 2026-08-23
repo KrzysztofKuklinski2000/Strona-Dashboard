@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Factories\SecurityFactories;
 
 use App\Factories\ServiceFactories\ServiceFactoryInterface;
@@ -9,7 +11,6 @@ use PDO;
 
 class AuthenticationFactory implements ServiceFactoryInterface
 {
-
     public function __construct(private PDO $pdo)
     {
     }

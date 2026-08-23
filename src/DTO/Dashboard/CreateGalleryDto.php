@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DTO\Dashboard;
 
 use App\DTO\DataTransferObjectInterface;
@@ -12,8 +14,7 @@ readonly class CreateGalleryDto implements DataTransferObjectInterface
         public array|string|null $imageName,
         public string $createdAt,
         public string $updatedAt,
-    )
-    {
+    ) {
     }
 
     public static function fromArray(array $data): self
@@ -27,7 +28,8 @@ readonly class CreateGalleryDto implements DataTransferObjectInterface
         );
     }
 
-    public function toArray(): array {
+    public function toArray(): array
+    {
         return [
             'category' => $this->category,
             'description' => $this->description,

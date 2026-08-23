@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Core;
 
 use App\Middleware\CsrfMiddleware;
@@ -14,7 +16,6 @@ readonly class ContextController
         public Validator      $validator,
         public Config         $config,
         public SessionManager $sessionManager,
-    )
-    {
+    ) {
     }
 }

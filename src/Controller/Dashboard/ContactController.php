@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Dashboard;
 
 use App\Controller\Dashboard\Traits\HasUpdateAction;
@@ -17,8 +19,7 @@ class ContactController extends AbstractDashboardController
         public ContactManagementServiceInterface $service,
         private readonly ContactRequestMapper    $contactRequestMapper,
         ContextController                        $contextController,
-    )
-    {
+    ) {
         parent::__construct($contextController);
     }
 

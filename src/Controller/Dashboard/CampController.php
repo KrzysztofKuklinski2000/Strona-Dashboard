@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Dashboard;
 
 use App\Controller\Dashboard\Traits\HasUpdateAction;
@@ -16,8 +18,7 @@ class CampController extends AbstractDashboardController
         public CampManagementServiceInterface $service,
         private readonly CampRequestMapper    $campRequestMapper,
         ContextController                     $contextController,
-    )
-    {
+    ) {
         parent::__construct($contextController);
     }
 

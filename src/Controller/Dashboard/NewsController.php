@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Dashboard;
 
 use App\Controller\Dashboard\Traits\HasDeleteAction;
@@ -20,14 +22,18 @@ use App\Service\Dashboard\Contracts\NewsManagementServiceInterface;
 
 class NewsController extends AbstractDashboardController
 {
-    use HasStoreAction, HasDeleteAction, HasUpdateAction, HasPublishedAction, HasMoveAction, HasSingleData;
+    use HasStoreAction;
+    use HasDeleteAction;
+    use HasUpdateAction;
+    use HasPublishedAction;
+    use HasMoveAction;
+    use HasSingleData;
 
     public function __construct(
         public NewsManagementServiceInterface $service,
         private readonly NewsRequestMapper    $requestMapper,
         ContextController                     $contextController,
-    )
-    {
+    ) {
         parent::__construct($contextController);
     }
 

@@ -12,8 +12,7 @@ readonly class PublishedDto implements DataTransferObjectInterface
         public int $id,
         public int $published,
         public bool $isNotify,
-    )
-    {
+    ) {
     }
 
     public static function fromArray(array $data): self

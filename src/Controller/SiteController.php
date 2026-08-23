@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -14,8 +15,7 @@ class SiteController extends AbstractController
         public SiteService                  $siteService,
         ContextController                   $contextController,
         private readonly PublicPageRenderer $renderer
-    )
-    {
+    ) {
         parent::__construct($contextController);
     }
 

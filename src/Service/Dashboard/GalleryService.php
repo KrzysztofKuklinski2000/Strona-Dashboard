@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Dashboard;
 
 use App\Core\FileHandler;
@@ -23,15 +25,16 @@ use App\Service\Dashboard\Traits\PositionableTrait;
  */
 class GalleryService extends AbstractDashboardService implements GalleryManagementServiceInterface
 {
-    use PositionableTrait, CanPublished, CanEdit;
+    use PositionableTrait;
+    use CanPublished;
+    use CanEdit;
 
     private const TABLE = 'gallery';
 
     public function __construct(
         GalleryRepository            $repository,
         private readonly FileHandler $fileHandler
-    )
-    {
+    ) {
         parent::__construct($repository);
     }
 
@@ -133,10 +136,10 @@ class GalleryService extends AbstractDashboardService implements GalleryManageme
 
         try {
             $this->create(self::TABLE, $updatedDto);
-        }catch (ServiceException $e){
+        } catch (ServiceException $e) {
             try {
                 $this->fileHandler->deleteImage($imageName);
-            }catch (FileException $e){
+            } catch (FileException $e) {
                 throw new ServiceException(
                     'Nie udało się zapisać wpisu galerii ani usunąć przesłanego pliku.',
                     500,

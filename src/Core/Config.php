@@ -1,79 +1,97 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Core;
 
 readonly class Config
 {
-
     public function __construct(private array $config)
     {
     }
 
-    public function getDbConfig(): array {
+    public function getDbConfig(): array
+    {
         return $this->config['db'] ?? [];
     }
 
-    public function getEnv(): string{
+    public function getEnv(): string
+    {
         return $this->config['env'] ?? 'prod';
     }
 
-    public function getUrl(): string{
+    public function getUrl(): string
+    {
         return $this->config['app_url'] ?? 'http://localhost:8000';
     }
 
-    public function getTemplatesPath(): string{
+    public function getTemplatesPath(): string
+    {
         return $this->config['paths']['templates'] ?? dirname(__DIR__, 2) . '/templates';
     }
 
-    public function getUploadDir(): string{
+    public function getUploadDir(): string
+    {
         return $this->config['paths']['uploads_dir'] ?? dirname(__DIR__, 2) . '/public/uploads';
     }
 
-    public function getUploadUrl(): string{
+    public function getUploadUrl(): string
+    {
         return $this->config['paths']['uploads_url'] ?? '/public/uploads';
     }
 
-    public function getMaxUploadSize(): int{
+    public function getMaxUploadSize(): int
+    {
         return $this->config['app_settings']['upload_max_size'] ?? 5_000_000;
     }
 
-    public function getFilePrefix(): string{
+    public function getFilePrefix(): string
+    {
         return $this->config['app_settings']['file_prefix'] ?? 'karate_';
     }
 
-    public function getDashboardRoute(): string{
+    public function getDashboardRoute(): string
+    {
         return $this->config['app_settings']['dashboard_route'] ?? '/dashboard';
     }
 
-    public function getLoginRoute(): string{
+    public function getLoginRoute(): string
+    {
         return $this->config['app_settings']['login_route'] ?? '/auth/login';
     }
 
-    public function getHomeRoute(): string{
+    public function getHomeRoute(): string
+    {
         return $this->config['app_settings']['home_route'] ?? '/';
     }
 
-    public function getRoutesPath(): string{
+    public function getRoutesPath(): string
+    {
         return $this->config['paths']['routes'] ?? dirname(__DIR__, 2) . '/config/routes.php';
     }
 
-    public function getMailConfig(): array{
+    public function getMailConfig(): array
+    {
         return $this->config['mail'] ?? [];
     }
 
-    public function getCsrfTokenName(): string{
+    public function getCsrfTokenName(): string
+    {
         return $this->config['app_settings']['csrf_token_name'] ?? 'csrf_token';
     }
 
-    public function getCsrfPrefix(): string{
+    public function getCsrfPrefix(): string
+    {
         return $this->config['app_settings']['csrf_prefix'] ?? 'csrf_token_';
     }
 
-    public function getNotificationMessages(): array {
+    public function getNotificationMessages(): array
+    {
         return $this->config['notifications'] ?? [];
     }
 
-    public function getItemsPerPage(): int {
+    public function getItemsPerPage(): int
+    {
         return $this->config['app_settings']['items_per_page'] ?? 10;
     }
 

@@ -14,26 +14,26 @@ use PDO;
 
 class CampControllerFactory implements ControllerFactoryInterface
 {
-  private CampServiceFactory $serviceFactory;
+    private CampServiceFactory $serviceFactory;
 
-  public function __construct(PDO $pdo)
-  {
-    $this->serviceFactory = new CampServiceFactory($pdo);
-  }
+    public function __construct(PDO $pdo)
+    {
+        $this->serviceFactory = new CampServiceFactory($pdo);
+    }
 
-  public function createController(ContextController $contextController): AbstractController
-  {
-    $service = $this->serviceFactory->createService();
+    public function createController(ContextController $contextController): AbstractController
+    {
+        $service = $this->serviceFactory->createService();
 
-    $campRequestMapper = new CampRequestMapper(
-        $contextController->request,
-        $contextController->validator,
-    );
+        $campRequestMapper = new CampRequestMapper(
+            $contextController->request,
+            $contextController->validator,
+        );
 
-    return new CampController(
-      $service,
-      $campRequestMapper,
-      $contextController
-    );
-  }
+        return new CampController(
+            $service,
+            $campRequestMapper,
+            $contextController
+        );
+    }
 }

@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DTO\Dashboard;
 
 use App\DTO\DataTransferObjectInterface;
 
 readonly class UpdateTimetableDto implements DataTransferObjectInterface
 {
-
     public function __construct(
         public int $id,
         public string $day,
@@ -16,8 +17,7 @@ readonly class UpdateTimetableDto implements DataTransferObjectInterface
         public string $start,
         public string $end,
         public int $isNotify,
-    )
-    {
+    ) {
     }
 
     public static function fromArray(array $data): self
@@ -34,7 +34,8 @@ readonly class UpdateTimetableDto implements DataTransferObjectInterface
         );
     }
 
-    public function toArray(): array {
+    public function toArray(): array
+    {
         return [
             'id' => $this->id,
             'day' => $this->day,

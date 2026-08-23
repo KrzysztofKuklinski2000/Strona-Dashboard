@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository\Dashboard\Traits;
 
 use App\Exception\RepositoryException;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Dashboard\Traits;
 
 use App\Core\Request;
@@ -35,7 +37,7 @@ trait HasDeleteAction
         $this->csrfMiddleware->verify('admin');
         $id = $this->getDataToDelete();
 
-        if($id === null) {
+        if ($id === null) {
             $this->sessionManager->setFlash(
                 'warning',
                 'Nieprawidłowy identyfikator wpisu.'

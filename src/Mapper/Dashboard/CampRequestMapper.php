@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Mapper\Dashboard;
 
 use App\Core\Request;
@@ -9,10 +11,9 @@ use App\DTO\Dashboard\CampDto;
 readonly class CampRequestMapper
 {
     public function __construct(
-        private  Request $request,
-        private  Validator $validator,
-    )
-    {
+        private Request $request,
+        private Validator $validator,
+    ) {
     }
 
     public function mapUpdate(): CampDto

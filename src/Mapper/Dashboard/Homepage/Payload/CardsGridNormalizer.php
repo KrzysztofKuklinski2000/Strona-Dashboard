@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Mapper\Dashboard\Homepage\Payload;
@@ -21,14 +22,16 @@ final readonly class CardsGridNormalizer implements PayloadNormalizerInterface
         if (!is_array($rawCards)) {
             $this->validator->addError(
                 'payload.cards',
-                'Kafelki muszą być przesłane jako lista.');
+                'Kafelki muszą być przesłane jako lista.'
+            );
             $rawCards = [];
         }
 
         if ($rawCards === []) {
             $this->validator->addError(
                 'payload.cards',
-                'Dodaj przynajmniej jeden kafelek.');
+                'Dodaj przynajmniej jeden kafelek.'
+            );
         }
 
         if (count($rawCards) > self::MAX_CARDS) {

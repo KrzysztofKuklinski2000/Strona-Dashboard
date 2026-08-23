@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DTO\Dashboard;
 
 use App\DTO\DataTransferObjectInterface;
@@ -11,8 +13,7 @@ readonly class SubscribersDto implements DataTransferObjectInterface
         public string $email,
         public int $isActive,
         public string $token
-    )
-    {
+    ) {
     }
 
     public static function fromArray(array $data): self
@@ -25,7 +26,8 @@ readonly class SubscribersDto implements DataTransferObjectInterface
         );
     }
 
-    public function toArray(): array {
+    public function toArray(): array
+    {
         return [
             'id' => $this->id,
             'email' => $this->email,

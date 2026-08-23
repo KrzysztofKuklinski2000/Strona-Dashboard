@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Mapper\Dashboard\Homepage;
 
 use App\Content\HomepagePostTypes;
@@ -24,8 +26,7 @@ readonly class HomepagePostRequestMapper
         private ChangePositionRequestMapper   $changePositionRequestMapper,
         private PublicationRequestMapper      $publicationRequestMapper,
         private DeleteRequestMapper           $deleteRequestMapper,
-    )
-    {
+    ) {
     }
 
     public function mapCreate(): CreateHomepagePostDto
@@ -162,7 +163,8 @@ readonly class HomepagePostRequestMapper
         return $this->publicationRequestMapper->map();
     }
 
-    public function mapDelete(): ?int {
+    public function mapDelete(): ?int
+    {
         return $this->deleteRequestMapper->map();
     }
 }
