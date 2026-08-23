@@ -10,7 +10,9 @@ class Request
     public function __construct(
         private readonly array $get,
         private readonly array $post,
-        private readonly array $server,)
+        private readonly array $server,
+        private readonly array $files = [],
+    )
     {
     }
 
@@ -24,7 +26,8 @@ class Request
         return $this->post[$name] ?? $default;
     }
 
-    public function getFormData(): array {
+    public function getFormData(): array
+    {
         return $this->post;
     }
 
@@ -35,7 +38,7 @@ class Request
 
     public function getFile(string $name, $default = null): mixed
     {
-        return $_FILES[$name] ?? $default;
+        return $this->files[$name] ?? $default;
     }
 
     public function getMethod(): string

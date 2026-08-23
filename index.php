@@ -37,7 +37,7 @@ if ($isDev) {
 
 
 $errorHandler = new ErrorHandler($isDev, "{$config->getTemplatesPath()}/errors");
-$request = new Request($_GET, $_POST, $_SERVER);
+$request = new Request($_GET, $_POST, $_SERVER, $_FILES);
 $easyCSRF = new EasyCSRF(new NativeSessionProvider());
 $sessionManager = new SessionManager();
 
