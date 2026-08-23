@@ -105,21 +105,19 @@ readonly class HomepagePostRequestMapper
         }
 
         $imageFile = null;
-        $file = $this->request->getFile('postImage');
-        $rawImage = is_array($rawPayload['image'] ?? null) ? $rawPayload['image'] : [];
-        $hasImage = !empty($rawImage['src']);
 
-        if (
-            $type === HomepagePostTypes::IMAGE_TEXT_LIST
-            && (
-                !$hasImage
-                || ($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE
-            )
-        ) {
+        if ($type === HomepagePostTypes::IMAGE_TEXT_LIST) {
+            $rawImage = is_array($rawPayload['image'] ?? null)
+                ? $rawPayload['image']
+                : [];
+
+            $hasSavedImage = !empty($rawImage['src']);
+
             $imageFile = $this->validator->validateFile(
                 field: 'postImage',
-                file: $file,
-                maxSize: $this->config->getMaxUploadSize()
+                file: $this->request->getFile('postImage'),
+                maxSize: $this->config->getMaxUploadSize(),
+                required: !$hasSavedImage,
             );
         }
 
