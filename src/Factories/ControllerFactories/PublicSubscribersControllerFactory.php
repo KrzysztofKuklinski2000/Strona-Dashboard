@@ -4,17 +4,17 @@ namespace App\Factories\ControllerFactories;
 
 use App\Controller\PublicSubscribersController;
 use App\Core\ContextController;
-use App\Factories\ServiceFactories\Dashboard\SubscribersServiceFactory;
 use App\Factories\ServiceFactories\Notification\NotifierFactory;
+use App\Factories\ServiceFactories\SubscriptionServiceFactory;
 use PDO;
 
 class PublicSubscribersControllerFactory implements ControllerFactoryInterface
 {
-    private SubscribersServiceFactory $serviceFactory;
+    private SubscriptionServiceFactory $serviceFactory;
 
     public function __construct(private readonly PDO $pdo)
     {
-        $this->serviceFactory = new SubscribersServiceFactory($this->pdo);
+        $this->serviceFactory = new SubscriptionServiceFactory($this->pdo);
     }
 
     public function createController(ContextController $contextController): PublicSubscribersController
