@@ -35,18 +35,24 @@ class SubscriberRepository extends BaseDashboardRepository
     /**
      * @throws RepositoryException
      */
-    public function emailExists(string $email): bool {
-        $sql = "SELECT COUNT(*) FROM subscribers WHERE email = :email";
-        $result = $this->runQuery($sql, [':email' => $email])->fetchColumn();
+    public function emailExists(string $email): bool
+    {
+        try {
+            $sql = "SELECT COUNT(*) FROM subscribers WHERE email = :email";
+            $result = $this->runQuery($sql, [':email' => $email])->fetchColumn();
 
-        return $result > 0;
+            return $result > 0;
+        } catch (RepositoryException $e) {
+            throw new RepositoryException('Nie udało się pobrać subskrybenta', 500, $e);
+        }
     }
 
     /**
      * @throws NotFoundException
      * @throws RepositoryException
      */
-    public function getSubscriberByToken(string $token): SubscribersDto {
+    public function getSubscriberByToken(string $token): SubscribersDto
+    {
         try {
             $result = $this->runQuery("SELECT * FROM subscribers WHERE token = :token", [':token' => $token])
                 ->fetch(PDO::FETCH_ASSOC);
@@ -54,10 +60,29 @@ class SubscriberRepository extends BaseDashboardRepository
             throw new RepositoryException('Nie udało się pobrać subskrybenta', 500, $e);
         }
 
-        if(!$result) {
+        if (!$result) {
             throw new NotFoundException('Nie ma takiego subskrybenta', 404);
         }
 
         return $this->mapToDto($result);
+    }
+
+    /**
+     * @throws RepositoryException
+     */
+    public function deletePendingSubscriberByToken(string $token): void
+    {
+        try {
+            $this->runQuery(
+                'DELETE FROM subscribers WHERE token = :token AND is_active = 0',
+                [':token' => $token]
+            );
+        } catch (RepositoryException $e) {
+            throw new RepositoryException(
+                'Nie udało się usunąć oczekującej subskrypcji',
+                500,
+                $e
+            );
+        }
     }
 }

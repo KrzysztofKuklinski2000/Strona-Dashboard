@@ -6,7 +6,7 @@ use App\DTO\Dashboard\CreateSubscriberDto;
 
 interface SubscriptionServiceInterface
 {
-    public function subscribe(CreateSubscriberDto $data): string;
+    public function subscribe(CreateSubscriberDto $data): void;
     public function unsubscribe(string $token): void;
     public function confirm(string $token): void;
 }

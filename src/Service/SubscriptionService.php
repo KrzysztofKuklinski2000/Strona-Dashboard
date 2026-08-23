@@ -7,9 +7,12 @@ use App\DTO\Dashboard\SubscribersDto;
 use App\Exception\NotFoundException;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
+use App\Notification\Notifier;
 use App\Repository\Dashboard\SubscriberRepository;
 use App\Security\TokenGeneratorInterface;
 use App\Service\Contracts\SubscriptionServiceInterface;
+use Random\RandomException;
+use Throwable;
 
 class SubscriptionService implements SubscriptionServiceInterface
 {
@@ -18,6 +21,7 @@ class SubscriptionService implements SubscriptionServiceInterface
     public function __construct(
         private readonly SubscriberRepository    $subscriberRepository,
         private readonly TokenGeneratorInterface $tokenGenerator,
+        private readonly Notifier                $notifier,
     )
     {
     }
@@ -41,7 +45,7 @@ class SubscriptionService implements SubscriptionServiceInterface
             ]);
 
             $this->subscriberRepository->edit(self::TABLE, $updateDto);
-        } catch (RepositoryException $e) {
+        } catch (RepositoryException|RandomException $e) {
             throw new ServiceException(
                 'Nie udało się potwierdzić subskrypcji.',
                 500,
@@ -72,7 +76,7 @@ class SubscriptionService implements SubscriptionServiceInterface
     /**
      * @throws ServiceException
      */
-    public function subscribe(CreateSubscriberDto $data): string
+    public function subscribe(CreateSubscriberDto $data): void
     {
         try {
             if ($this->subscriberRepository->emailExists($data->email)) {
@@ -89,11 +93,37 @@ class SubscriptionService implements SubscriptionServiceInterface
             ]);
 
             $this->subscriberRepository->create(self::TABLE, $saveDto);
-
-            return $token;
-        } catch (RepositoryException $e) {
+        } catch (RepositoryException|RandomException $e) {
             throw new ServiceException(
                 'Nie udało się utworzyć subskrypcji.',
+                500,
+                $e,
+            );
+        }
+
+        try {
+            $this->notifier->sendConfirmationEmail($data->email, $token);
+        } catch (Throwable $e) {
+            $this->removePendingSubscriber($token);
+
+            throw new ServiceException(
+                'Nie udało się wysłać wiadomości potwierdzającej.',
+                500,
+                $e,
+            );
+        }
+    }
+
+    /**
+     * @throws ServiceException
+     */
+    private function removePendingSubscriber(string $token): void
+    {
+        try {
+            $this->subscriberRepository->deletePendingSubscriberByToken($token);
+        } catch (RepositoryException $e) {
+            throw new ServiceException(
+                'Nie udało się usunąć oczekującej subskrypcji.',
                 500,
                 $e,
             );

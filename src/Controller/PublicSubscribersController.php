@@ -6,17 +6,14 @@ use App\Core\ContextController;
 use App\DTO\Dashboard\CreateSubscriberDto;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
-use App\Notification\Notifier;
 use App\Service\Contracts\SubscriptionServiceInterface;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 use Exception;
-use Random\RandomException;
 
 class PublicSubscribersController extends AbstractController
 {
     public function __construct(
         private readonly SubscriptionServiceInterface $service,
-        private readonly Notifier           $notifier,
         ContextController                   $contextController,
     )
     {
@@ -25,7 +22,6 @@ class PublicSubscribersController extends AbstractController
 
     /**
      * @throws InvalidCsrfTokenException
-     * @throws RandomException
      */
     public function subscribeAction(): void
     {
@@ -49,9 +45,7 @@ class PublicSubscribersController extends AbstractController
 
         try {
             $dto = CreateSubscriberDto::fromArray(['email' => $email]);
-            $token = $this->service->subscribe($dto);
-
-            $this->notifier->sendConfirmationEmail($email, $token);
+            $this->service->subscribe($dto);
 
             $this->sessionManager->setFlash('success', 'Dziękujemy za zapisanie się!', 'public');
 
