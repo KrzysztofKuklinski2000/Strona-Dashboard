@@ -23,14 +23,14 @@ readonly class GalleryDto implements DataTransferObjectInterface
     public static function fromArray(array $data): self
     {
         return new self(
-            id: $data['id'],
-            imageName: $data['image_name'],
-            description: $data['description'],
-            createdAt: $data['created_at'],
-            updatedAt: $data['updated_at'],
-            position: $data['position'],
+            id: (int) $data['id'],
+            imageName: (string) $data['image_name'],
+            description: (string) $data['description'],
+            createdAt: (string) $data['created_at'],
+            updatedAt: (string) $data['updated_at'],
+            position: (int) $data['position'],
             category: $data['category'],
-            status: $data['status'],
+            status: (int) $data['status'],
         );
     }
 
