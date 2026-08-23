@@ -65,12 +65,33 @@ class HomepageService extends AbstractDashboardService implements HomepageManage
         $oldPost = $this->getPost($data->id);
         $oldImageName = $this->prepareImageForDeletion($oldPost);
 
+        $payload = $this->preparePayloadForPersistence($data);
+
+        if ($data->type === HomepagePostTypes::IMAGE_TEXT_LIST && $data->imageFile === null) {
+            if ($payload === null || $oldImageName === null) {
+                throw new ServiceException('Obraz jest wymagany dla tego typu posta.');
+            }
+
+            try {
+                $payload = $this->processor->preserveImageSource(
+                    $payload,
+                    $oldImageName,
+                );
+            } catch (JsonException $e) {
+                throw new ServiceException(
+                    'Nie udało się zachować danych obrazu.',
+                    500,
+                    $e,
+                );
+            }
+        }
+
         $dataToUpload = UpdateHomepagePostDto::fromArray([
             'id' => $data->id,
             'title' => $data->title,
             'updated' => $data->updated,
             'type' => $data->type,
-            'payload' => $this->preparePayloadForPersistence($data)
+            'payload' => $payload
         ]);
 
         if (!is_array($data->imageFile)) {
