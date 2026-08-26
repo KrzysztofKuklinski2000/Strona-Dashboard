@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Content\HomepagePostTypes;
 use App\DTO\Dashboard\CampDto;
 use App\DTO\Dashboard\ContactDto;
 use App\DTO\Dashboard\FeesDto;
@@ -19,7 +20,8 @@ readonly class SiteService implements ContactProviderInterface
         private SiteRepository      $siteRepository,
         private TimetableRepository $timetableRepository,
         private int                 $itemsPerPage
-    ) {
+    )
+    {
     }
 
     /**
@@ -29,7 +31,7 @@ readonly class SiteService implements ContactProviderInterface
     {
         try {
             $limit = $perPage ?? $this->itemsPerPage;
-            $totalPages = (int) ceil($this->siteRepository->countPublishedNews() / $limit);
+            $totalPages = (int)ceil($this->siteRepository->countPublishedNews() / $limit);
             $totalPages = max(1, $totalPages);
             $page = max(1, min($page, $totalPages));
             $offset = (int)(($page - 1) * $limit);
@@ -56,9 +58,30 @@ readonly class SiteService implements ContactProviderInterface
             $importantPosts = $this->siteRepository->getImportantPosts();
 
 
+            $homepageFeeds = [];
+
+            foreach ($posts as $post) {
+                if ($post->type !== HomepagePostTypes::MODULE_FEED) {
+                    continue;
+                }
+
+                $payload = json_decode($post->payload ?? '', true);
+
+
+                if (!is_array($payload) || ($payload['module'] ?? null) !== 'news') {
+                    continue;
+                }
+
+                $limit = max(1, min(12, (int)($payload['limit'] ?? 3)));
+
+                $homepageFeeds[$post->id] = $this->siteRepository->getNews($limit, 0);
+            }
+
+
             return [
                 'homepagePosts' => $posts,
-                'importantPosts' => $importantPosts
+                'importantPosts' => $importantPosts,
+                'homepageFeeds' => $homepageFeeds,
             ];
 
         } catch (RepositoryException $e) {

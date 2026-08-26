@@ -12,6 +12,8 @@ final class HomepagePostTypes
 
     public const TRIAL_BANNER = 'trial_banner';
 
+    public const MODULE_FEED = 'module_feed';
+
     private const TYPES = [
         self::SIMPLE_TEXT => [
             'label' => 'Prosty tekst',
@@ -28,6 +30,10 @@ final class HomepagePostTypes
         self::TRIAL_BANNER => [
             'label' => 'Baner pierwszego treningu',
             'partial' => 'trial_banner.php',
+        ],
+        self::MODULE_FEED => [
+            'label' => 'Aktualności z modułu',
+            'partial' => 'module_feed.php',
         ]
     ];
 

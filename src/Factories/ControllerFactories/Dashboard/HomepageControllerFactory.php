@@ -16,6 +16,7 @@ use App\Mapper\Dashboard\Homepage\HomepagePostPayloadNormalizer;
 use App\Mapper\Dashboard\Homepage\HomepagePostRequestMapper;
 use App\Mapper\Dashboard\Homepage\Payload\CardsGridNormalizer;
 use App\Mapper\Dashboard\Homepage\Payload\ImageTextListNormalizer;
+use App\Mapper\Dashboard\Homepage\Payload\ModuleFeedNormalizer;
 use App\Mapper\Dashboard\Homepage\Payload\SimpleTextNormalizer;
 use App\Mapper\Dashboard\PublicationRequestMapper;
 use PDO;
@@ -46,6 +47,9 @@ class HomepageControllerFactory implements ControllerFactoryInterface
                 ),
                 HomepagePostTypes::TRIAL_BANNER => new SimpleTextNormalizer(
                     $contextController->validator,
+                ),
+                HomepagePostTypes::MODULE_FEED => new ModuleFeedNormalizer(
+                    $contextController->validator
                 )
             ],
         );

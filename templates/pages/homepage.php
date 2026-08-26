@@ -5,6 +5,7 @@ $content = $params['content'] ?? [];
 
 $homepagePosts = $content['homepagePosts'] ?? [];
 $importantPosts = $content['importantPosts'] ?? [];
+$homepageFeeds = $content['homepageFeeds'] ?? [];
 ?>
 
 <?php if ($importantPosts): ?>
@@ -59,6 +60,7 @@ $importantPosts = $content['importantPosts'] ?? [];
     <?php
         $type = (string) ($post->type ?? HomepagePostTypes::SIMPLE_TEXT);
         $partial = HomepagePostTypes::partial($type);
+        $feedPosts = $homepageFeeds[$post->id] ?? [];
 
         if ($partial === null) {
             $type = HomepagePostTypes::SIMPLE_TEXT;
