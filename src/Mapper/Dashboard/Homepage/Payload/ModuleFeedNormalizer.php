@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Mapper\Dashboard\Homepage\Payload;
 
+use App\Content\HomepageFeedModules;
 use App\Core\Validator;
 use App\Mapper\Dashboard\Payload\PayloadNormalizerInterface;
 
@@ -24,7 +25,7 @@ final readonly class ModuleFeedNormalizer implements PayloadNormalizerInterface
             required: true,
         );
 
-        if($module !== null && $module !== 'news') {
+        if($module !== null && !HomepageFeedModules::isAllowed($module)) {
             $this->validator->addError(
                 'payload.module',
                 'Moduł nie jest obsługiwany'

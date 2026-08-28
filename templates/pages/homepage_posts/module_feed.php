@@ -1,4 +1,7 @@
 <?php
+
+use App\Content\HomepageFeedModules;
+
 $feedPosts = is_array($feedPosts ?? null) ? $feedPosts : [];
 $feedLimit = max(1, min(12, (int) ($block['limit'] ?? 3)));
 $feedPosts = array_slice($feedPosts, 0, $feedLimit);
@@ -7,10 +10,8 @@ $sectionId = 'module-feed-section-' . (int) ($post->id ?? 0);
 $titleId = $sectionId . '-title';
 $sectionTitle = (string) ($post->title ?? 'Najnowsze wpisy');
 
-$moduleUrl = match ((string) ($block['module'] ?? '')) {
-    'news' => '/aktualnosci',
-    default => null,
-};
+$module = HomepageFeedModules::get($block['module'] ?? '')
+
 ?>
 
 <?php if ($feedPosts): ?>
@@ -27,8 +28,8 @@ $moduleUrl = match ((string) ($block['module'] ?? '')) {
                     <h2 id="<?= e($titleId) ?>"><?= e($sectionTitle) ?></h2>
                 </div>
 
-                <?php if ($moduleUrl !== null): ?>
-                    <a class="module-feed-section__more" href="<?= e($moduleUrl) ?>">
+                <?php if ($module !== null): ?>
+                    <a class="module-feed-section__more" href="<?= e($module['url']) ?>">
                         Więcej
                         <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                     </a>

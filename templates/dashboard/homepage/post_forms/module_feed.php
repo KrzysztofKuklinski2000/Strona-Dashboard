@@ -1,10 +1,14 @@
 <?php
+
+use App\Content\HomepageFeedModules;
+$modules = HomepageFeedModules::all();
+
 $payload = isset($payload) && is_array($payload)
     ? $payload
     : (json_decode((string) ($data->payload ?? ''), true) ?: []);
 
-$moduleValue = $payload['module'] ?? 'news';
-$module = is_scalar($moduleValue) ? (string) $moduleValue : 'news';
+$moduleValue = $payload['module'] ?? HomepageFeedModules::NEWS;
+$module = is_scalar($moduleValue) ? (string) $moduleValue : HomepageFeedModules::NEWS;
 
 $limitValue = $payload['limit'] ?? 3;
 $limit = is_scalar($limitValue) ? (string) $limitValue : '3';
@@ -20,7 +24,14 @@ $limit = is_scalar($limitValue) ? (string) $limitValue : '3';
         <label>
             <span>Moduł źródłowy</span>
             <select name="payload[module]">
-                <option value="news" <?= $module === 'news' ? 'selected' : '' ?>>Aktualności</option>
+                <?php foreach ($modules as $key  => $value): ?>
+                    <option
+                        value="<?= e($key) ?>"
+                        <?= $module === $key ? 'selected': ''?>
+                    >
+                            <?= e($value['label']) ?>
+                    </option>
+                <?php endforeach; ?>
             </select>
         </label>
         <p class="validation-error"><?= e($errors['payload.module'] ?? '') ?></p>
