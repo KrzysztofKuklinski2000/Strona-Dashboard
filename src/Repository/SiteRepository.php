@@ -105,7 +105,7 @@ class SiteRepository extends AbstractRepository
     /**
      * @throws RepositoryException
      */
-    public function getGallery(?string $category = null): array
+    public function getGallery(?string $category = null, ?int $limit = null): array
     {
         try {
             $sql = "SELECT * FROM gallery WHERE status = 1";
@@ -117,6 +117,11 @@ class SiteRepository extends AbstractRepository
             }
 
             $sql .= " ORDER BY position ASC";
+
+            if($limit !== null){
+                $sql .= " LIMIT :limit";
+                $params[':limit'] = [$limit, PDO::PARAM_INT];
+            }
 
             $result = $this->runQuery($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
 

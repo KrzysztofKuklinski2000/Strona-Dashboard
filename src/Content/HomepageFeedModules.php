@@ -6,6 +6,8 @@ final readonly class HomepageFeedModules
 {
     public const NEWS = 'news';
 
+    public const GALLERY = 'gallery';
+
     private const MODULES = [
         self::NEWS => [
             'label' => 'Aktualności',

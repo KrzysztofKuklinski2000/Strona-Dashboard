@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Content\HomepageFeedModules;
 use App\Content\HomepagePostTypes;
 use App\DTO\Dashboard\CampDto;
 use App\DTO\Dashboard\ContactDto;
@@ -68,13 +69,17 @@ readonly class SiteService implements ContactProviderInterface
                 $payload = json_decode($post->payload ?? '', true);
 
 
-                if (!is_array($payload) || ($payload['module'] ?? null) !== 'news') {
+                if (!is_array($payload)) {
                     continue;
                 }
 
                 $limit = max(1, min(12, (int)($payload['limit'] ?? 3)));
 
-                $homepageFeeds[$post->id] = $this->siteRepository->getNews($limit, 0);
+                $homepageFeeds[$post->id] = match ($payload['module'] ?? null) {
+                    HomepageFeedModules::NEWS => $this->siteRepository->getNews($limit, 0),
+                    HomepageFeedModules::GALLERY => $this->siteRepository->getGallery(limit: $limit),
+                    default => [],
+                };
             }
 
 
