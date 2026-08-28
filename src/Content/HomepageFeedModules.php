@@ -10,6 +10,7 @@ final readonly class HomepageFeedModules
         self::NEWS => [
             'label' => 'Aktualności',
             'url' => '/aktualnosci',
+            'partial' => 'news.php',
         ],
     ];
 

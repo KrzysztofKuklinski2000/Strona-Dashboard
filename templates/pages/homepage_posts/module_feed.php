@@ -10,7 +10,8 @@ $sectionId = 'module-feed-section-' . (int) ($post->id ?? 0);
 $titleId = $sectionId . '-title';
 $sectionTitle = (string) ($post->title ?? 'Najnowsze wpisy');
 
-$module = HomepageFeedModules::get($block['module'] ?? '')
+$module = HomepageFeedModules::get($block['module'] ?? '');
+$feedPartial = $module['partial'] ?? '';
 
 ?>
 
@@ -44,30 +45,7 @@ $module = HomepageFeedModules::get($block['module'] ?? '')
                     data-feed-slider-list
                 >
                     <?php foreach ($feedPosts as $feedPost): ?>
-                        <?php
-                        $createdTimestamp = strtotime((string) ($feedPost->created ?? ''));
-                        $createdDate = $createdTimestamp ? date('d.m.Y', $createdTimestamp) : '';
-                        ?>
-
-                        <article class="important-card module-feed-card">
-                            <div class="module-feed-card__meta">
-                                <span class="module-feed-card__icon" aria-hidden="true">
-                                    <i class="fa-regular fa-newspaper"></i>
-                                </span>
-
-                                <?php if ($createdDate !== ''): ?>
-                                    <time datetime="<?= e(date('Y-m-d', $createdTimestamp)) ?>">
-                                        <?= e($createdDate) ?>
-                                    </time>
-                                <?php endif ?>
-                            </div>
-
-                            <div class="module-feed-card__content">
-                                <p class="module-feed-card__label">Wpis</p>
-                                <h3><?= e($feedPost->title ?? '') ?></h3>
-                                <p class="module-feed-card__description"><?= e_br($feedPost->description ?? '') ?></p>
-                            </div>
-                        </article>
+                        <?php require 'templates/pages/homepage_posts/module_feeds/'. $feedPartial;  ?>
                     <?php endforeach ?>
                 </div>
             </div>
