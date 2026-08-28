@@ -21,6 +21,7 @@ $feedPartial = $module['partial'] ?? '';
         class="important-section module-feed-section"
         aria-labelledby="<?= e($titleId) ?>"
         data-feed-slider
+        data-feed-module="<?= e((string) ($block['module'] ?? '')) ?>"
     >
         <div class="important-section__inner">
             <div class="module-feed-section__header">

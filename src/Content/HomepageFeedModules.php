@@ -14,6 +14,11 @@ final readonly class HomepageFeedModules
             'url' => '/aktualnosci',
             'partial' => 'news.php',
         ],
+        self::GALLERY => [
+            'label' => 'Galeria',
+            'url' => '/galeria',
+            'partial' => 'gallery.php',
+        ]
     ];
 
 
