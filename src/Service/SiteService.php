@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Content\HomepageFeedModules;
 use App\Content\HomepagePostTypes;
 use App\DTO\Dashboard\CampDto;
 use App\DTO\Dashboard\ContactDto;
@@ -14,12 +13,14 @@ use App\Exception\ServiceException;
 use App\Repository\Dashboard\TimetableRepository;
 use App\Repository\SiteRepository;
 use App\Service\Contracts\ContactProviderInterface;
+use App\Service\Homepage\Feed\HomepageFeedRegistry;
 
 readonly class SiteService implements ContactProviderInterface
 {
     public function __construct(
         private SiteRepository      $siteRepository,
         private TimetableRepository $timetableRepository,
+        private HomepageFeedRegistry $homepageFeedRegistry,
         private int                 $itemsPerPage
     )
     {
@@ -69,17 +70,23 @@ readonly class SiteService implements ContactProviderInterface
                 $payload = json_decode($post->payload ?? '', true);
 
 
+
                 if (!is_array($payload)) {
+                    continue;
+                }
+
+                $module = $payload['module'] ?? null;
+
+                if(!is_string($module)) {
                     continue;
                 }
 
                 $limit = max(1, min(12, (int)($payload['limit'] ?? 3)));
 
-                $homepageFeeds[$post->id] = match ($payload['module'] ?? null) {
-                    HomepageFeedModules::NEWS => $this->siteRepository->getNews($limit, 0),
-                    HomepageFeedModules::GALLERY => $this->siteRepository->getGallery(limit: $limit),
-                    default => [],
-                };
+                $homepageFeeds[$post->id] = $this->homepageFeedRegistry->getItems(
+                    $module,
+                    $limit
+                );
             }
 
 

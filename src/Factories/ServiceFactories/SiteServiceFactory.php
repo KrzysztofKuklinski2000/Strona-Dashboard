@@ -6,6 +6,9 @@ namespace App\Factories\ServiceFactories;
 
 use App\Core\Config;
 use App\Repository\Dashboard\TimetableRepository;
+use App\Service\Homepage\Feed\GalleryFeedProvider;
+use App\Service\Homepage\Feed\HomepageFeedRegistry;
+use App\Service\Homepage\Feed\NewsFeedProvider;
 use PDO;
 use App\Service\SiteService;
 use App\Repository\SiteRepository;
@@ -20,6 +23,17 @@ readonly class SiteServiceFactory implements ServiceFactoryInterface
     {
         $repository = new SiteRepository($this->pdo);
         $timetableRepository = new TimetableRepository($this->pdo);
-        return new SiteService($repository, $timetableRepository, $this->config->getItemsPerPage());
+
+        $homepageFeedRegistry = new HomepageFeedRegistry([
+            new NewsFeedProvider($repository),
+            new GalleryFeedProvider($repository),
+        ]);
+
+        return new SiteService(
+            $repository,
+            $timetableRepository,
+            $homepageFeedRegistry,
+            $this->config->getItemsPerPage()
+        );
     }
 }
