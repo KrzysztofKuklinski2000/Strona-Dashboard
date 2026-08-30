@@ -8,6 +8,7 @@ use App\Core\Config;
 use App\Repository\Dashboard\TimetableRepository;
 use App\Service\Homepage\Feed\GalleryFeedProvider;
 use App\Service\Homepage\Feed\HomepageFeedRegistry;
+use App\Service\Homepage\Feed\ImportantPostsFeedProvider;
 use App\Service\Homepage\Feed\NewsFeedProvider;
 use PDO;
 use App\Service\SiteService;
@@ -27,6 +28,7 @@ readonly class SiteServiceFactory implements ServiceFactoryInterface
         $homepageFeedRegistry = new HomepageFeedRegistry([
             new NewsFeedProvider($repository),
             new GalleryFeedProvider($repository),
+            new ImportantPostsFeedProvider($repository),
         ]);
 
         return new SiteService(

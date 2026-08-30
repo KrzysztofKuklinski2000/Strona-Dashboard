@@ -7,6 +7,7 @@ final readonly class HomepageFeedModules
     public const NEWS = 'news';
 
     public const GALLERY = 'gallery';
+    public const IMPORTANT_POSTS = 'important_posts';
 
     private const MODULES = [
         self::NEWS => [
@@ -18,6 +19,11 @@ final readonly class HomepageFeedModules
             'label' => 'Galeria',
             'url' => '/galeria',
             'partial' => 'gallery.php',
+        ],
+        self::IMPORTANT_POSTS => [
+            'label' => 'Ważne informacje',
+            'url' => null,
+            'partial' => 'important_posts.php',
         ]
     ];
 

@@ -16,11 +16,24 @@ use PDO;
 
 class SiteRepository extends AbstractRepository
 {
-    private function fetchCollection(string $table): array
+    /**
+     * @throws RepositoryException
+     */
+    private function fetchCollection(string $table, ?int $limit = null): array
     {
         try {
-            $sql = "SELECT * FROM $table WHERE status = 1 ORDER BY position ASC";
-            return $this->runQuery($sql)->fetchAll(PDO::FETCH_ASSOC);
+            $sql = "SELECT * FROM $table WHERE status = 1 ORDER BY position ASC ";
+            $params = [];
+
+            if($limit !== null){
+                $sql .= " LIMIT :limit";
+                $params[':limit'] = [$limit, PDO::PARAM_INT];
+            }
+
+            return $this->runQuery(
+                $sql,
+                $params
+            )->fetchAll(PDO::FETCH_ASSOC);
         } catch (RepositoryException $e) {
             throw new RepositoryException("Nie udało się pobrać danych z tabeli $table", 500, $e);
         }
@@ -57,9 +70,9 @@ class SiteRepository extends AbstractRepository
     /**
      * @throws RepositoryException
      */
-    public function getImportantPosts(): array
+    public function getImportantPosts(?int $limit = null): array
     {
-        return array_map(fn (array $row) => ImportantPostsDto::fromArray($row), $this->fetchCollection('important_posts'));
+        return array_map(fn (array $row) => ImportantPostsDto::fromArray($row), $this->fetchCollection('important_posts', $limit));
     }
 
     /**

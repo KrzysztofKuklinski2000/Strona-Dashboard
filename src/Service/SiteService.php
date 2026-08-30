@@ -57,8 +57,6 @@ readonly class SiteService implements ContactProviderInterface
     {
         try {
             $posts = $this->siteRepository->getHomepagePosts();
-            $importantPosts = $this->siteRepository->getImportantPosts();
-
 
             $homepageFeeds = [];
 
@@ -92,7 +90,6 @@ readonly class SiteService implements ContactProviderInterface
 
             return [
                 'homepagePosts' => $posts,
-                'importantPosts' => $importantPosts,
                 'homepageFeeds' => $homepageFeeds,
             ];
 

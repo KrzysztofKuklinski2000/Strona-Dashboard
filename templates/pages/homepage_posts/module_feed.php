@@ -30,7 +30,7 @@ $feedPartial = $module['partial'] ?? '';
                     <h2 id="<?= e($titleId) ?>"><?= e($sectionTitle) ?></h2>
                 </div>
 
-                <?php if ($module !== null): ?>
+                <?php if ($module !== null && $module['url'] !== null): ?>
                     <a class="module-feed-section__more" href="<?= e($module['url']) ?>">
                         Więcej
                         <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
