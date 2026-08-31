@@ -25,22 +25,34 @@ class TimetableRepository extends BaseDashboardRepository
      * @return TimetableDto[]
      * @throws RepositoryException
      */
-    public function timetablePageData(): array
+    public function timetablePageData(?int $limit = null, bool $publishedOnly = false): array
     {
         try {
-            $sql = "SELECT * FROM timetable ORDER BY 
-        CASE 
-            WHEN TRIM(day) = 'PON' THEN 1
-            WHEN TRIM(day) = 'WT' THEN 2
-            WHEN TRIM(day) = 'ŚR' THEN 3
-            WHEN TRIM(day) = 'CZW' THEN 4
-            WHEN TRIM(day) = 'PT' THEN 5
-            WHEN TRIM(day) = 'SOB' THEN 6
-            WHEN TRIM(day) = 'NIEDZ' THEN 7
-            ELSE 8
-        END ASC, start ASC";
+            $params = [];
+            $sql = "SELECT * FROM timetable";
 
-            $result = $this->runQuery($sql)->fetchAll(PDO::FETCH_ASSOC);
+            if($publishedOnly === true) {
+                $sql .= " WHERE status = 1";
+            }
+
+            $sql .= " ORDER BY
+                CASE
+                    WHEN TRIM(day) = 'PON' THEN 1
+                    WHEN TRIM(day) = 'WT' THEN 2
+                    WHEN TRIM(day) = 'ŚR' THEN 3
+                    WHEN TRIM(day) = 'CZW' THEN 4
+                    WHEN TRIM(day) = 'PT' THEN 5
+                    WHEN TRIM(day) = 'SOB' THEN 6
+                    WHEN TRIM(day) = 'NIEDZ' THEN 7
+                    ELSE 8
+                END ASC, start ASC";
+
+            if($limit !== null) {
+                $sql .= " LIMIT :limit";
+                $params[':limit'] = [$limit, PDO::PARAM_INT];
+            }
+
+            $result = $this->runQuery($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
 
             return array_map(fn (array $row) => $this->mapToDto($row), $result);
         } catch (RepositoryException $e) {

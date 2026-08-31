@@ -9,6 +9,8 @@ final readonly class HomepageFeedModules
     public const GALLERY = 'gallery';
     public const IMPORTANT_POSTS = 'important_posts';
 
+    public const TIMETABLE = 'timetable';
+
     private const MODULES = [
         self::NEWS => [
             'label' => 'Aktualności',
@@ -24,6 +26,11 @@ final readonly class HomepageFeedModules
             'label' => 'Ważne informacje',
             'url' => null,
             'partial' => 'important_posts.php',
+        ],
+        self::TIMETABLE => [
+            'label' => 'Grafik',
+            'url' => '/grafik',
+            'partial' => 'timetable.php',
         ]
     ];
 

@@ -10,6 +10,7 @@ use App\Service\Homepage\Feed\GalleryFeedProvider;
 use App\Service\Homepage\Feed\HomepageFeedRegistry;
 use App\Service\Homepage\Feed\ImportantPostsFeedProvider;
 use App\Service\Homepage\Feed\NewsFeedProvider;
+use App\Service\Homepage\Feed\TimetableFeedProvider;
 use PDO;
 use App\Service\SiteService;
 use App\Repository\SiteRepository;
@@ -29,6 +30,7 @@ readonly class SiteServiceFactory implements ServiceFactoryInterface
             new NewsFeedProvider($repository),
             new GalleryFeedProvider($repository),
             new ImportantPostsFeedProvider($repository),
+            new TimetableFeedProvider($timetableRepository),
         ]);
 
         return new SiteService(
