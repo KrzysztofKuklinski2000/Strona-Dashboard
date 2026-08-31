@@ -12,13 +12,15 @@ $sectionTitle = (string) ($post->title ?? 'Najnowsze wpisy');
 
 $module = HomepageFeedModules::get($block['module'] ?? '');
 $feedPartial = $module['partial'] ?? '';
+$sectionEyebrow = (string) ($module['eyebrow'] ?? 'Najnowsze wpisy');
+$sectionTone = $sectionTone ?? 'home-post-section--soft';
 
 ?>
 
 <?php if ($feedPosts): ?>
     <section
         id="<?= e($sectionId) ?>"
-        class="important-section module-feed-section"
+        class="important-section module-feed-section home-post-section <?= e($sectionTone) ?>"
         aria-labelledby="<?= e($titleId) ?>"
         data-feed-slider
         data-feed-module="<?= e((string) ($block['module'] ?? '')) ?>"
@@ -26,7 +28,7 @@ $feedPartial = $module['partial'] ?? '';
         <div class="important-section__inner">
             <div class="module-feed-section__header">
                 <div class="important-section__heading">
-                    <p>Najnowsze wpisy</p>
+                    <p><?= e($sectionEyebrow) ?></p>
                     <h2 id="<?= e($titleId) ?>"><?= e($sectionTitle) ?></h2>
                 </div>
 

@@ -14,21 +14,25 @@ final readonly class HomepageFeedModules
     private const MODULES = [
         self::NEWS => [
             'label' => 'Aktualności',
+            'eyebrow' => 'Najnowsze wpisy',
             'url' => '/aktualnosci',
             'partial' => 'news.php',
         ],
         self::GALLERY => [
             'label' => 'Galeria',
+            'eyebrow' => 'Z życia klubu',
             'url' => '/galeria',
             'partial' => 'gallery.php',
         ],
         self::IMPORTANT_POSTS => [
             'label' => 'Ważne informacje',
+            'eyebrow' => 'Aktualne komunikaty',
             'url' => null,
             'partial' => 'important_posts.php',
         ],
         self::TIMETABLE => [
             'label' => 'Grafik',
+            'eyebrow' => 'Najbliższe zajęcia',
             'url' => '/grafik',
             'partial' => 'timetable.php',
         ]
