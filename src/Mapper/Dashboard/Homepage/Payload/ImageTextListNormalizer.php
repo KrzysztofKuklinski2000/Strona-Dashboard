@@ -55,7 +55,6 @@ final readonly class ImageTextListNormalizer implements PayloadNormalizerInterfa
             name: 'payload.description',
             value: $rawPayload['description'] ?? null,
             required: true,
-            minLength: 20,
             maxLength: 1000,
         );
 

@@ -67,7 +67,6 @@ readonly class HomepagePostRequestMapper
                 name: 'postTitle',
                 value: $this->request->getFormParam('postTitle'),
                 required: true,
-                minLength: 10,
                 maxLength: 60
             ),
 
@@ -136,7 +135,6 @@ readonly class HomepagePostRequestMapper
                 name: 'postTitle',
                 value: $this->request->getFormParam('postTitle'),
                 required: true,
-                minLength: 10,
                 maxLength: 60
             ),
 

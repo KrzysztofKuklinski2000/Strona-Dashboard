@@ -38,7 +38,6 @@ readonly class GalleryRequestMapper
                 name: 'description',
                 value: $this->request->getFormParam('description'),
                 required: true,
-                minLength: 10,
                 maxLength: 50
             ),
 
@@ -77,7 +76,6 @@ readonly class GalleryRequestMapper
                 name: 'description',
                 value: $this->request->getFormParam('description'),
                 required: true,
-                minLength: 10,
                 maxLength: 50
             ),
 
