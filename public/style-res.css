@@ -120,6 +120,21 @@
 		padding: 30px;
 	}
 
+	.news-event-card--featured {
+		grid-column: 1 / -1;
+		display: grid;
+		grid-template-columns: minmax(260px, .75fr) minmax(0, 1.25fr);
+	}
+
+	.news-event-card--featured .news-event-card__header {
+		border-right: 1px solid var(--color-line);
+		border-bottom: 0;
+	}
+
+	.news-event-card--featured .news-event-card__body {
+		padding: 30px;
+	}
+
 	.timetable-page__inner {
 		padding-top: 72px;
 		padding-bottom: 96px;
@@ -792,6 +807,10 @@
 	}
 
 	.news-card--featured {
+		grid-column: span 2;
+	}
+
+	.news-event-card--featured {
 		grid-column: span 2;
 	}
 
