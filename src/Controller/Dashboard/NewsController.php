@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Dashboard;
 
+use App\Content\NewsPostTypes;
 use App\Controller\Dashboard\Traits\HasDeleteAction;
 use App\Controller\Dashboard\Traits\HasMoveAction;
 use App\Controller\Dashboard\Traits\HasPublishedAction;
@@ -53,6 +54,7 @@ class NewsController extends AbstractDashboardController
         $this->renderPage([
             'page' => 'news/edit',
             'data' => $this->getSingleData(),
+            'postTypes' => NewsPostTypes::all()
         ]);
     }
 
@@ -60,6 +62,7 @@ class NewsController extends AbstractDashboardController
     {
         $this->renderPage([
             'page' => 'news/create',
+            'postTypes' => NewsPostTypes::all()
         ]);
     }
 
