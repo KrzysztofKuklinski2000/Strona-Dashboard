@@ -13,6 +13,8 @@ readonly class UpdateNewsDto implements DataTransferObjectInterface
         public string $title,
         public string $description,
         public string $updated,
+        public string $type,
+        public string $payload
     ) {
     }
 
@@ -23,6 +25,8 @@ readonly class UpdateNewsDto implements DataTransferObjectInterface
             title: (string) ($data['title'] ?? ''),
             description: (string) ($data['description'] ?? ''),
             updated: (string) ($data['updated'] ?? ''),
+            type: (string) ($data['type'] ?? ''),
+            payload: (string) ($data['payload'] ?? ''),
         );
     }
 
@@ -33,6 +37,8 @@ readonly class UpdateNewsDto implements DataTransferObjectInterface
             'title' => $this->title,
             'description' => $this->description,
             'updated' => $this->updated,
+            'type' => $this->type,
+            'payload' => $this->payload,
         ];
     }
 }
