@@ -10,7 +10,6 @@ readonly class CreateNewsDto implements DataTransferObjectInterface
 {
     public function __construct(
         public string $title,
-        public string $description,
         public string $created,
         public string $updated,
         public int $status,
@@ -23,7 +22,6 @@ readonly class CreateNewsDto implements DataTransferObjectInterface
     {
         return new self(
             title: (string) ($data['title'] ?? ''),
-            description: (string) ($data['description'] ?? ''),
             created: (string) ($data['created'] ?? ''),
             updated: (string) ($data['updated'] ?? ''),
             status: (int) ($data['status'] ?? 0),
@@ -36,7 +34,6 @@ readonly class CreateNewsDto implements DataTransferObjectInterface
     {
         return [
             'title' => $this->title,
-            'description' => $this->description,
             'created' => $this->created,
             'updated' => $this->updated,
             'status' => $this->status,

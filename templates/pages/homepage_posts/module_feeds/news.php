@@ -3,9 +3,7 @@ $createdTimestamp = strtotime((string) ($feedPost->created ?? ''));
 $createdDate = $createdTimestamp ? date('d.m.Y', $createdTimestamp) : '';
 $payload = json_decode((string) ($feedPost->payload ?? ''), true);
 $payload = is_array($payload) ? $payload : [];
-$description = $payload['description']
-    ?? $feedPost->description
-    ?? '';
+$description = $payload['description'] ?? '';
 ?>
 
 <article class="important-card module-feed-card">

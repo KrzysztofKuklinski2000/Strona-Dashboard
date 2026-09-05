@@ -22,10 +22,6 @@ $titleValue = $oldInput['postTitle']
 $payload = $oldInput['payload']
     ?? json_decode((string) ($data->payload ?? ''), true)
     ?? [];
-
-if (!isset($payload['description']) && isset($data->description)) {
-    $payload['description'] = $data->description;
-}
 ?>
 
 <h3 class="dashboard-action-header"><?= e($formTitle ?? 'Nowa aktualność') ?></h3>

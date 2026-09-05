@@ -1,7 +1,5 @@
 <?php
-$description = $payload['description']
-    ?? $data->description
-    ?? '';
+$description = $payload['description'] ?? '';
 ?>
 
 <h4><?= e($data->title ?? '') ?></h4>

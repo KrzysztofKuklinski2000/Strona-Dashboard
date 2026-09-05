@@ -3,9 +3,7 @@ $createdTimestamp = strtotime((string) ($content->created ?? ''));
 $createdDate = $createdTimestamp ? date('d.m.Y', $createdTimestamp) : '';
 $createdDateTime = $createdTimestamp ? date('Y-m-d', $createdTimestamp) : '';
 $imageName = $content->imageName ?? $content->image_name ?? null;
-$description = $payload['description']
-    ?? $content->description
-    ?? '';
+$description = $payload['description'] ?? '';
 ?>
 
 <article class="news-card <?= ($index ?? null) === 0 ? 'news-card--featured' : '' ?>">

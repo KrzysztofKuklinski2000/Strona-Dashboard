@@ -368,6 +368,9 @@ VALUES (35, 'MISTRZOSTWA POLSKI 2011',
 UPDATE `news`
 SET `payload` = JSON_OBJECT('description', `description`)
 WHERE `payload` IS NULL;
+
+ALTER TABLE `news`
+DROP COLUMN `description`;
 -- --------------------------------------------------------
 
 --
