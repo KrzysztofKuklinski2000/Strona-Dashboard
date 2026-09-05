@@ -1,4 +1,6 @@
 <?php
+use App\Content\NewsPostTypes;
+
 $numberOfRows = (int) ($params['numberOfRows'] ?? 1);
 $currentPage = (int) ($params['currentNumberOfPage'] ?? 1);
 $newsPosts = array_values(array_filter(
@@ -18,32 +20,21 @@ $newsPosts = array_values(array_filter(
             <div class="news-page__grid">
                 <?php foreach ($newsPosts as $index => $content): ?>
                     <?php
-                    $createdTimestamp = strtotime($content->created ?? '');
-                    $createdDate = $createdTimestamp ? date('d.m.Y', $createdTimestamp) : '';
-                    $createdDateTime = $createdTimestamp ? date('Y-m-d', $createdTimestamp) : '';
-                    $imageName = $content->imageName ?? $content->image_name ?? null;
+                    $payload = json_decode((string) ($content->payload ?? ''), true);
+                    $payload = is_array($payload) ? $payload : [];
+                    $type = (string) ($content->type ?? NewsPostTypes::ARTICLE);
+
+                    if (!NewsPostTypes::isAllowed($type)) {
+                        $type = NewsPostTypes::ARTICLE;
+                    }
+
+                    $partial = NewsPostTypes::partial($type)
+                        ?? NewsPostTypes::partial(NewsPostTypes::ARTICLE);
+
+                    if ($partial !== null) {
+                        require __DIR__ . '/news_posts/' . $partial;
+                    }
                     ?>
-
-                    <article class="news-card <?= $index === 0 ? 'news-card--featured' : '' ?>">
-                        <?php if ($imageName): ?>
-                            <div class="news-card__media">
-                                <img src="/public/uploads/<?= rawurlencode((string) $imageName) ?>" alt="<?= e($content->title) ?>" loading="lazy">
-                            </div>
-                        <?php else: ?>
-                            <div class="news-card__media news-card__media--fallback" aria-hidden="true">
-                                <i class="fa-regular fa-newspaper"></i>
-                            </div>
-                        <?php endif ?>
-
-                        <div class="news-card__content">
-                            <?php if ($createdDate): ?>
-                                <time datetime="<?= e($createdDateTime) ?>"><?= e($createdDate) ?></time>
-                            <?php endif ?>
-
-                            <h3><?= e($content->title) ?></h3>
-                            <p><?= e_br($content->description) ?></p>
-                        </div>
-                    </article>
                 <?php endforeach ?>
             </div>
         <?php else: ?>
