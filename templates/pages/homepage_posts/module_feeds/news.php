@@ -1,6 +1,11 @@
 <?php
 $createdTimestamp = strtotime((string) ($feedPost->created ?? ''));
 $createdDate = $createdTimestamp ? date('d.m.Y', $createdTimestamp) : '';
+$payload = json_decode((string) ($feedPost->payload ?? ''), true);
+$payload = is_array($payload) ? $payload : [];
+$description = $payload['description']
+    ?? $feedPost->description
+    ?? '';
 ?>
 
 <article class="important-card module-feed-card">
@@ -19,6 +24,6 @@ $createdDate = $createdTimestamp ? date('d.m.Y', $createdTimestamp) : '';
     <div class="module-feed-card__content">
         <p class="module-feed-card__label">Wpis</p>
         <h3><?= e($feedPost->title ?? '') ?></h3>
-        <p class="module-feed-card__description"><?= e_br($feedPost->description ?? '') ?></p>
+        <p class="module-feed-card__description"><?= e_br($description) ?></p>
     </div>
 </article>
