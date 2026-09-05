@@ -260,7 +260,9 @@ CREATE TABLE `news`
     `created`     date                                           DEFAULT NULL,
     `updated`     date                                           DEFAULT NULL,
     `status`      tinyint(1) NOT NULL,
-    `position`    int                                   NOT NULL DEFAULT '1'
+    `position`    int                                   NOT NULL DEFAULT '1',
+    `type` varchar(50) NOT NULL DEFAULT 'article',
+    `payload` JSON
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
@@ -363,7 +365,9 @@ VALUES (35, 'MISTRZOSTWA POLSKI 2011',
        (67, 'XIV Mistrzostwa Województwa Pomorskiego w Karate KYOKUSHIN',
         '    W dniu 26.04.2025 roku odbyły się XIV Mistrzostwa Województwa Pomorskiego w Karate KYOKUSHIN juniorów i seniorów\r\n\r\nNasz Klub reprezentowało 5 zawodników i zawodniczek,  seniorzy  troje i juniorzy dwoje osób\r\n\r\nAndrzej Klahs zajął drugie miejsce w kategorii  kumite senior + 80 kg\r\n\r\nKacper Walczyk i Kacper Nosal zajęli trzecie miejsce w kumite senior -75 kg\r\n\r\nDorota Klahs zajęła 3 miejsce w kategorii kumite junior 15-17 lat + 62 kg\r\n\r\nSofiia Cherenok 3 miejsce w kategorii kumite junior 11-12 lat -37 kg\r\n\r\nStartowało 217 zawodników i zawodniczek z 17 Klubów',
         '2025-07-28', '2025-10-07', 1, 2);
-
+UPDATE `news`
+SET `payload` = JSON_OBJECT('description', `description`)
+WHERE `payload` IS NULL;
 -- --------------------------------------------------------
 
 --
