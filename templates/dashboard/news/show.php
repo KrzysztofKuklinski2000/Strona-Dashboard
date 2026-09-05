@@ -4,10 +4,8 @@ $action = "/dashboard/news/published/" . ($data->id ?? '');
 $csrf = $params['csrf_token'] ?? '';
 $formTitle = "Szczegóły posta aktualności";
 
-$postDetailsHtml = sprintf(
-    '<h4>Tytuł: %s</h4><p>%s</p>',
-    e($data->title),
-    e_br($data->description),
-);
+ob_start();
+require "templates/dashboard/news/_post_details.php";
+$postDetailsHtml = ob_get_clean();
 
 require "templates/dashboard/_partials/_show_form.php";
