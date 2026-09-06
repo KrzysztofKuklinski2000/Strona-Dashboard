@@ -2,25 +2,27 @@
 
 declare(strict_types=1);
 
-namespace App\DTO\Dashboard;
+namespace App\DTO\Dashboard\Subscriber;
 
 use App\DTO\DataTransferObjectInterface;
 
-readonly class UpdateSubscriberDto implements DataTransferObjectInterface
+readonly class SubscribersDto implements DataTransferObjectInterface
 {
     public function __construct(
         public int $id,
         public string $email,
-        public int $isActive
+        public int $isActive,
+        public string $token
     ) {
     }
 
     public static function fromArray(array $data): self
     {
         return new self(
-            id: (int)($data['id'] ?? 0),
-            email: (string)($data['email'] ?? ''),
-            isActive: (int)($data['is_active'] ?? 0)
+            id: (int) $data['id'],
+            email: (string) $data['email'],
+            isActive: (int) $data['is_active'],
+            token: (string) $data['token']
         );
     }
 
@@ -29,7 +31,8 @@ readonly class UpdateSubscriberDto implements DataTransferObjectInterface
         return [
             'id' => $this->id,
             'email' => $this->email,
-            'is_active' => $this->isActive
+            'is_active' => $this->isActive,
+            'token' => $this->token,
         ];
     }
 }

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Service\Dashboard\Contracts;
 
-use App\DTO\Dashboard\CreateSubscriberDto;
-use App\DTO\Dashboard\SubscribersDto;
-use App\DTO\Dashboard\UpdateSubscriberDto;
+use App\DTO\Dashboard\Subscriber\CreateSubscriberDto;
+use App\DTO\Dashboard\Subscriber\SubscribersDto;
+use App\DTO\Dashboard\Subscriber\UpdateSubscriberDto;
 
 /**
  * Interfejs definiujący operacje wyłącznie dla modułu Subscribers.

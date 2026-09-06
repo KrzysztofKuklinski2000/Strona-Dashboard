@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Contracts;
 
-use App\DTO\Dashboard\CreateSubscriberDto;
+use App\DTO\Dashboard\Subscriber\CreateSubscriberDto;
 
 interface SubscriptionServiceInterface
 {

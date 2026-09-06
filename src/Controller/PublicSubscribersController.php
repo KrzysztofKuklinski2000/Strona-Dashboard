@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Core\ContextController;
-use App\DTO\Dashboard\CreateSubscriberDto;
+use App\DTO\Dashboard\Subscriber\CreateSubscriberDto;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
 use App\Service\Contracts\SubscriptionServiceInterface;

@@ -6,8 +6,8 @@ namespace App\Mapper\Dashboard;
 
 use App\Core\Request;
 use App\Core\Validator;
-use App\DTO\Dashboard\CreateSubscriberDto;
-use App\DTO\Dashboard\UpdateSubscriberDto;
+use App\DTO\Dashboard\Subscriber\CreateSubscriberDto;
+use App\DTO\Dashboard\Subscriber\UpdateSubscriberDto;
 
 readonly class SubscriberRequestMapper
 {

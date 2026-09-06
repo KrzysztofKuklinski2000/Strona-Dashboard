@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\DTO\Dashboard\CreateSubscriberDto;
-use App\DTO\Dashboard\SubscribersDto;
+use App\DTO\Dashboard\Subscriber\CreateSubscriberDto;
+use App\DTO\Dashboard\Subscriber\SubscribersDto;
 use App\Exception\NotFoundException;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;

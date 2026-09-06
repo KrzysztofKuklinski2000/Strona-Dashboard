@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Service\Dashboard;
 
-use App\DTO\Dashboard\CreateSubscriberDto;
-use App\DTO\Dashboard\SubscribersDto;
-use App\DTO\Dashboard\UpdateSubscriberDto;
+use App\DTO\Dashboard\Subscriber\CreateSubscriberDto;
+use App\DTO\Dashboard\Subscriber\SubscribersDto;
+use App\DTO\Dashboard\Subscriber\UpdateSubscriberDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;

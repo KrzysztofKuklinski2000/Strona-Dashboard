@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository\Dashboard;
 
-use App\DTO\Dashboard\SubscribersDto;
+use App\DTO\Dashboard\Subscriber\SubscribersDto;
 use App\Exception\NotFoundException;
 use App\Exception\RepositoryException;
 use App\Repository\Dashboard\Traits\StandardCrud;
