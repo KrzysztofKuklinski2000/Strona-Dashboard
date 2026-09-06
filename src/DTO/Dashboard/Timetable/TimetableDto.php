@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\DTO\Dashboard;
+namespace App\DTO\Dashboard\Timetable;
 
 use App\DTO\DataTransferObjectInterface;
 
-readonly class UpdateTimetableDto implements DataTransferObjectInterface
+readonly class TimetableDto implements DataTransferObjectInterface
 {
     public function __construct(
         public int $id,
@@ -16,7 +16,7 @@ readonly class UpdateTimetableDto implements DataTransferObjectInterface
         public string $place,
         public string $start,
         public string $end,
-        public int $isNotify,
+        public int $status
     ) {
     }
 
@@ -24,13 +24,13 @@ readonly class UpdateTimetableDto implements DataTransferObjectInterface
     {
         return new self(
             id: (int) $data['id'],
-            day: (string) $data['day'],
+            day: trim((string) ($data['day'] ?? '')),
             city: (string) $data['city'],
             advancementGroup: (string) $data['advancement_group'],
             place: (string) $data['place'],
             start: (string) $data['start'],
             end: (string) $data['end'],
-            isNotify: !empty($data['is_notify']) ? 1 : 0,
+            status: (int) $data['status']
         );
     }
 
@@ -44,6 +44,7 @@ readonly class UpdateTimetableDto implements DataTransferObjectInterface
             'place' => $this->place,
             'start' => $this->start,
             'end' => $this->end,
+            'status' => $this->status
         ];
     }
 }

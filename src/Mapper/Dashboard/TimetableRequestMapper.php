@@ -6,9 +6,9 @@ namespace App\Mapper\Dashboard;
 
 use App\Core\Request;
 use App\Core\Validator;
-use App\DTO\Dashboard\CreateTimetableDto;
 use App\DTO\Dashboard\PublishedDto;
-use App\DTO\Dashboard\UpdateTimetableDto;
+use App\DTO\Dashboard\Timetable\CreateTimetableDto;
+use App\DTO\Dashboard\Timetable\UpdateTimetableDto;
 
 readonly class TimetableRequestMapper
 {

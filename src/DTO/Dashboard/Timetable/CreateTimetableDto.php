@@ -2,49 +2,45 @@
 
 declare(strict_types=1);
 
-namespace App\DTO\Dashboard;
+namespace App\DTO\Dashboard\Timetable;
 
 use App\DTO\DataTransferObjectInterface;
 
-readonly class TimetableDto implements DataTransferObjectInterface
+readonly class CreateTimetableDto implements DataTransferObjectInterface
 {
     public function __construct(
-        public int $id,
         public string $day,
         public string $city,
         public string $advancementGroup,
         public string $place,
         public string $start,
         public string $end,
-        public int $status
+        public int $isNotify
     ) {
     }
 
     public static function fromArray(array $data): self
     {
         return new self(
-            id: (int) $data['id'],
-            day: trim((string) ($data['day'] ?? '')),
+            day: (string) $data['day'],
             city: (string) $data['city'],
             advancementGroup: (string) $data['advancement_group'],
             place: (string) $data['place'],
             start: (string) $data['start'],
             end: (string) $data['end'],
-            status: (int) $data['status']
+            isNotify: !empty($data['is_notify']) ? 1 : 0,
         );
     }
 
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
             'day' => $this->day,
             'city' => $this->city,
             'advancement_group' => $this->advancementGroup,
             'place' => $this->place,
             'start' => $this->start,
             'end' => $this->end,
-            'status' => $this->status
         ];
     }
 }

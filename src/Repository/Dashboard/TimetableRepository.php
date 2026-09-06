@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository\Dashboard;
 
-use App\DTO\Dashboard\TimetableDto;
+use App\DTO\Dashboard\Timetable\TimetableDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\RepositoryException;
 use App\Repository\Dashboard\Traits\CanPublished;

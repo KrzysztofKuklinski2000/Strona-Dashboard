@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Service\Dashboard;
 
-use App\DTO\Dashboard\CreateTimetableDto;
 use App\DTO\Dashboard\PublishedDto;
-use App\DTO\Dashboard\UpdateTimetableDto;
+use App\DTO\Dashboard\Timetable\CreateTimetableDto;
+use App\DTO\Dashboard\Timetable\UpdateTimetableDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Exception\RepositoryException;
