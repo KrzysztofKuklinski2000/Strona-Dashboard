@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Service\Dashboard\Contracts;
 
 use App\DTO\Dashboard\ChangePositionDto;
-use App\DTO\Dashboard\CreateNewsDto;
-use App\DTO\Dashboard\NewsDto;
+use App\DTO\Dashboard\News\CreateNewsDto;
+use App\DTO\Dashboard\News\NewsDto;
+use App\DTO\Dashboard\News\UpdateNewsDto;
 use App\DTO\Dashboard\PublishedDto;
-use App\DTO\Dashboard\UpdateNewsDto;
 
 /**
  * Interfejs definiujący operacje wyłącznie dla modułu Aktualności.

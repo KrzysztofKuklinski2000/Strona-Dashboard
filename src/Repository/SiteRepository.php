@@ -10,7 +10,7 @@ use App\DTO\Dashboard\FeesDto;
 use App\DTO\Dashboard\Gallery\GalleryDto;
 use App\DTO\Dashboard\Homepage\HomepagePostDto;
 use App\DTO\Dashboard\ImportantPosts\ImportantPostsDto;
-use App\DTO\Dashboard\NewsDto;
+use App\DTO\Dashboard\News\NewsDto;
 use App\Exception\RepositoryException;
 use PDO;
 

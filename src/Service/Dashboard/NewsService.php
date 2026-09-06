@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Service\Dashboard;
 
 use App\DTO\Dashboard\ChangePositionDto;
-use App\DTO\Dashboard\CreateNewsDto;
+use App\DTO\Dashboard\News\CreateNewsDto;
+use App\DTO\Dashboard\News\UpdateNewsDto;
 use App\DTO\Dashboard\PublishedDto;
-use App\DTO\Dashboard\UpdateNewsDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;

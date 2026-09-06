@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository\Dashboard;
 
-use App\DTO\Dashboard\NewsDto;
+use App\DTO\Dashboard\News\NewsDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Repository\Dashboard\Traits\CanPublished;
 use App\Repository\Dashboard\Traits\Positionable;
