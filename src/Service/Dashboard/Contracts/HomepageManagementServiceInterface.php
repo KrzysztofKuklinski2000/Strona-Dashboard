@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Service\Dashboard\Contracts;
 
 use App\DTO\Dashboard\ChangePositionDto;
-use App\DTO\Dashboard\CreateHomepagePostDto;
-use App\DTO\Dashboard\HomepagePostDto;
+use App\DTO\Dashboard\Homepage\CreateHomepagePostDto;
+use App\DTO\Dashboard\Homepage\HomepagePostDto;
+use App\DTO\Dashboard\Homepage\UpdateHomepagePostDto;
 use App\DTO\Dashboard\PublishedDto;
-use App\DTO\Dashboard\UpdateHomepagePostDto;
 
 /**
  * Interfejs definiujący operacje wyłącznie dla modułu Strony Głównej.

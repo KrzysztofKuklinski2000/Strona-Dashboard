@@ -2,18 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\DTO\Dashboard;
+namespace App\DTO\Dashboard\Homepage;
 
 use App\DTO\DataTransferObjectInterface;
 
-readonly class CreateHomepagePostDto implements DataTransferObjectInterface
+readonly class UpdateHomepagePostDto implements DataTransferObjectInterface
 {
     public function __construct(
+        public int $id,
         public string $title,
-        public string $created,
         public string $updated,
-        public int $status,
-        public int $position,
         public string $type,
         public ?string $payload,
         public ?array $imageFile,
@@ -23,11 +21,9 @@ readonly class CreateHomepagePostDto implements DataTransferObjectInterface
     public static function fromArray(array $data): self
     {
         return new self(
+            id: (int) $data['id'],
             title: (string) $data['title'],
-            created: (string) $data['created'],
             updated: (string) $data['updated'],
-            status: (int) $data['status'],
-            position: (int) ($data['position'] ?? 2),
             type: (string) ($data['type'] ?? 'simple_text'),
             payload: isset($data['payload']) ? (string) $data['payload'] : null,
             imageFile: $data['imageFile'] ?? null,
@@ -37,11 +33,9 @@ readonly class CreateHomepagePostDto implements DataTransferObjectInterface
     public function toArray(): array
     {
         return [
+            'id' => $this->id,
             'title' => $this->title,
-            'created' => $this->created,
             'updated' => $this->updated,
-            'status' => $this->status,
-            'position' => $this->position,
             'type' => $this->type,
             'payload' => $this->payload,
         ];

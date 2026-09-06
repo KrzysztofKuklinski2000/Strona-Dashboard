@@ -6,10 +6,10 @@ namespace App\Service\Dashboard;
 
 use App\Content\HomepagePostTypes;
 use App\DTO\Dashboard\ChangePositionDto;
-use App\DTO\Dashboard\CreateHomepagePostDto;
-use App\DTO\Dashboard\HomepagePostDto;
+use App\DTO\Dashboard\Homepage\CreateHomepagePostDto;
+use App\DTO\Dashboard\Homepage\HomepagePostDto;
+use App\DTO\Dashboard\Homepage\UpdateHomepagePostDto;
 use App\DTO\Dashboard\PublishedDto;
-use App\DTO\Dashboard\UpdateHomepagePostDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\FileException;
 use App\Exception\NotFoundException;

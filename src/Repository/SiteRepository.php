@@ -8,7 +8,7 @@ use App\DTO\Dashboard\CampDto;
 use App\DTO\Dashboard\ContactDto;
 use App\DTO\Dashboard\FeesDto;
 use App\DTO\Dashboard\Gallery\GalleryDto;
-use App\DTO\Dashboard\HomepagePostDto;
+use App\DTO\Dashboard\Homepage\HomepagePostDto;
 use App\DTO\Dashboard\ImportantPostsDto;
 use App\DTO\Dashboard\NewsDto;
 use App\Exception\RepositoryException;
