@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Service\Dashboard\Contracts;
 
 use App\DTO\Dashboard\ChangePositionDto;
-use App\DTO\Dashboard\CreateImportantPostDto;
-use App\DTO\Dashboard\ImportantPostsDto;
+use App\DTO\Dashboard\ImportantPosts\CreateImportantPostDto;
+use App\DTO\Dashboard\ImportantPosts\ImportantPostsDto;
+use App\DTO\Dashboard\ImportantPosts\UpdateImportantPostDto;
 use App\DTO\Dashboard\PublishedDto;
-use App\DTO\Dashboard\UpdateImportantPostDto;
 
 /**
  * Interfejs definiujący operacje wyłącznie dla modułu Ważnych Informacji.

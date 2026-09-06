@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Service\Dashboard;
 
 use App\DTO\Dashboard\ChangePositionDto;
-use App\DTO\Dashboard\CreateImportantPostDto;
+use App\DTO\Dashboard\ImportantPosts\CreateImportantPostDto;
+use App\DTO\Dashboard\ImportantPosts\UpdateImportantPostDto;
 use App\DTO\Dashboard\PublishedDto;
-use App\DTO\Dashboard\UpdateImportantPostDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;

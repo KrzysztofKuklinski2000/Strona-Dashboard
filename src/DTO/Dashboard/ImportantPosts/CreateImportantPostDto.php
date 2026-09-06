@@ -2,37 +2,40 @@
 
 declare(strict_types=1);
 
-namespace App\DTO\Dashboard;
+namespace App\DTO\Dashboard\ImportantPosts;
 
 use App\DTO\DataTransferObjectInterface;
 
-readonly class UpdateImportantPostDto implements DataTransferObjectInterface
+readonly class CreateImportantPostDto implements DataTransferObjectInterface
 {
     public function __construct(
-        public int $id,
         public string $title,
         public string $description,
+        public string $created,
         public string $updated,
+        public int $status,
     ) {
     }
 
     public static function fromArray(array $data): self
     {
         return new self(
-            id: (int) ($data['id'] ?? 0),
             title: (string) ($data['title'] ?? ''),
             description: (string) ($data['description'] ?? ''),
+            created: (string) ($data['created'] ?? ''),
             updated: (string) ($data['updated'] ?? ''),
+            status: (int) ($data['status'] ?? 0),
         );
     }
 
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
+            'created' => $this->created,
             'updated' => $this->updated,
+            'status' => $this->status,
         ];
     }
 }

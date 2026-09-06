@@ -7,9 +7,9 @@ namespace App\Mapper\Dashboard;
 use App\Core\Request;
 use App\Core\Validator;
 use App\DTO\Dashboard\ChangePositionDto;
-use App\DTO\Dashboard\CreateImportantPostDto;
+use App\DTO\Dashboard\ImportantPosts\CreateImportantPostDto;
+use App\DTO\Dashboard\ImportantPosts\UpdateImportantPostDto;
 use App\DTO\Dashboard\PublishedDto;
-use App\DTO\Dashboard\UpdateImportantPostDto;
 
 readonly class ImportantPostRequestMapper
 {
