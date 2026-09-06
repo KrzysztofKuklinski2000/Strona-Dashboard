@@ -6,7 +6,7 @@ namespace App\Mapper\Dashboard;
 
 use App\Core\Request;
 use App\Core\Validator;
-use App\DTO\Dashboard\ContactDto;
+use App\DTO\Dashboard\Contact\ContactDto;
 
 readonly class ContactRequestMapper
 {

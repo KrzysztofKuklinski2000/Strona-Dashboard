@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Dashboard;
 
-use App\DTO\Dashboard\ContactDto;
+use App\DTO\Dashboard\Contact\ContactDto;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\ContactRepository;

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\DTO\Dashboard\Camp\CampDto;
-use App\DTO\Dashboard\ContactDto;
+use App\DTO\Dashboard\Contact\ContactDto;
 use App\DTO\Dashboard\FeesDto;
 use App\DTO\Dashboard\Gallery\GalleryDto;
 use App\DTO\Dashboard\Homepage\HomepagePostDto;

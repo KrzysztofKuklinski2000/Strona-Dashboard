@@ -7,7 +7,6 @@ namespace App\Factories\ControllerFactories\Dashboard;
 use App\Controller\AbstractController;
 use App\Controller\Dashboard\ContactController;
 use App\Core\ContextController;
-use App\DTO\Dashboard\ContactDto;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\ContactServiceFactory;
 use App\Mapper\Dashboard\ContactRequestMapper;

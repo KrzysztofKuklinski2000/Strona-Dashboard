@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository\Dashboard;
 
-use App\DTO\Dashboard\ContactDto;
+use App\DTO\Dashboard\Contact\ContactDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Repository\Dashboard\Traits\CanEdit;
 

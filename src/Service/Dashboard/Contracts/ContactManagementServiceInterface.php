@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Dashboard\Contracts;
 
-use App\DTO\Dashboard\ContactDto;
+use App\DTO\Dashboard\Contact\ContactDto;
 use App\Service\Contracts\ContactProviderInterface;
 
 /**
