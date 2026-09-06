@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository\Dashboard;
 
-use App\DTO\Dashboard\GalleryDto;
+use App\DTO\Dashboard\Gallery\GalleryDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Repository\Dashboard\Traits\CanCreate;
 use App\Repository\Dashboard\Traits\CanDelete;

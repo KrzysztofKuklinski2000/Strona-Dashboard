@@ -6,10 +6,10 @@ namespace App\Service\Dashboard;
 
 use App\Core\FileHandler;
 use App\DTO\Dashboard\ChangePositionDto;
-use App\DTO\Dashboard\CreateGalleryDto;
-use App\DTO\Dashboard\GalleryDto;
+use App\DTO\Dashboard\Gallery\CreateGalleryDto;
+use App\DTO\Dashboard\Gallery\GalleryDto;
+use App\DTO\Dashboard\Gallery\UpdateGalleryDto;
 use App\DTO\Dashboard\PublishedDto;
-use App\DTO\Dashboard\UpdateGalleryDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\FileException;
 use App\Exception\NotFoundException;

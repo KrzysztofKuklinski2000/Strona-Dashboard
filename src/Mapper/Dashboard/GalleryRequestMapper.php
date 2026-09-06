@@ -8,9 +8,9 @@ use App\Core\Config;
 use App\Core\Request;
 use App\Core\Validator;
 use App\DTO\Dashboard\ChangePositionDto;
-use App\DTO\Dashboard\CreateGalleryDto;
+use App\DTO\Dashboard\Gallery\CreateGalleryDto;
+use App\DTO\Dashboard\Gallery\UpdateGalleryDto;
 use App\DTO\Dashboard\PublishedDto;
-use App\DTO\Dashboard\UpdateGalleryDto;
 
 readonly class GalleryRequestMapper
 {
