@@ -18,7 +18,7 @@ use App\DTO\Dashboard\PublishedDto;
 use App\DTO\Dashboard\UpdateNewsDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
-use App\Mapper\Dashboard\NewsRequestMapper;
+use App\Mapper\Dashboard\News\NewsPostRequestMapper;
 use App\Service\Dashboard\Contracts\NewsManagementServiceInterface;
 
 class NewsController extends AbstractDashboardController
@@ -31,9 +31,9 @@ class NewsController extends AbstractDashboardController
     use HasSingleData;
 
     public function __construct(
-        public NewsManagementServiceInterface $service,
-        private readonly NewsRequestMapper    $requestMapper,
-        ContextController                     $contextController,
+        public NewsManagementServiceInterface  $service,
+        private readonly NewsPostRequestMapper $requestMapper,
+        ContextController                      $contextController,
     ) {
         parent::__construct($contextController);
     }

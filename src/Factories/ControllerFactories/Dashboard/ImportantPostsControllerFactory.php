@@ -11,7 +11,7 @@ use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\ImportantPostsServiceFactory;
 use App\Mapper\Dashboard\ChangePositionRequestMapper;
 use App\Mapper\Dashboard\DeleteRequestMapper;
-use App\Mapper\Dashboard\ImportantPostsRequestMapper;
+use App\Mapper\Dashboard\ImportantPostRequestMapper;
 use App\Mapper\Dashboard\PublicationRequestMapper;
 use PDO;
 
@@ -28,7 +28,7 @@ class ImportantPostsControllerFactory implements ControllerFactoryInterface
     {
         $service = $this->serviceFactory->createService();
 
-        $requestMapper = new ImportantPostsRequestMapper(
+        $requestMapper = new ImportantPostRequestMapper(
             $contextController->request,
             $contextController->validator,
             new ChangePositionRequestMapper(

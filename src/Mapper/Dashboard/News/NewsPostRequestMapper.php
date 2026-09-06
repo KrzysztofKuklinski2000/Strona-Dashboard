@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Mapper\Dashboard;
+namespace App\Mapper\Dashboard\News;
 
 use App\Content\NewsPostTypes;
 use App\Core\Request;
@@ -11,9 +11,12 @@ use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\CreateNewsDto;
 use App\DTO\Dashboard\PublishedDto;
 use App\DTO\Dashboard\UpdateNewsDto;
+use App\Mapper\Dashboard\ChangePositionRequestMapper;
+use App\Mapper\Dashboard\DeleteRequestMapper;
 use App\Mapper\Dashboard\Payload\PostPayloadNormalizer;
+use App\Mapper\Dashboard\PublicationRequestMapper;
 
-readonly class NewsRequestMapper
+readonly class NewsPostRequestMapper
 {
     public function __construct(
         private Request                     $request,

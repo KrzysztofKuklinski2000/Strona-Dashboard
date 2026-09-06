@@ -11,7 +11,7 @@ use App\DTO\Dashboard\CreateImportantPostDto;
 use App\DTO\Dashboard\PublishedDto;
 use App\DTO\Dashboard\UpdateImportantPostDto;
 
-readonly class ImportantPostsRequestMapper
+readonly class ImportantPostRequestMapper
 {
     public function __construct(
         private Request                     $request,

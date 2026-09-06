@@ -12,9 +12,9 @@ use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\NewsServiceFactory;
 use App\Mapper\Dashboard\ChangePositionRequestMapper;
 use App\Mapper\Dashboard\DeleteRequestMapper;
+use App\Mapper\Dashboard\News\NewsPostRequestMapper;
 use App\Mapper\Dashboard\News\Payload\ArticleNormalizer;
 use App\Mapper\Dashboard\News\Payload\EventNormalizer;
-use App\Mapper\Dashboard\NewsRequestMapper;
 use App\Mapper\Dashboard\Payload\PostPayloadNormalizer;
 use App\Mapper\Dashboard\PublicationRequestMapper;
 use PDO;
@@ -40,7 +40,7 @@ class NewsControllerFactory implements ControllerFactoryInterface
             ]
         );
 
-        $requestMapper = new NewsRequestMapper(
+        $requestMapper = new NewsPostRequestMapper(
             $contextController->request,
             $contextController->validator,
             $newsNormalizer,

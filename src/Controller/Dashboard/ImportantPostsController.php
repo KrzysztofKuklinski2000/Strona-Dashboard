@@ -17,7 +17,7 @@ use App\DTO\Dashboard\PublishedDto;
 use App\DTO\Dashboard\UpdateImportantPostDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
-use App\Mapper\Dashboard\ImportantPostsRequestMapper;
+use App\Mapper\Dashboard\ImportantPostRequestMapper;
 use App\Service\Dashboard\Contracts\ImportantPostsManagementServiceInterface;
 
 class ImportantPostsController extends AbstractDashboardController
@@ -31,7 +31,7 @@ class ImportantPostsController extends AbstractDashboardController
 
     public function __construct(
         public ImportantPostsManagementServiceInterface $service,
-        private readonly ImportantPostsRequestMapper    $importantPostsRequestMapper,
+        private readonly ImportantPostRequestMapper     $importantPostsRequestMapper,
         ContextController                               $contextController,
     ) {
         parent::__construct($contextController);
