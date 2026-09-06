@@ -6,7 +6,7 @@ namespace App\Mapper\Dashboard;
 
 use App\Core\Request;
 use App\Core\Validator;
-use App\DTO\Dashboard\CampDto;
+use App\DTO\Dashboard\Camp\CampDto;
 
 readonly class CampRequestMapper
 {

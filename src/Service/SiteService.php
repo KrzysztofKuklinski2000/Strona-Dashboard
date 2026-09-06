@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Content\HomepagePostTypes;
-use App\DTO\Dashboard\CampDto;
+use App\DTO\Dashboard\Camp\CampDto;
 use App\DTO\Dashboard\ContactDto;
 use App\DTO\Dashboard\FeesDto;
 use App\Exception\RepositoryException;

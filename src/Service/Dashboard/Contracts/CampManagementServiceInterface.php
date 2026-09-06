@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Dashboard\Contracts;
 
-use App\DTO\Dashboard\CampDto;
+use App\DTO\Dashboard\Camp\CampDto;
 
 /**
  * Interfejs definiujący operacje wyłącznie dla modułu Obozu.

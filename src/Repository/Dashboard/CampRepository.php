@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository\Dashboard;
 
-use App\DTO\Dashboard\CampDto;
+use App\DTO\Dashboard\Camp\CampDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Repository\Dashboard\Traits\CanEdit;
 

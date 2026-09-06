@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\DTO\Dashboard;
+namespace App\DTO\Dashboard\Camp;
 
 use App\DTO\DataTransferObjectInterface;
 

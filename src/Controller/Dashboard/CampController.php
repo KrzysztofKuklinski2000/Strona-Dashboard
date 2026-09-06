@@ -6,7 +6,7 @@ namespace App\Controller\Dashboard;
 
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
-use App\DTO\Dashboard\CampDto;
+use App\DTO\Dashboard\Camp\CampDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Mapper\Dashboard\CampRequestMapper;
 use App\Service\Dashboard\Contracts\CampManagementServiceInterface;

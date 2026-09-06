@@ -1,5 +1,6 @@
 <?php
-use App\DTO\Dashboard\CampDto;
+
+use App\DTO\Dashboard\Camp\CampDto;
 
 /** @var CampDto $data */
 $data = $params['data'];
