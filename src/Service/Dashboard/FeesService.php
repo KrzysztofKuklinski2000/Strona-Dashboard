@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Dashboard;
 
-use App\DTO\Dashboard\FeesDto;
+use App\DTO\Dashboard\Fees\FeesDto;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
 use App\Service\Dashboard\Contracts\FeesManagementServiceInterface;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Dashboard\Contracts;
 
-use App\DTO\Dashboard\FeesDto;
+use App\DTO\Dashboard\Fees\FeesDto;
 
 /**
  * Interfejs definiujący operacje wyłącznie dla modułu Opłat.

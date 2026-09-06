@@ -6,7 +6,7 @@ namespace App\Controller\Dashboard;
 
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
-use App\DTO\Dashboard\FeesDto;
+use App\DTO\Dashboard\Fees\FeesDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Mapper\Dashboard\FeesRequestMapper;
 use App\Service\Dashboard\Contracts\FeesManagementServiceInterface;

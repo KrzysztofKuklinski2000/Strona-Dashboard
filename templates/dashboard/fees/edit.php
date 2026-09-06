@@ -1,6 +1,6 @@
 <?php
 
-use App\DTO\Dashboard\FeesDto;
+use App\DTO\Dashboard\Fees\FeesDto;
 
 /** @var FeesDto $data */
 $data = $params['data'];

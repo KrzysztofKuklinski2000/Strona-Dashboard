@@ -6,7 +6,7 @@ namespace App\Mapper\Dashboard;
 
 use App\Core\Request;
 use App\Core\Validator;
-use App\DTO\Dashboard\FeesDto;
+use App\DTO\Dashboard\Fees\FeesDto;
 
 readonly class FeesRequestMapper
 {

@@ -7,7 +7,7 @@ namespace App\Service;
 use App\Content\HomepagePostTypes;
 use App\DTO\Dashboard\Camp\CampDto;
 use App\DTO\Dashboard\Contact\ContactDto;
-use App\DTO\Dashboard\FeesDto;
+use App\DTO\Dashboard\Fees\FeesDto;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\TimetableRepository;
