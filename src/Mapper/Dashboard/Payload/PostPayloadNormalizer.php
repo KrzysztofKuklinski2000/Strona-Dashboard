@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Mapper\Dashboard\News;
+namespace App\Mapper\Dashboard\Payload;
 
 use App\Core\Validator;
-use App\Mapper\Dashboard\Payload\PayloadNormalizerInterface;
-
-final readonly class NewsPostPayloadNormalizer
+final readonly class PostPayloadNormalizer
 {
     /**
      * @param array<string, PayloadNormalizerInterface> $normalizers

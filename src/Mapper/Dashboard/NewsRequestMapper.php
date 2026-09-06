@@ -11,14 +11,14 @@ use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\CreateNewsDto;
 use App\DTO\Dashboard\PublishedDto;
 use App\DTO\Dashboard\UpdateNewsDto;
-use App\Mapper\Dashboard\News\NewsPostPayloadNormalizer;
+use App\Mapper\Dashboard\Payload\PostPayloadNormalizer;
 
 readonly class NewsRequestMapper
 {
     public function __construct(
         private Request                     $request,
         private Validator                   $validator,
-        private NewsPostPayloadNormalizer   $normalizer,
+        private PostPayloadNormalizer       $normalizer,
         private ChangePositionRequestMapper $changePositionRequestMapper,
         private PublicationRequestMapper    $publicationRequestMapper,
         private DeleteRequestMapper         $deleteRequestMapper,
@@ -36,13 +36,13 @@ readonly class NewsRequestMapper
             required: true,
         );
 
-        if(!NewsPostTypes::isAllowed((string) $postType)) {
+        if (!NewsPostTypes::isAllowed((string)$postType)) {
             $postType = NewsPostTypes::ARTICLE;
         }
 
         $rawPayload = $this->request->getFormParam('payload') ?? [];
 
-        if(!is_array($rawPayload)) {
+        if (!is_array($rawPayload)) {
             $rawPayload = [];
         }
 
@@ -73,13 +73,13 @@ readonly class NewsRequestMapper
             required: true,
         );
 
-        if(!NewsPostTypes::isAllowed((string) $postType)) {
+        if (!NewsPostTypes::isAllowed((string)$postType)) {
             $postType = NewsPostTypes::ARTICLE;
         }
 
         $rawPayload = $this->request->getFormParam('payload') ?? [];
 
-        if(!is_array($rawPayload)) {
+        if (!is_array($rawPayload)) {
             $rawPayload = [];
         }
 

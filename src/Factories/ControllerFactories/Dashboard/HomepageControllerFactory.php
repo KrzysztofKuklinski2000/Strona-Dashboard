@@ -12,12 +12,12 @@ use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\HomepageServiceFactory;
 use App\Mapper\Dashboard\ChangePositionRequestMapper;
 use App\Mapper\Dashboard\DeleteRequestMapper;
-use App\Mapper\Dashboard\Homepage\HomepagePostPayloadNormalizer;
 use App\Mapper\Dashboard\Homepage\HomepagePostRequestMapper;
 use App\Mapper\Dashboard\Homepage\Payload\CardsGridNormalizer;
 use App\Mapper\Dashboard\Homepage\Payload\ImageTextListNormalizer;
 use App\Mapper\Dashboard\Homepage\Payload\ModuleFeedNormalizer;
 use App\Mapper\Dashboard\Homepage\Payload\SimpleTextNormalizer;
+use App\Mapper\Dashboard\Payload\PostPayloadNormalizer;
 use App\Mapper\Dashboard\PublicationRequestMapper;
 use PDO;
 
@@ -33,7 +33,7 @@ class HomepageControllerFactory implements ControllerFactoryInterface
         $serviceFactory = new HomepageServiceFactory($this->pdo, $contextController->config);
         $service = $serviceFactory->createService();
 
-        $payloadNormalizer = new HomepagePostPayloadNormalizer(
+        $payloadNormalizer = new PostPayloadNormalizer(
             validator: $contextController->validator,
             normalizers: [
                 HomepagePostTypes::SIMPLE_TEXT => new SimpleTextNormalizer(

@@ -14,19 +14,21 @@ use App\DTO\Dashboard\PublishedDto;
 use App\DTO\Dashboard\UpdateHomepagePostDto;
 use App\Mapper\Dashboard\ChangePositionRequestMapper;
 use App\Mapper\Dashboard\DeleteRequestMapper;
+use App\Mapper\Dashboard\Payload\PostPayloadNormalizer;
 use App\Mapper\Dashboard\PublicationRequestMapper;
 
 readonly class HomepagePostRequestMapper
 {
     public function __construct(
-        private Request                       $request,
-        private Validator                     $validator,
-        private Config                        $config,
-        private HomepagePostPayloadNormalizer $payloadNormalizer,
-        private ChangePositionRequestMapper   $changePositionRequestMapper,
-        private PublicationRequestMapper      $publicationRequestMapper,
-        private DeleteRequestMapper           $deleteRequestMapper,
-    ) {
+        private Request                     $request,
+        private Validator                   $validator,
+        private Config                      $config,
+        private PostPayloadNormalizer       $payloadNormalizer,
+        private ChangePositionRequestMapper $changePositionRequestMapper,
+        private PublicationRequestMapper    $publicationRequestMapper,
+        private DeleteRequestMapper         $deleteRequestMapper,
+    )
+    {
     }
 
     public function mapCreate(): CreateHomepagePostDto
