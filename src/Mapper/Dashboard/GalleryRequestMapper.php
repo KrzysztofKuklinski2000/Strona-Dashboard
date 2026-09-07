@@ -26,30 +26,12 @@ readonly class GalleryRequestMapper
 
     public function mapCreate(): CreateGalleryDto
     {
+        $currentDate = date('Y-m-d');
+
         $data = [
-            'category' => $this->validator->validate(
-                name: 'category',
-                value: $this->request->getFormParam('category'),
-                required: true,
-                maxLength: 8
-            ),
-
-            'description' => $this->validator->validate(
-                name: 'description',
-                value: $this->request->getFormParam('description'),
-                required: true,
-                maxLength: 50
-            ),
-
-            'image_name' => $this->validator->validateFile(
-                field: 'image_name',
-                file: $this->request->getFile('image_name'),
-                maxSize: $this->config->getMaxUploadSize()
-            ),
-
-            'created_at' => date('Y-m-d'),
-
-            'updated_at' => date('Y-m-d'),
+            ...$this->mapCommonFields(imageRequired: true),
+            'created_at' => $currentDate,
+            'updated_at' => $currentDate,
         ];
 
         return CreateGalleryDto::fromArray($data);
@@ -64,28 +46,7 @@ readonly class GalleryRequestMapper
                 required: true,
                 type: 'int'
             ),
-
-            'category' => $this->validator->validate(
-                name: 'category',
-                value: $this->request->getFormParam('category'),
-                required: true,
-                maxLength: 8
-            ),
-
-            'description' => $this->validator->validate(
-                name: 'description',
-                value: $this->request->getFormParam('description'),
-                required: true,
-                maxLength: 50
-            ),
-
-            'image_name' => $this->validator->validateFile(
-                field: 'image_name',
-                file: $this->request->getFile('image_name'),
-                maxSize: $this->config->getMaxUploadSize(),
-                required: false
-            ),
-
+            ...$this->mapCommonFields(imageRequired: false),
             'updated_at' => date('Y-m-d'),
         ];
 
@@ -105,5 +66,30 @@ readonly class GalleryRequestMapper
     public function mapDelete(): ?int
     {
         return $this->deleteRequestMapper->map();
+    }
+
+    private function mapCommonFields(bool $imageRequired): array {
+        return [
+            'category' => $this->validator->validate(
+                name: 'category',
+                value: $this->request->getFormParam('category'),
+                required: true,
+                maxLength: 8
+            ),
+
+            'description' => $this->validator->validate(
+                name: 'description',
+                value: $this->request->getFormParam('description'),
+                required: true,
+                maxLength: 50
+            ),
+
+            'image_name' => $this->validator->validateFile(
+                field: 'image_name',
+                file: $this->request->getFile('image_name'),
+                maxSize: $this->config->getMaxUploadSize(),
+                required: $imageRequired,
+            ),
+        ];
     }
 }
