@@ -32,23 +32,8 @@ readonly class NewsPostRequestMapper
     public function mapCreate(): CreateNewsDto
     {
         $currentDate = date('Y-m-d');
-
-        $postType = $this->validator->validate(
-            name: 'postType',
-            value: $this->request->getFormParam('postType'),
-            required: true,
-        );
-
-        if (!NewsPostTypes::isAllowed((string)$postType)) {
-            $postType = NewsPostTypes::ARTICLE;
-        }
-
-        $rawPayload = $this->request->getFormParam('payload') ?? [];
-
-        if (!is_array($rawPayload)) {
-            $rawPayload = [];
-        }
-
+        $postType = $this->resolvePostType();
+        $rawPayload = $this->getRawPayload();
         $payload = $this->normalizer->normalize($postType, $rawPayload);
 
         $data = [
@@ -70,22 +55,8 @@ readonly class NewsPostRequestMapper
 
     public function mapUpdate(): UpdateNewsDto
     {
-        $postType = $this->validator->validate(
-            name: 'postType',
-            value: $this->request->getFormParam('postType'),
-            required: true,
-        );
-
-        if (!NewsPostTypes::isAllowed((string)$postType)) {
-            $postType = NewsPostTypes::ARTICLE;
-        }
-
-        $rawPayload = $this->request->getFormParam('payload') ?? [];
-
-        if (!is_array($rawPayload)) {
-            $rawPayload = [];
-        }
-
+        $postType = $this->resolvePostType();
+        $rawPayload = $this->getRawPayload();
         $payload = $this->normalizer->normalize($postType, $rawPayload);
 
         $data = [
@@ -122,5 +93,28 @@ readonly class NewsPostRequestMapper
     public function mapDelete(): ?int
     {
         return $this->deleteRequestMapper->map();
+    }
+
+    private function resolvePostType(): string
+    {
+
+        $postType = $this->validator->validate(
+            name: 'postType',
+            value: $this->request->getFormParam('postType'),
+            required: true,
+        );
+
+        if (!NewsPostTypes::isAllowed((string)$postType)) {
+            return NewsPostTypes::ARTICLE;
+        }
+
+        return $postType;
+    }
+
+    private function getRawPayload(): array
+    {
+        $rawPayload = $this->request->getFormParam('payload') ?? [];
+
+        return is_array($rawPayload) ? $rawPayload : [];
     }
 }
