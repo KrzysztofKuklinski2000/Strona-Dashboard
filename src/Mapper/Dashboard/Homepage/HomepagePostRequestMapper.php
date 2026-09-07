@@ -34,16 +34,8 @@ readonly class HomepagePostRequestMapper
     public function mapCreate(): CreateHomepagePostDto
     {
 
-        $type = $this->validator->validate(
-            name: 'postType',
-            value: $this->request->getFormParam('postType'),
-            required: true,
-        );
-
-        if (!HomepagePostTypes::isAllowed((string)$type)) {
-            $type = HomepagePostTypes::SIMPLE_TEXT;
-        }
-
+        $type = $this->resolvePostType();
+        $rawPayload = $this->getRawPayload();
         $imageFile = null;
 
         if ($type === HomepagePostTypes::IMAGE_TEXT_LIST) {
@@ -54,13 +46,8 @@ readonly class HomepagePostRequestMapper
             ) ?? null;
         }
 
-        $rawPayload = $this->request->getFormParam('payload') ?? [];
-
-        if (!is_array($rawPayload)) {
-            $rawPayload = [];
-        }
-
         $payload = $this->payloadNormalizer->normalize($type, $rawPayload);
+        $currentDate = date('Y-m-d');
 
         $data = [
 
@@ -72,9 +59,9 @@ readonly class HomepagePostRequestMapper
                 maxLength: 60
             ),
 
-            'created' => date('Y-m-d'),
+            'created' => $currentDate,
 
-            'updated' => date('Y-m-d'),
+            'updated' => $currentDate,
 
             'status' => 1,
 
@@ -90,22 +77,8 @@ readonly class HomepagePostRequestMapper
 
     public function mapUpdate(): UpdateHomepagePostDto
     {
-        $type = $this->validator->validate(
-            name: 'postType',
-            value: $this->request->getFormParam('postType'),
-            required: true,
-        );
-
-        if (!HomepagePostTypes::isAllowed((string)$type)) {
-            $type = HomepagePostTypes::SIMPLE_TEXT;
-        }
-
-        $rawPayload = $this->request->getFormParam('payload') ?? [];
-
-        if (!is_array($rawPayload)) {
-            $rawPayload = [];
-        }
-
+        $type = $this->resolvePostType();
+        $rawPayload = $this->getRawPayload();
         $imageFile = null;
 
         if ($type === HomepagePostTypes::IMAGE_TEXT_LIST) {
@@ -166,5 +139,25 @@ readonly class HomepagePostRequestMapper
     public function mapDelete(): ?int
     {
         return $this->deleteRequestMapper->map();
+    }
+
+    private function resolvePostType(): string {
+        $type = $this->validator->validate(
+            name: 'postType',
+            value: $this->request->getFormParam('postType'),
+            required: true,
+        );
+
+        if (!HomepagePostTypes::isAllowed((string)$type)) {
+            return HomepagePostTypes::SIMPLE_TEXT;
+        }
+
+        return $type;
+    }
+
+    private function getRawPayload(): array {
+        $rawPayload = $this->request->getFormParam('payload');
+
+        return is_array($rawPayload) ? $rawPayload : [];
     }
 }
