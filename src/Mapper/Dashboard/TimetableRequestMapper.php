@@ -22,51 +22,7 @@ readonly class TimetableRequestMapper
 
     public function mapCreate(): CreateTimetableDto
     {
-        $data = [
-            'day' => $this->validator->validate(
-                name: 'day',
-                value: $this->request->getFormParam('day'),
-                required: true,
-                maxLength: 20
-            ),
-
-            'city' => $this->validator->validate(
-                name: 'city',
-                value: $this->request->getFormParam('city'),
-                required: true,
-                maxLength: 40
-            ),
-
-            'advancement_group' => $this->validator->validate(
-                name: 'group',
-                value: $this->request->getFormParam('group'),
-                required: true,
-                maxLength: 40
-            ),
-
-            'place' => $this->validator->validate(
-                name: 'place',
-                value: $this->request->getFormParam('place'),
-                required: true,
-                maxLength: 100
-            ),
-
-            'start' => $this->validator->validate(
-                name: 'startTime',
-                value: $this->request->getFormParam('startTime'),
-                required: true,
-            ),
-
-            'end' => $this->validator->validate(
-                name: 'endTime',
-                value: $this->request->getFormParam('endTime'),
-                required: true,
-            ),
-
-            'is_notify' => $this->request->getFormParam('is_notify')
-        ];
-
-        return CreateTimetableDto::fromArray($data);
+        return CreateTimetableDto::fromArray($this->mapCommonFields());
     }
 
     public function mapUpdate(): UpdateTimetableDto
@@ -78,48 +34,7 @@ readonly class TimetableRequestMapper
                 required: true,
                 type: 'int'
             ),
-
-            'day' => $this->validator->validate(
-                name: 'day',
-                value: $this->request->getFormParam('day'),
-                required: true,
-                maxLength: 20
-            ),
-
-            'city' => $this->validator->validate(
-                name: 'city',
-                value: $this->request->getFormParam('city'),
-                required: true,
-                maxLength: 40
-            ),
-
-            'advancement_group' => $this->validator->validate(
-                name: 'group',
-                value: $this->request->getFormParam('group'),
-                required: true,
-                maxLength: 40
-            ),
-
-            'place' => $this->validator->validate(
-                name: 'place',
-                value: $this->request->getFormParam('place'),
-                required: true,
-                maxLength: 100
-            ),
-
-            'start' => $this->validator->validate(
-                name: 'startTime',
-                value: $this->request->getFormParam('startTime'),
-                required: true,
-            ),
-
-            'end' => $this->validator->validate(
-                name: 'endTime',
-                value: $this->request->getFormParam('endTime'),
-                required: true,
-            ),
-
-            'is_notify' => $this->request->getFormParam('is_notify')
+            ...$this->mapCommonFields(),
         ];
 
         return UpdateTimetableDto::fromArray($data);
@@ -135,4 +50,50 @@ readonly class TimetableRequestMapper
         return $this->deleteRequestMapper->map();
     }
 
+    private function mapCommonFields(): array {
+
+        return [
+            'day' => $this->validator->validate(
+                name: 'day',
+                value: $this->request->getFormParam('day'),
+                required: true,
+                maxLength: 20
+            ),
+
+            'city' => $this->validator->validate(
+                name: 'city',
+                value: $this->request->getFormParam('city'),
+                required: true,
+                maxLength: 40
+            ),
+
+            'advancement_group' => $this->validator->validate(
+                name: 'group',
+                value: $this->request->getFormParam('group'),
+                required: true,
+                maxLength: 40
+            ),
+
+            'place' => $this->validator->validate(
+                name: 'place',
+                value: $this->request->getFormParam('place'),
+                required: true,
+                maxLength: 100
+            ),
+
+            'start' => $this->validator->validate(
+                name: 'startTime',
+                value: $this->request->getFormParam('startTime'),
+                required: true,
+            ),
+
+            'end' => $this->validator->validate(
+                name: 'endTime',
+                value: $this->request->getFormParam('endTime'),
+                required: true,
+            ),
+
+            'is_notify' => $this->request->getFormParam('is_notify')
+        ];
+    }
 }
