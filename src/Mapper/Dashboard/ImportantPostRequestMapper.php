@@ -27,18 +27,7 @@ readonly class ImportantPostRequestMapper
         $currentDate = date('Y-m-d');
 
         $data = [
-            'title' => $this->validator->validate(
-                name: 'postTitle',
-                value: $this->request->getFormParam('postTitle'),
-                required: true,
-                maxLength: 60,
-            ),
-            'description' => $this->validator->validate(
-                name: 'postDescription',
-                value: $this->request->getFormParam('postDescription'),
-                required: true,
-                maxLength: 1000,
-            ),
+            ...$this->mapCommonFields(),
             'created' => $currentDate,
             'updated' => $currentDate,
             'status' => 1,
@@ -56,19 +45,8 @@ readonly class ImportantPostRequestMapper
                 required: true,
                 type: 'int',
             ),
-            'title' => $this->validator->validate(
-                name: 'postTitle',
-                value: $this->request->getFormParam('postTitle'),
-                required: true,
-                maxLength: 60,
-            ),
-            'description' => $this->validator->validate(
-                name: 'postDescription',
-                value: $this->request->getFormParam('postDescription'),
-                required: true,
-                maxLength: 1000,
-            ),
             'updated' => date('Y-m-d'),
+            ...$this->mapCommonFields(),
         ];
 
         return UpdateImportantPostDto::fromArray($data);
@@ -87,5 +65,22 @@ readonly class ImportantPostRequestMapper
     public function mapDelete(): ?int
     {
         return $this->deleteRequestMapper->map();
+    }
+
+    private function mapCommonFields(): array {
+        return [
+            'title' => $this->validator->validate(
+                name: 'postTitle',
+                value: $this->request->getFormParam('postTitle'),
+                required: true,
+                maxLength: 60,
+            ),
+            'description' => $this->validator->validate(
+                name: 'postDescription',
+                value: $this->request->getFormParam('postDescription'),
+                required: true,
+                maxLength: 1000,
+            ),
+        ];
     }
 }
