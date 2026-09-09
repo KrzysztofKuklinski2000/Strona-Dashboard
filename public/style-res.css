@@ -135,6 +135,20 @@
 		padding: 30px;
 	}
 
+	.news-results-card--featured {
+		grid-column: 1 / -1;
+		display: grid;
+		grid-template-columns: minmax(280px, .82fr) minmax(0, 1.18fr);
+	}
+
+	.news-results-card--featured .news-results-card__header {
+		align-content: center;
+	}
+
+	.news-results-card--featured .news-results-card__body {
+		padding: 30px;
+	}
+
 	.timetable-page__inner {
 		padding-top: 72px;
 		padding-bottom: 96px;
@@ -811,6 +825,10 @@
 	}
 
 	.news-event-card--featured {
+		grid-column: span 2;
+	}
+
+	.news-results-card--featured {
 		grid-column: span 2;
 	}
 
