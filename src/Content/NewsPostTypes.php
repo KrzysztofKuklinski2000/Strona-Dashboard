@@ -6,6 +6,7 @@ final class NewsPostTypes
 {
     public const ARTICLE = 'article';
     public const EVENT = 'event';
+    public const COMPETITION_RESULTS = 'competition_results';
 
     private const TYPES = [
         self::ARTICLE => [
@@ -15,6 +16,10 @@ final class NewsPostTypes
         self::EVENT => [
             'label' => 'Wydarzenie',
             'partial' => 'event.php',
+        ],
+        self::COMPETITION_RESULTS => [
+            'label' => 'Wyniki zawodów',
+            'partial' => 'competition_results.php',
         ]
     ];
 

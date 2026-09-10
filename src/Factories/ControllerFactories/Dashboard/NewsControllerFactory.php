@@ -14,6 +14,7 @@ use App\Mapper\Dashboard\ChangePositionRequestMapper;
 use App\Mapper\Dashboard\DeleteRequestMapper;
 use App\Mapper\Dashboard\News\NewsPostRequestMapper;
 use App\Mapper\Dashboard\News\Payload\ArticleNormalizer;
+use App\Mapper\Dashboard\News\Payload\CompetitionResultsNormalizer;
 use App\Mapper\Dashboard\News\Payload\EventNormalizer;
 use App\Mapper\Dashboard\Payload\PostPayloadNormalizer;
 use App\Mapper\Dashboard\PublicationRequestMapper;
@@ -37,6 +38,7 @@ class NewsControllerFactory implements ControllerFactoryInterface
             normalizers: [
                 NewsPostTypes::ARTICLE => new ArticleNormalizer($contextController->validator),
                 NewsPostTypes::EVENT => new EventNormalizer($contextController->validator),
+                NewsPostTypes::COMPETITION_RESULTS => new CompetitionResultsNormalizer($contextController->validator),
             ]
         );
 
