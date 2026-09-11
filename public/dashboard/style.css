@@ -1234,6 +1234,10 @@ main {
 	gap: 18px;
 }
 
+.content-container .news-results-form [hidden] {
+	display: none;
+}
+
 .content-container .news-results-form textarea {
 	height: 130px;
 	margin: 0;

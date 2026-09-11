@@ -29,6 +29,7 @@ function syncPostTypeForms() {
     });
 
     syncCardRemoveButtons();
+    syncResultButtons();
     syncImageTextOptionalSections();
 }
 
@@ -99,6 +100,74 @@ if (cardsContainer && cardTemplate && addCardButton) {
     });
 
     reindexCards();
+}
+
+const resultsContainer = document.querySelector('[data-results-list]');
+const resultTemplate = document.querySelector('[data-result-template]');
+const addResultButton = document.querySelector('[data-add-result]');
+
+function getResults() {
+    return resultsContainer ? [...resultsContainer.querySelectorAll('[data-result-row]')] : [];
+}
+
+function getMaxResults() {
+    return Number(resultsContainer?.dataset.maxResults) || 20;
+}
+
+function syncResultButtons() {
+    const results = getResults();
+    const typeForm = resultsContainer?.closest('[data-post-type-form]');
+    const isInactive = Boolean(typeForm?.hidden);
+
+    results.forEach((result) => {
+        result.querySelector('[data-remove-result]').disabled = results.length <= 1 || isInactive;
+    });
+
+    if (addResultButton) {
+        addResultButton.disabled = isInactive || results.length >= getMaxResults();
+    }
+}
+
+function reindexResults() {
+    getResults().forEach((result, index) => {
+        const number = index + 1;
+
+        result.querySelector('[data-result-label]').textContent = `Wynik ${number}`;
+        result.querySelector('[data-remove-result]').setAttribute('aria-label', `Usuń wynik ${number}`);
+
+        result.querySelectorAll('[data-result-field]').forEach((field) => {
+            field.name = `payload[results][${index}][${field.dataset.resultField}]`;
+        });
+    });
+
+    syncResultButtons();
+}
+
+if (resultsContainer && resultTemplate && addResultButton) {
+    addResultButton.addEventListener('click', () => {
+        if (getResults().length >= getMaxResults()) {
+            return;
+        }
+
+        const newResult = resultTemplate.content.firstElementChild.cloneNode(true);
+
+        resultsContainer.appendChild(newResult);
+        reindexResults();
+        newResult.querySelector('input')?.focus();
+    });
+
+    resultsContainer.addEventListener('click', (event) => {
+        const removeButton = event.target.closest('[data-remove-result]');
+
+        if (!removeButton || getResults().length <= 1) {
+            return;
+        }
+
+        removeButton.closest('[data-result-row]').remove();
+        reindexResults();
+    });
+
+    reindexResults();
 }
 
 const listSection = document.querySelector('[data-list-section]');

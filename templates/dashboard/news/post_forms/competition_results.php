@@ -5,6 +5,7 @@ $payload = isset($payload) && is_array($payload)
 
 $results = is_array($payload['results'] ?? null) ? $payload['results'] : [];
 $link = is_array($payload['link'] ?? null) ? $payload['link'] : [];
+$hasLink = !empty($link['label']) || !empty($link['url']);
 
 if ($results === []) {
     $results = array_fill(0, 3, [
@@ -144,10 +145,17 @@ if ($results === []) {
             </button>
         </fieldset>
 
-        <fieldset class="cards-grid-form__card news-results-form__link">
+        <fieldset
+            class="cards-grid-form__card news-results-form__link"
+            data-link-section
+            <?= !$hasLink ? 'hidden' : '' ?>
+        >
             <legend>
                 <span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
                 <strong>Przycisk <small>(opcjonalnie)</small></strong>
+                <button type="button" class="cards-grid-form__remove" data-remove-link aria-label="Usuń przycisk">
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                </button>
             </legend>
 
             <div class="news-results-form__link-fields">
@@ -176,6 +184,11 @@ if ($results === []) {
             <p class="validation-error"><?= e($errors['payload.link.label'] ?? '') ?></p>
             <p class="validation-error"><?= e($errors['payload.link.url'] ?? '') ?></p>
         </fieldset>
+
+        <button type="button" class="cards-grid-form__add" data-add-link <?= $hasLink ? 'hidden' : '' ?>>
+            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+            Dodaj przycisk
+        </button>
     </div>
 </div>
 
