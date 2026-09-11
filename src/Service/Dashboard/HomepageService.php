@@ -16,7 +16,7 @@ use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\HomepageRepository;
 use App\Service\Dashboard\Contracts\HomepageManagementServiceInterface;
-use App\Service\Dashboard\Homepage\ImageTextListImageProcessor;
+use App\Service\Dashboard\Payload\PayloadImageProcessor;
 use App\Service\Dashboard\Traits\CanEdit;
 use App\Service\Dashboard\Traits\CanPublished;
 use App\Service\Dashboard\Traits\PositionableTrait;
@@ -35,8 +35,8 @@ class HomepageService extends AbstractDashboardService implements HomepageManage
     private const NEW_POST_POSITION = 2;
 
     public function __construct(
-        HomepageRepository                           $repository,
-        private readonly ImageTextListImageProcessor $processor,
+        HomepageRepository                     $repository,
+        private readonly PayloadImageProcessor $processor,
     ) {
         parent::__construct($repository);
     }

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Dashboard\Homepage;
+namespace App\Service\Dashboard\Payload;
 
 use App\Core\FileHandler;
 use App\Exception\FileException;
 use JsonException;
 
-final readonly class ImageTextListImageProcessor
+final readonly class PayloadImageProcessor
 {
     public function __construct(
         private FileHandler $fileHandler,
