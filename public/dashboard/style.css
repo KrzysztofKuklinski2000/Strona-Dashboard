@@ -1283,6 +1283,23 @@ main {
 	grid-template-columns: minmax(190px, .4fr) minmax(0, 1.6fr);
 }
 
+.news-results-details > div,
+.news-results-details__result > div {
+	min-width: 0;
+}
+
+.news-results-details .homepage-post-details__description,
+.news-results-details__result p,
+.news-results-details__result small {
+	overflow-wrap: anywhere;
+	word-break: break-word;
+}
+
+.news-results-details .homepage-post-details__description {
+	width: 100%;
+	max-width: none;
+}
+
 .news-results-details__summary {
 	min-height: 210px;
 	display: flex;
