@@ -20,18 +20,16 @@ use App\Mapper\Dashboard\Payload\PostPayloadNormalizer;
 use App\Mapper\Dashboard\PublicationRequestMapper;
 use PDO;
 
-class NewsControllerFactory implements ControllerFactoryInterface
+readonly class NewsControllerFactory implements ControllerFactoryInterface
 {
-    private NewsServiceFactory $serviceFactory;
 
-    public function __construct(PDO $pdo)
+    public function __construct(private PDO $pdo)
     {
-        $this->serviceFactory = new NewsServiceFactory($pdo);
     }
 
     public function createController(ContextController $contextController): AbstractController
     {
-        $service = $this->serviceFactory->createService();
+        $service = (new NewsServiceFactory($this->pdo, $contextController->config))->createService();
 
         $newsNormalizer = new PostPayloadNormalizer(
             validator: $contextController->validator,
