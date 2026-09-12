@@ -13,7 +13,9 @@ readonly class UpdateNewsDto implements DataTransferObjectInterface
         public string $title,
         public string $updated,
         public string $type,
-        public string $payload
+        public string $payload,
+        public ?array $imageFile,
+        public bool $removeImage
     ) {
     }
 
@@ -25,6 +27,8 @@ readonly class UpdateNewsDto implements DataTransferObjectInterface
             updated: (string) ($data['updated'] ?? ''),
             type: (string) ($data['type'] ?? ''),
             payload: (string) ($data['payload'] ?? ''),
+            imageFile: $data['imageFile'] ?? null,
+            removeImage: (bool) ($data['removeImage'] ?? false)
         );
     }
 

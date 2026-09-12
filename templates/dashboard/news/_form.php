@@ -26,7 +26,7 @@ $payload = $oldInput['payload']
 
 <h3 class="dashboard-action-header"><?= e($formTitle ?? 'Nowa aktualność') ?></h3>
 
-<form class="homepage-post-form news-post-form" action="<?= e($action ?? '') ?>" method="POST">
+<form class="homepage-post-form news-post-form" action="<?= e($action ?? '') ?>" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="csrf_token" value="<?= e($csrf ?? '') ?>">
 
     <section class="homepage-post-form__type-panel">

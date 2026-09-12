@@ -14,7 +14,8 @@ readonly class CreateNewsDto implements DataTransferObjectInterface
         public string $updated,
         public int $status,
         public string $type,
-        public string $payload
+        public string $payload,
+        public ?array $imageFile,
     ) {
     }
 
@@ -26,7 +27,8 @@ readonly class CreateNewsDto implements DataTransferObjectInterface
             updated: (string) ($data['updated'] ?? ''),
             status: (int) ($data['status'] ?? 0),
             type: (string)$data['type'],
-            payload: (string)$data['payload']
+            payload: (string)$data['payload'],
+            imageFile: $data['imageFile'] ?? null,
         );
     }
 
@@ -38,7 +40,7 @@ readonly class CreateNewsDto implements DataTransferObjectInterface
             'updated' => $this->updated,
             'status' => $this->status,
             'type' => $this->type,
-            'payload' => $this->payload
+            'payload' => $this->payload,
         ];
     }
 }

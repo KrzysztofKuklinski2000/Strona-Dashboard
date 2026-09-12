@@ -45,6 +45,7 @@ class NewsControllerFactory implements ControllerFactoryInterface
         $requestMapper = new NewsPostRequestMapper(
             $contextController->request,
             $contextController->validator,
+            $contextController->config,
             $newsNormalizer,
             new ChangePositionRequestMapper(
                 $contextController->request,

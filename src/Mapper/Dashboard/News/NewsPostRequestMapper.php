@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Mapper\Dashboard\News;
 
 use App\Content\NewsPostTypes;
+use App\Core\Config;
 use App\Core\Request;
 use App\Core\Validator;
 use App\DTO\Dashboard\ChangePositionDto;
@@ -21,6 +22,7 @@ readonly class NewsPostRequestMapper
     public function __construct(
         private Request                     $request,
         private Validator                   $validator,
+        private Config                      $config,
         private PostPayloadNormalizer       $normalizer,
         private ChangePositionRequestMapper $changePositionRequestMapper,
         private PublicationRequestMapper    $publicationRequestMapper,
@@ -48,6 +50,7 @@ readonly class NewsPostRequestMapper
             'status' => 1,
             'type' => $postType,
             'payload' => $payload,
+            'imageFile' => $this->getImage($postType)
         ];
 
         return CreateNewsDto::fromArray($data);
@@ -75,6 +78,8 @@ readonly class NewsPostRequestMapper
             'updated' => date('Y-m-d'),
             'type' => $postType,
             'payload' => $payload,
+            'imageFile' => $this->getImage($postType),
+            'removeImage' => $this->request->getFormParam('removeImage') === '1',
         ];
 
         return UpdateNewsDto::fromArray($data);
@@ -116,5 +121,18 @@ readonly class NewsPostRequestMapper
         $rawPayload = $this->request->getFormParam('payload') ?? [];
 
         return is_array($rawPayload) ? $rawPayload : [];
+    }
+
+    private function getImage(string $type): ?array {
+        if(NewsPostTypes::supportsImage($type)) {
+            return $this->validator->validateFile(
+                field: 'postImage',
+                file: $this->request->getFile('postImage'),
+                maxSize: $this->config->getMaxUploadSize(),
+                required: false,
+            );
+        }
+
+        return null;
     }
 }
