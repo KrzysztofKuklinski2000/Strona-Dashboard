@@ -11,15 +11,18 @@ final class NewsPostTypes
     private const TYPES = [
         self::ARTICLE => [
             'label' => 'Zwykły artykół',
-            'partial' => 'article.php'
+            'partial' => 'article.php',
+            'supports_image' => true,
         ],
         self::EVENT => [
             'label' => 'Wydarzenie',
             'partial' => 'event.php',
+            'supports_image' => false,
         ],
         self::COMPETITION_RESULTS => [
             'label' => 'Wyniki zawodów',
             'partial' => 'competition_results.php',
+            'supports_image' => false,
         ]
     ];
 
@@ -42,5 +45,9 @@ final class NewsPostTypes
     public static function partial(string $type): ?string
     {
         return self::TYPES[$type]['partial'] ?? null;
+    }
+
+    public static function supportsImage(string $type): bool {
+        return (bool) (self::TYPES[$type]['supports_image'] ?? false);
     }
 }

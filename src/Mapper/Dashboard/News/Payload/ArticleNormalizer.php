@@ -13,6 +13,23 @@ final readonly class ArticleNormalizer implements PayloadNormalizerInterface
     }
 
     public function normalize(array $rawPayload): array {
+        $rawImage = $rawPayload['image'] ?? [];
+
+        if(!is_array($rawImage)) {
+            $this->validator->addError(
+                name: 'payload.image',
+                message: 'Nieprawidłowe dane obrazu.',
+            );
+
+            $rawImage = [];
+        }
+
+        $alt = $this->validator->validate(
+            name: 'payload.image.alt',
+            value: $rawImage['alt'] ?? null,
+            maxLength: 160,
+        );
+
         $description = $this->validator->validate(
             name: 'payload.description',
             value: $rawPayload['description'] ?? null,
@@ -22,6 +39,11 @@ final readonly class ArticleNormalizer implements PayloadNormalizerInterface
 
         return [
             'description' => $description === null ? '' : (string) $description,
+            'image' => [
+                'src' => '',
+                'alt' => $alt === null ? '' : (string)$alt,
+            ],
         ];
     }
+
 }
