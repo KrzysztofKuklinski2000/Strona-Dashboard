@@ -214,11 +214,47 @@ class NewsService extends AbstractDashboardService implements NewsManagementServ
         $this->published(self::TABLE, $data);
     }
 
+    /**
+     * @throws ServiceException
+     * @throws NotFoundException
+     */
     public function deleteNews(int $id): void
     {
+        /** @var NewsDto $post */
+        $post = $this->getPost($id);
+
+        try {
+            $imageName = $this->imageProcessor->extractImageName($post->payload);
+        }catch (JsonException $e) {
+            throw new ServiceException(
+                'Nie udało się odczytać danych obrazu.',
+                500,
+                $e,
+            );
+        }
+
         $this->delete(self::TABLE, $id);
+
+        if($imageName === null) {
+            return;
+        }
+
+        try {
+            $this->imageProcessor->deleteImage($imageName);
+        }catch (FileException $e) {
+            throw new ServiceException(
+                'Post został usunięty, ale nie udało się usunąć pliku obrazu.',
+                500,
+                $e
+            );
+        }
+
+
     }
 
+    /**
+     * @throws ServiceException
+     */
     public function moveNews(ChangePositionDto $data): void
     {
         $this->move(self::TABLE, $data);
