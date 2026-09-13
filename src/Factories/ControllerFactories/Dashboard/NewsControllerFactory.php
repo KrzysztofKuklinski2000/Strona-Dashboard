@@ -16,6 +16,7 @@ use App\Mapper\Dashboard\News\NewsPostRequestMapper;
 use App\Mapper\Dashboard\News\Payload\ArticleNormalizer;
 use App\Mapper\Dashboard\News\Payload\CompetitionResultsNormalizer;
 use App\Mapper\Dashboard\News\Payload\EventNormalizer;
+use App\Mapper\Dashboard\News\Payload\FundingNormalizer;
 use App\Mapper\Dashboard\Payload\PostPayloadNormalizer;
 use App\Mapper\Dashboard\PublicationRequestMapper;
 use PDO;
@@ -37,6 +38,7 @@ readonly class NewsControllerFactory implements ControllerFactoryInterface
                 NewsPostTypes::ARTICLE => new ArticleNormalizer($contextController->validator),
                 NewsPostTypes::EVENT => new EventNormalizer($contextController->validator),
                 NewsPostTypes::COMPETITION_RESULTS => new CompetitionResultsNormalizer($contextController->validator),
+                NewsPostTypes::FUNDING => new FundingNormalizer($contextController->validator),
             ]
         );
 

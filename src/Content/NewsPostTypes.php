@@ -7,6 +7,7 @@ final class NewsPostTypes
     public const ARTICLE = 'article';
     public const EVENT = 'event';
     public const COMPETITION_RESULTS = 'competition_results';
+    public const FUNDING = 'funding';
 
     private const TYPES = [
         self::ARTICLE => [
@@ -22,6 +23,11 @@ final class NewsPostTypes
         self::COMPETITION_RESULTS => [
             'label' => 'Wyniki zawodów',
             'partial' => 'competition_results.php',
+            'supports_image' => false,
+        ],
+        self::FUNDING => [
+            'label' => 'Dofinansowania',
+            'partial' => 'funding.php',
             'supports_image' => false,
         ]
     ];
