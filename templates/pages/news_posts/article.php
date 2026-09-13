@@ -2,14 +2,20 @@
 $createdTimestamp = strtotime((string) ($content->created ?? ''));
 $createdDate = $createdTimestamp ? date('d.m.Y', $createdTimestamp) : '';
 $createdDateTime = $createdTimestamp ? date('Y-m-d', $createdTimestamp) : '';
-$imageName = $content->imageName ?? $content->image_name ?? null;
 $description = $payload['description'] ?? '';
+$image = $payload['image'] ?? [];
+$imageSrc = $image['src'] ?? '';
+$imageAlt = trim((string) ($image['alt'] ?? ''));
+
+if ($imageAlt === '') {
+    $imageAlt = (string) ($content->title ?? '');
+}
 ?>
 
 <article class="news-card <?= ($index ?? null) === 0 ? 'news-card--featured' : '' ?>">
-    <?php if ($imageName): ?>
+    <?php if ($imageSrc !== ''): ?>
         <div class="news-card__media">
-            <img src="/public/uploads/<?= rawurlencode((string) $imageName) ?>" alt="<?= e($content->title) ?>" loading="lazy">
+            <img src="<?= e($imageSrc) ?>" alt="<?= e($imageAlt) ?>" loading="lazy">
         </div>
     <?php else: ?>
         <div class="news-card__media news-card__media--fallback" aria-hidden="true">
