@@ -149,6 +149,29 @@
 		padding: 30px;
 	}
 
+	.news-funding-card--featured {
+		grid-column: 1 / -1;
+		display: grid;
+		grid-template-columns: minmax(240px, .68fr) minmax(0, 1.32fr);
+	}
+
+	.news-funding-card--featured .news-funding-card__visual {
+		min-height: 280px;
+		grid-template-columns: minmax(0, 1fr);
+		align-content: center;
+		padding: 34px;
+	}
+
+	.news-funding-card--featured .news-funding-card__icon {
+		width: 64px;
+		height: 64px;
+	}
+
+	.news-funding-card--featured .news-funding-card__content {
+		justify-content: center;
+		padding: 30px;
+	}
+
 	.timetable-page__inner {
 		padding-top: 72px;
 		padding-bottom: 96px;
