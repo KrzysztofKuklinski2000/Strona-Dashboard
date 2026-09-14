@@ -82,7 +82,7 @@ CREATE TABLE `contact`
 (
     `id`      tinyint unsigned NOT NULL DEFAULT 1,
     `email`   text COLLATE utf8mb4_polish_ci NOT NULL,
-    `phone`   int                            NOT NULL,
+    `phone`   varchar(20) COLLATE utf8mb4_polish_ci NOT NULL,
     `address` text COLLATE utf8mb4_polish_ci NOT NULL,
     PRIMARY KEY (`id`),
     CONSTRAINT `chk_contact_singleton` CHECK (`id` = 1)

@@ -11,6 +11,7 @@ use App\DTO\Dashboard\Gallery\GalleryDto;
 use App\DTO\Dashboard\Homepage\HomepagePostDto;
 use App\DTO\Dashboard\ImportantPosts\ImportantPostsDto;
 use App\DTO\Dashboard\News\NewsDto;
+use App\Exception\NotFoundException;
 use App\Exception\RepositoryException;
 use PDO;
 
@@ -41,21 +42,22 @@ class SiteRepository extends AbstractRepository
 
     /**
      * @throws RepositoryException
+     * @throws NotFoundException
      */
     private function fetchSingleRecord(string $table): array
     {
         try {
             $sql = "SELECT * FROM $table WHERE id = :id";
             $result = $this->runQuery($sql, [':id' => 1])->fetch(PDO::FETCH_ASSOC);
-
-            if (!$result) {
-                throw new RepositoryException("Brak danych w tabeli $table", 404);
-            }
-
-            return $result;
         } catch (RepositoryException $e) {
             throw new RepositoryException("Nie udało się pobrać danych z tabeli $table", 500, $e);
         }
+
+        if (!$result) {
+            throw new NotFoundException("Brak danych w tabeli $table", 404);
+        }
+
+        return $result;
     }
 
     /**
@@ -77,6 +79,7 @@ class SiteRepository extends AbstractRepository
 
     /**
      * @throws RepositoryException
+     * @throws NotFoundException
      */
     public function getContact(): ContactDto
     {
@@ -85,6 +88,7 @@ class SiteRepository extends AbstractRepository
 
     /**
      * @throws RepositoryException
+     * @throws NotFoundException
      */
     public function getCamp(): CampDto
     {
@@ -93,6 +97,7 @@ class SiteRepository extends AbstractRepository
 
     /**
      * @throws RepositoryException
+     * @throws NotFoundException
      */
     public function getFees(): FeesDto
     {

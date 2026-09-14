@@ -8,6 +8,7 @@ use App\Content\HomepagePostTypes;
 use App\DTO\Dashboard\Camp\CampDto;
 use App\DTO\Dashboard\Contact\ContactDto;
 use App\DTO\Dashboard\Fees\FeesDto;
+use App\Exception\NotFoundException;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\TimetableRepository;
@@ -116,7 +117,9 @@ readonly class SiteService implements ContactProviderInterface
     public function getTimetable(): array
     {
         try {
-            return $this->timetableRepository->timetablePageData();
+            return $this->timetableRepository->timetablePageData(
+                publishedOnly: true,
+            );
         } catch (RepositoryException $e) {
             throw new ServiceException("Nie udało się pobrać grafiku", 500, $e);
         }
@@ -124,6 +127,7 @@ readonly class SiteService implements ContactProviderInterface
 
     /**
      * @throws ServiceException
+     * @throws NotFoundException
      */
     public function getContact(): ContactDto
     {
@@ -136,6 +140,7 @@ readonly class SiteService implements ContactProviderInterface
 
     /**
      * @throws ServiceException
+     * @throws NotFoundException
      */
     public function getCamp(): CampDto
     {
@@ -148,6 +153,7 @@ readonly class SiteService implements ContactProviderInterface
 
     /**
      * @throws ServiceException
+     * @throws NotFoundException
      */
     public function getFees(): FeesDto
     {

@@ -24,7 +24,6 @@ readonly class FundingNormalizer implements PayloadNormalizerInterface
         $amount = $this->validator->validate(
             name: 'payload.amount',
             value: $rawPayload['amount'] ?? null,
-            type:'float',
             maxLength: 80
         );
 

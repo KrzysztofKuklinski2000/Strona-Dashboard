@@ -23,14 +23,15 @@ readonly class ContactRequestMapper
                 name: 'email',
                 value: $this->request->getFormParam('email'),
                 required: true,
-                maxLength: 100
+                type: 'email',
+                maxLength: 100,
             ),
 
             'phone' => $this->validator->validate(
                 name: 'phone',
                 value: $this->request->getFormParam('phone'),
                 required: true,
-                maxLength: 9
+                maxLength: 20,
             ),
 
             'address' => $this->validator->validate(
