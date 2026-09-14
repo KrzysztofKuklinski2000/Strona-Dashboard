@@ -17,6 +17,7 @@ use App\Mapper\Dashboard\Homepage\Payload\CardsGridNormalizer;
 use App\Mapper\Dashboard\Homepage\Payload\ImageTextListNormalizer;
 use App\Mapper\Dashboard\Homepage\Payload\ModuleFeedNormalizer;
 use App\Mapper\Dashboard\Homepage\Payload\SimpleTextNormalizer;
+use App\Mapper\Dashboard\Payload\OptionalLinkNormalizer;
 use App\Mapper\Dashboard\Payload\PostPayloadNormalizer;
 use App\Mapper\Dashboard\PublicationRequestMapper;
 use PDO;
@@ -32,6 +33,7 @@ class HomepageControllerFactory implements ControllerFactoryInterface
     {
         $serviceFactory = new HomepageServiceFactory($this->pdo, $contextController->config);
         $service = $serviceFactory->createService();
+        $linkNormalizer = new OptionalLinkNormalizer($contextController->validator);
 
         $payloadNormalizer = new PostPayloadNormalizer(
             validator: $contextController->validator,
@@ -44,6 +46,7 @@ class HomepageControllerFactory implements ControllerFactoryInterface
                 ),
                 HomepagePostTypes::IMAGE_TEXT_LIST => new ImageTextListNormalizer(
                     $contextController->validator,
+                    $linkNormalizer,
                 ),
                 HomepagePostTypes::TRIAL_BANNER => new SimpleTextNormalizer(
                     $contextController->validator,

@@ -5,14 +5,17 @@ declare(strict_types=1);
 namespace App\Mapper\Dashboard\Homepage\Payload;
 
 use App\Core\Validator;
+use App\Mapper\Dashboard\Payload\OptionalLinkNormalizer;
 use App\Mapper\Dashboard\Payload\PayloadNormalizerInterface;
 
 final readonly class ImageTextListNormalizer implements PayloadNormalizerInterface
 {
     private const MAX_LIST_ITEMS = 20;
 
-    public function __construct(private Validator $validator)
-    {
+    public function __construct(
+        private Validator $validator,
+        private OptionalLinkNormalizer $linkNormalizer,
+    ) {
     }
 
     public function normalize(array $rawPayload): array
@@ -73,7 +76,7 @@ final readonly class ImageTextListNormalizer implements PayloadNormalizerInterfa
                 'alt' => $alt === null ? '' : (string)$alt,
             ],
             'items' => $this->normalizeListItems($rawPayload['items'] ?? []),
-            'link' => $this->normalizeLink($rawPayload['link'] ?? []),
+            'link' => $this->linkNormalizer->normalize($rawPayload['link'] ?? []),
         ];
     }
 
@@ -128,100 +131,6 @@ final readonly class ImageTextListNormalizer implements PayloadNormalizerInterfa
         }
 
         return $items;
-    }
-
-    private function normalizeLink(mixed $rawLink): array
-    {
-        if (!is_array($rawLink)) {
-            $this->validator->addError(
-                'payload.link',
-                'Nieprawidłowe dane przycisku.'
-            );
-
-            return [
-                'label' => '',
-                'url' => ''
-            ];
-        }
-
-        $rawLabelValue = $rawLink['label'] ?? null;
-        $rawUrlValue = $rawLink['url'] ?? null;
-
-        if ($rawLabelValue !== null && !is_scalar($rawLabelValue)) {
-            $this->validator->addError(
-                'payload.link.label',
-                'Nieprawidłowa wartość pola.'
-            );
-        }
-
-        if ($rawUrlValue !== null && !is_scalar($rawUrlValue)) {
-            $this->validator->addError(
-                'payload.link.url',
-                'Nieprawidłowa wartość pola.'
-            );
-        }
-
-        $rawLabel = is_scalar($rawLabelValue)
-            ? trim((string)$rawLabelValue)
-            : '';
-
-        $rawUrl = is_scalar($rawUrlValue)
-            ? trim((string)$rawUrlValue)
-            : '';
-
-        if ($rawLabel === '' && $rawUrl === '') {
-            return [
-                'label' => '',
-                'url' => ''
-            ];
-        }
-
-        $label = $this->validator->validate(
-            name: 'payload.link.label',
-            value: $rawLabel,
-            required: true,
-            maxLength: 80,
-        );
-
-        $url = $this->validator->validate(
-            name: 'payload.link.url',
-            value: $rawUrl,
-            required: true,
-            maxLength: 255,
-        );
-
-        $label = $label === null ? '' : (string)$label;
-        $url = $url === null ? '' : (string)$url;
-
-        if ($url !== '' && !$this->isAllowedLink($url)) {
-            $this->validator->addError(
-                'payload.link.url',
-                'Adres musi być ścieżką wewnętrzną albo poprawnym adresem HTTP/HTTPS.'
-            );
-
-            $url = '';
-        }
-
-        return [
-            'label' => $label,
-            'url' => $url
-        ];
-    }
-
-
-    private function isAllowedLink(string $url): bool
-    {
-        if ($this->isSafeInternalPath($url)) {
-            return true;
-        }
-
-        if (filter_var($url, FILTER_VALIDATE_URL) === false) {
-            return false;
-        }
-
-        $scheme = strtolower((string)parse_url($url, PHP_URL_SCHEME));
-
-        return in_array($scheme, ['http', 'https'], true);
     }
 
     private function isSafeInternalPath(string $path): bool
