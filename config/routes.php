@@ -8,6 +8,7 @@ use App\Controller\Dashboard\GalleryController;
 use App\Controller\Dashboard\ImportantPostsController;
 use App\Controller\Dashboard\NewsController;
 use App\Controller\Dashboard\HomepageController;
+use App\Controller\Dashboard\OverviewController;
 use App\Controller\Dashboard\SubscribersController;
 use App\Controller\Dashboard\TimetableController;
 use App\Controller\PublicSubscribersController;
@@ -38,7 +39,7 @@ return function (RouteCollector $r) {
     $r->post('/auth/login', [AuthController::class, 'loginAction']);
     $r->post('/auth/logout', [AuthController::class, 'logoutAction']);
 
-    $r->get('/dashboard', [HomepageController::class, 'indexAction']);
+    $r->get('/dashboard', [OverviewController::class, 'indexAction']);
 
     $r->get('/dashboard/camp', [CampController::class, 'editAction']);
     $r->get('/dashboard/camp/edit', [CampController::class, 'editAction']);

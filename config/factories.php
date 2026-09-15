@@ -1,4 +1,4 @@
-<?php 
+<?php
 declare(strict_types=1);
 
 use App\Controller\AuthController;
@@ -9,6 +9,7 @@ use App\Controller\Dashboard\GalleryController;
 use App\Controller\Dashboard\ImportantPostsController;
 use App\Controller\Dashboard\NewsController;
 use App\Controller\Dashboard\HomepageController;
+use App\Controller\Dashboard\OverviewController;
 use App\Controller\Dashboard\SubscribersController;
 use App\Controller\Dashboard\TimetableController;
 use App\Controller\PublicSubscribersController;
@@ -21,6 +22,7 @@ use App\Factories\ControllerFactories\Dashboard\GalleryControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\ImportantPostsControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\NewsControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\HomepageControllerFactory;
+use App\Factories\ControllerFactories\Dashboard\OverviewControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\SubscribersControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\TimetableControllerFactory;
 use App\Factories\ControllerFactories\PublicSubscribersControllerFactory;
@@ -28,18 +30,18 @@ use App\Factories\ControllerFactories\SiteControllerFactory;
 
 
 return [
-  NewsController::class           => NewsControllerFactory::class,
-  ImportantPostsController::class => ImportantPostsControllerFactory::class,
-  GalleryController::class        => GalleryControllerFactory::class,
-  TimetableController::class      => TimetableControllerFactory::class,
-  FeesController::class           => FeesControllerFactory::class,
-  CampController::class           => CampControllerFactory::class,
-  ContactController::class        => ContactControllerFactory::class,
-  HomepageController::class          => HomepageControllerFactory::class, // Dawny '_default'
-  SubscribersController::class    => SubscribersControllerFactory::class,
-  
+    NewsController::class => NewsControllerFactory::class,
+    ImportantPostsController::class => ImportantPostsControllerFactory::class,
+    GalleryController::class => GalleryControllerFactory::class,
+    TimetableController::class => TimetableControllerFactory::class,
+    FeesController::class => FeesControllerFactory::class,
+    CampController::class => CampControllerFactory::class,
+    ContactController::class => ContactControllerFactory::class,
+    HomepageController::class => HomepageControllerFactory::class, // Dawny '_default'
+    SubscribersController::class => SubscribersControllerFactory::class,
+    OverviewController::class => OverviewControllerFactory::class,
 
-  PublicSubscribersController::class    => PublicSubscribersControllerFactory::class,
-  SiteController::class           => SiteControllerFactory::class,
-  AuthController::class           => AuthControllerFactory::class,
+    PublicSubscribersController::class => PublicSubscribersControllerFactory::class,
+    SiteController::class => SiteControllerFactory::class,
+    AuthController::class => AuthControllerFactory::class,
 ];
