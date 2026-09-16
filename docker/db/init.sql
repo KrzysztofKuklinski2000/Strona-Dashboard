@@ -446,6 +446,17 @@ INSERT INTO `user` (`id`, `login`, `password`)
 VALUES (1, 'Musashi', '$2y$10$ErJp/xcJgY4QRrYipGtsjO2tJk7LVhArlCfYPxj6ii5AiA5cAdnvm'),
        (2, 'test', '$2y$10$rx/38yd5XRg5fzMHGfi3i.SjEQhIIqiiTM.eF2C/NvYIo8c/HEXUq');
 
+
+CREATE TABLE `page_views`
+(
+    `id`        bigint unsigned NOT NULL AUTO_INCREMENT,
+    `path`      varchar(255) COLLATE utf8mb4_polish_ci NOT NULL,
+    `viewed_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    INDEX `idx_page_views_viewed_at` (`viewed_at`),
+    INDEX `idx_page_views_path` (`path`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
 --
 -- Indeksy dla zrzutów tabel
 --
