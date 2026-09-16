@@ -16,6 +16,9 @@ use App\View\View;
 use EasyCSRF\EasyCSRF;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 use EasyCSRF\NativeSessionProvider;
+use App\Controller\SiteController;
+use App\Repository\Analytics\PageViewRepository;
+use App\Service\Analytics\PageViewTracker;
 
 require_once 'vendor/autoload.php';
 
@@ -82,6 +85,13 @@ try {
     }
 
     $controller->$action();
+
+    if($controller instanceof SiteController) {
+        $pageViewRepository = new PageViewRepository($pdo);
+        $pageViewTracker = new PageViewTracker($pageViewRepository);
+
+        $pageViewTracker->track($request);
+    }
 
 } catch (InvalidCsrfTokenException $e) {
     $uri = $_SERVER['REQUEST_URI'];
