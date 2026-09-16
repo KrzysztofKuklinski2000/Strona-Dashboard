@@ -13,7 +13,8 @@ class Request
         private readonly array $post,
         private readonly array $server,
         private readonly array $files = [],
-    ) {
+    )
+    {
     }
 
     public function getQueryParam(string $name, $default = null): mixed
@@ -49,6 +50,11 @@ class Request
     public function isPost(): bool
     {
         return $this->getMethod() === 'POST';
+    }
+
+    public function isGet(): bool
+    {
+        return $this->getMethod() === 'GET';
     }
 
     public function hasPost(): bool
