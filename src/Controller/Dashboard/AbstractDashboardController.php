@@ -15,8 +15,6 @@ abstract class AbstractDashboardController extends AbstractController
         parent::__construct($contextController);
     }
 
-    abstract protected function getModuleName(): string;
-
     protected function renderPage(array $params): void
     {
         $params['flash_dashboard'] = $this->sessionManager->getFlash();

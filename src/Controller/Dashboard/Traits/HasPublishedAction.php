@@ -17,11 +17,12 @@ use JetBrains\PhpStorm\NoReturn;
  * @property CsrfMiddleware $csrfMiddleware
  * @method void redirect(string $to)
  * @method void setFlash(string $type, $message, string $prefix = 'dashboard')
- * @method string getModuleName()
  */
 trait HasPublishedAction
 {
     abstract protected function getDataToPublished(): PublishedDto;
+
+    abstract protected function getModuleName(): string;
 
     abstract protected function handlePublish(PublishedDto $data): void;
 

@@ -13,11 +13,12 @@ use EasyCSRF\Exceptions\InvalidCsrfTokenException;
  * @property Request $request
  * @property CsrfMiddleware $csrfMiddleware
  * @method void redirect(string $to)
- * @method string getModuleName()
  */
 trait HasMoveAction
 {
     abstract protected function handleMove(ChangePositionDto $changePositionDto): void;
+
+    abstract protected function getModuleName(): string;
 
     abstract protected function getDataToChangePostPosition(): ChangePositionDto;
 

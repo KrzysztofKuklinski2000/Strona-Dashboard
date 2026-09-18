@@ -14,12 +14,12 @@ use JetBrains\PhpStorm\NoReturn;
  * @property CsrfMiddleware $csrfMiddleware
  * @method void redirect(string $to)
  * @method void setFlash(string $type, $message, string $prefix = 'dashboard')
- * @method string getModuleName()
  */
-
 trait HasDeleteAction
 {
     abstract protected function handleDelete(int $id): void;
+
+    abstract protected function getModuleName(): string;
 
     abstract protected function getDataToDelete(): ?int;
 

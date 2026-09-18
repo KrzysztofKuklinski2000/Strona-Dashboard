@@ -28,9 +28,4 @@ class OverviewController extends AbstractDashboardController
             'data' => $this->overviewService->getOverviewData(),
         ]);
     }
-
-    protected function getModuleName(): string
-    {
-        return 'overview';
-    }
 }

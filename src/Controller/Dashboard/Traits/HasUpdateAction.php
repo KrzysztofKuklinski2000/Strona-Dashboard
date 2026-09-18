@@ -15,11 +15,12 @@ use JetBrains\PhpStorm\NoReturn;
  * @property CsrfMiddleware $csrfMiddleware
  * @method void redirect(string $to)
  * @method void setFlash(string $type, $message, string $prefix = 'dashboard')
- * @method string getModuleName()
  */
 trait HasUpdateAction
 {
     abstract protected function handleUpdate(DataTransferObjectInterface $data): void;
+
+    abstract protected function getModuleName(): string;
 
     abstract protected function getDataToUpdate(): DataTransferObjectInterface;
 
@@ -50,7 +51,7 @@ trait HasUpdateAction
 
         $this->sessionManager->setFlash(
             type: "warning",
-            message:  $this->validator->getErrors(),
+            message: $this->validator->getErrors(),
             context: [
                 'oldInput' => $oldInput,
             ]
