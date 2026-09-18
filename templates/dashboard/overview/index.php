@@ -1,5 +1,68 @@
 <?php
 declare(strict_types=1);
+
+$pageViews = $params['data']['pageViews'] ?? [];
+
+$statistics = [
+    [
+        'label' => 'Wszystkie odsłony',
+        'description' => 'Od początku pomiaru',
+        'value' => (int) ($pageViews['total'] ?? 0),
+        'icon' => 'fa-solid fa-chart-line',
+        'class' => 'overview-stat-card--featured',
+    ],
+    [
+        'label' => 'Dzisiaj',
+        'description' => 'Od północy',
+        'value' => (int) ($pageViews['today'] ?? 0),
+        'icon' => 'fa-solid fa-calendar-day',
+        'class' => '',
+    ],
+    [
+        'label' => 'Ostatnie 7 dni',
+        'description' => 'Łącznie z dzisiaj',
+        'value' => (int) ($pageViews['last7Days'] ?? 0),
+        'icon' => 'fa-solid fa-calendar-week',
+        'class' => '',
+    ],
+    [
+        'label' => 'Ostatnie 30 dni',
+        'description' => 'Łącznie z dzisiaj',
+        'value' => (int) ($pageViews['last30Days'] ?? 0),
+        'icon' => 'fa-solid fa-calendar-days',
+        'class' => '',
+    ],
+];
 ?>
 
-<h1>Dashboard</h1>
+<h3 class="dashboard-action-header">Podsumowanie</h3>
+
+<section class="overview-dashboard" aria-labelledby="overview-page-views-heading">
+    <div class="overview-dashboard__heading">
+        <div>
+            <span>Ruch na stronie</span>
+            <h4 id="overview-page-views-heading">Statystyki odwiedzin</h4>
+        </div>
+        <p>Dane zarejestrowane na publicznej części strony.</p>
+    </div>
+
+    <div class="overview-stats-grid">
+        <?php foreach ($statistics as $statistic): ?>
+            <article class="overview-stat-card <?= $statistic['class'] ?>">
+                <div class="overview-stat-card__top">
+                    <div class="overview-stat-card__icon" aria-hidden="true">
+                        <i class="<?= $statistic['icon'] ?>"></i>
+                    </div>
+                    <span class="overview-stat-card__label"><?= $statistic['label'] ?></span>
+                </div>
+
+                <div>
+                    <strong class="overview-stat-card__value">
+                        <?= number_format($statistic['value'], 0, ',', ' ') ?>
+                    </strong>
+                    <p class="overview-stat-card__description"><?= $statistic['description'] ?></p>
+                </div>
+            </article>
+        <?php endforeach; ?>
+    </div>
+</section>
