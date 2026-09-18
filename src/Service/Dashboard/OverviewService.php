@@ -41,7 +41,35 @@ readonly class OverviewService
                 'today' => $todayViews,
                 'last7Days' => $last7DaysViews,
                 'last30Days' => $last30DaysViews,
-            ]
+            ],
+            'viewsByPath' => $this->getOverviewDataByPath()
         ];
+    }
+
+    /**
+     * @throws ServiceException
+     */
+    private function getOverviewDataByPath(): array {
+        try {
+            $groupedViewsByPath = $this->pageViewRepository->countGroupedByPath();
+            $normalizedViews = [];
+
+            foreach ($groupedViewsByPath as $path => $count) {
+                $path = preg_replace(
+                    '#^/aktualnosci/\d+/?$#',
+                    '/aktualnosci',
+                    $path
+                );
+
+                $normalizedViews[$path] =
+                    ($normalizedViews[$path] ?? 0) + (int) $count;
+            }
+
+            arsort($normalizedViews);
+
+            return $normalizedViews;
+        }catch (RepositoryException $e){
+            throw new ServiceException('Nie udało się pobrać statystyk', 500, $e);
+        }
     }
 }
