@@ -8,9 +8,9 @@ use App\Exception\ServiceException;
 use App\Repository\Analytics\PageViewRepository;
 use DateTimeImmutable;
 
-class OverviewService
+readonly class OverviewService
 {
-    public function __construct(private readonly PageViewRepository $pageViewRepository)
+    public function __construct(private PageViewRepository $pageViewRepository)
     {
     }
 
