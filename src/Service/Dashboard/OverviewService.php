@@ -75,7 +75,7 @@ readonly class OverviewService
     }
 
     /**
-     * @throws RepositoryException
+     * @throws ServiceException
      */
     private function getViewsGroupedByDay(DateTimeImmutable $from, DateTimeImmutable $to): array {
         try {
@@ -93,8 +93,8 @@ readonly class OverviewService
 
             return $result;
         }catch (RepositoryException $e) {
-            throw new RepositoryException(
-                'Nie udało się pobrać odsłon pogrupowanych według dnia',
+            throw new ServiceException(
+                'Nie udało się pobrać statystyk dziennych',
                 500,
                 $e
             );

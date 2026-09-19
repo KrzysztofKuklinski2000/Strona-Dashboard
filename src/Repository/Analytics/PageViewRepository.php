@@ -88,7 +88,11 @@ class PageViewRepository extends AbstractRepository
                 ]
             )->fetchAll(PDO::FETCH_KEY_PAIR);
         }catch (RepositoryException $e) {
-            throw new RepositoryException('Błąd przy pobieraniu danych dla każdego dnia');
+            throw new RepositoryException(
+                'Nie udało się pobrać odsłon pogrupowanych według dnia',
+                500,
+                $e
+            );
         }
     }
 }
