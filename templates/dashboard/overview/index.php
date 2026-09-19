@@ -86,51 +86,58 @@ $statistics = [
         <?php endforeach; ?>
     </div>
 
-    <section class="overview-page-views" aria-labelledby="overview-pages-heading">
-        <div class="overview-dashboard__heading">
-            <div>
+    <details class="overview-page-views" data-overview-page-views open>
+        <summary class="overview-page-views__summary" data-overview-page-views-toggle>
+            <span class="overview-page-views__heading">
                 <span>Podstrony</span>
-                <h4 id="overview-pages-heading">Odsłony według strony</h4>
-            </div>
-            <p>Wszystkie zarejestrowane adresy, od najczęściej odwiedzanych.</p>
-        </div>
+                <strong>Odsłony według strony</strong>
+            </span>
+            <span class="overview-page-views__description">
+                Wszystkie zarejestrowane adresy, od najczęściej odwiedzanych.
+            </span>
+            <span class="overview-page-views__toggle" aria-hidden="true">
+                <i class="fa-solid fa-chevron-down"></i>
+            </span>
+        </summary>
 
-        <?php if ($viewsByPath === []): ?>
-            <div class="overview-page-views__empty">
-                <i class="fa-regular fa-chart-bar" aria-hidden="true"></i>
-                <p>Brak zarejestrowanych odsłon podstron.</p>
-            </div>
-        <?php else: ?>
-            <div class="overview-page-views__list">
-                <?php foreach ($viewsByPath as $path => $count): ?>
-                    <?php
-                    $count = (int) $count;
-                    $share = $highestPathViewCount > 0
-                        ? (int) round(($count / $highestPathViewCount) * 100)
-                        : 0;
-                    ?>
-                    <article class="overview-page-view">
-                        <div class="overview-page-view__identity">
-                            <span class="overview-page-view__icon" aria-hidden="true">
-                                <i class="fa-solid fa-arrow-trend-up"></i>
-                            </span>
-                            <div>
-                                <strong><?= e($pageLabels[$path] ?? $path) ?></strong>
-                                <span><?= e($path) ?></span>
+        <div class="overview-page-views__content" data-overview-page-views-content>
+            <?php if ($viewsByPath === []): ?>
+                <div class="overview-page-views__empty">
+                    <i class="fa-regular fa-chart-bar" aria-hidden="true"></i>
+                    <p>Brak zarejestrowanych odsłon podstron.</p>
+                </div>
+            <?php else: ?>
+                <div class="overview-page-views__list">
+                    <?php foreach ($viewsByPath as $path => $count): ?>
+                        <?php
+                        $count = (int) $count;
+                        $share = $highestPathViewCount > 0
+                            ? (int) round(($count / $highestPathViewCount) * 100)
+                            : 0;
+                        ?>
+                        <article class="overview-page-view">
+                            <div class="overview-page-view__identity">
+                                <span class="overview-page-view__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-arrow-trend-up"></i>
+                                </span>
+                                <div>
+                                    <strong><?= e($pageLabels[$path] ?? $path) ?></strong>
+                                    <span><?= e($path) ?></span>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="overview-page-view__bar" aria-hidden="true">
-                            <span style="width: <?= $share ?>%"></span>
-                        </div>
+                            <div class="overview-page-view__bar" aria-hidden="true">
+                                <span style="width: <?= $share ?>%"></span>
+                            </div>
 
-                        <div class="overview-page-view__count">
-                            <strong><?= number_format($count, 0, ',', ' ') ?></strong>
-                            <span>odsłon</span>
-                        </div>
-                    </article>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
-    </section>
+                            <div class="overview-page-view__count">
+                                <strong><?= number_format($count, 0, ',', ' ') ?></strong>
+                                <span>odsłon</span>
+                            </div>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    </details>
 </section>

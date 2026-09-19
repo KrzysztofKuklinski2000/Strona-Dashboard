@@ -315,3 +315,60 @@ if (postTypeSelect) {
     syncPostTypeForms();
     postTypeSelect.addEventListener('change', syncPostTypeForms);
 }
+
+const overviewPageViews = document.querySelector('[data-overview-page-views]');
+const overviewPageViewsToggle = overviewPageViews?.querySelector('[data-overview-page-views-toggle]');
+const overviewPageViewsContent = overviewPageViews?.querySelector('[data-overview-page-views-content]');
+
+if (
+    overviewPageViews
+    && overviewPageViewsToggle
+    && overviewPageViewsContent
+    && typeof overviewPageViewsContent.animate === 'function'
+    && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+) {
+    let isAnimating = false;
+
+    overviewPageViewsToggle.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        if (isAnimating) {
+            return;
+        }
+
+        isAnimating = true;
+        const isClosing = overviewPageViews.open;
+
+        if (!isClosing) {
+            overviewPageViews.open = true;
+        } else {
+            overviewPageViews.classList.add('is-closing');
+        }
+
+        const contentHeight = overviewPageViewsContent.scrollHeight;
+        const animation = overviewPageViewsContent.animate(
+            [
+                {
+                    height: isClosing ? `${contentHeight}px` : '0px',
+                    opacity: isClosing ? 1 : 0,
+                    overflow: 'hidden',
+                },
+                {
+                    height: isClosing ? '0px' : `${contentHeight}px`,
+                    opacity: isClosing ? 0 : 1,
+                    overflow: 'hidden',
+                },
+            ],
+            {
+                duration: 280,
+                easing: 'cubic-bezier(.4, 0, .2, 1)',
+            }
+        );
+
+        animation.addEventListener('finish', () => {
+            overviewPageViews.open = !isClosing;
+            overviewPageViews.classList.remove('is-closing');
+            isAnimating = false;
+        });
+    });
+}

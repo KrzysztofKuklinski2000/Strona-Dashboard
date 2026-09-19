@@ -1581,12 +1581,78 @@ main {
 }
 
 .overview-page-views {
-	display: flex;
-	flex-direction: column;
-	gap: 18px;
 	margin-top: 8px;
 	padding-top: 24px;
 	border-top: 1px solid #e4e7ec;
+}
+
+.overview-page-views__summary {
+	display: grid;
+	grid-template-columns: minmax(210px, auto) minmax(260px, 1fr) 36px;
+	align-items: center;
+	gap: 20px;
+	list-style: none;
+	cursor: pointer;
+}
+
+.overview-page-views__summary::-webkit-details-marker {
+	display: none;
+}
+
+.overview-page-views__summary:focus-visible {
+	border-radius: 6px;
+	outline: 2px solid #FF3366;
+	outline-offset: 6px;
+}
+
+.overview-page-views__heading > span {
+	display: block;
+	margin-bottom: 5px;
+	color: #FF3366;
+	font-size: .72rem;
+	font-weight: 700;
+	letter-spacing: .12em;
+	text-transform: uppercase;
+}
+
+.overview-page-views__heading > strong {
+	display: block;
+	color: #171D29;
+	font-size: 1.35rem;
+}
+
+.overview-page-views__description {
+	justify-self: end;
+	color: #6c7583;
+	font-size: .9rem;
+	text-align: right;
+}
+
+.overview-page-views__toggle {
+	width: 34px;
+	height: 34px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 9px;
+	background: #f2f3f6;
+	color: #596273;
+}
+
+.overview-page-views__toggle i {
+	transition: transform .2s ease;
+}
+
+.overview-page-views[open] .overview-page-views__toggle i {
+	transform: rotate(180deg);
+}
+
+.overview-page-views.is-closing .overview-page-views__toggle i {
+	transform: rotate(0);
+}
+
+.overview-page-views__content {
+	padding-top: 18px;
 }
 
 .overview-page-views__list {
@@ -1721,6 +1787,23 @@ main {
 		min-height: 132px;
 	}
 
+	.overview-page-views__summary {
+		grid-template-columns: minmax(0, 1fr) 36px;
+		gap: 8px 12px;
+	}
+
+	.overview-page-views__description {
+		grid-column: 1 / -1;
+		grid-row: 2;
+		justify-self: start;
+		text-align: left;
+	}
+
+	.overview-page-views__toggle {
+		grid-column: 2;
+		grid-row: 1;
+	}
+
 	.overview-page-view {
 		grid-template-columns: minmax(0, 1fr) auto;
 		gap: 12px;
@@ -1734,5 +1817,11 @@ main {
 	.overview-page-view__count {
 		grid-column: 2;
 		grid-row: 1;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.overview-page-views__toggle i {
+		transition: none;
 	}
 }
