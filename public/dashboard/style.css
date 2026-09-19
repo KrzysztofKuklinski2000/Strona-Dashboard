@@ -1766,6 +1766,23 @@ main {
 	margin: 0;
 }
 
+.overview-chart {
+	padding: 24px;
+	border: 1px solid #e4e7ec;
+	border-radius: 12px;
+	background: linear-gradient(145deg, #fff 0%, #fafbfc 100%);
+	box-shadow: 0 8px 24px rgba(23, 29, 41, .07);
+}
+
+.overview-chart__heading {
+	margin-bottom: 24px;
+}
+
+.overview-chart__canvas {
+	position: relative;
+	height: 340px;
+}
+
 @media (max-width: 1200px) {
 	.overview-stats-grid {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1817,6 +1834,14 @@ main {
 	.overview-page-view__count {
 		grid-column: 2;
 		grid-row: 1;
+	}
+
+	.overview-chart {
+		padding: 18px;
+	}
+
+	.overview-chart__canvas {
+		height: 260px;
 	}
 }
 

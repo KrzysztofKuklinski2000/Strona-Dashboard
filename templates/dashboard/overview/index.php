@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 $pageViews = $params['data']['pageViews'] ?? [];
 $viewsByPath = $params['data']['viewsByPath'] ?? [];
+$viewsByDay = $params['data']['viewsByDay'] ?? [];
 
 $pageLabels = [
     '/' => 'Strona główna',
@@ -86,6 +87,28 @@ $statistics = [
         <?php endforeach; ?>
     </div>
 
+    <section class="overview-chart" aria-labelledby="overview-chart-title">
+        <div class="overview-dashboard__heading overview-chart__heading">
+            <div>
+                <span>Ostatnie 30 dni</span>
+                <h4 id="overview-chart-title">Odsłony w czasie</h4>
+            </div>
+            <p>Dzienna liczba odsłon publicznej części strony.</p>
+        </div>
+
+        <div class="overview-chart__canvas">
+            <canvas
+                    id="overview-views-chart"
+                    role="img"
+                    aria-label="Wykres dziennej liczby odsłon z ostatnich 30 dni"
+            >
+                Twoja przeglądarka nie obsługuje wykresów
+            </canvas>
+        </div>
+    </section>
+
+
+
     <details class="overview-page-views" data-overview-page-views open>
         <summary class="overview-page-views__summary" data-overview-page-views-toggle>
             <span class="overview-page-views__heading">
@@ -141,3 +164,13 @@ $statistics = [
         </div>
     </details>
 </section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.1/chart.umd.min.js" integrity="sha512-WoViKhKD4qI2WruSZqv9+kvM4WfFhUMQCLN4QlDTt5aU56fLQy2gYoxWIqlEnXqJy/+Ac5q/hk1oWfqnMDhwMA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script type="application/json" id="overview-views-data">
+        <?=
+    json_encode($viewsByDay, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT )
+    ?>
+</script>
+
+<script src="/public/dashboard/overview-chart.js"></script>
