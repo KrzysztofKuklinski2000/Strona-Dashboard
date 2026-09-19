@@ -30,10 +30,10 @@ readonly class OverviewService
             $todayViews = $this->pageViewRepository->countBetween($today, $tomorrow);
             $last7DaysViews = $this->pageViewRepository->countBetween($last7DaysStart, $tomorrow);
             $last30DaysViews = $this->pageViewRepository->countBetween($last30DaysStart, $tomorrow);
+
         }catch (RepositoryException $e){
             throw new ServiceException('Nie udało się pobrać statystyk', 500, $e);
         }
-
 
         return [
             'pageViews' => [
@@ -42,14 +42,15 @@ readonly class OverviewService
                 'last7Days' => $last7DaysViews,
                 'last30Days' => $last30DaysViews,
             ],
-            'viewsByPath' => $this->getOverviewDataByPath()
+            'viewsByPath' => $this->getViewsGroupedByPath(),
+            'viewsByDay' => $this->getViewsGroupedByDay($last30DaysStart, $tomorrow),
         ];
     }
 
     /**
      * @throws ServiceException
      */
-    private function getOverviewDataByPath(): array {
+    private function getViewsGroupedByPath(): array {
         try {
             $groupedViewsByPath = $this->pageViewRepository->countGroupedByPath();
             $normalizedViews = [];
@@ -70,6 +71,33 @@ readonly class OverviewService
             return $normalizedViews;
         }catch (RepositoryException $e){
             throw new ServiceException('Nie udało się pobrać statystyk', 500, $e);
+        }
+    }
+
+    /**
+     * @throws RepositoryException
+     */
+    private function getViewsGroupedByDay(DateTimeImmutable $from, DateTimeImmutable $to): array {
+        try {
+            $viewsFromDatabase = $this->pageViewRepository->countGroupedByDay($from, $to);
+
+            $result = [];
+
+            while($from < $to) {
+                $date = $from->format('Y-m-d');
+
+                $result[$date] = (int) ($viewsFromDatabase[$date] ?? 0);
+
+                $from = $from->modify('+1 day');
+            }
+
+            return $result;
+        }catch (RepositoryException $e) {
+            throw new RepositoryException(
+                'Nie udało się pobrać odsłon pogrupowanych według dnia',
+                500,
+                $e
+            );
         }
     }
 }

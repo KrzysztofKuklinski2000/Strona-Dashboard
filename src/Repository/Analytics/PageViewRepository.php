@@ -71,4 +71,24 @@ class PageViewRepository extends AbstractRepository
             throw new RepositoryException('Nie udało się pobrać pogrupowanych odsłon', 500, $e);
         }
     }
+
+    /**
+     * @throws RepositoryException
+     */
+    public function countGroupedByDay(DateTimeImmutable $from, DateTimeImmutable $to): array {
+        try {
+            return $this->runQuery(
+                'SELECT DATE(viewed_at) AS viewedDay, COUNT(*) AS countRows 
+                    FROM page_views 
+                    WHERE viewed_at >= :from AND viewed_at < :to
+                    GROUP BY DATE(viewed_at)',
+                [
+                    ':from' => $from->format('Y-m-d'),
+                    ':to' => $to->format('Y-m-d')
+                ]
+            )->fetchAll(PDO::FETCH_KEY_PAIR);
+        }catch (RepositoryException $e) {
+            throw new RepositoryException('Błąd przy pobieraniu danych dla każdego dnia');
+        }
+    }
 }
