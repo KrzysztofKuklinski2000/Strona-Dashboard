@@ -5,6 +5,7 @@ namespace App\Factories\ServiceFactories\Dashboard;
 
 use App\Factories\ServiceFactories\ServiceFactoryInterface;
 use App\Repository\Analytics\PageViewRepository;
+use App\Repository\Dashboard\OverviewRepository;
 use App\Service\Dashboard\OverviewService;
 use PDO;
 
@@ -16,8 +17,9 @@ readonly class OverviewServiceFactory implements ServiceFactoryInterface
 
     public function createService(): OverviewService
     {
-        $repository = new PageViewRepository($this->pdo);
+        $pageViewRepository = new PageViewRepository($this->pdo);
+        $overviewRepository = new OverviewRepository($this->pdo);
 
-        return new OverviewService($repository);
+        return new OverviewService($pageViewRepository, $overviewRepository);
     }
 }

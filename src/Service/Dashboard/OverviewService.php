@@ -6,11 +6,15 @@ namespace App\Service\Dashboard;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\Analytics\PageViewRepository;
+use App\Repository\Dashboard\OverviewRepository;
 use DateTimeImmutable;
 
 readonly class OverviewService
 {
-    public function __construct(private PageViewRepository $pageViewRepository)
+    public function __construct(
+        private PageViewRepository $pageViewRepository,
+        private OverviewRepository $overviewRepository,
+    )
     {
     }
 
@@ -18,7 +22,8 @@ readonly class OverviewService
     /**
      * @throws ServiceException
      */
-    public function getOverviewData(): array {
+    public function getOverviewData(): array
+    {
         $today = new DateTimeImmutable('today');
         $tomorrow = $today->modify('+1 day');
         $last7DaysStart = $today->modify('-6 days');
@@ -39,7 +44,9 @@ readonly class OverviewService
             $previous7DaysViews = $this->pageViewRepository->countBetween($previous7DaysStart, $last7DaysStart);
             $previous30DaysViews = $this->pageViewRepository->countBetween($previous30DaysStart, $last30DaysStart);
 
-        }catch (RepositoryException $e){
+            $contentSummary = $this->overviewRepository->getContentSummary();
+
+        } catch (RepositoryException $e) {
             throw new ServiceException('Nie udało się pobrać statystyk', 500, $e);
         }
 
@@ -64,13 +71,15 @@ readonly class OverviewService
             ],
             'viewsByPath' => $this->getViewsGroupedByPath(),
             'viewsByDay' => $this->getViewsGroupedByDay($last30DaysStart, $tomorrow),
+            'contentSummary' => $this->groupContentSummary($contentSummary),
         ];
     }
 
     /**
      * @throws ServiceException
      */
-    private function getViewsGroupedByPath(): array {
+    private function getViewsGroupedByPath(): array
+    {
         try {
             $groupedViewsByPath = $this->pageViewRepository->countGroupedByPath();
             $normalizedViews = [];
@@ -83,13 +92,13 @@ readonly class OverviewService
                 );
 
                 $normalizedViews[$path] =
-                    ($normalizedViews[$path] ?? 0) + (int) $count;
+                    ($normalizedViews[$path] ?? 0) + (int)$count;
             }
 
             arsort($normalizedViews);
 
             return $normalizedViews;
-        }catch (RepositoryException $e){
+        } catch (RepositoryException $e) {
             throw new ServiceException('Nie udało się pobrać statystyk', 500, $e);
         }
     }
@@ -97,22 +106,23 @@ readonly class OverviewService
     /**
      * @throws ServiceException
      */
-    private function getViewsGroupedByDay(DateTimeImmutable $from, DateTimeImmutable $to): array {
+    private function getViewsGroupedByDay(DateTimeImmutable $from, DateTimeImmutable $to): array
+    {
         try {
             $viewsFromDatabase = $this->pageViewRepository->countGroupedByDay($from, $to);
 
             $result = [];
 
-            while($from < $to) {
+            while ($from < $to) {
                 $date = $from->format('Y-m-d');
 
-                $result[$date] = (int) ($viewsFromDatabase[$date] ?? 0);
+                $result[$date] = (int)($viewsFromDatabase[$date] ?? 0);
 
                 $from = $from->modify('+1 day');
             }
 
             return $result;
-        }catch (RepositoryException $e) {
+        } catch (RepositoryException $e) {
             throw new ServiceException(
                 'Nie udało się pobrać statystyk dziennych',
                 500,
@@ -121,7 +131,8 @@ readonly class OverviewService
         }
     }
 
-    private function calculatePercentageChange(int $current, int $previous): ?float {
+    private function calculatePercentageChange(int $current, int $previous): ?float
+    {
         if ($previous === 0) {
             return $current === 0 ? 0.0 : null;
         }
@@ -130,5 +141,62 @@ readonly class OverviewService
             (($current - $previous) / $previous) * 100,
             1
         );
+    }
+
+    private function groupContentSummary(array $contentSummary): array
+    {
+        return [
+            'news' => [
+                'total' => $contentSummary['totalNews'],
+                'published' => $contentSummary['publishedNews'],
+                'percentage' => $this->calculateSharePercentage(
+                    $contentSummary['publishedNews'], $contentSummary['totalNews']
+                ),
+            ],
+            'homepagePosts' => [
+                'total' => $contentSummary['totalHomepagePosts'],
+                'published' => $contentSummary['publishedHomepagePosts'],
+                'percentage' => $this->calculateSharePercentage(
+                    $contentSummary['publishedHomepagePosts'], $contentSummary['totalHomepagePosts']
+                ),
+            ],
+            'gallery' => [
+                'total' => $contentSummary['totalGallery'],
+                'published' => $contentSummary['publishedGallery'],
+                'percentage' => $this->calculateSharePercentage(
+                    $contentSummary['publishedGallery'], $contentSummary['totalGallery']
+                ),
+            ],
+            'importantPosts' => [
+                'total' => $contentSummary['totalImportantPosts'],
+                'published' => $contentSummary['publishedImportantPosts'],
+                'percentage' => $this->calculateSharePercentage(
+                    $contentSummary['publishedImportantPosts'], $contentSummary['totalImportantPosts']
+                ),
+            ],
+            'timetable' => [
+                'total' => $contentSummary['totalTimetable'],
+                'published' => $contentSummary['publishedTimetable'],
+                'percentage' => $this->calculateSharePercentage(
+                    $contentSummary['publishedTimetable'], $contentSummary['totalTimetable']
+                ),
+            ],
+            'subscribers' => [
+                'total' => $contentSummary['totalSubscribers'],
+                'active' => $contentSummary['activeSubscribers'],
+                'percentage' => $this->calculateSharePercentage(
+                    $contentSummary['activeSubscribers'], $contentSummary['totalSubscribers']
+                ),
+            ]
+        ];
+    }
+
+    private function calculateSharePercentage(int $part, int $total): float
+    {
+        if ($total === 0) {
+            return 0.0;
+        }
+
+        return round(($part / $total) * 100, 1);
     }
 }
