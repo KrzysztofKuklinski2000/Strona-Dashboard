@@ -15,6 +15,9 @@ class AbstractRepository
     {
     }
 
+    /**
+     * @throws RepositoryException
+     */
     public function runQuery(string $sql, array $params = []): PDOStatement
     {
         try {
