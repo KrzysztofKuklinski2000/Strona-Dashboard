@@ -1783,6 +1783,49 @@ main {
 	height: 340px;
 }
 
+.overview-stat-card__trend {
+	width: fit-content;
+	max-width: 100%;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 5px;
+	margin-top: 12px;
+	padding: 7px 9px;
+	border-radius: 8px;
+	font-size: .72rem;
+	font-weight: 600;
+}
+
+.overview-stat-card__trend strong {
+	font-size: .76rem;
+}
+
+.overview-stat-card__trend span {
+	color: #677180;
+	font-weight: 500;
+}
+
+.overview-stat-card__trend--positive {
+	background: rgba(24, 121, 78, .1);
+	color: #18794e;
+}
+
+.overview-stat-card__trend--negative {
+	background: rgba(217, 31, 80, .09);
+	color: #c82850;
+}
+
+.overview-stat-card__trend--neutral {
+	background: rgba(89, 98, 115, .1);
+	color: #596273;
+}
+
+.overview-stat-card__trend--unavailable {
+	background: #f0f2f5;
+	color: #6c7583;
+}
+
 @media (max-width: 1200px) {
 	.overview-stats-grid {
 		grid-template-columns: repeat(2, minmax(0, 1fr));

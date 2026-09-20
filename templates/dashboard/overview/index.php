@@ -6,53 +6,61 @@ $viewsByPath = $params['data']['viewsByPath'] ?? [];
 $viewsByDay = $params['data']['viewsByDay'] ?? [];
 
 $pageLabels = [
-    '/' => 'Strona główna',
-    '/aktualnosci' => 'Aktualności',
-    '/grafik' => 'Grafik zajęć',
-    '/galeria' => 'Galeria',
-    '/galeria/training' => 'Galeria treningów',
-    '/galeria/camp' => 'Galeria obozów',
-    '/obozy' => 'Obozy',
-    '/skladki' => 'Składki',
-    '/zapisy' => 'Zapisy',
-    '/kontakt' => 'Kontakt',
-    '/status' => 'Statut',
-    '/oyama' => 'Masutatsu Oyama',
-    '/dojo-oath' => 'Przysięga dojo',
-    '/wymagania-egzaminacyjne' => 'Wymagania egzaminacyjne',
+        '/' => 'Strona główna',
+        '/aktualnosci' => 'Aktualności',
+        '/grafik' => 'Grafik zajęć',
+        '/galeria' => 'Galeria',
+        '/galeria/training' => 'Galeria treningów',
+        '/galeria/camp' => 'Galeria obozów',
+        '/obozy' => 'Obozy',
+        '/skladki' => 'Składki',
+        '/zapisy' => 'Zapisy',
+        '/kontakt' => 'Kontakt',
+        '/status' => 'Statut',
+        '/oyama' => 'Masutatsu Oyama',
+        '/dojo-oath' => 'Przysięga dojo',
+        '/wymagania-egzaminacyjne' => 'Wymagania egzaminacyjne',
 ];
 
 $highestPathViewCount = $viewsByPath === [] ? 0 : (int) max($viewsByPath);
 
 $statistics = [
-    [
-        'label' => 'Wszystkie odsłony',
-        'description' => 'Od początku pomiaru',
-        'value' => (int) ($pageViews['total'] ?? 0),
-        'icon' => 'fa-solid fa-chart-line',
-        'class' => 'overview-stat-card--featured',
-    ],
-    [
-        'label' => 'Dzisiaj',
-        'description' => 'Od północy',
-        'value' => (int) ($pageViews['today'] ?? 0),
-        'icon' => 'fa-solid fa-calendar-day',
-        'class' => '',
-    ],
-    [
-        'label' => 'Ostatnie 7 dni',
-        'description' => 'Łącznie z dzisiaj',
-        'value' => (int) ($pageViews['last7Days'] ?? 0),
-        'icon' => 'fa-solid fa-calendar-week',
-        'class' => '',
-    ],
-    [
-        'label' => 'Ostatnie 30 dni',
-        'description' => 'Łącznie z dzisiaj',
-        'value' => (int) ($pageViews['last30Days'] ?? 0),
-        'icon' => 'fa-solid fa-calendar-days',
-        'class' => '',
-    ],
+        [
+                'label' => 'Wszystkie odsłony',
+                'description' => 'Od początku pomiaru',
+                'value' => (int) ($pageViews['total']['views'] ?? 0),
+                'percentageChange' => $pageViews['total']['percentageChange'] ?? null,
+                'comparisonLabel' => null,
+                'icon' => 'fa-solid fa-chart-line',
+                'class' => 'overview-stat-card--featured',
+        ],
+        [
+                'label' => 'Dzisiaj',
+                'description' => 'Od północy',
+                'value' => (int) ($pageViews['today']['views'] ?? 0),
+                'percentageChange' => $pageViews['today']['percentageChange'] ?? null,
+                'comparisonLabel' => 'Względem wczoraj',
+                'icon' => 'fa-solid fa-calendar-day',
+                'class' => '',
+        ],
+        [
+                'label' => 'Ostatnie 7 dni',
+                'description' => 'Łącznie z dzisiaj',
+                'value' => (int) ($pageViews['last7Days']['views'] ?? 0),
+                'percentageChange' => $pageViews['last7Days']['percentageChange'] ?? null,
+                'comparisonLabel' => 'Względem poprzednich 7 dni',
+                'icon' => 'fa-solid fa-calendar-week',
+                'class' => '',
+        ],
+        [
+                'label' => 'Ostatnie 30 dni',
+                'description' => 'Łącznie z dzisiaj',
+                'value' => (int) ($pageViews['last30Days']['views'] ?? 0),
+                'percentageChange' => $pageViews['last30Days']['percentageChange'] ?? null,
+                'comparisonLabel' => 'Względem poprzednich 30 dni',
+                'icon' => 'fa-solid fa-calendar-days',
+                'class' => '',
+        ],
 ];
 ?>
 
@@ -82,6 +90,39 @@ $statistics = [
                         <?= number_format($statistic['value'], 0, ',', ' ') ?>
                     </strong>
                     <p class="overview-stat-card__description"><?= $statistic['description'] ?></p>
+                    <?php if($statistic['comparisonLabel'] !== null): ?>
+                        <?php $change = $statistic['percentageChange']; ?>
+
+                        <?php if($change === null): ?>
+                            <div class="overview-stat-card__trend overview-stat-card__trend--unavailable">
+                                Brak danych do porównania
+                            </div>
+                        <?php else: ?>
+                            <?php
+                                if($change > 0) {
+                                    $trendClass = 'overview-stat-card__trend--positive';
+                                    $trendIcon = 'fa-arrow-trend-up';
+                                }else if ($change < 0) {
+                                    $trendClass = 'overview-stat-card__trend--negative';
+                                    $trendIcon = 'fa-arrow-trend-down';
+                                }else {
+                                    $trendClass = 'overview-stat-card__trend--neutral';
+                                    $trendIcon = 'fa-minus';
+                                }
+                            ?>
+
+                            <div class="overview-stat-card__trend <?= $trendClass ?>">
+                                <i class="fa-solid <?= $trendIcon ?>" aria-hidden="true"></i>
+
+                                <strong>
+                                    <?= $change > 0 ? '+' : '' ?>
+                                    <?= number_format($change, 1, ',', ' ') ?>%
+                                </strong>
+
+                                <span><?= $statistic['comparisonLabel'] ?></span>
+                            </div>
+                        <?php endif; ?>
+                    <?php endif; ?>
                 </div>
             </article>
         <?php endforeach; ?>
@@ -106,7 +147,6 @@ $statistics = [
             </canvas>
         </div>
     </section>
-
 
 
     <details class="overview-page-views" data-overview-page-views open>
@@ -135,8 +175,8 @@ $statistics = [
                         <?php
                         $count = (int) $count;
                         $share = $highestPathViewCount > 0
-                            ? (int) round(($count / $highestPathViewCount) * 100)
-                            : 0;
+                                ? (int) round(($count / $highestPathViewCount) * 100)
+                                : 0;
                         ?>
                         <article class="overview-page-view">
                             <div class="overview-page-view__identity">
@@ -165,12 +205,15 @@ $statistics = [
     </details>
 </section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.1/chart.umd.min.js" integrity="sha512-WoViKhKD4qI2WruSZqv9+kvM4WfFhUMQCLN4QlDTt5aU56fLQy2gYoxWIqlEnXqJy/+Ac5q/hk1oWfqnMDhwMA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.1/chart.umd.min.js"
+        integrity="sha512-WoViKhKD4qI2WruSZqv9+kvM4WfFhUMQCLN4QlDTt5aU56fLQy2gYoxWIqlEnXqJy/+Ac5q/hk1oWfqnMDhwMA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script type="application/json" id="overview-views-data">
         <?=
-    json_encode($viewsByDay, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT )
+    json_encode($viewsByDay, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT)
     ?>
+
 </script>
 
 <script src="/public/dashboard/overview-chart.js"></script>
