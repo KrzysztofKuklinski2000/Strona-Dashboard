@@ -5,14 +5,19 @@ $statusText = $isPublished ? 'Publiczny' : 'Niepubliczny';
 
 ?>
 <tr>
-  <td><?= e($key + 1) ?>.</td>
-  <td><img class="dashboard-image-index" src="/public/uploads/<?= e(rawurlencode((string) $row->imageName)) ?>" alt="zdjecie" loading="lazy"></td>
-  <td><?= e($row->description) ?></td>
+  <td class="dashboard-table__index"><?= e($key + 1) ?>.</td>
+  <td><img class="dashboard-image-index" src="/public/uploads/<?= e(rawurlencode((string) $row->imageName)) ?>" alt="Miniatura zdjęcia" loading="lazy"></td>
+  <td class="dashboard-table__primary"><?= e($row->description) ?></td>
   <td><?= e($row->createdAt) ?></td>
-  <td class="<?= e($statusClass) ?>"><?= e($statusText) ?></td>
+  <td>
+    <span class="dashboard-status-badge <?= e($statusClass) ?>">
+      <i class="fa-solid <?= $isPublished ? 'fa-circle-check' : 'fa-circle-xmark' ?>" aria-hidden="true"></i>
+      <?= e($statusText) ?>
+    </span>
+  </td>
   <?php require "templates/dashboard/_partials/_action_links.php"; ?>
-  <td class="move-arrows">
-    <div>
+  <td class="dashboard-table__position">
+    <div class="dashboard-position-actions">
       <?php
       $postId = $row->id;
       $direction = 'up';
