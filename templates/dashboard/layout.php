@@ -1,3 +1,21 @@
+<?php
+$currentPage = (string) ($params['page'] ?? '');
+$isAuthPage = in_array($currentPage, ['login', 'register'], true);
+$activeModule = explode('/', $currentPage)[0];
+
+$navigationItems = [
+    ['module' => 'overview', 'label' => 'Podsumowanie', 'url' => '/dashboard', 'icon' => 'fa-solid fa-chart-line'],
+    ['module' => 'homepage', 'label' => 'Strona główna', 'url' => '/dashboard/homepage', 'icon' => 'fa-solid fa-house'],
+    ['module' => 'important_posts', 'label' => 'Ważne informacje', 'url' => '/dashboard/important_posts', 'icon' => 'fa-solid fa-exclamation'],
+    ['module' => 'timetable', 'label' => 'Grafik', 'url' => '/dashboard/timetable', 'icon' => 'fa-regular fa-calendar'],
+    ['module' => 'news', 'label' => 'Aktualności', 'url' => '/dashboard/news', 'icon' => 'fa-regular fa-newspaper'],
+    ['module' => 'gallery', 'label' => 'Galeria', 'url' => '/dashboard/gallery', 'icon' => 'fa-regular fa-image'],
+    ['module' => 'camp', 'label' => 'Obozy', 'url' => '/dashboard/camp', 'icon' => 'fa-solid fa-campground'],
+    ['module' => 'fees', 'label' => 'Składki', 'url' => '/dashboard/fees', 'icon' => 'fa-solid fa-money-check-dollar'],
+    ['module' => 'contact', 'label' => 'Kontakt', 'url' => '/dashboard/contact', 'icon' => 'fa-regular fa-address-book'],
+    ['module' => 'subscribers', 'label' => 'Subskrybenci', 'url' => '/dashboard/subscribers', 'icon' => 'fa-regular fa-bell'],
+];
+?>
 <!DOCTYPE html>
 <html lang="pl">
 
@@ -21,73 +39,57 @@
         </div>
     <?php endif; ?>
 <?php endif; ?>
-<header>
-    <h2><i style="margin-right: 10px;" class="fa-solid fa-gear"></i>Panel Administracyjny</h2>
+<header class="dashboard-header">
+    <a class="dashboard-header__brand" href="/dashboard">
+        <span class="dashboard-header__brand-icon" aria-hidden="true">
+            <i class="fa-solid fa-gear"></i>
+        </span>
+        <span>
+            <small>Karate Kyokushin</small>
+            <strong>Panel administracyjny</strong>
+        </span>
+    </a>
+
+    <a class="dashboard-header__site-link" href="/" target="_blank" rel="noopener noreferrer">
+        <span>Przejdź do strony</span>
+        <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+    </a>
 </header>
-<div class="container">
-    <?php if (!in_array($params['page'], ['login', 'register'])): ?>
-        <aside>
-            <ul>
-                <a href="/dashboard">
-                    <i class="fa-solid fa-list"></i>
-                    <p>Podsumowanie</p>
-                </a>
-                <a href="/dashboard/homepage">
-                    <i class="fa-solid fa-house"></i>
-                    <p>Strona Główna</p>
-                </a>
+<div class="dashboard-layout">
+    <?php if (!$isAuthPage): ?>
+        <aside class="dashboard-sidebar">
+            <nav class="dashboard-sidebar__navigation" aria-label="Nawigacja panelu administracyjnego">
+                <ul class="dashboard-navigation">
+                    <?php foreach ($navigationItems as $navigationItem): ?>
+                        <?php $isActive = $activeModule === $navigationItem['module']; ?>
+                        <li>
+                            <a
+                                class="dashboard-navigation__link<?= $isActive ? ' is-active' : '' ?>"
+                                href="<?= e($navigationItem['url']) ?>"
+                                <?= $isActive ? 'aria-current="page"' : '' ?>
+                            >
+                                <i class="<?= e($navigationItem['icon']) ?>" aria-hidden="true"></i>
+                                <span><?= e($navigationItem['label']) ?></span>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
 
-                <a href="/dashboard/important_posts">
-                    <i class="fa-solid fa-exclamation"></i>
-                    <p>Ważne Info</p>
-                </a>
-
-                <a href="/dashboard/timetable">
-                    <i class="fa-regular fa-calendar"></i>
-                    <p>Grafik</p>
-                </a>
-
-                <a href="/dashboard/news">
-                    <i class="fa-solid fa-info"></i>
-                    <p>Aktualności</p>
-                </a>
-
-                <a href="/dashboard/gallery">
-                    <i class="fa-solid fa-image"></i>
-                    <p>Galeria</p>
-                </a>
-
-                <a href="/dashboard/camp">
-                    <i class="fa-solid fa-campground"></i>
-                    <p>Obozy</p>
-                </a>
-
-                <a href="/dashboard/fees">
-                    <i class="fa-solid fa-money-check-dollar"></i>
-                    <p>Składki</p>
-                </a>
-                <a href="/dashboard/contact">
-                    <i class="fa-regular fa-address-book"></i>
-                    <p>Kontakt</p>
-                </a>
-                <a href="/dashboard/subscribers">
-                    <i class="fa-regular fa-bell"></i>
-                    <p>Subskrybenci</p>
-                </a>
-                <form action="/auth/logout" method="POST" class="logout-form">
-                    <input type="hidden" name="csrf_token" value="<?= e($params['csrf_token'] ?? '') ?>">
-                    <button type="submit">
-                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                        <p>Wyloguj</p>
-                    </button>
-                </form>
-
-            </ul>
+                    <li class="dashboard-navigation__logout">
+                        <form action="/auth/logout" method="POST" class="logout-form">
+                            <input type="hidden" name="csrf_token" value="<?= e($params['csrf_token'] ?? '') ?>">
+                            <button class="dashboard-navigation__link" type="submit">
+                                <i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i>
+                                <span>Wyloguj</span>
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
         </aside>
     <?php endif; ?>
-    <main>
-        <div class="<?= $params['page'] !== 'login' ? 'content-container' : '' ?>">
-            <?php require_once('templates/dashboard/' . $params['page'] . '.php'); ?>
+    <main class="dashboard-main<?= $isAuthPage ? ' dashboard-main--auth' : '' ?>">
+        <div class="<?= !$isAuthPage ? 'content-container' : '' ?>">
+            <?php require_once('templates/dashboard/' . $currentPage . '.php'); ?>
         </div>
     </main>
 </div>
