@@ -48,7 +48,11 @@ class PublicSubscribersController extends AbstractController
             $dto = CreateSubscriberDto::fromArray(['email' => $email]);
             $this->service->subscribe($dto);
 
-            $this->sessionManager->setFlash('success', 'Dziękujemy za zapisanie się!', 'public');
+            $this->sessionManager->setFlash(
+                'success',
+                'Sprawdź swoją skrzynkę e-mail i kliknij link, aby potwierdzić subskrypcję.',
+                'public'
+            );
 
         } catch (ServiceException $e) {
             $this->sessionManager->setFlash('warning', $e->getMessage(), 'public');

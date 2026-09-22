@@ -53,11 +53,50 @@
 </head>
 
 <body>
-	<?php if (isset($params['flash_public']) && in_array($params['flash_public']['type'], ['success', 'info', 'warning'])): ?>
-		<div class="flash <?= htmlspecialchars($params['flash_public']['type']) ?>">
-            <?= e($params['flash_public']['message']) ?>
-			<i class="flash-close fa-solid fa-xmark"></i>
-		</div>
+	<?php if (isset($params['flash_public'])): ?>
+		<?php
+		$flash = $params['flash_public'];
+		$flashType = $flash['type'] ?? 'info';
+
+		if (!in_array($flashType, ['success', 'info', 'warning'], true)) {
+			$flashType = 'info';
+		}
+
+		$flashDetails = match ($flashType) {
+			'success' => [
+				'title' => 'Gotowe',
+				'icon' => 'fa-solid fa-check',
+			],
+			'warning' => [
+				'title' => 'Uwaga',
+				'icon' => 'fa-solid fa-exclamation',
+			],
+			default => [
+				'title' => 'Informacja',
+				'icon' => 'fa-solid fa-info',
+			],
+		};
+		?>
+		<?php if (is_string($flash['message'] ?? null)): ?>
+			<div class="site-toast-region" aria-live="polite" aria-atomic="true">
+				<div
+					class="site-toast site-toast--<?= e($flashType) ?>"
+					data-site-toast
+					role="<?= $flashType === 'warning' ? 'alert' : 'status' ?>"
+				>
+					<span class="site-toast__icon" aria-hidden="true">
+						<i class="<?= e($flashDetails['icon']) ?>"></i>
+					</span>
+					<div class="site-toast__content">
+						<strong><?= e($flashDetails['title']) ?></strong>
+						<p><?= e($flash['message']) ?></p>
+					</div>
+					<button class="site-toast__close" type="button" data-site-toast-close aria-label="Zamknij komunikat">
+						<i class="fa-solid fa-xmark" aria-hidden="true"></i>
+					</button>
+				</div>
+			</div>
+		<?php endif ?>
 	<?php endif ?>
 	<!-- menu na urządzenia mobilne -->
 	<?php require_once('components/mobile_menu.php') ?>

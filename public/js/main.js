@@ -1,3 +1,29 @@
+const siteToast = document.querySelector('[data-site-toast]');
+const siteToastClose = siteToast?.querySelector('[data-site-toast-close]');
+
+if (siteToast) {
+	let closeTimeout;
+
+	const closeSiteToast = () => {
+		if (siteToast.classList.contains('is-closing')) {
+			return;
+		}
+
+		window.clearTimeout(closeTimeout);
+		siteToast.classList.add('is-closing');
+		window.setTimeout(() => siteToast.remove(), 260);
+	};
+
+	const scheduleSiteToastClose = () => {
+		closeTimeout = window.setTimeout(closeSiteToast, 6000);
+	};
+
+	siteToastClose?.addEventListener('click', closeSiteToast);
+	siteToast.addEventListener('mouseenter', () => window.clearTimeout(closeTimeout));
+	siteToast.addEventListener('mouseleave', scheduleSiteToastClose);
+	scheduleSiteToastClose();
+}
+
 let menu = document.querySelector('.menu');
 
 let choice = document.querySelectorAll('.choice');

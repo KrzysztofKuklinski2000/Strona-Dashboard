@@ -5264,33 +5264,149 @@ footer .copy {
     accent-color: #FF3366; 
 }
 
-.flash {
-	width:100%;
-	height:40px;
-	color:#fff;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: .8em;
-	letter-spacing: 2px;
-	gap: 10px;
+.site-toast-region {
+	position: fixed;
+	top: 104px;
+	right: 24px;
+	z-index: 100;
+	width: min(390px, calc(100vw - 32px));
+	pointer-events: none;
 }
 
-.flash i {
-	font-size:1.2em;
+.site-toast {
+	--toast-accent: #415f7d;
+	--toast-soft: #edf3f7;
+	position: relative;
+	display: grid;
+	grid-template-columns: 40px minmax(0, 1fr) 30px;
+	gap: 12px;
+	align-items: start;
+	overflow: hidden;
+	box-sizing: border-box;
+	padding: 15px 14px 15px 17px;
+	border: 1px solid rgba(23, 29, 41, .12);
+	border-radius: 12px;
+	background: #fff;
+	box-shadow: 0 18px 42px rgba(23, 29, 41, .2);
+	pointer-events: auto;
+	animation: site-toast-in .28s cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.site-toast::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: 4px;
+	background: var(--toast-accent);
+}
+
+.site-toast--success {
+	--toast-accent: #26845b;
+	--toast-soft: #eaf7f1;
+}
+
+.site-toast--warning {
+	--toast-accent: #c23a3d;
+	--toast-soft: #fff0f0;
+}
+
+.site-toast__icon {
+	width: 40px;
+	height: 40px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 10px;
+	background: var(--toast-soft);
+	color: var(--toast-accent);
+	font-size: .95rem;
+}
+
+.site-toast__content {
+	min-width: 0;
+	padding-top: 1px;
+}
+
+.site-toast__content strong {
+	display: block;
+	margin-bottom: 4px;
+	color: #171d29;
+	font-size: .88rem;
+	line-height: 1.3;
+}
+
+.site-toast__content p {
+	margin: 0;
+	color: #687282;
+	font-size: .78rem;
+	font-weight: 500;
+	line-height: 1.45;
+	overflow-wrap: anywhere;
+}
+
+.site-toast__close {
+	width: 30px;
+	height: 30px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+	border: 0;
+	border-radius: 8px;
+	background: transparent;
+	color: #7b8491;
 	cursor: pointer;
 }
 
-.flash.success {
-	background-color: #22bb33;
+.site-toast__close:hover,
+.site-toast__close:focus-visible {
+	background: #f1f3f6;
+	color: #252c38;
 }
 
-.flash.info {
-	background-color: #5bc0de ;
+.site-toast.is-closing {
+	animation: site-toast-out .24s ease both;
 }
 
-.flash.warning {
-	background-color: #bb2124;
+@keyframes site-toast-in {
+	from {
+		opacity: 0;
+		transform: translate3d(18px, -8px, 0) scale(.98);
+	}
+
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0) scale(1);
+	}
+}
+
+@keyframes site-toast-out {
+	to {
+		opacity: 0;
+		transform: translate3d(18px, -6px, 0) scale(.98);
+	}
+}
+
+@media (max-width: 640px) {
+	.site-toast-region {
+		top: 92px;
+		right: 16px;
+		left: 16px;
+		width: auto;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.site-toast,
+	.site-toast.is-closing {
+		animation: none;
+	}
+
+	.site-toast.is-closing {
+		opacity: 0;
+	}
 }
 
 /* Redesign foundation: minimal Japanese-inspired public navigation */
