@@ -1,10 +1,27 @@
-let flash = document.querySelector('.flash');
-let flashClose = document.querySelector('.flash-close');
+const dashboardToast = document.querySelector('[data-dashboard-toast]');
+const dashboardToastClose = dashboardToast?.querySelector('[data-dashboard-toast-close]');
 
-if (flash && flashClose) {
-    flashClose.addEventListener('click', ()=> {
-        flash.style.display = 'none';
-    }, false)
+if (dashboardToast) {
+    let closeTimeout;
+
+    const closeDashboardToast = () => {
+        if (dashboardToast.classList.contains('is-closing')) {
+            return;
+        }
+
+        window.clearTimeout(closeTimeout);
+        dashboardToast.classList.add('is-closing');
+        window.setTimeout(() => dashboardToast.remove(), 260);
+    };
+
+    const scheduleDashboardToastClose = () => {
+        closeTimeout = window.setTimeout(closeDashboardToast, 6000);
+    };
+
+    dashboardToastClose?.addEventListener('click', closeDashboardToast);
+    dashboardToast.addEventListener('mouseenter', () => window.clearTimeout(closeTimeout));
+    dashboardToast.addEventListener('mouseleave', scheduleDashboardToastClose);
+    scheduleDashboardToastClose();
 }
 
 const postTypeSelect = document.querySelector('[data-post-type-select]');
