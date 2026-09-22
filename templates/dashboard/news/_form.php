@@ -30,6 +30,16 @@ $payload = $oldInput['payload']
     <input type="hidden" name="csrf_token" value="<?= e($csrf ?? '') ?>">
 
     <section class="homepage-post-form__type-panel">
+        <div class="homepage-post-form__panel-heading">
+            <span class="homepage-post-form__panel-icon">
+                <i class="fa-regular fa-newspaper" aria-hidden="true"></i>
+            </span>
+            <span>
+                <strong>Rodzaj aktualności</strong>
+                <small>Wybierz formularz dopasowany do publikowanej informacji.</small>
+            </span>
+        </div>
+
         <div class="homepage-post-form__type-row">
             <label for="news-post-type-select">Typ aktualności</label>
 
@@ -49,6 +59,16 @@ $payload = $oldInput['payload']
     <p class="validation-error"><?= e($errors['postType'] ?? '') ?></p>
 
     <section class="homepage-post-form__preview-panel">
+        <div class="homepage-post-form__panel-heading homepage-post-form__panel-heading--content">
+            <span class="homepage-post-form__panel-icon">
+                <i class="fa-regular fa-pen-to-square" aria-hidden="true"></i>
+            </span>
+            <span>
+                <strong>Treść aktualności</strong>
+                <small>Uzupełnij tytuł oraz dane właściwe dla wybranego rodzaju wpisu.</small>
+            </span>
+        </div>
+
         <div class="homepage-post-form__preview-content">
             <div class="homepage-post-form__base-fields">
                 <label class="homepage-post-form__title-field">

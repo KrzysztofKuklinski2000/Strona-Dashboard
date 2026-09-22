@@ -11,7 +11,7 @@ $csrf = $params['csrf_token'] ?? '';
 <p><b>Szczegóły:</b> <?= e($data->place) ?></p>
 <p><b>Start:</b> <?= e($data->start) ?></p>
 <p><b>Koniec:</b> <?= e($data->end) ?></p>
-<form action="<?= e($action) ?>" method="POST">
+<form class="dashboard-delete-form" action="<?= e($action) ?>" method="POST">
   <input type="hidden" name="csrf_token" value="<?= e($csrf ?? "") ?>">
   <label>
     <input type="checkbox" name="is_notify">

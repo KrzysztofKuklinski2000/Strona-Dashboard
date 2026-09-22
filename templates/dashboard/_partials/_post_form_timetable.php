@@ -1,9 +1,19 @@
 <h3 class="dashboard-action-header"><?= e($formTitle ?? '') ?></h3>
-<form action="<?= e($action) ?>" method="POST" class="timetable-create-form">
+<form action="<?= e($action) ?>" method="POST" class="timetable-create-form dashboard-editor-form timetable-editor-form">
   <input type="hidden" name="csrf_token" value="<?= e($csrf ?? '') ?>">
   <?php if(isset($data->id)): ?>
   <input type="hidden" name="id" value="<?= e($data->id) ?>">
   <?php endif; ?>
+
+  <section class="dashboard-form-section">
+    <header class="dashboard-form-section__header">
+      <span class="dashboard-form-section__icon"><i class="fa-solid fa-calendar-week" aria-hidden="true"></i></span>
+      <span class="dashboard-form-section__title">
+        <strong>Dane zajęć</strong>
+        <small>Określ dzień, grupę oraz miejsce treningu.</small>
+      </span>
+    </header>
+    <div class="dashboard-form-grid">
   <label>
     <span>Dzień: </span>
     <select name="day">
@@ -39,6 +49,19 @@
     <input type="text" name="place" maxlength="100" value="<?= e($data->place ?? '') ?>" placeholder="Miejsce">
   </label>
   <p class="validation-error"><?= e($error['place'] ?? "")  ?></p>
+
+    </div>
+  </section>
+
+  <section class="dashboard-form-section">
+    <header class="dashboard-form-section__header">
+      <span class="dashboard-form-section__icon"><i class="fa-regular fa-clock" aria-hidden="true"></i></span>
+      <span class="dashboard-form-section__title">
+        <strong>Godziny i powiadomienie</strong>
+        <small>Ustaw czas rozpoczęcia i zakończenia treningu.</small>
+      </span>
+    </header>
+    <div class="dashboard-form-grid">
   <label>
     <span>Start:</span>
     <input type="time" name="startTime" value="<?= e($data->start ?? '') ?>">
@@ -50,9 +73,19 @@
   </label>
   <p class="validation-error"><?= e($error['endTime'] ?? "")  ?></p>
 
-  <label>
+    </div>
+
+  <label class="dashboard-form-check">
     <input type="checkbox" name="is_notify">
-    Powiadom
+    <span>
+      <strong>Powiadom subskrybentów</strong>
+      <small>Wyślij wiadomość o zmianie w grafiku.</small>
+    </span>
   </label>
-  <input type="submit" value="Zapisz">
+  </section>
+
+  <div class="dashboard-form-actions">
+    <input type="submit" value="Zapisz">
+    <span>Zmiany zostaną zapisane w publicznym grafiku zajęć.</span>
+  </div>
 </form>

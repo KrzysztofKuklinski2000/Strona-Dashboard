@@ -7,11 +7,11 @@ $link = is_array($payload['link'] ?? null) ? $payload['link'] : [];
 ?>
 
 <div class="cards-grid-form news-event-form">
-    <fieldset class="cards-grid-form__card news-event-form__schedule">
-        <legend>
+    <section class="cards-grid-form__card news-event-form__schedule">
+        <header class="cards-grid-form__card-heading">
             <span><i class="fa-regular fa-calendar-days" aria-hidden="true"></i></span>
             <strong>Termin wydarzenia</strong>
-        </legend>
+        </header>
 
         <label>
             <span>Data</span>
@@ -44,14 +44,14 @@ $link = is_array($payload['link'] ?? null) ? $payload['link'] : [];
         </div>
         <p class="validation-error"><?= e($errors['payload.start_time'] ?? '') ?></p>
         <p class="validation-error"><?= e($errors['payload.end_time'] ?? '') ?></p>
-    </fieldset>
+    </section>
 
     <div class="news-event-form__content">
-        <fieldset class="cards-grid-form__card">
-            <legend>
+        <section class="cards-grid-form__card">
+            <header class="cards-grid-form__card-heading">
                 <span><i class="fa-regular fa-pen-to-square" aria-hidden="true"></i></span>
                 <strong>Opis wydarzenia</strong>
-            </legend>
+            </header>
 
             <label>
                 <span>Treść</span>
@@ -62,13 +62,13 @@ $link = is_array($payload['link'] ?? null) ? $payload['link'] : [];
                 ><?= e($payload['description'] ?? '') ?></textarea>
             </label>
             <p class="validation-error"><?= e($errors['payload.description'] ?? '') ?></p>
-        </fieldset>
+        </section>
 
-        <fieldset class="cards-grid-form__card">
-            <legend>
+        <section class="cards-grid-form__card">
+            <header class="cards-grid-form__card-heading">
                 <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i></span>
                 <strong>Miejsce</strong>
-            </legend>
+            </header>
 
             <label>
                 <span>Nazwa lub adres miejsca</span>
@@ -81,13 +81,13 @@ $link = is_array($payload['link'] ?? null) ? $payload['link'] : [];
                 >
             </label>
             <p class="validation-error"><?= e($errors['payload.location'] ?? '') ?></p>
-        </fieldset>
+        </section>
 
-        <fieldset class="cards-grid-form__card news-event-form__link">
-            <legend>
+        <section class="cards-grid-form__card news-event-form__link">
+            <header class="cards-grid-form__card-heading">
                 <span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
                 <strong>Przycisk <small>(opcjonalnie)</small></strong>
-            </legend>
+            </header>
 
             <div class="news-event-form__link-fields">
                 <label>
@@ -114,6 +114,6 @@ $link = is_array($payload['link'] ?? null) ? $payload['link'] : [];
             </div>
             <p class="validation-error"><?= e($errors['payload.link.label'] ?? '') ?></p>
             <p class="validation-error"><?= e($errors['payload.link.url'] ?? '') ?></p>
-        </fieldset>
+        </section>
     </div>
 </div>

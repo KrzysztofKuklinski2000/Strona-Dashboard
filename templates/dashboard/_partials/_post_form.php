@@ -1,23 +1,43 @@
 <h3 class="dashboard-action-header"><?= e($formTitle ?? 'Nowy Post') ?></h3>
 
-<form action="<?= e($action ?? '') ?>" method="POST">
+<form action="<?= e($action ?? '') ?>" method="POST" class="dashboard-editor-form important-post-form">
     <input type="hidden" name="csrf_token" value="<?= e($csrf ?? '') ?>">
 
     <?php if (isset($data->id)): ?>
         <input type="hidden" name="postId" value="<?= e($data->id) ?>">
     <?php endif; ?>
 
-    <input type="text" name="postTitle" maxlength="100" value="<?= e($data->title ?? '') ?>" placeholder="Tytuł posta">
-    <p class="validation-error"><?= e($errors['postTitle'] ?? '') ?></p>
+    <section class="dashboard-form-section dashboard-form-section--important">
+        <header class="dashboard-form-section__header">
+            <span class="dashboard-form-section__icon"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i></span>
+            <span class="dashboard-form-section__title">
+                <strong>Treść ważnej informacji</strong>
+                <small>Tytuł powinien szybko wyjaśniać temat, a opis przekazywać wszystkie szczegóły.</small>
+            </span>
+        </header>
 
-    <textarea name="postDescription" placeholder="Wpisz treść posta"><?= e($data->description ?? '') ?></textarea>
-    <p class="validation-error"><?= e($errors['postDescription'] ?? '') ?></p>
+        <label>
+            <span>Tytuł komunikatu</span>
+            <input type="text" name="postTitle" maxlength="100" value="<?= e($data->title ?? '') ?>" placeholder="Krótki tytuł ważnej informacji">
+        </label>
+        <p class="validation-error"><?= e($errors['postTitle'] ?? '') ?></p>
 
-    <?php
-    if (isset($extraFieldsHtml) && is_string($extraFieldsHtml)) {
-        echo $extraFieldsHtml;
-    }
-    ?>
+        <label>
+            <span>Treść komunikatu</span>
+            <textarea name="postDescription" placeholder="Opisz ważną informację i podaj potrzebne szczegóły..."><?= e($data->description ?? '') ?></textarea>
+        </label>
+        <p class="validation-error"><?= e($errors['postDescription'] ?? '') ?></p>
 
-    <input type="submit" value="<?= e($buttonTitle ?? 'Stwórz') ?>">
+        <?php
+        if (isset($extraFieldsHtml) && is_string($extraFieldsHtml)) {
+            echo $extraFieldsHtml;
+        }
+        ?>
+
+    </section>
+
+    <div class="dashboard-form-actions">
+        <input type="submit" value="<?= e($buttonTitle ?? 'Stwórz') ?>">
+        <span>Informacja będzie wyróżniona w module ważnych komunikatów.</span>
+    </div>
 </form>

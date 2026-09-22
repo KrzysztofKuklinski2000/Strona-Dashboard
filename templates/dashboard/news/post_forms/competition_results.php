@@ -17,11 +17,11 @@ if ($results === []) {
 ?>
 
 <div class="cards-grid-form news-results-form">
-    <fieldset class="cards-grid-form__card news-results-form__summary">
-        <legend>
+    <section class="cards-grid-form__card news-results-form__summary">
+        <header class="cards-grid-form__card-heading">
             <span><i class="fa-solid fa-trophy" aria-hidden="true"></i></span>
             <strong>Zawody</strong>
-        </legend>
+        </header>
 
         <label>
             <span>Data zawodów</span>
@@ -44,14 +44,14 @@ if ($results === []) {
             >
         </label>
         <p class="validation-error"><?= e($errors['payload.location'] ?? '') ?></p>
-    </fieldset>
+    </section>
 
     <div class="news-results-form__content">
-        <fieldset class="cards-grid-form__card">
-            <legend>
+        <section class="cards-grid-form__card">
+            <header class="cards-grid-form__card-heading">
                 <span><i class="fa-regular fa-pen-to-square" aria-hidden="true"></i></span>
                 <strong>Podsumowanie</strong>
-            </legend>
+            </header>
 
             <label>
                 <span>Krótki opis zawodów</span>
@@ -62,13 +62,13 @@ if ($results === []) {
                 ><?= e($payload['description'] ?? '') ?></textarea>
             </label>
             <p class="validation-error"><?= e($errors['payload.description'] ?? '') ?></p>
-        </fieldset>
+        </section>
 
-        <fieldset class="cards-grid-form__card news-results-form__results">
-            <legend>
+        <section class="cards-grid-form__card news-results-form__results">
+            <header class="cards-grid-form__card-heading">
                 <span><i class="fa-solid fa-medal" aria-hidden="true"></i></span>
                 <strong>Wyniki zawodników</strong>
-            </legend>
+            </header>
 
             <div class="news-results-form__list" data-results-list data-max-results="20">
                 <?php foreach ($results as $index => $result): ?>
@@ -143,20 +143,20 @@ if ($results === []) {
                 <i class="fa-solid fa-plus" aria-hidden="true"></i>
                 Dodaj wynik
             </button>
-        </fieldset>
+        </section>
 
-        <fieldset
+        <section
             class="cards-grid-form__card news-results-form__link"
             data-link-section
             <?= !$hasLink ? 'hidden' : '' ?>
         >
-            <legend>
+            <header class="cards-grid-form__card-heading">
                 <span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
                 <strong>Przycisk <small>(opcjonalnie)</small></strong>
                 <button type="button" class="cards-grid-form__remove" data-remove-link aria-label="Usuń przycisk">
                     <i class="fa-solid fa-xmark" aria-hidden="true"></i>
                 </button>
-            </legend>
+            </header>
 
             <div class="news-results-form__link-fields">
                 <label>
@@ -183,7 +183,7 @@ if ($results === []) {
             </div>
             <p class="validation-error"><?= e($errors['payload.link.label'] ?? '') ?></p>
             <p class="validation-error"><?= e($errors['payload.link.url'] ?? '') ?></p>
-        </fieldset>
+        </section>
 
         <button type="button" class="cards-grid-form__add" data-add-link <?= $hasLink ? 'hidden' : '' ?>>
             <i class="fa-solid fa-plus" aria-hidden="true"></i>

@@ -5,11 +5,11 @@ $payload = isset($payload) && is_array($payload)
 ?>
 
 <div class="cards-grid-form news-funding-form">
-    <fieldset class="cards-grid-form__card news-funding-form__summary">
-        <legend>
+    <section class="cards-grid-form__card news-funding-form__summary">
+        <header class="cards-grid-form__card-heading">
             <span><i class="fa-solid fa-hand-holding-dollar" aria-hidden="true"></i></span>
             <strong>Dane dofinansowania</strong>
-        </legend>
+        </header>
 
         <label>
             <span>Źródło finansowania</span>
@@ -34,13 +34,13 @@ $payload = isset($payload) && is_array($payload)
             >
         </label>
         <p class="validation-error"><?= e($errors['payload.amount'] ?? '') ?></p>
-    </fieldset>
+    </section>
 
-    <fieldset class="cards-grid-form__card news-funding-form__description">
-        <legend>
+    <section class="cards-grid-form__card news-funding-form__description">
+        <header class="cards-grid-form__card-heading">
             <span><i class="fa-regular fa-pen-to-square" aria-hidden="true"></i></span>
             <strong>Opis dofinansowania</strong>
-        </legend>
+        </header>
 
         <label>
             <span>Treść</span>
@@ -51,5 +51,5 @@ $payload = isset($payload) && is_array($payload)
             ><?= e($payload['description'] ?? '') ?></textarea>
         </label>
         <p class="validation-error"><?= e($errors['payload.description'] ?? '') ?></p>
-    </fieldset>
+    </section>
 </div>

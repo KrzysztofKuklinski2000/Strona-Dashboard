@@ -15,11 +15,11 @@ $limit = is_scalar($limitValue) ? (string) $limitValue : '3';
 ?>
 
 <div class="cards-grid-form module-feed-form">
-    <fieldset class="cards-grid-form__card">
-        <legend>
+    <section class="cards-grid-form__card">
+        <header class="cards-grid-form__card-heading">
             <span><i class="fa-regular fa-newspaper" aria-hidden="true"></i></span>
             <strong>Wpisy z modułu</strong>
-        </legend>
+        </header>
 
         <label>
             <span>Moduł źródłowy</span>
@@ -47,5 +47,5 @@ $limit = is_scalar($limitValue) ? (string) $limitValue : '3';
             >
         </label>
         <p class="validation-error"><?= e($errors['payload.limit'] ?? '') ?></p>
-    </fieldset>
+    </section>
 </div>

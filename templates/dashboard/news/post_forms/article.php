@@ -12,11 +12,11 @@ $removeImage = ($oldInput['removeImage'] ?? null) === '1';
 ?>
 
 <div class="image-text-list-form news-article-form">
-    <fieldset class="cards-grid-form__card image-text-list-form__image">
-        <legend>
+    <section class="cards-grid-form__card image-text-list-form__image">
+        <header class="cards-grid-form__card-heading">
             <span><i class="fa-regular fa-image" aria-hidden="true"></i></span>
-            Obraz opcjonalny
-        </legend>
+            <strong>Obraz opcjonalny</strong>
+        </header>
 
         <div class="image-text-list-form__placeholder">
             <?php if ($imageSrc !== ''): ?>
@@ -60,9 +60,14 @@ $removeImage = ($oldInput['removeImage'] ?? null) === '1';
             >
         </label>
         <p class="validation-error"><?= e($errors['payload.image.alt'] ?? '') ?></p>
-    </fieldset>
+    </section>
 
-    <div class="image-text-list-form__content news-article-form__content">
+    <section class="cards-grid-form__card image-text-list-form__content news-article-form__content">
+        <header class="cards-grid-form__card-heading">
+            <span><i class="fa-regular fa-pen-to-square" aria-hidden="true"></i></span>
+            <strong>Treść aktualności</strong>
+        </header>
+
         <label class="homepage-post-form__description-field">
             <span>Treść aktualności</span>
             <textarea
@@ -72,5 +77,5 @@ $removeImage = ($oldInput['removeImage'] ?? null) === '1';
             ><?= e($payload['description'] ?? '') ?></textarea>
         </label>
         <p class="validation-error"><?= e($errors['payload.description'] ?? '') ?></p>
-    </div>
+    </section>
 </div>

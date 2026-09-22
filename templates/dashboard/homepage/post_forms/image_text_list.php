@@ -18,11 +18,11 @@ if ($hasItems && !$items) {
 ?>
 
 <div class="cards-grid-form image-text-list-form">
-    <fieldset class="cards-grid-form__card image-text-list-form__image">
-        <legend>
+    <section class="cards-grid-form__card image-text-list-form__image">
+        <header class="cards-grid-form__card-heading">
             <span><i class="fa-regular fa-image" aria-hidden="true"></i></span>
-            Obraz
-        </legend>
+            <strong>Obraz</strong>
+        </header>
 
         <div class="image-text-list-form__placeholder">
             <?php if (!empty($image['src'])): ?>
@@ -47,7 +47,7 @@ if ($hasItems && !$items) {
             <input type="text" name="payload[image][alt]" maxlength="160" value="<?= e($image['alt'] ?? '') ?>" placeholder="Opis obrazka">
         </label>
         <p class="validation-error"><?= e($errors['payload.image.alt'] ?? '') ?></p>
-    </fieldset>
+    </section>
 
     <div class="image-text-list-form__content">
         <div class="image-text-list-form__eyebrow">
@@ -71,14 +71,14 @@ if ($hasItems && !$items) {
         </div>
 
         <div class="image-text-list-form__optional-slot image-text-list-form__list-slot">
-            <fieldset class="cards-grid-form__card image-text-list-form__group" data-list-section <?= !$hasItems ? 'hidden' : '' ?>>
-                <legend>
+            <section class="cards-grid-form__card image-text-list-form__group" data-list-section <?= !$hasItems ? 'hidden' : '' ?>>
+                <header class="cards-grid-form__card-heading">
                     <span><i class="fa-solid fa-list-check" aria-hidden="true"></i></span>
-                    Lista punktów
+                    <strong>Lista punktów</strong>
                     <button type="button" class="cards-grid-form__remove" data-remove-list aria-label="Usuń całą listę">
                         <i class="fa-solid fa-xmark" aria-hidden="true"></i>
                     </button>
-                </legend>
+                </header>
 
                 <div class="image-text-list-form__items" data-list-items data-max-items="20">
                     <?php foreach ($items as $index => $item): ?>
@@ -107,7 +107,7 @@ if ($hasItems && !$items) {
                     <i class="fa-solid fa-plus" aria-hidden="true"></i>
                     Dodaj punkt
                 </button>
-            </fieldset>
+            </section>
 
             <button type="button" class="cards-grid-form__add" data-add-list <?= $hasItems ? 'hidden' : '' ?>>
                 <i class="fa-solid fa-plus" aria-hidden="true"></i>
@@ -116,14 +116,14 @@ if ($hasItems && !$items) {
         </div>
 
         <div class="image-text-list-form__optional-slot image-text-list-form__link-slot">
-            <fieldset class="cards-grid-form__card image-text-list-form__group" data-link-section <?= !$hasLink ? 'hidden' : '' ?>>
-                <legend>
+            <section class="cards-grid-form__card image-text-list-form__group" data-link-section <?= !$hasLink ? 'hidden' : '' ?>>
+                <header class="cards-grid-form__card-heading">
                     <span><i class="fa-solid fa-arrow-pointer" aria-hidden="true"></i></span>
-                    Przycisk / link
+                    <strong>Przycisk / link</strong>
                     <button type="button" class="cards-grid-form__remove" data-remove-link aria-label="Usuń przycisk">
                         <i class="fa-solid fa-xmark" aria-hidden="true"></i>
                     </button>
-                </legend>
+                </header>
                 <div class="image-text-list-form__link">
                     <label>
                         <span>Tekst</span>
@@ -136,7 +136,7 @@ if ($hasItems && !$items) {
                 </div>
                 <p class="validation-error"><?= e($errors['payload.link.label'] ?? '') ?></p>
                 <p class="validation-error"><?= e($errors['payload.link.url'] ?? '') ?></p>
-            </fieldset>
+            </section>
 
             <button type="button" class="cards-grid-form__add" data-add-link <?= $hasLink ? 'hidden' : '' ?>>
                 <i class="fa-solid fa-plus" aria-hidden="true"></i>

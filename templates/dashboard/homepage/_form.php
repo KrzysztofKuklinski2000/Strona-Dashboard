@@ -31,6 +31,16 @@ $payload = $oldInput['payload']
     <input type="hidden" name="csrf_token" value="<?= e($csrf ?? '') ?>">
 
     <section class="homepage-post-form__type-panel">
+        <div class="homepage-post-form__panel-heading">
+            <span class="homepage-post-form__panel-icon">
+                <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+            </span>
+            <span>
+                <strong>Układ sekcji</strong>
+                <small>Wybierz sposób prezentacji treści na stronie głównej.</small>
+            </span>
+        </div>
+
         <div class="homepage-post-form__type-row">
             <label for="post-type-select">Typ posta</label>
 
@@ -50,6 +60,16 @@ $payload = $oldInput['payload']
     <p class="validation-error"><?= e($errors['postType'] ?? '') ?></p>
 
     <section class="homepage-post-form__preview-panel">
+        <div class="homepage-post-form__panel-heading homepage-post-form__panel-heading--content">
+            <span class="homepage-post-form__panel-icon">
+                <i class="fa-regular fa-pen-to-square" aria-hidden="true"></i>
+            </span>
+            <span>
+                <strong>Zawartość sekcji</strong>
+                <small>Uzupełnij pola właściwe dla wybranego układu.</small>
+            </span>
+        </div>
+
         <div class="homepage-post-form__preview-content">
             <div class="homepage-post-form__base-fields">
                 <label class="homepage-post-form__title-field">
