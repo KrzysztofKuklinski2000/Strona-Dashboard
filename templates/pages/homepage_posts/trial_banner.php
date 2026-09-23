@@ -2,7 +2,7 @@
 $titleId = 'trial-banner-title-' . (int) ($post->id ?? 0);
 $description = (string) ($block['description'] ?? '');
 ?>
-<section class="first-class-section" aria-labelledby="<?= e($titleId) ?>">
+<section class="first-class-section home-post-section" aria-labelledby="<?= e($titleId) ?>">
     <div class="first-class-section__inner">
         <div class="first-class-section__icon" aria-hidden="true">
             <i class="fa-solid fa-gift"></i>

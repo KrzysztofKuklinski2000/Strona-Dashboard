@@ -5,7 +5,7 @@ $title = $post->title ?? '';
 $description = $block['description'] ?? '';
 ?>
 
-<section id="<?= e($sectionId) ?>" class="simple-text-section home-post-section <?= e($sectionTone ?? 'home-post-section--soft') ?>" aria-labelledby="<?= e($titleId) ?>">
+<section id="<?= e($sectionId) ?>" class="simple-text-section home-post-section" aria-labelledby="<?= e($titleId) ?>">
     <div class="simple-text-section__inner">
         <div class="simple-text-section__heading">
             <?php if ($title !== ''): ?>

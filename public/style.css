@@ -39,7 +39,7 @@ html, body {
 	display: flex;
   flex-direction: column;
   justify-content: space-between;
-	overflow-x: hidden;
+	overflow-x: clip;
 }
 
 body {
@@ -140,7 +140,7 @@ iframe {
 	align-items: center;
 	overflow: visible;
 	isolation: isolate;
-	background: #f1f1ef;
+	background: #fff;
 	border-bottom: 0;
 }
 
@@ -150,7 +150,7 @@ iframe {
 	inset: 0;
 	z-index: -2;
 	background:
-		linear-gradient(90deg, rgba(241, 241, 239, .98) 0%, rgba(241, 241, 239, .94) 28%, rgba(241, 241, 239, .64) 42%, rgba(241, 241, 239, .18) 55%, rgba(241, 241, 239, 0) 66%);
+		linear-gradient(90deg, rgba(255, 255, 255, .98) 0%, rgba(255, 255, 255, .94) 28%, rgba(255, 255, 255, .64) 42%, rgba(255, 255, 255, .18) 55%, rgba(255, 255, 255, 0) 66%);
 }
 
 .hero-section::after {
@@ -165,7 +165,7 @@ iframe {
 	position: absolute;
 	inset: 0;
 	z-index: -3;
-	background-color: #f1f1ef;
+	background-color: #fff;
 	overflow: hidden;
 }
 
@@ -596,16 +596,6 @@ main {
 	background: var(--module-feed-background);
 }
 
-.module-feed-section.home-post-section--soft {
-	--module-feed-background: var(--color-surface-soft);
-	--module-feed-background-rgb: 246, 246, 244;
-}
-
-.module-feed-section.home-post-section--paper {
-	--module-feed-background: var(--color-paper);
-	--module-feed-background-rgb: 255, 255, 255;
-}
-
 .module-feed-card__label,
 .module-feed-card time {
 	color: var(--module-feed-accent);
@@ -1004,7 +994,7 @@ main {
 .first-class-section {
 	position: relative;
 	overflow: hidden;
-	background: #f9f7f4;
+	background: var(--home-section-background, #fff);
 }
 
 .first-class-section::before {
@@ -1021,8 +1011,8 @@ main {
 	position: absolute;
 	inset: 0;
 	background:
-		linear-gradient(180deg, rgba(249, 247, 244, .98) 0%, rgba(249, 247, 244, .82) 52%, rgba(249, 247, 244, .08) 100%),
-		linear-gradient(90deg, rgba(249, 247, 244, .96), rgba(249, 247, 244, .5) 60%, rgba(249, 247, 244, .04));
+		linear-gradient(180deg, rgba(var(--home-section-rgb, 255, 255, 255), .98) 0%, rgba(var(--home-section-rgb, 255, 255, 255), .82) 52%, rgba(var(--home-section-rgb, 255, 255, 255), .08) 100%),
+		linear-gradient(90deg, rgba(var(--home-section-rgb, 255, 255, 255), .96), rgba(var(--home-section-rgb, 255, 255, 255), .5) 60%, rgba(var(--home-section-rgb, 255, 255, 255), .04));
 	pointer-events: none;
 }
 
@@ -1412,27 +1402,36 @@ main {
 	color: #fff;
 }
 
-.home-post-section {
+/* Tones follow rendered sections, including banners, regardless of post type. */
+.homepage main > .home-post-section {
+	--home-section-rgb: 255, 255, 255;
+	--home-section-background: rgb(var(--home-section-rgb));
+	--module-feed-background: var(--home-section-background);
+	--module-feed-background-rgb: var(--home-section-rgb);
+	--family-section-bg: var(--home-section-background);
+	background: var(--home-section-background);
 	border-bottom: 0;
-	transition: background-color .25s ease;
 }
 
-.simple-text-section.home-post-section--paper,
-.why-karate-section.home-post-section--paper {
-	background: var(--color-paper);
+.homepage main > .home-post-section:nth-of-type(even) {
+	--home-section-rgb: 250, 251, 252;
 }
 
-.simple-text-section.home-post-section--soft,
-.why-karate-section.home-post-section--soft {
-	background: var(--color-surface-soft);
+.homepage main > .home-post-section + .home-post-section {
+	border-top: 1px solid #eef0f2;
 }
 
-.family-training-section.home-post-section--paper {
-	--family-section-bg: var(--color-paper);
+.homepage .home-post-section > :is(
+	.important-section__inner,
+	.simple-text-section__inner,
+	.why-karate-section__inner,
+	.family-training-section__inner
+) {
+	padding-block: clamp(40px, 4vw, 64px);
 }
 
-.family-training-section.home-post-section--soft {
-	--family-section-bg: var(--color-surface-soft);
+.homepage .family-training-section__content {
+	padding-block: 0;
 }
 
 
@@ -1572,7 +1571,7 @@ footer .copy {
 	display: flex;
 	align-items: center;
 	overflow: hidden;
-	background: #f1f1ef;
+	background: #fff;
 	isolation: isolate;
 }
 
@@ -1582,7 +1581,7 @@ footer .copy {
 	inset: 0;
 	z-index: -1;
 	background:
-		linear-gradient(90deg, rgba(241, 241, 239, .98) 0%, rgba(241, 241, 239, .94) 28%, rgba(241, 241, 239, .64) 42%, rgba(241, 241, 239, .18) 55%, rgba(241, 241, 239, 0) 66%),
+		linear-gradient(90deg, rgba(255, 255, 255, .98) 0%, rgba(255, 255, 255, .94) 28%, rgba(255, 255, 255, .64) 42%, rgba(255, 255, 255, .18) 55%, rgba(255, 255, 255, 0) 66%),
 		linear-gradient(90deg, transparent 45%, rgba(232, 174, 92, .2) 72%, rgba(232, 174, 92, .16) 100%);
 }
 
@@ -3178,7 +3177,6 @@ footer .copy {
 	gap: 18px;
 	margin: 0;
 	color: var(--color-ink);
-	font-family: var(--font-display);
 	font-size: clamp(1.55rem, 4vw, 2rem);
 	font-weight: 600;
 	letter-spacing: -.025em;
@@ -3256,7 +3254,6 @@ footer .copy {
 .fees-card p {
 	margin: 0;
 	color: var(--color-ink);
-	font-family: var(--font-display);
 	font-size: 1.1rem;
 	font-weight: 600;
 	letter-spacing: -.015em;
@@ -3275,7 +3272,6 @@ footer .copy {
 	display: block;
 	margin-top: 32px;
 	color: var(--color-ink);
-	font-family: var(--font-display);
 	font-size: clamp(2.2rem, 8vw, 3rem);
 	font-weight: 600;
 	letter-spacing: -.045em;
@@ -5707,8 +5703,7 @@ body > footer {
 	position: relative;
 	overflow: hidden;
 	padding: 26px 0;
-	background:
-		linear-gradient(180deg, #faf8f4 0%, #fff 100%);
+	background: linear-gradient(180deg, #fafbfc, #fff);
 	border-top: 1px solid var(--color-line);
 	border-bottom: 0;
 }

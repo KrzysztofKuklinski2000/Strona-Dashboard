@@ -7,7 +7,7 @@ $homepagePosts = $content['homepagePosts'] ?? [];
 $homepageFeeds = $content['homepageFeeds'] ?? [];
 ?>
 
-<?php foreach ($homepagePosts as $postIndex => $post): ?>
+<?php foreach ($homepagePosts as $post): ?>
     <?php
         $type = (string) ($post->type ?? HomepagePostTypes::SIMPLE_TEXT);
         $partial = HomepagePostTypes::partial($type);
@@ -21,9 +21,6 @@ $homepageFeeds = $content['homepageFeeds'] ?? [];
         $partialPath = 'templates/pages/homepage_posts/' . $partial;
         $payload = json_decode((string) ($post->payload ?? ''), true) ?: [];
         $block = $payload;
-        $sectionTone = $postIndex % 2 === 0
-            ? 'home-post-section--soft'
-            : 'home-post-section--paper';
     ?>
 
     <?php require $partialPath; ?>

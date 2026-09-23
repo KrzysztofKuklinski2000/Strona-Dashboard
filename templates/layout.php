@@ -52,7 +52,7 @@
 	</title>
 </head>
 
-<body>
+<body<?= $page === 'homepage' ? ' class="homepage"' : '' ?>>
 	<?php if (isset($params['flash_public'])): ?>
 		<?php
 		$flash = $params['flash_public'];

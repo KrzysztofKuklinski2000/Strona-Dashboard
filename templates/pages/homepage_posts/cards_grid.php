@@ -11,7 +11,7 @@ $gridSizeClass = $cardCount <= 2
 ?>
 
 <?php if ($cards): ?>
-    <section class="why-karate-section home-post-section <?= e($sectionTone ?? 'home-post-section--paper') ?>" aria-labelledby="<?= e($titleId) ?>">
+    <section class="why-karate-section home-post-section" aria-labelledby="<?= e($titleId) ?>">
         <div class="why-karate-section__inner">
             <div class="why-karate-section__heading">
                 <?php if ($eyebrow !== ''): ?>
