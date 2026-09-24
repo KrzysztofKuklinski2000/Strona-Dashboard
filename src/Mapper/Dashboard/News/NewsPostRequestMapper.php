@@ -47,7 +47,7 @@ readonly class NewsPostRequestMapper
             ),
             'created' => $currentDate,
             'updated' => $currentDate,
-            'status' => 1,
+            'status' => 0,
             'type' => $postType,
             'payload' => $payload,
             'imageFile' => $this->getImage($postType)
