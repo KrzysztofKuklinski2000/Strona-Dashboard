@@ -36,13 +36,13 @@ readonly class NewsPostRequestMapper
         $currentDate = date('Y-m-d');
         $postType = $this->resolvePostType();
         $rawPayload = $this->getRawPayload();
-        $payload = $this->normalizer->normalize($postType, $rawPayload);
+        $payload = $this->normalizer->normalize($postType, $rawPayload, requireCompleteData: false);
 
         $data = [
             'title' => $this->validator->validate(
                 name: 'postTitle',
                 value: $this->request->getFormParam('postTitle'),
-                required: true,
+                required: false,
                 maxLength: 60,
             ),
             'created' => $currentDate,
@@ -56,23 +56,23 @@ readonly class NewsPostRequestMapper
         return CreateNewsDto::fromArray($data);
     }
 
-    public function mapUpdate(): UpdateNewsDto
+    public function mapUpdate(bool $requireCompleteData): UpdateNewsDto
     {
         $postType = $this->resolvePostType();
         $rawPayload = $this->getRawPayload();
-        $payload = $this->normalizer->normalize($postType, $rawPayload);
+        $payload = $this->normalizer->normalize($postType, $rawPayload, $requireCompleteData);
 
         $data = [
             'id' => $this->validator->validate(
                 name: 'postId',
-                value: $this->request->getFormParam('postId'),
+                value: $this->request->getRouteParam('id'),
                 required: true,
                 type: 'int',
             ),
             'title' => $this->validator->validate(
                 name: 'postTitle',
                 value: $this->request->getFormParam('postTitle'),
-                required: true,
+                required: $requireCompleteData,
                 maxLength: 60,
             ),
             'updated' => date('Y-m-d'),

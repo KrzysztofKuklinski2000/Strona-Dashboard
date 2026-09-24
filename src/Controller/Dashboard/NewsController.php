@@ -14,6 +14,7 @@ use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
 use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\News\CreateNewsDto;
+use App\DTO\Dashboard\News\NewsDto;
 use App\DTO\Dashboard\News\UpdateNewsDto;
 use App\DTO\Dashboard\PublishedDto;
 use App\DTO\DataTransferObjectInterface;
@@ -98,9 +99,15 @@ class NewsController extends AbstractDashboardController
         return $this->requestMapper->mapCreate();
     }
 
+    /**
+     * @throws NotFoundException
+     */
     protected function getDataToUpdate(): UpdateNewsDto
     {
-        return $this->requestMapper->mapUpdate();
+        /** @var NewsDto $post */
+        $post = $this->getSingleData();
+
+        return $this->requestMapper->mapUpdate(requireCompleteData: $post->status === 1);
     }
 
     protected function getDataToPublished(): PublishedDto
