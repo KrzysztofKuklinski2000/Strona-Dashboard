@@ -17,7 +17,7 @@ readonly class FundingNormalizer implements PayloadNormalizerInterface
         $fundingSource = $this->validator->validate(
             name: 'payload.funding_source',
             value: $rawPayload['funding_source'] ?? null,
-            required: true,
+            required: $requireCompleteData,
             maxLength: 160
         );
 
@@ -30,7 +30,7 @@ readonly class FundingNormalizer implements PayloadNormalizerInterface
         $description = $this->validator->validate(
             name: 'payload.description',
             value: $rawPayload['description'] ?? null,
-            required: true,
+            required: $requireCompleteData,
             maxLength: 1000,
         );
 

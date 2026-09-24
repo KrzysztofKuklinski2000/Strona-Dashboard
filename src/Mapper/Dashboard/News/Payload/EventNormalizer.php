@@ -19,11 +19,11 @@ final readonly class EventNormalizer implements PayloadNormalizerInterface
 
     public function normalize(array $rawPayload, bool $requireCompleteData = true): array
     {
-        $eventDate = $this->normalizeDate($rawPayload['event_date'] ?? null);
+        $eventDate = $this->normalizeDate($rawPayload['event_date'] ?? null, $requireCompleteData);
         $eventStartTime = $this->normalizeTime(
             field: 'payload.start_time',
             value: $rawPayload['start_time'] ?? null,
-            required: true,
+            required: $requireCompleteData,
         );
         $eventEndTime = $this->normalizeTime(
             field: 'payload.end_time',
@@ -44,14 +44,14 @@ final readonly class EventNormalizer implements PayloadNormalizerInterface
         $location = $this->validator->validate(
             name: 'payload.location',
             value: $rawPayload['location'] ?? null,
-            required: true,
+            required: $requireCompleteData,
             maxLength: 160
         );
 
         $description = $this->validator->validate(
             name: 'payload.description',
             value: $rawPayload['description'] ?? null,
-            required: true,
+            required: $requireCompleteData,
             maxLength: 1000,
         );
 
@@ -61,16 +61,16 @@ final readonly class EventNormalizer implements PayloadNormalizerInterface
             'end_time' => $eventEndTime,
             'description' => $description ?? '',
             'location' => $location ?? '',
-            'link' => $this->linkNormalizer->normalize($rawPayload['link'] ?? []),
+            'link' => $this->linkNormalizer->normalize($rawPayload['link'] ?? [], $requireCompleteData),
         ];
     }
 
-    private function normalizeDate(mixed $rawDate): string
+    private function normalizeDate(mixed $rawDate, bool $requireCompleteData): string
     {
         $date = $this->validator->validate(
             name: 'payload.event_date',
             value: $rawDate,
-            required: true,
+            required: $requireCompleteData,
             maxLength: 10,
         );
 

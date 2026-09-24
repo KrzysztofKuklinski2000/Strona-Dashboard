@@ -12,7 +12,7 @@ final readonly class OptionalLinkNormalizer
     {
     }
 
-    public function normalize(mixed $rawLink): array
+    public function normalize(mixed $rawLink, bool $requireCompleteData = true): array
     {
         if (!is_array($rawLink)) {
             $this->validator->addError(
@@ -34,14 +34,14 @@ final readonly class OptionalLinkNormalizer
         $label = $this->validator->validate(
             name: 'payload.link.label',
             value: $rawLabel,
-            required: $hasUrl,
+            required: $hasUrl && $requireCompleteData,
             maxLength: 80,
         );
 
         $url = $this->validator->validate(
             name: 'payload.link.url',
             value: $rawUrl,
-            required: $hasLabel,
+            required: $hasLabel && $requireCompleteData,
             maxLength: 255,
         );
 
