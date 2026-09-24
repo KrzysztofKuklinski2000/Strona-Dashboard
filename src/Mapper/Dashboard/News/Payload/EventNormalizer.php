@@ -17,7 +17,7 @@ final readonly class EventNormalizer implements PayloadNormalizerInterface
     ) {
     }
 
-    public function normalize(array $rawPayload): array
+    public function normalize(array $rawPayload, bool $requireCompleteData = true): array
     {
         $eventDate = $this->normalizeDate($rawPayload['event_date'] ?? null);
         $eventStartTime = $this->normalizeTime(

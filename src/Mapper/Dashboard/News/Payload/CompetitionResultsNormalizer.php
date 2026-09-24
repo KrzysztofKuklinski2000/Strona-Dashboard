@@ -18,7 +18,7 @@ final readonly class CompetitionResultsNormalizer implements PayloadNormalizerIn
     ) {
     }
 
-    public function normalize(array $rawPayload): array {
+    public function normalize(array $rawPayload, bool $requireCompleteData = true): array {
         $competitionDate = $this->normalizeDate($rawPayload['competition_date'] ?? null);
 
         $location = $this->validator->validate(

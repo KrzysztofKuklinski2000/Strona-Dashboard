@@ -12,7 +12,7 @@ readonly class FundingNormalizer implements PayloadNormalizerInterface
     {
     }
 
-    public function normalize(array $rawPayload): array
+    public function normalize(array $rawPayload, bool $requireCompleteData = true): array
     {
         $fundingSource = $this->validator->validate(
             name: 'payload.funding_source',

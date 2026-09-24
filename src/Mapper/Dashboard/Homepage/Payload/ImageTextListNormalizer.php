@@ -18,7 +18,7 @@ final readonly class ImageTextListNormalizer implements PayloadNormalizerInterfa
     ) {
     }
 
-    public function normalize(array $rawPayload): array
+    public function normalize(array $rawPayload, bool $requireCompleteData = true): array
     {
         $rawImage = $rawPayload['image'] ?? [];
 

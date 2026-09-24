@@ -13,7 +13,7 @@ final readonly class SimpleTextNormalizer implements PayloadNormalizerInterface
     {
     }
 
-    public function normalize(array $rawPayload): array
+    public function normalize(array $rawPayload, bool $requireCompleteData = true): array
     {
         $description = $this->validator->validate(
             name: 'payload.description',

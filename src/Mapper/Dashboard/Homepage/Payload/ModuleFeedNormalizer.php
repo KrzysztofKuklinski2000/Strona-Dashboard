@@ -17,7 +17,7 @@ final readonly class ModuleFeedNormalizer implements PayloadNormalizerInterface
     {
     }
 
-    public function normalize(array $rawPayload): array
+    public function normalize(array $rawPayload, bool $requireCompleteData = true): array
     {
         $module = $this->validator->validate(
             name: 'payload.module',

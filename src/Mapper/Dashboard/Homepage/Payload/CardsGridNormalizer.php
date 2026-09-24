@@ -15,7 +15,7 @@ final readonly class CardsGridNormalizer implements PayloadNormalizerInterface
     {
     }
 
-    public function normalize(array $rawPayload): array
+    public function normalize(array $rawPayload, bool $requireCompleteData = true): array
     {
         $rawCards = $rawPayload['cards'] ?? [];
 

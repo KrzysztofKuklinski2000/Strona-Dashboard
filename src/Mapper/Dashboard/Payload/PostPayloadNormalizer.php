@@ -16,7 +16,7 @@ final readonly class PostPayloadNormalizer
     ) {
     }
 
-    public function normalize(string $type, array $rawPayload): ?string
+    public function normalize(string $type, array $rawPayload, bool $requireCompleteData = true): ?string
     {
 
         $normalizer = $this->normalizers[$type] ?? null;
@@ -30,7 +30,7 @@ final readonly class PostPayloadNormalizer
             return null;
         }
 
-        $payload = $normalizer->normalize($rawPayload);
+        $payload = $normalizer->normalize($rawPayload, $requireCompleteData);
         $json = json_encode($payload, JSON_UNESCAPED_UNICODE);
 
         if ($json === false) {

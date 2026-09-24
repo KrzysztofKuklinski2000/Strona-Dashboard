@@ -6,5 +6,5 @@ namespace App\Mapper\Dashboard\Payload;
 
 interface PayloadNormalizerInterface
 {
-    public function normalize(array $rawPayload): array;
+    public function normalize(array $rawPayload, bool $requireCompleteData = true): array;
 }

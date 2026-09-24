@@ -12,7 +12,7 @@ final readonly class ArticleNormalizer implements PayloadNormalizerInterface
     {
     }
 
-    public function normalize(array $rawPayload): array {
+    public function normalize(array $rawPayload, bool $requireCompleteData = true): array {
         $rawImage = $rawPayload['image'] ?? [];
 
         if(!is_array($rawImage)) {
