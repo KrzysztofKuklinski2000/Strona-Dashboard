@@ -21,6 +21,7 @@ use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Mapper\Dashboard\News\NewsPostRequestMapper;
 use App\Service\Dashboard\Contracts\NewsManagementServiceInterface;
+use App\Validator\Dashboard\News\NewsPostPublicationValidator;
 
 class NewsController extends AbstractDashboardController
 {
@@ -34,6 +35,7 @@ class NewsController extends AbstractDashboardController
     public function __construct(
         public NewsManagementServiceInterface  $service,
         private readonly NewsPostRequestMapper $requestMapper,
+        private readonly NewsPostPublicationValidator $publicationValidator,
         ContextController                      $contextController,
     ) {
         parent::__construct($contextController);
@@ -112,7 +114,18 @@ class NewsController extends AbstractDashboardController
 
     protected function getDataToPublished(): PublishedDto
     {
-        return $this->requestMapper->mapPublication();
+        $data = $this->requestMapper->mapPublication();
+
+        if ($data->published !== 1 || $this->validator->getErrors()) {
+            return $data;
+        }
+
+        /** @var NewsDto $post */
+        $post = $this->service->getPost($data->id);
+
+        $this->publicationValidator->validate($post);
+
+        return $data;
     }
 
     protected function getDataToChangePostPosition(): ChangePositionDto
