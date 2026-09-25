@@ -20,6 +20,7 @@ use App\Mapper\Dashboard\Homepage\Payload\SimpleTextNormalizer;
 use App\Mapper\Dashboard\Payload\OptionalLinkNormalizer;
 use App\Mapper\Dashboard\Payload\PostPayloadNormalizer;
 use App\Mapper\Dashboard\PublicationRequestMapper;
+use App\Mapper\Dashboard\SubmissionActionRequestMapper;
 use PDO;
 
 class HomepageControllerFactory implements ControllerFactoryInterface
@@ -71,6 +72,10 @@ class HomepageControllerFactory implements ControllerFactoryInterface
                 $contextController->validator,
             ),
             new DeleteRequestMapper(
+                $contextController->request,
+                $contextController->validator,
+            ),
+            new SubmissionActionRequestMapper(
                 $contextController->request,
                 $contextController->validator,
             )

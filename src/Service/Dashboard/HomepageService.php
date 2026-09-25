@@ -71,21 +71,22 @@ class HomepageService extends AbstractDashboardService implements HomepageManage
         $payload = $this->preparePayloadForPersistence($data);
 
         if ($data->type === HomepagePostTypes::IMAGE_TEXT_LIST && $data->imageFile === null) {
-            if ($payload === null || $oldImageName === null) {
-                throw new ServiceException('Obraz jest wymagany dla tego typu posta.');
-            }
+            if ($payload !== null && $oldImageName !== null) {
 
-            try {
-                $payload = $this->processor->preserveImageSource(
-                    $payload,
-                    $oldImageName,
-                );
-            } catch (JsonException $e) {
-                throw new ServiceException(
-                    'Nie udało się zachować danych obrazu.',
-                    500,
-                    $e,
-                );
+                try {
+                    $payload = $this->processor->preserveImageSource(
+                        $payload,
+                        $oldImageName,
+                    );
+                } catch (JsonException $e) {
+                    throw new ServiceException(
+                        'Nie udało się zachować danych obrazu.',
+                        500,
+                        $e,
+                    );
+                }
+            }elseif ($data->status === 1) {
+                throw new ServiceException('Obraz jest wymagany dla tego typu posta.');
             }
         }
 
@@ -94,6 +95,7 @@ class HomepageService extends AbstractDashboardService implements HomepageManage
             'title' => $data->title,
             'updated' => $data->updated,
             'type' => $data->type,
+            'status' => $data->status,
             'payload' => $payload
         ]);
 
@@ -200,6 +202,9 @@ class HomepageService extends AbstractDashboardService implements HomepageManage
         }
     }
 
+    /**
+     * @throws ServiceException
+     */
     public function moveHomepagePost(ChangePositionDto $data): void
     {
         $this->move(self::TABLE, $data);

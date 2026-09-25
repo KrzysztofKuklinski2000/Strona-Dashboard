@@ -16,23 +16,27 @@ use App\Mapper\Dashboard\ChangePositionRequestMapper;
 use App\Mapper\Dashboard\DeleteRequestMapper;
 use App\Mapper\Dashboard\Payload\PostPayloadNormalizer;
 use App\Mapper\Dashboard\PublicationRequestMapper;
+use App\Mapper\Dashboard\SubmissionActionRequestMapper;
 
 readonly class HomepagePostRequestMapper
 {
     public function __construct(
-        private Request                     $request,
-        private Validator                   $validator,
-        private Config                      $config,
-        private PostPayloadNormalizer       $payloadNormalizer,
-        private ChangePositionRequestMapper $changePositionRequestMapper,
-        private PublicationRequestMapper    $publicationRequestMapper,
-        private DeleteRequestMapper         $deleteRequestMapper,
+        private Request                       $request,
+        private Validator                     $validator,
+        private Config                        $config,
+        private PostPayloadNormalizer         $payloadNormalizer,
+        private ChangePositionRequestMapper   $changePositionRequestMapper,
+        private PublicationRequestMapper      $publicationRequestMapper,
+        private DeleteRequestMapper           $deleteRequestMapper,
+        private SubmissionActionRequestMapper $submissionActionRequestMapper,
     )
     {
     }
 
     public function mapCreate(): CreateHomepagePostDto
     {
+        $requireCompleteData = $this->submissionActionRequestMapper->shouldPublish();
+        $status = $requireCompleteData ? 1 : 0;
 
         $type = $this->resolvePostType();
         $rawPayload = $this->getRawPayload();
@@ -42,11 +46,12 @@ readonly class HomepagePostRequestMapper
             $imageFile = $this->validator->validateFile(
                 field: 'postImage',
                 file: $this->request->getFile('postImage'),
-                maxSize: $this->config->getMaxUploadSize()
+                maxSize: $this->config->getMaxUploadSize(),
+                required: $requireCompleteData
             ) ?? null;
         }
 
-        $payload = $this->payloadNormalizer->normalize($type, $rawPayload);
+        $payload = $this->payloadNormalizer->normalize($type, $rawPayload, $requireCompleteData);
         $currentDate = date('Y-m-d');
 
         $data = [
@@ -55,20 +60,15 @@ readonly class HomepagePostRequestMapper
             'title' => $this->validator->validate(
                 name: 'postTitle',
                 value: $this->request->getFormParam('postTitle'),
-                required: true,
+                required: $requireCompleteData,
                 maxLength: 60
             ),
 
             'created' => $currentDate,
-
             'updated' => $currentDate,
-
-            'status' => 1,
-
+            'status' => $status,
             'type' => $type,
-
             'payload' => $payload,
-
             'imageFile' => $imageFile
         ];
 
@@ -77,6 +77,9 @@ readonly class HomepagePostRequestMapper
 
     public function mapUpdate(): UpdateHomepagePostDto
     {
+        $requireCompleteData = $this->submissionActionRequestMapper->shouldPublish();
+        $status = $requireCompleteData ? 1 : 0;
+
         $type = $this->resolvePostType();
         $rawPayload = $this->getRawPayload();
         $imageFile = null;
@@ -92,16 +95,16 @@ readonly class HomepagePostRequestMapper
                 field: 'postImage',
                 file: $this->request->getFile('postImage'),
                 maxSize: $this->config->getMaxUploadSize(),
-                required: !$hasSavedImage,
+                required: !$hasSavedImage && $requireCompleteData,
             );
         }
 
-        $payload = $this->payloadNormalizer->normalize($type, $rawPayload);
+        $payload = $this->payloadNormalizer->normalize($type, $rawPayload, $requireCompleteData);
 
         $data = [
             'id' => $this->validator->validate(
                 name: 'postId',
-                value: $this->request->getFormParam('postId'),
+                value: $this->request->getRouteParam('id'),
                 required: true,
                 type: 'int'
             ),
@@ -109,16 +112,14 @@ readonly class HomepagePostRequestMapper
             'title' => $this->validator->validate(
                 name: 'postTitle',
                 value: $this->request->getFormParam('postTitle'),
-                required: true,
+                required: $requireCompleteData,
                 maxLength: 60
             ),
 
             'updated' => date('Y-m-d'),
-
             'type' => $type,
-
+            'status' => $status,
             'payload' => $payload,
-
             'imageFile' => $imageFile
 
         ];
@@ -141,7 +142,8 @@ readonly class HomepagePostRequestMapper
         return $this->deleteRequestMapper->map();
     }
 
-    private function resolvePostType(): string {
+    private function resolvePostType(): string
+    {
         $type = $this->validator->validate(
             name: 'postType',
             value: $this->request->getFormParam('postType'),
@@ -155,7 +157,8 @@ readonly class HomepagePostRequestMapper
         return $type;
     }
 
-    private function getRawPayload(): array {
+    private function getRawPayload(): array
+    {
         $rawPayload = $this->request->getFormParam('payload');
 
         return is_array($rawPayload) ? $rawPayload : [];

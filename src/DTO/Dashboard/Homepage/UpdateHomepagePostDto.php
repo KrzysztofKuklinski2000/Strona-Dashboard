@@ -13,6 +13,7 @@ readonly class UpdateHomepagePostDto implements DataTransferObjectInterface
         public string $title,
         public string $updated,
         public string $type,
+        public int $status,
         public ?string $payload,
         public ?array $imageFile,
     ) {
@@ -25,6 +26,7 @@ readonly class UpdateHomepagePostDto implements DataTransferObjectInterface
             title: (string) $data['title'],
             updated: (string) $data['updated'],
             type: (string) ($data['type'] ?? 'simple_text'),
+            status: (int) $data['status'],
             payload: isset($data['payload']) ? (string) $data['payload'] : null,
             imageFile: $data['imageFile'] ?? null,
         );
@@ -37,6 +39,7 @@ readonly class UpdateHomepagePostDto implements DataTransferObjectInterface
             'title' => $this->title,
             'updated' => $this->updated,
             'type' => $this->type,
+            'status' => $this->status,
             'payload' => $this->payload,
         ];
     }
