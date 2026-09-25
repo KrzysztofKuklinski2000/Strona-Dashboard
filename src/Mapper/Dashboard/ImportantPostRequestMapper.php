@@ -14,23 +14,28 @@ use App\DTO\Dashboard\PublishedDto;
 readonly class ImportantPostRequestMapper
 {
     public function __construct(
-        private Request                     $request,
-        private Validator                   $validator,
-        private ChangePositionRequestMapper $changePositionRequestMapper,
-        private PublicationRequestMapper    $publicationRequestMapper,
-        private DeleteRequestMapper         $deleteRequestMapper,
-    ) {
+        private Request                       $request,
+        private Validator                     $validator,
+        private ChangePositionRequestMapper   $changePositionRequestMapper,
+        private PublicationRequestMapper      $publicationRequestMapper,
+        private DeleteRequestMapper           $deleteRequestMapper,
+        private SubmissionActionRequestMapper $submissionActionRequestMapper,
+    )
+    {
     }
 
     public function mapCreate(): CreateImportantPostDto
     {
+        $requireCompleteData = $this->submissionActionRequestMapper->shouldPublish();
+        $status = $requireCompleteData ? 1 : 0;
+
         $currentDate = date('Y-m-d');
 
         $data = [
-            ...$this->mapCommonFields(),
+            ...$this->mapCommonFields($requireCompleteData),
             'created' => $currentDate,
             'updated' => $currentDate,
-            'status' => 1,
+            'status' => $status,
         ];
 
         return CreateImportantPostDto::fromArray($data);
@@ -38,15 +43,19 @@ readonly class ImportantPostRequestMapper
 
     public function mapUpdate(): UpdateImportantPostDto
     {
+        $requireCompleteData = $this->submissionActionRequestMapper->shouldPublish();
+        $status = $requireCompleteData ? 1 : 0;
+
         $data = [
             'id' => $this->validator->validate(
                 name: 'postId',
-                value: $this->request->getFormParam('postId'),
+                value: $this->request->getRouteParam('id'),
                 required: true,
                 type: 'int',
             ),
             'updated' => date('Y-m-d'),
-            ...$this->mapCommonFields(),
+            'status' => $status,
+            ...$this->mapCommonFields($requireCompleteData),
         ];
 
         return UpdateImportantPostDto::fromArray($data);
@@ -67,18 +76,19 @@ readonly class ImportantPostRequestMapper
         return $this->deleteRequestMapper->map();
     }
 
-    private function mapCommonFields(): array {
+    private function mapCommonFields(bool $requireCompleteData): array
+    {
         return [
             'title' => $this->validator->validate(
                 name: 'postTitle',
                 value: $this->request->getFormParam('postTitle'),
-                required: true,
+                required: $requireCompleteData,
                 maxLength: 60,
             ),
             'description' => $this->validator->validate(
                 name: 'postDescription',
                 value: $this->request->getFormParam('postDescription'),
-                required: true,
+                required: $requireCompleteData,
                 maxLength: 1000,
             ),
         ];

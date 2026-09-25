@@ -12,6 +12,7 @@ readonly class UpdateImportantPostDto implements DataTransferObjectInterface
         public int $id,
         public string $title,
         public string $description,
+        public int $status,
         public string $updated,
     ) {
     }
@@ -22,6 +23,7 @@ readonly class UpdateImportantPostDto implements DataTransferObjectInterface
             id: (int) ($data['id'] ?? 0),
             title: (string) ($data['title'] ?? ''),
             description: (string) ($data['description'] ?? ''),
+            status: (int) ($data['status'] ?? 0),
             updated: (string) ($data['updated'] ?? ''),
         );
     }
@@ -32,6 +34,7 @@ readonly class UpdateImportantPostDto implements DataTransferObjectInterface
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
+            'status' => $this->status,
             'updated' => $this->updated,
         ];
     }

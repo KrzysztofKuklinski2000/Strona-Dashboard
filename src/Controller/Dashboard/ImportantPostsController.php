@@ -13,6 +13,7 @@ use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
 use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\ImportantPosts\CreateImportantPostDto;
+use App\DTO\Dashboard\ImportantPosts\ImportantPostsDto;
 use App\DTO\Dashboard\ImportantPosts\UpdateImportantPostDto;
 use App\DTO\Dashboard\PublishedDto;
 use App\DTO\DataTransferObjectInterface;
@@ -102,7 +103,30 @@ class ImportantPostsController extends AbstractDashboardController
 
     protected function getDataToPublished(): PublishedDto
     {
-        return $this->importantPostsRequestMapper->mapPublication();
+        $data = $this->importantPostsRequestMapper->mapPublication();
+
+        if ($data->published !== 1 || $this->validator->getErrors()) {
+            return $data;
+        }
+
+        /** @var ImportantPostsDto $post */
+        $post = $this->service->getPost($data->id);
+
+        $this->validator->validate(
+            name: 'postTitle',
+            value: $post->title,
+            required: true,
+            maxLength: 60,
+        );
+
+        $this->validator->validate(
+            name: 'postDescription',
+            value: $post->description,
+            required: true,
+            maxLength: 1000,
+        );
+
+        return $data;
     }
 
     protected function getDataToChangePostPosition(): ChangePositionDto

@@ -18,7 +18,7 @@
 
         <label>
             <span>Tytuł komunikatu</span>
-            <input type="text" name="postTitle" maxlength="100" value="<?= e($data->title ?? '') ?>" placeholder="Krótki tytuł ważnej informacji">
+            <input type="text" name="postTitle" maxlength="60" value="<?= e($data->title ?? '') ?>" placeholder="Krótki tytuł ważnej informacji">
         </label>
         <p class="validation-error"><?= e($errors['postTitle'] ?? '') ?></p>
 
@@ -36,8 +36,23 @@
 
     </section>
 
-    <div class="dashboard-form-actions">
-        <input type="submit" value="<?= e($buttonTitle ?? 'Stwórz') ?>">
-        <span>Informacja będzie wyróżniona w module ważnych komunikatów.</span>
+    <div class="homepage-post-form__actions">
+        <button
+                class="homepage-post-form__action homepage-post-form__action--draft"
+                type="submit"
+                name="submitAction"
+                value="draft"
+        >
+            Zapisz szkic
+        </button>
+
+        <button
+                class="homepage-post-form__action homepage-post-form__action--publish"
+                type="submit"
+                name="submitAction"
+                value="publish"
+        >
+            Opublikuj
+        </button>
     </div>
 </form>
