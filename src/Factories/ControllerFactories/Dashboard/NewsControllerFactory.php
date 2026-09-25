@@ -21,7 +21,7 @@ use App\Mapper\Dashboard\Payload\OptionalLinkNormalizer;
 use App\Mapper\Dashboard\Payload\PostPayloadNormalizer;
 use App\Mapper\Dashboard\PublicationRequestMapper;
 use App\Mapper\Dashboard\SubmissionActionRequestMapper;
-use App\Validator\Dashboard\News\NewsPostPublicationValidator;
+use App\Validator\Dashboard\PostPublicationValidator;
 use PDO;
 
 readonly class NewsControllerFactory implements ControllerFactoryInterface
@@ -75,7 +75,7 @@ readonly class NewsControllerFactory implements ControllerFactoryInterface
             ),
         );
 
-        $newsPostPublicationValidator = new NewsPostPublicationValidator(
+        $postPublicationValidator = new PostPublicationValidator(
             $contextController->validator,
             $newsNormalizer
         );
@@ -83,7 +83,7 @@ readonly class NewsControllerFactory implements ControllerFactoryInterface
         return new NewsController(
             $service,
             $requestMapper,
-            $newsPostPublicationValidator,
+            $postPublicationValidator,
             $contextController,
         );
     }

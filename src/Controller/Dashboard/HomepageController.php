@@ -21,7 +21,7 @@ use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Mapper\Dashboard\Homepage\HomepagePostRequestMapper;
 use App\Service\Dashboard\Contracts\HomepageManagementServiceInterface;
-use App\Validator\Dashboard\Homepage\HomepagePostPublicationValidator;
+use App\Validator\Dashboard\PostPublicationValidator;
 
 class HomepageController extends AbstractDashboardController
 {
@@ -35,7 +35,7 @@ class HomepageController extends AbstractDashboardController
     public function __construct(
         public HomepageManagementServiceInterface  $service,
         private readonly HomepagePostRequestMapper $requestMapper,
-        private readonly HomepagePostPublicationValidator $publicationValidator,
+        private readonly PostPublicationValidator $publicationValidator,
         ContextController                          $contextController,
     ) {
         parent::__construct($contextController);
@@ -117,7 +117,7 @@ class HomepageController extends AbstractDashboardController
         /** @var HomepagePostDto $post */
         $post = $this->service->getPost($data->id);
 
-        $this->publicationValidator->validate($post);
+        $this->publicationValidator->validate($post->title, $post->type, $post->payload);
 
         return $data;
     }

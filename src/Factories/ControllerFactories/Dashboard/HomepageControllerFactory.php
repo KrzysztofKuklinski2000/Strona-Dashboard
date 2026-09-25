@@ -21,7 +21,7 @@ use App\Mapper\Dashboard\Payload\OptionalLinkNormalizer;
 use App\Mapper\Dashboard\Payload\PostPayloadNormalizer;
 use App\Mapper\Dashboard\PublicationRequestMapper;
 use App\Mapper\Dashboard\SubmissionActionRequestMapper;
-use App\Validator\Dashboard\Homepage\HomepagePostPublicationValidator;
+use App\Validator\Dashboard\PostPublicationValidator;
 use PDO;
 
 class HomepageControllerFactory implements ControllerFactoryInterface
@@ -82,8 +82,12 @@ class HomepageControllerFactory implements ControllerFactoryInterface
             )
         );
 
-        $publicationValidator = new HomepagePostPublicationValidator(
-            $contextController->validator, $payloadNormalizer
+        $publicationValidator = new PostPublicationValidator(
+            $contextController->validator,
+            $payloadNormalizer,
+            typesRequiringImage: [
+                HomepagePostTypes::IMAGE_TEXT_LIST,
+            ]
         );
 
         return new HomepageController(

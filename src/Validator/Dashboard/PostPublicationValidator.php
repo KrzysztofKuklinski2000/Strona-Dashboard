@@ -1,32 +1,31 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Validator\Dashboard\Homepage;
+namespace App\Validator\Dashboard;
 
-use App\Content\HomepagePostTypes;
 use App\Core\Validator;
-use App\DTO\Dashboard\Homepage\HomepagePostDto;
 use App\Mapper\Dashboard\Payload\PostPayloadNormalizer;
 use JsonException;
 
-final readonly class HomepagePostPublicationValidator
+final readonly class PostPublicationValidator
 {
     public function __construct(
         private Validator $validator,
-        private PostPayloadNormalizer $payloadNormalizer
+        private PostPayloadNormalizer $payloadNormalizer,
+        private array $typesRequiringImage = [],
     )
     {
     }
 
-    public function validate(HomepagePostDto $post): void  {
+    public function validate(string $title, string $type, ?string $payload): void {
         $this->validator->validate(
             name: 'postTitle',
-            value: $post->title,
+            value: $title,
             required: true,
             maxLength: 60,
         );
 
-        if($post->payload === null) {
+        if($payload === null) {
             $this->validator->addError(
                 'payload',
                 'Nie udało się przygotować danych posta.',
@@ -36,7 +35,7 @@ final readonly class HomepagePostPublicationValidator
         }
 
         try {
-            $payload = json_decode($post->payload,true, 512, JSON_THROW_ON_ERROR);
+            $payload = json_decode($payload,true, 512, JSON_THROW_ON_ERROR);
         }catch (JsonException $e){
             $this->validator->addError(
                 'payload',
@@ -54,7 +53,7 @@ final readonly class HomepagePostPublicationValidator
             return;
         }
 
-        if($post->type === HomepagePostTypes::IMAGE_TEXT_LIST) {
+        if(in_array($type, $this->typesRequiringImage, true)) {
             $image = $payload['image'] ?? null;
 
             $imageSrc = is_array($image)
@@ -69,10 +68,6 @@ final readonly class HomepagePostPublicationValidator
             }
         }
 
-        $this->payloadNormalizer->normalize(
-            $post->type,
-            $payload,
-            requireCompleteData: true,
-        );
+        $this->payloadNormalizer->normalize($type, $payload, requireCompleteData: true);
     }
 }

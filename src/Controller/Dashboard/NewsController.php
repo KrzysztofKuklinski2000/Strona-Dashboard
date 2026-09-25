@@ -21,7 +21,7 @@ use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Mapper\Dashboard\News\NewsPostRequestMapper;
 use App\Service\Dashboard\Contracts\NewsManagementServiceInterface;
-use App\Validator\Dashboard\News\NewsPostPublicationValidator;
+use App\Validator\Dashboard\PostPublicationValidator;
 
 class NewsController extends AbstractDashboardController
 {
@@ -35,7 +35,7 @@ class NewsController extends AbstractDashboardController
     public function __construct(
         public NewsManagementServiceInterface  $service,
         private readonly NewsPostRequestMapper $requestMapper,
-        private readonly NewsPostPublicationValidator $publicationValidator,
+        private readonly PostPublicationValidator $publicationValidator,
         ContextController                      $contextController,
     ) {
         parent::__construct($contextController);
@@ -117,7 +117,7 @@ class NewsController extends AbstractDashboardController
         /** @var NewsDto $post */
         $post = $this->service->getPost($data->id);
 
-        $this->publicationValidator->validate($post);
+        $this->publicationValidator->validate($post->title, $post->type, $post->payload);
 
         return $data;
     }
