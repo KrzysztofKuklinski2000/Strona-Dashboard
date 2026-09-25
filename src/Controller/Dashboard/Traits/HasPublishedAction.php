@@ -44,11 +44,19 @@ trait HasPublishedAction
             $this->sessionManager->setFlash(
                 'warning',
                 $this->validator->getErrors(),
+                context: [
+                  'summary' => 'Nie można opublikować wpisu. Uzupełnij wymagane dane.'
+                ],
             );
 
-            $this->redirect(
-                "{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}"
-            );
+            $redirectUrl = "{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}";
+
+            if ($data->id > 0) {
+                $redirectUrl .= "/show/{$data->id}";
+            }
+
+            $this->redirect($redirectUrl);
+
             return;
         }
 

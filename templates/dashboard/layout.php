@@ -30,29 +30,34 @@ $navigationItems = [
 <body>
 <?php if (isset($params['flash_dashboard'])): ?>
     <?php
-    $flash = $params['flash_dashboard'];
-    $flashType = $flash['type'] ?? 'info';
+        $flash = $params['flash_dashboard'];
+        $flashType = $flash['type'] ?? 'info';
 
-    if (!in_array($flashType, ['success', 'warning', 'info'], true)) {
-        $flashType = 'info';
-    }
+        if (!in_array($flashType, ['success', 'warning', 'info'], true)) {
+            $flashType = 'info';
+        }
 
-    $flashDetails = match ($flashType) {
-        'success' => [
-            'title' => 'Gotowe',
-            'icon' => 'fa-solid fa-check',
-        ],
-        'warning' => [
-            'title' => 'Uwaga',
-            'icon' => 'fa-solid fa-exclamation',
-        ],
-        default => [
-            'title' => 'Informacja',
-            'icon' => 'fa-solid fa-info',
-        ],
-    };
+        $flashDetails = match ($flashType) {
+            'success' => [
+                'title' => 'Gotowe',
+                'icon' => 'fa-solid fa-check',
+            ],
+            'warning' => [
+                'title' => 'Uwaga',
+                'icon' => 'fa-solid fa-exclamation',
+            ],
+            default => [
+                'title' => 'Informacja',
+                'icon' => 'fa-solid fa-info',
+            ],
+        };
+
+        $flashMessage = is_string($flash['message'] ?? null)
+                ? $flash['message']
+                : ($flash['context']['summary'] ?? null);
+
     ?>
-    <?php if (is_string($flash['message'] ?? null)): ?>
+    <?php if (is_string($flashMessage)): ?>
         <div class="dashboard-toast-region" aria-live="polite" aria-atomic="true">
             <div
                 class="dashboard-toast dashboard-toast--<?= e($flashType) ?>"
@@ -64,7 +69,7 @@ $navigationItems = [
                 </span>
                 <div class="dashboard-toast__content">
                     <strong><?= e($flashDetails['title']) ?></strong>
-                    <p><?= e($flash['message']) ?></p>
+                    <p><?= e($flashMessage) ?></p>
                 </div>
                 <button class="dashboard-toast__close" type="button" data-dashboard-toast-close aria-label="Zamknij komunikat">
                     <i class="fa-solid fa-xmark" aria-hidden="true"></i>
