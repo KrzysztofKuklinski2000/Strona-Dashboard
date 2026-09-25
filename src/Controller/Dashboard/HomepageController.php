@@ -14,12 +14,14 @@ use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
 use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\Homepage\CreateHomepagePostDto;
+use App\DTO\Dashboard\Homepage\HomepagePostDto;
 use App\DTO\Dashboard\Homepage\UpdateHomepagePostDto;
 use App\DTO\Dashboard\PublishedDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Mapper\Dashboard\Homepage\HomepagePostRequestMapper;
 use App\Service\Dashboard\Contracts\HomepageManagementServiceInterface;
+use App\Validator\Dashboard\Homepage\HomepagePostPublicationValidator;
 
 class HomepageController extends AbstractDashboardController
 {
@@ -33,6 +35,7 @@ class HomepageController extends AbstractDashboardController
     public function __construct(
         public HomepageManagementServiceInterface  $service,
         private readonly HomepagePostRequestMapper $requestMapper,
+        private readonly HomepagePostPublicationValidator $publicationValidator,
         ContextController                          $contextController,
     ) {
         parent::__construct($contextController);
@@ -105,7 +108,18 @@ class HomepageController extends AbstractDashboardController
 
     protected function getDataToPublished(): PublishedDto
     {
-        return $this->requestMapper->mapPublication();
+        $data = $this->requestMapper->mapPublication();
+
+        if ($data->published !== 1 || $this->validator->getErrors()) {
+            return $data;
+        }
+
+        /** @var HomepagePostDto $post */
+        $post = $this->service->getPost($data->id);
+
+        $this->publicationValidator->validate($post);
+
+        return $data;
     }
 
     protected function getDataToChangePostPosition(): ChangePositionDto
