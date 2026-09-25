@@ -22,7 +22,7 @@ final readonly class ModuleFeedNormalizer implements PayloadNormalizerInterface
         $module = $this->validator->validate(
             name: 'payload.module',
             value: $rawPayload['module'] ?? null,
-            required: true,
+            required: $requireCompleteData,
         );
 
         if($module !== null && !HomepageFeedModules::isAllowed($module)) {
@@ -35,7 +35,7 @@ final readonly class ModuleFeedNormalizer implements PayloadNormalizerInterface
         $limit = $this->validator->validate(
             name: 'payload.limit',
             value: $rawPayload['limit'] ?? null,
-            required: true,
+            required: $requireCompleteData,
             type: 'int'
         );
 

@@ -57,7 +57,7 @@ final readonly class ImageTextListNormalizer implements PayloadNormalizerInterfa
         $description = $this->validator->validate(
             name: 'payload.description',
             value: $rawPayload['description'] ?? null,
-            required: true,
+            required: $requireCompleteData,
             maxLength: 1000,
         );
 
@@ -76,7 +76,7 @@ final readonly class ImageTextListNormalizer implements PayloadNormalizerInterfa
                 'alt' => $alt === null ? '' : (string)$alt,
             ],
             'items' => $this->normalizeListItems($rawPayload['items'] ?? []),
-            'link' => $this->linkNormalizer->normalize($rawPayload['link'] ?? []),
+            'link' => $this->linkNormalizer->normalize($rawPayload['link'] ?? [], $requireCompleteData),
         ];
     }
 

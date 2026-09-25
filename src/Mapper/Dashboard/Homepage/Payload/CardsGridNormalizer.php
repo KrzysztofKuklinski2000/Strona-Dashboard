@@ -27,7 +27,7 @@ final readonly class CardsGridNormalizer implements PayloadNormalizerInterface
             $rawCards = [];
         }
 
-        if ($rawCards === []) {
+        if ($requireCompleteData && $rawCards === []) {
             $this->validator->addError(
                 'payload.cards',
                 'Dodaj przynajmniej jeden kafelek.'
@@ -64,14 +64,14 @@ final readonly class CardsGridNormalizer implements PayloadNormalizerInterface
             $title = $this->validator->validate(
                 name: "payload.cards.$index.title",
                 value: $rawCard['title'] ?? null,
-                required: true,
+                required: $requireCompleteData,
                 maxLength: 80,
             );
 
             $description = $this->validator->validate(
                 name: "payload.cards.$index.description",
                 value: $rawCard['description'] ?? null,
-                required: true,
+                required: $requireCompleteData,
                 maxLength: 500,
             );
 

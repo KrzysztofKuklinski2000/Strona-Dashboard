@@ -18,7 +18,7 @@ final readonly class SimpleTextNormalizer implements PayloadNormalizerInterface
         $description = $this->validator->validate(
             name: 'payload.description',
             value: $rawPayload['description'] ?? null,
-            required: true,
+            required: $requireCompleteData,
             maxLength: 1000,
         );
 
