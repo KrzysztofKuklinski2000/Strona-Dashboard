@@ -20,6 +20,7 @@ use App\Mapper\Dashboard\News\Payload\FundingNormalizer;
 use App\Mapper\Dashboard\Payload\OptionalLinkNormalizer;
 use App\Mapper\Dashboard\Payload\PostPayloadNormalizer;
 use App\Mapper\Dashboard\PublicationRequestMapper;
+use App\Mapper\Dashboard\SubmissionActionRequestMapper;
 use App\Validator\Dashboard\News\NewsPostPublicationValidator;
 use PDO;
 
@@ -67,7 +68,11 @@ readonly class NewsControllerFactory implements ControllerFactoryInterface
             new DeleteRequestMapper(
                 $contextController->request,
                 $contextController->validator,
-            )
+            ),
+            new SubmissionActionRequestMapper(
+                $contextController->request,
+                $contextController->validator,
+            ),
         );
 
         $newsPostPublicationValidator = new NewsPostPublicationValidator(

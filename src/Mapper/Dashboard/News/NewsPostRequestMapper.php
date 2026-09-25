@@ -16,25 +16,26 @@ use App\Mapper\Dashboard\ChangePositionRequestMapper;
 use App\Mapper\Dashboard\DeleteRequestMapper;
 use App\Mapper\Dashboard\Payload\PostPayloadNormalizer;
 use App\Mapper\Dashboard\PublicationRequestMapper;
+use App\Mapper\Dashboard\SubmissionActionRequestMapper;
 
 readonly class NewsPostRequestMapper
 {
     public function __construct(
-        private Request                     $request,
-        private Validator                   $validator,
-        private Config                      $config,
-        private PostPayloadNormalizer       $normalizer,
-        private ChangePositionRequestMapper $changePositionRequestMapper,
-        private PublicationRequestMapper    $publicationRequestMapper,
-        private DeleteRequestMapper         $deleteRequestMapper,
+        private Request                       $request,
+        private Validator                     $validator,
+        private Config                        $config,
+        private PostPayloadNormalizer         $normalizer,
+        private ChangePositionRequestMapper   $changePositionRequestMapper,
+        private PublicationRequestMapper      $publicationRequestMapper,
+        private DeleteRequestMapper           $deleteRequestMapper,
+        private SubmissionActionRequestMapper $submissionActionRequestMapper,
     )
     {
     }
 
     public function mapCreate(): CreateNewsDto
     {
-        $submitAction = $this->resolveSubmitAction();
-        $requireCompleteData = $submitAction === 'publish';
+        $requireCompleteData =$this->submissionActionRequestMapper->shouldPublish();
         $status = $requireCompleteData ? 1 : 0;
 
         $currentDate = date('Y-m-d');
@@ -62,8 +63,7 @@ readonly class NewsPostRequestMapper
 
     public function mapUpdate(): UpdateNewsDto
     {
-        $submitAction = $this->resolveSubmitAction();
-        $requireCompleteData = $submitAction === 'publish';
+        $requireCompleteData =$this->submissionActionRequestMapper->shouldPublish();
         $status = $requireCompleteData ? 1 : 0;
 
         $postType = $this->resolvePostType();
@@ -132,8 +132,9 @@ readonly class NewsPostRequestMapper
         return is_array($rawPayload) ? $rawPayload : [];
     }
 
-    private function getImage(string $type): ?array {
-        if(NewsPostTypes::supportsImage($type)) {
+    private function getImage(string $type): ?array
+    {
+        if (NewsPostTypes::supportsImage($type)) {
             return $this->validator->validateFile(
                 field: 'postImage',
                 file: $this->request->getFile('postImage'),
@@ -143,29 +144,5 @@ readonly class NewsPostRequestMapper
         }
 
         return null;
-    }
-
-    private function resolveSubmitAction(): string {
-        $submitAction = $this->validator->validate(
-            name: 'submitAction',
-            value: $this->request->getFormParam('submitAction'),
-            required: true,
-        );
-
-        if ($submitAction === null) {
-            return 'draft';
-        }
-
-
-        if(!in_array($submitAction, ['draft', 'publish'], true)) {
-            $this->validator->addError(
-                'submitAction',
-                'Nieprawidłowa akcja formularza.',
-            );
-
-            return 'draft';
-        }
-
-        return (string) $submitAction;
     }
 }
