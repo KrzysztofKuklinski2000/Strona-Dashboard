@@ -101,15 +101,9 @@ class NewsController extends AbstractDashboardController
         return $this->requestMapper->mapCreate();
     }
 
-    /**
-     * @throws NotFoundException
-     */
     protected function getDataToUpdate(): UpdateNewsDto
     {
-        /** @var NewsDto $post */
-        $post = $this->getSingleData();
-
-        return $this->requestMapper->mapUpdate(requireCompleteData: $post->status === 1);
+        return $this->requestMapper->mapUpdate();
     }
 
     protected function getDataToPublished(): PublishedDto

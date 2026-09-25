@@ -13,6 +13,7 @@ readonly class UpdateNewsDto implements DataTransferObjectInterface
         public string $title,
         public string $updated,
         public string $type,
+        public int $status,
         public string $payload,
         public ?array $imageFile,
         public bool $removeImage
@@ -26,6 +27,7 @@ readonly class UpdateNewsDto implements DataTransferObjectInterface
             title: (string) ($data['title'] ?? ''),
             updated: (string) ($data['updated'] ?? ''),
             type: (string) ($data['type'] ?? ''),
+            status: (int) ($data['status'] ?? 0),
             payload: (string) ($data['payload'] ?? ''),
             imageFile: $data['imageFile'] ?? null,
             removeImage: (bool) ($data['removeImage'] ?? false)
@@ -39,6 +41,7 @@ readonly class UpdateNewsDto implements DataTransferObjectInterface
             'title' => $this->title,
             'updated' => $this->updated,
             'type' => $this->type,
+            'status' => $this->status,
             'payload' => $this->payload,
         ];
     }

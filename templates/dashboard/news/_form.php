@@ -107,6 +107,22 @@ $payload = $oldInput['payload']
     </section>
 
     <div class="homepage-post-form__actions">
-        <input type="submit" value="<?= e($buttonTitle ?? 'Stwórz') ?>">
+        <button
+            class="homepage-post-form__action homepage-post-form__action--draft"
+            type="submit"
+            name="submitAction"
+            value="draft"
+        >
+            Zapisz szkic
+        </button>
+
+        <button
+            class="homepage-post-form__action homepage-post-form__action--publish"
+            type="submit"
+            name="submitAction"
+            value="publish"
+        >
+            Opublikuj
+        </button>
     </div>
 </form>

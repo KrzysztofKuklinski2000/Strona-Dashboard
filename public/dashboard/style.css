@@ -1918,7 +1918,9 @@ body {
 .content-container .homepage-post-form__actions {
 	width: auto;
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: flex-start;
+	gap: 10px;
 	padding: 17px 20px;
 	border: 1px solid #dfe3e9;
 	border-radius: 10px;
@@ -1926,9 +1928,59 @@ body {
 	box-shadow: 0 7px 20px rgba(23, 29, 41, .05);
 }
 
-.content-container .homepage-post-form__actions input[type=submit] {
+.content-container .homepage-post-form__actions input[type=submit],
+.content-container .homepage-post-form__action {
 	align-self: auto;
 	margin: 0;
+}
+
+.content-container .homepage-post-form__action {
+	min-width: 132px;
+	min-height: 42px;
+	padding: 0 18px;
+	border-radius: 9px;
+	font: inherit;
+	font-size: .82rem;
+	font-weight: 700;
+	letter-spacing: .03em;
+	cursor: pointer;
+	transition: background-color .18s ease, border-color .18s ease, box-shadow .18s ease, color .18s ease, transform .18s ease;
+}
+
+.content-container .homepage-post-form__action--draft {
+	border: 1px solid #cfd6df;
+	background: #fff;
+	color: #4f5968;
+}
+
+.content-container .homepage-post-form__action--draft:hover {
+	border-color: #aeb7c4;
+	background: #f4f6f8;
+	color: #171d29;
+	transform: translateY(-1px);
+}
+
+.content-container .homepage-post-form__action--publish {
+	border: 1px solid #ff3366;
+	background: #ff3366;
+	box-shadow: 0 5px 14px rgba(255, 51, 102, .2);
+	color: #fff;
+}
+
+.content-container .homepage-post-form__action--publish:hover {
+	border-color: #e72858;
+	background: #e72858;
+	box-shadow: 0 7px 18px rgba(255, 51, 102, .26);
+	transform: translateY(-1px);
+}
+
+.content-container .homepage-post-form__action:focus-visible {
+	outline: 2px solid #ff3366;
+	outline-offset: 3px;
+}
+
+.content-container .homepage-post-form__action:active {
+	transform: translateY(0);
 }
 
 .content-container .image-text-list-form {

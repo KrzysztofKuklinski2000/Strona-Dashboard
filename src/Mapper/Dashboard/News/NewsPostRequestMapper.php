@@ -33,21 +33,25 @@ readonly class NewsPostRequestMapper
 
     public function mapCreate(): CreateNewsDto
     {
+        $submitAction = $this->resolveSubmitAction();
+        $requireCompleteData = $submitAction === 'publish';
+        $status = $requireCompleteData ? 1 : 0;
+
         $currentDate = date('Y-m-d');
         $postType = $this->resolvePostType();
         $rawPayload = $this->getRawPayload();
-        $payload = $this->normalizer->normalize($postType, $rawPayload, requireCompleteData: false);
+        $payload = $this->normalizer->normalize($postType, $rawPayload, $requireCompleteData);
 
         $data = [
             'title' => $this->validator->validate(
                 name: 'postTitle',
                 value: $this->request->getFormParam('postTitle'),
-                required: false,
+                required: $requireCompleteData,
                 maxLength: 60,
             ),
             'created' => $currentDate,
             'updated' => $currentDate,
-            'status' => 0,
+            'status' => $status,
             'type' => $postType,
             'payload' => $payload,
             'imageFile' => $this->getImage($postType)
@@ -56,8 +60,12 @@ readonly class NewsPostRequestMapper
         return CreateNewsDto::fromArray($data);
     }
 
-    public function mapUpdate(bool $requireCompleteData): UpdateNewsDto
+    public function mapUpdate(): UpdateNewsDto
     {
+        $submitAction = $this->resolveSubmitAction();
+        $requireCompleteData = $submitAction === 'publish';
+        $status = $requireCompleteData ? 1 : 0;
+
         $postType = $this->resolvePostType();
         $rawPayload = $this->getRawPayload();
         $payload = $this->normalizer->normalize($postType, $rawPayload, $requireCompleteData);
@@ -76,6 +84,7 @@ readonly class NewsPostRequestMapper
                 maxLength: 60,
             ),
             'updated' => date('Y-m-d'),
+            'status' => $status,
             'type' => $postType,
             'payload' => $payload,
             'imageFile' => $this->getImage($postType),
@@ -134,5 +143,29 @@ readonly class NewsPostRequestMapper
         }
 
         return null;
+    }
+
+    private function resolveSubmitAction(): string {
+        $submitAction = $this->validator->validate(
+            name: 'submitAction',
+            value: $this->request->getFormParam('submitAction'),
+            required: true,
+        );
+
+        if ($submitAction === null) {
+            return 'draft';
+        }
+
+
+        if(!in_array($submitAction, ['draft', 'publish'], true)) {
+            $this->validator->addError(
+                'submitAction',
+                'Nieprawidłowa akcja formularza.',
+            );
+
+            return 'draft';
+        }
+
+        return (string) $submitAction;
     }
 }

@@ -114,6 +114,7 @@ class NewsService extends AbstractDashboardService implements NewsManagementServ
             'title' => $data->title,
             'updated' => $data->updated,
             'type' => $data->type,
+            'status' => $data->status,
             'payload' => $payload,
             'imageFile' => null,
             'removeImage' => false,
