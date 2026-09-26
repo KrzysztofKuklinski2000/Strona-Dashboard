@@ -86,5 +86,10 @@ $link = is_array($eventPayload['link'] ?? null) ? $eventPayload['link'] : [];
                 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
             </a>
         <?php endif ?>
+
+        <a class="news-card__details-link" href="<?= e($detailsUrl) ?>">
+            Zobacz szczegóły
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </a>
     </div>
 </article>

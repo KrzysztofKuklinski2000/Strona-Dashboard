@@ -22,6 +22,7 @@ $newsPosts = array_values(array_filter(
                     <?php
                     $payload = json_decode((string) ($content->payload ?? ''), true);
                     $payload = is_array($payload) ? $payload : [];
+                    $detailsUrl = '/aktualnosci/wpis/' . (int) ($content->id ?? 0);
                     $type = (string) ($content->type ?? NewsPostTypes::ARTICLE);
 
                     if (!NewsPostTypes::isAllowed($type)) {

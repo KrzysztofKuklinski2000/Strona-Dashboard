@@ -37,6 +37,11 @@ $subpageHeaders = [
         'title' => 'Aktualności',
         'description' => 'Bądź na bieżąco z wydarzeniami, egzaminami, zmianami w grafiku i ważnymi informacjami z życia klubu.',
     ],
+    'news_details' => [
+        'eyebrow' => 'Aktualności klubowe',
+        'title' => (string) ($params['content']->title ?? 'Aktualność'),
+        'description' => 'Szczegóły najnowszych wydarzeń, komunikatów i informacji z życia klubu.',
+    ],
     'oyama' => [
         'eyebrow' => 'Historia karate',
         'title' => 'Matsutatsu Oyama',

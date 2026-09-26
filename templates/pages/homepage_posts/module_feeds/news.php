@@ -39,4 +39,9 @@ if ($imageAlt === '') {
             <p class="module-feed-card__description"><?= e_br($description) ?></p>
         </div>
     </div>
+
+    <a class="module-feed-card__details-link" href="/aktualnosci/wpis/<?= (int) ($feedPost->id ?? 0) ?>">
+        Zobacz szczegóły
+        <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+    </a>
 </article>

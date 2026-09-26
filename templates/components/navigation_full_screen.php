@@ -1,5 +1,6 @@
 <?php
 $currentPage = $params['page'] ?? 'homepage';
+$activeMainPage = $currentPage === 'news_details' ? 'news' : $currentPage;
 
 $mainNavItems = [
     'homepage' => ['label' => 'Strona główna', 'href' => '/'],
@@ -34,7 +35,7 @@ $karatePages = ['oyama', 'dojo-oath', 'requirements', 'statute'];
             <?php foreach ($mainNavItems as $page => $item): ?>
                 <li>
                     <a
-                        class="<?= $currentPage === $page ? 'is-active' : '' ?>"
+                        class="<?= $activeMainPage === $page ? 'is-active' : '' ?>"
                         href="<?= e($item['href']) ?>"
                     >
                         <?= e($item['label']) ?>

@@ -43,5 +43,10 @@ $description = $payload['description'] ?? '';
         <?php if ($description !== ''): ?>
             <p class="news-funding-card__description"><?= e_br($description) ?></p>
         <?php endif ?>
+
+        <a class="news-card__details-link" href="<?= e($detailsUrl) ?>">
+            Zobacz szczegóły
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </a>
     </div>
 </article>

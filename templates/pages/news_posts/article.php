@@ -30,5 +30,10 @@ if ($imageAlt === '') {
 
         <h3><?= e($content->title) ?></h3>
         <p><?= e_br($description) ?></p>
+
+        <a class="news-card__details-link" href="<?= e($detailsUrl) ?>">
+            Zobacz szczegóły
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </a>
     </div>
 </article>

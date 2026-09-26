@@ -45,11 +45,12 @@ readonly class PublicNewsService
 
     /**
      * @throws ServiceException
+     * @throws NotFoundException
      */
     public function getSingleNews(int $id): NewsDto {
         try {
             return $this->repository->getSingleNews($id);
-        }catch (RepositoryException | NotFoundException $e) {
+        }catch (RepositoryException $e) {
             throw new ServiceException('Nie udało się pobrać wpisu', 500, $e);
         }
     }
