@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\DTO\Dashboard\News\NewsDto;
+use App\Exception\NotFoundException;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\PublicNewsRepository;
@@ -38,6 +40,17 @@ readonly class PublicNewsService
             ];
         } catch (RepositoryException $e) {
             throw new ServiceException("Nie udało się pobrać danych", 500, $e);
+        }
+    }
+
+    /**
+     * @throws ServiceException
+     */
+    public function getSingleNews(int $id): NewsDto {
+        try {
+            return $this->repository->getSingleNews($id);
+        }catch (RepositoryException | NotFoundException $e) {
+            throw new ServiceException('Nie udało się pobrać wpisu', 500, $e);
         }
     }
 }

@@ -18,8 +18,13 @@ use FastRoute\RouteCollector;
 
 return function (RouteCollector $r) {
     $r->get('/', [SiteController::class, 'indexAction']);
+
     $r->get('/aktualnosci', [PublicNewsController::class, 'indexAction']);
     $r->get('/aktualnosci/{page:\d+}', [PublicNewsController::class, 'indexAction']);
+    $r->get('/aktualnosci/wpis/{id:\d+}', [PublicNewsController::class, 'showAction']);
+
+
+
     $r->get('/grafik', [SiteController::class, 'timetableAction']);
     $r->get('/galeria', [SiteController::class, 'galleryAction']);
     $r->get('/galeria/{category}', [SiteController::class, 'galleryAction']);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\DTO\Dashboard\News\NewsDto;
+use App\Exception\NotFoundException;
 use App\Exception\RepositoryException;
 use PDO;
 
@@ -25,6 +26,31 @@ class PublicNewsRepository extends AbstractRepository
             return array_map(fn (array $row) => NewsDto::fromArray($row), $result);
         } catch (RepositoryException $e) {
             throw new RepositoryException('Nie udało się pobrać aktualności', 500, $e);
+        }
+    }
+
+    /**
+     * @throws RepositoryException
+     * @throws NotFoundException
+     */
+    public function getSingleNews(int $newsId): NewsDto {
+        try {
+            $sql = "SELECT * FROM news WHERE id = :news_id AND status = 1 LIMIT 1";
+
+            $result = $this->runQuery($sql, [
+                ':news_id' => $newsId
+            ])->fetch(PDO::FETCH_ASSOC);
+
+            if (!$result) {
+                throw new NotFoundException(
+                    'Nie znaleziono wpisu',
+                    404,
+                );
+            }
+
+            return NewsDto::fromArray($result);
+        }catch (RepositoryException $e) {
+            throw new RepositoryException('Nie udało się pobrać wpisu', 500, $e);
         }
     }
 
