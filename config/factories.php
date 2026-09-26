@@ -12,6 +12,7 @@ use App\Controller\Dashboard\HomepageController;
 use App\Controller\Dashboard\OverviewController;
 use App\Controller\Dashboard\SubscribersController;
 use App\Controller\Dashboard\TimetableController;
+use App\Controller\PublicNewsController;
 use App\Controller\PublicSubscribersController;
 use App\Controller\SiteController;
 use App\Factories\ControllerFactories\AuthControllerFactory;
@@ -25,6 +26,7 @@ use App\Factories\ControllerFactories\Dashboard\HomepageControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\OverviewControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\SubscribersControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\TimetableControllerFactory;
+use App\Factories\ControllerFactories\PublicNewsControllerFactory;
 use App\Factories\ControllerFactories\PublicSubscribersControllerFactory;
 use App\Factories\ControllerFactories\SiteControllerFactory;
 
@@ -42,6 +44,7 @@ return [
     OverviewController::class => OverviewControllerFactory::class,
 
     PublicSubscribersController::class => PublicSubscribersControllerFactory::class,
+    PublicNewsController::class => PublicNewsControllerFactory::class,
     SiteController::class => SiteControllerFactory::class,
     AuthController::class => AuthControllerFactory::class,
 ];

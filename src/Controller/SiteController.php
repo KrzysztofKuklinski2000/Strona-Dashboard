@@ -33,22 +33,6 @@ class SiteController extends AbstractController
     /**
      * @throws ServiceException
      */
-    public function newsAction(): void
-    {
-        $page = (int)$this->request->getRouteParam('page');
-        $result = $this->siteService->getNews($page);
-
-        $this->renderer->render([
-            'page' => 'news',
-            'content' => $result['data'],
-            'numberOfRows' => $result['totalPages'],
-            'currentNumberOfPage' => $result['currentPage'],
-        ]);
-    }
-
-    /**
-     * @throws ServiceException
-     */
     public function timetableAction(): void
     {
         $this->renderer->render([

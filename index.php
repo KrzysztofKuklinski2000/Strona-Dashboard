@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use App\Controller\PublicNewsController;
 use App\Core\Config;
 use App\Core\ContextController;
 use App\Core\Database;
@@ -86,7 +87,7 @@ try {
 
     $controller->$action();
 
-    if($controller instanceof SiteController) {
+    if($controller instanceof SiteController || $controller instanceof PublicNewsController) {
         $pageViewRepository = new PageViewRepository($pdo);
         $pageViewTracker = new PageViewTracker($pageViewRepository);
 

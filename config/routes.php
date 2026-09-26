@@ -11,14 +11,15 @@ use App\Controller\Dashboard\HomepageController;
 use App\Controller\Dashboard\OverviewController;
 use App\Controller\Dashboard\SubscribersController;
 use App\Controller\Dashboard\TimetableController;
+use App\Controller\PublicNewsController;
 use App\Controller\PublicSubscribersController;
 use App\Controller\SiteController;
 use FastRoute\RouteCollector;
 
 return function (RouteCollector $r) {
     $r->get('/', [SiteController::class, 'indexAction']);
-    $r->get('/aktualnosci', [SiteController::class, 'newsAction']);
-    $r->get('/aktualnosci/{page:\d+}', [SiteController::class, 'newsAction']);
+    $r->get('/aktualnosci', [PublicNewsController::class, 'indexAction']);
+    $r->get('/aktualnosci/{page:\d+}', [PublicNewsController::class, 'indexAction']);
     $r->get('/grafik', [SiteController::class, 'timetableAction']);
     $r->get('/galeria', [SiteController::class, 'galleryAction']);
     $r->get('/galeria/{category}', [SiteController::class, 'galleryAction']);

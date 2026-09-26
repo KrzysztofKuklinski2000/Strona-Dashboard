@@ -6,51 +6,23 @@ namespace App\Service;
 
 use App\Content\HomepagePostTypes;
 use App\DTO\Dashboard\Camp\CampDto;
-use App\DTO\Dashboard\Contact\ContactDto;
 use App\DTO\Dashboard\Fees\FeesDto;
 use App\Exception\NotFoundException;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\TimetableRepository;
 use App\Repository\SiteRepository;
-use App\Service\Contracts\ContactProviderInterface;
 use App\Service\Homepage\Feed\HomepageFeedRegistry;
 
-readonly class SiteService implements ContactProviderInterface
+readonly class SiteService
 {
     public function __construct(
         private SiteRepository      $siteRepository,
         private TimetableRepository $timetableRepository,
         private HomepageFeedRegistry $homepageFeedRegistry,
-        private int                 $itemsPerPage
     )
     {
     }
-
-    /**
-     * @throws ServiceException
-     */
-    public function getNews(int $page, ?int $perPage = null): array
-    {
-        try {
-            $limit = $perPage ?? $this->itemsPerPage;
-            $totalPages = (int)ceil($this->siteRepository->countPublishedNews() / $limit);
-            $totalPages = max(1, $totalPages);
-            $page = max(1, min($page, $totalPages));
-            $offset = (int)(($page - 1) * $limit);
-
-            $news = $this->siteRepository->getNews($limit, $offset);
-
-            return [
-                'data' => $news,
-                'currentPage' => (int)$page,
-                'totalPages' => $totalPages,
-            ];
-        } catch (RepositoryException $e) {
-            throw new ServiceException("Nie udało się pobrać danych", 500, $e);
-        }
-    }
-
     /**
      * @throws ServiceException
      */
@@ -122,19 +94,6 @@ readonly class SiteService implements ContactProviderInterface
             );
         } catch (RepositoryException $e) {
             throw new ServiceException("Nie udało się pobrać grafiku", 500, $e);
-        }
-    }
-
-    /**
-     * @throws ServiceException
-     * @throws NotFoundException
-     */
-    public function getContact(): ContactDto
-    {
-        try {
-            return $this->siteRepository->getContact();
-        } catch (RepositoryException $e) {
-            throw new ServiceException("Nie udało się pobrać danych kontaktowych", 500, $e);
         }
     }
 
