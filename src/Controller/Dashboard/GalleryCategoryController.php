@@ -4,11 +4,13 @@ declare(strict_types=1);
 namespace App\Controller\Dashboard;
 
 use App\Controller\Dashboard\Traits\HasDeleteAction;
+use App\Controller\Dashboard\Traits\HasMoveAction;
 use App\Controller\Dashboard\Traits\HasPublishedAction;
 use App\Controller\Dashboard\Traits\HasSingleData;
 use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
+use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\GalleryCategory\CreateGalleryCategoryDto;
 use App\DTO\Dashboard\GalleryCategory\UpdateGalleryCategoryDto;
 use App\DTO\Dashboard\PublishedDto;
@@ -24,6 +26,7 @@ class GalleryCategoryController extends AbstractDashboardController
     use HasUpdateAction;
     use HasDeleteAction;
     use HasPublishedAction;
+    use HasMoveAction;
 
     public function __construct(
         private readonly GalleryCategoryManagementServiceInterface $service,
@@ -116,6 +119,11 @@ class GalleryCategoryController extends AbstractDashboardController
         return $this->mapper->mapPublished();
     }
 
+    protected function getDataToChangePostPosition(): ChangePositionDto
+    {
+        return $this->mapper->mapChangePosition();
+    }
+
     protected function handleCreate(DataTransferObjectInterface $data): void
     {
         /** @var CreateGalleryCategoryDto $data */
@@ -136,6 +144,11 @@ class GalleryCategoryController extends AbstractDashboardController
     protected function handlePublish(PublishedDto $data): void
     {
         $this->service->publishedGalleryCategory($data);
+    }
+
+    protected function handleMove(ChangePositionDto $changePositionDto): void
+    {
+        $this->service->moveGalleryCategory($changePositionDto);
     }
 
     private function checkSlug(DataTransferObjectInterface $data): void {

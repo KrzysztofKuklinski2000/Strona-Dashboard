@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Service\Dashboard;
 
+use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\GalleryCategory\CreateGalleryCategoryDto;
 use App\DTO\Dashboard\GalleryCategory\UpdateGalleryCategoryDto;
 use App\DTO\Dashboard\PublishedDto;
@@ -68,6 +69,13 @@ class GalleryCategoryService extends AbstractDashboardService implements Gallery
         $this->published(self::TABLE, $data);
     }
 
+    /**
+     * @throws ServiceException
+     */
+    public function moveGalleryCategory(ChangePositionDto $changePositionDto): void
+    {
+        $this->move(self::TABLE, $changePositionDto);
+    }
 
     public function existsBySlug(string $slug, ?int $excludedId = null): bool {
         return $this->repository->existsBySlug($slug, $excludedId);

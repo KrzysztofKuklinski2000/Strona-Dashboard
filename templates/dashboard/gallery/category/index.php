@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 $data = $params['data'] ?? [];
+$action = '/dashboard/gallery/categories/move';
+$csrf = $params['csrf_token'] ?? '';
 $moduleName = 'gallery/categories';
 ?>
 
@@ -29,9 +31,9 @@ $moduleName = 'gallery/categories';
                 <th>Nazwa</th>
                 <th>Slug</th>
                 <th>Status</th>
-                <th>Pozycja</th>
                 <th>Data utworzenia</th>
-                <th>Operacje</th>
+                <th class="dashboard-table__actions-heading">Operacje</th>
+                <th class="dashboard-table__position-heading">Pozycja</th>
             </tr>
             </thead>
             <tbody>
@@ -51,12 +53,24 @@ $moduleName = 'gallery/categories';
                             <?= e($statusText) ?>
                         </span>
                     </td>
-                    <td><?= e($category->position) ?></td>
+
                     <td><?= e($category->createdAt) ?></td>
                     <?php
                         $row = $category;
                     ?>
                     <?php require "templates/dashboard/_partials/_action_links.php"; ?>
+                    <td class="dashboard-table__position">
+                        <div class="dashboard-position-actions">
+                            <?php
+                            $postId = $category->id;
+                            $direction = 'up';
+                            require 'templates/dashboard/_partials/_move_button.php';
+
+                            $direction = 'down';
+                            require 'templates/dashboard/_partials/_move_button.php';
+                            ?>
+                        </div>
+                    </td>
                 </tr>
             <?php endforeach; ?>
             </tbody>

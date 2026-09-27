@@ -8,6 +8,7 @@ use App\Controller\Dashboard\GalleryCategoryController;
 use App\Core\ContextController;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\GalleryCategoryServiceFactory;
+use App\Mapper\Dashboard\ChangePositionRequestMapper;
 use App\Mapper\Dashboard\DeleteRequestMapper;
 use App\Mapper\Dashboard\GalleryCategoryRequestMapper;
 use App\Mapper\Dashboard\PublicationRequestMapper;
@@ -32,6 +33,10 @@ readonly class GalleryCategoryControllerFactory implements ControllerFactoryInte
                 $contextController->validator,
             ),
             new PublicationRequestMapper(
+                $contextController->request,
+                $contextController->validator,
+            ),
+            new ChangePositionRequestMapper(
                 $contextController->request,
                 $contextController->validator,
             )
