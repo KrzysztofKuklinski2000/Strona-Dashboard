@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Dashboard;
 
+use App\Controller\Dashboard\Traits\HasDeleteAction;
 use App\Controller\Dashboard\Traits\HasSingleData;
 use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
@@ -19,6 +20,7 @@ class GalleryCategoryController extends AbstractDashboardController
     use HasSingleData;
     use HasStoreAction;
     use HasUpdateAction;
+    use HasDeleteAction;
 
     public function __construct(
         private readonly GalleryCategoryManagementServiceInterface $service,
@@ -65,6 +67,18 @@ class GalleryCategoryController extends AbstractDashboardController
         ]);
     }
 
+    /**
+     * @throws NotFoundException
+     */
+    public function confirmDeleteAction(): void
+    {
+        $this->renderPage([
+            'page' => 'gallery/category/delete',
+            'data' => $this->getSingleData(),
+        ]);
+    }
+
+
     protected function getModuleName(): string
     {
         return 'gallery/categories';
@@ -89,6 +103,11 @@ class GalleryCategoryController extends AbstractDashboardController
 
     }
 
+    protected function getDataToDelete(): ?int
+    {
+        return $this->mapper->mapDelete();
+    }
+
     protected function handleCreate(DataTransferObjectInterface $data): void
     {
         /** @var CreateGalleryCategoryDto $data */
@@ -99,6 +118,11 @@ class GalleryCategoryController extends AbstractDashboardController
     {
         /** @var UpdateGalleryCategoryDto $data */
         $this->service->updateGalleryCategory($data);
+    }
+
+    protected function handleDelete(int $id): void
+    {
+        $this->service->deleteGalleryCategory($id);
     }
 
     private function checkSlug(DataTransferObjectInterface $data): void {

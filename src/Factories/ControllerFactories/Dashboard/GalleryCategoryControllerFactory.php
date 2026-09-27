@@ -8,6 +8,7 @@ use App\Controller\Dashboard\GalleryCategoryController;
 use App\Core\ContextController;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\GalleryCategoryServiceFactory;
+use App\Mapper\Dashboard\DeleteRequestMapper;
 use App\Mapper\Dashboard\GalleryCategoryRequestMapper;
 use App\Mapper\SlugNormalizer;
 use PDO;
@@ -25,6 +26,10 @@ readonly class GalleryCategoryControllerFactory implements ControllerFactoryInte
             $contextController->request,
             $contextController->validator,
             new SlugNormalizer(),
+            new DeleteRequestMapper(
+                $contextController->request,
+                $contextController->validator,
+            ),
         );
 
         return new GalleryCategoryController(

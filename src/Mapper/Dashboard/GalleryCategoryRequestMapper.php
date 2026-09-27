@@ -15,6 +15,7 @@ readonly class GalleryCategoryRequestMapper
         private Request        $request,
         private Validator      $validator,
         private SlugNormalizer $slugNormalizer,
+        private DeleteRequestMapper    $deleteRequestMapper,
     )
     {
     }
@@ -84,5 +85,9 @@ readonly class GalleryCategoryRequestMapper
             'updated_at' => date('Y-m-d'),
         ];
         return UpdateGalleryCategoryDto::fromArray($data);
+    }
+
+    public function mapDelete(): ?int {
+        return $this->deleteRequestMapper->map();
     }
 }

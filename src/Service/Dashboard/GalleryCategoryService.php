@@ -51,6 +51,13 @@ class GalleryCategoryService extends AbstractDashboardService implements Gallery
         $this->edit(self::TABLE, $data);
     }
 
+    /**
+     * @throws ServiceException
+     */
+    public function deleteGalleryCategory(int $id): void {
+        $this->delete(self::TABLE, $id);
+    }
+
     public function existsBySlug(string $slug, ?int $excludedId = null): bool {
         return $this->repository->existsBySlug($slug, $excludedId);
     }

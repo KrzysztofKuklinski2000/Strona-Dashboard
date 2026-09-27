@@ -28,6 +28,12 @@ interface GalleryCategoryManagementServiceInterface extends SharedGetDataService
      * @return void
      */
     public function updateGalleryCategory(UpdateGalleryCategoryDto $data): void;
+    /**
+     * Usuwa kategorię
+     * @param int $id
+     */
+
+    public function deleteGalleryCategory(int $id): void;
 
     /**
      * Sprawdza, czy istnieje w bazie kategoria z takim samym slug.
