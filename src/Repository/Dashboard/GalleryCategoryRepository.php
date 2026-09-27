@@ -9,6 +9,7 @@ use App\Exception\RepositoryException;
 use App\Repository\Dashboard\Traits\CanCreate;
 use App\Repository\Dashboard\Traits\CanDelete;
 use App\Repository\Dashboard\Traits\CanEdit;
+use App\Repository\Dashboard\Traits\CanPublished;
 use App\Repository\Dashboard\Traits\Positionable;
 
 class GalleryCategoryRepository extends BaseDashboardRepository
@@ -17,6 +18,7 @@ class GalleryCategoryRepository extends BaseDashboardRepository
     use CanCreate;
     use CanEdit;
     use CanDelete;
+    use CanPublished;
 
     protected function mapToDto(array $data): DataTransferObjectInterface
     {

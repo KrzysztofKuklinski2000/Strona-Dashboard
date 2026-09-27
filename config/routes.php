@@ -135,5 +135,7 @@ return function (RouteCollector $r) {
     $r->post('/dashboard/gallery/categories/update/{id:\d+}', [GalleryCategoryController::class, 'updateAction']);
     $r->get('/dashboard/gallery/categories/confirmDelete/{id:\d+}', [GalleryCategoryController::class, 'confirmDeleteAction']);
     $r->post('/dashboard/gallery/categories/delete/{id:\d+}', [GalleryCategoryController::class, 'deleteAction']);
+    $r->post('/dashboard/gallery/categories/published/{id:\d+}', [GalleryCategoryController::class, 'publishedAction']);
+
 };
 

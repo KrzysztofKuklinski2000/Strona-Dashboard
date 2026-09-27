@@ -10,6 +10,7 @@ use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\GalleryCategoryServiceFactory;
 use App\Mapper\Dashboard\DeleteRequestMapper;
 use App\Mapper\Dashboard\GalleryCategoryRequestMapper;
+use App\Mapper\Dashboard\PublicationRequestMapper;
 use App\Mapper\SlugNormalizer;
 use PDO;
 
@@ -30,6 +31,10 @@ readonly class GalleryCategoryControllerFactory implements ControllerFactoryInte
                 $contextController->request,
                 $contextController->validator,
             ),
+            new PublicationRequestMapper(
+                $contextController->request,
+                $contextController->validator,
+            )
         );
 
         return new GalleryCategoryController(

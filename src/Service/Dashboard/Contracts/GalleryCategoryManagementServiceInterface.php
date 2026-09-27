@@ -6,6 +6,7 @@ namespace App\Service\Dashboard\Contracts;
 use App\DTO\Dashboard\GalleryCategory\CreateGalleryCategoryDto;
 use App\DTO\Dashboard\GalleryCategory\GalleryCategoryDto;
 use App\DTO\Dashboard\GalleryCategory\UpdateGalleryCategoryDto;
+use App\DTO\Dashboard\PublishedDto;
 
 interface GalleryCategoryManagementServiceInterface extends SharedGetDataServiceInterface
 {
@@ -28,12 +29,19 @@ interface GalleryCategoryManagementServiceInterface extends SharedGetDataService
      * @return void
      */
     public function updateGalleryCategory(UpdateGalleryCategoryDto $data): void;
+
     /**
      * Usuwa kategorię
      * @param int $id
      */
-
     public function deleteGalleryCategory(int $id): void;
+
+    /**
+     * Zmienia status posta.
+     * @param PublishedDto $data
+     * @return void
+     */
+    public function publishedGalleryCategory(PublishedDto $data): void;
 
     /**
      * Sprawdza, czy istnieje w bazie kategoria z takim samym slug.

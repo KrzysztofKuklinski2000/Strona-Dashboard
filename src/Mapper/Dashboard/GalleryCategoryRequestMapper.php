@@ -7,15 +7,17 @@ use App\Core\Request;
 use App\Core\Validator;
 use App\DTO\Dashboard\GalleryCategory\CreateGalleryCategoryDto;
 use App\DTO\Dashboard\GalleryCategory\UpdateGalleryCategoryDto;
+use App\DTO\Dashboard\PublishedDto;
 use App\Mapper\SlugNormalizer;
 
 readonly class GalleryCategoryRequestMapper
 {
     public function __construct(
-        private Request        $request,
-        private Validator      $validator,
-        private SlugNormalizer $slugNormalizer,
-        private DeleteRequestMapper    $deleteRequestMapper,
+        private Request                  $request,
+        private Validator                $validator,
+        private SlugNormalizer           $slugNormalizer,
+        private DeleteRequestMapper      $deleteRequestMapper,
+        private PublicationRequestMapper $publicationRequestMapper,
     )
     {
     }
@@ -87,7 +89,12 @@ readonly class GalleryCategoryRequestMapper
         return UpdateGalleryCategoryDto::fromArray($data);
     }
 
-    public function mapDelete(): ?int {
+    public function mapDelete(): ?int
+    {
         return $this->deleteRequestMapper->map();
+    }
+
+    public function mapPublished(): PublishedDto {
+        return $this->publicationRequestMapper->map();
     }
 }

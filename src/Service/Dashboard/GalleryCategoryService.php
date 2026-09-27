@@ -5,17 +5,20 @@ namespace App\Service\Dashboard;
 
 use App\DTO\Dashboard\GalleryCategory\CreateGalleryCategoryDto;
 use App\DTO\Dashboard\GalleryCategory\UpdateGalleryCategoryDto;
+use App\DTO\Dashboard\PublishedDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
 use App\Service\Dashboard\Contracts\GalleryCategoryManagementServiceInterface;
 use App\Service\Dashboard\Traits\CanEdit;
+use App\Service\Dashboard\Traits\CanPublished;
 use App\Service\Dashboard\Traits\PositionableTrait;
 
 class GalleryCategoryService extends AbstractDashboardService implements GalleryCategoryManagementServiceInterface
 {
     use PositionableTrait;
     use CanEdit;
+    use CanPublished;
     private const TABLE = 'gallery_categories';
 
 
@@ -57,6 +60,14 @@ class GalleryCategoryService extends AbstractDashboardService implements Gallery
     public function deleteGalleryCategory(int $id): void {
         $this->delete(self::TABLE, $id);
     }
+
+    /**
+     * @throws ServiceException
+     */
+    public function publishedGalleryCategory(PublishedDto $data): void {
+        $this->published(self::TABLE, $data);
+    }
+
 
     public function existsBySlug(string $slug, ?int $excludedId = null): bool {
         return $this->repository->existsBySlug($slug, $excludedId);
