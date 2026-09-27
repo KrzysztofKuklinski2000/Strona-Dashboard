@@ -5,6 +5,7 @@ namespace App\Service\Dashboard\Contracts;
 
 use App\DTO\Dashboard\GalleryCategory\CreateGalleryCategoryDto;
 use App\DTO\Dashboard\GalleryCategory\GalleryCategoryDto;
+use App\DTO\Dashboard\GalleryCategory\UpdateGalleryCategoryDto;
 
 interface GalleryCategoryManagementServiceInterface extends SharedGetDataServiceInterface
 {
@@ -22,9 +23,17 @@ interface GalleryCategoryManagementServiceInterface extends SharedGetDataService
     public function createGalleryCategory(CreateGalleryCategoryDto $data): void;
 
     /**
-     * Sprawdza czy istnieje w bazie kategoria z takim samym slug.
+     * Aktualizuje nową kategorię.
+     * @param UpdateGalleryCategoryDto $data
+     * @return void
+     */
+    public function updateGalleryCategory(UpdateGalleryCategoryDto $data): void;
+
+    /**
+     * Sprawdza, czy istnieje w bazie kategoria z takim samym slug.
      * @param string $slug
+     * @param int|null $excludedId
      * @return bool
      */
-    public function existsBySlug(string $slug): bool;
+    public function existsBySlug(string $slug, ?int $excludedId = null): bool;
 }

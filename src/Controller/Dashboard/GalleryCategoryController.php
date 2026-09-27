@@ -5,8 +5,10 @@ namespace App\Controller\Dashboard;
 
 use App\Controller\Dashboard\Traits\HasSingleData;
 use App\Controller\Dashboard\Traits\HasStoreAction;
+use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
 use App\DTO\Dashboard\GalleryCategory\CreateGalleryCategoryDto;
+use App\DTO\Dashboard\GalleryCategory\UpdateGalleryCategoryDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Mapper\Dashboard\GalleryCategoryRequestMapper;
@@ -16,6 +18,7 @@ class GalleryCategoryController extends AbstractDashboardController
 {
     use HasSingleData;
     use HasStoreAction;
+    use HasUpdateAction;
 
     public function __construct(
         private readonly GalleryCategoryManagementServiceInterface $service,
@@ -44,6 +47,16 @@ class GalleryCategoryController extends AbstractDashboardController
     /**
      * @throws NotFoundException
      */
+    public function editAction(): void {
+        $this->renderPage([
+            'page' => 'gallery/category/edit',
+            'data' => $this->getSingleData(),
+        ]);
+    }
+
+    /**
+     * @throws NotFoundException
+     */
     public function showAction(): void
     {
         $this->renderPage([
@@ -57,18 +70,20 @@ class GalleryCategoryController extends AbstractDashboardController
         return 'gallery/categories';
     }
 
+    protected function getDataToUpdate(): DataTransferObjectInterface
+    {
+        $data = $this->mapper->mapUpdate();
+
+        $this->checkSlug($data);
+
+        return $data;
+    }
+
     protected function getDataToCreate(): CreateGalleryCategoryDto
     {
         $data = $this->mapper->mapCreate();
 
-        if (!$this->validator->getErrors() &&
-            $this->service->existsBySlug($data->slug)
-        ) {
-            $this->validator->addError(
-                'name',
-                'Kategoria o takiej lub podobnej nazwie już istnieje.'
-            );
-        }
+        $this->checkSlug($data);
 
         return $data;
 
@@ -78,5 +93,24 @@ class GalleryCategoryController extends AbstractDashboardController
     {
         /** @var CreateGalleryCategoryDto $data */
         $this->service->createGalleryCategory($data);
+    }
+
+    protected function handleUpdate(DataTransferObjectInterface $data): void
+    {
+        /** @var UpdateGalleryCategoryDto $data */
+        $this->service->updateGalleryCategory($data);
+    }
+
+    private function checkSlug(DataTransferObjectInterface $data): void {
+        $excludedId = $data instanceof UpdateGalleryCategoryDto ? $data->id : null;
+
+        if (!$this->validator->getErrors() &&
+            $this->service->existsBySlug($data->slug, $excludedId)
+        ) {
+            $this->validator->addError(
+                'name',
+                'Kategoria o takiej lub podobnej nazwie już istnieje.'
+            );
+        }
     }
 }

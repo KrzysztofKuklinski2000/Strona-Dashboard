@@ -131,5 +131,7 @@ return function (RouteCollector $r) {
     $r->get('/dashboard/gallery/categories/create', [GalleryCategoryController::class, 'createAction']);
     $r->get('/dashboard/gallery/categories/show/{id:\d+}', [GalleryCategoryController::class, 'showAction']);
     $r->post('/dashboard/gallery/categories/store', [GalleryCategoryController::class, 'storeAction']);
+    $r->get('/dashboard/gallery/categories/edit/{id:\d+}', [GalleryCategoryController::class, 'editAction']);
+    $r->post('/dashboard/gallery/categories/update/{id:\d+}', [GalleryCategoryController::class, 'updateAction']);
 };
 
