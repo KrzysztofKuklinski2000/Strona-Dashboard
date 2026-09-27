@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 $data = $params['data'] ?? [];
+$moduleName = 'gallery/categories';
 ?>
 
 <div class="list-header">
@@ -26,6 +27,7 @@ $data = $params['data'] ?? [];
                 <th>Status</th>
                 <th>Pozycja</th>
                 <th>Data utworzenia</th>
+                <th>Operacje</th>
             </tr>
             </thead>
             <tbody>
@@ -47,6 +49,10 @@ $data = $params['data'] ?? [];
                     </td>
                     <td><?= e($category->position) ?></td>
                     <td><?= e($category->createdAt) ?></td>
+                    <?php
+                        $row = $category;
+                    ?>
+                    <?php require "templates/dashboard/_partials/_action_links.php"; ?>
                 </tr>
             <?php endforeach; ?>
             </tbody>

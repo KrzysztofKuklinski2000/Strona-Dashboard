@@ -128,5 +128,6 @@ return function (RouteCollector $r) {
     $r->post('/dashboard/subscribers/delete/{id:\d+}', [SubscribersController::class, 'deleteAction']);
 
     $r->get('/dashboard/gallery/categories', [GalleryCategoryController::class, 'indexAction']);
+    $r->get('/dashboard/gallery/categories/show/{id:\d+}', [GalleryCategoryController::class, 'showAction']);
 };
 
