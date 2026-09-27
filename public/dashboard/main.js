@@ -1,6 +1,67 @@
 const dashboardToast = document.querySelector('[data-dashboard-toast]');
 const dashboardToastClose = dashboardToast?.querySelector('[data-dashboard-toast-close]');
 
+document.querySelectorAll('[data-dashboard-navigation-toggle]').forEach((toggle) => {
+    const submenuId = toggle.getAttribute('aria-controls');
+    const submenu = submenuId ? document.getElementById(submenuId) : null;
+    let isAnimating = false;
+
+    if (!submenu) {
+        return;
+    }
+
+    toggle.addEventListener('click', () => {
+        const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+        const navigationLabel = toggle.dataset.dashboardNavigationLabel ?? '';
+
+        if (isAnimating) {
+            return;
+        }
+
+        toggle.setAttribute('aria-expanded', String(!isExpanded));
+        toggle.setAttribute('aria-label', `${isExpanded ? 'Rozwiń' : 'Zwiń'} podmenu: ${navigationLabel}`);
+
+        if (
+            typeof submenu.animate !== 'function'
+            || window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        ) {
+            submenu.hidden = isExpanded;
+            return;
+        }
+
+        isAnimating = true;
+
+        if (!isExpanded) {
+            submenu.hidden = false;
+        }
+
+        const submenuHeight = submenu.scrollHeight;
+        const animation = submenu.animate(
+            [
+                {
+                    height: isExpanded ? `${submenuHeight}px` : '0px',
+                    opacity: isExpanded ? 1 : 0,
+                    overflow: 'hidden',
+                },
+                {
+                    height: isExpanded ? '0px' : `${submenuHeight}px`,
+                    opacity: isExpanded ? 0 : 1,
+                    overflow: 'hidden',
+                },
+            ],
+            {
+                duration: 220,
+                easing: 'cubic-bezier(.4, 0, .2, 1)',
+            }
+        );
+
+        animation.addEventListener('finish', () => {
+            submenu.hidden = isExpanded;
+            isAnimating = false;
+        });
+    });
+});
+
 if (dashboardToast) {
     let closeTimeout;
 

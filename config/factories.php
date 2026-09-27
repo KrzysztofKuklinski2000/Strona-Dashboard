@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use App\Controller\AuthController;
 use App\Controller\Dashboard\CampController;
+use App\Controller\Dashboard\GalleryCategoryController;
 use App\Controller\Dashboard\ContactController;
 use App\Controller\Dashboard\FeesController;
 use App\Controller\Dashboard\GalleryController;
@@ -17,6 +18,7 @@ use App\Controller\PublicSubscribersController;
 use App\Controller\SiteController;
 use App\Factories\ControllerFactories\AuthControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\CampControllerFactory;
+use App\Factories\ControllerFactories\Dashboard\GalleryCategoryControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\ContactControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\FeesControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\GalleryControllerFactory;
@@ -42,6 +44,7 @@ return [
     HomepageController::class => HomepageControllerFactory::class, // Dawny '_default'
     SubscribersController::class => SubscribersControllerFactory::class,
     OverviewController::class => OverviewControllerFactory::class,
+    GalleryCategoryController::class => GalleryCategoryControllerFactory::class,
 
     PublicSubscribersController::class => PublicSubscribersControllerFactory::class,
     PublicNewsController::class => PublicNewsControllerFactory::class,

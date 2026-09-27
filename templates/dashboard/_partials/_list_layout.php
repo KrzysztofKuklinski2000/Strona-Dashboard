@@ -4,9 +4,20 @@ $csrfToken = $csrfToken ?? '';
 ?>
 <div class="list-header">
   <h3><?= e($pageTitle) ?></h3>
-  <a href="/dashboard/<?= e($moduleName) ?>/create">
-    <span>Nowy</span><i class="fa-solid fa-plus" aria-hidden="true"></i>
-  </a>
+  <div class="list-header__actions">
+    <?php foreach ($additionalHeaderActions ?? [] as $headerAction): ?>
+      <a
+        class="<?= ($headerAction['variant'] ?? '') === 'secondary' ? 'list-header__action--secondary' : '' ?>"
+        href="<?= e($headerAction['url']) ?>"
+      >
+        <span><?= e($headerAction['label']) ?></span>
+        <i class="<?= e($headerAction['icon']) ?>" aria-hidden="true"></i>
+      </a>
+    <?php endforeach; ?>
+    <a href="/dashboard/<?= e($moduleName) ?>/create">
+      <span>Nowy</span><i class="fa-solid fa-plus" aria-hidden="true"></i>
+    </a>
+  </div>
 </div>
 
 <?php if ($data === []): ?>

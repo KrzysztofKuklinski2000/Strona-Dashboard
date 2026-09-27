@@ -9,7 +9,20 @@ $navigationItems = [
     ['module' => 'important_posts', 'label' => 'Ważne informacje', 'url' => '/dashboard/important_posts', 'icon' => 'fa-solid fa-exclamation'],
     ['module' => 'timetable', 'label' => 'Grafik', 'url' => '/dashboard/timetable', 'icon' => 'fa-regular fa-calendar'],
     ['module' => 'news', 'label' => 'Aktualności', 'url' => '/dashboard/news', 'icon' => 'fa-regular fa-newspaper'],
-    ['module' => 'gallery', 'label' => 'Galeria', 'url' => '/dashboard/gallery', 'icon' => 'fa-regular fa-image'],
+    [
+        'module' => 'gallery',
+        'label' => 'Galeria',
+        'url' => '/dashboard/gallery',
+        'icon' => 'fa-regular fa-image',
+        'children' => [
+            [
+                'label' => 'Kategorie',
+                'url' => '/dashboard/gallery/categories',
+                'pagePrefix' => 'gallery/category',
+                'icon' => 'fa-solid fa-tags',
+            ],
+        ],
+    ],
     ['module' => 'camp', 'label' => 'Obozy', 'url' => '/dashboard/camp', 'icon' => 'fa-solid fa-campground'],
     ['module' => 'fees', 'label' => 'Składki', 'url' => '/dashboard/fees', 'icon' => 'fa-solid fa-money-check-dollar'],
     ['module' => 'contact', 'label' => 'Kontakt', 'url' => '/dashboard/contact', 'icon' => 'fa-regular fa-address-book'],
@@ -100,16 +113,66 @@ $navigationItems = [
             <nav class="dashboard-sidebar__navigation" aria-label="Nawigacja panelu administracyjnego">
                 <ul class="dashboard-navigation">
                     <?php foreach ($navigationItems as $navigationItem): ?>
-                        <?php $isActive = $activeModule === $navigationItem['module']; ?>
-                        <li>
-                            <a
-                                class="dashboard-navigation__link<?= $isActive ? ' is-active' : '' ?>"
-                                href="<?= e($navigationItem['url']) ?>"
-                                <?= $isActive ? 'aria-current="page"' : '' ?>
-                            >
-                                <i class="<?= e($navigationItem['icon']) ?>" aria-hidden="true"></i>
-                                <span><?= e($navigationItem['label']) ?></span>
-                            </a>
+                        <?php
+                        $isActive = $activeModule === $navigationItem['module'];
+                        $children = $navigationItem['children'] ?? [];
+                        $hasActiveChild = false;
+
+                        foreach ($children as $child) {
+                            if (str_starts_with($currentPage, $child['pagePrefix'])) {
+                                $hasActiveChild = true;
+                                break;
+                            }
+                        }
+                        ?>
+                        <li class="<?= $children !== [] ? 'dashboard-navigation__item--has-children' : '' ?>">
+                            <div class="dashboard-navigation__group-header">
+                                <a
+                                    class="dashboard-navigation__link<?= $isActive ? ' is-active' : '' ?>"
+                                    href="<?= e($navigationItem['url']) ?>"
+                                    <?= $isActive && !$hasActiveChild ? 'aria-current="page"' : '' ?>
+                                >
+                                    <i class="<?= e($navigationItem['icon']) ?>" aria-hidden="true"></i>
+                                    <span><?= e($navigationItem['label']) ?></span>
+                                </a>
+
+                                <?php if ($children !== []): ?>
+                                    <?php $submenuId = 'dashboard-navigation-' . $navigationItem['module']; ?>
+                                    <button
+                                        class="dashboard-navigation__toggle"
+                                        type="button"
+                                        aria-expanded="<?= $hasActiveChild ? 'true' : 'false' ?>"
+                                        aria-controls="<?= e($submenuId) ?>"
+                                        aria-label="<?= $hasActiveChild ? 'Zwiń' : 'Rozwiń' ?> podmenu: <?= e($navigationItem['label']) ?>"
+                                        data-dashboard-navigation-label="<?= e($navigationItem['label']) ?>"
+                                        data-dashboard-navigation-toggle
+                                    >
+                                        <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                                    </button>
+                                <?php endif; ?>
+                            </div>
+
+                            <?php if ($children !== []): ?>
+                                <ul
+                                    class="dashboard-navigation__sublist"
+                                    id="<?= e($submenuId) ?>"
+                                    <?= !$hasActiveChild ? 'hidden' : '' ?>
+                                >
+                                    <?php foreach ($children as $child): ?>
+                                        <?php $isChildActive = str_starts_with($currentPage, $child['pagePrefix']); ?>
+                                        <li>
+                                            <a
+                                                class="dashboard-navigation__sublink<?= $isChildActive ? ' is-active' : '' ?>"
+                                                href="<?= e($child['url']) ?>"
+                                                <?= $isChildActive ? 'aria-current="page"' : '' ?>
+                                            >
+                                                <i class="<?= e($child['icon']) ?>" aria-hidden="true"></i>
+                                                <span><?= e($child['label']) ?></span>
+                                            </a>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php endif; ?>
                         </li>
                     <?php endforeach; ?>
 

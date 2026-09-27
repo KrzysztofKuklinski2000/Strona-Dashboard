@@ -2,6 +2,7 @@
 
 use App\Controller\AuthController;
 use App\Controller\Dashboard\CampController;
+use App\Controller\Dashboard\GalleryCategoryController;
 use App\Controller\Dashboard\ContactController;
 use App\Controller\Dashboard\FeesController;
 use App\Controller\Dashboard\GalleryController;
@@ -125,5 +126,7 @@ return function (RouteCollector $r) {
 
     $r->get('/dashboard/subscribers/confirmDelete/{id:\d+}', [SubscribersController::class, 'confirmDeleteAction']);
     $r->post('/dashboard/subscribers/delete/{id:\d+}', [SubscribersController::class, 'deleteAction']);
+
+    $r->get('/dashboard/gallery/categories', [GalleryCategoryController::class, 'indexAction']);
 };
 

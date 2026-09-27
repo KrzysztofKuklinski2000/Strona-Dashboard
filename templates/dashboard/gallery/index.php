@@ -5,6 +5,14 @@ $data = $params['data'] ?? [];
 $csrf = $params['csrf_token'] ?? '';
 $action = '/dashboard/gallery/move';
 $showPosition = true;
+$additionalHeaderActions = [
+    [
+        'label' => 'Zarządzaj kategoriami',
+        'url' => '/dashboard/gallery/categories',
+        'icon' => 'fa-solid fa-tags',
+        'variant' => 'secondary',
+    ],
+];
 
 $tableHeadersHtml = <<<HTML
     <th>Zdjęcie</th>
