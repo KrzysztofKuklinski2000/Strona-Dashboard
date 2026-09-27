@@ -457,6 +457,31 @@ CREATE TABLE `page_views`
     INDEX `idx_page_views_path` (`path`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
+
+CREATE TABLE `gallery_categories`
+(
+    `id`         int                                   NOT NULL,
+    `name`       varchar(100) COLLATE utf8mb4_polish_ci NOT NULL,
+    `slug`       varchar(100) COLLATE utf8mb4_polish_ci NOT NULL,
+    `position`   int                                   NOT NULL DEFAULT '1',
+    `status`     tinyint                               NOT NULL DEFAULT '1',
+    `created_at` date                                  NOT NULL,
+    `updated_at` date                                  NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+
+CREATE TABLE `gallery_category`
+(
+    `gallery_id`  int NOT NULL,
+    `category_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+
+INSERT INTO `gallery_categories`
+(`id`, `name`, `slug`, `position`, `status`, `created_at`, `updated_at`)
+VALUES
+    (1, 'Treningi', 'training', 1, 1, CURRENT_DATE, CURRENT_DATE),
+    (2, 'Obozy', 'camp', 2, 1, CURRENT_DATE, CURRENT_DATE);
 --
 -- Indeksy dla zrzutów tabel
 --
@@ -505,6 +530,22 @@ ALTER TABLE `timetable`
 ALTER TABLE `user`
     ADD PRIMARY KEY (`id`);
 
+
+--
+-- Indeksy dla tabeli `gallery_categories`
+--
+ALTER TABLE `gallery_categories`
+    ADD PRIMARY KEY (`id`),
+    ADD UNIQUE KEY `gallery_categories_slug_unique` (`slug`);
+
+--
+-- Indeksy dla tabeli `gallery_category`
+--
+
+ALTER TABLE `gallery_category`
+    ADD PRIMARY KEY (`gallery_id`, `category_id`),
+    ADD KEY `gallery_category_category_id_index` (`category_id`);
+
 --
 -- AUTO_INCREMENT dla zrzuconych tabel
 --
@@ -550,6 +591,25 @@ ALTER TABLE `timetable`
 --
 ALTER TABLE `user`
     MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT dla tabeli `gallery_categories`
+--
+ALTER TABLE `gallery_categories`
+    MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+
+--
+-- FOREIGN KEY dla tabeli `gallery_category`
+--
+ALTER TABLE `gallery_category`
+    ADD CONSTRAINT `gallery_category_gallery_fk`
+        FOREIGN KEY (`gallery_id`) REFERENCES `gallery` (`id`)
+            ON DELETE CASCADE,
+    ADD CONSTRAINT `gallery_category_category_fk`
+        FOREIGN KEY (`category_id`) REFERENCES `gallery_categories` (`id`)
+        ON DELETE CASCADE;
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
