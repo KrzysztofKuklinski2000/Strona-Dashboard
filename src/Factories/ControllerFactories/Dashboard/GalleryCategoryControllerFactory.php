@@ -8,6 +8,8 @@ use App\Controller\Dashboard\GalleryCategoryController;
 use App\Core\ContextController;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\GalleryCategoryServiceFactory;
+use App\Mapper\Dashboard\GalleryCategoryRequestMapper;
+use App\Mapper\SlugNormalizer;
 use PDO;
 
 readonly class GalleryCategoryControllerFactory implements ControllerFactoryInterface
@@ -19,9 +21,15 @@ readonly class GalleryCategoryControllerFactory implements ControllerFactoryInte
     public function createController(ContextController $contextController): AbstractController
     {
         $service = (new GalleryCategoryServiceFactory($this->pdo))->createService();
+        $mapper = new GalleryCategoryRequestMapper(
+            $contextController->request,
+            $contextController->validator,
+            new SlugNormalizer(),
+        );
 
         return new GalleryCategoryController(
             $service,
+            $mapper,
             $contextController
         );
     }

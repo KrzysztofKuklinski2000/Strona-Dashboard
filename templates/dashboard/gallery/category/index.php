@@ -8,6 +8,10 @@ $moduleName = 'gallery/categories';
 
 <div class="list-header">
     <h3>Kategorie galerii</h3>
+    <a href="/dashboard/gallery/categories/create">
+        <span>Nowa</span>
+        <i class="fa-solid fa-plus" aria-hidden="true"></i>
+    </a>
 </div>
 
 <?php if ($data === []): ?>

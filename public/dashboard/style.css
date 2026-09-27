@@ -1208,6 +1208,11 @@ body {
 	width: min(100%, 920px);
 }
 
+.content-container form.dashboard-editor-form--full {
+	width: 100%;
+	margin: 0;
+}
+
 .content-container form.important-post-form,
 .content-container form.camp-form,
 .content-container form.contact-form,
