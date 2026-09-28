@@ -6,16 +6,17 @@ $galleryItems = array_values(array_filter(
 $categories = is_array($params['categories'] ?? null)
     ? $params['categories']
     : [];
-$currentCategory = $params['category'] ?? null;
-
-$activeCategory = null;
-
-foreach ($categories as $category) {
-    if (($category->slug ?? null) === $currentCategory) {
-        $activeCategory = $category;
-        break;
-    }
-}
+$selectedCategorySlugs = is_array($params['selectedCategorySlugs'] ?? null)
+    ? $params['selectedCategorySlugs']
+    : [];
+$selectedCategories = array_values(array_filter(
+    $categories,
+    static fn($category): bool => in_array($category->slug, $selectedCategorySlugs, true)
+));
+$selectedCategoryNames = array_map(
+    static fn($category): string => $category->name,
+    $selectedCategories
+);
 
 $formatPhotoCount = static function (int $count): string {
     $lastDigit = $count % 10;
@@ -31,8 +32,10 @@ $formatPhotoCount = static function (int $count): string {
     return $count . ' ' . $label;
 };
 
-$activeCategoryLabel = $activeCategory?->name ?? 'Wszystkie zdjęcia';
-$countContext = $currentCategory === null ? 'w galerii' : 'w tej kategorii';
+$activeCategoryLabel = $selectedCategoryNames === []
+    ? 'Wszystkie zdjęcia'
+    : implode(' • ', $selectedCategoryNames);
+$countContext = $selectedCategoryNames === [] ? 'w galerii' : 'dla wybranych kategorii';
 ?>
 
 <section class="gallery-page" aria-labelledby="gallery-page-title">
@@ -42,8 +45,7 @@ $countContext = $currentCategory === null ? 'w galerii' : 'w tej kategorii';
                 <p>Galeria</p>
                 <h2 id="gallery-page-title">Klub w obiektywie</h2>
                 <span>
-                    Zobacz zdjęcia z treningów, obozów i wydarzeń klubowych. Galeria jest tworzona z opublikowanych
-                    materiałów dodanych w panelu administracyjnym.
+                    Zobacz zdjęcia z treningów, obozów i wydarzeń klubowych.
                 </span>
             </div>
 
@@ -60,28 +62,86 @@ $countContext = $currentCategory === null ? 'w galerii' : 'w tej kategorii';
             </aside>
         </section>
 
-        <nav class="gallery-filters" aria-label="Filtry galerii">
-            <a class="<?= $currentCategory === null ? 'is-active' : '' ?>" href="/galeria">
-                Wszystkie
-            </a>
+        <?php if ($categories): ?>
+            <form id="gallery-filters" class="gallery-filters" action="/galeria" method="GET">
+                <fieldset>
+                    <legend class="visually-hidden">Wybierz kategorie zdjęć</legend>
 
-            <?php foreach ($categories as $category): ?>
-                <?php $isActive = $category->slug === $currentCategory; ?>
+                    <div class="gallery-filters__slider">
+                        <button
+                            class="gallery-filters__arrow gallery-filters__arrow--left"
+                            type="button"
+                            aria-label="Pokaż poprzednie kategorie"
+                        >
+                            <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+                        </button>
 
-                <a
-                    class="<?= $isActive ? 'is-active' : '' ?>"
-                    href="/galeria/<?= e(rawurlencode($category->slug)) ?>"
-                >
-                    <?= e($category->name) ?>
-                </a>
-            <?php endforeach ?>
-        </nav>
+                        <div class="gallery-filters__options">
+                            <?php foreach ($categories as $category): ?>
+                                <?php $isSelected = in_array($category->slug, $selectedCategorySlugs, true); ?>
+
+                                <label class="gallery-filter-option">
+                                    <input
+                                        type="checkbox"
+                                        name="categories[]"
+                                        value="<?= e($category->slug) ?>"
+                                        <?= $isSelected ? 'checked' : '' ?>
+                                    >
+
+                                    <span
+                                        class="gallery-filter-option__content"
+                                        title="<?= e($category->name) ?>"
+                                    >
+                                        <span class="gallery-filter-option__check" aria-hidden="true">
+                                            <i class="fa-solid fa-check"></i>
+                                        </span>
+                                        <span class="gallery-filter-option__label"><?= e($category->name) ?></span>
+                                    </span>
+                                </label>
+                            <?php endforeach ?>
+                        </div>
+
+                        <button
+                            class="gallery-filters__arrow gallery-filters__arrow--right"
+                            type="button"
+                            aria-label="Pokaż kolejne kategorie"
+                        >
+                            <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <div class="gallery-filters__actions">
+                        <button
+                            class="gallery-filters__submit"
+                            type="submit"
+                            aria-label="Pokaż zdjęcia z wybranych kategorii"
+                            title="Pokaż zdjęcia"
+                        >
+                            <i class="fa-solid fa-filter" aria-hidden="true"></i>
+                            <span>Filtruj</span>
+                        </button>
+
+                        <a
+                            class="gallery-filters__clear <?= $selectedCategorySlugs === [] ? 'is-hidden' : '' ?>"
+                            href="/galeria"
+                            aria-label="Wyczyść wybrane kategorie"
+                            <?= $selectedCategorySlugs === [] ? 'aria-hidden="true" tabindex="-1"' : '' ?>
+                        >
+                            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                            <span>Wyczyść</span>
+                        </a>
+                    </div>
+                </fieldset>
+            </form>
+        <?php endif ?>
 
         <?php if ($galleryItems): ?>
             <div class="gallery-grid">
                 <?php foreach ($galleryItems as $index => $item): ?>
                     <?php
-                    $categoryLabel = $activeCategory?->name ?? 'Galeria';
+                    $categoryLabel = count($selectedCategoryNames) === 1
+                        ? $selectedCategoryNames[0]
+                        : 'Galeria';
                     $description = trim((string) ($item->description ?? ''));
                     $imageDescription = $description !== '' ? $description : 'Zdjęcie z galerii klubowej';
                     $imagePath = '/public/uploads/' . rawurlencode((string) $item->imageName);
@@ -106,3 +166,5 @@ $countContext = $currentCategory === null ? 'w galerii' : 'w tej kategorii';
         <?php endif ?>
     </div>
 </section>
+
+<script src="/public/js/gallery-filters.js"></script>

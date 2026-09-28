@@ -74,10 +74,10 @@ readonly class SiteService
     /**
      * @throws ServiceException
      */
-    public function getGallery(?string $category = null): array
+    public function getGallery(array $categorySlugs = []): array
     {
         try {
-            return $this->siteRepository->getGallery($category);
+            return $this->siteRepository->getGallery($categorySlugs);
         } catch (RepositoryException $e) {
             throw new ServiceException("Nie udało się pobrać galeri", 500, $e);
         }
