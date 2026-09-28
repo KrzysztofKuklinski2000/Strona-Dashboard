@@ -3,12 +3,19 @@ $galleryItems = array_values(array_filter(
     $params['content'] ?? [],
     static fn($item): bool => (bool) ($item->status ?? false)
 ));
+$categories = is_array($params['categories'] ?? null)
+    ? $params['categories']
+    : [];
 $currentCategory = $params['category'] ?? null;
 
-$categoryLabels = [
-    'training' => 'Treningi',
-    'camp' => 'Obozy',
-];
+$activeCategory = null;
+
+foreach ($categories as $category) {
+    if (($category->slug ?? null) === $currentCategory) {
+        $activeCategory = $category;
+        break;
+    }
+}
 
 $formatPhotoCount = static function (int $count): string {
     $lastDigit = $count % 10;
@@ -24,25 +31,7 @@ $formatPhotoCount = static function (int $count): string {
     return $count . ' ' . $label;
 };
 
-$filters = [
-    'all' => [
-        'label' => 'Wszystkie',
-        'href' => '/galeria',
-        'category' => null,
-    ],
-    'training' => [
-        'label' => 'Treningi',
-        'href' => '/galeria/training',
-        'category' => 'training',
-    ],
-    'camp' => [
-        'label' => 'Obozy',
-        'href' => '/galeria/camp',
-        'category' => 'camp',
-    ],
-];
-
-$activeCategoryLabel = $categoryLabels[$currentCategory] ?? 'Wszystkie zdjęcia';
+$activeCategoryLabel = $activeCategory?->name ?? 'Wszystkie zdjęcia';
 $countContext = $currentCategory === null ? 'w galerii' : 'w tej kategorii';
 ?>
 
@@ -72,11 +61,18 @@ $countContext = $currentCategory === null ? 'w galerii' : 'w tej kategorii';
         </section>
 
         <nav class="gallery-filters" aria-label="Filtry galerii">
-            <?php foreach ($filters as $filter): ?>
-                <?php $isActive = $filter['category'] === $currentCategory; ?>
+            <a class="<?= $currentCategory === null ? 'is-active' : '' ?>" href="/galeria">
+                Wszystkie
+            </a>
 
-                <a class="<?= $isActive ? 'is-active' : '' ?>" href="<?= e($filter['href']) ?>">
-                    <?= e($filter['label']) ?>
+            <?php foreach ($categories as $category): ?>
+                <?php $isActive = $category->slug === $currentCategory; ?>
+
+                <a
+                    class="<?= $isActive ? 'is-active' : '' ?>"
+                    href="/galeria/<?= e(rawurlencode($category->slug)) ?>"
+                >
+                    <?= e($category->name) ?>
                 </a>
             <?php endforeach ?>
         </nav>
@@ -85,8 +81,7 @@ $countContext = $currentCategory === null ? 'w galerii' : 'w tej kategorii';
             <div class="gallery-grid">
                 <?php foreach ($galleryItems as $index => $item): ?>
                     <?php
-                    $category = $item->category ?? null;
-                    $categoryLabel = $categoryLabels[$category] ?? 'Galeria';
+                    $categoryLabel = $activeCategory?->name ?? 'Galeria';
                     $description = trim((string) ($item->description ?? ''));
                     $imageDescription = $description !== '' ? $description : 'Zdjęcie z galerii klubowej';
                     $imagePath = '/public/uploads/' . rawurlencode((string) $item->imageName);

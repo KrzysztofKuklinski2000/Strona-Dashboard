@@ -109,11 +109,19 @@ class SiteRepository extends AbstractRepository
     public function getGallery(?string $category = null, ?int $limit = null): array
     {
         try {
-            $sql = "SELECT * FROM gallery WHERE status = 1";
+            $sql = "SELECT gallery.* FROM gallery WHERE gallery.status = 1";
             $params = [];
 
-            if ($category && in_array($category, ["training","camp"])) {
-                $sql .= " AND category = :category";
+            if ($category !== null && $category !== '') {
+                $sql .= ' AND EXISTS 
+                            (SELECT 1 FROM gallery_category 
+                            INNER JOIN gallery_categories 
+                                ON gallery_categories.id = gallery_category.category_id
+                            WHERE gallery_category.gallery_id = gallery.id
+                                AND gallery_categories.slug = :category
+                                AND gallery_categories.status = 1
+                          )
+                       ';
                 $params[':category'] = $category;
             }
 

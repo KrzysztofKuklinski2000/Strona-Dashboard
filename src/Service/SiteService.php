@@ -10,6 +10,7 @@ use App\DTO\Dashboard\Fees\FeesDto;
 use App\Exception\NotFoundException;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
+use App\Repository\Dashboard\GalleryCategoryRepository;
 use App\Repository\Dashboard\TimetableRepository;
 use App\Repository\SiteRepository;
 use App\Service\Homepage\Feed\HomepageFeedRegistry;
@@ -19,6 +20,7 @@ readonly class SiteService
     public function __construct(
         private SiteRepository      $siteRepository,
         private TimetableRepository $timetableRepository,
+        private GalleryCategoryRepository $galleryCategoryRepository,
         private HomepageFeedRegistry $homepageFeedRegistry,
     )
     {
@@ -80,6 +82,17 @@ readonly class SiteService
             return $this->siteRepository->getGallery($category);
         } catch (RepositoryException $e) {
             throw new ServiceException("Nie udało się pobrać galeri", 500, $e);
+        }
+    }
+
+    /**
+     * @throws ServiceException
+     */
+    public function getActiveCategories(): array {
+        try {
+            return $this->galleryCategoryRepository->getActiveCategories();
+        }catch (RepositoryException $e) {
+            throw new ServiceException('Nie udało się pobrać kategorii', 500, $e);
         }
     }
 
