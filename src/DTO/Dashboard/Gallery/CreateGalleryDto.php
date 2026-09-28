@@ -9,7 +9,7 @@ use App\DTO\DataTransferObjectInterface;
 readonly class CreateGalleryDto implements DataTransferObjectInterface
 {
     public function __construct(
-        public string $category,
+        public array $categoryIds,
         public string $description,
         public array|string|null $imageName,
         public string $createdAt,
@@ -20,7 +20,7 @@ readonly class CreateGalleryDto implements DataTransferObjectInterface
     public static function fromArray(array $data): self
     {
         return new self(
-            category: (string) ($data['category'] ?? ''),
+            categoryIds: $data['category_ids'] ?? [],
             description: (string) ($data['description'] ?? ''),
             imageName: $data['image_name'] ?? null,
             createdAt: (string) ($data['created_at'] ?? ''),
@@ -31,7 +31,6 @@ readonly class CreateGalleryDto implements DataTransferObjectInterface
     public function toArray(): array
     {
         return [
-            'category' => $this->category,
             'description' => $this->description,
             'image_name' => $this->imageName,
             'created_at' => $this->createdAt,

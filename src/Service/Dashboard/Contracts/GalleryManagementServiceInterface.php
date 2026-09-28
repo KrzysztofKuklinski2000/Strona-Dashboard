@@ -8,6 +8,7 @@ use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\Gallery\CreateGalleryDto;
 use App\DTO\Dashboard\Gallery\GalleryDto;
 use App\DTO\Dashboard\Gallery\UpdateGalleryDto;
+use App\DTO\Dashboard\GalleryCategory\GalleryCategoryDto;
 use App\DTO\Dashboard\PublishedDto;
 
 interface GalleryManagementServiceInterface extends SharedGetDataServiceInterface
@@ -17,6 +18,19 @@ interface GalleryManagementServiceInterface extends SharedGetDataServiceInterfac
      * @return GalleryDto[]
      */
     public function getAllGallery(): array;
+
+    /**
+     * Pobiera wszystkie aktywne kategorie
+     * @return GalleryCategoryDto[]
+     */
+    public function getActiveCategories(): array;
+
+    /**
+     * Pobieranie przypiętych kategorii (id)
+     * @param int $galleryId
+     * @return int[]
+     */
+    public function getCategoryIdsForGallery(int $galleryId): array;
 
     /**
      * Aktualizuje istniejący wpis galerii.

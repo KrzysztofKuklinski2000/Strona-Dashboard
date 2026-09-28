@@ -17,7 +17,7 @@ trait CanCreate
     /**
      * @throws RepositoryException
      */
-    public function create(string $table, DataTransferObjectInterface $data): void
+    public function create(string $table, DataTransferObjectInterface $data): int
     {
         try {
             $payload = $data->toArray();
@@ -25,7 +25,7 @@ trait CanCreate
             unset($payload['id']);
 
             $columns = implode(", ", array_keys($payload));
-            $placeholders = implode(", ", array_map(fn ($key) => ":$key", array_keys($payload)));
+            $placeholders = implode(", ", array_map(fn($key) => ":$key", array_keys($payload)));
 
             $bindings = [];
             foreach ($payload as $key => $value) {
@@ -35,6 +35,8 @@ trait CanCreate
             $sql = "INSERT INTO $table ($columns) VALUES ($placeholders)";
 
             $this->runQuery($sql, $bindings);
+
+            return (int)$this->con->lastInsertId();
         } catch (Exception $e) {
             throw new RepositoryException("Failed to create record", 500, $e);
         }

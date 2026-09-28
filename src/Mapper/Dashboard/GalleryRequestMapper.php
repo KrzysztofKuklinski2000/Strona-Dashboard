@@ -21,7 +21,8 @@ readonly class GalleryRequestMapper
         private ChangePositionRequestMapper $changePositionRequestMapper,
         private PublicationRequestMapper    $publicationRequestMapper,
         private DeleteRequestMapper         $deleteRequestMapper,
-    ) {
+    )
+    {
     }
 
     public function mapCreate(): CreateGalleryDto
@@ -68,14 +69,10 @@ readonly class GalleryRequestMapper
         return $this->deleteRequestMapper->map();
     }
 
-    private function mapCommonFields(bool $imageRequired): array {
+    private function mapCommonFields(bool $imageRequired): array
+    {
         return [
-            'category' => $this->validator->validate(
-                name: 'category',
-                value: $this->request->getFormParam('category'),
-                required: true,
-                maxLength: 8
-            ),
+            'category_ids' => $this->mapCategoryIds(),
 
             'description' => $this->validator->validate(
                 name: 'description',
@@ -91,5 +88,46 @@ readonly class GalleryRequestMapper
                 required: $imageRequired,
             ),
         ];
+    }
+
+    private function mapCategoryIds(): array
+    {
+        $rawCategoryIds = $this->request->getFormParam('category_ids', []);
+
+        if (!is_array($rawCategoryIds) || $rawCategoryIds === []) {
+            $this->validator->addError(
+                'category_ids',
+                'Wybierz przynajmniej jedną kategorię'
+            );
+
+            return [];
+        }
+
+        $categoryIds = [];
+
+        foreach ($rawCategoryIds as $rawCategoryId) {
+            $categoryId = $this->validator->validate(
+                name: 'category_ids',
+                value: $rawCategoryId,
+                required: true,
+                type: 'int'
+            );
+
+
+            if ($categoryId !== null && $categoryId > 0) {
+                $categoryIds[] = (int)$categoryId;
+            }
+        }
+
+        $categoryIds = array_values(array_unique($categoryIds));
+
+        if ($categoryIds === []) {
+            $this->validator->addError(
+                'category_ids',
+                'Wybierz przynajmniej jedną prawidłową kategorię.'
+            );
+        }
+
+        return $categoryIds;
     }
 }

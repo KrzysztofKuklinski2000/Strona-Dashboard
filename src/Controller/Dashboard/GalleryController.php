@@ -13,10 +13,12 @@ use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
 use App\DTO\Dashboard\ChangePositionDto;
 use App\DTO\Dashboard\Gallery\CreateGalleryDto;
+use App\DTO\Dashboard\Gallery\GalleryDto;
 use App\DTO\Dashboard\Gallery\UpdateGalleryDto;
 use App\DTO\Dashboard\PublishedDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
+use App\Exception\ServiceException;
 use App\Mapper\Dashboard\GalleryRequestMapper;
 use App\Service\Dashboard\Contracts\GalleryManagementServiceInterface;
 
@@ -47,12 +49,18 @@ class GalleryController extends AbstractDashboardController
 
     /**
      * @throws NotFoundException
+     * @throws ServiceException
      */
     public function editAction(): void
     {
+        /** @var GalleryDto $post */
+        $post = $this->getSingleData();
+
         $this->renderPage([
             'page' => 'gallery/edit',
-            'data' => $this->getSingleData(),
+            'data' => $post,
+            'categories' => $this->service->getActiveCategories(),
+            'selectedCategoryIds' => $this->service->getCategoryIdsForGallery($post->id),
         ]);
     }
 
@@ -60,6 +68,7 @@ class GalleryController extends AbstractDashboardController
     {
         $this->renderPage([
             'page' => 'gallery/create',
+            'categories' => $this->service->getActiveCategories(),
         ]);
     }
 

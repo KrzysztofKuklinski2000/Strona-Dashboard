@@ -10,7 +10,7 @@ readonly class UpdateGalleryDto implements DataTransferObjectInterface
 {
     public function __construct(
         public int $id,
-        public string $category,
+        public array $categoryIds,
         public string $description,
         public array|string|null $imageName,
         public string $updatedAt
@@ -21,7 +21,7 @@ readonly class UpdateGalleryDto implements DataTransferObjectInterface
     {
         return new self(
             id: (int)($data['id'] ?? 0),
-            category: (string)($data['category'] ?? ''),
+            categoryIds: $data['category_ids'] ?? [],
             description: (string)($data['description'] ?? ''),
             imageName: $data['image_name'] ?? null,
             updatedAt: (string)($data['updated_at'] ?? '')
@@ -32,7 +32,6 @@ readonly class UpdateGalleryDto implements DataTransferObjectInterface
     {
         $data = [
             'id' => $this->id,
-            'category' => $this->category,
             'description' => $this->description,
             'updated_at' => $this->updatedAt
         ];

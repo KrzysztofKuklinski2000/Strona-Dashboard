@@ -7,6 +7,7 @@ namespace App\Factories\ServiceFactories\Dashboard;
 use App\Core\Config;
 use App\Core\FileHandler;
 use App\Factories\ServiceFactories\ServiceFactoryInterface;
+use App\Repository\Dashboard\GalleryCategoryRepository;
 use App\Repository\Dashboard\GalleryRepository;
 use App\Service\Dashboard\GalleryService;
 use PDO;
@@ -21,7 +22,8 @@ readonly class GalleryServiceFactory implements ServiceFactoryInterface
     {
         $fileHandler = new FileHandler($this->config->getUploadDir(), $this->config->getFilePrefix());
         $repository = new GalleryRepository($this->pdo);
+        $categoryRepository = new GalleryCategoryRepository($this->pdo);
 
-        return new GalleryService($repository, $fileHandler);
+        return new GalleryService($repository, $categoryRepository, $fileHandler);
     }
 }

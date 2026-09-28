@@ -13,7 +13,9 @@ use App\DTO\Dashboard\PublishedDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\FileException;
 use App\Exception\NotFoundException;
+use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
+use App\Repository\Dashboard\GalleryCategoryRepository;
 use App\Repository\Dashboard\GalleryRepository;
 use App\Service\Dashboard\Contracts\GalleryManagementServiceInterface;
 use App\Service\Dashboard\Traits\CanEdit;
@@ -33,6 +35,7 @@ class GalleryService extends AbstractDashboardService implements GalleryManageme
 
     public function __construct(
         GalleryRepository            $repository,
+        private readonly GalleryCategoryRepository $galleryCategoryRepository,
         private readonly FileHandler $fileHandler
     ) {
         parent::__construct($repository);
@@ -44,6 +47,36 @@ class GalleryService extends AbstractDashboardService implements GalleryManageme
     public function getAllGallery(): array
     {
         return $this->getAll(self::TABLE);
+    }
+
+    /**
+     * @throws ServiceException
+     */
+    public function getActiveCategories(): array {
+        try {
+            return $this->galleryCategoryRepository->getActiveCategories();
+        }catch (RepositoryException $e) {
+            throw new ServiceException(
+                'Nie udało się pobrać kategorii galerii.',
+                500,
+                $e
+            );
+        }
+    }
+
+    /**
+     * @throws ServiceException
+     */
+    public function getCategoryIdsForGallery(int $galleryId): array {
+        try {
+           return $this->repository->getCategoryIdsForGallery($galleryId);
+        } catch (RepositoryException $e) {
+            throw new ServiceException(
+                'Nie udało się pobrać zaznaczonych kategorii dla zdjęcia.',
+                500,
+                $e
+            );
+        }
     }
 
     /**
@@ -62,7 +95,15 @@ class GalleryService extends AbstractDashboardService implements GalleryManageme
     public function updateGallery(UpdateGalleryDto $galleryDto): void
     {
         if (!is_array($galleryDto->imageName)) {
-            $this->edit(self::TABLE, $galleryDto);
+            $this->execute(function () use ($galleryDto) {
+                $this->repository->edit(self::TABLE, $galleryDto);
+
+                $this->repository->replaceCategories(
+                    $galleryDto->id,
+                    $galleryDto->categoryIds
+                );
+            }, 'Nie udało się zaktualizować zdjęcia w galerii.');
+
             return;
         }
 
@@ -83,14 +124,21 @@ class GalleryService extends AbstractDashboardService implements GalleryManageme
 
         $updatedDto = UpdateGalleryDto::fromArray([
             'id' => $galleryDto->id,
-            'category' => $galleryDto->category,
+            'category_ids' => $galleryDto->categoryIds,
             'description' => $galleryDto->description,
             'image_name' => $newImageName,
             'updated_at' => $galleryDto->updatedAt,
         ]);
 
         try {
-            $this->edit(self::TABLE, $updatedDto);
+            $this->execute(function () use ($updatedDto) {
+                $this->repository->edit(self::TABLE, $updatedDto);
+
+                $this->repository->replaceCategories(
+                    $updatedDto->id,
+                    $updatedDto->categoryIds
+                );
+            }, 'Nie udało się zaktualizować zdjęcia w galerii.');
         } catch (ServiceException $e) {
             try {
                 $this->fileHandler->deleteImage($newImageName);
@@ -127,7 +175,7 @@ class GalleryService extends AbstractDashboardService implements GalleryManageme
         }
 
         $updatedDto = CreateGalleryDto::fromArray([
-            'category' => $galleryDto->category,
+            'category_ids' => $galleryDto->categoryIds,
             'description' => $galleryDto->description,
             'image_name' => $imageName,
             'created_at' => $galleryDto->createdAt,
@@ -135,7 +183,16 @@ class GalleryService extends AbstractDashboardService implements GalleryManageme
         ]);
 
         try {
-            $this->create(self::TABLE, $updatedDto);
+            $this->execute(function () use ($updatedDto) {
+                $this->repository->incrementPosition(self::TABLE);
+
+                $galleryId = $this->repository->create(
+                    self::TABLE,
+                    $updatedDto,
+                );
+
+                $this->repository->assignCategories($galleryId, $updatedDto->categoryIds);
+            }, 'Nie udało się utworzyć zdjęcia w galerii.');
         } catch (ServiceException $e) {
             try {
                 $this->fileHandler->deleteImage($imageName);

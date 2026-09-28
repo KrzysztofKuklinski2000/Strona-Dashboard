@@ -1,4 +1,7 @@
-<?php $errors = $params['flash_dashboard']['message'] ?? []; ?>
+<?php
+    $errors = $params['flash_dashboard']['message'] ?? [];
+    $categories = $params['categories'] ?? [];
+?>
 
 <h3 class="dashboard-action-header">Dodawanie zdjęcia do galerii</h3>
 
@@ -31,14 +34,7 @@
                 <strong>Informacje o zdjęciu</strong>
             </header>
 
-            <label>
-                <span>Kategoria</span>
-                <select name="category">
-                    <option value="training">Trening</option>
-                    <option value="camp">Obóz</option>
-                </select>
-            </label>
-            <p class="validation-error"><?= e($errors['category'] ?? '') ?></p>
+            <?php require 'templates/dashboard/gallery/_category_select.php'; ?>
 
             <label>
                 <span>Opis</span>

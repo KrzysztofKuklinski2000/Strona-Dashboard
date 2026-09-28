@@ -2,6 +2,8 @@
     $data = $params['data'];
     $action = '/dashboard/gallery/update/' . ($data->id ?? '');
     $errors = $params['flash_dashboard']['message'] ?? [];
+    $categories = $params['categories'] ?? [];
+    $selectedCategoryIds = $params['selectedCategoryIds'] ?? [];
 ?>
 
 <h3 class="dashboard-action-header">Edytowanie zdjęcia</h3>
@@ -37,14 +39,7 @@
                 <strong>Informacje o zdjęciu</strong>
             </header>
 
-            <label>
-                <span>Kategoria</span>
-                <select name="category">
-                    <option value="training" <?= $data->category === 'training' ? 'selected' : '' ?>>Trening</option>
-                    <option value="camp" <?= $data->category === 'camp' ? 'selected' : '' ?>>Obóz</option>
-                </select>
-            </label>
-            <p class="validation-error"><?= e($errors['category'] ?? '') ?></p>
+            <?php require 'templates/dashboard/gallery/_category_select.php'; ?>
 
             <label>
                 <span>Opis</span>
