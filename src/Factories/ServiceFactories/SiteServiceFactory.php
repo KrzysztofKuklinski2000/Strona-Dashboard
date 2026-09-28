@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Factories\ServiceFactories;
 
-use App\Repository\Dashboard\GalleryCategoryRepository;
 use App\Repository\Dashboard\TimetableRepository;
 use App\Repository\PublicNewsRepository;
 use App\Service\Homepage\Feed\GalleryFeedProvider;
@@ -27,7 +26,6 @@ readonly class SiteServiceFactory implements ServiceFactoryInterface
         $repository = new SiteRepository($this->pdo);
         $publicNewsRepository = new PublicNewsRepository($this->pdo);
         $timetableRepository = new TimetableRepository($this->pdo);
-        $galleryCategoryRepository = new GalleryCategoryRepository($this->pdo);
 
         $homepageFeedRegistry = new HomepageFeedRegistry([
             new NewsFeedProvider($publicNewsRepository),
@@ -39,7 +37,6 @@ readonly class SiteServiceFactory implements ServiceFactoryInterface
         return new SiteService(
             $repository,
             $timetableRepository,
-            $galleryCategoryRepository,
             $homepageFeedRegistry,
         );
     }

@@ -8,6 +8,7 @@ use App\DTO\Dashboard\Camp\CampDto;
 use App\DTO\Dashboard\Contact\ContactDto;
 use App\DTO\Dashboard\Fees\FeesDto;
 use App\DTO\Dashboard\Gallery\GalleryDto;
+use App\DTO\Dashboard\GalleryCategory\GalleryCategoryDto;
 use App\DTO\Dashboard\Homepage\HomepagePostDto;
 use App\DTO\Dashboard\ImportantPosts\ImportantPostsDto;
 use App\Exception\NotFoundException;
@@ -137,6 +138,42 @@ class SiteRepository extends AbstractRepository
             return array_map(fn (array $row) => GalleryDto::fromArray($row), $result);
         } catch (RepositoryException $e) {
             throw new RepositoryException('Nie udało się pobrać galeri', 500, $e);
+        }
+    }
+
+    /**
+     * @throws RepositoryException
+     */
+    public function getGalleryCategoriesWithImages(): array
+    {
+        try {
+            $sql = '
+                SELECT gallery_categories.*
+                FROM gallery_categories
+                WHERE gallery_categories.status = 1
+                  AND EXISTS (
+                      SELECT 1
+                      FROM gallery_category
+                      INNER JOIN gallery
+                          ON gallery.id = gallery_category.gallery_id
+                      WHERE gallery_category.category_id = gallery_categories.id
+                        AND gallery.status = 1
+                  )
+                ORDER BY gallery_categories.position ASC
+        ';
+
+            $categories = $this->runQuery($sql)->fetchAll(PDO::FETCH_ASSOC);
+
+            return array_map(
+                fn(array $category) => GalleryCategoryDto::fromArray($category),
+                $categories
+            );
+        } catch (RepositoryException $e) {
+            throw new RepositoryException(
+                'Nie udało się pobrać kategorii zawierających zdjęcia.',
+                500,
+                $e
+            );
         }
     }
 }

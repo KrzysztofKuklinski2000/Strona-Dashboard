@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Core\ContextController;
+use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
 use App\Service\SiteService;
 use App\View\PublicPageRenderer;
@@ -46,7 +47,7 @@ class SiteController extends AbstractController
      */
     public function galleryAction(): void
     {
-        $categories = $this->siteService->getActiveCategories();
+        $categories = $this->siteService->getGalleryCategoriesWithImages();
         $requestedCategory = $this->request->getRouteParam('category');
 
         $activeSlugs = array_map(
@@ -68,6 +69,7 @@ class SiteController extends AbstractController
 
     /**
      * @throws ServiceException
+     * @throws NotFoundException
      */
     public function campAction(): void
     {
@@ -79,6 +81,7 @@ class SiteController extends AbstractController
 
     /**
      * @throws ServiceException
+     * @throws NotFoundException
      */
     public function feesAction(): void
     {
@@ -90,6 +93,7 @@ class SiteController extends AbstractController
 
     /**
      * @throws ServiceException
+     * @throws NotFoundException
      */
     public function registrationAction(): void
     {
@@ -99,9 +103,6 @@ class SiteController extends AbstractController
         ]);
     }
 
-    /**
-     * @throws ServiceException
-     */
     public function contactAction(): void
     {
         $this->renderer->render([
@@ -109,33 +110,21 @@ class SiteController extends AbstractController
         ]);
     }
 
-    /**
-     * @throws ServiceException
-     */
     public function statuteAction(): void
     {
         $this->renderer->render(['page' => 'statute']);
     }
 
-    /**
-     * @throws ServiceException
-     */
     public function oyamaAction(): void
     {
         $this->renderer->render(['page' => 'oyama']);
     }
 
-    /**
-     * @throws ServiceException
-     */
     public function dojoOathAction(): void
     {
         $this->renderer->render(['page' => 'dojo-oath']);
     }
 
-    /**
-     * @throws ServiceException
-     */
     public function requirementsAction(): void
     {
         $this->renderer->render(['page' => 'requirements']);
