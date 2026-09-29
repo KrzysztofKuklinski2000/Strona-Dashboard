@@ -6,6 +6,7 @@ namespace App\Factories\ServiceFactories\Dashboard;
 
 use App\Core\Config;
 use App\Core\FileHandler;
+use App\Factories\ServiceFactories\HomepageFeedRegistryFactory;
 use App\Factories\ServiceFactories\ServiceFactoryInterface;
 use App\Repository\Dashboard\HomepageRepository;
 use App\Service\Dashboard\HomepageService;
@@ -25,6 +26,10 @@ readonly class HomepageServiceFactory implements ServiceFactoryInterface
         $imageProcessor = new PayloadImageProcessor($fileHandler, $this->config->getUploadUrl());
 
 
-        return new HomepageService($repository, $imageProcessor);
+        return new HomepageService(
+            $repository,
+            $imageProcessor,
+            (new HomepageFeedRegistryFactory($this->pdo))->createService(),
+        );
     }
 }

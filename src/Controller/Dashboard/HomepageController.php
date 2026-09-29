@@ -19,6 +19,7 @@ use App\DTO\Dashboard\Homepage\UpdateHomepagePostDto;
 use App\DTO\Dashboard\PublishedDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
+use App\Exception\ServiceException;
 use App\Mapper\Dashboard\Homepage\HomepagePostRequestMapper;
 use App\Service\Dashboard\Contracts\HomepageManagementServiceInterface;
 use App\Validator\Dashboard\PostPublicationValidator;
@@ -51,6 +52,7 @@ class HomepageController extends AbstractDashboardController
 
     /**
      * @throws NotFoundException
+     * @throws ServiceException
      */
     public function editAction(): void
     {
@@ -71,23 +73,33 @@ class HomepageController extends AbstractDashboardController
 
     /**
      * @throws NotFoundException
+     * @throws ServiceException
      */
     public function showAction(): void
     {
+        /** @var HomepagePostDto $post */
+        $post = $this->getSingleData();
+
         $this->renderPage([
             'page' => 'homepage/show',
-            'data' => $this->getSingleData(),
+            'data' => $post,
+            'previewFeedPosts' => $this->service->getPreviewFeedPosts($post),
         ]);
     }
 
     /**
      * @throws NotFoundException
+     * @throws ServiceException
      */
     public function confirmDeleteAction(): void
     {
+        /** @var HomepagePostDto $post */
+        $post = $this->getSingleData();
+
         $this->renderPage([
             'page' => 'homepage/delete',
-            'data' => $this->getSingleData(),
+            'data' => $post,
+            'previewFeedPosts' => $this->service->getPreviewFeedPosts($post),
         ]);
     }
 

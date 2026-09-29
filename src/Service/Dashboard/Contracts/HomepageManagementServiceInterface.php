@@ -22,6 +22,11 @@ interface HomepageManagementServiceInterface extends SharedGetDataServiceInterfa
     public function getAllHomepagePosts(): array;
 
     /**
+     * Pobiera elementy potrzebne do podglądu posta modułowego.
+     */
+    public function getPreviewFeedPosts(HomepagePostDto $post): array;
+
+    /**
      * Aktualizuje istniejący wpis Strony Głownej.
      * @param UpdateHomepagePostDto $data
      * @return void

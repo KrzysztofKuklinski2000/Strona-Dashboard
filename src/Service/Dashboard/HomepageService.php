@@ -13,6 +13,7 @@ use App\DTO\Dashboard\PublishedDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\FileException;
 use App\Exception\NotFoundException;
+use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Repository\Dashboard\HomepageRepository;
 use App\Service\Dashboard\Contracts\HomepageManagementServiceInterface;
@@ -20,6 +21,7 @@ use App\Service\Dashboard\Payload\PayloadImageProcessor;
 use App\Service\Dashboard\Traits\CanEdit;
 use App\Service\Dashboard\Traits\CanPublished;
 use App\Service\Dashboard\Traits\PositionableTrait;
+use App\Service\Homepage\Feed\HomepageFeedRegistry;
 use JsonException;
 
 /**
@@ -37,6 +39,7 @@ class HomepageService extends AbstractDashboardService implements HomepageManage
     public function __construct(
         HomepageRepository                     $repository,
         private readonly PayloadImageProcessor $processor,
+        private readonly HomepageFeedRegistry  $homepageFeedRegistry,
     ) {
         parent::__construct($repository);
     }
@@ -47,6 +50,30 @@ class HomepageService extends AbstractDashboardService implements HomepageManage
     public function getAllHomepagePosts(): array
     {
         return $this->getAll(self::TABLE);
+    }
+
+    /**
+     * @throws ServiceException
+     */
+    public function getPreviewFeedPosts(HomepagePostDto $post): array
+    {
+        if ($post->type !== HomepagePostTypes::MODULE_FEED) {
+            return [];
+        }
+
+        $payload = json_decode($post->payload ?? '', true);
+
+        if (!is_array($payload) || !is_string($payload['module'] ?? null)) {
+            return [];
+        }
+
+        $limit = max(1, min(12, (int) ($payload['limit'] ?? 3)));
+
+        try {
+            return $this->homepageFeedRegistry->getItems($payload['module'], $limit);
+        } catch (RepositoryException $e) {
+            throw new ServiceException('Nie udało się przygotować podglądu sekcji.', 500, $e);
+        }
     }
 
     /**
