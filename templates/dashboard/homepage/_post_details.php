@@ -7,11 +7,6 @@ $payload = is_array($payload) ? $payload : [];
 $type = (string) ($data->type ?? HomepagePostTypes::SIMPLE_TEXT);
 $typeProperties = HomepagePostTypes::get($type);
 $typeLabel = (string) ($typeProperties['label'] ?? $type);
-$detailsPartial = HomepagePostTypes::partial($type)
-    ?? HomepagePostTypes::partial(HomepagePostTypes::SIMPLE_TEXT);
-$detailsPartialPath = $detailsPartial === null
-    ? null
-    : 'templates/dashboard/homepage/post_details/' . $detailsPartial;
 ?>
 
 <article class="homepage-post-details">
@@ -23,8 +18,6 @@ $detailsPartialPath = $detailsPartial === null
     </dl>
 
     <section class="homepage-post-details__content">
-        <?php if ($detailsPartialPath !== null): ?>
-            <?php require $detailsPartialPath; ?>
-        <?php endif ?>
+        <?php require 'templates/dashboard/homepage/_post_preview.php'; ?>
     </section>
 </article>

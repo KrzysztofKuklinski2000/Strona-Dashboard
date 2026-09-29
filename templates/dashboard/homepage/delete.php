@@ -3,6 +3,7 @@ $data = $params['data'];
 $action = "/dashboard/homepage/delete/" . ($data->id ?? '');
 $formTitle = "Usuwanie posta ze strony głównej";
 $csrf = $params['csrf_token'] ?? '';
+$previewFeedPosts = $params['previewFeedPosts'] ?? [];
 
 ob_start();
 require "templates/dashboard/homepage/_post_details.php";

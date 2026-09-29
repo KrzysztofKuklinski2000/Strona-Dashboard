@@ -5,9 +5,8 @@ $formTitle = "Usuń posta aktualności";
 $buttonTitle = "Usuń";
 $csrf = $params['csrf_token'] ?? '';
 
-$postDetailsHtml = sprintf(
-    '<h4> Tytuł posta: %s </h4>',
-    e($data->title ?? '')
-);
+ob_start();
+require "templates/dashboard/news/_post_details.php";
+$postDetailsHtml = ob_get_clean();
 
 require "templates/dashboard/_partials/_delete_form.php";

@@ -2,6 +2,7 @@
 $data = $params['data'];
 $action = "/dashboard/homepage/published/" . ($data->id ?? '');
 $csrf = $params['csrf_token'] ?? '';
+$previewFeedPosts = $params['previewFeedPosts'] ?? [];
 $formTitle = "Szczegóły posta strony głównej";
 
 ob_start();

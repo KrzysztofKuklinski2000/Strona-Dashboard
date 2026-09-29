@@ -394,6 +394,44 @@ if (postTypeSelect) {
     postTypeSelect.addEventListener('change', syncPostTypeForms);
 }
 
+document.querySelectorAll('[data-public-post-preview]').forEach((previewFrame) => {
+    const resizePreview = () => {
+        const previewDocument = previewFrame.contentDocument;
+
+        if (!previewDocument) {
+            return;
+        }
+
+        const previewHeight = Math.max(
+            previewDocument.documentElement.scrollHeight,
+            previewDocument.body?.scrollHeight ?? 0,
+        );
+
+        previewFrame.style.height = `${Math.max(260, previewHeight)}px`;
+    };
+
+    const initializePreview = () => {
+        if (previewFrame.dataset.previewInitialized === 'true') {
+            resizePreview();
+            return;
+        }
+
+        previewFrame.dataset.previewInitialized = 'true';
+        resizePreview();
+
+        if (typeof ResizeObserver !== 'undefined' && previewFrame.contentDocument?.body) {
+            const resizeObserver = new ResizeObserver(resizePreview);
+            resizeObserver.observe(previewFrame.contentDocument.body);
+        }
+    };
+
+    previewFrame.addEventListener('load', initializePreview);
+
+    if (previewFrame.contentDocument?.readyState === 'complete') {
+        initializePreview();
+    }
+});
+
 const overviewPageViews = document.querySelector('[data-overview-page-views]');
 const overviewPageViewsToggle = overviewPageViews?.querySelector('[data-overview-page-views-toggle]');
 const overviewPageViewsContent = overviewPageViews?.querySelector('[data-overview-page-views-content]');

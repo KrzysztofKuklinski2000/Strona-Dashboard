@@ -2,8 +2,6 @@
 
 use App\Content\NewsPostTypes;
 
-$payload = json_decode((string) ($data->payload ?? ''), true);
-$payload = is_array($payload) ? $payload : [];
 $type = (string) ($data->type ?? NewsPostTypes::ARTICLE);
 
 if (!NewsPostTypes::isAllowed($type)) {
@@ -12,11 +10,6 @@ if (!NewsPostTypes::isAllowed($type)) {
 
 $typeProperties = NewsPostTypes::get($type);
 $typeLabel = (string) ($typeProperties['label'] ?? $type);
-$detailsPartial = NewsPostTypes::partial($type)
-    ?? NewsPostTypes::partial(NewsPostTypes::ARTICLE);
-$detailsPartialPath = $detailsPartial === null
-    ? null
-    : 'templates/dashboard/news/post_details/' . $detailsPartial;
 ?>
 
 <article class="homepage-post-details news-post-details">
@@ -28,8 +21,6 @@ $detailsPartialPath = $detailsPartial === null
     </dl>
 
     <section class="homepage-post-details__content">
-        <?php if ($detailsPartialPath !== null): ?>
-            <?php require $detailsPartialPath; ?>
-        <?php endif ?>
+        <?php require 'templates/dashboard/news/_post_preview.php'; ?>
     </section>
 </article>
