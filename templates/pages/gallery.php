@@ -6,6 +6,12 @@ $galleryItems = array_values(array_filter(
 $categories = is_array($params['categories'] ?? null)
     ? $params['categories']
     : [];
+$categoryColorVariants = [];
+
+foreach ($categories as $categoryIndex => $category) {
+    $categoryColorVariants[$category->name] = $categoryIndex % 10;
+}
+
 $selectedCategorySlugs = is_array($params['selectedCategorySlugs'] ?? null)
     ? $params['selectedCategorySlugs']
     : [];
@@ -139,19 +145,29 @@ $countContext = $selectedCategoryNames === [] ? 'w galerii' : 'dla wybranych kat
             <div class="gallery-grid">
                 <?php foreach ($galleryItems as $index => $item): ?>
                     <?php
-                    $categoryLabel = count($selectedCategoryNames) === 1
-                        ? $selectedCategoryNames[0]
-                        : 'Galeria';
-                    $description = trim((string) ($item->description ?? ''));
-                    $imageDescription = $description !== '' ? $description : 'Zdjęcie z galerii klubowej';
-                    $imagePath = '/public/uploads/' . rawurlencode((string) $item->imageName);
+                        $categoryNames = $item->categoryNames !== []
+                                ? $item->categoryNames
+                                : ['Galeria'];
+                        $description = trim((string) ($item->description ?? ''));
+                        $imageDescription = $description !== '' ? $description : 'Zdjęcie z galerii klubowej';
+                        $imagePath = '/public/uploads/' . rawurlencode((string) $item->imageName);
                     ?>
 
                     <article class="gallery-card <?= $index === 0 ? 'gallery-card--featured' : '' ?>">
                         <img src="<?= e($imagePath) ?>" alt="<?= e($imageDescription) ?>" loading="lazy">
 
                         <div class="gallery-card__overlay">
-                            <p><?= e($categoryLabel) ?></p>
+                            <div class="gallery-card__badges" aria-label="Kategorie zdjęcia">
+                                <?php foreach ($categoryNames as $categoryName): ?>
+                                    <?php
+                                        $colorVariant = $categoryColorVariants[$categoryName] ?? 0;
+                                    ?>
+                                    <span class="gallery-card__badge gallery-card__badge--<?= $colorVariant ?>">
+                                        <?= e($categoryName) ?>
+                                    </span>
+                                <?php endforeach ?>
+                            </div>
+
                             <h3><?= e($imageDescription) ?></h3>
                         </div>
                     </article>

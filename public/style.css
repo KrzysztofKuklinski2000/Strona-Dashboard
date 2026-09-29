@@ -5697,17 +5697,92 @@ footer .copy {
 	right: 0;
 	bottom: 0;
 	left: 0;
-	padding: 72px 20px 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 8px;
+	padding: 96px 20px 20px;
 	background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(15, 15, 15, .78));
 }
 
-.gallery-card__overlay p {
-	margin-bottom: 7px;
-	color: rgba(255, 255, 255, .82);
-	font-size: .6rem;
+.gallery-card__badges {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 5px;
+}
+
+.gallery-card__badge {
+	min-height: 20px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 7px;
+	border: 1px solid transparent;
+	border-radius: 5px;
+	font-size: .5rem;
 	font-weight: 900;
-	letter-spacing: .18em;
+	letter-spacing: .07em;
 	text-transform: uppercase;
+}
+
+.gallery-card__badge--0 {
+	border-color: rgba(30, 58, 95, .18);
+	background: rgba(219, 234, 254, .94);
+	color: #1e3a5f;
+}
+
+.gallery-card__badge--1 {
+	border-color: rgba(127, 29, 29, .18);
+	background: rgba(254, 226, 226, .94);
+	color: #7f1d1d;
+}
+
+.gallery-card__badge--2 {
+	border-color: rgba(20, 83, 45, .18);
+	background: rgba(220, 252, 231, .94);
+	color: #14532d;
+}
+
+.gallery-card__badge--3 {
+	border-color: rgba(120, 53, 15, .18);
+	background: rgba(254, 243, 199, .94);
+	color: #78350f;
+}
+
+.gallery-card__badge--4 {
+	border-color: rgba(88, 28, 135, .18);
+	background: rgba(243, 232, 255, .94);
+	color: #581c87;
+}
+
+.gallery-card__badge--5 {
+	border-color: rgba(19, 78, 74, .18);
+	background: rgba(204, 251, 241, .94);
+	color: #134e4a;
+}
+
+.gallery-card__badge--6 {
+	border-color: rgba(124, 45, 18, .18);
+	background: rgba(255, 237, 213, .94);
+	color: #7c2d12;
+}
+
+.gallery-card__badge--7 {
+	border-color: rgba(54, 83, 20, .18);
+	background: rgba(236, 252, 203, .94);
+	color: #365314;
+}
+
+.gallery-card__badge--8 {
+	border-color: rgba(131, 24, 67, .18);
+	background: rgba(252, 231, 243, .94);
+	color: #831843;
+}
+
+.gallery-card__badge--9 {
+	border-color: rgba(51, 65, 85, .18);
+	background: rgba(226, 232, 240, .94);
+	color: #334155;
 }
 
 .gallery-card__overlay h3 {

@@ -17,6 +17,7 @@ readonly class GalleryDto implements DataTransferObjectInterface
         public int $position,
         public ?string $category,
         public int $status,
+        public array $categoryNames = [],
     ) {
     }
 
@@ -31,6 +32,7 @@ readonly class GalleryDto implements DataTransferObjectInterface
             position: (int) $data['position'],
             category: $data['category'],
             status: (int) $data['status'],
+            categoryNames: !empty($data['category_names']) ? explode('||', $data['category_names']) : [],
         );
     }
 
@@ -45,6 +47,7 @@ readonly class GalleryDto implements DataTransferObjectInterface
             'position' => $this->position,
             'category' => $this->category,
             'status' => $this->status,
+            'category_names' => $this->categoryNames,
         ];
     }
 
