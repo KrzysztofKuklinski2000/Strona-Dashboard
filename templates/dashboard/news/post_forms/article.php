@@ -45,7 +45,7 @@ $removeImage = ($oldInput['removeImage'] ?? null) === '1';
 
         <label>
             <span><?= $imageSrc !== '' ? 'Zmień obraz' : 'Dodaj obraz' ?></span>
-            <input type="file" name="postImage" accept="image/jpeg,image/png,image/gif">
+            <input type="file" name="postImage" accept="image/jpeg,image/png" data-compress-image>
         </label>
         <p class="validation-error"><?= e($errors['postImage'] ?? '') ?></p>
 

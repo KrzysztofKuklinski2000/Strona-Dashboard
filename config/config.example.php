@@ -11,7 +11,7 @@ return [
     ],
 
     'app_settings' => [
-        'upload_max_size' => 5_000_000,
+        'upload_max_size' => 3_000_000,
         'file_prefix' => 'karate_',
         'dashboard_route' => '/dashboard',
         'login_route' => '/auth/login',

@@ -23,7 +23,7 @@
 
             <label>
                 <span>Dodaj zdjęcie</span>
-                <input type="file" name="image_name" accept="image/jpeg,image/png,image/gif">
+                <input type="file" name="image_name" accept="image/jpeg,image/png" data-compress-image>
             </label>
             <p class="validation-error"><?= e($errors['image_name'] ?? '') ?></p>
         </section>

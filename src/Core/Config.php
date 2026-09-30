@@ -42,7 +42,7 @@ readonly class Config
 
     public function getMaxUploadSize(): int
     {
-        return $this->config['app_settings']['upload_max_size'] ?? 5_000_000;
+        return $this->config['app_settings']['upload_max_size'] ?? 3_000_000;
     }
 
     public function getFilePrefix(): string
