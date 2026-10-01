@@ -7,6 +7,7 @@ use App\Controller\Dashboard\ContactController;
 use App\Controller\Dashboard\FeesController;
 use App\Controller\Dashboard\GalleryController;
 use App\Controller\Dashboard\ImportantPostsController;
+use App\Controller\Dashboard\LocationController;
 use App\Controller\Dashboard\NewsController;
 use App\Controller\Dashboard\HomepageController;
 use App\Controller\Dashboard\OverviewController;
@@ -137,6 +138,8 @@ return function (RouteCollector $r) {
     $r->post('/dashboard/gallery/categories/delete/{id:\d+}', [GalleryCategoryController::class, 'deleteAction']);
     $r->post('/dashboard/gallery/categories/published/{id:\d+}', [GalleryCategoryController::class, 'publishedAction']);
     $r->post('/dashboard/gallery/categories/move', [GalleryCategoryController::class, 'moveAction']);
+
+    $r->get('/dashboard/timetable/location', [LocationController::class, 'indexAction']);
 
 };
 

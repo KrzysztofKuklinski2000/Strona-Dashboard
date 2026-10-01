@@ -15,7 +15,7 @@ $navigationItems = [
         'children' => [
             [
                 'label' => 'Lokalizacje',
-                'url' => '#',
+                'url' => '/dashboard/timetable/location',
                 'pagePrefix' => 'timetable/location',
                 'icon' => 'fa-solid fa-location-dot',
             ],

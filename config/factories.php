@@ -8,6 +8,7 @@ use App\Controller\Dashboard\ContactController;
 use App\Controller\Dashboard\FeesController;
 use App\Controller\Dashboard\GalleryController;
 use App\Controller\Dashboard\ImportantPostsController;
+use App\Controller\Dashboard\LocationController;
 use App\Controller\Dashboard\NewsController;
 use App\Controller\Dashboard\HomepageController;
 use App\Controller\Dashboard\OverviewController;
@@ -23,6 +24,7 @@ use App\Factories\ControllerFactories\Dashboard\ContactControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\FeesControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\GalleryControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\ImportantPostsControllerFactory;
+use App\Factories\ControllerFactories\Dashboard\LocationControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\NewsControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\HomepageControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\OverviewControllerFactory;
@@ -45,6 +47,7 @@ return [
     SubscribersController::class => SubscribersControllerFactory::class,
     OverviewController::class => OverviewControllerFactory::class,
     GalleryCategoryController::class => GalleryCategoryControllerFactory::class,
+    LocationController::class => LocationControllerFactory::class,
 
     PublicSubscribersController::class => PublicSubscribersControllerFactory::class,
     PublicNewsController::class => PublicNewsControllerFactory::class,
