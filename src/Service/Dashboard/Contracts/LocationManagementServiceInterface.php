@@ -4,7 +4,7 @@ namespace App\Service\Dashboard\Contracts;
 
 use App\DTO\Dashboard\Location\LocationDto;
 
-interface LocationManagementServiceInterface
+interface LocationManagementServiceInterface extends SharedGetDataServiceInterface
 {
     /**
      * Pobiera wszystkie lokalizacje zajęć.

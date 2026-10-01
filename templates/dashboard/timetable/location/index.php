@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 $data = $params['data'] ?? [];
+$moduleName = 'timetable/location'
 ?>
 
 <div class="list-header">
@@ -27,6 +28,7 @@ $data = $params['data'] ?? [];
                 <th scope="col">Status</th>
                 <th scope="col">Mapa</th>
                 <th scope="col">Data utworzenia</th>
+                <th scope="col">Opcje</th>
             </tr>
             </thead>
             <tbody>
@@ -50,6 +52,8 @@ $data = $params['data'] ?? [];
                     </td>
                     <td><?= $hasMap ? 'Dodana' : 'Brak' ?></td>
                     <td><?= e($location->createdAt) ?></td>
+                    <?php $row = $location ?>
+                    <?php require "templates/dashboard/_partials/_action_links.php"; ?>
                 </tr>
             <?php endforeach; ?>
             </tbody>

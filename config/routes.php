@@ -140,6 +140,7 @@ return function (RouteCollector $r) {
     $r->post('/dashboard/gallery/categories/move', [GalleryCategoryController::class, 'moveAction']);
 
     $r->get('/dashboard/timetable/location', [LocationController::class, 'indexAction']);
+    $r->get('/dashboard/timetable/location/show/{id:\d+}', [LocationController::class, 'showAction']);
 
 };
 
