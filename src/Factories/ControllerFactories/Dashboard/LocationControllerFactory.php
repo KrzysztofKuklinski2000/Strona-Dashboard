@@ -8,6 +8,7 @@ use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\LocationServiceFactory;
 use App\Mapper\Dashboard\DeleteRequestMapper;
 use App\Mapper\Dashboard\LocationRequestMapper;
+use App\Mapper\Dashboard\PublicationRequestMapper;
 use PDO;
 
 readonly class LocationControllerFactory implements ControllerFactoryInterface
@@ -26,6 +27,10 @@ readonly class LocationControllerFactory implements ControllerFactoryInterface
                 $contextController->request,
                 $contextController->validator
             ),
+            new PublicationRequestMapper(
+                $contextController->request,
+                $contextController->validator
+            )
         );
 
         return new LocationController(

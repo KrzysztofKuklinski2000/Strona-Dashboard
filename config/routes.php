@@ -147,6 +147,7 @@ return function (RouteCollector $r) {
     $r->post('/dashboard/timetable/location/update/{id:\d+}', [LocationController::class, 'updateAction']);
     $r->get('/dashboard/timetable/location/confirmDelete/{id:\d+}', [LocationController::class, 'confirmDeleteAction']);
     $r->post('/dashboard/timetable/location/delete/{id:\d+}', [LocationController::class, 'deleteAction']);
+    $r->post('/dashboard/timetable/location/published/{id:\d+}', [LocationController::class, 'publishedAction']);
 
 };
 

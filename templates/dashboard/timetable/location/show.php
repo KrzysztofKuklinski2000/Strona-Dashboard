@@ -3,6 +3,14 @@
 declare(strict_types=1);
 
 $data = $params['data'];
+$action = '/dashboard/timetable/location/published/' . $data->id;
+$csrf = $params['csrf_token'] ?? '';
+$formTitle = 'Szczegóły lokalizacji';
+$statusLegend = 'Dostępność lokalizacji';
+$enabledStatusTitle = 'Aktywna';
+$enabledStatusDescription = 'Lokalizacja jest dostępna do wyboru podczas tworzenia zajęć.';
+$disabledStatusTitle = 'Nieaktywna';
+$disabledStatusDescription = 'Lokalizacja nie jest dostępna do nowych przypisań. Istniejące przypisania do zajęć pozostają bez zmian.';
 $isActive = $data->status === 1;
 $statusClass = $isActive ? 'is-public' : 'is-private';
 $statusText = $isActive ? 'Aktywna' : 'Nieaktywna';
@@ -14,14 +22,10 @@ $hasValidMap = filter_var($mapUrl, FILTER_VALIDATE_URL) !== false
     && ($mapParts['scheme'] ?? '') === 'https'
     && in_array(strtolower($mapParts['host'] ?? ''), ['www.google.com', 'maps.google.com'], true)
     && ($mapPath === '/maps/embed' || str_starts_with($mapPath, '/maps/embed/'));
+
+ob_start();
 ?>
 
-<div class="list-header">
-    <h3>Szczegóły lokalizacji</h3>
-</div>
-
-<div class="dashboard-action-page">
-    <div class="post-content">
         <article class="homepage-post-details">
             <section class="homepage-post-details__content">
                 <p class="homepage-post-details__eyebrow">Lokalizacja zajęć</p>
@@ -88,5 +92,8 @@ $hasValidMap = filter_var($mapUrl, FILTER_VALIDATE_URL) !== false
                 <?php endif; ?>
             </section>
         </article>
-    </div>
-</div>
+
+<?php
+$postDetailsHtml = ob_get_clean();
+
+require 'templates/dashboard/_partials/_show_form.php';

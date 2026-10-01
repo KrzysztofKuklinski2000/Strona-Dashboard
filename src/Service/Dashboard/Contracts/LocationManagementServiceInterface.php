@@ -5,6 +5,7 @@ namespace App\Service\Dashboard\Contracts;
 use App\DTO\Dashboard\Location\CreateLocationDto;
 use App\DTO\Dashboard\Location\LocationDto;
 use App\DTO\Dashboard\Location\UpdateLocationDto;
+use App\DTO\Dashboard\PublishedDto;
 
 interface LocationManagementServiceInterface extends SharedGetDataServiceInterface
 {
@@ -34,4 +35,11 @@ interface LocationManagementServiceInterface extends SharedGetDataServiceInterfa
      * @return void
      */
     public function deleteLocation(int $id): void;
+
+    /**
+     * Zmienia status lokalizacji.
+     * @param PublishedDto $data
+     * @return void
+     */
+    public function publishedLocation(PublishedDto $data): void;
 }

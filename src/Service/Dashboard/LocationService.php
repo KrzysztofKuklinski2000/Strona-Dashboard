@@ -4,6 +4,7 @@ namespace App\Service\Dashboard;
 
 use App\DTO\Dashboard\Location\CreateLocationDto;
 use App\DTO\Dashboard\Location\UpdateLocationDto;
+use App\DTO\Dashboard\PublishedDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
@@ -11,12 +12,14 @@ use App\Service\Dashboard\Contracts\LocationManagementServiceInterface;
 use App\Service\Dashboard\Traits\CanCreate;
 use App\Service\Dashboard\Traits\CanDelete;
 use App\Service\Dashboard\Traits\CanEdit;
+use App\Service\Dashboard\Traits\CanPublished;
 
 class LocationService extends AbstractDashboardService implements LocationManagementServiceInterface
 {
     use CanCreate;
     use CanEdit;
     use CanDelete;
+    use CanPublished;
 
     const TABLE = 'locations';
 
@@ -67,5 +70,13 @@ class LocationService extends AbstractDashboardService implements LocationManage
         }
 
         $this->delete(self::TABLE, $id);
+    }
+
+    /**
+     * @throws ServiceException
+     */
+    public function publishedLocation(PublishedDto $data): void
+    {
+        $this->published(self::TABLE, $data);
     }
 }

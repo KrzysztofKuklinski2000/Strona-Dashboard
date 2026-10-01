@@ -7,15 +7,17 @@ use App\Core\Request;
 use App\Core\Validator;
 use App\DTO\Dashboard\Location\CreateLocationDto;
 use App\DTO\Dashboard\Location\UpdateLocationDto;
+use App\DTO\Dashboard\PublishedDto;
 use App\DTO\DataTransferObjectInterface;
 
 readonly class LocationRequestMapper
 {
 
     public function __construct(
-        private Request $request,
-        private Validator $validator,
-        private DeleteRequestMapper $deleteRequestMapper,
+        private Request                  $request,
+        private Validator                $validator,
+        private DeleteRequestMapper      $deleteRequestMapper,
+        private PublicationRequestMapper $publicationRequestMapper,
     )
     {
     }
@@ -30,7 +32,8 @@ readonly class LocationRequestMapper
         return CreateLocationDto::fromArray($data);
     }
 
-    public function mapUpdate(): UpdateLocationDto {
+    public function mapUpdate(): UpdateLocationDto
+    {
         return UpdateLocationDto::fromArray([
             'id' => $this->validator->validate(
                 name: 'id',
@@ -42,9 +45,16 @@ readonly class LocationRequestMapper
         ]);
     }
 
-    public function mapDelete(): ?int {
+    public function mapDelete(): ?int
+    {
         return $this->deleteRequestMapper->map();
     }
+
+    public function mapPublished(): PublishedDto
+    {
+        return $this->publicationRequestMapper->map();
+    }
+
     private function mapCommonFields(): array
     {
 

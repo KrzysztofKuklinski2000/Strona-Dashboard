@@ -3,12 +3,14 @@
 namespace App\Controller\Dashboard;
 
 use App\Controller\Dashboard\Traits\HasDeleteAction;
+use App\Controller\Dashboard\Traits\HasPublishedAction;
 use App\Controller\Dashboard\Traits\HasSingleData;
 use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
 use App\DTO\Dashboard\Location\CreateLocationDto;
 use App\DTO\Dashboard\Location\UpdateLocationDto;
+use App\DTO\Dashboard\PublishedDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
@@ -21,6 +23,7 @@ class LocationController extends AbstractDashboardController
     use HasStoreAction;
     use HasUpdateAction;
     use HasDeleteAction;
+    use HasPublishedAction;
 
     public function __construct(
         private readonly LocationManagementServiceInterface $service,
@@ -94,6 +97,11 @@ class LocationController extends AbstractDashboardController
         return $this->locationRequestMapper->mapDelete();
     }
 
+    protected function getDataToPublished(): PublishedDto
+    {
+        return $this->locationRequestMapper->mapPublished();
+    }
+
     protected function handleCreate(DataTransferObjectInterface $data): void
     {
         /** @var CreateLocationDto $data */
@@ -123,5 +131,10 @@ class LocationController extends AbstractDashboardController
                 "{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}"
             );
         }
+    }
+
+    protected function handlePublish(PublishedDto $data): void
+    {
+        $this->service->publishedLocation($data);
     }
 }

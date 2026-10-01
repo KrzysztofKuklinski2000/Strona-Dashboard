@@ -8,12 +8,14 @@ use App\Exception\RepositoryException;
 use App\Repository\Dashboard\Traits\CanCreate;
 use App\Repository\Dashboard\Traits\CanDelete;
 use App\Repository\Dashboard\Traits\CanEdit;
+use App\Repository\Dashboard\Traits\CanPublished;
 
 class LocationRepository extends BaseDashboardRepository
 {
     use CanCreate;
     use CanEdit;
     use CanDelete;
+    use CanPublished;
 
     protected function mapToDto(array $data): DataTransferObjectInterface
     {
