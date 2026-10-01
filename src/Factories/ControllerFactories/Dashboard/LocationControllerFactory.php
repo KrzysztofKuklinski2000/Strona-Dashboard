@@ -6,6 +6,7 @@ use App\Controller\Dashboard\LocationController;
 use App\Core\ContextController;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\LocationServiceFactory;
+use App\Mapper\Dashboard\DeleteRequestMapper;
 use App\Mapper\Dashboard\LocationRequestMapper;
 use PDO;
 
@@ -20,7 +21,11 @@ readonly class LocationControllerFactory implements ControllerFactoryInterface
 
         $mapper = new LocationRequestMapper(
             $contextController->request,
-            $contextController->validator
+            $contextController->validator,
+            new DeleteRequestMapper(
+                $contextController->request,
+                $contextController->validator
+            ),
         );
 
         return new LocationController(

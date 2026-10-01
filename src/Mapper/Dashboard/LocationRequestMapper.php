@@ -15,6 +15,7 @@ readonly class LocationRequestMapper
     public function __construct(
         private Request $request,
         private Validator $validator,
+        private DeleteRequestMapper $deleteRequestMapper,
     )
     {
     }
@@ -41,6 +42,9 @@ readonly class LocationRequestMapper
         ]);
     }
 
+    public function mapDelete(): ?int {
+        return $this->deleteRequestMapper->map();
+    }
     private function mapCommonFields(): array
     {
 

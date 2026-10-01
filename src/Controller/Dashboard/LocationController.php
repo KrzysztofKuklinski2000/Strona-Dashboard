@@ -2,6 +2,7 @@
 
 namespace App\Controller\Dashboard;
 
+use App\Controller\Dashboard\Traits\HasDeleteAction;
 use App\Controller\Dashboard\Traits\HasSingleData;
 use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
@@ -10,6 +11,7 @@ use App\DTO\Dashboard\Location\CreateLocationDto;
 use App\DTO\Dashboard\Location\UpdateLocationDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
+use App\Exception\ServiceException;
 use App\Mapper\Dashboard\LocationRequestMapper;
 use App\Service\Dashboard\Contracts\LocationManagementServiceInterface;
 
@@ -18,6 +20,7 @@ class LocationController extends AbstractDashboardController
     use HasSingleData;
     use HasStoreAction;
     use HasUpdateAction;
+    use HasDeleteAction;
 
     public function __construct(
         private readonly LocationManagementServiceInterface $service,
@@ -61,6 +64,16 @@ class LocationController extends AbstractDashboardController
         ]);
     }
 
+    /**
+     * @throws NotFoundException
+     */
+    public function confirmDeleteAction(): void {
+        $this->renderPage([
+            'page' => 'timetable/location/delete',
+            'data' => $this->getSingleData(),
+        ]);
+    }
+
     protected function getModuleName(): string
     {
         return 'timetable/location';
@@ -76,6 +89,11 @@ class LocationController extends AbstractDashboardController
         return $this->locationRequestMapper->mapUpdate();
     }
 
+    protected function getDataToDelete(): ?int
+    {
+        return $this->locationRequestMapper->mapDelete();
+    }
+
     protected function handleCreate(DataTransferObjectInterface $data): void
     {
         /** @var CreateLocationDto $data */
@@ -86,5 +104,24 @@ class LocationController extends AbstractDashboardController
     {
         /** @var UpdateLocationDto $data */
         $this->service->updateLocation($data);
+    }
+
+    /**
+     * @throws ServiceException
+     */
+    protected function handleDelete(int $id): void {
+        try {
+            $this->service->deleteLocation($id);
+        }catch (ServiceException $e){
+            if ($e->getCode() !== 409) {
+                throw $e;
+            }
+
+            $this->sessionManager->setFlash('warning', $e->getMessage());
+
+            $this->redirect(
+                "{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}"
+            );
+        }
     }
 }

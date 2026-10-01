@@ -27,4 +27,11 @@ interface LocationManagementServiceInterface extends SharedGetDataServiceInterfa
      * @return void
      */
     public function updateLocation(UpdateLocationDto $data): void;
+
+    /**
+     * Usówanie lokalizację zajęć.
+     * @param int $id
+     * @return void
+     */
+    public function deleteLocation(int $id): void;
 }
