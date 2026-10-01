@@ -4,8 +4,10 @@ namespace App\Controller\Dashboard;
 
 use App\Controller\Dashboard\Traits\HasSingleData;
 use App\Controller\Dashboard\Traits\HasStoreAction;
+use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
 use App\DTO\Dashboard\Location\CreateLocationDto;
+use App\DTO\Dashboard\Location\UpdateLocationDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
 use App\Mapper\Dashboard\LocationRequestMapper;
@@ -15,6 +17,7 @@ class LocationController extends AbstractDashboardController
 {
     use HasSingleData;
     use HasStoreAction;
+    use HasUpdateAction;
 
     public function __construct(
         private readonly LocationManagementServiceInterface $service,
@@ -48,6 +51,16 @@ class LocationController extends AbstractDashboardController
         ]);
     }
 
+    /**
+     * @throws NotFoundException
+     */
+    public function editAction(): void{
+        $this->renderPage([
+            'page' => 'timetable/location/edit',
+            'data' => $this->getSingleData(),
+        ]);
+    }
+
     protected function getModuleName(): string
     {
         return 'timetable/location';
@@ -58,9 +71,20 @@ class LocationController extends AbstractDashboardController
         return $this->locationRequestMapper->mapCreate();
     }
 
+    protected function getDataToUpdate(): DataTransferObjectInterface
+    {
+        return $this->locationRequestMapper->mapUpdate();
+    }
+
     protected function handleCreate(DataTransferObjectInterface $data): void
     {
         /** @var CreateLocationDto $data */
         $this->service->createLocation($data);
+    }
+
+    protected function handleUpdate(DataTransferObjectInterface $data): void
+    {
+        /** @var UpdateLocationDto $data */
+        $this->service->updateLocation($data);
     }
 }

@@ -6,6 +6,7 @@ namespace App\Mapper\Dashboard;
 use App\Core\Request;
 use App\Core\Validator;
 use App\DTO\Dashboard\Location\CreateLocationDto;
+use App\DTO\Dashboard\Location\UpdateLocationDto;
 use App\DTO\DataTransferObjectInterface;
 
 readonly class LocationRequestMapper
@@ -20,7 +21,28 @@ readonly class LocationRequestMapper
 
     public function mapCreate(): DataTransferObjectInterface
     {
-        $currentDate = date('Y-m-d');
+        $data = [
+            ...$this->mapCommonFields(),
+            'created_at' => date('Y-m-d'),
+        ];
+
+        return CreateLocationDto::fromArray($data);
+    }
+
+    public function mapUpdate(): UpdateLocationDto {
+        return UpdateLocationDto::fromArray([
+            'id' => $this->validator->validate(
+                name: 'id',
+                value: $this->request->getFormParam('id'),
+                required: true,
+                type: 'int',
+            ),
+            ...$this->mapCommonFields(),
+        ]);
+    }
+
+    private function mapCommonFields(): array
+    {
 
         $name = $this->validator->validate(
             name: 'name',
@@ -75,28 +97,13 @@ readonly class LocationRequestMapper
             }
         }
 
-        $status = $this->validator->validate(
-            name: 'status',
-            value: $this->request->getFormParam('status'),
-            required: true,
-            type: 'int',
-        );
-
-        if ($status !== null && !in_array($status, [0, 1], true)) {
-            $this->validator->addError('status', 'Wybierz prawidłowy status.');
-        }
-
-        $data = [
+        return [
             'name' => $name,
             'city' => $city,
             'address' => $address,
             'description' => $description,
             'map_embed_url' => $mapEmbedUrl,
-            'status' => $status,
-            'created_at' => $currentDate,
-            'updated_at' => $currentDate,
+            'updated_at' => date('Y-m-d'),
         ];
-
-        return CreateLocationDto::fromArray($data);
     }
 }

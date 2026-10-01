@@ -4,6 +4,7 @@ namespace App\Service\Dashboard\Contracts;
 
 use App\DTO\Dashboard\Location\CreateLocationDto;
 use App\DTO\Dashboard\Location\LocationDto;
+use App\DTO\Dashboard\Location\UpdateLocationDto;
 
 interface LocationManagementServiceInterface extends SharedGetDataServiceInterface
 {
@@ -19,4 +20,11 @@ interface LocationManagementServiceInterface extends SharedGetDataServiceInterfa
      * @return void
      */
     public function createLocation(CreateLocationDto $data): void;
+
+    /**
+     * Aktualizuje lokalizację zajęć.
+     * @param UpdateLocationDto $data
+     * @return void
+     */
+    public function updateLocation(UpdateLocationDto $data): void;
 }
