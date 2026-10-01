@@ -4,27 +4,24 @@ namespace App\DTO\Dashboard\Location;
 
 use App\DTO\DataTransferObjectInterface;
 
-class LocationDto implements DataTransferObjectInterface
+class CreateLocationDto implements DataTransferObjectInterface
 {
     public function __construct(
-        public int    $id,
         public string $name,
         public string $city,
         public string $address,
         public string $description,
         public string $mapEmbedUrl,
-        public int    $status,
+        public int $status,
         public string $createdAt,
         public string $updatedAt,
     )
     {
-
     }
 
-    public static function fromArray(array $data): DataTransferObjectInterface
+    public static function fromArray(array $data): self
     {
         return new self(
-            id: (int)$data['id'] ,
             name: (string)($data['name'] ?? ''),
             city: (string)($data['city'] ?? ''),
             address: (string)($data['address'] ?? ''),
@@ -39,7 +36,6 @@ class LocationDto implements DataTransferObjectInterface
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
             'name' => $this->name,
             'city' => $this->city,
             'address' => $this->address,

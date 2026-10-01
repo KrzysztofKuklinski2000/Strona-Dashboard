@@ -6,6 +6,7 @@ use App\Controller\Dashboard\LocationController;
 use App\Core\ContextController;
 use App\Factories\ControllerFactories\ControllerFactoryInterface;
 use App\Factories\ServiceFactories\Dashboard\LocationServiceFactory;
+use App\Mapper\Dashboard\LocationRequestMapper;
 use PDO;
 
 readonly class LocationControllerFactory implements ControllerFactoryInterface
@@ -17,8 +18,14 @@ readonly class LocationControllerFactory implements ControllerFactoryInterface
     public function createController(ContextController $contextController): LocationController {
         $service = (new LocationServiceFactory($this->pdo))->createService();
 
+        $mapper = new LocationRequestMapper(
+            $contextController->request,
+            $contextController->validator
+        );
+
         return new LocationController(
             $service,
+            $mapper,
             $contextController
         );
     }

@@ -7,7 +7,7 @@ $isActive = $data->status === 1;
 $statusClass = $isActive ? 'is-public' : 'is-private';
 $statusText = $isActive ? 'Aktywna' : 'Nieaktywna';
 $description = trim($data->description);
-$mapUrl = trim($data->map_embed_url);
+$mapUrl = trim($data->mapEmbedUrl);
 $mapParts = parse_url($mapUrl) ?: [];
 $mapPath = $mapParts['path'] ?? '';
 $hasValidMap = filter_var($mapUrl, FILTER_VALIDATE_URL) !== false

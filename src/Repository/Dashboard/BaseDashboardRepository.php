@@ -18,10 +18,10 @@ abstract class BaseDashboardRepository extends AbstractRepository
      * @return DataTransferObjectInterface[]
      * @throws RepositoryException
      */
-    public function getDashboardData(string $table, string $orderBy = 'position'): array
+    public function getDashboardData(string $table, string $orderBy = 'position', string $orderDir = 'ASC'): array
     {
         try {
-            $sql = "SELECT * FROM $table ORDER BY $orderBy ASC";
+            $sql = "SELECT * FROM $table ORDER BY $orderBy $orderDir";
             $result = $this->runQuery($sql)->fetchAll(PDO::FETCH_ASSOC);
 
             return array_map(fn (array $row) => $this->mapToDto($row), $result);

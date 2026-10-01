@@ -141,6 +141,9 @@ return function (RouteCollector $r) {
 
     $r->get('/dashboard/timetable/location', [LocationController::class, 'indexAction']);
     $r->get('/dashboard/timetable/location/show/{id:\d+}', [LocationController::class, 'showAction']);
+    $r->get('/dashboard/timetable/location/create', [LocationController::class, 'createAction']);
+    $r->post('/dashboard/timetable/location/store', [LocationController::class, 'storeAction']);
+
 
 };
 

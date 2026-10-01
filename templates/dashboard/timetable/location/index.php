@@ -8,6 +8,10 @@ $moduleName = 'timetable/location'
 
 <div class="list-header">
     <h3>Lokalizacje zajęć</h3>
+    <a href="/dashboard/timetable/location/create">
+        <span>Nowa</span>
+        <i class="fa-solid fa-plus" aria-hidden="true"></i>
+    </a>
 </div>
 
 <?php if ($data === []): ?>
@@ -37,7 +41,7 @@ $moduleName = 'timetable/location'
                 $isActive = $location->status === 1;
                 $statusClass = $isActive ? 'published' : 'no-published';
                 $statusText = $isActive ? 'Aktywna' : 'Nieaktywna';
-                $hasMap = trim((string) $location->map_embed_url) !== '';
+                $hasMap = trim((string) $location->mapEmbedUrl) !== '';
                 ?>
                 <tr>
                     <td class="dashboard-table__index"><?= e($key + 1) ?>.</td>

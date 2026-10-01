@@ -1394,6 +1394,15 @@ body {
 	margin-top: -12px;
 }
 
+.content-container .location-editor-form .dashboard-form-section > label select {
+	width: 100%;
+	max-width: none;
+}
+
+.location-editor-form .dashboard-form-grid .validation-error {
+	margin: 0;
+}
+
 .dashboard-form-section--important {
 	box-shadow: inset 3px 0 0 #ff3366, 0 8px 24px rgba(23, 29, 41, .06);
 }
