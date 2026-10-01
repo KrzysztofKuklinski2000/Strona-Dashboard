@@ -7,7 +7,20 @@ $navigationItems = [
     ['module' => 'overview', 'label' => 'Podsumowanie', 'url' => '/dashboard', 'icon' => 'fa-solid fa-chart-line'],
     ['module' => 'homepage', 'label' => 'Strona główna', 'url' => '/dashboard/homepage', 'icon' => 'fa-solid fa-house'],
     ['module' => 'important_posts', 'label' => 'Ważne informacje', 'url' => '/dashboard/important_posts', 'icon' => 'fa-solid fa-exclamation'],
-    ['module' => 'timetable', 'label' => 'Grafik', 'url' => '/dashboard/timetable', 'icon' => 'fa-regular fa-calendar'],
+    [
+        'module' => 'timetable',
+        'label' => 'Grafik',
+        'url' => '/dashboard/timetable',
+        'icon' => 'fa-regular fa-calendar',
+        'children' => [
+            [
+                'label' => 'Lokalizacje',
+                'url' => '#',
+                'pagePrefix' => 'timetable/location',
+                'icon' => 'fa-solid fa-location-dot',
+            ],
+        ],
+    ],
     ['module' => 'news', 'label' => 'Aktualności', 'url' => '/dashboard/news', 'icon' => 'fa-regular fa-newspaper'],
     [
         'module' => 'gallery',

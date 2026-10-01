@@ -428,6 +428,28 @@ VALUES (2, 'ŚR', 'rekowo', 'Wszyscy', 'sala gimnastyczna', '17:00:00', '18:00:0
 -- --------------------------------------------------------
 
 --
+-- Struktura tabeli dla tabeli `location`
+--
+
+
+CREATE TABLE `locations`
+(
+    `id`            int          NOT NULL AUTO_INCREMENT,
+    `name`          varchar(100) NOT NULL,
+    `city`          varchar(50)  NOT NULL,
+    `address`       varchar(200) NOT NULL,
+    `description`   text         NULL,
+    `map_embed_url` text         NULL,
+    `status`        tinyint(1)   NOT NULL DEFAULT '1',
+    `created_at`    date         NOT NULL,
+    `updated_at`    date         NOT NULL,
+
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_polish_ci;
+
+--
 -- Struktura tabeli dla tabeli `user`
 --
 
@@ -585,6 +607,16 @@ ALTER TABLE `subscribers`
 --
 ALTER TABLE `timetable`
     MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+
+ALTER TABLE `timetable`
+    ADD COLUMN `location_id` int NULL,
+    ADD INDEX `idx_timetable_location_id` (`location_id`),
+    ADD CONSTRAINT `fk_timetable_location`
+        FOREIGN KEY (`location_id`)
+        REFERENCES `locations` (`id`)
+        ON DELETE RESTRICT
+        ON UPDATE RESTRICT;
 
 --
 -- AUTO_INCREMENT dla tabeli `user`
