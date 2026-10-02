@@ -4,8 +4,6 @@
 	$csrf = $params['csrf_token'] ?? '';
 	$error = $params['flash_dashboard']['message'] ?? [];
 	$formTitle = "Edytuj Post z grafiku";
-
-
 	require "templates/dashboard/_partials/_post_form_timetable.php";
 
 ?>

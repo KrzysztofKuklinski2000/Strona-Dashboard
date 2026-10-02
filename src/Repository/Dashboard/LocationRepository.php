@@ -38,4 +38,22 @@ class LocationRepository extends BaseDashboardRepository
             );
         }
     }
+
+    /**
+     * @throws RepositoryException
+     */
+    public function getActiveLocations(): array {
+        try {
+            $locations = $this->runQuery('SELECT * FROM locations WHERE status = 1')->fetchAll();
+
+            return array_map(fn($location) => LocationDto::fromArray($location), $locations);
+        }catch (RepositoryException $e){
+            throw new RepositoryException(
+                'Nie udało się pobrać aktywnych lokalizacji.',
+                500,
+                $e,
+            );
+        }
+    }
+
 }

@@ -12,9 +12,11 @@ use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
 use App\DTO\Dashboard\PublishedDto;
 use App\DTO\Dashboard\Timetable\CreateTimetableDto;
+use App\DTO\Dashboard\Timetable\TimetableDto;
 use App\DTO\Dashboard\Timetable\UpdateTimetableDto;
 use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
+use App\Exception\ServiceException;
 use App\Mapper\Dashboard\TimetableRequestMapper;
 use App\Service\Dashboard\Contracts\TimetableManagementServiceInterface;
 
@@ -47,16 +49,24 @@ class TimetableController extends AbstractDashboardController
      */
     public function editAction(): void
     {
+        /** @var TimetableDto $data */
+        $data = $this->getSingleData();
+
         $this->renderPage([
             'page' => 'timetable/edit',
-            'data' => $this->getSingleData(),
+            'data' => $data,
+            'locations' => $this->service->getAvailableLocations($data->locationId),
         ]);
     }
 
+    /**
+     * @throws ServiceException
+     */
     public function createAction(): void
     {
         $this->renderPage([
             'page' => 'timetable/create',
+            'locations' => $this->service->getAllActiveLocations(),
         ]);
     }
 

@@ -8,6 +8,7 @@ use App\Core\Config;
 use App\Factories\ServiceFactories\Notification\NotifierFactory;
 use App\Factories\ServiceFactories\ServiceFactoryInterface;
 use App\Notification\Observer\EmailNotificationObserver;
+use App\Repository\Dashboard\LocationRepository;
 use App\Repository\Dashboard\TimetableRepository;
 use App\Service\Dashboard\TimetableService;
 use PDO;
@@ -21,7 +22,13 @@ readonly class TimetableServiceFactory implements ServiceFactoryInterface
     public function createService(): TimetableService
     {
         $timetableRepository = new TimetableRepository($this->pdo);
-        $timetableService = new TimetableService($timetableRepository, $this->config->getNotificationMessages());
+        $locationRepository = new LocationRepository($this->pdo);
+
+        $timetableService = new TimetableService(
+            $timetableRepository,
+            $locationRepository,
+            $this->config->getNotificationMessages()
+        );
 
         $notifier = (new NotifierFactory($this->pdo, $this->config))->createService();
         $emailObserver = new EmailNotificationObserver($notifier);

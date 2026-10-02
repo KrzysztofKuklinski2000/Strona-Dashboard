@@ -9,28 +9,31 @@ use App\DTO\DataTransferObjectInterface;
 readonly class TimetableDto implements DataTransferObjectInterface
 {
     public function __construct(
-        public int $id,
+        public int    $id,
         public string $day,
         public string $city,
         public string $advancementGroup,
         public string $place,
         public string $start,
         public string $end,
-        public int $status
-    ) {
+        public int    $status,
+        public int    $locationId,
+    )
+    {
     }
 
     public static function fromArray(array $data): self
     {
         return new self(
-            id: (int) $data['id'],
-            day: trim((string) ($data['day'] ?? '')),
-            city: (string) $data['city'],
-            advancementGroup: (string) $data['advancement_group'],
-            place: (string) $data['place'],
-            start: (string) $data['start'],
-            end: (string) $data['end'],
-            status: (int) $data['status']
+            id: (int)$data['id'],
+            day: trim((string)($data['day'] ?? '')),
+            city: (string)$data['city'],
+            advancementGroup: (string)$data['advancement_group'],
+            place: (string)$data['place'],
+            start: (string)$data['start'],
+            end: (string)$data['end'],
+            status: (int)$data['status'],
+            locationId: (int)$data['location_id'],
         );
     }
 
@@ -44,7 +47,8 @@ readonly class TimetableDto implements DataTransferObjectInterface
             'place' => $this->place,
             'start' => $this->start,
             'end' => $this->end,
-            'status' => $this->status
+            'status' => $this->status,
+            'location_id' => $this->locationId,
         ];
     }
 }

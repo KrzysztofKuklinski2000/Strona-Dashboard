@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Dashboard\Contracts;
 
+use App\DTO\Dashboard\Location\LocationDto;
 use App\DTO\Dashboard\PublishedDto;
 use App\DTO\Dashboard\Timetable\CreateTimetableDto;
 use App\DTO\Dashboard\Timetable\TimetableDto;
@@ -20,6 +21,17 @@ interface TimetableManagementServiceInterface extends SharedGetDataServiceInterf
      */
     public function getAllTimetable(): array;
 
+    /**
+     * Pobiera wszystkie aktywne lokacje + przypisaną wcześniej.
+     * @return LocationDto[]
+     */
+    public function getAvailableLocations(int $locationId): array;
+
+    /**
+     * Pobiera wszystkie aktywne lokalizacje.
+     * @return LocationDto[]
+     */
+    public function getAllActiveLocations(): array;
     /**
      * Aktualizuje istniejący wpis.
      * @param UpdateTimetableDto $data

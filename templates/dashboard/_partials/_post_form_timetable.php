@@ -1,3 +1,14 @@
+<?php
+$flash = $params['flash_dashboard'] ?? [];
+$error = is_array($flash['message'] ?? null) ? $flash['message'] : [];
+$oldInput = $flash['context']['oldInput'] ?? [];
+$locations = $params['locations'] ?? [];
+$currentLocationId = (string) ($data->locationId ?? '');
+$selectedLocationId = (string) ($oldInput['location_id'] ?? $currentLocationId);
+$day = $oldInput['day'] ?? ($data->day ?? '');
+$group = $oldInput['group'] ?? ($data->advancementGroup ?? '');
+?>
+
 <h3 class="dashboard-action-header"><?= e($formTitle ?? '') ?></h3>
 <form action="<?= e($action) ?>" method="POST" class="timetable-create-form dashboard-editor-form timetable-editor-form">
   <input type="hidden" name="csrf_token" value="<?= e($csrf ?? '') ?>">
@@ -16,41 +27,65 @@
     <div class="dashboard-form-grid">
   <label>
     <span>Dzień: </span>
-    <select name="day">
-      <option <?= ($data->day ?? '') === "PON"   ? 'selected' : '' ?> value="PON"> Poniedziałek </option>
-      <option <?= ($data->day ?? '') === "WT"    ? 'selected' : '' ?> value="WT"> Wtorek </option>
-      <option <?= ($data->day ?? '') === 'ŚR'    ? 'selected' : '' ?> value="ŚR"> Środa </option>
-      <option <?= ($data->day ?? '') === 'CZW'   ? 'selected' : '' ?> value="CZW"> Czwartek </option>
-      <option <?= ($data->day ?? '') === 'PT'    ? 'selected' : '' ?> value="PT"> Piątek </option>
-      <option <?= ($data->day ?? '') === 'SOB'   ? 'selected' : '' ?> value="SOB"> Sobota </option>
-      <option <?= ($data->day ?? '') === 'NIEDZ' ? 'selected' : '' ?> value="NIEDZ"> Niedziela </option>
+    <select name="day" aria-describedby="timetable-day-error">
+      <option <?= $day === "PON"   ? 'selected' : '' ?> value="PON"> Poniedziałek </option>
+      <option <?= $day === "WT"    ? 'selected' : '' ?> value="WT"> Wtorek </option>
+      <option <?= $day === 'ŚR'    ? 'selected' : '' ?> value="ŚR"> Środa </option>
+      <option <?= $day === 'CZW'   ? 'selected' : '' ?> value="CZW"> Czwartek </option>
+      <option <?= $day === 'PT'    ? 'selected' : '' ?> value="PT"> Piątek </option>
+      <option <?= $day === 'SOB'   ? 'selected' : '' ?> value="SOB"> Sobota </option>
+      <option <?= $day === 'NIEDZ' ? 'selected' : '' ?> value="NIEDZ"> Niedziela </option>
     </select>
+    <span class="validation-error" id="timetable-day-error"><?= e($error['day'] ?? '') ?></span>
   </label>
-  <p class="validation-error"><?= e($error['day'] ?? "")  ?></p>
-  <label>
-    <span>Miasto: </span>
-    <input type="text" name="city" maxlength="30" value="<?= e($data->city ?? '' )?>" placeholder="Miasto">
-  </label>
-  <p class="validation-error"><?= e($error['city'] ?? "")  ?></p>
   <label>
     <span>Grupa</span>
-    <select name="group">
-      <option <?= ($data->advancementGroup ?? '') == "Zaawansowana" ? 'selected' : '' ?> value="Zaawansowana"> Zaawansowana </option>
-      <option <?= ($data->advancementGroup ?? '') == "Wszyscy"      ? 'selected' : '' ?> value="Wszyscy"> Wszyscy </option>
-      <option <?= ($data->advancementGroup ?? '') == "Początkująca" ? 'selected' : '' ?> value="Początkująca"> Początkująca </option>
-      <option <?= ($data->advancementGroup ?? '') == "Dzieci"       ? 'selected' : '' ?> value="Dzieci"> Dzieci </option>
-      <option <?= ($data->advancementGroup ?? '') == "Kadra"        ? 'selected' : '' ?> value="Kadra"> Kadra </option>
-      <option <?= ($data->advancementGroup ?? '') == "Początkująca dzieci" ? 'selected' : '' ?> value="Początkująca dzieci">Początkująca dzieci</option>
+    <select name="group" aria-describedby="timetable-group-error">
+      <option <?= $group === "Zaawansowana" ? 'selected' : '' ?> value="Zaawansowana"> Zaawansowana </option>
+      <option <?= $group === "Wszyscy"      ? 'selected' : '' ?> value="Wszyscy"> Wszyscy </option>
+      <option <?= $group === "Początkująca" ? 'selected' : '' ?> value="Początkująca"> Początkująca </option>
+      <option <?= $group === "Dzieci"       ? 'selected' : '' ?> value="Dzieci"> Dzieci </option>
+      <option <?= $group === "Kadra"        ? 'selected' : '' ?> value="Kadra"> Kadra </option>
+      <option <?= $group === "Początkująca dzieci" ? 'selected' : '' ?> value="Początkująca dzieci">Początkująca dzieci</option>
     </select>
+    <span class="validation-error" id="timetable-group-error"><?= e($error['group'] ?? '') ?></span>
   </label>
-  <p class="validation-error"><?= e($error['group'] ?? "")  ?></p>
-  <label>
-    <span>Opis miejsca: </span>
-    <input type="text" name="place" maxlength="100" value="<?= e($data->place ?? '') ?>" placeholder="Miejsce">
-  </label>
-  <p class="validation-error"><?= e($error['place'] ?? "")  ?></p>
 
     </div>
+
+    <label for="timetable-location">
+      <span>Lokalizacja zajęć</span>
+      <select
+        id="timetable-location"
+        name="location_id"
+        aria-describedby="timetable-location-help timetable-location-error"
+        required
+        <?= $locations === [] ? 'disabled' : '' ?>
+      >
+        <option value="" disabled <?= $selectedLocationId === '' || $selectedLocationId === '0' ? 'selected' : '' ?>>
+          <?= $locations === [] ? 'Brak dostępnych lokalizacji' : 'Wybierz lokalizację' ?>
+        </option>
+        <?php foreach ($locations as $location): ?>
+          <?php $canSelect = $location->status === 1 || (string) $location->id === $currentLocationId; ?>
+          <option
+            value="<?= e($location->id) ?>"
+            <?= (string) $location->id === $selectedLocationId ? 'selected' : '' ?>
+            <?= !$canSelect ? 'disabled' : '' ?>
+          ><?= e($location->name . ' — ' . $location->city . ', ' . $location->address . ($location->status !== 1 ? ' (nieaktywna)' : '')) ?></option>
+        <?php endforeach; ?>
+      </select>
+      <small id="timetable-location-help">
+        <?php if ($locations === []): ?>
+          Najpierw <a href="/dashboard/timetable/location/create">dodaj lokalizację</a>
+          lub aktywuj istniejącą w <a href="/dashboard/timetable/location">module lokalizacji</a>.
+        <?php elseif ($currentLocationId !== '' && $currentLocationId !== '0'): ?>
+          Możesz wybrać aktywną lokalizację lub zachować obecnie przypisaną, nawet jeśli jest nieaktywna.
+        <?php else: ?>
+          Wybierz aktywną lokalizację. Nazwa, miasto i adres są pobierane z modułu lokalizacji.
+        <?php endif; ?>
+      </small>
+    </label>
+    <p class="validation-error" id="timetable-location-error"><?= e($error['location_id'] ?? '') ?></p>
   </section>
 
   <section class="dashboard-form-section">
@@ -64,19 +99,19 @@
     <div class="dashboard-form-grid">
   <label>
     <span>Start:</span>
-    <input type="time" name="startTime" value="<?= e($data->start ?? '') ?>">
+    <input type="time" name="startTime" value="<?= e($oldInput['startTime'] ?? ($data->start ?? '')) ?>" aria-describedby="timetable-start-error">
+    <span class="validation-error" id="timetable-start-error"><?= e($error['startTime'] ?? '') ?></span>
   </label>
-  <p class="validation-error"><?= e($error['startTime'] ?? "")  ?></p>
   <label>
     <span>Koniec:</span>
-    <input type="time" name="endTime" value="<?= e($data->end ?? '') ?>">
+    <input type="time" name="endTime" value="<?= e($oldInput['endTime'] ?? ($data->end ?? '')) ?>" aria-describedby="timetable-end-error">
+    <span class="validation-error" id="timetable-end-error"><?= e($error['endTime'] ?? '') ?></span>
   </label>
-  <p class="validation-error"><?= e($error['endTime'] ?? "")  ?></p>
 
     </div>
 
   <label class="dashboard-form-check">
-    <input type="checkbox" name="is_notify">
+    <input type="checkbox" name="is_notify" <?= !empty($oldInput['is_notify']) ? 'checked' : '' ?>>
     <span>
       <strong>Powiadom subskrybentów</strong>
       <small>Wyślij wiadomość o zmianie w grafiku.</small>
@@ -85,7 +120,7 @@
   </section>
 
   <div class="dashboard-form-actions">
-    <input type="submit" value="Zapisz">
+    <input type="submit" value="Zapisz" <?= $locations === [] ? 'disabled' : '' ?>>
     <span>Zmiany zostaną zapisane w publicznym grafiku zajęć.</span>
   </div>
 </form>
