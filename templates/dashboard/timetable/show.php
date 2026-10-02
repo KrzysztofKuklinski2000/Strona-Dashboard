@@ -7,9 +7,12 @@
 <h3 class="dashboard-action-header">Szczegóły wpisu w grafiku</h3>
 <div class="post-content">
  <h4>Dzień: <?= e($data->day) ?></h4>
-	<h4>Miasto: <?= e($data->city) ?></h4>
+	<h4>Lokalizacja:
+    <a href="/dashboard/timetable/location/show/<?= e($data->locationId) ?>">
+      Lokalizacja #<?= e($data->locationId) ?>
+    </a>
+  </h4>
 	<h4>Grupa: <?= e($data->advancementGroup) ?></h4>
-	<h4>Szczegóły: <?= e($data->place) ?></h4>
 	<h4>Start: <?= e($data->start) ?></h4>
 	<h4>Koniec: <?= e($data->end) ?></h4>
 </div>
@@ -28,4 +31,3 @@
 	</label>
     <input type="submit" value="Zapisz">
   </form>
-</div>

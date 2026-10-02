@@ -7,7 +7,11 @@ $showPosition = false;
 <tr>
   <td class="dashboard-table__index"><?=e($key + 1) ?>.</td>
   <td class="dashboard-table__primary"><?= e($row->day) ?></td>
-  <td><?= e($row->city) ?></td>
+  <td>
+    <a href="/dashboard/timetable/location/show/<?= e($row->locationId) ?>">
+      Lokalizacja #<?= e($row->locationId) ?>
+    </a>
+  </td>
   <td><?= e($row->advancementGroup) ?></td>
   <td><?= e($row->start) ?></td>
   <td><?= e($row->end) ?></td>

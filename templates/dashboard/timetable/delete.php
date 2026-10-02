@@ -6,9 +6,12 @@ $csrf = $params['csrf_token'] ?? '';
 
 <h3 class="dashboard-action-header">Usuwanie wpisu z grafiku</h3>
 <p><b>Dzień:</b> <?= e($data->day) ?> </p>
-<p><b>Miasto:</b> <?= e($data->city) ?> </p>
+<p><b>Lokalizacja:</b>
+  <a href="/dashboard/timetable/location/show/<?= e($data->locationId) ?>">
+    Lokalizacja #<?= e($data->locationId) ?>
+  </a>
+</p>
 <p><b>Grupa:</b> <?= e($data->advancementGroup) ?></p>
-<p><b>Szczegóły:</b> <?= e($data->place) ?></p>
 <p><b>Start:</b> <?= e($data->start) ?></p>
 <p><b>Koniec:</b> <?= e($data->end) ?></p>
 <form class="dashboard-delete-form" action="<?= e($action) ?>" method="POST">

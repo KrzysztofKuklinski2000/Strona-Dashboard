@@ -10,12 +10,11 @@ readonly class CreateTimetableDto implements DataTransferObjectInterface
 {
     public function __construct(
         public string $day,
-        public string $city,
         public string $advancementGroup,
-        public string $place,
         public string $start,
         public string $end,
-        public int $isNotify
+        public int $isNotify,
+        public int $locationId,
     ) {
     }
 
@@ -23,12 +22,11 @@ readonly class CreateTimetableDto implements DataTransferObjectInterface
     {
         return new self(
             day: (string) $data['day'],
-            city: (string) $data['city'],
             advancementGroup: (string) $data['advancement_group'],
-            place: (string) $data['place'],
             start: (string) $data['start'],
             end: (string) $data['end'],
             isNotify: !empty($data['is_notify']) ? 1 : 0,
+            locationId: (int) $data['location_id'],
         );
     }
 
@@ -36,11 +34,10 @@ readonly class CreateTimetableDto implements DataTransferObjectInterface
     {
         return [
             'day' => $this->day,
-            'city' => $this->city,
             'advancement_group' => $this->advancementGroup,
-            'place' => $this->place,
             'start' => $this->start,
             'end' => $this->end,
+            'location_id' => $this->locationId,
         ];
     }
 }

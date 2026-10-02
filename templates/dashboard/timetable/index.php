@@ -6,7 +6,7 @@ $csrfToken = $params['csrf_token'] ?? '';
 
 $tableHeadersHtml = <<<HTML
     <th>Dzień</th>
-    <th>Miasto</th>
+    <th>Lokalizacja</th>
     <th>Grupa</th>
     <th>Start</th>
     <th>Koniec</th>

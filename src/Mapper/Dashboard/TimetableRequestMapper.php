@@ -17,7 +17,8 @@ readonly class TimetableRequestMapper
         private Validator                $validator,
         private PublicationRequestMapper $publicationRequestMapper,
         private DeleteRequestMapper      $deleteRequestMapper,
-    ) {
+    )
+    {
     }
 
     public function mapCreate(): CreateTimetableDto
@@ -50,7 +51,21 @@ readonly class TimetableRequestMapper
         return $this->deleteRequestMapper->map();
     }
 
-    private function mapCommonFields(): array {
+    private function mapCommonFields(): array
+    {
+        $locationId =  $this->validator->validate(
+            name: 'location_id',
+            value: $this->request->getFormParam('location_id'),
+            required: true,
+            type: 'int'
+        );
+
+        if($locationId <= 0){
+            $this->validator->addError(
+                'location_id',
+                'Nie poprawna lokalizacja'
+            );
+        }
 
         return [
             'day' => $this->validator->validate(
@@ -60,25 +75,11 @@ readonly class TimetableRequestMapper
                 maxLength: 20
             ),
 
-            'city' => $this->validator->validate(
-                name: 'city',
-                value: $this->request->getFormParam('city'),
-                required: true,
-                maxLength: 40
-            ),
-
             'advancement_group' => $this->validator->validate(
                 name: 'group',
                 value: $this->request->getFormParam('group'),
                 required: true,
                 maxLength: 40
-            ),
-
-            'place' => $this->validator->validate(
-                name: 'place',
-                value: $this->request->getFormParam('place'),
-                required: true,
-                maxLength: 100
             ),
 
             'start' => $this->validator->validate(
@@ -93,7 +94,9 @@ readonly class TimetableRequestMapper
                 required: true,
             ),
 
-            'is_notify' => $this->request->getFormParam('is_notify')
+            'is_notify' => $this->request->getFormParam('is_notify'),
+
+            'location_id' => $locationId,
         ];
     }
 }

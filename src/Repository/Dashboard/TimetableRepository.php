@@ -29,10 +29,16 @@ class TimetableRepository extends BaseDashboardRepository
     {
         try {
             $params = [];
-            $sql = "SELECT * FROM timetable";
+            $sql = "SELECT 
+                        t.*, 
+                        l.name AS location_name,
+                        l.city AS city,
+                        l.address AS address
+                    FROM timetable AS t 
+                    LEFT JOIN locations AS l ON l.id = t.location_id";
 
             if($publishedOnly === true) {
-                $sql .= " WHERE status = 1";
+                $sql .= " WHERE t.status = 1";
             }
 
             $sql .= " ORDER BY
@@ -45,7 +51,7 @@ class TimetableRepository extends BaseDashboardRepository
                     WHEN TRIM(day) = 'SOB' THEN 6
                     WHEN TRIM(day) = 'NIEDZ' THEN 7
                     ELSE 8
-                END ASC, start ASC";
+                END ASC, t.start ASC";
 
             if($limit !== null) {
                 $sql .= " LIMIT :limit";

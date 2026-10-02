@@ -117,16 +117,61 @@ class TimetableController extends AbstractDashboardController
         return $this->timetableRequestMapper->mapDelete();
     }
 
+    /**
+     * @throws ServiceException
+     */
     protected function handleCreate(DataTransferObjectInterface $data): void
     {
         /** @var CreateTimetableDto $data */
-        $this->service->createTimetable($data);
+        try {
+            $this->service->createTimetable($data);
+        } catch (ServiceException $e) {
+            if ($e->getCode() !== 409) {
+                throw $e;
+            }
+
+            $oldInput = $this->request->getFormData();
+            unset($oldInput['csrf_token']);
+
+            $this->sessionManager->setFlash(
+                type: 'warning',
+                message: ['location_id' => $e->getMessage()],
+                context: ['oldInput' => $oldInput],
+            );
+
+            $this->redirect(
+                "{$this->contextController->config->getDashboardRoute()}/timetable/create"
+            );
+        }
     }
 
+    /**
+     * @throws ServiceException
+     */
     protected function handleUpdate(DataTransferObjectInterface $data): void
     {
-        /** @var UpdateTimetableDto $data */
-        $this->service->updateTimetable($data);
+
+        try {
+            /** @var UpdateTimetableDto $data */
+            $this->service->updateTimetable($data);
+        } catch (ServiceException $e) {
+            if ($e->getCode() !== 409) {
+                throw $e;
+            }
+
+            $oldInput = $this->request->getFormData();
+            unset($oldInput['csrf_token']);
+
+            $this->sessionManager->setFlash(
+                type: 'warning',
+                message: ['location_id' => $e->getMessage()],
+                context: ['oldInput' => $oldInput],
+            );
+
+            $this->redirect(
+                "{$this->contextController->config->getDashboardRoute()}/timetable/edit/{$data->id}"
+            );
+        }
     }
 
     protected function handleDelete(int $id): void
