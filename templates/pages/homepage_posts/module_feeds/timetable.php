@@ -14,8 +14,11 @@ $dayLabel = $dayLabels[$dayCode] ?? $dayCode;
 $start = substr(trim((string) ($feedPost->start ?? '')), 0, 5);
 $end = substr(trim((string) ($feedPost->end ?? '')), 0, 5);
 $group = trim((string) ($feedPost->advancementGroup ?? ''));
-$city = trim((string) ($feedPost->city ?? ''));
-$place = trim((string) ($feedPost->place ?? ''));
+$locationName = trim($feedPost->locationName);
+$locationDetails = implode(', ', array_filter(
+    [trim($feedPost->locationCity), trim($feedPost->locationAddress)],
+    static fn(string $value): bool => $value !== '',
+));
 ?>
 
 <article class="important-card module-feed-timetable-card">
@@ -49,10 +52,10 @@ $place = trim((string) ($feedPost->place ?? ''));
             </span>
 
             <div>
-                <strong><?= e($city !== '' ? $city : 'Lokalizacja') ?></strong>
+                <strong><?= e($locationName !== '' ? $locationName : 'Lokalizacja') ?></strong>
 
-                <?php if ($place !== ''): ?>
-                    <small><?= e($place) ?></small>
+                <?php if ($locationDetails !== ''): ?>
+                    <small><?= e($locationDetails) ?></small>
                 <?php endif ?>
             </div>
         </div>

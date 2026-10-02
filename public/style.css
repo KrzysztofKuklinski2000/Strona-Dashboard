@@ -1019,6 +1019,111 @@ main {
 	font-size: .7rem;
 }
 
+.timetable-map-button {
+	display: inline-flex;
+	align-items: center;
+	justify-self: start;
+	gap: 6px;
+	margin-top: 5px;
+	padding: 6px 9px;
+	border: 1px solid var(--color-secondary-soft);
+	border-radius: 6px;
+	color: var(--color-secondary-dark);
+	font-size: .68rem;
+	font-weight: 700;
+	transition: background .2s ease, border-color .2s ease;
+}
+
+.timetable-map-button i {
+	color: inherit;
+}
+
+.timetable-map-button:hover {
+	border-color: var(--color-secondary);
+	background: var(--color-secondary-soft);
+}
+
+.timetable-map-button:focus-visible,
+.location-map-dialog__close:focus-visible {
+	outline: 2px solid var(--color-secondary);
+	outline-offset: 3px;
+}
+
+html.has-location-map-open,
+html.has-location-map-open body {
+	overflow: hidden;
+}
+
+.location-map-dialog {
+	width: min(820px, calc(100% - 32px));
+	max-width: none;
+	max-height: calc(100dvh - 32px);
+	margin: auto;
+	padding: 0;
+	overflow: auto;
+	border: 1px solid var(--color-line);
+	border-radius: var(--radius-card);
+	background: var(--color-paper);
+	box-shadow: var(--shadow-soft);
+}
+
+.location-map-dialog::backdrop {
+	background: rgba(23, 23, 23, .55);
+}
+
+.location-map-dialog__header {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 18px 20px;
+	border-bottom: 1px solid var(--color-line);
+}
+
+.location-map-dialog__header h2 {
+	margin: 0;
+	font-size: 1.05rem;
+	font-weight: 800;
+	overflow-wrap: anywhere;
+}
+
+.location-map-dialog__header p {
+	margin-top: 5px;
+	color: var(--color-muted);
+	font-size: .78rem;
+	overflow-wrap: anywhere;
+}
+
+.location-map-dialog__close {
+	width: 40px;
+	height: 40px;
+	flex: 0 0 40px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+	border: 1px solid var(--color-line);
+	border-radius: 8px;
+	background: var(--color-paper);
+	color: var(--color-muted);
+	font-size: 1.4rem;
+	cursor: pointer;
+}
+
+.location-map-dialog__close:hover {
+	background: var(--color-ivory);
+	color: var(--color-ink);
+}
+
+.location-map-dialog__frame {
+	display: block;
+	width: 100%;
+	height: clamp(260px, 55vh, 460px);
+	margin: 0;
+	border: 0;
+	background: var(--color-ivory);
+}
+
 .first-class-section {
 	position: relative;
 	overflow: hidden;

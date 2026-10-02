@@ -19,13 +19,13 @@ usort($publishedItems, static function ($first, $second) use ($dayOrder): int {
     return [
         $dayOrder[trim((string) ($first->day ?? ''))] ?? 99,
         trim((string) ($first->start ?? '')),
-        trim((string) ($first->city ?? '')),
-        trim((string) ($first->place ?? '')),
+        trim($first->locationCity),
+        trim($first->locationAddress),
     ] <=> [
         $dayOrder[trim((string) ($second->day ?? ''))] ?? 99,
         trim((string) ($second->start ?? '')),
-        trim((string) ($second->city ?? '')),
-        trim((string) ($second->place ?? '')),
+        trim($second->locationCity),
+        trim($second->locationAddress),
     ];
 });
 
@@ -39,9 +39,7 @@ foreach ($publishedItems as $item) {
         continue;
     }
 
-    $city = trim((string) ($item->city ?? ''));
-    $place = trim((string) ($item->place ?? ''));
-    $locationKey = md5($city . '|' . $place);
+    $locationKey = $item->locationId;
 
     $days[$dayCode] ??= [
         'label' => $dayLabels[$dayCode] ?? $dayCode,
@@ -50,11 +48,25 @@ foreach ($publishedItems as $item) {
 
     $days[$dayCode]['items'][] = $item;
 
-    $locations[$locationKey] ??= [
-        'city' => $city,
-        'place' => $place,
-        'count' => 0,
-    ];
+    if (!isset($locations[$locationKey])) {
+        $mapUrl = trim($item->locationMapEmbedUrl);
+        $mapParts = parse_url($mapUrl) ?: [];
+        $mapPath = $mapParts['path'] ?? '';
+        $hasValidMap = filter_var($mapUrl, FILTER_VALIDATE_URL) !== false
+            && ($mapParts['scheme'] ?? '') === 'https'
+            && in_array(strtolower($mapParts['host'] ?? ''), ['www.google.com', 'maps.google.com'], true)
+            && ($mapPath === '/maps/embed' || str_starts_with($mapPath, '/maps/embed/'));
+
+        $locations[$locationKey] = [
+            'name' => trim($item->locationName),
+            'details' => implode(', ', array_filter(
+                [trim($item->locationCity), trim($item->locationAddress)],
+                static fn(string $value): bool => $value !== '',
+            )),
+            'map_url' => $hasValidMap ? $mapUrl : '',
+            'count' => 0,
+        ];
+    }
 
     $locations[$locationKey]['count']++;
 }
@@ -92,12 +104,17 @@ uksort($days, static fn(string $first, string $second): int => ($dayOrder[$first
 
                                         <p>
                                             <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
-                                            <?= e($item->city ?: 'Lokalizacja') ?>
+                                            <?= e($item->locationName ?: 'Lokalizacja') ?>
                                         </p>
 
-                                        <?php if (trim((string) $item->place) !== ''): ?>
-                                            <span><?= e($item->place) ?></span>
+                                        <?php if ($locations[$item->locationId]['details'] !== ''): ?>
+                                            <span><?= e($locations[$item->locationId]['details']) ?></span>
                                         <?php endif ?>
+
+                                        <?php
+                                        $mapLocation = $locations[$item->locationId];
+                                        require 'templates/components/location_map_link.php';
+                                        ?>
                                     </div>
                                 </article>
                             <?php endforeach ?>
@@ -120,13 +137,18 @@ uksort($days, static fn(string $first, string $second): int => ($dayOrder[$first
                                     <i class="fa-solid fa-location-dot"></i>
                                 </span>
                                 <div>
-                                    <h3><?= e($location['city'] ?: 'Lokalizacja') ?></h3>
+                                    <h3><?= e($location['name'] ?: 'Lokalizacja') ?></h3>
 
-                                    <?php if ($location['place']): ?>
-                                        <p><?= e($location['place']) ?></p>
+                                    <?php if ($location['details'] !== ''): ?>
+                                        <p><?= e($location['details']) ?></p>
                                     <?php endif ?>
 
                                     <small><?= (int) $location['count'] ?> <?= ((int) $location['count']) === 1 ? 'trening' : 'treningi' ?> w grafiku</small>
+
+                                    <?php
+                                    $mapLocation = $location;
+                                    require 'templates/components/location_map_link.php';
+                                    ?>
                                 </div>
                             </article>
                         <?php endforeach ?>

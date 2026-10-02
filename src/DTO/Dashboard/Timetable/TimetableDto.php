@@ -16,6 +16,10 @@ readonly class TimetableDto implements DataTransferObjectInterface
         public string $end,
         public int    $status,
         public int    $locationId,
+        public string $locationName,
+        public string $locationCity,
+        public string $locationAddress,
+        public string $locationMapEmbedUrl,
     )
     {
     }
@@ -30,6 +34,10 @@ readonly class TimetableDto implements DataTransferObjectInterface
             end: (string)$data['end'],
             status: (int)$data['status'],
             locationId: (int)$data['location_id'],
+            locationName: (string)$data['location_name'],
+            locationCity: (string)$data['location_city'],
+            locationAddress: (string)$data['location_address'],
+            locationMapEmbedUrl: (string)$data['location_map_embed_url'],
         );
     }
 
@@ -43,6 +51,10 @@ readonly class TimetableDto implements DataTransferObjectInterface
             'end' => $this->end,
             'status' => $this->status,
             'location_id' => $this->locationId,
+            'location_name' => $this->locationName,
+            'location_city' => $this->locationCity,
+            'location_address' => $this->locationAddress,
+            'location_map_embed_url' => $this->locationMapEmbedUrl,
         ];
     }
 }

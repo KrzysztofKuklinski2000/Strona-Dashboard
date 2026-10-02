@@ -6,6 +6,7 @@ namespace App\Repository\Dashboard;
 
 use App\DTO\Dashboard\Timetable\TimetableDto;
 use App\DTO\DataTransferObjectInterface;
+use App\Exception\NotFoundException;
 use App\Exception\RepositoryException;
 use App\Repository\Dashboard\Traits\CanPublished;
 use App\Repository\Dashboard\Traits\StandardCrud;
@@ -22,6 +23,40 @@ class TimetableRepository extends BaseDashboardRepository
     }
 
     /**
+     * @throws RepositoryException
+     * @throws NotFoundException
+     */
+    public function getPost(string $table, int $id): TimetableDto
+    {
+        try {
+            $result = $this->runQuery(
+                $this->selectWithLocation($table) . ' WHERE t.id = :id',
+                [':id' => $id],
+            )->fetch(PDO::FETCH_ASSOC);
+        } catch (RepositoryException $e) {
+            throw new RepositoryException('Nie udało się pobrać wpisu grafiku.', 500, $e);
+        }
+
+        if ($result === false) {
+            throw new NotFoundException('Nie ma takiego wpisu grafiku.', 404);
+        }
+
+        return TimetableDto::fromArray($result);
+    }
+
+    private function selectWithLocation(string $table): string
+    {
+        return "SELECT
+                    t.*,
+                    l.name AS location_name,
+                    l.city AS location_city,
+                    l.address AS location_address,
+                    l.map_embed_url AS location_map_embed_url
+                FROM {$table} AS t
+                LEFT JOIN locations AS l ON l.id = t.location_id";
+    }
+
+    /**
      * @return TimetableDto[]
      * @throws RepositoryException
      */
@@ -29,13 +64,7 @@ class TimetableRepository extends BaseDashboardRepository
     {
         try {
             $params = [];
-            $sql = "SELECT 
-                        t.*, 
-                        l.name AS location_name,
-                        l.city AS city,
-                        l.address AS address
-                    FROM timetable AS t 
-                    LEFT JOIN locations AS l ON l.id = t.location_id";
+            $sql = $this->selectWithLocation('timetable');
 
             if($publishedOnly === true) {
                 $sql .= " WHERE t.status = 1";

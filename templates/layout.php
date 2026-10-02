@@ -127,6 +127,9 @@
 
 	<script type="text/javascript" src="/public/js/main.js"></script>
 	<script type="text/javascript" src="/public/js/nav-indicator.js"></script>
+	<?php if ($page === 'timetable'): ?>
+		<script src="/public/js/location-map.js" defer></script>
+	<?php endif ?>
 </body>
 
 </html>
