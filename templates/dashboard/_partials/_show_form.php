@@ -29,6 +29,8 @@ $disabledStatusDescription = $disabledStatusDescription ?? 'Post jest ukryty na 
       </label>
     </fieldset>
 
+    <?= $additionalFieldsHtml ?? '' ?>
+
     <input type="submit" value="Zapisz">
   </form>
 </div>

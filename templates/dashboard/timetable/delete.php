@@ -1,24 +1,28 @@
-<?php 
+<?php
+
+declare(strict_types=1);
+
 $data = $params['data'];
-$action = "/dashboard/timetable/delete/" . ($data->id ?? '');
+$action = '/dashboard/timetable/delete/' . $data->id;
 $csrf = $params['csrf_token'] ?? '';
+$formTitle = 'Usuwanie wpisu z grafiku';
+
+ob_start();
+require 'templates/dashboard/timetable/_post_details.php';
+$postDetailsHtml = ob_get_clean();
+
+ob_start();
 ?>
 
-<h3 class="dashboard-action-header">Usuwanie wpisu z grafiku</h3>
-<p><b>Dzień:</b> <?= e($data->day) ?> </p>
-<p><b>Lokalizacja:</b>
-  <a href="/dashboard/timetable/location/show/<?= e($data->locationId) ?>">
-    Lokalizacja #<?= e($data->locationId) ?>
-  </a>
-</p>
-<p><b>Grupa:</b> <?= e($data->advancementGroup) ?></p>
-<p><b>Start:</b> <?= e($data->start) ?></p>
-<p><b>Koniec:</b> <?= e($data->end) ?></p>
-<form class="dashboard-delete-form" action="<?= e($action) ?>" method="POST">
-  <input type="hidden" name="csrf_token" value="<?= e($csrf ?? "") ?>">
-  <label>
+<label class="dashboard-form-check">
     <input type="checkbox" name="is_notify">
-		Powiadom
-	</label>
-  <input type="submit" value="Usuń"> 
-</form>
+    <span>
+        <strong>Powiadom subskrybentów</strong>
+        <small>Wyślij wiadomość o usunięciu zajęć z grafiku.</small>
+    </span>
+</label>
+
+<?php
+$additionalFieldsHtml = ob_get_clean();
+
+require 'templates/dashboard/_partials/_delete_form.php';
