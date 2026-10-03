@@ -624,6 +624,65 @@ body {
 	outline-offset: 2px;
 }
 
+.content-container .timetable-location-link {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 8px;
+	max-width: 100%;
+	color: #3c4553;
+	font-weight: 600;
+	line-height: 1.45;
+	text-decoration: none;
+	transition: color .18s ease;
+}
+
+.timetable-location-link > span {
+	min-width: 0;
+	overflow-wrap: anywhere;
+	text-decoration: underline;
+	text-decoration-color: #cfd5de;
+	text-underline-offset: 4px;
+	text-decoration-thickness: 1px;
+	transition: text-decoration-color .18s ease;
+}
+
+.timetable-location-link > i {
+	flex: 0 0 auto;
+	color: #8992a0;
+	font-size: .75em;
+	transition: color .18s ease;
+}
+
+.timetable-location-link > .timetable-location-link__arrow {
+	font-size: .65em;
+}
+
+.content-container .timetable-location-link:hover {
+	color: #d91f50;
+}
+
+.timetable-location-link:hover > span {
+	text-decoration-color: #d91f50;
+}
+
+.timetable-location-link:hover > i {
+	color: #d91f50;
+}
+
+.content-container .timetable-location-link:focus-visible {
+	border-radius: 3px;
+	outline: 2px solid #ff3366;
+	outline-offset: 4px;
+}
+
+.content-container .timetable-location-link--table {
+	max-width: 280px;
+}
+
+.content-container .timetable-location-link--inline {
+	display: inline;
+}
+
 .dashboard-status-badge {
 	display: inline-flex;
 	align-items: center;

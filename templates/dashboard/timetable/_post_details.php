@@ -50,8 +50,10 @@ $isPublic = $data->status === 1;
     <section class="homepage-post-details__content">
         <p class="homepage-post-details__eyebrow">Lokalizacja zajęć</p>
         <h4>
-            <a href="/dashboard/timetable/location/show/<?= e($data->locationId) ?>">
-                <?= e($locationName !== '' ? $locationName : 'Lokalizacja #' . $data->locationId) ?>
+            <a class="timetable-location-link" href="/dashboard/timetable/location/show/<?= e($data->locationId) ?>">
+                <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+                <span><?= e($locationName !== '' ? $locationName : 'Lokalizacja #' . $data->locationId) ?></span>
+                <i class="fa-solid fa-arrow-right timetable-location-link__arrow" aria-hidden="true"></i>
             </a>
         </h4>
         <?php if ($locationDetails !== ''): ?>

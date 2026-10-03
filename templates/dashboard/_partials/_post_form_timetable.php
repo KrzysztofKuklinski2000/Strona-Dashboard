@@ -83,8 +83,8 @@ $group = $oldInput['group'] ?? ($data->advancementGroup ?? '');
             </select>
             <small id="timetable-location-help">
                 <?php if ($locations === []): ?>
-                    Najpierw <a href="/dashboard/timetable/location/create">dodaj lokalizację</a>
-                    lub aktywuj istniejącą w <a href="/dashboard/timetable/location">module lokalizacji</a>.
+                    Najpierw <a class="timetable-location-link timetable-location-link--inline" href="/dashboard/timetable/location/create"><span>dodaj lokalizację</span></a>
+                    lub aktywuj istniejącą w <a class="timetable-location-link timetable-location-link--inline" href="/dashboard/timetable/location"><span>module lokalizacji</span></a>.
                 <?php elseif ($currentLocationId !== '' && $currentLocationId !== '0'): ?>
                     Możesz wybrać aktywną lokalizację lub zachować obecnie przypisaną, nawet jeśli jest nieaktywna.
                 <?php else: ?>
