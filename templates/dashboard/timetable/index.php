@@ -3,6 +3,14 @@ $pageTitle = 'Lista postów - Grafik';
 $moduleName = 'timetable';
 $data = $params['data'] ?? [];
 $csrfToken = $params['csrf_token'] ?? '';
+$additionalHeaderActions = [
+    [
+        'label' => 'Lokalizacje',
+        'url' => '/dashboard/timetable/location',
+        'icon' => 'fa-solid fa-location-dot',
+        'variant' => 'secondary',
+    ],
+];
 
 $tableHeadersHtml = <<<HTML
     <th>Dzień</th>
