@@ -12,9 +12,11 @@ function bytesToMegabytes(bytes) {
 }
 
 function setSubmissionButtonsDisabled(form, disabled) {
-    form.querySelectorAll('button[type="submit"], input[type="submit"]').forEach((button) => {
-        button.disabled = disabled;
-    })
+    [...form.elements].forEach((button) => {
+        if (button.matches('button[type="submit"], input[type="submit"]')) {
+            button.disabled = disabled;
+        }
+    });
 }
 
 imageInput.forEach((input) => {

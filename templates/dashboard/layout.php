@@ -211,6 +211,9 @@ $navigationItems = [
 </body>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.js"></script>
 <script src="/public/dashboard/main.js"></script>
+<?php if (!$isAuthPage): ?>
+    <script src="/public/dashboard/action-bar.js"></script>
+<?php endif; ?>
 <script src="/public/dashboard/image-compression.js"></script>
 
 
