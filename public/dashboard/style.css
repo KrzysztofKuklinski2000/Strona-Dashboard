@@ -1209,7 +1209,7 @@ body {
 
 .dashboard-status-form legend { padding: 0 8px; color: #171D29; font-weight: 700; }
 
-.dashboard-status-form fieldset label {
+.dashboard-status-form fieldset > label {
 	width: auto;
 	flex-direction: row;
 	align-items: flex-start;
@@ -1221,13 +1221,26 @@ body {
 	transition: border-color .18s ease, background-color .18s ease;
 }
 
-.dashboard-status-form fieldset label:has(input:checked) {
+.dashboard-status-form fieldset > label:has(input:checked) {
 	border-color: rgba(255, 51, 102, .42);
 	background: #fff5f7;
 }
 
 .dashboard-status-form label span { display: flex; flex-direction: column; gap: 4px; }
 .dashboard-status-form label small { color: #6c7583; }
+
+.dashboard-status-form__additional-fields {
+	grid-column: 1 / -1;
+	min-width: 0;
+	padding-top: 12px;
+	border-top: 1px solid #e4e7ec;
+}
+
+.content-container .dashboard-status-form__additional-fields .dashboard-form-check {
+	width: fit-content;
+	max-width: 100%;
+	margin-top: 0;
+}
 
 .dashboard-delete-warning {
 	display: flex;
