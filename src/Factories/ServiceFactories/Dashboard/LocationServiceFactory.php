@@ -4,6 +4,7 @@ namespace App\Factories\ServiceFactories\Dashboard;
 
 use App\Factories\ServiceFactories\ServiceFactoryInterface;
 use App\Repository\Dashboard\LocationRepository;
+use App\Repository\Dashboard\TimetableRepository;
 use App\Service\Dashboard\LocationService;
 use PDO;
 
@@ -15,8 +16,12 @@ readonly class LocationServiceFactory implements ServiceFactoryInterface
 
     public function createService(): LocationService
     {
-        $repository = new LocationRepository($this->pdo);
+        $locationRepository = new LocationRepository($this->pdo);
+        $timetableRepository = new TimetableRepository($this->pdo);
 
-        return new LocationService($repository);
+        return new LocationService(
+            $locationRepository,
+            $timetableRepository
+        );
     }
 }

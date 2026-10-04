@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-/** @var \App\DTO\Dashboard\Location\LocationDto $data */
 $data = $params['data'];
 $action = '/dashboard/timetable/location/delete/' . $data->id;
 $formTitle = 'Usuwanie lokalizacji zajęć';
 $csrf = $params['csrf_token'] ?? '';
 $description = trim($data->description);
 $isActive = $data->status === 1;
+
 
 ob_start();
 ?>
@@ -42,6 +42,8 @@ ob_start();
             <dd><?= e($data->createdAt) ?></dd>
         </div>
     </dl>
+
+    <?php require 'templates/dashboard/timetable/location/_assigned_timetable.php'; ?>
 
     <p>
         Lokalizacji przypisanej do zajęć nie można usunąć.

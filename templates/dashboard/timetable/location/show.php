@@ -62,6 +62,8 @@ ob_start();
                 </div>
             </dl>
 
+            <?php require 'templates/dashboard/timetable/location/_assigned_timetable.php'; ?>
+
             <section class="dashboard-post-preview" aria-labelledby="location-map-title">
                 <div class="dashboard-post-preview__heading">
                     <span class="dashboard-post-preview__icon" aria-hidden="true">

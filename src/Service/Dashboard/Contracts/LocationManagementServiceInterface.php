@@ -6,6 +6,7 @@ use App\DTO\Dashboard\Location\CreateLocationDto;
 use App\DTO\Dashboard\Location\LocationDto;
 use App\DTO\Dashboard\Location\UpdateLocationDto;
 use App\DTO\Dashboard\PublishedDto;
+use App\DTO\Dashboard\Timetable\TimetableDto;
 
 interface LocationManagementServiceInterface extends SharedGetDataServiceInterface
 {
@@ -14,6 +15,12 @@ interface LocationManagementServiceInterface extends SharedGetDataServiceInterfa
      * @return LocationDto[]
      */
     public function getAllLocations(): array;
+
+    /**
+     * Pobiera wszystkie zajęcia przypisane do danej lokalizacji.
+     * @return TimetableDto[]
+     */
+    public function getTimetableByLocationId(int $id): array;
 
     /**
      * Tworzy nową lokalizacje zajęć.

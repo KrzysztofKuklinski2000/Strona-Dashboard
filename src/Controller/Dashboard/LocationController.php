@@ -9,6 +9,7 @@ use App\Controller\Dashboard\Traits\HasStoreAction;
 use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
 use App\DTO\Dashboard\Location\CreateLocationDto;
+use App\DTO\Dashboard\Location\LocationDto;
 use App\DTO\Dashboard\Location\UpdateLocationDto;
 use App\DTO\Dashboard\PublishedDto;
 use App\DTO\DataTransferObjectInterface;
@@ -51,9 +52,13 @@ class LocationController extends AbstractDashboardController
      * @throws NotFoundException
      */
     public function showAction(): void{
+        /** @var LocationDto $data */
+        $data = $this->getSingleData();
+
         $this->renderPage([
             'page' => 'timetable/location/show',
-            'data' => $this->getSingleData(),
+            'data' => $data,
+            'timetableData' => $this->service->getTimetableByLocationId($data->id),
         ]);
     }
 
@@ -71,9 +76,13 @@ class LocationController extends AbstractDashboardController
      * @throws NotFoundException
      */
     public function confirmDeleteAction(): void {
+        /** @var LocationDto $data */
+        $data = $this->getSingleData();
+
         $this->renderPage([
             'page' => 'timetable/location/delete',
-            'data' => $this->getSingleData(),
+            'data' => $data,
+            'timetableData' => $this->service->getTimetableByLocationId($data->id),
         ]);
     }
 

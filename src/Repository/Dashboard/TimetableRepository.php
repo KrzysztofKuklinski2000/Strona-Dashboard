@@ -44,18 +44,6 @@ class TimetableRepository extends BaseDashboardRepository
         return TimetableDto::fromArray($result);
     }
 
-    private function selectWithLocation(string $table): string
-    {
-        return "SELECT
-                    t.*,
-                    l.name AS location_name,
-                    l.city AS location_city,
-                    l.address AS location_address,
-                    l.map_embed_url AS location_map_embed_url
-                FROM {$table} AS t
-                LEFT JOIN locations AS l ON l.id = t.location_id";
-    }
-
     /**
      * @return TimetableDto[]
      * @throws RepositoryException
@@ -93,5 +81,32 @@ class TimetableRepository extends BaseDashboardRepository
         } catch (RepositoryException $e) {
             throw new RepositoryException('Nie udało się pobrać danych grafiku.', 500, $e);
         }
+    }
+
+    /**
+     * @throws RepositoryException
+     */
+    public function getByLocationId(int $locationId): array {
+        try {
+            $sql = "{$this->selectWithLocation('timetable')} WHERE location_id = :location_id" ;
+
+            $result = $this->runQuery($sql, [':location_id' => $locationId])->fetchAll(PDO::FETCH_ASSOC);
+
+            return array_map(fn($item) => TimetableDto::fromArray($item), $result);
+        }catch (RepositoryException $e) {
+            throw new RepositoryException('Nie udało pobrać się danych grafiku.', 500, $e);
+        }
+    }
+
+    private function selectWithLocation(string $table): string
+    {
+        return "SELECT
+                    t.*,
+                    l.name AS location_name,
+                    l.city AS location_city,
+                    l.address AS location_address,
+                    l.map_embed_url AS location_map_embed_url
+                FROM {$table} AS t
+                LEFT JOIN locations AS l ON l.id = t.location_id";
     }
 }
