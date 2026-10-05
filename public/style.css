@@ -48,6 +48,10 @@ body {
 	background: var(--color-paper);
 }
 
+body.homepage {
+	background: #08080a;
+}
+
 header {
 	width:100%;
 }
@@ -182,6 +186,7 @@ iframe {
 	inset: 14px;
 	z-index: 5;
 	border: 1px solid rgba(255, 255, 255, .07);
+	border-bottom: 0;
 	border-radius: 0;
 	pointer-events: none;
 }
@@ -6840,10 +6845,23 @@ body.is-menu-open {
 
 /* Homepage navigation is part of the full-screen cinematic hero. */
 body.homepage > header {
+	position: relative;
+	z-index: 2;
 	min-height: 100svh;
 	display: flex;
 	flex-direction: column;
 	background: #08080a;
+}
+
+body.homepage > main {
+	position: relative;
+	z-index: 3;
+	flex: 0 0 auto;
+	margin-top: 0;
+	border-radius: 28px 28px 0 0;
+	background: #fff;
+	box-shadow: none;
+	overflow: hidden;
 }
 
 .homepage .site-mobile-nav {
@@ -6898,7 +6916,7 @@ body.homepage > header {
 body > footer {
 	width: 100%;
 	margin-top: 0;
-	background: var(--color-charcoal);
+	background: #08080a;
 	overflow: hidden;
 }
 
@@ -7107,8 +7125,10 @@ body > footer {
 
 .site-footer-main {
 	background:
-		radial-gradient(circle at 92% 4%, rgba(191, 31, 26, .12), transparent 25%),
-		linear-gradient(135deg, #151515 0%, #1f1f1f 100%);
+		radial-gradient(circle at 0 34%, rgba(191, 31, 26, .2), transparent 28%),
+		radial-gradient(circle at 100% 58%, rgba(191, 31, 26, .16), transparent 26%),
+		repeating-linear-gradient(112deg, rgba(255, 255, 255, .01) 0 1px, transparent 1px 9px),
+		linear-gradient(145deg, #111114 0%, #08080a 58%, #0d0b0c 100%);
 }
 
 .site-footer-main__inner {

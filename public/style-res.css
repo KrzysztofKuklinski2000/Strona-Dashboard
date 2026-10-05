@@ -759,6 +759,12 @@
 
 
 @media only screen and (min-width: 1024px) {
+	body.homepage > main {
+		margin-top: 0;
+		border-radius: 52px 52px 0 0;
+		box-shadow: none;
+	}
+
 	.hero-section {
 		min-height: calc(100svh - 86px);
 		padding: 0;
