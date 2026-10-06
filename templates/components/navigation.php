@@ -13,7 +13,7 @@
         </span>
     </a>
 
-    <button class="nav-bar-icon" type="button" aria-label="Otwórz menu" aria-controls="mobile-menu">
+    <button class="nav-bar-icon" type="button" aria-label="Otwórz menu" aria-controls="mobile-menu" aria-expanded="false">
         <span></span>
         <span></span>
         <span></span>
