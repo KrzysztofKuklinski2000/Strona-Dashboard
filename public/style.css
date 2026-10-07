@@ -373,6 +373,25 @@ iframe {
 	outline-offset: 5px;
 }
 
+.hero-gallery.is-enhanced .hero-gallery__viewport {
+	scroll-behavior: auto;
+	scroll-snap-type: none;
+	mask-image: linear-gradient(90deg, transparent, #000 28px, #000 calc(100% - 28px), transparent);
+	mask-repeat: no-repeat;
+	mask-size: 100% 100%;
+}
+
+.hero-gallery.is-enhanced::before,
+.hero-gallery.is-enhanced::after {
+	display: none;
+}
+
+@media (max-width: 767px) {
+	.hero-gallery.is-enhanced .hero-gallery__viewport {
+		mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent);
+	}
+}
+
 .hero-gallery__track {
 	width: max-content;
 	min-width: 100%;
@@ -391,6 +410,7 @@ iframe {
 	overflow: hidden;
 	scroll-snap-align: start;
 	scroll-snap-stop: always;
+	transition: transform .45s ease;
 }
 
 .hero-gallery__item::after {
@@ -406,7 +426,7 @@ iframe {
 	height: 100%;
 	display: block;
 	object-fit: cover;
-	transition: transform .45s ease, filter .45s ease;
+	transition: filter .45s ease;
 }
 
 .hero-gallery__item figcaption {
@@ -488,6 +508,40 @@ iframe {
 	width: 34px;
 	height: 1px;
 	background: linear-gradient(90deg, #d52b25 0%, rgba(255, 255, 255, .28) 100%);
+}
+
+.hero-gallery__autoplay {
+	width: 28px;
+	height: 28px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: 3px;
+	padding: 0;
+	border: 1px solid rgba(255, 255, 255, .18);
+	border-radius: 50%;
+	background: transparent;
+	color: rgba(255, 255, 255, .7);
+	cursor: pointer;
+}
+
+.hero-gallery__autoplay[hidden] {
+	display: none;
+}
+
+.hero-gallery__autoplay i {
+	color: inherit;
+	font-size: .6rem;
+}
+
+.hero-gallery__autoplay:hover {
+	border-color: rgba(255, 255, 255, .5);
+	color: #fff;
+}
+
+.hero-gallery__autoplay:focus-visible {
+	outline: 2px solid #fff;
+	outline-offset: 3px;
 }
 
 .hero-section__footer {
@@ -588,8 +642,30 @@ iframe {
 }
 
 @media (hover: hover) {
+	.hero-gallery {
+		display: flow-root;
+	}
+
+	.hero-gallery__viewport {
+		/* Make room for the enlarged tile without moving the surrounding content. */
+		padding-block: 16px;
+		margin-block: -16px;
+	}
+
+	.hero-gallery__item:hover {
+		z-index: 3;
+		transform: scale(1.1);
+	}
+
+	.hero-gallery__item:has(~ .hero-gallery__item:hover) {
+		transform: translateX(-6%);
+	}
+
+	.hero-gallery__item:hover ~ .hero-gallery__item {
+		transform: translateX(6%);
+	}
+
 	.hero-gallery__item:hover img {
-		transform: scale(1.035);
 		filter: brightness(1.06);
 	}
 }
@@ -599,6 +675,7 @@ iframe {
 		scroll-behavior: auto;
 	}
 
+	.hero-gallery__item,
 	.hero-gallery__item img,
 	.hero-gallery__control,
 	.hero-button {

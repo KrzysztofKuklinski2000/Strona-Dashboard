@@ -111,10 +111,13 @@ $heroSlides = [
 			</button>
 		</div>
 
-		<div class="hero-gallery__status" aria-hidden="true">
-			<span data-hero-carousel-current>01</span>
-			<span class="hero-gallery__status-line"></span>
-			<span><?= str_pad((string) count($heroSlides), 2, '0', STR_PAD_LEFT) ?></span>
+		<div class="hero-gallery__status">
+			<span data-hero-carousel-current aria-hidden="true">01</span>
+			<span class="hero-gallery__status-line" aria-hidden="true"></span>
+			<span aria-hidden="true"><?= str_pad((string) count($heroSlides), 2, '0', STR_PAD_LEFT) ?></span>
+			<button class="hero-gallery__autoplay" type="button" data-hero-carousel-autoplay aria-label="Wstrzymaj automatyczne przesuwanie zdjęć" title="Wstrzymaj automatyczne przesuwanie zdjęć" hidden>
+				<i class="fa-solid fa-pause" aria-hidden="true"></i>
+			</button>
 		</div>
 
 		<div class="hero-section__footer">
