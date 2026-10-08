@@ -25,14 +25,14 @@ $gridSizeClass = $cardCount <= 2
 
             <div class="why-karate-grid <?= e($gridSizeClass) ?>">
                 <?php foreach ($cards as $card): ?>
-                    <article class="why-karate-card">
+                    <article class="why-karate-card<?= !empty($card['icon']) ? ' why-karate-card--with-icon' : '' ?>">
                         <?php if (!empty($card['icon'])): ?>
                             <div class="why-karate-card__icon" aria-hidden="true">
                                 <i class="<?= e($card['icon']) ?>"></i>
                             </div>
                         <?php endif ?>
 
-                        <div>
+                        <div class="why-karate-card__content">
                             <?php if (!empty($card['title'])): ?>
                                 <h3><?= e($card['title']) ?></h3>
                             <?php endif ?>

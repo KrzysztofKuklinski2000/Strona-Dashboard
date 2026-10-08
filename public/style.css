@@ -1688,61 +1688,62 @@ html.has-location-map-open body {
 }
 
 .why-karate-grid {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
 	gap: 14px;
 }
 
 .why-karate-card {
-	flex: 0 1 100%;
 	min-width: 0;
 	display: grid;
-	grid-template-columns: 1fr;
-	gap: 16px;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 14px;
 	align-items: start;
-	justify-items: center;
-	padding: 22px;
+	padding: 20px;
 	border: 1px solid var(--color-line);
 	border-radius: var(--radius-card);
-	background: #fff;
+	background: var(--color-paper);
 	box-shadow: none;
-	text-align: center;
+	text-align: left;
+}
+
+.why-karate-card--with-icon {
+	grid-template-columns: 40px minmax(0, 1fr);
 }
 
 .why-karate-card__icon {
-	width: 58px;
-	height: 58px;
+	width: 40px;
+	height: 40px;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	border-radius: 999px;
-	background: #fff2f2;
+	border: 1px solid var(--color-line);
+	border-radius: 6px;
+	background: #f5f5f7;
 }
 
 .why-karate-card__icon i {
 	color: var(--color-accent);
-	font-size: 1.26rem;
+	font-size: 1rem;
 }
 
-.why-karate-card > div:not(.why-karate-card__icon) {
+.why-karate-card__content {
 	min-width: 0;
-	max-width: 34ch;
 }
 
 .why-karate-card h3 {
 	margin: 0;
 	color: var(--color-ink);
 	font-size: 1rem;
-	font-weight: 900;
+	font-weight: 800;
 	letter-spacing: -.02em;
 	line-height: 1.25;
 	overflow-wrap: break-word;
 }
 
 .why-karate-card p {
-	max-width: 34ch;
-	margin: 8px auto 0;
+	max-width: 56ch;
+	margin: 8px 0 0;
 	color: var(--color-muted);
 	font-size: .86rem;
 	font-weight: 500;
