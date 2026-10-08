@@ -9,7 +9,7 @@ $description = (string) ($block['description'] ?? '');
         </div>
 
         <div class="first-class-section__content">
-            <h2 id="<?= e($titleId) ?>">
+            <h2 class="home-section-title" id="<?= e($titleId) ?>">
                 <?= e($post->title ?? 'Pierwsze zajęcia są bezpłatne') ?>
             </h2>
 

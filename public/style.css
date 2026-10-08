@@ -1894,8 +1894,14 @@ html.has-location-map-open body {
 	color: #fff;
 }
 
-/* Tones follow rendered sections, including banners, regardless of post type. */
+/* Shared homepage foundation; deliberately scoped away from hero and subpages. */
 .homepage main > .home-post-section {
+	--radius-card: 10px;
+	--color-line: #e2e2e5;
+	--color-muted: #606167;
+	--home-section-space: clamp(36px, 4vw, 60px);
+	--home-heading-gap: clamp(22px, 2.4vw, 32px);
+	--home-control-radius: 6px;
 	--home-section-rgb: 255, 255, 255;
 	--home-section-background: rgb(var(--home-section-rgb));
 	--module-feed-background: var(--home-section-background);
@@ -1906,11 +1912,11 @@ html.has-location-map-open body {
 }
 
 .homepage main > .home-post-section:nth-of-type(even) {
-	--home-section-rgb: 250, 251, 252;
+	--home-section-rgb: 245, 245, 247;
 }
 
 .homepage main > .home-post-section + .home-post-section {
-	border-top: 1px solid #eef0f2;
+	border-top: 1px solid var(--color-line);
 }
 
 .homepage .home-post-section > :is(
@@ -1919,11 +1925,123 @@ html.has-location-map-open body {
 	.why-karate-section__inner,
 	.family-training-section__inner
 ) {
-	padding-block: clamp(40px, 4vw, 64px);
+	width: min(calc(100% - 40px), var(--container-width));
+	padding-block: var(--home-section-space);
+}
+
+.homepage main > .home-post-section .home-section-heading {
+	display: block;
+	max-width: none;
+	margin: 0;
+	padding-left: 18px;
+	border-left: 2px solid rgba(191, 31, 26, .4);
+	text-align: left;
+}
+
+.homepage main > .home-post-section .home-section-heading::before {
+	content: none;
+}
+
+.homepage main > .home-post-section .home-section-eyebrow {
+	margin: 0 0 8px;
+	color: var(--color-accent);
+	font-size: .65rem;
+	font-weight: 800;
+	letter-spacing: .16em;
+	line-height: 1.5;
+	text-transform: uppercase;
+}
+
+.homepage main > .home-post-section .home-section-title {
+	margin: 0;
+	color: var(--color-ink);
+	font-size: clamp(1.7rem, 3vw, 2.75rem);
+	font-weight: 800;
+	letter-spacing: -.045em;
+	line-height: 1.12;
+	overflow-wrap: anywhere;
+}
+
+.homepage main > .home-post-section .why-karate-section__heading,
+.homepage main > .home-post-section .module-feed-section__header {
+	margin-bottom: var(--home-heading-gap);
+}
+
+.homepage main > .module-feed-section:not([data-feed-module="timetable"]) {
+	--module-feed-accent: #606167;
+	--module-feed-accent-dark: var(--color-ink);
+	--module-feed-soft: #eeeef0;
+}
+
+.homepage main > .home-post-section :is(
+	.first-class-section__cta,
+	.family-training-section__cta,
+	.module-feed-section__more
+) {
+	min-height: 44px;
+	gap: 10px;
+	padding-inline: 20px;
+	border: 1px solid transparent;
+	border-radius: var(--home-control-radius);
+	font-size: .8rem;
+	font-weight: 800;
+	line-height: 1.4;
+	text-align: center;
+	box-shadow: none;
+	transition: background .2s ease, border-color .2s ease, color .2s ease;
+}
+
+.homepage main > .home-post-section :is(
+	.first-class-section__cta,
+	.family-training-section__cta
+) {
+	background: var(--color-accent);
+	color: var(--color-paper);
+}
+
+.homepage main > .home-post-section .module-feed-section__more {
+	border-color: var(--color-line);
+	background: var(--color-paper);
+	color: var(--color-ink);
+}
+
+.homepage main > .home-post-section :is(
+	.first-class-section__cta,
+	.family-training-section__cta,
+	.module-feed-section__more
+):hover {
+	transform: none;
+	box-shadow: none;
+}
+
+.homepage main > .home-post-section :is(
+	.first-class-section__cta,
+	.family-training-section__cta
+):hover {
+	background: var(--color-accent-dark);
+}
+
+.homepage main > .home-post-section .module-feed-section__more:hover {
+	border-color: rgba(191, 31, 26, .35);
+	background: #fff5f4;
+	color: var(--color-accent);
+}
+
+.homepage main > .home-post-section :is(a, button, [tabindex="0"]):focus-visible {
+	outline: 2px solid var(--color-accent);
+	outline-offset: 4px;
 }
 
 .homepage .family-training-section__content {
 	padding-block: 0;
+	text-align: left;
+}
+
+.homepage main > .home-post-section :is(
+	.family-training-section__lead,
+	.family-training-section__list li
+) {
+	margin-inline: 0;
 }
 
 

@@ -26,9 +26,9 @@ $sectionEyebrow = (string) ($module['eyebrow'] ?? 'Najnowsze wpisy');
     >
         <div class="important-section__inner">
             <div class="module-feed-section__header">
-                <div class="important-section__heading">
-                    <p><?= e($sectionEyebrow) ?></p>
-                    <h2 id="<?= e($titleId) ?>"><?= e($sectionTitle) ?></h2>
+                <div class="important-section__heading home-section-heading">
+                    <p class="home-section-eyebrow"><?= e($sectionEyebrow) ?></p>
+                    <h2 class="home-section-title" id="<?= e($titleId) ?>"><?= e($sectionTitle) ?></h2>
                 </div>
 
                 <?php if ($module !== null && $module['url'] !== null): ?>

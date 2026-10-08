@@ -21,13 +21,15 @@ $link = $block['link'] ?? null;
         <?php endif ?>
 
         <div class="family-training-section__content">
-            <?php if ($eyebrow !== ''): ?>
-                <p class="family-training-section__eyebrow"><?= e($eyebrow) ?></p>
-            <?php endif ?>
+            <div class="home-section-heading">
+                <?php if ($eyebrow !== ''): ?>
+                    <p class="family-training-section__eyebrow home-section-eyebrow"><?= e($eyebrow) ?></p>
+                <?php endif ?>
 
-            <?php if ($title !== ''): ?>
-                <h2 id="<?= e($titleId) ?>"><?= e($title) ?></h2>
-            <?php endif ?>
+                <?php if ($title !== ''): ?>
+                    <h2 class="home-section-title" id="<?= e($titleId) ?>"><?= e($title) ?></h2>
+                <?php endif ?>
+            </div>
 
             <?php if ($description !== ''): ?>
                 <p class="family-training-section__lead"><?= e($description) ?></p>

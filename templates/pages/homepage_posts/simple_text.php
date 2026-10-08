@@ -7,9 +7,9 @@ $description = $block['description'] ?? '';
 
 <section id="<?= e($sectionId) ?>" class="simple-text-section home-post-section" aria-labelledby="<?= e($titleId) ?>">
     <div class="simple-text-section__inner">
-        <div class="simple-text-section__heading">
+        <div class="simple-text-section__heading home-section-heading">
             <?php if ($title !== ''): ?>
-                <h2 id="<?= e($titleId) ?>"><?= e($title) ?></h2>
+                <h2 class="home-section-title" id="<?= e($titleId) ?>"><?= e($title) ?></h2>
             <?php endif ?>
         </div>
 
