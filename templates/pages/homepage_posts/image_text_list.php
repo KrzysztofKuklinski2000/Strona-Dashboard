@@ -13,7 +13,7 @@ $link = $block['link'] ?? null;
 ?>
 
 <section id="<?= e($sectionId) ?>" class="family-training-section home-post-section" aria-labelledby="<?= e($titleId) ?>">
-    <div class="family-training-section__inner">
+    <div class="family-training-section__inner<?= empty($image['src']) ? ' family-training-section__inner--text-only' : '' ?>">
         <?php if (!empty($image['src'])): ?>
             <div class="family-training-section__media">
                 <img src="<?= e($image['src']) ?>" alt="<?= e($image['alt'] ?? '') ?>">
@@ -40,7 +40,7 @@ $link = $block['link'] ?? null;
                     <?php foreach ($items as $item): ?>
                         <li>
                             <i class="fa-solid fa-check" aria-hidden="true"></i>
-                            <?= e($item) ?>
+                            <span><?= e($item) ?></span>
                         </li>
                     <?php endforeach ?>
                 </ul>

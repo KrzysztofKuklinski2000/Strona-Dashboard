@@ -1504,52 +1504,22 @@
 	}
 
 	.family-training-section__inner {
-		grid-template-columns: minmax(0, 1.06fr) minmax(360px, .94fr);
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 		align-items: center;
-		gap: 56px;
-		padding-top: 0;
-		padding-bottom: 0;
+		gap: clamp(32px, 4vw, 56px);
 	}
 
-	.family-training-section__media {
-		align-self: stretch;
-		min-height: 360px;
-		border-radius: 0;
-		margin-left: calc((100vw - min(100vw, var(--container-width))) / -2);
-		display: flex;
-		align-items: center;
-		justify-content: center;
+	.family-training-section__inner--text-only {
+		max-width: var(--container-width);
+		grid-template-columns: minmax(0, 1fr);
 	}
 
 	.family-training-section__media img {
-		width: min(100%, 760px);
-		height: auto;
-		max-height: 520px;
+		max-height: 480px;
 	}
 
 	.family-training-section__content {
-		padding: 74px 0 76px;
-		text-align: left;
-	}
-
-	.family-training-section__lead {
-		max-width: 520px;
-		margin-left: 0;
-		margin-right: 0;
-	}
-
-	.family-training-section__list li {
-		max-width: 560px;
-		margin-left: 0;
-		margin-right: 0;
-	}
-
-	.family-training-section__content::after {
-		right: -66px;
-		bottom: 20px;
-		width: 360px;
-		height: 360px;
-		opacity: .055;
+		max-width: 620px;
 	}
 
 	.site-newsletter__inner {
