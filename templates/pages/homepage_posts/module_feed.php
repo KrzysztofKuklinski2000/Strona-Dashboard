@@ -16,6 +16,7 @@ $sectionEyebrow = (string) ($module['eyebrow'] ?? 'Najnowsze wpisy');
 $isNewsFeed = ($block['module'] ?? '') === 'news';
 $isImportantFeed = ($block['module'] ?? '') === 'important_posts';
 $isTimetableFeed = ($block['module'] ?? '') === 'timetable';
+$isGalleryFeed = ($block['module'] ?? '') === 'gallery';
 
 ?>
 
@@ -55,7 +56,11 @@ $isTimetableFeed = ($block['module'] ?? '') === 'timetable';
                     <p class="module-feed-timetable-intro">Znajdź trening dla swojej grupy i sprawdź, kiedy oraz gdzie się spotykamy. W grafiku znajdziesz godziny zajęć i adresy sal.</p>
                 <?php endif ?>
 
-                <?php if (!$isNewsFeed && !$isTimetableFeed && $module !== null && $module['url'] !== null): ?>
+                <?php if ($isGalleryFeed): ?>
+                    <p class="module-feed-gallery-intro">Zobacz nasz klub w ruchu. Na treningach, zawodach i obozach. W galerii zbieramy wspólne chwile, sportowe emocje i codzienne życie naszej społeczności.</p>
+                <?php endif ?>
+
+                <?php if (!$isNewsFeed && !$isTimetableFeed && !$isGalleryFeed && $module !== null && $module['url'] !== null): ?>
                     <a class="module-feed-section__more" href="<?= e($module['url']) ?>">
                         Więcej
                         <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
@@ -87,7 +92,7 @@ $isTimetableFeed = ($block['module'] ?? '') === 'timetable';
                         </button>
                     </div>
 
-                    <?php if ($isNewsFeed || $isImportantFeed || $isTimetableFeed): ?>
+                    <?php if ($isNewsFeed || $isImportantFeed || $isTimetableFeed || $isGalleryFeed): ?>
                         <div
                             class="module-feed-section__pagination"
                             aria-label="Pozycje slidera"
@@ -97,9 +102,9 @@ $isTimetableFeed = ($block['module'] ?? '') === 'timetable';
                 <?php endif ?>
             </div>
 
-            <?php if (($isNewsFeed || $isTimetableFeed) && $module !== null && $module['url'] !== null): ?>
+            <?php if (($isNewsFeed || $isTimetableFeed || $isGalleryFeed) && $module !== null && $module['url'] !== null): ?>
                 <a class="module-feed-section__more module-feed-section__more--footer" href="<?= e($module['url']) ?>">
-                    <?= $isTimetableFeed ? 'Zobacz pełny grafik' : 'Wszystkie aktualności' ?>
+                    <?= $isTimetableFeed ? 'Zobacz pełny grafik' : ($isGalleryFeed ? 'Zobacz całą galerię' : 'Wszystkie aktualności') ?>
                     <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                 </a>
             <?php endif ?>

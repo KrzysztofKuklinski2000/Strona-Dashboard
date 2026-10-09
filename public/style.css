@@ -3798,12 +3798,12 @@ footer .copy {
 	margin: 0;
 }
 
-/* Timetable feed: shared section rhythm, unchanged card sizing and scrolling. */
-.homepage main > .module-feed-section[data-feed-module="timetable"] .important-section__inner {
+/* Timetable and gallery feeds share section chrome; card layouts stay independent. */
+.homepage main > .module-feed-section:is([data-feed-module="timetable"], [data-feed-module="gallery"]) .important-section__inner {
 	width: min(calc(100% - 40px), 1040px);
 	padding-block: clamp(44px, 5vw, 64px);
 }
-.homepage main > [data-feed-module="timetable"] .module-feed-section__header {
+.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) .module-feed-section__header {
 	width: min(100%, 640px);
 	flex-direction: column;
 	align-items: center;
@@ -3811,17 +3811,17 @@ footer .copy {
 	margin-inline: auto;
 	margin-bottom: clamp(28px, 3.5vw, 38px);
 }
-.homepage main > [data-feed-module="timetable"] .home-section-heading {
+.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) .home-section-heading {
 	padding: 0;
 	border: 0;
 	text-align: center;
 }
-.homepage main > [data-feed-module="timetable"] .home-section-eyebrow { display: none; }
-.homepage main > [data-feed-module="timetable"] .home-section-title {
+.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) .home-section-eyebrow { display: none; }
+.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) .home-section-title {
 	font-size: clamp(1.9rem, 4vw, 2.7rem);
 	letter-spacing: -.05em;
 }
-.homepage main > [data-feed-module="timetable"] .home-section-heading::after {
+.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) .home-section-heading::after {
 	content: '';
 	display: block;
 	width: 42px;
@@ -3830,22 +3830,22 @@ footer .copy {
 	border-radius: 999px;
 	background: var(--color-accent);
 }
-.homepage main > [data-feed-module="timetable"] .module-feed-timetable-intro {
+.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) :is(.module-feed-timetable-intro, .module-feed-gallery-intro) {
 	margin: 18px auto 0;
 	color: var(--color-muted);
 	font-size: clamp(.88rem, 1.3vw, .98rem);
 	line-height: 1.65;
 	text-align: center;
 }
-.homepage main > [data-feed-module="timetable"] .module-feed-section__slider {
+.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) .module-feed-section__slider {
 	position: relative;
 	display: grid;
 	grid-template-columns: minmax(0, 1fr);
 }
-.homepage main > [data-feed-module="timetable"] .important-info-shell { grid-row: 1; }
-.homepage main > [data-feed-module="timetable"] .important-info-shell::before,
-.homepage main > [data-feed-module="timetable"] .important-info-shell::after { display: none; }
-.homepage main > [data-feed-module="timetable"] .info-arrows {
+.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) .important-info-shell { grid-row: 1; }
+.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) .important-info-shell::before,
+.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) .important-info-shell::after { display: none; }
+.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) .info-arrows {
 	position: absolute;
 	inset: 0;
 	grid-row: 1;
@@ -3855,7 +3855,7 @@ footer .copy {
 	margin: 0;
 	pointer-events: none;
 }
-.homepage main > [data-feed-module="timetable"] :is(.left-arrow, .right-arrow) {
+.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) :is(.left-arrow, .right-arrow) {
 	position: absolute;
 	top: 50%;
 	width: 38px;
@@ -3863,12 +3863,12 @@ footer .copy {
 	pointer-events: auto;
 	transform: translateY(-50%);
 }
-.homepage main > [data-feed-module="timetable"] .left-arrow { left: 8px; right: auto; }
-.homepage main > [data-feed-module="timetable"] .right-arrow { right: 8px; left: auto; }
-.homepage main > [data-feed-module="timetable"] :is(.left-arrow, .right-arrow):hover {
+.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) .left-arrow { left: 8px; right: auto; }
+.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) .right-arrow { right: 8px; left: auto; }
+.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) :is(.left-arrow, .right-arrow):hover {
 	transform: translateY(calc(-50% - 1px));
 }
-.homepage main > [data-feed-module="timetable"] .module-feed-section__pagination {
+.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) .module-feed-section__pagination {
 	grid-row: 2;
 	display: flex;
 	align-items: center;
@@ -3876,8 +3876,8 @@ footer .copy {
 	gap: 7px;
 	margin-top: 14px;
 }
-.homepage main > [data-feed-module="timetable"] .module-feed-section__pagination[hidden] { display: none; }
-.homepage main > [data-feed-module="timetable"] .module-feed-section__pagination button {
+.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) .module-feed-section__pagination[hidden] { display: none; }
+.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) .module-feed-section__pagination button {
 	width: 7px;
 	height: 7px;
 	padding: 0;
@@ -3887,12 +3887,12 @@ footer .copy {
 	cursor: pointer;
 	transition: width .2s ease, background .2s ease;
 }
-.homepage main > [data-feed-module="timetable"] .module-feed-section__pagination button.is-active {
+.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) .module-feed-section__pagination button.is-active {
 	width: 22px;
 	background: var(--color-accent);
 }
-.homepage main > [data-feed-module="timetable"] .module-feed-section__pagination button:focus-visible { outline-offset: 4px; }
-.homepage main > [data-feed-module="timetable"] .module-feed-section__more--footer {
+.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) .module-feed-section__pagination button:focus-visible { outline-offset: 4px; }
+.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) .module-feed-section__more--footer {
 	width: fit-content;
 	display: flex;
 	margin: 22px auto 0;
@@ -3900,7 +3900,7 @@ footer .copy {
 	background: var(--color-accent);
 	color: #fff;
 }
-.homepage main > [data-feed-module="timetable"] .module-feed-section__more--footer:hover {
+.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) .module-feed-section__more--footer:hover {
 	border-color: var(--color-accent-dark);
 	background: var(--color-accent-dark);
 	color: #fff;
@@ -3911,20 +3911,20 @@ footer .copy {
 	color: var(--color-accent);
 }
 @media (min-width: 760px) {
-	.homepage main > .module-feed-section[data-feed-module="timetable"] .important-section__inner {
+	.homepage main > .module-feed-section:is([data-feed-module="timetable"], [data-feed-module="gallery"]) .important-section__inner {
 		width: min(calc(100% - 128px), 1040px);
 	}
-	.homepage main > [data-feed-module="timetable"] :is(.left-arrow, .right-arrow) { width: 42px; height: 42px; }
-	.homepage main > [data-feed-module="timetable"] .left-arrow { left: -54px; }
-	.homepage main > [data-feed-module="timetable"] .right-arrow { right: -54px; }
+	.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) :is(.left-arrow, .right-arrow) { width: 42px; height: 42px; }
+	.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) .left-arrow { left: -54px; }
+	.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) .right-arrow { right: -54px; }
 }
 @media (min-width: 1800px) {
-	.homepage main > .module-feed-section[data-feed-module="timetable"] .important-section__inner {
+	.homepage main > .module-feed-section:is([data-feed-module="timetable"], [data-feed-module="gallery"]) .important-section__inner {
 		width: min(calc(100% - 160px), 1420px);
 	}
 }
 @media (prefers-reduced-motion: reduce) {
-	.homepage main > [data-feed-module="timetable"] .module-feed-section__pagination button { transition: none; }
+	.homepage main > :is([data-feed-module="timetable"], [data-feed-module="gallery"]) .module-feed-section__pagination button { transition: none; }
 }
 
 .news-pagination {
