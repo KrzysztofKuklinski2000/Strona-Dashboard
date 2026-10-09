@@ -14,6 +14,7 @@ $module = HomepageFeedModules::get($block['module'] ?? '');
 $feedPartial = $module['partial'] ?? '';
 $sectionEyebrow = (string) ($module['eyebrow'] ?? 'Najnowsze wpisy');
 $isNewsFeed = ($block['module'] ?? '') === 'news';
+$isImportantFeed = ($block['module'] ?? '') === 'important_posts';
 
 ?>
 
@@ -24,6 +25,7 @@ $isNewsFeed = ($block['module'] ?? '') === 'news';
         aria-labelledby="<?= e($titleId) ?>"
         data-feed-slider
         data-feed-module="<?= e((string) ($block['module'] ?? '')) ?>"
+        data-feed-count="<?= count($feedPosts) ?>"
     >
         <div class="important-section__inner">
             <div class="module-feed-section__header">
@@ -31,6 +33,10 @@ $isNewsFeed = ($block['module'] ?? '') === 'news';
                     <p class="home-section-eyebrow"><?= e($sectionEyebrow) ?></p>
                     <h2 class="home-section-title" id="<?= e($titleId) ?>"><?= e($sectionTitle) ?></h2>
                 </div>
+
+                <?php if ($isImportantFeed): ?>
+                    <p class="club-notices-intro">Tutaj znajdziesz najważniejsze komunikaty dotyczące życia naszego klubu: zmiany w grafiku treningów, informacje o wydarzeniach i sprawach organizacyjnych. Sprawdź aktualne ogłoszenia, aby być na bieżąco i dobrze przygotować się do kolejnych zajęć.</p>
+                <?php endif ?>
 
                 <?php if ($isNewsFeed): ?>
                     <p class="module-feed-news-intro">
@@ -76,10 +82,10 @@ $isNewsFeed = ($block['module'] ?? '') === 'news';
                         </button>
                     </div>
 
-                    <?php if ($isNewsFeed): ?>
+                    <?php if ($isNewsFeed || $isImportantFeed): ?>
                         <div
                             class="module-feed-section__pagination"
-                            aria-label="Strony aktualności"
+                            aria-label="Pozycje komunikatów"
                             data-feed-slider-pagination
                         ></div>
                     <?php endif ?>

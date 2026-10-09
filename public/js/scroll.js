@@ -106,7 +106,7 @@
             paginationOffsets.forEach((offset, index) => {
                 const dot = document.createElement('button');
                 dot.type = 'button';
-                dot.setAttribute('aria-label', `Pokaż pozycję aktualności ${index + 1} z ${paginationOffsets.length}`);
+                dot.setAttribute('aria-label', `Pokaż pozycję ${index + 1} z ${paginationOffsets.length}`);
                 dot.addEventListener('click', () => {
                     scrollElement.scrollTo({top: 0, left: offset, behavior: 'smooth'});
                 });
@@ -154,6 +154,30 @@
     window.addEventListener('load', () => {
         requestAnimationFrame(() => {
             document.querySelectorAll('.important-section').forEach(initializeSlider);
+            document.querySelectorAll('.club-notice').forEach((card) => {
+                const text = card.querySelector('[data-notice-text]');
+                const toggle = card.querySelector('[data-notice-toggle]');
+
+                if (!text || !toggle) {
+                    return;
+                }
+
+                function updateToggle() {
+                    if (!card.classList.contains('is-expanded')) {
+                        toggle.hidden = text.scrollHeight <= text.clientHeight + 1;
+                    }
+                }
+
+                toggle.addEventListener('click', () => {
+                    const expanded = card.classList.toggle('is-expanded');
+                    toggle.setAttribute('aria-expanded', String(expanded));
+                    toggle.textContent = expanded ? 'Zwiń' : 'Rozwiń';
+                    updateToggle();
+                });
+
+                updateToggle();
+                window.addEventListener('resize', updateToggle);
+            });
         });
     });
 })();
