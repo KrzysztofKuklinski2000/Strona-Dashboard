@@ -1494,7 +1494,7 @@ html.has-location-map-open body {
 .first-class-section__inner {
 	--color-ink: #fff;
 	--color-muted: #c5c5cb;
-	width: min(calc(100% - 40px), var(--container-width));
+	width: min(calc(100% - 40px), 1040px);
 	margin: 0 auto;
 	display: grid;
 	grid-template-columns: minmax(0, 1fr);
@@ -1533,21 +1533,33 @@ html.has-location-map-open body {
 .first-class-section__content h2 {
 	margin: 0;
 	color: var(--color-ink);
-	font-size: clamp(1.45rem, 6vw, 2.65rem);
+	font-size: clamp(1.4rem, 4vw, 2.25rem);
 	font-weight: 800;
 	letter-spacing: -.055em;
-	line-height: 1.05;
+	line-height: 1.15;
 	overflow-wrap: break-word;
 }
 
 .first-class-section__content p {
-	max-width: 65ch;
+	max-width: 58ch;
 	margin-top: 12px;
 	color: var(--color-muted);
 	font-size: .88rem;
 	font-weight: 500;
 	line-height: 1.65;
 	overflow-wrap: break-word;
+}
+
+@media (min-width: 760px) {
+	.first-class-section__inner {
+		width: min(calc(100% - 128px), 1040px);
+	}
+}
+
+@media (min-width: 1800px) {
+	.first-class-section__inner {
+		width: min(calc(100% - 160px), 1420px);
+	}
 }
 
 .first-class-section__cta {

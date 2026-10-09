@@ -1,6 +1,13 @@
 <?php
 $titleId = 'trial-banner-title-' . (int) ($post->id ?? 0);
 $description = (string) ($block['description'] ?? '');
+$defaultDescription = 'Poznaj nasz klub i spróbuj treningu karate. Pierwsze zajęcia są bezpłatne — przyjdź, poćwicz z nami i zdecyduj, czy chcesz dołączyć.';
+if ($description === '' || (
+    str_contains($description, 'Chcesz spróbować, zanim się zdecydujesz?')
+    && str_contains($description, 'Nie przegap okazji')
+)) {
+    $description = $defaultDescription;
+}
 ?>
 <section class="first-class-section home-post-section" aria-labelledby="<?= e($titleId) ?>">
     <div class="first-class-section__inner">
