@@ -2034,6 +2034,107 @@ html.has-location-map-open body {
 	margin-inline: 0;
 }
 
+/* Image and copy share one aligned column until there is room for two. */
+.homepage main > .family-training-section .family-training-section__inner {
+	width: min(calc(100% - 40px), 1040px);
+	grid-template-columns: minmax(0, 1fr);
+	align-items: start;
+	gap: 30px;
+}
+
+.homepage main > .family-training-section .family-training-section__media,
+.homepage main > .family-training-section .family-training-section__content {
+	width: 100%;
+	max-width: none;
+	margin-inline: 0;
+}
+
+.homepage main > .family-training-section .family-training-section__media {
+	box-shadow: 0 12px 12px -12px rgba(25, 25, 28, .24);
+}
+
+.homepage main > .family-training-section .family-training-section__media img {
+	max-height: none;
+	width: 100%;
+	height: auto;
+}
+
+.homepage main > .family-training-section .home-section-heading {
+	padding: 0;
+	border: 0;
+}
+
+.homepage main > .family-training-section .home-section-heading::after {
+	content: '';
+	display: block;
+	width: 42px;
+	height: 3px;
+	margin-top: 14px;
+	border-radius: 999px;
+	background: #c9201b;
+}
+
+.homepage main > .family-training-section .family-training-section__lead {
+	width: 100%;
+	max-width: none;
+	text-align: left;
+	line-height: 1.75;
+	white-space: pre-line;
+}
+
+.homepage main > .family-training-section .family-training-section__list {
+	gap: 14px;
+	border: 0;
+	margin-top: 24px;
+}
+
+.homepage main > .family-training-section .family-training-section__list li {
+	padding: 0;
+	border: 0;
+}
+
+.homepage main > .family-training-section .family-training-section__list i {
+	border: 0;
+	background: transparent;
+	color: #c9201b;
+	font-size: .8rem;
+}
+
+@media (min-width: 760px) and (max-width: 1399px) {
+	.homepage main > .family-training-section .family-training-section__inner {
+		width: min(calc(100% - 128px), 1040px);
+	}
+}
+
+@media (min-width: 1400px) {
+	.homepage main > .family-training-section .family-training-section__inner {
+		width: min(calc(100% - 128px), 1280px);
+		grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+		gap: 40px;
+	}
+
+	.homepage main > .family-training-section .family-training-section__inner--text-only {
+		grid-template-columns: minmax(0, 1fr);
+		max-width: 700px;
+	}
+
+	.homepage main > .family-training-section .family-training-section__lead {
+		hyphens: auto;
+	}
+}
+
+@media (min-width: 1800px) {
+	.homepage main > .family-training-section .family-training-section__inner:not(.family-training-section__inner--text-only) {
+		width: min(calc(100% - 160px), 1420px);
+		grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+		gap: 56px;
+	}
+
+	.homepage main > .family-training-section .family-training-section__lead {
+		text-align: justify;
+	}
+}
+
 /* Content tiles: centered benefits with an icon above the copy. */
 .homepage main > .why-karate-section .why-karate-section__inner {
 	width: min(calc(100% - 40px), 1040px);
