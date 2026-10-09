@@ -2565,41 +2565,10 @@ html.has-location-map-open body {
 
 /* Homepage news: compact club editorial carousel. */
 .homepage main > .module-feed-section[data-feed-module="news"] {
-	--home-section-rgb: 245, 245, 247;
 	position: relative;
 	overflow: hidden;
 	border-top: 0;
 	border-bottom: 0;
-}
-
-.homepage main > .module-feed-section[data-feed-module="news"]::before {
-	content: '';
-	position: absolute;
-	inset: 0;
-	background:
-		url('/public/images/logo.png') 4% 12% / 20px 20px no-repeat,
-		url('/public/images/logo.png') 17% 8% / 27px 27px no-repeat,
-		url('/public/images/logo.png') 31% 17% / 18px 18px no-repeat,
-		url('/public/images/logo.png') 48% 9% / 23px 23px no-repeat,
-		url('/public/images/logo.png') 66% 14% / 29px 29px no-repeat,
-		url('/public/images/logo.png') 82% 8% / 19px 19px no-repeat,
-		url('/public/images/logo.png') 95% 18% / 25px 25px no-repeat,
-		url('/public/images/logo.png') 9% 34% / 30px 30px no-repeat,
-		url('/public/images/logo.png') 24% 29% / 21px 21px no-repeat,
-		url('/public/images/logo.png') 41% 39% / 26px 26px no-repeat,
-		url('/public/images/logo.png') 59% 31% / 18px 18px no-repeat,
-		url('/public/images/logo.png') 76% 36% / 24px 24px no-repeat,
-		url('/public/images/logo.png') 91% 42% / 29px 29px no-repeat,
-		url('/public/images/logo.png') 3% 59% / 22px 22px no-repeat,
-		url('/public/images/logo.png') 20% 66% / 28px 28px no-repeat,
-		url('/public/images/logo.png') 37% 57% / 19px 19px no-repeat,
-		url('/public/images/logo.png') 63% 63% / 27px 27px no-repeat,
-		url('/public/images/logo.png') 84% 69% / 21px 21px no-repeat,
-		url('/public/images/logo.png') 13% 88% / 25px 25px no-repeat,
-		url('/public/images/logo.png') 72% 89% / 30px 30px no-repeat;
-	opacity: .045;
-	display: none;
-	pointer-events: none;
 }
 
 .homepage main > .module-feed-section[data-feed-module="news"] .important-section__inner {
@@ -2925,10 +2894,6 @@ html.has-location-map-open body {
 }
 
 @media (min-width: 640px) {
-	.homepage main > .module-feed-section[data-feed-module="news"]::before {
-		display: block;
-	}
-
 	.homepage main > .module-feed-section[data-feed-module="news"] .module-feed-news-card {
 		flex-basis: 318px;
 	}
