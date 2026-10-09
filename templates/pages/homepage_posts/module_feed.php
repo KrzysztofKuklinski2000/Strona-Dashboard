@@ -15,6 +15,7 @@ $feedPartial = $module['partial'] ?? '';
 $sectionEyebrow = (string) ($module['eyebrow'] ?? 'Najnowsze wpisy');
 $isNewsFeed = ($block['module'] ?? '') === 'news';
 $isImportantFeed = ($block['module'] ?? '') === 'important_posts';
+$isTimetableFeed = ($block['module'] ?? '') === 'timetable';
 
 ?>
 
@@ -50,7 +51,11 @@ $isImportantFeed = ($block['module'] ?? '') === 'important_posts';
                     </ul>
                 <?php endif ?>
 
-                <?php if (!$isNewsFeed && $module !== null && $module['url'] !== null): ?>
+                <?php if ($isTimetableFeed): ?>
+                    <p class="module-feed-timetable-intro">Znajdź trening dla swojej grupy i sprawdź, kiedy oraz gdzie się spotykamy. W grafiku znajdziesz godziny zajęć i adresy sal.</p>
+                <?php endif ?>
+
+                <?php if (!$isNewsFeed && !$isTimetableFeed && $module !== null && $module['url'] !== null): ?>
                     <a class="module-feed-section__more" href="<?= e($module['url']) ?>">
                         Więcej
                         <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
@@ -82,19 +87,19 @@ $isImportantFeed = ($block['module'] ?? '') === 'important_posts';
                         </button>
                     </div>
 
-                    <?php if ($isNewsFeed || $isImportantFeed): ?>
+                    <?php if ($isNewsFeed || $isImportantFeed || $isTimetableFeed): ?>
                         <div
                             class="module-feed-section__pagination"
-                            aria-label="Pozycje komunikatów"
+                            aria-label="Pozycje slidera"
                             data-feed-slider-pagination
                         ></div>
                     <?php endif ?>
                 <?php endif ?>
             </div>
 
-            <?php if ($isNewsFeed && $module !== null && $module['url'] !== null): ?>
+            <?php if (($isNewsFeed || $isTimetableFeed) && $module !== null && $module['url'] !== null): ?>
                 <a class="module-feed-section__more module-feed-section__more--footer" href="<?= e($module['url']) ?>">
-                    Wszystkie aktualności
+                    <?= $isTimetableFeed ? 'Zobacz pełny grafik' : 'Wszystkie aktualności' ?>
                     <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                 </a>
             <?php endif ?>

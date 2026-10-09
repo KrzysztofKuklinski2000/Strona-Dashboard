@@ -1235,9 +1235,9 @@ main {
 }
 
 .module-feed-section[data-feed-module="timetable"] {
-	--module-feed-accent: #2d6170;
-	--module-feed-accent-dark: #1e4651;
-	--module-feed-soft: #deebed;
+	--module-feed-accent: var(--color-accent);
+	--module-feed-accent-dark: #19191b;
+	--module-feed-soft: #f5f5f7;
 }
 
 .module-feed-section .module-feed-timetable-card {
@@ -1258,7 +1258,13 @@ main {
 
 .module-feed-timetable-card:hover {
 	transform: translateY(-3px);
-	box-shadow: 0 12px 28px rgba(30, 70, 81, .1);
+	box-shadow: 0 12px 28px rgba(20, 20, 24, .1);
+}
+
+.module-feed-timetable-card__schedule {
+	background:
+		linear-gradient(135deg, rgba(191, 31, 26, .2), transparent 46%),
+		#19191c;
 }
 
 .module-feed-timetable-card__header {
@@ -1267,7 +1273,7 @@ main {
 	justify-content: space-between;
 	gap: 14px;
 	padding: 20px 22px 14px;
-	background: linear-gradient(135deg, var(--module-feed-accent-dark), var(--module-feed-accent));
+	background: transparent;
 }
 
 .module-feed-timetable-card__day {
@@ -1300,7 +1306,7 @@ main {
 	align-items: center;
 	gap: 13px;
 	padding: 2px 22px 22px;
-	background: linear-gradient(135deg, var(--module-feed-accent-dark), var(--module-feed-accent));
+	background: transparent;
 }
 
 .module-feed-timetable-card__time time {
@@ -3790,6 +3796,135 @@ footer .copy {
 .news-page__empty h2,
 .news-page__empty p {
 	margin: 0;
+}
+
+/* Timetable feed: shared section rhythm, unchanged card sizing and scrolling. */
+.homepage main > .module-feed-section[data-feed-module="timetable"] .important-section__inner {
+	width: min(calc(100% - 40px), 1040px);
+	padding-block: clamp(44px, 5vw, 64px);
+}
+.homepage main > [data-feed-module="timetable"] .module-feed-section__header {
+	width: min(100%, 640px);
+	flex-direction: column;
+	align-items: center;
+	gap: 0;
+	margin-inline: auto;
+	margin-bottom: clamp(28px, 3.5vw, 38px);
+}
+.homepage main > [data-feed-module="timetable"] .home-section-heading {
+	padding: 0;
+	border: 0;
+	text-align: center;
+}
+.homepage main > [data-feed-module="timetable"] .home-section-eyebrow { display: none; }
+.homepage main > [data-feed-module="timetable"] .home-section-title {
+	font-size: clamp(1.9rem, 4vw, 2.7rem);
+	letter-spacing: -.05em;
+}
+.homepage main > [data-feed-module="timetable"] .home-section-heading::after {
+	content: '';
+	display: block;
+	width: 42px;
+	height: 3px;
+	margin: 14px auto 0;
+	border-radius: 999px;
+	background: var(--color-accent);
+}
+.homepage main > [data-feed-module="timetable"] .module-feed-timetable-intro {
+	margin: 18px auto 0;
+	color: var(--color-muted);
+	font-size: clamp(.88rem, 1.3vw, .98rem);
+	line-height: 1.65;
+	text-align: center;
+}
+.homepage main > [data-feed-module="timetable"] .module-feed-section__slider {
+	position: relative;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+}
+.homepage main > [data-feed-module="timetable"] .important-info-shell { grid-row: 1; }
+.homepage main > [data-feed-module="timetable"] .important-info-shell::before,
+.homepage main > [data-feed-module="timetable"] .important-info-shell::after { display: none; }
+.homepage main > [data-feed-module="timetable"] .info-arrows {
+	position: absolute;
+	inset: 0;
+	grid-row: 1;
+	z-index: 3;
+	display: block;
+	width: 100%;
+	margin: 0;
+	pointer-events: none;
+}
+.homepage main > [data-feed-module="timetable"] :is(.left-arrow, .right-arrow) {
+	position: absolute;
+	top: 50%;
+	width: 38px;
+	height: 38px;
+	pointer-events: auto;
+	transform: translateY(-50%);
+}
+.homepage main > [data-feed-module="timetable"] .left-arrow { left: 8px; right: auto; }
+.homepage main > [data-feed-module="timetable"] .right-arrow { right: 8px; left: auto; }
+.homepage main > [data-feed-module="timetable"] :is(.left-arrow, .right-arrow):hover {
+	transform: translateY(calc(-50% - 1px));
+}
+.homepage main > [data-feed-module="timetable"] .module-feed-section__pagination {
+	grid-row: 2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 7px;
+	margin-top: 14px;
+}
+.homepage main > [data-feed-module="timetable"] .module-feed-section__pagination[hidden] { display: none; }
+.homepage main > [data-feed-module="timetable"] .module-feed-section__pagination button {
+	width: 7px;
+	height: 7px;
+	padding: 0;
+	border: 0;
+	border-radius: 999px;
+	background: #b9b9bf;
+	cursor: pointer;
+	transition: width .2s ease, background .2s ease;
+}
+.homepage main > [data-feed-module="timetable"] .module-feed-section__pagination button.is-active {
+	width: 22px;
+	background: var(--color-accent);
+}
+.homepage main > [data-feed-module="timetable"] .module-feed-section__pagination button:focus-visible { outline-offset: 4px; }
+.homepage main > [data-feed-module="timetable"] .module-feed-section__more--footer {
+	width: fit-content;
+	display: flex;
+	margin: 22px auto 0;
+	border-color: var(--color-accent);
+	background: var(--color-accent);
+	color: #fff;
+}
+.homepage main > [data-feed-module="timetable"] .module-feed-section__more--footer:hover {
+	border-color: var(--color-accent-dark);
+	background: var(--color-accent-dark);
+	color: #fff;
+}
+.homepage main > [data-feed-module="timetable"] .module-feed-timetable-card__day i,
+.homepage main > [data-feed-module="timetable"] .module-feed-timetable-card__location > span,
+.homepage main > [data-feed-module="timetable"] .module-feed-timetable-card__time span {
+	color: var(--color-accent);
+}
+@media (min-width: 760px) {
+	.homepage main > .module-feed-section[data-feed-module="timetable"] .important-section__inner {
+		width: min(calc(100% - 128px), 1040px);
+	}
+	.homepage main > [data-feed-module="timetable"] :is(.left-arrow, .right-arrow) { width: 42px; height: 42px; }
+	.homepage main > [data-feed-module="timetable"] .left-arrow { left: -54px; }
+	.homepage main > [data-feed-module="timetable"] .right-arrow { right: -54px; }
+}
+@media (min-width: 1800px) {
+	.homepage main > .module-feed-section[data-feed-module="timetable"] .important-section__inner {
+		width: min(calc(100% - 160px), 1420px);
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.homepage main > [data-feed-module="timetable"] .module-feed-section__pagination button { transition: none; }
 }
 
 .news-pagination {

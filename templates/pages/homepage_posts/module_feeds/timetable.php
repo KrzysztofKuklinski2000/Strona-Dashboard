@@ -22,6 +22,7 @@ $locationDetails = implode(', ', array_filter(
 ?>
 
 <article class="important-card module-feed-timetable-card">
+    <div class="module-feed-timetable-card__schedule">
     <header class="module-feed-timetable-card__header">
         <span class="module-feed-timetable-card__day">
             <i class="fa-regular fa-calendar-days" aria-hidden="true"></i>
@@ -40,6 +41,7 @@ $locationDetails = implode(', ', array_filter(
             <i class="fa-solid fa-arrow-right-long"></i>
         </span>
         <time datetime="<?= e($end) ?>"><?= e($end) ?></time>
+    </div>
     </div>
 
     <div class="module-feed-timetable-card__content">
