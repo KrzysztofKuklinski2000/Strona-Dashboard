@@ -4,6 +4,7 @@ $previewTitle = (string) ($previewTitle ?? 'Podgląd wpisu na stronie głównej'
 $previewDescription = (string) ($previewDescription ?? 'Tak wpis będzie prezentowany na stronie głównej.');
 $previewBodyClass = trim((string) ($previewBodyClass ?? 'homepage'));
 $previewBodyAttribute = $previewBodyClass !== '' ? ' class="' . e($previewBodyClass) . '"' : '';
+$scrollScriptVersion = filemtime(__DIR__ . '/../../../public/js/scroll.js');
 ?>
 
 <section class="dashboard-post-preview" aria-label="<?= e($previewTitle) ?>">
@@ -54,7 +55,7 @@ $previewBodyAttribute = $previewBodyClass !== '' ? ' class="' . e($previewBodyCl
             <main>
                 {$previewHtml}
             </main>
-            <script src="/public/js/scroll.js"></script>
+            <script src="/public/js/scroll.js?v={$scrollScriptVersion}"></script>
         </body>
         </html>
         HTML;

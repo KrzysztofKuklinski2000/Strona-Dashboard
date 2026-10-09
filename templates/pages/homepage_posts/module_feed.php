@@ -13,6 +13,7 @@ $sectionTitle = (string) ($post->title ?? 'Najnowsze wpisy');
 $module = HomepageFeedModules::get($block['module'] ?? '');
 $feedPartial = $module['partial'] ?? '';
 $sectionEyebrow = (string) ($module['eyebrow'] ?? 'Najnowsze wpisy');
+$isNewsFeed = ($block['module'] ?? '') === 'news';
 
 ?>
 
@@ -31,7 +32,19 @@ $sectionEyebrow = (string) ($module['eyebrow'] ?? 'Najnowsze wpisy');
                     <h2 class="home-section-title" id="<?= e($titleId) ?>"><?= e($sectionTitle) ?></h2>
                 </div>
 
-                <?php if ($module !== null && $module['url'] !== null): ?>
+                <?php if ($isNewsFeed): ?>
+                    <p class="module-feed-news-intro">
+                        Relacje z zawodów, informacje organizacyjne i codzienne życie naszego klubu — wszystko w jednym miejscu.
+                    </p>
+
+                    <ul class="module-feed-news-topics" aria-label="Tematy aktualności">
+                        <li title="Zawody"><i class="fa-solid fa-trophy" aria-hidden="true"></i><span class="visually-hidden">Zawody</span></li>
+                        <li title="Wydarzenia"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i><span class="visually-hidden">Wydarzenia</span></li>
+                        <li title="Życie klubu"><i class="fa-solid fa-people-group" aria-hidden="true"></i><span class="visually-hidden">Życie klubu</span></li>
+                    </ul>
+                <?php endif ?>
+
+                <?php if (!$isNewsFeed && $module !== null && $module['url'] !== null): ?>
                     <a class="module-feed-section__more" href="<?= e($module['url']) ?>">
                         Więcej
                         <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
@@ -39,28 +52,45 @@ $sectionEyebrow = (string) ($module['eyebrow'] ?? 'Najnowsze wpisy');
                 <?php endif ?>
             </div>
 
-            <div class="important-info-shell" data-feed-slider-shell>
-                <div
-                    class="important-info"
-                    tabindex="0"
-                    aria-label="Lista wpisów"
-                    data-feed-slider-list
-                >
-                    <?php foreach ($feedPosts as $feedPost): ?>
-                        <?php require 'templates/pages/homepage_posts/module_feeds/'. $feedPartial;  ?>
-                    <?php endforeach ?>
+            <div class="module-feed-section__slider">
+                <div class="important-info-shell" data-feed-slider-shell>
+                    <div
+                        class="important-info"
+                        tabindex="0"
+                        aria-label="Lista wpisów"
+                        data-feed-slider-list
+                    >
+                        <?php foreach ($feedPosts as $feedPost): ?>
+                            <?php require 'templates/pages/homepage_posts/module_feeds/'. $feedPartial;  ?>
+                        <?php endforeach ?>
+                    </div>
                 </div>
+
+                <?php if (count($feedPosts) > 1): ?>
+                    <div class="info-arrows" aria-label="Nawigacja wpisów" data-feed-slider-controls>
+                        <button class="left-arrow" type="button" aria-label="Poprzednie wpisy" data-feed-slider-previous>
+                            <i class="fa-solid fa-angle-left" aria-hidden="true"></i>
+                        </button>
+                        <button class="right-arrow" type="button" aria-label="Następne wpisy" data-feed-slider-next>
+                            <i class="fa-solid fa-angle-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <?php if ($isNewsFeed): ?>
+                        <div
+                            class="module-feed-section__pagination"
+                            aria-label="Strony aktualności"
+                            data-feed-slider-pagination
+                        ></div>
+                    <?php endif ?>
+                <?php endif ?>
             </div>
 
-            <?php if (count($feedPosts) > 1): ?>
-                <div class="info-arrows" aria-label="Nawigacja wpisów" data-feed-slider-controls>
-                    <button class="left-arrow" type="button" aria-label="Poprzednie wpisy" data-feed-slider-previous>
-                        <i class="fa-solid fa-angle-left" aria-hidden="true"></i>
-                    </button>
-                    <button class="right-arrow" type="button" aria-label="Następne wpisy" data-feed-slider-next>
-                        <i class="fa-solid fa-angle-right" aria-hidden="true"></i>
-                    </button>
-                </div>
+            <?php if ($isNewsFeed && $module !== null && $module['url'] !== null): ?>
+                <a class="module-feed-section__more module-feed-section__more--footer" href="<?= e($module['url']) ?>">
+                    Wszystkie aktualności
+                    <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                </a>
             <?php endif ?>
         </div>
     </section>

@@ -6,6 +6,8 @@
         const scrollShell = section.querySelector('.important-info-shell');
         const leftArrow = section.querySelector('.left-arrow');
         const rightArrow = section.querySelector('.right-arrow');
+        const pagination = section.querySelector('[data-feed-slider-pagination]');
+        let paginationOffsets = [];
 
         if (!scrollElement || !scrollShell || !leftArrow || !rightArrow) {
             return;
@@ -41,13 +43,91 @@
             rightArrow.style.visibility = isAtEnd ? 'hidden' : 'visible';
             scrollShell?.classList.toggle('has-left-fade', !isAtStart);
             scrollShell?.classList.toggle('has-right-fade', !isAtEnd);
+            updatePaginationState();
         }
 
+        function updatePaginationState() {
+            if (!pagination || paginationOffsets.length === 0) {
+                return;
+            }
+
+            const activeIndex = getActivePaginationIndex();
+
+            pagination.querySelectorAll('button').forEach((dot, index) => {
+                const isActive = index === activeIndex;
+                dot.classList.toggle('is-active', isActive);
+
+                if (isActive) {
+                    dot.setAttribute('aria-current', 'true');
+                } else {
+                    dot.removeAttribute('aria-current');
+                }
+            });
+        }
+
+        function getActivePaginationIndex() {
+            let activeIndex = 0;
+            let smallestDistance = Number.POSITIVE_INFINITY;
+
+            paginationOffsets.forEach((offset, index) => {
+                const distance = Math.abs(scrollElement.scrollLeft - offset);
+
+                if (distance < smallestDistance) {
+                    smallestDistance = distance;
+                    activeIndex = index;
+                }
+            });
+
+            return activeIndex;
+        }
+
+        function rebuildPagination() {
+            if (!pagination) {
+                return;
+            }
+
+            const maxScrollLeft = Math.max(0, scrollElement.scrollWidth - scrollElement.clientWidth);
+            const cards = [...scrollElement.querySelectorAll('.important-card')];
+            const firstCardOffset = cards[0]?.offsetLeft ?? 0;
+
+            paginationOffsets = cards
+                .map((card) => Math.min(card.offsetLeft - firstCardOffset, maxScrollLeft))
+                .filter((offset, index, offsets) => {
+                    return index === 0 || Math.abs(offset - offsets[index - 1]) > TOLERANCE;
+                });
+
+            if (paginationOffsets.length === 0) {
+                paginationOffsets = [0];
+            }
+
+            pagination.replaceChildren();
+            pagination.hidden = paginationOffsets.length <= 1;
+
+            paginationOffsets.forEach((offset, index) => {
+                const dot = document.createElement('button');
+                dot.type = 'button';
+                dot.setAttribute('aria-label', `Pokaż pozycję aktualności ${index + 1} z ${paginationOffsets.length}`);
+                dot.addEventListener('click', () => {
+                    scrollElement.scrollTo({top: 0, left: offset, behavior: 'smooth'});
+                });
+                pagination.append(dot);
+            });
+
+            updatePaginationState();
+        }
+
+        rebuildPagination();
         updateArrowVisibility();
-        window.addEventListener('resize', updateArrowVisibility);
+        window.addEventListener('resize', () => {
+            rebuildPagination();
+            updateArrowVisibility();
+        });
 
         const observer = new MutationObserver(() => {
-            requestAnimationFrame(updateArrowVisibility);
+            requestAnimationFrame(() => {
+                rebuildPagination();
+                updateArrowVisibility();
+            });
         });
         observer.observe(scrollElement, {childList: true});
 

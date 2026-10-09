@@ -26,4 +26,4 @@ $homepageFeeds = $content['homepageFeeds'] ?? [];
     <?php require $partialPath; ?>
 <?php endforeach ?>
 
-<script src="/public/js/scroll.js"></script>
+<script src="/public/js/scroll.js?v=<?= filemtime(__DIR__ . '/../../public/js/scroll.js') ?>"></script>
