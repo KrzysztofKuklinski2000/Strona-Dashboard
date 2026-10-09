@@ -1963,6 +1963,67 @@ html.has-location-map-open body {
 	margin-bottom: var(--home-heading-gap);
 }
 
+.homepage main > .simple-text-section .simple-text-section__inner {
+	width: min(calc(100% - 40px), 1040px);
+	grid-template-columns: minmax(0, 1fr);
+	gap: 24px;
+	align-items: start;
+}
+
+.homepage main > .simple-text-section .simple-text-section__heading {
+	padding: 0;
+	border: 0;
+	text-align: left;
+}
+
+.homepage main > .simple-text-section .home-section-title {
+	max-width: none;
+}
+
+.homepage main > .simple-text-section .simple-text-section__heading::after {
+	content: '';
+	display: block;
+	width: 42px;
+	height: 3px;
+	margin-top: 14px;
+	border-radius: 999px;
+	background: var(--color-accent);
+}
+
+.homepage main > .simple-text-section .simple-text-section__content {
+	width: 100%;
+	max-width: 72ch;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	text-align: left;
+}
+
+.homepage main > .simple-text-section .simple-text-section__content p {
+	font-size: clamp(.95rem, 1.1vw, 1rem);
+	line-height: 1.75;
+	overflow-wrap: anywhere;
+}
+
+@media (min-width: 760px) {
+	.homepage main > .simple-text-section .simple-text-section__inner {
+		width: min(calc(100% - 128px), 1040px);
+	}
+}
+
+@media (min-width: 1200px) {
+	.homepage main > .simple-text-section .simple-text-section__inner {
+		grid-template-columns: minmax(220px, .6fr) minmax(0, 1.4fr);
+		gap: clamp(32px, 3vw, 48px);
+	}
+}
+
+@media (min-width: 1800px) {
+	.homepage main > .simple-text-section .simple-text-section__inner {
+		width: min(calc(100% - 160px), 1420px);
+	}
+}
+
 .homepage main > .module-feed-section:not([data-feed-module="timetable"]) {
 	--module-feed-accent: #606167;
 	--module-feed-accent-dark: var(--color-ink);
@@ -8327,17 +8388,6 @@ body > footer {
 	background: linear-gradient(180deg, #fafbfc, #fff);
 	border-top: 1px solid var(--color-line);
 	border-bottom: 0;
-}
-
-.site-newsletter::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 50%;
-	width: min(100% - 40px, var(--container-width));
-	height: 1px;
-	background: linear-gradient(90deg, transparent, rgba(191, 31, 26, .28), transparent);
-	transform: translateX(-50%);
 }
 
 .site-newsletter__inner {
