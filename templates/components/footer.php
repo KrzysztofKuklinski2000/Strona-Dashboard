@@ -22,7 +22,7 @@
 				<label class="visually-hidden" for="newsletter-email">Adres e-mail</label>
 				<input id="newsletter-email" type="email" name="email" required maxlength="100" placeholder="Twój adres e-mail">
 				<button type="submit">
-					Włącz powiadomienia
+					Zapisz się
 					<i class="fa-regular fa-envelope" aria-hidden="true"></i>
 				</button>
 			</div>
