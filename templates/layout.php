@@ -54,7 +54,7 @@
 	</title>
 </head>
 
-<body<?= $page === 'homepage' ? ' class="homepage"' : '' ?>>
+<body class="public-site <?= $page === 'homepage' ? 'homepage' : 'subpage' ?>">
 	<?php if (isset($params['flash_public'])): ?>
 		<?php
 		$flash = $params['flash_public'];

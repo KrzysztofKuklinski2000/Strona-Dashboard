@@ -215,12 +215,12 @@
 
 @media only screen and (min-width: 768px) {
 	.subpage-header {
-		min-height: 470px;
+		min-height: 480px;
 	}
 
 	.subpage-header__inner {
-		padding-top: 128px;
-		padding-bottom: 132px;
+		padding-top: 112px;
+		padding-bottom: 120px;
 	}
 
 	.news-page__inner {
@@ -1250,7 +1250,7 @@
 		white-space: nowrap;
 	}
 
-	.homepage .nav-container-full-screen.site-desktop-nav {
+	.public-site .nav-container-full-screen.site-desktop-nav {
 		position: relative;
 		flex: 0 0 86px;
 		background: #0a0a0c;
@@ -1259,51 +1259,55 @@
 		backdrop-filter: none;
 	}
 
-	.homepage .site-desktop-nav .site-brand,
-	.homepage .site-desktop-nav .site-brand__text,
-	.homepage .site-desktop-nav .site-brand__text strong,
-	.homepage .site-desktop-nav .site-brand__text strong span {
+	.public-site .site-desktop-nav .site-brand,
+	.public-site .site-desktop-nav .site-brand__text,
+	.public-site .site-desktop-nav .site-brand__text strong,
+	.public-site .site-desktop-nav .site-brand__text strong span {
 		color: #fff;
 	}
 
-	.homepage .site-desktop-nav .site-brand__emblem,
-	.homepage .site-desktop-nav .site-brand__calligraphy {
+	.public-site .site-desktop-nav .site-brand__emblem,
+	.public-site .site-desktop-nav .site-brand__calligraphy {
 		filter: grayscale(1) invert(1) brightness(1.55);
 	}
 
-	.homepage .site-desktop-nav .site-brand__text small {
+	.public-site .site-desktop-nav .site-brand__text small {
 		color: rgba(255, 255, 255, .58);
 	}
 
-	.homepage .site-desktop-nav__links a,
-	.homepage .site-desktop-nav__dropdown button {
+	.public-site .site-desktop-nav__links a,
+	.public-site .site-desktop-nav__dropdown button {
 		color: rgba(255, 255, 255, .7);
 	}
 
-	.homepage .site-desktop-nav__links a:hover,
-	.homepage .site-desktop-nav__links a.is-active,
-	.homepage .site-desktop-nav__dropdown button:hover,
-	.homepage .site-desktop-nav__dropdown button.is-active {
+	.public-site .site-desktop-nav__links a:hover,
+	.public-site .site-desktop-nav__links a.is-active,
+	.public-site .site-desktop-nav__dropdown button:hover,
+	.public-site .site-desktop-nav__dropdown button.is-active {
 		color: #fff;
 	}
 
-	.homepage .site-desktop-nav__dropdown button i {
+	.public-site .site-desktop-nav__dropdown button i {
 		color: inherit;
 	}
 
-	.homepage .site-desktop-nav__dropdown-menu {
+	.public-site .site-desktop-nav__dropdown-menu {
 		border-color: rgba(255, 255, 255, .12);
 		background: #121214;
 		box-shadow: 0 22px 54px rgba(0, 0, 0, .42);
 	}
 
-	.homepage .site-desktop-nav__dropdown-menu a {
+	.public-site .site-desktop-nav__dropdown-menu a {
 		color: rgba(255, 255, 255, .7);
 	}
 
-	.homepage .site-desktop-nav__dropdown-menu a:hover {
+	.public-site .site-desktop-nav__dropdown-menu a:hover {
 		background: rgba(255, 255, 255, .07);
 		color: #fff;
+	}
+
+	.subpage .nav-container-full-screen.site-desktop-nav {
+		position: sticky;
 	}
 
 }
