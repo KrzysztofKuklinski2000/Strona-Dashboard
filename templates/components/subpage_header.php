@@ -72,7 +72,10 @@ $header = $subpageHeaders[$page] ?? [
 ?>
 
 <section class="subpage-header" aria-labelledby="subpage-title">
-    <div class="subpage-header__background" aria-hidden="true"></div>
+    <span class="hero-section__corner hero-section__corner--top-left" aria-hidden="true"></span>
+    <span class="hero-section__corner hero-section__corner--top-right" aria-hidden="true"></span>
+    <span class="hero-section__corner hero-section__corner--bottom-left" aria-hidden="true"></span>
+    <span class="hero-section__corner hero-section__corner--bottom-right" aria-hidden="true"></span>
 
     <div class="subpage-header__inner">
         <p class="subpage-header__eyebrow"><?= e($header['eyebrow']) ?></p>
