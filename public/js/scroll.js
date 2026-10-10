@@ -151,33 +151,101 @@
         });
     }
 
+    function initializeNotice(card, index) {
+        const text = card.querySelector('[data-notice-text]');
+        const toggle = card.querySelector('[data-notice-toggle]');
+
+        if (!text || !toggle) {
+            return;
+        }
+
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        let collapsedHeight = 0;
+        let animation = null;
+
+        text.id ||= `club-notice-text-${index + 1}`;
+        toggle.setAttribute('aria-controls', text.id);
+
+        function finishAnimation() {
+            animation?.cancel();
+            animation = null;
+            card.classList.remove('is-animating');
+            text.style.removeProperty('height');
+        }
+
+        function updateMeasurements() {
+            finishAnimation();
+            const expanded = card.classList.contains('is-expanded');
+            card.classList.remove('is-expanded');
+            collapsedHeight = text.getBoundingClientRect().height;
+            toggle.hidden = text.scrollHeight <= collapsedHeight + TOLERANCE;
+            card.classList.toggle('is-expanded', expanded);
+        }
+
+        toggle.addEventListener('click', () => {
+            const startHeight = text.getBoundingClientRect().height;
+            animation?.cancel();
+            animation = null;
+
+            const expanded = !card.classList.contains('is-expanded');
+            card.classList.add('is-animating');
+            card.classList.toggle('is-expanded', expanded);
+            text.style.removeProperty('height');
+            const endHeight = expanded ? text.scrollHeight : collapsedHeight;
+            text.style.height = `${endHeight}px`;
+            toggle.setAttribute('aria-expanded', String(expanded));
+            toggle.textContent = expanded ? 'Zwiń' : 'Rozwiń';
+
+            if (reducedMotion.matches || Math.abs(startHeight - endHeight) <= TOLERANCE) {
+                finishAnimation();
+                return;
+            }
+
+            animation = text.animate(
+                [{height: `${startHeight}px`}, {height: `${endHeight}px`}],
+                {duration: 350, easing: 'cubic-bezier(.22, 1, .36, 1)'}
+            );
+            animation.onfinish = finishAnimation;
+        });
+
+        updateMeasurements();
+        window.addEventListener('resize', updateMeasurements);
+        reducedMotion.addEventListener('change', () => {
+            if (reducedMotion.matches) {
+                finishAnimation();
+            }
+        });
+    }
+
+    function initializeNoticeHeights(section) {
+        const list = section.querySelector('.important-info');
+        const cards = [...section.querySelectorAll('.club-notice')];
+
+        if (!list || cards.length === 0) {
+            return;
+        }
+
+        function updateCollapsedHeights() {
+            list.style.removeProperty('--notice-collapsed-height');
+            const heights = cards.map((card) => {
+                const expanded = card.classList.contains('is-expanded');
+                card.classList.remove('is-expanded');
+                const height = card.getBoundingClientRect().height;
+                card.classList.toggle('is-expanded', expanded);
+                return height;
+            });
+            list.style.setProperty('--notice-collapsed-height', `${Math.max(...heights)}px`);
+        }
+
+        updateCollapsedHeights();
+        window.addEventListener('resize', updateCollapsedHeights);
+    }
+
     window.addEventListener('load', () => {
         requestAnimationFrame(() => {
             document.querySelectorAll('.important-section').forEach(initializeSlider);
-            document.querySelectorAll('.club-notice').forEach((card) => {
-                const text = card.querySelector('[data-notice-text]');
-                const toggle = card.querySelector('[data-notice-toggle]');
-
-                if (!text || !toggle) {
-                    return;
-                }
-
-                function updateToggle() {
-                    if (!card.classList.contains('is-expanded')) {
-                        toggle.hidden = text.scrollHeight <= text.clientHeight + 1;
-                    }
-                }
-
-                toggle.addEventListener('click', () => {
-                    const expanded = card.classList.toggle('is-expanded');
-                    toggle.setAttribute('aria-expanded', String(expanded));
-                    toggle.textContent = expanded ? 'Zwiń' : 'Rozwiń';
-                    updateToggle();
-                });
-
-                updateToggle();
-                window.addEventListener('resize', updateToggle);
-            });
+            document.querySelectorAll('.club-notice').forEach(initializeNotice);
+            document.querySelectorAll('[data-feed-module="important_posts"]').forEach(initializeNoticeHeights);
         });
     });
 })();

@@ -2484,13 +2484,14 @@ html.has-location-map-open body {
 
 .homepage main > [data-feed-module="important_posts"] .important-info {
 	gap: 18px;
+	align-items: flex-start;
 	padding: 10px 2px 36px;
 	scroll-snap-type: x mandatory;
 }
 
 .homepage main > [data-feed-module="important_posts"] .club-notice {
 	flex: 0 0 100%;
-	min-height: 200px;
+	min-height: var(--notice-collapsed-height, 200px);
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
@@ -2586,7 +2587,7 @@ html.has-location-map-open body {
 	overflow: hidden;
 }
 
-.homepage main > [data-feed-module="important_posts"] .club-notice.is-expanded [data-notice-text] {
+.homepage main > [data-feed-module="important_posts"] .club-notice:is(.is-expanded, .is-animating) [data-notice-text] {
 	display: block;
 	-webkit-line-clamp: unset;
 }
@@ -2608,7 +2609,7 @@ html.has-location-map-open body {
 @media (max-width: 480px) {
 	.homepage main > [data-feed-module="important_posts"] .club-notice {
 		flex-basis: 100%;
-		min-height: 200px;
+		min-height: var(--notice-collapsed-height, 200px);
 	}
 
 	.homepage main > [data-feed-module="important_posts"] .club-notice time {
