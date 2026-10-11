@@ -20,12 +20,17 @@
         return;
     }
 
-    if (!form.id) {
+    let formId = form.getAttribute('id');
+
+    if (!formId) {
         let suffix = 1;
+
         while (document.getElementById(`dashboard-action-form-${suffix}`)) {
             suffix++;
         }
-        form.id = `dashboard-action-form-${suffix}`;
+
+        formId = `dashboard-action-form-${suffix}`;
+        form.setAttribute('id', formId);
     }
 
     const bar = document.createElement('div');
@@ -46,7 +51,8 @@
         if (container) {
             originalContainers.add(container);
         }
-        button.setAttribute('form', form.id);
+
+        button.setAttribute('form', formId);
         if (form.classList.contains('dashboard-delete-form')) {
             button.classList.add('dashboard-action-bar__delete');
         }
