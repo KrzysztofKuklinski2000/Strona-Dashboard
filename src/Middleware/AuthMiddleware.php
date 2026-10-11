@@ -7,7 +7,6 @@ namespace App\Middleware;
 use App\Controller\Dashboard\AbstractDashboardController;
 use App\Core\Config;
 use App\Core\SessionManager;
-use App\DTO\Auth\UserDto;
 use JetBrains\PhpStorm\NoReturn;
 
 readonly class AuthMiddleware
@@ -30,14 +29,13 @@ readonly class AuthMiddleware
 
     public function handle(string $controllerClass): void
     {
+        $isAuthenticated = $this->sessionManager->isAuthenticated();
 
         if(!is_a($controllerClass, AbstractDashboardController::class, true)) {
             return;
         }
 
-        $user = $this->sessionManager->get('user');
-
-        if (!$user instanceof UserDto) {
+        if (!$isAuthenticated) {
             $this->redirect($this->config->getLoginRoute());
         }
     }

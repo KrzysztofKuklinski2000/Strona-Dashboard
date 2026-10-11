@@ -25,7 +25,7 @@ class AuthController extends AbstractController
      */
     public function loginAction(): void
     {
-        if (!empty($this->sessionManager->get('user'))) {
+        if ($this->sessionManager->isAuthenticated()) {
             $this->redirect($this->contextController->config->getDashboardRoute());
             return;
         }
@@ -43,10 +43,9 @@ class AuthController extends AbstractController
                 } else {
                     $userDto = $this->authenticator->authenticate($login, $password);
 
-                    $this->sessionManager->regenerate();
+                    $this->sessionManager->startAuthentication($userDto);
                     $this->csrfMiddleware->regenerateToken('admin');
 
-                    $this->sessionManager->set('user', $userDto);
                     $this->sessionManager->setFlash('info', 'Udało się zalogować');
 
                     $this->redirect($this->contextController->config->getDashboardRoute());

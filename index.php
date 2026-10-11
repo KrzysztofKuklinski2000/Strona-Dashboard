@@ -42,8 +42,10 @@ if ($isDev) {
 
 $errorHandler = new ErrorHandler($isDev, "{$config->getTemplatesPath()}/errors");
 $request = new Request($_GET, $_POST, $_SERVER, $_FILES);
+
+$sessionManager = new SessionManager(secureCookies: !$isDev);
 $easyCSRF = new EasyCSRF(new NativeSessionProvider());
-$sessionManager = new SessionManager();
+
 
 $factories = require_once('config/factories.php');
 
