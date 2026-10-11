@@ -1,13 +1,5 @@
-<html>
-<head>
-    <title>Błąd 405</title>
-    <link rel="stylesheet" href="/public/style.css">
-</head>
-<body>
-    <div class="e404">
-        <h1>405</h1>
-        <p>Ta akcja wymaga innej metody HTTP.</p>
-        <a href="/">Powrót</a>
-    </div>
-</body>
-</html>
+<?php
+$errorCode = '405';
+$errorTitle = 'Nie można otworzyć strony w ten sposób';
+$errorDescription = 'Ta akcja wymaga użycia odpowiedniego formularza. Wróć na stronę główną i spróbuj ponownie.';
+require __DIR__ . '/_public.php';

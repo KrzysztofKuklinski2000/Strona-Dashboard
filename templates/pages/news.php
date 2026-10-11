@@ -55,7 +55,7 @@ $newsPosts = array_values(array_filter(
                 <?php endif ?>
 
                 <?php for ($i = 1; $i <= $numberOfRows; $i++): ?>
-                    <a class="<?= $i === $currentPage ? 'is-active' : '' ?>" href="/aktualnosci/<?= $i ?>">
+                    <a class="<?= $i === $currentPage ? 'is-active' : '' ?>" href="/aktualnosci/<?= $i ?>"<?= $i === $currentPage ? ' aria-current="page"' : '' ?> aria-label="Strona <?= $i ?>">
                         <?= $i ?>
                     </a>
                 <?php endfor ?>

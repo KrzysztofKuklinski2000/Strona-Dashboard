@@ -382,9 +382,37 @@ let content2 = [
 
 const navIcon = document.querySelector('.nav-bar-icon');
 const closeIcon = document.querySelector('#times-icon');
-const mobileNav = document.querySelector('.site-mobile-nav');
 let mobileMenuCloseTimer = null;
 const mobileMenuTransitionDuration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 220;
+const mobileMenuBackground = new Map();
+const mobileMenuFocusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+const getMobileMenuFocusable = () => [...menu.querySelectorAll(mobileMenuFocusableSelector)]
+	.filter((element) => !element.closest('[inert]') && element.getClientRects().length > 0);
+
+const lockMobileMenuBackground = () => {
+	if (mobileMenuBackground.size > 0) {
+		return;
+	}
+
+	[...document.body.children].forEach((element) => {
+		if (element === menu || ['SCRIPT', 'STYLE', 'LINK'].includes(element.tagName)) {
+			return;
+		}
+
+		mobileMenuBackground.set(element, element.hasAttribute('inert'));
+		element.setAttribute('inert', '');
+	});
+};
+
+const unlockMobileMenuBackground = () => {
+	mobileMenuBackground.forEach((wasInert, element) => {
+		if (!wasInert) {
+			element.removeAttribute('inert');
+		}
+	});
+	mobileMenuBackground.clear();
+};
 
 const openMobileMenu = () => {
 	window.clearTimeout(mobileMenuCloseTimer);
@@ -397,7 +425,9 @@ const openMobileMenu = () => {
 
 	document.body.classList.add('is-menu-open');
 	menu.classList.add('is-open');
+	menu.removeAttribute('inert');
 	menu.setAttribute('aria-hidden', 'false');
+	menu.setAttribute('aria-modal', 'true');
 	navIcon?.setAttribute('aria-expanded', 'true');
 	window.requestAnimationFrame(() => {
 		if (!menu.classList.contains('is-open')) {
@@ -405,27 +435,29 @@ const openMobileMenu = () => {
 		}
 
 		closeIcon?.focus({ preventScroll: true });
-		mobileNav?.setAttribute('aria-hidden', 'true');
-		mobileNav?.setAttribute('inert', '');
+		lockMobileMenuBackground();
 	});
 };
 
 const closeMobileMenu = (restoreFocus = true) => {
 	document.body.classList.add('is-menu-closing');
 	menu.classList.remove('is-open');
+	unlockMobileMenuBackground();
+	if (restoreFocus) {
+		const focusTarget = navIcon?.getClientRects().length ? navIcon : document.querySelector('.site-desktop-nav .site-brand');
+		focusTarget?.focus({ preventScroll: true });
+	} else if (menu.contains(document.activeElement)) {
+		document.activeElement.blur();
+	}
+	menu.setAttribute('inert', '');
 	menu.setAttribute('aria-hidden', 'true');
+	menu.removeAttribute('aria-modal');
 	navIcon?.setAttribute('aria-expanded', 'false');
 
 	window.clearTimeout(mobileMenuCloseTimer);
 	mobileMenuCloseTimer = window.setTimeout(() => {
 		document.body.classList.remove('is-menu-open', 'is-menu-closing');
 		document.documentElement.style.removeProperty('--mobile-menu-scrollbar-width');
-		mobileNav?.removeAttribute('aria-hidden');
-		mobileNav?.removeAttribute('inert');
-
-		if (restoreFocus) {
-			navIcon?.focus({ preventScroll: true });
-		}
 	}, mobileMenuTransitionDuration);
 };
 
@@ -443,8 +475,65 @@ if (menu) {
 	});
 
 	document.addEventListener('keydown', (event) => {
-		if (event.key === 'Escape' && menu.classList.contains('is-open')) {
+		if (!menu.classList.contains('is-open')) {
+			return;
+		}
+		if (event.key === 'Escape') {
+			event.preventDefault();
 			closeMobileMenu();
+		} else if (event.key === 'Tab') {
+			const focusable = getMobileMenuFocusable();
+			const first = focusable[0];
+			const last = focusable[focusable.length - 1];
+			if (!first) {
+				event.preventDefault();
+				menu.focus();
+			} else if (event.shiftKey && (document.activeElement === first || !focusable.includes(document.activeElement))) {
+				event.preventDefault();
+				last.focus();
+			} else if (!event.shiftKey && (document.activeElement === last || !focusable.includes(document.activeElement))) {
+				event.preventDefault();
+				first.focus();
+			}
+		}
+	});
+
+	document.addEventListener('focusin', (event) => {
+		if (menu.classList.contains('is-open') && !menu.contains(event.target)) {
+			(getMobileMenuFocusable()[0] || menu).focus({ preventScroll: true });
+		}
+	});
+
+	window.matchMedia('(min-width: 1100px)').addEventListener('change', (event) => {
+		if (event.matches && menu.classList.contains('is-open')) {
+			closeMobileMenu();
+		}
+	});
+}
+
+const contactEmailLink = document.querySelector('[data-contact-email]');
+const contactEmailHelp = document.querySelector('#contact-email-help');
+const contactEmailAddress = document.querySelector('#contact-email-address');
+const contactEmailCopy = document.querySelector('[data-contact-email-copy]');
+const contactEmailStatus = document.querySelector('[data-contact-email-status]');
+
+if (contactEmailLink && contactEmailHelp && contactEmailAddress && contactEmailCopy && contactEmailStatus) {
+	contactEmailLink.addEventListener('click', () => {
+		contactEmailHelp.hidden = false;
+		contactEmailLink.setAttribute('aria-expanded', 'true');
+	});
+
+	contactEmailCopy.addEventListener('click', async () => {
+		try {
+			if (!navigator.clipboard?.writeText) {
+				throw new Error('Clipboard unavailable');
+			}
+			await navigator.clipboard.writeText(contactEmailAddress.value);
+			contactEmailStatus.textContent = 'Adres e-mail został skopiowany.';
+		} catch {
+			contactEmailAddress.focus();
+			contactEmailAddress.select();
+			contactEmailStatus.textContent = 'Adres jest zaznaczony. Skopiuj go skrótem Ctrl+C lub wybierz „Kopiuj” na telefonie.';
 		}
 	});
 }

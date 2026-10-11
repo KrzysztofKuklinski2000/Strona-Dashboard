@@ -1,16 +1,6 @@
-<html>
-<head>
-    <title>Błąd 500</title>
-    <link rel="stylesheet" href="/public/style.css">
-    <style>
-    </style>
-</head>
-<body>
-    <div class="e500">
-        <h1>500</h1>
-        <h2>Błąd Serwera</h2>
-        <p>Coś poszło nie tak. Odświez lub spróbuj później</p>
-    </div>
-</body>
-</html>
+<?php
+$errorCode = '500';
+$errorTitle = 'Strona jest chwilowo niedostępna';
+$errorDescription = 'Nie udało się wyświetlić tej strony. Spróbuj ponownie za chwilę. Jeśli problem się powtarza, skontaktuj się z nami.';
+require __DIR__ . '/_public.php';
 

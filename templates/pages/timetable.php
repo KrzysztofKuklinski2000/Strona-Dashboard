@@ -97,7 +97,7 @@ uksort($days, static fn(string $first, string $second): int => ($dayOrder[$first
                         <div class="timetable-day__sessions">
                             <?php foreach ($day['items'] as $item): ?>
                                 <article class="timetable-session">
-                                    <time><?= e($item->start . ' - ' . $item->end) ?></time>
+                                    <time><?= e(substr(trim((string) $item->start), 0, 5) . ' – ' . substr(trim((string) $item->end), 0, 5)) ?></time>
 
                                     <div class="timetable-session__body">
                                         <h4><?= e($item->advancementGroup) ?></h4>

@@ -1,4 +1,4 @@
-<div class="menu mobile-menu" id="mobile-menu" aria-hidden="true">
+<div class="menu mobile-menu" id="mobile-menu" role="dialog" aria-label="Nawigacja strony" aria-hidden="true" tabindex="-1" inert>
     <div class="mobile-menu__top">
         <a class="site-brand" href="/" aria-label="Strona główna Karate Kyokushin Wejherowo / Reda">
             <span class="site-brand__icons" aria-hidden="true">

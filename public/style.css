@@ -4136,12 +4136,31 @@ footer .copy {
 	color: var(--color-ink);
 	font-size: .88rem;
 	font-weight: 800;
+	transition: background-color .18s ease, border-color .18s ease, color .18s ease;
+}
+
+.news-pagination a:hover,
+.news-pagination a:focus-visible {
+	border-color: var(--color-accent);
+	background: #f7f1f0;
+	color: var(--color-accent);
+}
+
+.news-pagination a:focus-visible {
+	outline: 2px solid var(--color-accent);
+	outline-offset: 3px;
 }
 
 .news-pagination a.is-active {
 	border-color: var(--color-accent);
 	background: var(--color-accent);
 	color: #fff;
+}
+
+.news-pagination a.is-active:hover,
+.news-pagination a.is-active:focus-visible {
+	border-color: var(--color-accent-dark);
+	background: var(--color-accent-dark);
 }
 
 .news-pagination i {
@@ -4261,6 +4280,7 @@ footer .copy {
 }
 
 .news-detail__prose {
+	max-width: 75ch;
 	color: #494949;
 	font-size: clamp(.95rem, 2.6vw, 1.04rem);
 	font-weight: 500;
@@ -4854,9 +4874,9 @@ footer .copy {
 	display: block;
 	margin-top: 12px;
 	color: var(--color-ink);
-	font-family: var(--font-display);
+	font-family: var(--font-sans);
 	font-size: clamp(2rem, 7vw, 2.65rem);
-	font-weight: 600;
+	font-weight: 800;
 	letter-spacing: -.045em;
 	line-height: 1;
 }
@@ -4984,9 +5004,9 @@ footer .copy {
 .camp-price-panel h3 {
 	margin: 0;
 	color: var(--color-ink);
-	font-family: var(--font-display);
+	font-family: var(--font-sans);
 	font-size: clamp(2.15rem, 7vw, 3rem);
-	font-weight: 600;
+	font-weight: 800;
 	letter-spacing: -.045em;
 	line-height: 1;
 }
@@ -5299,9 +5319,10 @@ footer .copy {
 	justify-content: center;
 	gap: 10px;
 	padding: 0 24px;
-	border-radius: 4px;
+	border-radius: 8px;
 	font-size: .88rem;
 	font-weight: 900;
+	transition: background-color .18s ease, border-color .18s ease, color .18s ease;
 }
 
 .contact-action--primary,
@@ -5315,6 +5336,87 @@ footer .copy {
 	border: 1px solid var(--color-line);
 	background: #fff;
 	color: var(--color-ink);
+}
+
+.contact-action--primary:hover,
+.contact-action--primary:focus-visible,
+.contact-info-box a:hover,
+.contact-info-box a:focus-visible {
+	background: var(--color-accent-dark);
+}
+
+.contact-action--secondary:hover,
+.contact-action--secondary:focus-visible {
+	border-color: var(--color-accent);
+	background: #f7f1f0;
+	color: var(--color-accent);
+}
+
+.contact-action:focus-visible,
+.contact-info-box a:focus-visible {
+	outline: 2px solid var(--color-accent);
+	outline-offset: 4px;
+}
+
+.contact-email-help {
+	position: relative;
+	z-index: 1;
+	margin-top: 20px;
+	padding: 18px;
+	border: 1px solid var(--color-line);
+	border-radius: 10px;
+	background: var(--color-ivory);
+}
+
+.contact-email-help > p {
+	color: var(--color-muted);
+	font-size: .85rem;
+	line-height: 1.65;
+}
+
+.contact-email-help__field {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-top: 14px;
+}
+
+.contact-email-help__field input {
+	flex: 1 1 220px;
+	width: 100%;
+	min-width: 0;
+	min-height: 44px;
+	padding: 10px 12px;
+	border: 1px solid var(--color-line);
+	border-radius: 8px;
+	background: #fff;
+	font-size: .875rem;
+}
+
+.contact-email-help__field button {
+	min-height: 44px;
+	padding: 10px 16px;
+	border: 1px solid var(--color-accent);
+	border-radius: 8px;
+	background: var(--color-accent);
+	color: #fff;
+	font-size: .85rem;
+	font-weight: 800;
+	cursor: pointer;
+	transition: background-color .18s ease;
+}
+
+.contact-email-help__field button:hover {
+	background: var(--color-accent-dark);
+}
+
+.contact-email-help__field :is(input, button):focus-visible {
+	outline: 2px solid var(--color-accent);
+	outline-offset: 3px;
+}
+
+.contact-email-help__status:not(:empty) {
+	margin-top: 12px;
 }
 
 .contact-action i,
@@ -7091,6 +7193,7 @@ footer .copy {
 	gap: 22px;
 	padding: 28px;
 	border: 1px solid var(--color-line);
+	border-radius: var(--radius-card);
 	background:
 		linear-gradient(180deg, rgba(250, 247, 244, .72), rgba(255, 255, 255, 0) 170px),
 		#fff;
@@ -7151,6 +7254,7 @@ footer .copy {
 	align-items: start;
 	padding: 22px;
 	border: 1px solid var(--color-line);
+	border-radius: 10px;
 	background: rgba(255, 255, 255, .88);
 }
 
@@ -7486,6 +7590,7 @@ footer .copy {
 	min-height: 280px;
 	aspect-ratio: 4 / 3;
 	border: 1px solid var(--color-line);
+	border-radius: var(--radius-card);
 	background: #f9f7f4;
 	overflow: hidden;
 	box-shadow: 0 18px 60px rgba(31, 24, 17, .035);
@@ -7626,8 +7731,18 @@ footer .copy {
 	margin-top: 12px;
 	padding: 56px 20px;
 	border: 1px solid var(--color-line);
+	border-radius: var(--radius-card);
 	background: #fff;
 	text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.news-pagination a,
+	.contact-action,
+	.contact-info-box a,
+	.contact-email-help__field button {
+		transition: none;
+	}
 }
 
 .gallery-empty i {
@@ -7657,37 +7772,213 @@ footer .copy {
 	margin-right: 20px;
 }
 
-.e404, .e500 {
-	height: 100vh;
+/* Public error pages work independently of the normal page layout and scripts. */
+body.public-error-page {
+	height: auto;
+	min-height: 100vh;
+	min-height: 100svh;
+	justify-content: flex-start;
+	background:
+		radial-gradient(ellipse at 0 0, rgba(191, 31, 26, .16), transparent 55%),
+		repeating-linear-gradient(112deg, rgba(255, 255, 255, .018) 0 1px, transparent 1px 12px),
+		#08080a;
+}
+
+.public-error-page__header {
+	width: min(calc(100% - 40px), var(--container-width));
+	margin-inline: auto;
+	padding-block: 26px;
+}
+
+.public-error-page .site-brand :is(strong, strong span) {
+	color: #fff;
+}
+
+.public-error-page .site-brand small {
+	color: #b8b8bd;
+}
+
+.public-error-page :is(.site-brand__emblem, .site-brand__calligraphy) {
+	filter: grayscale(1) brightness(0) invert(1);
+}
+
+.public-error-page__main {
+	flex: 1;
+	width: min(calc(100% - 40px), 720px);
+	display: grid;
+	align-items: center;
+	margin-inline: auto;
+	padding-block: 24px 64px;
+}
+
+.public-error-card {
+	padding: clamp(24px, 6vw, 56px);
+	border: 1px solid var(--color-line);
+	border-radius: var(--radius-card);
+	background: var(--color-paper);
+	text-align: center;
+	overflow-wrap: anywhere;
+}
+
+.public-error-card__code {
+	color: var(--color-accent);
+	font-size: clamp(4rem, 16vw, 7rem);
+	font-weight: 800;
+	letter-spacing: -.06em;
+	line-height: 1;
+}
+
+.public-error-card h1 {
+	margin: 24px 0 0;
+	font-size: var(--font-size-section-title);
+	font-weight: 800;
+	letter-spacing: -.035em;
+	line-height: 1.2;
+	text-wrap: balance;
+}
+
+.public-error-card__description {
+	max-width: 55ch;
+	margin: 20px auto 0;
+	color: var(--color-muted);
+	font-size: .95rem;
+	line-height: 1.75;
+}
+
+.public-error-card__actions {
 	display: flex;
-	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 12px;
+	margin-top: 30px;
+}
+
+.public-error-card__actions a {
+	min-height: 48px;
+	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	gap: 2em;
-	letter-spacing: 2px;
+	padding: 12px 20px;
+	border: 1px solid var(--color-line);
+	border-radius: 8px;
+	font-size: .875rem;
+	font-weight: 800;
 }
 
-.e404 h1, .e500 h1 {
-	font-size: 6em;
-	color:#1C2331;
-	margin:0px;
+.public-error-card__actions .public-error-card__home {
+	border-color: var(--color-accent);
+	background: var(--color-accent);
+	color: #fff;
 }
 
-.e500 h2 {
-	font-size:2em;
-	margin: 0px;
-	color:#dc3545;
+.public-error-card__home:hover {
+	background: var(--color-accent-dark);
 }
 
-.e404 p, .e500 p {
-	color:gray;
+.public-error-card__contact:hover {
+	background: var(--color-ivory);
 }
 
-.e404 a {
-	padding:5px 20px;
-	background-color: #3760E3;
-	color:#fff;
-	border-radius: 2px;
+.public-error-card a:focus-visible {
+	outline: 3px solid var(--color-accent);
+	outline-offset: 4px;
+}
+
+.public-error-page__header a:focus-visible {
+	outline: 2px solid #fff;
+	outline-offset: 6px;
+}
+
+/* Shared public-page cards: restrained borders and the homepage's corner treatment. */
+.subpage main :is(
+	.entries-intro, .entries-steps, .entries-contact-panel, .entries-fees-panel, .entries-before-first,
+	.camp-intro, .camp-place, .camp-offer,
+	.contact-panel, .contact-info-box, .contact-map-section,
+	.fees-card, .fees-info-card, .fees-bank-card,
+	.dojo-oath-intro, .dojo-oath-list-section, .dojo-oath-principles,
+	.statute-intro, .statute-summary, .statute-sections,
+	.oyama-hero, .oyama-story, .oyama-timeline, .oyama-principles,
+	.timetable-day, .timetable-places, .timetable-notes,
+	.requirements-intro, .requirements-summary, .requirements-section, .requirements-result-card
+) {
+	border-radius: var(--radius-card);
+}
+
+.subpage main :is(
+	.entries-intro__note, .entries-step-card, .entries-contact-card, .entries-note-card, .entries-fee-card,
+	.camp-price-panel, .camp-detail-card, .camp-offer-card, .camp-place__content,
+	.contact-card, .dojo-oath-intro__note, .dojo-oath-card, .dojo-oath-principle,
+	.statute-intro__note, .statute-summary-card, .statute-card,
+	.oyama-timeline-card, .oyama-hero__facts > div, .oyama-principle,
+	.timetable-session, .timetable-place, .timetable-note, .requirements-intro__note
+) {
+	border-radius: 10px;
+}
+
+.subpage main .news-card {
+	border-radius: var(--radius-card);
+	overflow: hidden;
+}
+
+.subpage main :is(.entries-action, .entries-fees-link, .contact-action, .fees-section__cta) {
+	border-radius: 8px;
+}
+
+.subpage main :is(.entries-action--primary, .entries-fees-link, .contact-action--primary, .fees-section__cta) {
+	box-shadow: none;
+}
+
+.fees-card strong {
+	font-weight: 800;
+	font-variant-numeric: tabular-nums;
+}
+
+/* Respond to each card's available space, including narrow desktop columns. */
+.subpage main :is(
+	.entries-intro__note, .entries-contact-card, .entries-note-card,
+	.camp-detail-card, .camp-offer-card, .camp-place__content, .contact-card, .oyama-principle,
+	.dojo-oath-intro__note, .dojo-oath-card, .dojo-oath-principle,
+	.statute-intro__note, .statute-summary-card, .statute-card__header,
+	.timetable-place, .timetable-note, .requirements-intro__note, .requirements-summary-card
+) {
+	container: public-card / inline-size;
+	min-width: 0;
+	align-content: start;
+	overflow-wrap: anywhere;
+}
+
+.subpage main :is(
+	.entries-intro__note, .entries-contact-card, .entries-note-card,
+	.camp-detail-card, .camp-offer-card, .camp-place__content, .contact-card, .oyama-principle,
+	.dojo-oath-intro__note, .dojo-oath-card, .dojo-oath-principle,
+	.statute-intro__note, .statute-summary-card, .statute-card__header,
+	.timetable-place, .timetable-note, .requirements-intro__note, .requirements-summary-card
+) > :is(div, p) {
+	min-width: 0;
+}
+
+@container public-card (max-width: 300px) {
+	.subpage main :is(
+		.entries-intro__note, .entries-contact-card, .entries-note-card,
+		.camp-detail-card, .camp-offer-card, .camp-place__content, .contact-card, .oyama-principle,
+		.dojo-oath-intro__note, .dojo-oath-card, .dojo-oath-principle,
+		.statute-intro__note, .statute-summary-card, .statute-card__header,
+		.timetable-place, .timetable-note, .requirements-intro__note, .requirements-summary-card
+	) > * {
+		grid-column: 1 / -1;
+	}
+
+	.subpage main :is(
+		.entries-intro__note, .entries-contact-card, .entries-note-card,
+		.camp-detail-card, .camp-offer-card, .camp-place__content, .contact-card, .oyama-principle,
+		.dojo-oath-intro__note, .dojo-oath-card, .dojo-oath-principle,
+		.statute-intro__note, .statute-summary-card, .statute-card__header,
+		.timetable-place, .timetable-note, .requirements-intro__note, .requirements-summary-card
+	) > :is(span, i, strong) {
+		width: 40px;
+		height: 40px;
+		font-size: 1rem;
+	}
 }
 
 .filter {
@@ -8230,6 +8521,11 @@ footer .copy {
 	border-color: rgba(237, 74, 68, .62);
 	background: rgba(255, 255, 255, .09);
 	transform: rotate(4deg);
+}
+
+.mobile-menu :is(a, button):focus-visible {
+	outline: 2px solid #fff;
+	outline-offset: 4px;
 }
 
 .mobile-menu__close i {

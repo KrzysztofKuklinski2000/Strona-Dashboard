@@ -1,4 +1,24 @@
 @media only screen and (max-width: 639px) {
+	.subpage main :is(
+		.entries-intro, .entries-steps, .entries-contact-panel, .entries-fees-panel, .entries-before-first,
+		.camp-intro, .camp-place, .camp-offer,
+		.contact-panel, .contact-info-box, .fees-info-card, .fees-bank-card,
+		.dojo-oath-intro, .dojo-oath-list-section, .dojo-oath-principles,
+		.statute-intro, .statute-summary, .statute-sections,
+		.oyama-hero, .oyama-story, .oyama-timeline, .oyama-principles,
+		.requirements-intro, .requirements-summary, .requirements-section
+	) {
+		padding: 18px;
+	}
+
+	.subpage main :is(.statute-card, .dojo-oath-card, .entries-step-card, .requirements-result-card) {
+		padding: 18px;
+	}
+
+	.subpage main :is(h2, h3, h4) {
+		overflow-wrap: anywhere;
+	}
+
 	.site-newsletter__consent {
 		max-width: 330px;
 	}

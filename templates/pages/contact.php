@@ -78,12 +78,24 @@ $contactCards = [
                     <?php endif ?>
 
                     <?php if ($email !== ''): ?>
-                        <a class="contact-action contact-action--secondary" href="mailto:<?= e($email) ?>">
+                        <a class="contact-action contact-action--secondary" href="mailto:<?= e($email) ?>" data-contact-email aria-controls="contact-email-help" aria-expanded="false">
                             <i class="fa-regular fa-envelope" aria-hidden="true"></i>
                             Napisz e-mail
                         </a>
                     <?php endif ?>
                 </div>
+
+                <?php if ($email !== ''): ?>
+                    <div class="contact-email-help" id="contact-email-help" hidden>
+                        <p>Jeśli nie otworzył się program pocztowy, skopiuj adres i wklej go w swojej poczcie.</p>
+                        <div class="contact-email-help__field">
+                            <label class="visually-hidden" for="contact-email-address">Adres e-mail do skopiowania</label>
+                            <input id="contact-email-address" type="text" value="<?= e($email) ?>" readonly>
+                            <button type="button" data-contact-email-copy>Skopiuj adres</button>
+                        </div>
+                        <p class="contact-email-help__status" data-contact-email-status role="status" aria-live="polite"></p>
+                    </div>
+                <?php endif ?>
             </section>
 
             <aside class="contact-info-box" aria-labelledby="contact-info-title">

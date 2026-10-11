@@ -125,7 +125,7 @@
 		<?php require_once('components/footer.php') ?>
 	</footer>
 
-	<script type="text/javascript" src="/public/js/main.js"></script>
+	<script type="text/javascript" src="/public/js/main.js?v=<?= filemtime(__DIR__ . '/../public/js/main.js') ?>"></script>
 	<script type="text/javascript" src="/public/js/nav-indicator.js"></script>
 	<?php if (($params['page'] ?? '') === 'homepage'): ?>
 		<script src="/public/js/hero-carousel.js?v=<?= filemtime(__DIR__ . '/../public/js/hero-carousel.js') ?>" defer></script>
