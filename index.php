@@ -56,16 +56,15 @@ try {
         throw new Exception("Błąd konfiguracji: Brak fabryki dla kontrolera " . $controllerClass);
     }
 
+    $authMiddleware = new AuthMiddleware($sessionManager, $config);
+    $authMiddleware->handle($controllerClass);
+
     $factoryClass = $factories[$controllerClass];
 
     $database = new Database($config->getDbConfig());
     $pdo = $database->connect();
 
     $view = new View($config->getTemplatesPath());
-
-    $authMiddleware = new AuthMiddleware($sessionManager, $config);
-
-    $authMiddleware->handle($request);
 
     $csrfMiddleware = new CsrfMiddleware(
         $easyCSRF,

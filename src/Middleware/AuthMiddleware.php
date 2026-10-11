@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
+use App\Controller\Dashboard\AbstractDashboardController;
 use App\Core\Config;
-use App\Core\Request;
 use App\Core\SessionManager;
 use App\DTO\Auth\UserDto;
 use JetBrains\PhpStorm\NoReturn;
@@ -28,12 +28,10 @@ readonly class AuthMiddleware
         exit();
     }
 
-    public function handle(Request $request): void
+    public function handle(string $controllerClass): void
     {
-        $uri = $request->getServerParam('REQUEST_URI');
-        $dashboardRoute = $this->config->getDashboardRoute();
 
-        if (!str_starts_with($uri, $dashboardRoute)) {
+        if(!is_a($controllerClass, AbstractDashboardController::class, true)) {
             return;
         }
 
