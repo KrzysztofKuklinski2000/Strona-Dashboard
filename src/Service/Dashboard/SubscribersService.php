@@ -16,6 +16,10 @@ use App\Service\Dashboard\Contracts\SubscribersManagementServiceInterface;
 use App\Service\Dashboard\Traits\StandardCrudTrait;
 use Random\RandomException;
 
+/**
+ * Administracyjne zarządzanie subskrybentami, oddzielone od publicznego zapisu.
+ * Obecne dodawanie z dashboardu od razu ustawia rekord jako aktywny, bez maila potwierdzającego.
+ */
 class SubscribersService extends AbstractDashboardService implements SubscribersManagementServiceInterface
 {
     use StandardCrudTrait;
@@ -30,6 +34,8 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
     }
 
     /**
+     * Lista obejmuje rekordy aktywne i oczekujące, widoczne dla administratora.
+     *
      * @throws ServiceException
      */
     public function getAllSubscribers(): array
@@ -38,6 +44,8 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
     }
 
     /**
+     * Pobiera pojedynczy rekord do podglądu lub formularza edycji.
+     *
      * @throws ServiceException
      * @throws NotFoundException
      */
@@ -47,6 +55,9 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
     }
 
     /**
+     * Dodaje aktywnego odbiorcę na podstawie decyzji administratora.
+     * Generuje token wypisania, ale nie wykonuje publicznego potwierdzenia adresu.
+     *
      * @throws ServiceException
      * @throws RandomException
      */
@@ -62,13 +73,17 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
             'id' => 0,
             'email' => $data->email,
             'is_active' => 1,
-            'token' => $token,
+            'unsubscribe_token' => $token,
         ]);
 
         $this->create(self::TABLE, $saveDto);
     }
 
     /**
+     * Zapisuje email i status z formularza administratora.
+     * Obecnie nie resetuje tokenów ani potwierdzenia po zmianie adresu;
+     * obsługa takiej zmiany wymaga jeszcze dopracowania.
+     *
      * @throws ServiceException
      */
     public function updateSubscriber(UpdateSubscriberDto $data): void
@@ -76,6 +91,9 @@ class SubscribersService extends AbstractDashboardService implements Subscribers
         $this->edit(self::TABLE, $data);
     }
 
+    /**
+     * Administracyjne usunięcie wskazanego rekordu, bez publicznego tokenu wypisania.
+     */
     public function deleteSubscriber(int $id): void
     {
         $this->delete(self::TABLE, $id);

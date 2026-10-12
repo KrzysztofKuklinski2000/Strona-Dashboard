@@ -19,6 +19,9 @@ readonly class Notifier
     }
 
     /**
+     * Wysyła osobny mail do każdego aktywnego odbiorcy z jego linkiem wypisania.
+     * Obecna wysyłka jest synchroniczna; wyjątek przy jednym mailu przerywa pętlę.
+     *
      * @throws RepositoryException
      */
     public function notifyAboutTimetableUpdate(string $customMessage): void
@@ -33,7 +36,9 @@ readonly class Notifier
 
         foreach ($subscribers as $subscriber) {
             $email = $subscriber->email;
-            $token = $subscriber->token;
+            // Jawny token jest potrzebny do budowania linku w każdym kolejnym powiadomieniu.
+            // Nie jest to token potwierdzenia. Podpisane linki są zapisane jako osobne zadanie w TODO.md.
+            $token = $subscriber->unsubscribeToken;
 
             $unsubscribeUrl = "$baseUrl/unsubscribe?token=$token";
 
@@ -45,6 +50,10 @@ readonly class Notifier
         }
     }
 
+    /**
+     * Wstawia do linku oryginalny losowy token; w bazie znajduje się wyłącznie jego hash.
+     * Link budujemy z konfiguracji appUrl, a nie z nagłówka Host otrzymanego w żądaniu.
+     */
     public function sendConfirmationEmail(string $email, string $token): void
     {
         $subject = "Potwierdź zapis do aktualności - Karate Kyokushin";

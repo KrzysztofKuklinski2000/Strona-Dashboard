@@ -65,7 +65,7 @@ class PublicSubscribersController extends AbstractController
     {
         $token = $this->request->getQueryParam('token');
 
-        if (!$token) {
+        if (!is_string($token) || $token === '') {
             $this->redirect("{$this->contextController->config->getHomeRoute()}?error=invalid_token");
             return;
         }
@@ -85,7 +85,7 @@ class PublicSubscribersController extends AbstractController
     {
         $token = $this->request->getQueryParam('token');
 
-        if (!$token) {
+        if (!is_string($token) || $token === '') {
             $this->sessionManager->setFlash('warning', 'Brak klucza wypisania.', 'public');
             $this->redirect($this->contextController->config->getHomeRoute());
             return;

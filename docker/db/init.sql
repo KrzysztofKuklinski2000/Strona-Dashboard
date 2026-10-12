@@ -379,18 +379,22 @@ DROP COLUMN `description`;
 
 CREATE TABLE `subscribers`
 (
-    `id`        int                                     NOT NULL,
-    `email`     varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-    `is_active` tinyint(1) DEFAULT '1',
-    `token`     varchar(64) COLLATE utf8mb4_general_ci DEFAULT NULL
+    `id`                         int NOT NULL,
+    `email`                      varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+    `is_active`                  tinyint(1) DEFAULT '1',
+    `confirmation_token_hash`    char(64) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL,
+    `confirmation_expires_at`    datetime DEFAULT NULL,
+    `confirmation_last_sent_at`  datetime DEFAULT NULL,
+    `confirmed_at`               datetime DEFAULT NULL,
+    `unsubscribe_token`          char(64) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Zrzut danych tabeli `subscribers`
 --
 
-INSERT INTO `subscribers` (`id`, `email`, `is_active`, `token`)
-VALUES (1, 'example@gmail.com', 0, NULL);
+INSERT INTO `subscribers` (`id`, `email`, `is_active`)
+VALUES (1, 'example@gmail.com', 0);
 
 -- --------------------------------------------------------
 
@@ -520,8 +524,9 @@ ALTER TABLE `news`
 --
 ALTER TABLE `subscribers`
     ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `token` (`token`);
+    ADD UNIQUE KEY `email` (`email`),
+    ADD UNIQUE KEY `uq_subscribers_confirmation_token_hash` (`confirmation_token_hash`),
+    ADD UNIQUE KEY `uq_subscribers_unsubscribe_token` (`unsubscribe_token`);
 
 --
 -- Indeksy dla tabeli `timetable`
