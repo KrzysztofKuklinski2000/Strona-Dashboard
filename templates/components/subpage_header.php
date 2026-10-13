@@ -62,6 +62,11 @@ $subpageHeaders = [
         'title' => 'Grafik zajęć',
         'description' => 'Sprawdź aktualne dni, godziny i lokalizacje treningów dla poszczególnych grup.',
     ],
+    'unsubscribe' => [
+        'eyebrow' => 'Powiadomienia klubowe',
+        'title' => 'Wyłącz powiadomienia',
+        'description' => 'Potwierdź, czy chcesz zakończyć otrzymywanie e-maili o zmianach grafiku.',
+    ],
 ];
 
 $header = $subpageHeaders[$page] ?? [

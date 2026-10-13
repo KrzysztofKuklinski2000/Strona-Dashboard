@@ -9,6 +9,7 @@ use App\DTO\Dashboard\Subscriber\CreateSubscriberDto;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
 use App\Service\Contracts\SubscriptionServiceInterface;
+use App\View\PublicPageRenderer;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 use Exception;
 
@@ -16,8 +17,10 @@ class PublicSubscribersController extends AbstractController
 {
     public function __construct(
         private readonly SubscriptionServiceInterface $service,
-        ContextController                   $contextController,
-    ) {
+        private readonly PublicPageRenderer           $renderer,
+        ContextController                             $contextController,
+    )
+    {
         parent::__construct($contextController);
     }
 
@@ -28,7 +31,7 @@ class PublicSubscribersController extends AbstractController
     {
         $this->csrfMiddleware->verify();
 
-        $email = (string) $this->validator->validate(name: 'email', value: $this->request->getFormParam('email'), required: true, type: 'email');
+        $email = (string)$this->validator->validate(name: 'email', value: $this->request->getFormParam('email'), required: true, type: 'email');
 
         $consent = $this->request->getFormParam('terms_consent');
 
@@ -81,23 +84,101 @@ class PublicSubscribersController extends AbstractController
         $this->redirect($this->contextController->config->getHomeRoute());
     }
 
+    /**
+     * @throws InvalidCsrfTokenException
+     */
     public function unsubscribeAction(): void
     {
-        $token = $this->request->getQueryParam('token');
+        $this->csrfMiddleware->verify();
+
+        $token = $this->request->getFormParam('token');
 
         if (!is_string($token) || $token === '') {
-            $this->sessionManager->setFlash('warning', 'Brak klucza wypisania.', 'public');
-            $this->redirect($this->contextController->config->getHomeRoute());
+            $this->sessionManager->setFlash(
+                'warning',
+                'Brak klucza wypisania.',
+                'public'
+            );
+
+            $this->redirect(
+                $this->contextController->config->getHomeRoute(),
+                303
+            );
+
             return;
         }
 
         try {
             $this->service->unsubscribe($token);
-            $this->sessionManager->setFlash('success', 'Twoje dane zostały usunięte. Nie będziesz już otrzymywać powiadomień.', 'public');
-        } catch (ServiceException | NotFoundException) {
-            $this->sessionManager->setFlash('warning', 'Nie udało się przetworzyć prośby o wypisanie.', 'public');
+
+            $this->sessionManager->setFlash(
+                'success',
+                'Twoje dane zostały usunięte. Nie będziesz już otrzymywać powiadomień.',
+                'public'
+            );
+        } catch (NotFoundException) {
+            $this->sessionManager->setFlash(
+                'warning',
+                'Link wypisania jest nieprawidłowy lub został już wykorzystany.',
+                'public'
+            );
+        } catch (ServiceException) {
+            $this->sessionManager->setFlash(
+                'warning',
+                'Nie udało się usunąć subskrypcji. Spróbuj ponownie później.',
+                'public',
+            );
         }
 
-        $this->redirect($this->contextController->config->getHomeRoute());
+        $this->redirect(
+            $this->contextController->config->getHomeRoute(),
+            303
+        );
+    }
+
+    public function unsubscribeConfirmationAction(): void {
+        header('Cache-Control: no-store');
+        header('Referrer-Policy: no-referrer');
+        header('X-Robots-Tag: noindex, nofollow');
+
+        $token = $this->request->getQueryParam('token');
+
+        if (!is_string($token) || $token === '') {
+            $this->sessionManager->setFlash(
+                'warning',
+                'Brak klucza wypisania.',
+                'public',
+            );
+
+            $this->redirect($this->contextController->config->getHomeRoute());
+            return;
+        }
+
+        try {
+            $this->service->validateUnsubscribeToken($token);
+        }catch (NotFoundException) {
+            $this->sessionManager->setFlash(
+                'warning',
+                'Link wypisania jest nieprawidłowy lub został już wykorzystany.',
+                'public',
+            );
+
+            $this->redirect($this->contextController->config->getHomeRoute());
+            return;
+        } catch (ServiceException) {
+            $this->sessionManager->setFlash(
+                'warning',
+                'Nie udało się sprawdzić linku. Spróbuj ponownie później.',
+                'public',
+            );
+
+            $this->redirect($this->contextController->config->getHomeRoute());
+            return;
+        }
+
+        $this->renderer->render([
+            'page' => 'unsubscribe',
+            'unsubscribe_token' => $token,
+        ]);
     }
 }

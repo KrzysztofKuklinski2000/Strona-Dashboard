@@ -9347,3 +9347,27 @@ body > footer {
 		width: min(calc(100% - 160px), 1420px);
 	}
 }
+
+
+.unsubscribe-confirmation {
+	max-width: 720px;
+}
+
+.unsubscribe-confirmation__description {
+	max-width: 65ch;
+	color: var(--color-muted);
+	font-size: .95rem;
+	line-height: 1.7;
+}
+
+.unsubscribe-confirmation .contact-action {
+	max-width: 100%;
+	padding: 12px 20px;
+	line-height: 1.4;
+	text-align: center;
+}
+
+.unsubscribe-confirmation button.contact-action {
+	border: 0;
+	cursor: pointer;
+}

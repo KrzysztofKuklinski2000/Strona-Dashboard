@@ -25,6 +25,7 @@
         'requirements' => '/wymagania-egzaminacyjne',
         'statute' => '/status',
         'timetable' => '/grafik',
+        'unsubscribe' => '/unsubscribe',
         default => '/',
     };
 
@@ -47,6 +48,7 @@
 			'requirements' => 'Wymagania Egzaminacyjne',
 			'statute' => 'Regulamin',
 			'timetable' => 'Grafik zajęć',
+            'unsubscribe' => 'Wyłącz powiadomienia',
 			default => 'Strona Główna'
 		};
 		?>

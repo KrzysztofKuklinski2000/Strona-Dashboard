@@ -84,6 +84,27 @@ class SubscriberRepository extends BaseDashboardRepository
     }
 
     /**
+     * Usuwa rekord tylko przy zgodnym tokenie wypisania i aktywnym statusie.
+     *
+     * @return bool True po usunięciu; false, gdy nie znaleziono pasującego rekordu.
+     * @throws RepositoryException
+     */
+    public function deleteActiveSubscriptionByToken(string $token): bool
+    {
+        try {
+            $sql = "DELETE FROM subscribers
+                      WHERE unsubscribe_token = :token
+                      AND is_active = 1";
+
+            $stmt = $this->runQuery($sql, [':token' => $token]);
+        }catch (RepositoryException $e) {
+            throw new RepositoryException('Nie udało się usunąć subskrybenta', 500, $e);
+        }
+
+        return $stmt->rowCount() === 1;
+    }
+
+    /**
      * Zwraca DTO istniejącego subskrybenta albo null, jeżeli adres nie istnieje.
      * Serwis rozróżnia aktywny i oczekujący rekord na podstawie isActive w DTO.
      * Wynik jest odczytem stanu w danej chwili i nie blokuje późniejszych zmian.

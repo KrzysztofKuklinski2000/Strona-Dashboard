@@ -77,9 +77,14 @@ class SubscriptionService implements SubscriptionServiceInterface
     public function unsubscribe(string $token): void
     {
         try {
-            $subscriber = $this->subscriberRepository->getSubscriberByUnsubscribeToken($token);
+            $deleted = $this->subscriberRepository->deleteActiveSubscriptionByToken($token);
 
-            $this->subscriberRepository->delete(self::TABLE, $subscriber->id);
+            if (!$deleted) {
+                throw new NotFoundException(
+                    'Link wypisania jest nieprawidłowy lub został już wykorzystany.',
+                    404,
+                );
+            }
         } catch (RepositoryException $e) {
             throw new ServiceException(
                 'Nie udało się usunąć subskrypcji.',
@@ -158,6 +163,25 @@ class SubscriptionService implements SubscriptionServiceInterface
             // confirmation_last_sent_at opisuje próbę wysyłki, nie gwarantowane dostarczenie maila.
             throw new ServiceException(
                 'Nie udało się wysłać wiadomości potwierdzającej.',
+                500,
+                $e,
+            );
+        }
+    }
+
+    /**
+     * Sprawdza, czy link wskazuje aktywną subskrypcję.
+     * Nie zmienia ani nie usuwa żadnych danych.
+     *
+     * @throws NotFoundException
+     * @throws ServiceException
+     */
+    public function validateUnsubscribeToken(string $token): void {
+        try {
+            $this->subscriberRepository->getSubscriberByUnsubscribeToken($token);
+        } catch (RepositoryException $e) {
+            throw new ServiceException(
+                'Nie udało się sprawdzić linku wypisania.',
                 500,
                 $e,
             );

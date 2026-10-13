@@ -26,7 +26,6 @@ return function (RouteCollector $r) {
     $r->get('/aktualnosci/wpis/{id:\d+}', [PublicNewsController::class, 'showAction']);
 
 
-
     $r->get('/grafik', [SiteController::class, 'timetableAction']);
     $r->get('/galeria', [SiteController::class, 'galleryAction']);
     $r->get('/galeria/{category}', [SiteController::class, 'galleryAction']);
@@ -38,10 +37,12 @@ return function (RouteCollector $r) {
     $r->get('/oyama', [SiteController::class, 'oyamaAction']);
     $r->get('/dojo-oath', [SiteController::class, 'dojoOathAction']);
     $r->get('/wymagania-egzaminacyjne', [SiteController::class, 'requirementsAction']);
-    
+
     $r->post('/subscribe', [PublicSubscribersController::class, 'subscribeAction']);
     $r->get('/confirm-subscription', [PublicSubscribersController::class, 'confirmAction']);
-    $r->get('/unsubscribe', [PublicSubscribersController::class, 'unsubscribeAction']);
+
+    $r->get('/unsubscribe', [PublicSubscribersController::class, 'unsubscribeConfirmationAction']);
+    $r->post('/unsubscribe', [PublicSubscribersController::class, 'unsubscribeAction']);
 
     $r->get('/auth/login', [AuthController::class, 'loginAction']);
     $r->post('/auth/login', [AuthController::class, 'loginAction']);
@@ -80,7 +81,7 @@ return function (RouteCollector $r) {
     $r->post('/dashboard/important_posts/update/{id:\d+}', [ImportantPostsController::class, 'updateAction']);
     $r->get('/dashboard/important_posts/show/{id:\d+}', [ImportantPostsController::class, 'showAction']);
     $r->post('/dashboard/important_posts/published/{id:\d+}', [ImportantPostsController::class, 'publishedAction']);
-    $r->get('/dashboard/important_posts/confirmDelete/{id:\d+}', [ImportantPostsController::class,'confirmDeleteAction']);
+    $r->get('/dashboard/important_posts/confirmDelete/{id:\d+}', [ImportantPostsController::class, 'confirmDeleteAction']);
     $r->post('/dashboard/important_posts/delete/{id:\d+}', [ImportantPostsController::class, 'deleteAction']);
 
     $r->get('/dashboard/news', [NewsController::class, 'indexAction']);
@@ -122,7 +123,7 @@ return function (RouteCollector $r) {
 
     $r->get('/dashboard/subscribers/edit/{id:\d+}', [SubscribersController::class, 'editAction']);
     $r->post('/dashboard/subscribers/update/{id:\d+}', [SubscribersController::class, 'updateAction']);
-    
+
     $r->get('/dashboard/subscribers/show/{id:\d+}', [SubscribersController::class, 'showAction']);
 
     $r->get('/dashboard/subscribers/confirmDelete/{id:\d+}', [SubscribersController::class, 'confirmDeleteAction']);

@@ -11,4 +11,5 @@ interface SubscriptionServiceInterface
     public function subscribe(CreateSubscriberDto $data): void;
     public function unsubscribe(string $token): void;
     public function confirm(string $token): void;
+    public function validateUnsubscribeToken(string $token): void;
 }
