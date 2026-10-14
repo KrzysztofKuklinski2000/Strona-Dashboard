@@ -42,24 +42,6 @@ class SubscriberRepository extends BaseDashboardRepository
     }
 
     /**
-     * Pomocnicze sprawdzenie używane przy dodawaniu z dashboardu.
-     * Sam odczyt nie chroni przed równoczesnym zapisem; unikalność zapewnia indeks email.
-     *
-     * @throws RepositoryException
-     */
-    public function emailExists(string $email): bool
-    {
-        try {
-            $sql = "SELECT COUNT(*) FROM subscribers WHERE email = :email";
-            $result = $this->runQuery($sql, [':email' => $email])->fetchColumn();
-
-            return $result > 0;
-        } catch (RepositoryException $e) {
-            throw new RepositoryException('Nie udało się pobrać subskrybenta', 500, $e);
-        }
-    }
-
-    /**
      * Pobiera aktywny rekord na podstawie tokenu wypisania, nie hashu potwierdzenia.
      *
      * @throws NotFoundException

@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\Service\Dashboard\Contracts;
 
-use App\DTO\Dashboard\Subscriber\CreateSubscriberDto;
 use App\DTO\Dashboard\Subscriber\SubscribersDto;
-use App\DTO\Dashboard\Subscriber\UpdateSubscriberDto;
 
 /**
- * Interfejs definiujący operacje wyłącznie dla modułu Subscribers.
+ * Odczyt i usuwanie subskrybentów w dashboardzie, bez zmiany adresu lub aktywacji.
  */
 interface SubscribersManagementServiceInterface extends SharedGetDataServiceInterface
 {
@@ -18,19 +16,6 @@ interface SubscribersManagementServiceInterface extends SharedGetDataServiceInte
      * @return SubscribersDto[]
      */
     public function getAllSubscribers(): array;
-
-    /**
-     * Tworzy nowych subskrybenta
-     * @param CreateSubscriberDto $data
-     */
-    public function createSubscriber(CreateSubscriberDto $data): void;
-
-    /**
-     * Aktualizuje dane subskrybenta.
-     * @param UpdateSubscriberDto $data
-     * @return void
-     */
-    public function updateSubscriber(UpdateSubscriberDto $data): void;
 
     /**
      * Usuwa subskrybenta.

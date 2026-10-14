@@ -1,20 +1,18 @@
 <?php
 $pageTitle = 'Lista Subskrybentów';
 $moduleName = 'subscribers';
+$showEditAction = false;
 $data = $params['data'] ?? [];
 ?>
 <div class="list-header">
     <h3><?= e($pageTitle) ?></h3>
-    <a href="/dashboard/<?= e($moduleName) ?>/create">
-        <span>Nowy</span><i class="fa-solid fa-plus" aria-hidden="true"></i>
-    </a>
 </div>
 
 <?php if ($data === []): ?>
     <div class="dashboard-table-empty" role="status">
         <i class="fa-regular fa-folder-open" aria-hidden="true"></i>
         <strong>Brak subskrybentów</strong>
-        <span>Dodaj pierwszy adres e-mail, aby pojawił się na liście.</span>
+        <span>Adresy pojawią się tutaj po zapisie przez formularz na stronie publicznej.</span>
     </div>
 <?php else: ?>
     <div class="dashboard-table-wrapper">
@@ -34,8 +32,8 @@ $data = $params['data'] ?? [];
                     <td class="dashboard-table__primary"><?= e($row->email) ?></td>
                     <td>
                         <span class="dashboard-status-badge <?= $row->isActive ? 'published' : 'no-published' ?>">
-                            <i class="fa-solid <?= $row->isActive ? 'fa-circle-check' : 'fa-circle-xmark' ?>" aria-hidden="true"></i>
-                            <?= $row->isActive ? 'Aktywny' : 'Nieaktywny' ?>
+                            <i class="fa-solid <?= $row->isActive ? 'fa-circle-check' : 'fa-clock' ?>" aria-hidden="true"></i>
+                            <?= $row->isActive ? 'Aktywny' : 'Oczekuje na potwierdzenie' ?>
                         </span>
                     </td>
                     <?php require "templates/dashboard/_partials/_action_links.php"; ?>

@@ -6,26 +6,19 @@ namespace App\Controller\Dashboard;
 
 use App\Controller\Dashboard\Traits\HasDeleteAction;
 use App\Controller\Dashboard\Traits\HasSingleData;
-use App\Controller\Dashboard\Traits\HasStoreAction;
-use App\Controller\Dashboard\Traits\HasUpdateAction;
 use App\Core\ContextController;
-use App\DTO\Dashboard\Subscriber\CreateSubscriberDto;
-use App\DTO\Dashboard\Subscriber\UpdateSubscriberDto;
-use App\DTO\DataTransferObjectInterface;
 use App\Exception\NotFoundException;
-use App\Mapper\Dashboard\SubscriberRequestMapper;
+use App\Mapper\Dashboard\DeleteRequestMapper;
 use App\Service\Dashboard\Contracts\SubscribersManagementServiceInterface;
 
 class SubscribersController extends AbstractDashboardController
 {
-    use HasStoreAction;
     use HasDeleteAction;
-    use HasUpdateAction;
     use HasSingleData;
 
     public function __construct(
         private readonly SubscribersManagementServiceInterface $service,
-        private readonly SubscriberRequestMapper $subscriberRequestMapper,
+        private readonly DeleteRequestMapper $deleteRequestMapper,
         ContextController                                      $contextController
     ) {
 
@@ -37,24 +30,6 @@ class SubscribersController extends AbstractDashboardController
         $this->renderPage([
             'page' => 'subscribers/index',
             'data' => $this->service->getAllSubscribers(),
-        ]);
-    }
-
-    public function createAction(): void
-    {
-        $this->renderPage([
-            'page' => 'subscribers/create'
-        ]);
-    }
-
-    /**
-     * @throws NotFoundException
-     */
-    public function editAction(): void
-    {
-        $this->renderPage([
-            'page' => 'subscribers/edit',
-            'data' => $this->getSingleData(),
         ]);
     }
 
@@ -85,31 +60,9 @@ class SubscribersController extends AbstractDashboardController
         return 'subscribers';
     }
 
-    protected function getDataToCreate(): CreateSubscriberDto
-    {
-        return $this->subscriberRequestMapper->mapCreate();
-    }
-
-    protected function getDataToUpdate(): UpdateSubscriberDto
-    {
-        return $this->subscriberRequestMapper->mapUpdate();
-    }
-
     protected function getDataToDelete(): ?int
     {
-        return $this->subscriberRequestMapper->mapDelete();
-    }
-
-    protected function handleCreate(DataTransferObjectInterface $data): void
-    {
-        /** @var CreateSubscriberDto $data */
-        $this->service->createSubscriber($data);
-    }
-
-    protected function handleUpdate(DataTransferObjectInterface $data): void
-    {
-        /** @var UpdateSubscriberDto $data */
-        $this->service->updateSubscriber($data);
+        return $this->deleteRequestMapper->map();
     }
 
     protected function handleDelete(int $id): void
