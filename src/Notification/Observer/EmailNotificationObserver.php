@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Notification\Observer;
 
+use App\DTO\Notification\NotificationReportDto;
 use App\Notification\Notifier;
 
 class EmailNotificationObserver implements TimetableObserverInterface
@@ -12,8 +13,8 @@ class EmailNotificationObserver implements TimetableObserverInterface
     {
     }
 
-    public function update(string $customMessage = ''): void
+    public function update(string $customMessage = ''): NotificationReportDto
     {
-        $this->notification->notifyAboutTimetableUpdate($customMessage);
+        return $this->notification->notifyAboutTimetableUpdate($customMessage);
     }
 }

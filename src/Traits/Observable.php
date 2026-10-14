@@ -4,21 +4,20 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
+use App\DTO\Notification\NotificationReportDto;
 use App\Notification\Observer\TimetableObserverInterface;
 
 trait Observable
 {
-    private array $observers = [];
+    private TimetableObserverInterface $observer;
 
     public function attach(TimetableObserverInterface $observer): void
     {
-        $this->observers[] = $observer;
+        $this->observer = $observer;
     }
 
-    private function notify(string $customMessage): void
+    private function notify(string $customMessage): NotificationReportDto
     {
-        foreach ($this->observers as $observer) {
-            $observer->update($customMessage);
-        }
+        return $this->observer->update($customMessage);
     }
 }

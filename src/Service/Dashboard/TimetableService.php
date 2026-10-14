@@ -10,6 +10,7 @@ use App\DTO\Dashboard\Timetable\CreateTimetableDto;
 use App\DTO\Dashboard\Timetable\TimetableDto;
 use App\DTO\Dashboard\Timetable\UpdateTimetableDto;
 use App\DTO\DataTransferObjectInterface;
+use App\DTO\Notification\NotificationReportDto;
 use App\Exception\NotFoundException;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
@@ -63,7 +64,7 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
      * @throws ServiceException
      * @throws NotFoundException
      */
-    public function updateTimetable(UpdateTimetableDto $data): void
+    public function updateTimetable(UpdateTimetableDto $data): ?NotificationReportDto
     {
         /** @var TimetableDto $timetablePost */
         $timetablePost =  $this->getPost($data->id);
@@ -89,7 +90,7 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
             throw new ServiceException('Lokalizacja jest nie aktywna', 409);
         }
 
-        $this->handleActionWithNotification(
+        return $this->handleActionWithNotification(
             $data,
             $this->notifications['timetable_updated'],
             fn(DataTransferObjectInterface $dto) => $this->edit(self::TABLE, $dto)
@@ -100,7 +101,7 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
      * @throws ServiceException
      * @throws NotFoundException
      */
-    public function createTimetable(CreateTimetableDto $data): void
+    public function createTimetable(CreateTimetableDto $data): ?NotificationReportDto
     {
         try {
             /** @var LocationDto $location */
@@ -124,7 +125,7 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
         }
 
 
-        $this->handleActionWithNotification(
+        return $this->handleActionWithNotification(
             $data,
             $this->notifications['timetable_created'],
             fn(DataTransferObjectInterface $dto) => $this->create(self::TABLE, $dto)
@@ -134,37 +135,41 @@ class TimetableService extends AbstractDashboardService implements TimetableMana
     /**
      * @throws ServiceException
      */
-    public function publishedTimetable(PublishedDto $data): void
+    public function publishedTimetable(PublishedDto $data): ?NotificationReportDto
     {
-        $this->handleActionWithNotification(
+        return $this->handleActionWithNotification(
             $data,
             $this->notifications['timetable_published'],
             fn(DataTransferObjectInterface $dto) => $this->published(self::TABLE, $dto)
         );
     }
 
-    public function deleteTimetable(int $id, bool $shouldNotify): void
+    public function deleteTimetable(int $id, bool $shouldNotify): ?NotificationReportDto
     {
         $this->delete(self::TABLE, $id);
 
-        if ($shouldNotify) {
-            $this->notify($this->notifications['timetable_deleted']);
+        if (!$shouldNotify) {
+            return null;
         }
+
+        return $this->notify($this->notifications['timetable_deleted']);
     }
 
     private function handleActionWithNotification(
         CreateTimetableDto|UpdateTimetableDto|PublishedDto $data,
         string                                             $message,
         callable                                           $action
-    ): void
+    ): ?NotificationReportDto
     {
         $shouldNotify = (bool)($data->isNotify ?? false);
 
         $action($data);
 
-        if ($shouldNotify) {
-            $this->notify($message);
+        if (!$shouldNotify) {
+            return null;
         }
+
+        return $this->notify($message);
     }
 
     /**

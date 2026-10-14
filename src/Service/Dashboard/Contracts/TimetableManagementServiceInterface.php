@@ -9,6 +9,7 @@ use App\DTO\Dashboard\PublishedDto;
 use App\DTO\Dashboard\Timetable\CreateTimetableDto;
 use App\DTO\Dashboard\Timetable\TimetableDto;
 use App\DTO\Dashboard\Timetable\UpdateTimetableDto;
+use App\DTO\Notification\NotificationReportDto;
 
 /**
  * Interfejs definiujący operacje wyłącznie dla modułu Grafiku.
@@ -35,28 +36,28 @@ interface TimetableManagementServiceInterface extends SharedGetDataServiceInterf
     /**
      * Aktualizuje istniejący wpis.
      * @param UpdateTimetableDto $data
-     * @return void
+     * @return NotificationReportDto | null
      */
-    public function updateTimetable(UpdateTimetableDto $data): void;
+    public function updateTimetable(UpdateTimetableDto $data): ?NotificationReportDto;
 
     /**
      * Tworzy nowy wpis.
      * @param CreateTimetableDto $data
-     * @return void
+     * @return NotificationReportDto | null
      */
-    public function createTimetable(CreateTimetableDto $data): void;
+    public function createTimetable(CreateTimetableDto $data): ?NotificationReportDto;
 
     /**
      * Zmienia status publikacji.
      * @param PublishedDto $data
-     * @return void
+     * @return NotificationReportDto | null
      */
-    public function publishedTimetable(PublishedDto $data): void;
+    public function publishedTimetable(PublishedDto $data): ?NotificationReportDto;
 
     /**
      * Usuwa wpis.
      * @param int $id
-     * @return void
+     * @return NotificationReportDto | null
      */
-    public function deleteTimetable(int $id, bool $shouldNotify): void;
+    public function deleteTimetable(int $id, bool $shouldNotify): ?NotificationReportDto;
 }

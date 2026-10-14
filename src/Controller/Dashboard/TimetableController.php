@@ -15,6 +15,7 @@ use App\DTO\Dashboard\Timetable\CreateTimetableDto;
 use App\DTO\Dashboard\Timetable\TimetableDto;
 use App\DTO\Dashboard\Timetable\UpdateTimetableDto;
 use App\DTO\DataTransferObjectInterface;
+use App\DTO\Notification\NotificationReportDto;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
 use App\Mapper\Dashboard\TimetableRequestMapper;
@@ -38,9 +39,16 @@ class TimetableController extends AbstractDashboardController
 
     public function indexAction(): void
     {
+        $data = $this->service->getAllTimetable();
+
+        $notificationReport = $this->sessionManager->get('timetable_notification_report');
+
+        $this->sessionManager->remove('timetable_notification_report');
+
         $this->renderPage([
             'page' => 'timetable/index',
-            'data' => $this->service->getAllTimetable(),
+            'data' => $data,
+            'notification_report' => $notificationReport,
         ]);
     }
 
@@ -59,9 +67,6 @@ class TimetableController extends AbstractDashboardController
         ]);
     }
 
-    /**
-     * @throws ServiceException
-     */
     public function createAction(): void
     {
         $this->renderPage([
@@ -124,7 +129,8 @@ class TimetableController extends AbstractDashboardController
     {
         /** @var CreateTimetableDto $data */
         try {
-            $this->service->createTimetable($data);
+            $report = $this->service->createTimetable($data);
+            $this->storeNotificationReport($report);
         } catch (ServiceException $e) {
             if ($e->getCode() !== 409) {
                 throw $e;
@@ -153,7 +159,8 @@ class TimetableController extends AbstractDashboardController
 
         try {
             /** @var UpdateTimetableDto $data */
-            $this->service->updateTimetable($data);
+            $report = $this->service->updateTimetable($data);
+            $this->storeNotificationReport($report);
         } catch (ServiceException $e) {
             if ($e->getCode() !== 409) {
                 throw $e;
@@ -177,12 +184,33 @@ class TimetableController extends AbstractDashboardController
     protected function handleDelete(int $id): void
     {
         $shouldNotify = !empty($this->request->getFormParam('is_notify'));
-        $this->service->deleteTimetable($id, $shouldNotify);
+        $report = $this->service->deleteTimetable($id, $shouldNotify);
+        $this->storeNotificationReport($report);
     }
 
     protected function handlePublish(DataTransferObjectInterface $data): void
     {
         /** @var PublishedDto $data */
-        $this->service->publishedTimetable($data);
+        $report = $this->service->publishedTimetable($data);
+        $this->storeNotificationReport($report);
+    }
+
+
+    private function storeNotificationReport(
+        ?NotificationReportDto $report,
+    ): void {
+        if ($report === null) {
+            $this->sessionManager->remove('timetable_notification_report');
+            return;
+        }
+
+        $this->sessionManager->set(
+            'timetable_notification_report',
+            [
+                'sent_count' => $report->sentCount,
+                'failed_recipients' => $report->failedRecipients,
+                'recipients_loaded' => $report->recipientsLoaded,
+            ],
+        );
     }
 }
