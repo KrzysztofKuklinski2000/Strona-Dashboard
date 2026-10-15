@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use App\Controller\AuthController;
+use App\Controller\Dashboard\AbstractDashboardController;
 use App\Controller\PublicNewsController;
 use App\Core\Config;
 use App\Core\ContextController;
@@ -88,18 +90,30 @@ try {
 
     $controller->$action();
 
-    if($controller instanceof SiteController || $controller instanceof PublicNewsController) {
+    if ($controller instanceof SiteController || $controller instanceof PublicNewsController) {
         $pageViewRepository = new PageViewRepository($pdo);
         $pageViewTracker = new PageViewTracker($pageViewRepository);
 
         $pageViewTracker->track($request);
     }
 
-} catch (InvalidCsrfTokenException $e) {
-    $uri = $_SERVER['REQUEST_URI'];
-    $redirectPath = str_contains($uri, $config->getDashboardRoute()) ? "{$config->getDashboardRoute()}?error=csrf" : '/?error=csrf';
+} catch (InvalidCsrfTokenException) {
+    $isDashboardRequest = $controller instanceof AbstractDashboardController
+        || $controller instanceof AuthController;
 
-    header("Location: $redirectPath");
+    $sessionManager->setFlash(
+        'warning',
+        'Formularz wygasł lub jest nieprawidłowy. '
+        . 'Operacja nie została wykonana. '
+        . 'Otwórz formularz ponownie i spróbuj jeszcze raz.',
+        $isDashboardRequest ? 'dashboard' : 'public',
+    );
+
+    $redirectPath = $isDashboardRequest
+        ? $config->getDashboardRoute()
+        : $config->getHomeRoute();
+
+    header("Location: $redirectPath", true, 303);
     exit;
 } catch (NotFoundException $e) {
     http_response_code(404);

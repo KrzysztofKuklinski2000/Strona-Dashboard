@@ -11,7 +11,6 @@ use App\Exception\ServiceException;
 use App\Service\Contracts\SubscriptionServiceInterface;
 use App\View\PublicPageRenderer;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
-use Exception;
 
 class PublicSubscribersController extends AbstractController
 {
@@ -53,8 +52,10 @@ class PublicSubscribersController extends AbstractController
 
             $this->sessionManager->setFlash(
                 'success',
-                'Sprawdź swoją skrzynkę e-mail i kliknij link, aby potwierdzić subskrypcję.',
-                'public'
+                'Jeśli adres wymaga potwierdzenia, sprawdź skrzynkę e-mail i folder spam. '
+                . 'Link jest ważny przez 24 godziny. '
+                . 'Ponowna próba wysyłki potwierdzenia jest możliwa po 5 minutach.',
+                'public',
             );
 
         } catch (ServiceException $e) {
@@ -68,8 +69,20 @@ class PublicSubscribersController extends AbstractController
     {
         $token = $this->request->getQueryParam('token');
 
+        $invalidLinkMessage =
+            'Link potwierdzający jest nieprawidłowy, wygasł lub został już wykorzystany. '
+            . 'Jeśli subskrypcja nie została jeszcze potwierdzona, '
+            . 'ponownie wpisz adres w formularzu powiadomień, aby poprosić o nowy link.';
+
+
         if (!is_string($token) || $token === '') {
-            $this->redirect("{$this->contextController->config->getHomeRoute()}?error=invalid_token");
+            $this->sessionManager->setFlash(
+                'warning',
+                $invalidLinkMessage,
+                'public',
+            );
+
+            $this->redirect($this->contextController->config->getHomeRoute());
             return;
         }
 
@@ -77,8 +90,19 @@ class PublicSubscribersController extends AbstractController
 
             $this->service->confirm($token);
             $this->sessionManager->setFlash('success', 'Subskrypcja została potwierdzona! Oss!', 'public');
-        } catch (Exception) {
-            $this->sessionManager->setFlash('warning', 'Link aktywacyjny jest nieprawidłowy.', 'public');
+        }  catch (NotFoundException) {
+            $this->sessionManager->setFlash(
+                'warning',
+                $invalidLinkMessage,
+                'public',
+            );
+        } catch (ServiceException) {
+            $this->sessionManager->setFlash(
+                'warning',
+                'Nie udało się teraz potwierdzić subskrypcji. '
+                . 'Spróbuj ponownie później, korzystając z tego samego linku.',
+                'public',
+            );
         }
 
         $this->redirect($this->contextController->config->getHomeRoute());

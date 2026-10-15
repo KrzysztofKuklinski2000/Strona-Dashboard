@@ -16,7 +16,8 @@ class AuthController extends AbstractController
     public function __construct(
         private readonly Authenticator $authenticator,
         ContextController              $contextController,
-    ) {
+    )
+    {
         parent::__construct($contextController);
     }
 
@@ -35,8 +36,8 @@ class AuthController extends AbstractController
         if ($this->request->hasPost()) {
             try {
                 $this->csrfMiddleware->verify('admin');
-                $login = (string) $this->request->getFormParam('login');
-                $password = (string) $this->request->getFormParam('password');
+                $login = (string)$this->request->getFormParam('login');
+                $password = (string)$this->request->getFormParam('password');
 
                 if (empty($login) || empty($password)) {
                     $errors['general'] = "Podaj login i hasło.";
@@ -54,6 +55,10 @@ class AuthController extends AbstractController
 
             } catch (ServiceException $e) {
                 $errors['general'] = $e->getMessage();
+            } catch (InvalidCsrfTokenException) {
+                $errors['general'] =
+                    'Formularz logowania wygasł lub jest nieprawidłowy. '
+                    . 'Wpisz dane ponownie i spróbuj jeszcze raz.';
             } catch (Throwable $e) {
                 $errors['general'] = 'Wystąpił nieznany błąd serwera.';
             }
@@ -61,7 +66,8 @@ class AuthController extends AbstractController
         $this->view->renderDashboardView([
             'page' => 'login',
             'messages' => $errors,
-            'csrf_token' => $this->csrfMiddleware->generateToken('admin')
+            'csrf_token' => $this->csrfMiddleware->generateToken('admin'),
+            'flash_dashboard' => $this->sessionManager->getFlash(),
         ]);
     }
 

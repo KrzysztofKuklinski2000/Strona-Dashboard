@@ -27,6 +27,12 @@
                     POTWIERDZAM SUBSKRYPCJĘ</a>
               </div>
 
+                <p>
+                    Link potwierdzający jest ważny przez 24 godziny.
+                    Jeśli wygaśnie, ponownie wpisz swój adres w formularzu
+                    powiadomień na stronie klubu, aby poprosić o nowy link.
+                </p>
+
               <p>Jeśli link powyżej nie działa, skopiuj go do przeglądarki:<br>
                   <small>
                       <?= htmlspecialchars($confirmUrl, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>
