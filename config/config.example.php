@@ -1,7 +1,7 @@
 <?php
 return [
-    'env' => 'dev',
-    'app_url' => 'http://localhost:8000',
+    'env' => getenv('APP_ENV') ?: 'prod',
+    'app_url' => getenv('APP_URL') ?: '',
 
     'paths' => [
         'templates' => dirname(__DIR__) . '/templates',
@@ -29,11 +29,8 @@ return [
     ],
 
     'mail' => [
-        'host' => 'mailpit',
-        'port' => 1025,
-        'username' => null,
-        'password' => null,
-        'from_email' => 'powiadomienia@twojastrona.pl',
+        'dsn' => getenv('MAILER_DSN') ?: '',
+        'from_email' => getenv('MAIL_FROM_EMAIL') ?: '',
     ],
 
     'notifications' => [

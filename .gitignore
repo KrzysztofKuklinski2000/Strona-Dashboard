@@ -12,3 +12,6 @@ Thumbs.db
 .docker/
 todo.md
 docs
+.env
+.env.*
+!.env.example

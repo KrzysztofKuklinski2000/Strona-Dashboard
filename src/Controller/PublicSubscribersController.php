@@ -52,8 +52,8 @@ class PublicSubscribersController extends AbstractController
 
             $this->sessionManager->setFlash(
                 'success',
-                'Jeśli adres wymaga potwierdzenia, sprawdź skrzynkę e-mail i folder spam. '
-                . 'Link jest ważny przez 24 godziny. '
+                'Aby włączyć powiadomienia, potwierdź swój adres e-mail linkiem z wiadomości. '
+                . 'Sprawdź skrzynkę i folder spam. Link jest ważny przez 24 godziny. '
                 . 'Ponowna próba wysyłki potwierdzenia jest możliwa po 5 minutach.',
                 'public',
             );

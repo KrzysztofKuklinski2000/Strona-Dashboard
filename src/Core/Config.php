@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Core;
 
+use RuntimeException;
+
 readonly class Config
 {
     public function __construct(private array $config)
@@ -22,7 +24,13 @@ readonly class Config
 
     public function getUrl(): string
     {
-        return $this->config['app_url'] ?? 'http://localhost:8000';
+        $url = $this->config['app_url'] ?? '';
+
+        if ($url === '') {
+            throw new RuntimeException('Brak konfiguracji APP_URL.');
+        }
+
+        return rtrim($url, '/');
     }
 
     public function getTemplatesPath(): string
