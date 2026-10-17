@@ -1890,15 +1890,20 @@ html.has-dashboard-action-bar {
 
 .login-form {
 	width:100%;
-	height:calc(100vh - 68px);
+	min-height:calc(100vh - 68px);
+	min-height:calc(100dvh - 68px);
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	box-sizing: border-box;
+	padding: 24px 16px;
 }
 
 .login-form form {
+	width: min(100%, 420px);
 	display: flex;
 	flex-direction: column;
+	box-sizing: border-box;
 
 	padding: 50px;
 	background-color: #fff;
@@ -1924,18 +1929,78 @@ html.has-dashboard-action-bar {
 }
 
 .login-form form input {
+	width: 100%;
+	min-width: 0;
+	min-height: 46px;
+	box-sizing: border-box;
 	padding:10px;
+	font: inherit;
 	outline: none;
 	border-radius: 5px;
 	border:2px solid #171D29;
-	transition: all .3s ease-in-out;
+	transition: border-color .2s ease;
 }
 
 .login-form form input:focus {
 	border:2px solid #FF3366;
 }
 
-.login-form form button {
+.login-form__error {
+	margin: 22px 0 0;
+	padding: 12px 14px;
+	border: 1px solid #efc9cb;
+	border-radius: 6px;
+	background: #fff0f0;
+	color: #9c252b;
+	font-size: .86rem;
+	line-height: 1.6;
+	text-align: left;
+	overflow-wrap: anywhere;
+}
+
+.login-form__password-field {
+	position: relative;
+	min-width: 0;
+}
+
+.login-form__password-field.has-password-toggle input {
+	padding-right: 50px;
+}
+
+.login-form__password-toggle {
+	position: absolute;
+	top: 3px;
+	right: 3px;
+	bottom: 3px;
+	width: 40px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+	border: 0;
+	border-radius: 3px;
+	background: transparent;
+	color: #687282;
+	font: inherit;
+	font-size: 1rem;
+	cursor: pointer;
+}
+
+.login-form__password-toggle[hidden] {
+	display: none;
+}
+
+.login-form__password-toggle:hover {
+	color: #d91f50;
+}
+
+.login-form__password-toggle:focus-visible,
+.login-form__submit:focus-visible {
+	outline: 2px solid #d91f50;
+	outline-offset: 3px;
+}
+
+.login-form form .login-form__submit {
 	width:150px;
 	height:40px;
 
@@ -1954,12 +2019,18 @@ html.has-dashboard-action-bar {
 	margin-top: 30px;
 	border-radius: 5px;
 	border: 2px solid #FF3366;
-	transition: all .3s ease-in-out;
+	transition: background-color .2s ease, color .2s ease;
 }
 
-.login-form form button:hover {
+.login-form form .login-form__submit:hover {
 	background-color: #fff;
 	color:#171D29
+}
+
+@media (max-width: 480px) {
+	.login-form form {
+		padding: 28px 24px;
+	}
 }
 
 .error {
@@ -3948,6 +4019,11 @@ html.has-dashboard-action-bar {
 }
 
 @media (prefers-reduced-motion: reduce) {
+	.login-form form input,
+	.login-form form .login-form__submit {
+		transition: none;
+	}
+
 	.dashboard-toast,
 	.dashboard-toast.is-closing {
 		animation: none;

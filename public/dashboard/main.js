@@ -1,3 +1,27 @@
+document.querySelectorAll('[data-password-toggle]').forEach((toggle) => {
+    const field = toggle.closest('[data-password-field]');
+    const input = field?.querySelector('input');
+    const icon = toggle.querySelector('[data-password-icon]');
+
+    if (!input || input.type !== 'password') {
+        return;
+    }
+
+    field.classList.add('has-password-toggle');
+    toggle.hidden = false;
+
+    toggle.addEventListener('click', () => {
+        const showPassword = input.type === 'password';
+        const label = showPassword ? 'Ukryj hasło' : 'Pokaż hasło';
+
+        input.type = showPassword ? 'text' : 'password';
+        icon?.classList.toggle('fa-eye', !showPassword);
+        icon?.classList.toggle('fa-eye-slash', showPassword);
+        toggle.setAttribute('aria-label', label);
+        toggle.title = label;
+    });
+});
+
 const dashboardToast = document.querySelector('[data-dashboard-toast]');
 const dashboardToastClose = dashboardToast?.querySelector('[data-dashboard-toast-close]');
 
