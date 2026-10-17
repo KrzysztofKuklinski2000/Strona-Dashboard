@@ -5,9 +5,9 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Szkoła sztuk walki zaprasza na naukę karate kyokushin oraz samoobronę dla kobiet. Organizujemy obozy sportowe i kolonie dla dzieci i młodzieży - Wejherowo - Reda - Prowadzi zajęcia Pilates - Organizujemy warsztaty taneczne - Prowadzimy szkolenia dla firm - Pomorskie">
-	<link rel="stylesheet" type="text/css" href="/public/style.css?v=<?= filemtime(__DIR__ . '/../public/style.css') ?>">
-	<link rel="stylesheet" type="text/css" href="/public/style-res.css?v=<?= filemtime(__DIR__ . '/../public/style-res.css') ?>">
-	<link rel="icon" type="image/x-icon" href="/public/images/logo.png">
+	<link rel="stylesheet" type="text/css" href="/style.css?v=<?= filemtime(__DIR__ . '/../public/style.css') ?>">
+	<link rel="stylesheet" type="text/css" href="/style-res.css?v=<?= filemtime(__DIR__ . '/../public/style-res.css') ?>">
+	<link rel="icon" type="image/x-icon" href="/images/branding/logo.png">
 	<script src="https://kit.fontawesome.com/062ebc24f8.js" crossorigin="anonymous"></script>
     <?php
     $page = $params['page'] ?? 'homepage';
@@ -127,13 +127,13 @@
 		<?php require_once('components/footer.php') ?>
 	</footer>
 
-	<script type="text/javascript" src="/public/js/main.js?v=<?= filemtime(__DIR__ . '/../public/js/main.js') ?>"></script>
-	<script type="text/javascript" src="/public/js/nav-indicator.js"></script>
+	<script type="text/javascript" src="/js/main.js?v=<?= filemtime(__DIR__ . '/../public/js/main.js') ?>"></script>
+	<script type="text/javascript" src="/js/nav-indicator.js"></script>
 	<?php if (($params['page'] ?? '') === 'homepage'): ?>
-		<script src="/public/js/hero-carousel.js?v=<?= filemtime(__DIR__ . '/../public/js/hero-carousel.js') ?>" defer></script>
+		<script src="/js/hero-carousel.js?v=<?= filemtime(__DIR__ . '/../public/js/hero-carousel.js') ?>" defer></script>
 	<?php endif ?>
 	<?php if (($params['page'] ?? '') === 'timetable'): ?>
-		<script src="/public/js/location-map.js" defer></script>
+		<script src="/js/location-map.js" defer></script>
 	<?php endif ?>
 </body>
 

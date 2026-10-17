@@ -326,4 +326,4 @@ $contentStatistics = [
 
 </script>
 
-<script src="/public/dashboard/overview-chart.js"></script>
+<script src="/dashboard/overview-chart.js"></script>

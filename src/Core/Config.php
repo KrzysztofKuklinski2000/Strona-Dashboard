@@ -45,7 +45,7 @@ readonly class Config
 
     public function getUploadUrl(): string
     {
-        return $this->config['paths']['uploads_url'] ?? '/public/uploads';
+        return $this->config['paths']['uploads_url'] ?? '/uploads';
     }
 
     public function getMaxUploadSize(): int

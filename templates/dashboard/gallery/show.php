@@ -5,9 +5,9 @@ $csrf = $params['csrf_token'] ?? '';
 $formTitle = "Szczegóły posta ważnych informacji";
 
 $postDetailsHtml = sprintf(
-    '<img class="dashboard-image" src="/public/uploads/%s" alt="%s">
+    '<img class="dashboard-image" src="%s" alt="%s">
      <p>%s</p>',
-    rawurlencode($data->imageName),
+    e(upload_url($data->imageName)),
     e($data->description),
     e($data->description)
 );

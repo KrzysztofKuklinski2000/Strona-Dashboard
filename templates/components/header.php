@@ -1,5 +1,5 @@
 <?php
-$heroImageDirectory = __DIR__ . '/../../public/images/hero-cinematic/tiles';
+$heroImageDirectory = __DIR__ . '/../../public/images/hero';
 $heroImageVersion = filemtime($heroImageDirectory . '/hero-group.webp');
 $heroSlides = [
 	[
@@ -84,7 +84,7 @@ $heroSlides = [
 					<?php foreach ($heroSlides as $index => $slide): ?>
 						<figure class="hero-gallery__item" data-hero-carousel-item>
 							<img
-								src="/public/images/hero-cinematic/tiles/<?= e($slide['file']) ?>?v=<?= $heroImageVersion ?>"
+								src="/images/hero/<?= e($slide['file']) ?>?v=<?= $heroImageVersion ?>"
 								width="1536"
 								height="1024"
 								alt="<?= e($slide['alt']) ?>"

@@ -23,10 +23,12 @@ use App\Controller\SiteController;
 use App\Repository\Analytics\PageViewRepository;
 use App\Service\Analytics\PageViewTracker;
 
-require_once 'vendor/autoload.php';
+// Starsze widoki używają ścieżek względem katalogu projektu.
+chdir(dirname(__DIR__));
+require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 
-$configurationArray = require_once('config/config.php');
+$configurationArray = require dirname(__DIR__) . '/config/config.php';
 $config = new Config($configurationArray);
 
 $isDev = $config->getEnv() === 'dev';
@@ -49,7 +51,7 @@ $sessionManager = new SessionManager(secureCookies: !$isDev);
 $easyCSRF = new EasyCSRF(new NativeSessionProvider());
 
 
-$factories = require_once('config/factories.php');
+$factories = require dirname(__DIR__) . '/config/factories.php';
 
 
 try {

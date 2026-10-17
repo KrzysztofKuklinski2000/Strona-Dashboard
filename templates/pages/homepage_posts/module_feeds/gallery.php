@@ -10,7 +10,7 @@ $imageDescription = $description !== ''
     ? $description
     : 'Zdjęcie z galerii klubowej';
 
-$imagePath = '/public/uploads/' . rawurlencode((string) $feedPost->imageName);
+$imagePath = upload_url((string) $feedPost->imageName);
 ?>
 
 <article class="important-card module-feed-gallery-card">

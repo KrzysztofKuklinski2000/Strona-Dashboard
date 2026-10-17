@@ -26,8 +26,8 @@ $scrollScriptVersion = filemtime(__DIR__ . '/../../../public/js/scroll.js');
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link rel="stylesheet" href="/public/style.css">
-            <link rel="stylesheet" href="/public/style-res.css">
+            <link rel="stylesheet" href="/style.css">
+            <link rel="stylesheet" href="/style-res.css">
             <script src="https://kit.fontawesome.com/062ebc24f8.js" crossorigin="anonymous"></script>
             <style>
                 html, body {
@@ -55,7 +55,7 @@ $scrollScriptVersion = filemtime(__DIR__ . '/../../../public/js/scroll.js');
             <main>
                 {$previewHtml}
             </main>
-            <script src="/public/js/scroll.js?v={$scrollScriptVersion}"></script>
+            <script src="/js/scroll.js?v={$scrollScriptVersion}"></script>
         </body>
         </html>
         HTML;

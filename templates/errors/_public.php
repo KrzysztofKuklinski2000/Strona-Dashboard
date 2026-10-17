@@ -9,15 +9,15 @@ $errorStyleVersion = filemtime(__DIR__ . '/../../public/style.css');
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
     <title><?= $escapeError($errorTitle) ?> – Karate Kyokushin Wejherowo / Reda</title>
-    <link rel="icon" href="/public/images/logo.png">
-    <link rel="stylesheet" href="/public/style.css?v=<?= $errorStyleVersion ?>">
+    <link rel="icon" href="/images/branding/logo.png">
+    <link rel="stylesheet" href="/style.css?v=<?= $errorStyleVersion ?>">
 </head>
 <body class="public-error-page">
     <header class="public-error-page__header">
         <a class="site-brand" href="/" aria-label="Strona główna Karate Kyokushin Wejherowo / Reda">
             <span class="site-brand__icons" aria-hidden="true">
-                <img class="site-brand__emblem" src="/public/images/logo.png" alt="">
-                <img class="site-brand__calligraphy" src="/public/images/logo.gif" alt="">
+                <img class="site-brand__emblem" src="/images/branding/logo.png" alt="">
+                <img class="site-brand__calligraphy" src="/images/branding/logo.gif" alt="">
             </span>
             <span class="site-brand__text">
                 <strong><span>Karate</span><span>Kyokushin</span></strong>

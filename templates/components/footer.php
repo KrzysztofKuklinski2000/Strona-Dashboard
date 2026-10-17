@@ -33,7 +33,7 @@
 			</label>
 		</form>
 
-		<img class="site-newsletter__decor" src="/public/images/decor-bamboo.png" alt="" aria-hidden="true">
+		<img class="site-newsletter__decor" src="/images/decorations/decor-bamboo.png" alt="" aria-hidden="true">
 	</div>
 </section>
 
@@ -42,8 +42,8 @@
 		<div class="site-footer-brand">
 			<a class="site-brand site-brand--footer" href="/" aria-label="Strona główna Karate Kyokushin Wejherowo / Reda">
 				<span class="site-brand__icons" aria-hidden="true">
-					<img class="site-brand__emblem" src="/public/images/logo.png" alt="">
-					<img class="site-brand__calligraphy" src="/public/images/logo.gif" alt="">
+					<img class="site-brand__emblem" src="/images/branding/logo.png" alt="">
+					<img class="site-brand__calligraphy" src="/images/branding/logo.gif" alt="">
 				</span>
 				<span class="site-brand__text">
 					<strong>

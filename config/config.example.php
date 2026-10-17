@@ -6,7 +6,7 @@ return [
     'paths' => [
         'templates' => dirname(__DIR__) . '/templates',
         'uploads_dir' => dirname(__DIR__) . '/public/uploads',
-        'uploads_url' => '/public/uploads',
+        'uploads_url' => '/uploads',
         'routes' => dirname(__DIR__) . '/config/routes.php',
     ],
 

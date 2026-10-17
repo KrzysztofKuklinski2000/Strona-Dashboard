@@ -1,7 +1,6 @@
 /config/config.php
 /config/mail.php
 /vendor/
-/public/images/karate/
 /coverage-report/
 /.phpunit.cache/
 .php-cs-fixer.cache

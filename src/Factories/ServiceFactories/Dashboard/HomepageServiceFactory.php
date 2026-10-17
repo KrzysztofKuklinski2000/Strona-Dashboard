@@ -22,7 +22,7 @@ readonly class HomepageServiceFactory implements ServiceFactoryInterface
     public function createService(): HomepageService
     {
         $repository = new HomepageRepository($this->pdo);
-        $fileHandler = new FileHandler($this->config->getUploadDir(), $this->config->getFilePrefix());
+        $fileHandler = new FileHandler($this->config->getUploadDir(), $this->config->getFilePrefix(), 'homepage');
         $imageProcessor = new PayloadImageProcessor($fileHandler, $this->config->getUploadUrl());
 
 

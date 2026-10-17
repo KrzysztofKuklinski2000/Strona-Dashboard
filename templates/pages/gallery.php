@@ -150,7 +150,7 @@ $countContext = $selectedCategoryNames === [] ? 'w galerii' : 'dla wybranych kat
                                 : ['Galeria'];
                         $description = trim((string) ($item->description ?? ''));
                         $imageDescription = $description !== '' ? $description : 'Zdjęcie z galerii klubowej';
-                        $imagePath = '/public/uploads/' . rawurlencode((string) $item->imageName);
+                        $imagePath = upload_url((string) $item->imageName);
                     ?>
 
                     <article class="gallery-card <?= $index === 0 ? 'gallery-card--featured' : '' ?>">
@@ -183,4 +183,4 @@ $countContext = $selectedCategoryNames === [] ? 'w galerii' : 'dla wybranych kat
     </div>
 </section>
 
-<script src="/public/js/gallery-filters.js"></script>
+<script src="/js/gallery-filters.js"></script>

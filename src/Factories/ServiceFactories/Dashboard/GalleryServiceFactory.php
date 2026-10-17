@@ -20,7 +20,7 @@ readonly class GalleryServiceFactory implements ServiceFactoryInterface
 
     public function createService(): GalleryService
     {
-        $fileHandler = new FileHandler($this->config->getUploadDir(), $this->config->getFilePrefix());
+        $fileHandler = new FileHandler($this->config->getUploadDir(), $this->config->getFilePrefix(), 'gallery');
         $repository = new GalleryRepository($this->pdo);
         $categoryRepository = new GalleryCategoryRepository($this->pdo);
 

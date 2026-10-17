@@ -41,7 +41,7 @@ Projekt zawiera **publiczną stronę** (aktualności, galeria, grafik, obozy, op
 
 ## 📂 Struktura projektu
 ├── config/ # Konfiguracja (baza danych, ustawienia środowiska)
-├── public/ # Pliki publiczne (CSS, JS, obrazy)
+├── public/ # Jedyny katalog dostępny z internetu; index.php, CSS, JS, obrazy
 ├── src/
 │ ├── Controller/ # Kontrolery
 │ ├── Repository/ # Repozytoria (zapytania SQL)
@@ -54,7 +54,7 @@ Projekt zawiera **publiczną stronę** (aktualności, galeria, grafik, obozy, op
 | └── Views.php/ # Klasa odpowiedzialna za renderowanie widoków
 ├── templates/ # Widoki
 └── vendor/ # Zależności (Composer)
-└── index.php 
+└── public/index.php # Front controller
 
 ## Instalacja
 
@@ -67,6 +67,7 @@ Projekt zawiera **publiczną stronę** (aktualności, galeria, grafik, obozy, op
 2. **Utwórz lokalny plik konfiguracyjny**:
    ```bash
    cp config/config.example.php config/config.php
+   cp .env.example .env
    ```
 
    Plik `config/config.php` jest ignorowany przez Git, dlatego trzeba utworzyć go lokalnie po sklonowaniu projektu.

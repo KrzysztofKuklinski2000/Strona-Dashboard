@@ -1,2 +1,9 @@
 *
 !.gitignore
+!.htaccess
+!gallery/
+!gallery/.gitignore
+!news/
+!news/.gitignore
+!homepage/
+!homepage/.gitignore

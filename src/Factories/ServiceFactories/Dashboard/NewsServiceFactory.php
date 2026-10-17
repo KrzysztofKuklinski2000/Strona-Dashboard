@@ -24,7 +24,7 @@ class NewsServiceFactory implements ServiceFactoryInterface
     public function createService(): NewsService
     {
         $repository = new NewsRepository($this->pdo);
-        $fileHandler = new FileHandler($this->config->getUploadDir(), $this->config->getFilePrefix());
+        $fileHandler = new FileHandler($this->config->getUploadDir(), $this->config->getFilePrefix(), 'news');
         $imageProcessor = new PayloadImageProcessor($fileHandler, $this->config->getUploadUrl());
 
         return new NewsService($repository, $imageProcessor);

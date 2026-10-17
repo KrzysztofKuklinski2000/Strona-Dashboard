@@ -48,7 +48,7 @@ $navigationItems = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/dashboard/style.css">
+    <link rel="stylesheet" href="/dashboard/style.css">
     <script src="https://kit.fontawesome.com/062ebc24f8.js" crossorigin="anonymous"></script>
     <title>Panel Administracyjny - Karate Kyokushin</title>
 </head>
@@ -210,11 +210,11 @@ $navigationItems = [
 </div>
 </body>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.js"></script>
-<script src="/public/dashboard/main.js"></script>
+<script src="/dashboard/main.js"></script>
 <?php if (!$isAuthPage): ?>
-    <script src="/public/dashboard/action-bar.js"></script>
+    <script src="/dashboard/action-bar.js"></script>
 <?php endif; ?>
-<script src="/public/dashboard/image-compression.js"></script>
+<script src="/dashboard/image-compression.js"></script>
 
 
 </html>

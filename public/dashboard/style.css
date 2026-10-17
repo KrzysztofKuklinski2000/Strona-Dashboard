@@ -1190,6 +1190,21 @@ body {
 .homepage-post-details__meta .is-public { color: #2d8a3e; }
 .homepage-post-details__meta .is-private { color: #bb2124; }
 
+.subscriber-details__meta {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.subscriber-details__meta .dashboard-status-badge {
+	max-width: 100%;
+	box-sizing: border-box;
+	white-space: normal;
+}
+
+.homepage-post-details__content .subscriber-details__email {
+	font-size: clamp(1.125rem, 2vw, 1.55rem);
+	overflow-wrap: anywhere;
+}
+
 .homepage-post-details__content {
 	padding-top: 4px;
 }

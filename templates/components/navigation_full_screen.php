@@ -18,8 +18,8 @@ $karatePages = ['oyama', 'dojo-oath', 'requirements', 'statute'];
 <div class="nav-container-full-screen site-desktop-nav">
     <a class="site-brand" href="/" aria-label="Strona główna Karate Kyokushin Wejherowo / Reda">
         <span class="site-brand__icons" aria-hidden="true">
-            <img class="site-brand__emblem" src="/public/images/logo.png" alt="">
-            <img class="site-brand__calligraphy" src="/public/images/logo.gif" alt="">
+            <img class="site-brand__emblem" src="/images/branding/logo.png" alt="">
+            <img class="site-brand__calligraphy" src="/images/branding/logo.gif" alt="">
         </span>
         <span class="site-brand__text">
             <strong>

@@ -4600,7 +4600,7 @@ footer .copy {
 	bottom: -112px;
 	width: 270px;
 	aspect-ratio: 1;
-	background: url('/public/images/decor-bamboo.png') center / contain no-repeat;
+	background: url('/images/decorations/decor-bamboo.png') center / contain no-repeat;
 	opacity: .12;
 	pointer-events: none;
 }
@@ -4840,7 +4840,7 @@ footer .copy {
 	bottom: -82px;
 	width: 190px;
 	aspect-ratio: 1;
-	background: url('/public/images/decor-bamboo.png') center / contain no-repeat;
+	background: url('/images/decorations/decor-bamboo.png') center / contain no-repeat;
 	opacity: .13;
 	pointer-events: none;
 }
@@ -4918,10 +4918,6 @@ footer .copy {
 	line-height: 1.6;
 }
 
-.camp-header {
-	display: none;
-}
-
 .camp-page {
 	background: #fff;
 }
@@ -4952,7 +4948,7 @@ footer .copy {
 	bottom: -112px;
 	width: 270px;
 	aspect-ratio: 1;
-	background: url('/public/images/decor-bamboo.png') center / contain no-repeat;
+	background: url('/images/decorations/decor-bamboo.png') center / contain no-repeat;
 	opacity: .12;
 	pointer-events: none;
 }
@@ -5217,7 +5213,7 @@ footer .copy {
 	bottom: -98px;
 	width: 230px;
 	aspect-ratio: 1;
-	background: url('/public/images/decor-bamboo.png') center / contain no-repeat;
+	background: url('/images/decorations/decor-bamboo.png') center / contain no-repeat;
 	opacity: .12;
 	pointer-events: none;
 }
@@ -5675,7 +5671,7 @@ footer .copy {
 	bottom: -82px;
 	width: 190px;
 	aspect-ratio: 1;
-	background: url('/public/images/decor-bamboo.png') center / contain no-repeat;
+	background: url('/images/decorations/decor-bamboo.png') center / contain no-repeat;
 	opacity: .14;
 	pointer-events: none;
 }
@@ -5811,7 +5807,7 @@ footer .copy {
 	bottom: -110px;
 	width: 260px;
 	aspect-ratio: 1;
-	background: url('/public/images/decor-bamboo.png') center / contain no-repeat;
+	background: url('/images/decorations/decor-bamboo.png') center / contain no-repeat;
 	opacity: .12;
 	pointer-events: none;
 }
@@ -6099,7 +6095,7 @@ footer .copy {
 	bottom: -118px;
 	width: 280px;
 	aspect-ratio: 1;
-	background: url('/public/images/decor-bamboo.png') center / contain no-repeat;
+	background: url('/images/decorations/decor-bamboo.png') center / contain no-repeat;
 	opacity: .11;
 	pointer-events: none;
 }
@@ -6338,7 +6334,7 @@ footer .copy {
 	bottom: -118px;
 	width: 280px;
 	aspect-ratio: 1;
-	background: url('/public/images/decor-bamboo.png') center / contain no-repeat;
+	background: url('/images/decorations/decor-bamboo.png') center / contain no-repeat;
 	opacity: .11;
 	pointer-events: none;
 }
@@ -6881,7 +6877,7 @@ footer .copy {
 	bottom: -112px;
 	width: 270px;
 	aspect-ratio: 1;
-	background: url('/public/images/decor-bamboo.png') center / contain no-repeat;
+	background: url('/images/decorations/decor-bamboo.png') center / contain no-repeat;
 	opacity: .12;
 	pointer-events: none;
 }
@@ -7207,7 +7203,7 @@ footer .copy {
 	bottom: -112px;
 	width: 270px;
 	aspect-ratio: 1;
-	background: url('/public/images/decor-bamboo.png') center / contain no-repeat;
+	background: url('/images/decorations/decor-bamboo.png') center / contain no-repeat;
 	opacity: .12;
 	pointer-events: none;
 }

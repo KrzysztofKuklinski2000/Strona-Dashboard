@@ -21,7 +21,7 @@
 
             <div class="gallery-editor-form__placeholder gallery-editor-form__placeholder--filled">
                 <img
-                    src="/public/uploads/<?= e(rawurlencode((string) $data->imageName)) ?>"
+                    src="<?= e(upload_url((string) $data->imageName)) ?>"
                     alt="<?= e($data->description) ?>"
                 >
             </div>

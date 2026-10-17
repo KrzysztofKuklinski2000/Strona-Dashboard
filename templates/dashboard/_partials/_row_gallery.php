@@ -6,7 +6,7 @@ $statusText = $isPublished ? 'Publiczny' : 'Niepubliczny';
 ?>
 <tr>
   <td class="dashboard-table__index"><?= e($key + 1) ?>.</td>
-  <td><img class="dashboard-image-index" src="/public/uploads/<?= e(rawurlencode((string) $row->imageName)) ?>" alt="Miniatura zdjęcia" loading="lazy"></td>
+  <td><img class="dashboard-image-index" src="<?= e(upload_url((string) $row->imageName)) ?>" alt="Miniatura zdjęcia" loading="lazy"></td>
   <td class="dashboard-table__primary"><?= e($row->description) ?></td>
   <td><?= e($row->createdAt) ?></td>
   <td>

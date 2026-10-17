@@ -13,7 +13,7 @@ services:
       - karate-net
     depends_on:
       - mailpit
-    command: sh -c "mkdir -p /app/public/uploads && chown -R www-data:www-data /app/public/uploads && chmod -R 755 /app/public/uploads && php-fpm"
+    command: sh -c "mkdir -p /app/public/uploads/gallery /app/public/uploads/news /app/public/uploads/homepage && chown -R www-data:www-data /app/public/uploads && find /app/public/uploads -type d -exec chmod 755 {} + && find /app/public/uploads -type f -exec chmod 644 {} + && php-fpm"
 
   nginx:
     image: nginx:alpine

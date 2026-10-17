@@ -1,0 +1,7 @@
+Options -Indexes -ExecCGI
+SetHandler default-handler
+
+# Uploady są wyłącznie obrazami. Nigdy nie przekazuj ich do interpretera PHP.
+<FilesMatch "(?i)^(?![a-z0-9][a-z0-9._-]*\.(?:jpe?g|png|gif|webp)$)">
+    Require all denied
+</FilesMatch>

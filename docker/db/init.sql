@@ -232,7 +232,7 @@ VALUES (1, 'Pierwsze zajęcia są bezpłatne', '2025-08-02', '2025-08-02', 1, 1,
        (4, 'Trening rodzinny', '2025-08-02', '2025-10-16', 1, 4, 'image_text_list', JSON_SET(COALESCE('{
           "eyebrow": "Trening dla każdego",
           "image": {
-            "src": "/public/images/family-training.png",
+            "src": "/images/pages/family-training.png",
             "alt": "Rodzina podczas treningu karate"
           },
           "items": [

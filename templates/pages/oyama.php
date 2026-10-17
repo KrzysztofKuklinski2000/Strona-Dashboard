@@ -40,7 +40,7 @@ $principles = [
     <div class="oyama-page__inner">
         <section class="oyama-hero" aria-labelledby="oyama-page-title">
             <div class="oyama-hero__media">
-                <img src="/public/images/oyama.jpg" alt="Masutatsu Oyama">
+                <img src="/images/pages/oyama.jpg" alt="Masutatsu Oyama">
             </div>
 
             <div class="oyama-hero__content">

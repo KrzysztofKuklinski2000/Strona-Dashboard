@@ -20,7 +20,7 @@ if ($imageAlt === '') {
             </div>
         <?php else: ?>
             <div class="module-feed-news-card__media module-feed-news-card__media--placeholder" aria-hidden="true">
-                <img src="/public/images/logo1.png" alt="">
+                <img src="/images/branding/logo1.png" alt="">
                 <span>Klub Karate Kyokushin</span>
             </div>
         <?php endif ?>

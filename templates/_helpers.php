@@ -14,3 +14,10 @@ if (!function_exists('e_br')) {
         return nl2br(e($value));
     }
 }
+
+if (!function_exists('upload_url')) {
+    function upload_url(string $path): string
+    {
+        return \App\Core\UploadPath::toUrl($path);
+    }
+}

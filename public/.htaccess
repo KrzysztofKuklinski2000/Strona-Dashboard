@@ -1,0 +1,31 @@
+Options -Indexes -MultiViews
+Require all granted
+
+RewriteEngine On
+
+# Zgodność z adresami zapisanymi przed uporządkowaniem plików.
+RewriteRule ^public/(.*)$ $1 [L]
+RewriteRule ^images/(logo\.png|logo\.gif|logo1\.png)$ images/branding/$1 [L]
+RewriteRule ^images/(decor-bamboo\.png)$ images/decorations/$1 [L]
+RewriteRule ^images/(family-training\.png|oyama\.jpg)$ images/pages/$1 [L]
+RewriteRule ^images/hero-cinematic/tiles/(.*)$ images/hero/$1 [L]
+
+RewriteRule (^|/)\.(?!well-known(?:/|$)) - [R=404,L]
+
+# Jedyny wykonywalny skrypt PHP to front controller.
+RewriteRule ^(?!index\.php$).*\.(?:php[0-9]*|phtml|phar)(?:/|$) - [R=404,L,NC]
+
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^uploads/(?:(?:gallery|news|homepage)/)?[a-z0-9][a-z0-9._-]*\.(?:jpe?g|png|gif|webp)$ - [END,NC]
+RewriteRule ^uploads(?:/|$) - [R=404,L]
+
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule \.(?:css|js|jpe?g|png|gif|webp|svg|ico|woff2?|ttf|map)$ - [END,NC]
+RewriteRule \.(?:css|js|jpe?g|png|gif|webp|svg|ico|woff2?|ttf|map)$ - [R=404,L,NC]
+
+RewriteRule ^index\.php$ - [END]
+RewriteRule ^ index.php [END,QSA]
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+</IfModule>

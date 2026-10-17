@@ -6,6 +6,7 @@ namespace App\Core;
 
 use App\Exception\FileException;
 use finfo;
+use InvalidArgumentException;
 use Random\RandomException;
 
 readonly class FileHandler
@@ -17,9 +18,18 @@ readonly class FileHandler
     ];
     private string $targetDir;
 
-    public function __construct(private string $uploadDir, private string $filePrefix)
+    public function __construct(
+        private string $uploadDir,
+        private string $filePrefix,
+        private string $module = '',
+    )
     {
-        $this->targetDir = rtrim($this->uploadDir, '/') . '/';
+        if ($module !== '' && !in_array($module, UploadPath::MODULES, true)) {
+            throw new InvalidArgumentException('Nieprawidłowy katalog uploadów.');
+        }
+
+        $this->targetDir = rtrim($this->uploadDir, '/\\') . '/'
+            . ($module !== '' ? $module . '/' : '');
     }
 
     /**
@@ -61,7 +71,7 @@ readonly class FileHandler
 
         chmod($imagePath, 0644);
 
-        return $imageName;
+        return $this->module !== '' ? $this->module . '/' . $imageName : $imageName;
     }
 
     /**
@@ -69,11 +79,12 @@ readonly class FileHandler
      */
     public function deleteImage(string $imageName): void
     {
-        if ($imageName === '' || basename($imageName) !== $imageName) {
+        if (!$this->acceptsImagePath($imageName)) {
             throw new FileException("Nieprawidłowa nazwa zdjęcia.");
         }
 
-        $imagePath = $this->targetDir . $imageName;
+        // Stare uploady pozostają w katalogu głównym do czasu podmiany/usunięcia.
+        $imagePath = rtrim($this->uploadDir, '/\\') . '/' . $imageName;
 
         if (!file_exists($imagePath)) {
             return;
@@ -82,6 +93,16 @@ readonly class FileHandler
         if (!unlink($imagePath)) {
             throw new FileException('Nie udało się usunąć zdjęcia.');
         }
+    }
+
+    public function acceptsImagePath(string $path): bool
+    {
+        if (!UploadPath::isValid($path)) {
+            return false;
+        }
+
+        return !str_contains($path, '/')
+            || ($this->module !== '' && str_starts_with($path, $this->module . '/'));
     }
 
     /**

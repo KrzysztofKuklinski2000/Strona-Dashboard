@@ -69,10 +69,22 @@ final readonly class PayloadImageProcessor
             return null;
         }
 
-        $imageName = basename($imageSrc);
-        $expectedPath = rtrim($this->uploadUrl, '/') . '/' . $imageName;
+        // Zgodność z adresami zapisanymi w JSON przed zmianą document root.
+        $prefixes = array_unique([rtrim($this->uploadUrl, '/'), '/uploads', '/public/uploads']);
 
-        return $imageSrc === $expectedPath ? $imageName : null;
+        foreach ($prefixes as $prefix) {
+            if (!str_starts_with($imageSrc, $prefix . '/')) {
+                continue;
+            }
+
+            $imageName = substr($imageSrc, strlen($prefix) + 1);
+
+            if ($this->fileHandler->acceptsImagePath($imageName)) {
+                return $imageName;
+            }
+        }
+
+        return null;
     }
 
     /**
