@@ -22,11 +22,23 @@ use EasyCSRF\NativeSessionProvider;
 use App\Controller\SiteController;
 use App\Repository\Analytics\PageViewRepository;
 use App\Service\Analytics\PageViewTracker;
+use Symfony\Component\Dotenv\Dotenv;
+use Symfony\Component\Dotenv\Exception\ExceptionInterface as DotenvException;
 
-// Starsze widoki używają ścieżek względem katalogu projektu.
 chdir(dirname(__DIR__));
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
+try {
+    (new Dotenv())->loadEnv(
+        dirname(__DIR__) . '/.env',
+        defaultEnv: 'prod',
+    );
+} catch (DotenvException $e) {
+    error_log('Nie udało się wczytać konfiguracji środowiska: ' . $e::class);
+    http_response_code(500);
+    require dirname(__DIR__) . '/templates/errors/500.php';
+    exit;
+}
 
 $configurationArray = require dirname(__DIR__) . '/config/config.php';
 $config = new Config($configurationArray);

@@ -1,7 +1,7 @@
 <?php
 return [
-    'env' => getenv('APP_ENV') ?: 'prod',
-    'app_url' => getenv('APP_URL') ?: '',
+    'env' => $_ENV['APP_ENV'] ?? $_SERVER['APP_ENV'] ?? 'prod',
+    'app_url' => $_ENV['APP_URL'] ?? $_SERVER['APP_URL'] ?? '',
 
     'paths' => [
         'templates' => dirname(__DIR__) . '/templates',
@@ -22,15 +22,15 @@ return [
     ],
 
     'db' => [
-        'host' => 'db',
-        'database' => 'karate',
-        'user' => 'user_karate',
-        'password' => 'haslo'
+        'host' => $_ENV['DB_HOST'] ?? $_SERVER['DB_HOST'] ?? '',
+        'database' => $_ENV['DB_DATABASE'] ?? $_SERVER['DB_DATABASE'] ?? '',
+        'user' => $_ENV['DB_USERNAME'] ?? $_SERVER['DB_USERNAME'] ?? '',
+        'password' => $_ENV['DB_PASSWORD'] ?? $_SERVER['DB_PASSWORD'] ?? '',
     ],
 
     'mail' => [
-        'dsn' => getenv('MAILER_DSN') ?: '',
-        'from_email' => getenv('MAIL_FROM_EMAIL') ?: '',
+        'dsn' => $_ENV['MAILER_DSN'] ?? $_SERVER['MAILER_DSN'] ?? '',
+        'from_email' => $_ENV['MAIL_FROM_EMAIL'] ?? $_SERVER['MAIL_FROM_EMAIL'] ?? '',
     ],
 
     'notifications' => [

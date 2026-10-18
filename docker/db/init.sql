@@ -452,8 +452,7 @@ CREATE TABLE `user`
 --
 
 INSERT INTO `user` (`id`, `login`, `password`)
-VALUES (1, 'Musashi', '$2y$10$ErJp/xcJgY4QRrYipGtsjO2tJk7LVhArlCfYPxj6ii5AiA5cAdnvm'),
-       (2, 'test', '$2y$10$rx/38yd5XRg5fzMHGfi3i.SjEQhIIqiiTM.eF2C/NvYIo8c/HEXUq');
+VALUES (1, 'test', '$2y$10$rx/38yd5XRg5fzMHGfi3i.SjEQhIIqiiTM.eF2C/NvYIo8c/HEXUq');
 
 
 CREATE TABLE `page_views`

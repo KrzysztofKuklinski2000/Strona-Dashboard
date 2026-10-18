@@ -14,7 +14,20 @@ readonly class Config
 
     public function getDbConfig(): array
     {
-        return $this->config['db'] ?? [];
+        $dbConfig = $this->config['db'] ?? [];
+
+        foreach ([
+            'host' => 'DB_HOST',
+            'database' => 'DB_DATABASE',
+            'user' => 'DB_USERNAME',
+            'password' => 'DB_PASSWORD',
+        ] as $key => $variable) {
+            if (!isset($dbConfig[$key]) || !is_string($dbConfig[$key]) || $dbConfig[$key] === '') {
+                throw new RuntimeException('Brak konfiguracji ' . $variable . '.');
+            }
+        }
+
+        return $dbConfig;
     }
 
     public function getEnv(): string
