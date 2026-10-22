@@ -2229,7 +2229,7 @@ html.has-location-map-open body {
 
 /* Content tiles: centered benefits with an icon above the copy. */
 .homepage main > .why-karate-section .why-karate-section__inner {
-	width: min(calc(100% - 40px), 1040px);
+	width: min(calc(100% - 40px), var(--container-width));
 }
 
 .homepage main > .why-karate-section .why-karate-section__heading {
@@ -2251,7 +2251,7 @@ html.has-location-map-open body {
 }
 
 .homepage main > .why-karate-section .why-karate-grid {
-	max-width: 1040px;
+	max-width: var(--container-width);
 	margin-inline: auto;
 	gap: 22px;
 }
@@ -2321,7 +2321,17 @@ html.has-location-map-open body {
 
 @media (min-width: 760px) {
 	.homepage main > .why-karate-section .why-karate-section__inner {
-		width: min(calc(100% - 128px), 1040px);
+		width: min(calc(100% - 128px), var(--container-width));
+	}
+}
+
+@media (min-width: 1800px) {
+	.homepage main > .why-karate-section .why-karate-section__inner {
+		width: min(calc(100% - 160px), 1420px);
+	}
+
+	.homepage main > .why-karate-section .why-karate-grid:where(:not(.why-karate-grid--count-1):not(.why-karate-grid--count-2)) {
+		max-width: 1420px;
 	}
 }
 

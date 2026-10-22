@@ -1464,7 +1464,7 @@
 	}
 
 	.why-karate-grid {
-		grid-template-columns: repeat(3, minmax(0, 1fr));
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: 20px;
 	}
 
@@ -1478,8 +1478,7 @@
 		grid-template-columns: minmax(0, 1fr);
 	}
 
-	.why-karate-grid--count-2,
-	.why-karate-grid--many {
+	.why-karate-grid--count-2 {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 
@@ -1588,5 +1587,17 @@
 @media only screen and (min-width: 1180px) {
 	.site-newsletter__decor {
 		right: -62px;
+	}
+}
+
+@media only screen and (min-width: 1200px) {
+	.why-karate-grid:where(:not(.why-karate-grid--count-1):not(.why-karate-grid--count-2)) {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+}
+
+@media only screen and (min-width: 1600px) {
+	.why-karate-grid--many {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
 	}
 }
