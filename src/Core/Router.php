@@ -41,6 +41,7 @@ class Router
             $uri = substr($uri, 0, $pos);
         }
         $uri = rawurldecode($uri);
+        $uri = rtrim($uri, '/') ?: '/';
 
         $routeInfo = $this->dispatcher->dispatch($httpMethod, $uri);
 
