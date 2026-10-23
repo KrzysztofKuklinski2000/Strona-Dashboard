@@ -58,9 +58,10 @@ trait HasUpdateAction
         );
 
         $redirectUrl = "{$this->contextController->config->getDashboardRoute()}/{$this->getModuleName()}/edit";
+        $routeId = $this->request->getRouteParam('id');
 
-        if (isset($data->id) && $data->id !== '') {
-            $redirectUrl .= '/' . $data->id;
+        if ($routeId !== null && $routeId !== '') {
+            $redirectUrl .= '/' . $routeId;
         }
 
         $this->redirect($redirectUrl);
