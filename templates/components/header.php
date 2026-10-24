@@ -51,7 +51,7 @@ $heroSlides = [
 		<div class="hero-section__meta">
 			<p class="hero-section__brand">
 				<span aria-hidden="true"></span>
-				Klub Karate Kyokushin
+				Klub Karate Kyokushin i Sportów Walk
 			</p>
 			<p class="hero-section__location">Wejherowo / Reda</p>
 		</div>
@@ -90,6 +90,7 @@ $heroSlides = [
 								alt="<?= e($slide['alt']) ?>"
 								loading="<?= $index < 4 ? 'eager' : 'lazy' ?>"
 								decoding="async"
+								draggable="false"
 								<?= $index === 0 ? 'fetchpriority="high"' : '' ?>
 							>
 							<figcaption aria-hidden="true">
@@ -123,7 +124,7 @@ $heroSlides = [
 		<div class="hero-section__footer">
 			<div class="hero-section__copy">
 				<p class="hero-section__lead">
-					Tradycyjne karate dla dzieci, młodzieży i dorosłych. Budujemy charakter,
+					Karate Kyokushin dla dzieci, młodzieży i dorosłych. Budujemy charakter,
 					sprawność i pewność siebie przez regularny trening.
 				</p>
 				<p class="hero-section__motto">Silniejsi razem. Lepsi każdego dnia.</p>

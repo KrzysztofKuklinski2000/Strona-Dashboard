@@ -1910,8 +1910,8 @@ html.has-location-map-open body {
 /* Shared homepage foundation; deliberately scoped away from hero and subpages. */
 .homepage main > .home-post-section {
 	--radius-card: 10px;
-	--color-line: #e2e2e5;
-	--color-muted: #606167;
+	--color-line: #e2e2e2;
+	--color-muted: #606060;
 	--home-section-space: clamp(36px, 4vw, 60px);
 	--home-heading-gap: clamp(22px, 2.4vw, 32px);
 	--home-control-radius: 6px;
@@ -1922,10 +1922,6 @@ html.has-location-map-open body {
 	--family-section-bg: var(--home-section-background);
 	background: var(--home-section-background);
 	border-block: 0;
-}
-
-.homepage main > .home-post-section:nth-of-type(even) {
-	--home-section-rgb: 251, 251, 252;
 }
 
 .homepage .home-post-section > :is(
@@ -2221,10 +2217,6 @@ html.has-location-map-open body {
 		grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
 		gap: 56px;
 	}
-
-	.homepage main > .family-training-section .family-training-section__lead {
-		text-align: justify;
-	}
 }
 
 /* Content tiles: centered benefits with an icon above the copy. */
@@ -2270,17 +2262,11 @@ html.has-location-map-open body {
 	align-items: center;
 	gap: 12px;
 	padding: 30px 28px;
-	border: 0;
+	border: 1px solid #e5e5e5;
 	border-radius: 12px;
-	background: #f5f5f7;
-	box-shadow: 0 10px 10px -10px rgba(25, 25, 28, .16);
-	text-align: center;
-}
-
-.homepage main > .why-karate-section:nth-of-type(even) .why-karate-card {
 	background: #fff;
-	border: 1px solid #e7e7eb;
-	box-shadow: 0 8px 24px rgba(25, 25, 28, .07), 0 2px 5px rgba(25, 25, 28, .035);
+	box-shadow: 0 4px 14px rgba(0, 0, 0, .045);
+	text-align: center;
 }
 
 .homepage main > .why-karate-section .why-karate-card__content {
@@ -2507,46 +2493,51 @@ html.has-location-map-open body {
 	align-items: stretch;
 	gap: 0;
 	padding: 0;
-	border: 1px solid #e1e1e5;
+	border: 1px solid #fff;
 	border-radius: 10px;
 	background: #fff;
 	overflow: hidden;
 	text-align: left;
-	box-shadow: 0 12px 10px -10px rgba(25, 25, 28, .2);
+	box-shadow:
+		0 3px 0 #d0d0d0,
+		0 8px 0 -3px #777,
+		0 24px 28px -6px rgba(0, 0, 0, .85),
+		0 10px 14px rgba(0, 0, 0, .4);
 }
 
 .club-notice__header {
 	width: 100%;
-	min-height: 44px;
+	min-height: 56px;
 	box-sizing: border-box;
 	display: flex;
 	align-items: center;
 	flex-wrap: wrap;
 	gap: 10px;
 	justify-content: space-between;
-	padding: 12px 16px;
+	padding: 20px 22px 12px;
 	border-radius: 0;
-	background: #242427;
+	background: #fff;
 }
 
 .club-notice__label {
-	color: #fff;
-	font-size: .7rem;
+	color: #626262;
+	font-size: .72rem;
 	font-weight: 650;
 }
 
 .club-notice__body {
 	display: grid;
-	grid-template-columns: 48px minmax(0, 1fr);
+	grid-template-columns: 36px minmax(0, 1fr);
 	align-items: start;
-	gap: 18px;
-	padding: 26px 22px 28px;
+	column-gap: 14px;
+	row-gap: 20px;
+	padding: 10px 22px 28px;
 }
 
 .homepage main > [data-feed-module="important_posts"] .important-card__icon {
 	position: static;
-	width: 48px;
-	height: 48px;
+	width: 36px;
+	height: 36px;
 	transform: none;
 	border: 0;
 	border-radius: 0;
@@ -2555,8 +2546,8 @@ html.has-location-map-open body {
 }
 
 .homepage main > [data-feed-module="important_posts"] .important-card__icon svg {
-	width: 44px;
-	height: 44px;
+	width: 36px;
+	height: 36px;
 	display: block;
 	color: var(--color-accent);
 	stroke: var(--color-accent);
@@ -2565,17 +2556,17 @@ html.has-location-map-open body {
 
 .homepage main > [data-feed-module="important_posts"] .club-notice time {
 	margin: 0 0 0 auto;
-	color: rgba(255, 255, 255, .8);
-	font-size: .65rem;
+	color: #626262;
+	font-size: .7rem;
 	font-weight: 600;
 	letter-spacing: 0;
 	text-transform: none;
 }
 
 .homepage main > [data-feed-module="important_posts"] .club-notice h3 {
-	color: #242427;
-	font-size: 1.2rem;
-	line-height: 1.3;
+	color: #202020;
+	font-size: 1.15rem;
+	line-height: 1.35;
 	align-self: center;
 }
 
@@ -2588,9 +2579,10 @@ html.has-location-map-open body {
 
 .homepage main > [data-feed-module="important_posts"] .important-card__content > p {
 	margin-top: 0;
-	color: #66666f;
-	font-size: .78rem;
-	line-height: 1.55;
+	color: #4f4f4f;
+	font-size: .88rem;
+	font-weight: 400;
+	line-height: 1.65;
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 4;
@@ -2612,6 +2604,12 @@ html.has-location-map-open body {
 	font-size: .75rem;
 	font-weight: 750;
 	cursor: pointer;
+}
+
+.club-notice__toggle:hover { color: var(--color-accent-dark); }
+.club-notice__toggle:focus-visible {
+	outline: 2px solid var(--color-accent);
+	outline-offset: 4px;
 }
 
 .club-notice__toggle[hidden] { display: none; }
@@ -2813,7 +2811,7 @@ html.has-location-map-open body {
 	overflow: hidden;
 	aspect-ratio: 16 / 10;
 	border-radius: 0;
-	background: #e9e9ec;
+	background: #e9e9e9;
 }
 
 .homepage main > .module-feed-section[data-feed-module="news"] .module-feed-news-card__media > img {
@@ -2829,39 +2827,49 @@ html.has-location-map-open body {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	gap: 12px;
+	gap: 10px;
 	padding: 24px;
-	background:
-		linear-gradient(135deg, rgba(191, 31, 26, .2), transparent 46%),
-		#19191c;
+	background: #191919;
 }
 
-.homepage main > .module-feed-section[data-feed-module="news"] .module-feed-news-card__media--placeholder::before {
-	content: '';
-	position: absolute;
-	inset: 14px;
-	border: 1px solid rgba(255, 255, 255, .1);
-	border-radius: 5px;
+.homepage main > .module-feed-section[data-feed-module="news"] .module-feed-news-card__media--placeholder[data-news-type="funding"] {
+	background: #ebebeb;
 }
 
-.homepage main > .module-feed-section[data-feed-module="news"] .module-feed-news-card__media--placeholder img {
-	width: auto;
-	height: 44%;
-	max-width: 62%;
-	flex: 0 0 auto;
-	object-fit: contain;
-	opacity: .15;
+.homepage main > .module-feed-section[data-feed-module="news"] .module-feed-news-card__media--placeholder > i {
+	color: #fff;
+	font-size: 2.4rem;
+	line-height: 1.2;
+}
+
+.homepage main > .module-feed-section[data-feed-module="news"] .module-feed-news-card__media--placeholder[data-news-type="funding"] > i {
+	color: var(--color-accent);
 }
 
 .homepage main > .module-feed-section[data-feed-module="news"] .module-feed-news-card__media--placeholder span {
 	position: static;
-	color: rgba(255, 255, 255, .78);
-	font-size: .62rem;
+	color: #fff;
+	font-size: .9rem;
 	font-weight: 800;
-	letter-spacing: .12em;
+	letter-spacing: 0;
 	line-height: 1.35;
 	text-align: center;
-	text-transform: uppercase;
+	text-transform: none;
+}
+
+.homepage main > .module-feed-section[data-feed-module="news"] .module-feed-news-card__media--placeholder small {
+	color: #bdbdbd;
+	font-size: .65rem;
+	line-height: 1.4;
+	text-align: center;
+}
+
+.homepage main > .module-feed-section[data-feed-module="news"] .module-feed-news-card__media--placeholder[data-news-type="funding"] span {
+	color: var(--color-ink);
+}
+
+.homepage main > .module-feed-section[data-feed-module="news"] .module-feed-news-card__media--placeholder[data-news-type="funding"] small {
+	color: #606060;
 }
 
 .homepage main > .module-feed-section[data-feed-module="news"] .module-feed-news-card__body {
@@ -2910,10 +2918,6 @@ html.has-location-map-open body {
 
 .homepage main > .module-feed-section[data-feed-module="news"] .module-feed-news-card__link:hover .module-feed-news-card__media > img {
 	transform: scale(1.035);
-}
-
-.homepage main > .module-feed-section[data-feed-module="news"] .module-feed-news-card__link:hover .module-feed-news-card__media--placeholder > img {
-	transform: none;
 }
 
 .homepage main > .module-feed-section[data-feed-module="news"] .module-feed-news-card__link:hover h3 {
@@ -4058,9 +4062,14 @@ footer .copy {
 	color: #fff;
 }
 .homepage main > [data-feed-module="timetable"] .module-feed-timetable-card__day i,
-.homepage main > [data-feed-module="timetable"] .module-feed-timetable-card__location > span,
-.homepage main > [data-feed-module="timetable"] .module-feed-timetable-card__time span {
+.homepage main > [data-feed-module="timetable"] .module-feed-timetable-card__location > span {
 	color: var(--color-accent);
+}
+
+.homepage main > [data-feed-module="timetable"] .module-feed-timetable-card__time span {
+	color: rgba(255, 255, 255, .75);
+	font-size: 1.25rem;
+	line-height: 1;
 }
 @media (min-width: 760px) {
 	.homepage main > .module-feed-section:is([data-feed-module="timetable"], [data-feed-module="gallery"]) .important-section__inner {
@@ -6618,92 +6627,89 @@ footer .copy {
 .timetable-board {
 	display: grid;
 	grid-template-columns: minmax(0, 1fr);
+	align-items: start;
 	gap: 18px;
 }
 
 .timetable-day {
-	position: relative;
 	min-width: 0;
-	padding: 22px;
+	padding: 0;
 	border: 1px solid var(--color-line);
-	background:
-		linear-gradient(180deg, rgba(250, 247, 244, .72), rgba(255, 255, 255, 0) 128px),
-		#fff;
+	background: #fff;
 	overflow: hidden;
-}
-
-.timetable-day::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 3px;
-	height: 100%;
-	background: var(--color-accent);
-	opacity: .9;
 }
 
 .timetable-day__header {
 	display: flex;
-	align-items: flex-start;
+	align-items: center;
 	justify-content: space-between;
-	gap: 18px;
-	margin-bottom: 20px;
-}
-
-.timetable-day__header span {
-	display: block;
-	margin-bottom: 7px;
-	color: var(--color-accent);
-	font-size: .58rem;
-	font-weight: 900;
-	letter-spacing: .18em;
-	text-transform: uppercase;
+	flex-wrap: wrap;
+	gap: 10px 16px;
+	padding: 22px;
+	background: #191919;
 }
 
 .timetable-day__header h3 {
 	margin: 0;
-	color: var(--color-ink);
-	font-size: clamp(1.35rem, 5vw, 1.8rem);
+	color: #fff;
+	font-size: 1.35rem;
 	font-weight: 800;
-	letter-spacing: -.04em;
-	line-height: 1;
+	letter-spacing: -.025em;
+	line-height: 1.25;
 }
 
-.timetable-day__header strong {
-	width: 42px;
-	height: 42px;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	border-radius: 50%;
-	background: #f7f1f0;
-	color: var(--color-accent);
-	font-size: .95rem;
-	font-weight: 900;
+.timetable-day__count {
+	margin: 0;
+	color: #cecece;
+	font-size: .78rem;
+	line-height: 1.4;
+	white-space: nowrap;
+}
+
+.timetable-day__count strong {
+	color: inherit;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
 }
 
 .timetable-day__sessions {
 	display: grid;
-	gap: 12px;
+	padding-inline: 22px;
 }
 
 .timetable-session {
 	display: grid;
-	grid-template-columns: auto minmax(0, 1fr);
-	gap: 16px;
-	padding: 16px;
-	border: 1px solid var(--color-line);
-	background: rgba(255, 255, 255, .88);
+	grid-template-columns: minmax(0, 1fr);
+	gap: 10px;
+	min-width: 0;
+	padding-block: 22px;
+	border: 0;
+	background: transparent;
 }
 
-.timetable-session time {
-	min-width: 92px;
-	padding-top: 2px;
-	color: var(--color-accent);
-	font-size: .78rem;
-	font-weight: 900;
+.timetable-session + .timetable-session {
+	border-top: 1px solid var(--color-line);
+}
+
+.timetable-session__time {
+	display: flex;
+	align-items: baseline;
+	flex-wrap: wrap;
+	gap: 8px;
+	color: var(--color-ink);
+	font-size: 1.15rem;
+	font-weight: 800;
+	font-variant-numeric: tabular-nums;
 	line-height: 1.4;
+}
+
+.timetable-session__time time {
+	color: inherit;
+}
+
+.timetable-session__time > span {
+	color: var(--color-muted);
+	font-weight: 400;
 }
 
 .timetable-session__body {
@@ -7593,6 +7599,8 @@ footer .copy {
 
 .gallery-card {
 	position: relative;
+	width: 100%;
+	min-width: 0;
 	min-height: 280px;
 	aspect-ratio: 4 / 3;
 	border: 1px solid var(--color-line);
@@ -7916,7 +7924,7 @@ body.public-error-page {
 	.contact-card, .dojo-oath-intro__note, .dojo-oath-card, .dojo-oath-principle,
 	.statute-intro__note, .statute-summary-card, .statute-card,
 	.oyama-timeline-card, .oyama-hero__facts > div, .oyama-principle,
-	.timetable-session, .timetable-place, .timetable-note, .requirements-intro__note
+	.timetable-place, .timetable-note, .requirements-intro__note
 ) {
 	border-radius: 10px;
 }

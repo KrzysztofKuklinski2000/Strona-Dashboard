@@ -7,6 +7,9 @@
 	<meta name="description" content="Szkoła sztuk walki zaprasza na naukę karate kyokushin oraz samoobronę dla kobiet. Organizujemy obozy sportowe i kolonie dla dzieci i młodzieży - Wejherowo - Reda - Prowadzi zajęcia Pilates - Organizujemy warsztaty taneczne - Prowadzimy szkolenia dla firm - Pomorskie">
 	<link rel="stylesheet" type="text/css" href="/style.css?v=<?= filemtime(__DIR__ . '/../public/style.css') ?>">
 	<link rel="stylesheet" type="text/css" href="/style-res.css?v=<?= filemtime(__DIR__ . '/../public/style-res.css') ?>">
+	<?php if (($params['page'] ?? 'homepage') === 'homepage'): ?>
+		<link rel="stylesheet" href="/style-homepage.css?v=<?= filemtime(__DIR__ . '/../public/style-homepage.css') ?>">
+	<?php endif ?>
 	<link rel="icon" type="image/x-icon" href="/images/branding/logo.png">
 	<script src="https://kit.fontawesome.com/062ebc24f8.js" crossorigin="anonymous"></script>
     <?php
@@ -56,7 +59,7 @@
 	</title>
 </head>
 
-<body class="public-site <?= $page === 'homepage' ? 'homepage' : 'subpage' ?>">
+<body class="public-site <?= $page === 'homepage' ? 'homepage homepage--refined' : 'subpage' ?>">
 	<?php if (isset($params['flash_public'])): ?>
 		<?php
 		$flash = $params['flash_public'];

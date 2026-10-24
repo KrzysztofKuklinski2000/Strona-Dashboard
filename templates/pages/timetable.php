@@ -85,22 +85,34 @@ uksort($days, static fn(string $first, string $second): int => ($dayOrder[$first
 
             <div class="timetable-board">
                 <?php foreach ($days as $day): ?>
+                    <?php
+                    $trainingCount = count($day['items']);
+                    $trainingCountLabel = match (true) {
+                        $trainingCount === 1 => 'trening',
+                        $trainingCount % 10 >= 2 && $trainingCount % 10 <= 4
+                            && ($trainingCount % 100 < 12 || $trainingCount % 100 > 14) => 'treningi',
+                        default => 'treningów',
+                    };
+                    ?>
                     <article class="timetable-day">
                         <header class="timetable-day__header">
-                            <div>
-                                <span>Dzień</span>
-                                <h3><?= e($day['label']) ?></h3>
-                            </div>
-                            <strong><?= count($day['items']) ?></strong>
+                            <h3><?= e($day['label']) ?></h3>
+                            <p class="timetable-day__count">
+                                <strong><?= $trainingCount ?></strong> <?= e($trainingCountLabel) ?>
+                            </p>
                         </header>
 
                         <div class="timetable-day__sessions">
                             <?php foreach ($day['items'] as $item): ?>
                                 <article class="timetable-session">
-                                    <time><?= e(substr(trim((string) $item->start), 0, 5) . ' – ' . substr(trim((string) $item->end), 0, 5)) ?></time>
+                                    <div class="timetable-session__time" aria-label="Godziny treningu">
+                                        <time datetime="<?= e(substr(trim((string) $item->start), 0, 5)) ?>"><?= e(substr(trim((string) $item->start), 0, 5)) ?></time>
+                                        <span aria-hidden="true">–</span>
+                                        <time datetime="<?= e(substr(trim((string) $item->end), 0, 5)) ?>"><?= e(substr(trim((string) $item->end), 0, 5)) ?></time>
+                                    </div>
 
                                     <div class="timetable-session__body">
-                                        <h4><?= e($item->advancementGroup) ?></h4>
+                                        <h4>Grupa: <?= e($item->advancementGroup) ?></h4>
 
                                         <p>
                                             <i class="fa-solid fa-location-dot" aria-hidden="true"></i>

@@ -37,16 +37,14 @@ $locationDetails = implode(', ', array_filter(
         aria-label="Godziny zajęć: od <?= e($start) ?> do <?= e($end) ?>"
     >
         <time datetime="<?= e($start) ?>"><?= e($start) ?></time>
-        <span aria-hidden="true">
-            <i class="fa-solid fa-arrow-right-long"></i>
-        </span>
+        <span aria-hidden="true">–</span>
         <time datetime="<?= e($end) ?>"><?= e($end) ?></time>
     </div>
     </div>
 
     <div class="module-feed-timetable-card__content">
         <p>Grupa treningowa</p>
-        <h3><?= e($group !== '' ? $group : 'Trening karate') ?></h3>
+        <h3>Grupa: <?= e($group !== '' ? $group : 'ogólna') ?></h3>
 
         <div class="module-feed-timetable-card__location">
             <span aria-hidden="true">

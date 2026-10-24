@@ -1,0 +1,361 @@
+/* Homepage compositions follow the existing post templates. */
+.homepage--refined {
+	--home-content-width: 1280px;
+	--home-gutter: 20px;
+}
+
+body.homepage.homepage--refined {
+	--main-top-radius: 24px;
+}
+.homepage.homepage--refined main > .home-post-section {
+	--home-section-space: clamp(28px, 3vw, 44px);
+	--home-heading-gap: 26px;
+}
+.homepage.homepage--refined main > .home-post-section > :is(.important-section__inner, .why-karate-section__inner, .simple-text-section__inner, .family-training-section__inner) {
+	width: min(calc(100% - var(--home-gutter) * 2), var(--home-content-width));
+	max-width: none;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	align-items: start;
+	justify-items: stretch;
+	gap: var(--home-heading-gap);
+	margin-inline: auto;
+	padding-block: var(--home-section-space);
+}
+.homepage.homepage--refined main > .first-class-section .first-class-section__inner,
+.homepage.homepage--refined :is(.site-newsletter__inner, .site-footer-main__inner, .site-footer-bottom) {
+	width: min(calc(100% - var(--home-gutter) * 2), var(--home-content-width));
+}
+.homepage.homepage--refined main > .home-post-section :is(.home-section-heading, .module-feed-section__header) {
+	width: 100%;
+	max-width: none;
+	display: block;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	text-align: left;
+}
+.homepage.homepage--refined main > .home-post-section .home-section-title {
+	max-width: none;
+	margin: 0;
+	font-size: var(--font-size-section-title);
+	line-height: 1.2;
+	text-align: left;
+}
+.homepage.homepage--refined main > .home-post-section .home-section-heading::after {
+	content: '';
+	display: block;
+	width: 40px;
+	height: 3px;
+	margin: 14px 0 0;
+	border-radius: 2px;
+	background: var(--color-accent);
+}
+.homepage.homepage--refined main > .home-post-section :is(.club-notices-intro, .module-feed-news-intro, .module-feed-timetable-intro, .module-feed-gallery-intro) {
+	max-width: 72ch;
+	margin: 16px 0 0;
+	color: var(--color-muted);
+	font-size: .95rem;
+	font-weight: 400;
+	line-height: 1.7;
+	text-align: left;
+}
+
+/* Cards-grid posts remain actual tiles, not an unbounded text list. */
+.homepage.homepage--refined main > .why-karate-section .why-karate-grid {
+	width: 100%;
+	max-width: none;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 20px;
+	margin: 0;
+}
+.homepage.homepage--refined main > .why-karate-section .why-karate-card {
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 20px;
+	padding: clamp(24px, 2.2vw, 32px);
+	border: 1px solid #303030;
+	border-radius: 10px;
+	background: #191919;
+	box-shadow: 0 8px 18px -14px rgba(0, 0, 0, .4);
+	text-align: left;
+}
+.homepage.homepage--refined main > .why-karate-section .why-karate-card__icon {
+	width: 38px;
+	height: 38px;
+	justify-content: flex-start;
+	border: 0;
+	background: transparent;
+}
+.homepage.homepage--refined main > .why-karate-section .why-karate-card__icon i {
+	color: #ef7770;
+	font-size: 1.7rem;
+}
+.homepage.homepage--refined main > .why-karate-section .why-karate-card__content { max-width: none; }
+.homepage.homepage--refined main > .why-karate-section .why-karate-card h3 {
+	color: #fff;
+	font-size: 1.15rem;
+	line-height: 1.35;
+}
+.homepage.homepage--refined main > .why-karate-section .why-karate-card p {
+	max-width: 60ch;
+	margin: 12px 0 0;
+	color: #d0d0d0;
+	font-size: .92rem;
+	font-weight: 400;
+	line-height: 1.7;
+	text-align: left;
+}
+
+/* Simple text fills its post container, like the other content types. */
+.homepage.homepage--refined main > .simple-text-section .simple-text-section__content {
+	width: 100%;
+	max-width: none;
+	margin: 0;
+	text-align: left;
+}
+.homepage.homepage--refined main > .simple-text-section .simple-text-section__content p {
+	margin: 0;
+	font-size: 1rem;
+	line-height: 1.8;
+}
+
+/* Symmetrical arrow columns keep dots centred even at either end of a feed. */
+.homepage.homepage--refined main > .module-feed-section[data-feed-module] .module-feed-section__slider {
+	min-width: 0;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 12px;
+	margin: 0;
+}
+.homepage.homepage--refined main > .module-feed-section[data-feed-module] .important-info-shell {
+	min-width: 0;
+	grid-column: 1;
+	grid-row: auto;
+}
+.homepage.homepage--refined main > .module-feed-section[data-feed-module] .important-info {
+	display: flex;
+	align-items: stretch;
+	justify-content: flex-start;
+	gap: 20px;
+	padding: 4px 0 14px;
+}
+.homepage.homepage--refined main > .module-feed-section[data-feed-module="important_posts"] .important-info {
+	width: calc(100% + 24px);
+	max-width: none;
+	box-sizing: border-box;
+	align-items: flex-start;
+	margin-inline: -12px;
+	padding: 12px 12px 56px;
+	scroll-padding-inline: 12px;
+}
+.homepage.homepage--refined main > .module-feed-section[data-feed-module] .module-feed-section__navigation {
+	display: grid;
+	grid-template-columns: 44px minmax(0, 1fr) 44px;
+	align-items: center;
+	gap: 12px;
+}
+.homepage.homepage--refined main > .module-feed-section[data-feed-module] .module-feed-section__navigation[hidden] { display: none; }
+.homepage.homepage--refined main > .module-feed-section[data-feed-module] :is(.left-arrow, .right-arrow) {
+	position: static;
+	inset: auto;
+	width: 44px;
+	height: 44px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	border: 1px solid #dedede;
+	border-radius: 50%;
+	background: #fff;
+	color: var(--color-ink);
+	transform: none;
+	transition: border-color .2s ease, color .2s ease;
+}
+.homepage.homepage--refined main > .module-feed-section[data-feed-module] :is(.left-arrow, .right-arrow):hover {
+	border-color: var(--color-accent);
+	color: var(--color-accent);
+	transform: none;
+}
+.homepage.homepage--refined main > .module-feed-section[data-feed-module] .module-feed-section__pagination {
+	grid-column: 2;
+	grid-row: auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: nowrap;
+	gap: 0;
+	margin: 0;
+}
+.homepage.homepage--refined main > .module-feed-section[data-feed-module] .module-feed-section__pagination button {
+	position: relative;
+	width: 24px;
+	min-width: 10px;
+	height: 32px;
+	flex: 0 1 24px;
+	padding: 0;
+	border: 0;
+	border-radius: 0;
+	background: transparent;
+	cursor: pointer;
+	transition: none;
+}
+
+.homepage.homepage--refined main > .module-feed-section[data-feed-module] .module-feed-section__pagination button.is-active {
+	min-width: 24px;
+	flex-shrink: 0;
+}
+.homepage.homepage--refined main > .module-feed-section[data-feed-module] .module-feed-section__pagination button::after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 7px;
+	height: 7px;
+	border-radius: 999px;
+	background: #aaa;
+	transform: translate(-50%, -50%);
+}
+.homepage.homepage--refined main > .module-feed-section[data-feed-module] .module-feed-section__pagination button.is-active::after {
+	width: 20px;
+	background: var(--color-accent);
+}
+.homepage.homepage--refined main > .module-feed-section[data-feed-module] .module-feed-section__more--header {
+	justify-self: end;
+	width: fit-content;
+	margin: 0;
+	border-color: var(--color-accent);
+	background: var(--color-accent);
+	color: #fff;
+}
+.homepage.homepage--refined main > .module-feed-section[data-feed-module] .module-feed-section__more--header:hover {
+	border-color: var(--color-accent-dark);
+	background: var(--color-accent-dark);
+	color: #fff;
+}
+.homepage.homepage--refined main > .module-feed-section[data-feed-module] .important-card {
+	min-width: 0;
+	flex: 0 0 100%;
+}
+
+.homepage.homepage--refined main > .module-feed-section[data-feed-module][data-feed-count="1"] .important-card {
+	flex-basis: min(100%, 480px);
+}
+.homepage.homepage--refined main > [data-feed-module="gallery"] .module-feed-gallery-card {
+	min-height: 280px;
+	aspect-ratio: 4 / 3;
+}
+.homepage.homepage--refined main > [data-feed-module="timetable"] .module-feed-timetable-card {
+	min-height: 300px;
+	box-shadow: 0 6px 14px -12px rgba(0, 0, 0, .3);
+}
+.homepage.homepage--refined main > [data-feed-module="timetable"] .module-feed-timetable-card__schedule { background: #191919; }
+.homepage.homepage--refined main > [data-feed-module="timetable"] .module-feed-timetable-card__header { flex-wrap: wrap; gap: 10px; }
+.homepage.homepage--refined main > [data-feed-module="timetable"] .module-feed-timetable-card__time { gap: 10px; }
+.homepage.homepage--refined main > [data-feed-module="timetable"] .module-feed-timetable-card__time time { font-size: clamp(1.5rem, 2vw, 2rem); }
+.homepage.homepage--refined main > [data-feed-module="timetable"] .module-feed-timetable-card__location :is(strong, small) {
+	white-space: normal;
+	overflow-wrap: anywhere;
+}
+.homepage.homepage--refined main > .family-training-section .family-training-section__media { box-shadow: none; }
+.homepage.homepage--refined main > .family-training-section .family-training-section__lead {
+	max-width: 64ch;
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.8;
+	text-align: left;
+}
+
+.homepage.homepage--refined main > .module-feed-section .module-feed-section__header {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	align-items: start;
+	gap: 20px;
+}
+
+.homepage.homepage--refined main > .module-feed-section .module-feed-section__intro {
+	min-width: 0;
+}
+
+.homepage.homepage--refined main > .module-feed-section[data-feed-module="important_posts"] {
+	--home-section-rgb: 25, 25, 25;
+	background: var(--home-section-background);
+}
+
+.homepage.homepage--refined main > .module-feed-section[data-feed-module="important_posts"] .home-section-title {
+	color: #fff;
+}
+
+.homepage.homepage--refined main > .module-feed-section[data-feed-module="important_posts"] .club-notices-intro {
+	color: #cecece;
+}
+
+.homepage.homepage--refined main > .module-feed-section[data-feed-module="important_posts"] .home-section-heading::after,
+.homepage.homepage--refined main > .module-feed-section[data-feed-module="important_posts"] .module-feed-section__pagination button.is-active::after {
+	background: #ef7770;
+}
+
+.homepage.homepage--refined main > .module-feed-section[data-feed-module="important_posts"] .module-feed-section__pagination button::after {
+	background: #a5a5a5;
+}
+
+.homepage.homepage--refined .hero-section__brand {
+	max-width: none;
+	font-size: .65rem;
+	line-height: 1.5;
+}
+
+@media (max-width: 639px) {
+	body.homepage.homepage--refined {
+		--main-top-radius: 16px;
+	}
+
+	.homepage.homepage--refined .hero-section__meta {
+		display: grid;
+		gap: 10px;
+	}
+
+	.homepage.homepage--refined .hero-section__location {
+		text-align: left;
+	}
+}
+
+@media (min-width: 700px) {
+	.homepage.homepage--refined main > .why-karate-section .why-karate-grid,
+	.homepage.homepage--refined main > .why-karate-section .why-karate-grid--many { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	.homepage.homepage--refined main > .why-karate-section .why-karate-grid--count-1 { grid-template-columns: minmax(0, 1fr); }
+	.homepage.homepage--refined main > .module-feed-section[data-feed-module] .important-card { flex-basis: calc((100% - 20px) / 2); }
+	.homepage.homepage--refined main > .module-feed-section[data-feed-module][data-feed-count="2"] .important-card { flex-basis: calc((100% - 20px) / 2); }
+}
+@media (min-width: 760px) {
+	.homepage--refined { --home-gutter: 48px; }
+
+	.homepage.homepage--refined main > .module-feed-section .module-feed-section__header--with-link {
+		grid-template-columns: minmax(0, 1fr) auto;
+		column-gap: 32px;
+	}
+
+	.homepage.homepage--refined main > .module-feed-section[data-feed-module] .module-feed-section__more--header {
+		justify-self: end;
+		white-space: nowrap;
+	}
+}
+@media (min-width: 1000px) {
+	.homepage.homepage--refined main > .why-karate-section .why-karate-grid:not(.why-karate-grid--count-1):not(.why-karate-grid--count-2):not(.why-karate-grid--many) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+	.homepage.homepage--refined main > .family-training-section .family-training-section__inner:not(.family-training-section__inner--text-only) {
+		grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+		align-items: center;
+		gap: clamp(32px, 4vw, 64px);
+	}
+	.homepage.homepage--refined main > .module-feed-section[data-feed-module] .important-card { flex-basis: calc((100% - 40px) / 3); }
+}
+@media (min-width: 1400px) {
+	.homepage.homepage--refined main > .why-karate-section .why-karate-grid--many { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+	.homepage.homepage--refined main > .module-feed-section[data-feed-module]:not([data-feed-module="gallery"]) .important-card { flex-basis: calc((100% - 60px) / 4); }
+}
+@media (min-width: 1800px) {
+	.homepage--refined { --home-content-width: 1420px; --home-gutter: 80px; }
+}

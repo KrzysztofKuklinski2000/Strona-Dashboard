@@ -7,6 +7,7 @@
         const leftArrow = section.querySelector('.left-arrow');
         const rightArrow = section.querySelector('.right-arrow');
         const pagination = section.querySelector('[data-feed-slider-pagination]');
+        const navigation = section.querySelector('[data-feed-slider-controls]');
         let paginationOffsets = [];
 
         if (!scrollElement || !scrollShell || !leftArrow || !rightArrow) {
@@ -31,6 +32,10 @@
             const maxScrollLeft = scrollElement.scrollWidth - scrollElement.clientWidth;
             const isAtStart = scrollElement.scrollLeft <= TOLERANCE;
             const isAtEnd = maxScrollLeft <= TOLERANCE || scrollElement.scrollLeft >= maxScrollLeft - TOLERANCE;
+
+            if (navigation) {
+                navigation.hidden = !hasMultipleCards || maxScrollLeft <= TOLERANCE;
+            }
 
             if (!hasMultipleCards) {
                 leftArrow.style.visibility = 'hidden';

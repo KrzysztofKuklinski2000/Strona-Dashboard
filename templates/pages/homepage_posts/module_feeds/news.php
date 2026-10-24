@@ -6,6 +6,28 @@ $payload = is_array($payload) ? $payload : [];
 $image = $payload['image'] ?? [];
 $imageSrc = $image['src'] ?? '';
 $imageAlt = trim((string) ($image['alt'] ?? ''));
+$placeholder = match ($feedPost->type ?? '') {
+    \App\Content\NewsPostTypes::COMPETITION_RESULTS => [
+        'type' => 'competition_results',
+        'icon' => 'fa-solid fa-trophy',
+        'label' => 'Wyniki zawodów',
+    ],
+    \App\Content\NewsPostTypes::FUNDING => [
+        'type' => 'funding',
+        'icon' => 'fa-solid fa-hand-holding-heart',
+        'label' => 'Dofinansowanie',
+    ],
+    \App\Content\NewsPostTypes::EVENT => [
+        'type' => 'event',
+        'icon' => 'fa-regular fa-calendar-days',
+        'label' => 'Wydarzenie',
+    ],
+    default => [
+        'type' => 'article',
+        'icon' => 'fa-regular fa-newspaper',
+        'label' => 'Z życia klubu',
+    ],
+};
 
 if ($imageAlt === '') {
     $imageAlt = (string) ($feedPost->title ?? '');
@@ -19,9 +41,14 @@ if ($imageAlt === '') {
                 <img src="<?= e($imageSrc) ?>" alt="<?= e($imageAlt) ?>" loading="lazy">
             </div>
         <?php else: ?>
-            <div class="module-feed-news-card__media module-feed-news-card__media--placeholder" aria-hidden="true">
-                <img src="/images/branding/logo1.png" alt="">
-                <span>Klub Karate Kyokushin</span>
+            <div
+                class="module-feed-news-card__media module-feed-news-card__media--placeholder"
+                data-news-type="<?= e($placeholder['type']) ?>"
+                aria-hidden="true"
+            >
+                <i class="<?= e($placeholder['icon']) ?>"></i>
+                <span><?= e($placeholder['label']) ?></span>
+                <small>Klub Karate Kyokushin</small>
             </div>
         <?php endif ?>
 

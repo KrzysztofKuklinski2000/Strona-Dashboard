@@ -43,8 +43,8 @@
 		let viewportWidth = 0;
 		let hasOverflow = false;
 		let isInView = !('IntersectionObserver' in window);
-		let isHovered = false;
 		let pointerDown = false;
+		let pointerStartScroll = 0;
 		let userPaused = false;
 		let resumeAfter = 0;
 		let lastTimestamp = 0;
@@ -102,8 +102,8 @@
 		};
 
 		const canAutoplay = () => hasOverflow && isInView && !userPaused
-			&& !isHovered && !pointerDown && !document.hidden && !prefersReducedMotion.matches
-			&& !carousel.contains(document.activeElement) && !document.body.classList.contains('is-menu-open');
+			&& !pointerDown && !document.hidden && !prefersReducedMotion.matches
+			&& !carousel.querySelector(':focus-visible') && !document.body.classList.contains('is-menu-open');
 
 		const animate = (timestamp) => {
 			if (!canAutoplay()) {
@@ -197,31 +197,29 @@
 				}
 			}, 180);
 		}, { passive: true });
-
-		carousel.addEventListener('pointerenter', (event) => {
-			if (event.pointerType === 'mouse') {
-				isHovered = true;
-				stopAutoplay();
-			}
-		});
-		carousel.addEventListener('pointerleave', () => {
-			isHovered = false;
-			startAutoplay();
-		});
 		viewport.addEventListener('pointerdown', () => {
 			pointerDown = true;
-			pauseForInteraction();
+			pointerStartScroll = viewport.scrollLeft;
+			stopAutoplay();
 		}, { passive: true });
 		const releasePointer = () => {
 			if (pointerDown) {
 				pointerDown = false;
-				pauseForInteraction();
+				if (Math.abs(viewport.scrollLeft - pointerStartScroll) > 3) {
+					pauseForInteraction();
+				} else {
+					startAutoplay();
+				}
 			}
 		};
 		window.addEventListener('pointerup', releasePointer, { passive: true });
 		window.addEventListener('pointercancel', releasePointer, { passive: true });
 		viewport.addEventListener('wheel', pauseForInteraction, { passive: true });
-		carousel.addEventListener('focusin', stopAutoplay);
+		carousel.addEventListener('focusin', (event) => {
+			if (event.target.matches(':focus-visible')) {
+				stopAutoplay();
+			}
+		});
 		carousel.addEventListener('focusout', () => window.setTimeout(startAutoplay, 0));
 
 		autoplayButton?.addEventListener('click', () => {

@@ -7,10 +7,10 @@
 
 			<div>
 				<p class="site-newsletter__eyebrow">Bądź na bieżąco</p>
-				<h2 id="newsletter-title">Dołącz do listy informacji</h2>
+				<h2 id="newsletter-title">Powiadomienia o zmianach grafiku</h2>
 				<p>
-					Otrzymuj informacje o zmianach w grafiku, wydarzeniach klubowych i ważnych
-					komunikatach dla trenujących.
+					Otrzymuj wiadomości e-mail o zmianach w grafiku treningów.
+					Zapisz się i potwierdź swój adres, aby otrzymywać powiadomienia.
 				</p>
 			</div>
 		</div>
@@ -55,7 +55,7 @@
 			</a>
 
 			<p>
-				Tradycyjne karate, które aktualizuje ciało, charakter i sposób działania.
+				Karate Kyokushin, które rozwija sprawność i kształtuje charakter.
 			</p>
 		</div>
 
