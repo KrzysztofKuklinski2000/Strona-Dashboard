@@ -57,6 +57,19 @@ class PublicNewsRepository extends AbstractRepository
     /**
      * @throws RepositoryException
      */
+    public function getSitemapEntries(): array
+    {
+        try {
+            return $this->runQuery('SELECT id, type FROM news WHERE status = 1 ORDER BY id ASC')
+                ->fetchAll(PDO::FETCH_ASSOC);
+        } catch (RepositoryException $e) {
+            throw new RepositoryException('Nie udało się pobrać aktualności do mapy witryny', 500, $e);
+        }
+    }
+
+    /**
+     * @throws RepositoryException
+     */
     public function countPublishedNews(): int
     {
         try {

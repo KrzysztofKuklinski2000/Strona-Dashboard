@@ -35,6 +35,16 @@ readonly class Config
         return $this->config['env'] ?? 'prod';
     }
 
+    public function getSeoConfig(): array
+    {
+        return $this->config['seo'] ?? [];
+    }
+
+    public function getRedirectsConfig(): array
+    {
+        return $this->config['redirects'] ?? [];
+    }
+
     public function getUrl(): string
     {
         $url = $this->config['app_url'] ?? '';

@@ -16,6 +16,7 @@ use App\Controller\Dashboard\SubscribersController;
 use App\Controller\Dashboard\TimetableController;
 use App\Controller\PublicNewsController;
 use App\Controller\PublicSubscribersController;
+use App\Controller\SeoController;
 use App\Controller\SiteController;
 use App\Factories\ControllerFactories\AuthControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\CampControllerFactory;
@@ -32,6 +33,7 @@ use App\Factories\ControllerFactories\Dashboard\SubscribersControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\TimetableControllerFactory;
 use App\Factories\ControllerFactories\PublicNewsControllerFactory;
 use App\Factories\ControllerFactories\PublicSubscribersControllerFactory;
+use App\Factories\ControllerFactories\SeoControllerFactory;
 use App\Factories\ControllerFactories\SiteControllerFactory;
 
 
@@ -51,6 +53,7 @@ return [
 
     PublicSubscribersController::class => PublicSubscribersControllerFactory::class,
     PublicNewsController::class => PublicNewsControllerFactory::class,
+    SeoController::class => SeoControllerFactory::class,
     SiteController::class => SiteControllerFactory::class,
     AuthController::class => AuthControllerFactory::class,
 ];

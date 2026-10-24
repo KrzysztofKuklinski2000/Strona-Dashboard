@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\View;
 
 use App\Core\ContextController;
+use App\Seo\PublicPageMetadata;
+use App\Seo\SearchIndexing;
 use App\Service\Contracts\ContactProviderInterface;
 
 readonly class PublicPageRenderer
@@ -25,6 +27,11 @@ readonly class PublicPageRenderer
         ];
 
         $finalParams = array_merge($globalParams, $pageSpecificParams);
+        $finalParams['seo'] = PublicPageMetadata::forPage(
+            $finalParams,
+            $this->context->config->getUrl(),
+            (new SearchIndexing($this->context->config))->isAllowed($this->context->request),
+        );
 
         $this->context->view->renderPageView($finalParams);
     }

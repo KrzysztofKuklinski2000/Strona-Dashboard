@@ -12,6 +12,9 @@ RewriteRule ^images/hero-cinematic/tiles/(.*)$ images/hero/$1 [L]
 
 RewriteRule (^|/)\.(?!well-known(?:/|$)) - [R=404,L]
 
+# Front controller obsługuje również opcjonalne przekierowania starych adresów.
+RewriteRule ^index\.php/ index.php [END,QSA]
+
 # Jedyny wykonywalny skrypt PHP to front controller.
 RewriteRule ^(?!index\.php$).*\.(?:php[0-9]*|phtml|phar)(?:/|$) - [R=404,L,NC]
 

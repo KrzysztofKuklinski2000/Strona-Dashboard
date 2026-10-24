@@ -1,10 +1,29 @@
+<?php
+$page = $params['page'] ?? 'homepage';
+$seo = $params['seo'] ?? \App\Seo\PublicPageMetadata::forPage(
+    $params,
+    (string) ($params['base_url'] ?? ''),
+    false,
+);
+?>
 <!DOCTYPE html>
 <html lang='pl'>
 
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Szkoła sztuk walki zaprasza na naukę karate kyokushin oraz samoobronę dla kobiet. Organizujemy obozy sportowe i kolonie dla dzieci i młodzieży - Wejherowo - Reda - Prowadzi zajęcia Pilates - Organizujemy warsztaty taneczne - Prowadzimy szkolenia dla firm - Pomorskie">
+	<meta name="description" content="<?= e($seo['description']) ?>">
+	<meta name="robots" content="<?= e($seo['robots']) ?>">
+	<title><?= e($seo['title']) ?></title>
+	<?php if ($seo['canonical'] !== null): ?>
+		<link rel="canonical" href="<?= e($seo['canonical']) ?>">
+		<meta property="og:url" content="<?= e($seo['canonical']) ?>">
+	<?php endif ?>
+	<meta property="og:title" content="<?= e($seo['title']) ?>">
+	<meta property="og:description" content="<?= e($seo['description']) ?>">
+	<meta property="og:type" content="<?= e($seo['type']) ?>">
+	<meta property="og:locale" content="pl_PL">
+	<meta property="og:site_name" content="<?= e(\App\Seo\PublicPageMetadata::SITE_NAME) ?>">
 	<link rel="stylesheet" type="text/css" href="/style.css?v=<?= filemtime(__DIR__ . '/../public/style.css') ?>">
 	<link rel="stylesheet" type="text/css" href="/style-res.css?v=<?= filemtime(__DIR__ . '/../public/style-res.css') ?>">
 	<?php if (($params['page'] ?? 'homepage') === 'homepage'): ?>
@@ -12,51 +31,6 @@
 	<?php endif ?>
 	<link rel="icon" type="image/x-icon" href="/images/branding/logo.png">
 	<script src="https://kit.fontawesome.com/062ebc24f8.js" crossorigin="anonymous"></script>
-    <?php
-    $page = $params['page'] ?? 'homepage';
-
-    $canonicalPath = match ($page) {
-        'camp-info' => '/obozy',
-        'contact' => '/kontakt',
-        'dojo-oath' => '/dojo-oath',
-        'entries-info' => '/zapisy',
-        'fees-info' => '/skladki',
-        'gallery' => '/galeria',
-        'news' => '/aktualnosci',
-        'news_details' => '/aktualnosci/wpis/' . (int) ($params['content']->id ?? 0),
-        'oyama' => '/oyama',
-        'requirements' => '/wymagania-egzaminacyjne',
-        'statute' => '/status',
-        'timetable' => '/grafik',
-        'unsubscribe' => '/unsubscribe',
-        default => '/',
-    };
-
-    $baseUrl = rtrim((string) ($params['base_url'] ?? ''), '/');
-    $canonicalUrl = $baseUrl . $canonicalPath;
-    ?>
-    <link rel="canonical" href="<?= e($canonicalUrl) ?>">
-	<title>
-		<?php
-		echo match ($page) {
-			'camp-info' => 'Obóz',
-			'contact' => 'Kontakt',
-			'dojo-oath' => 'Przysięga Dojo',
-			'entries-info' => 'Zapisy',
-			'fees-info' => 'Składki',
-			'gallery' => 'Galeria',
-			'news' => 'Aktualności',
-			'news_details' => (string) ($params['content']->title ?? 'Aktualność'),
-			'oyama' => 'Matsutatsu Oyama',
-			'requirements' => 'Wymagania Egzaminacyjne',
-			'statute' => 'Regulamin',
-			'timetable' => 'Grafik zajęć',
-            'unsubscribe' => 'Wyłącz powiadomienia',
-			default => 'Strona Główna'
-		};
-		?>
-		- Klub Karate Kyokushin Wejherowo
-	</title>
 </head>
 
 <body class="public-site <?= $page === 'homepage' ? 'homepage homepage--refined' : 'subpage' ?>">

@@ -15,11 +15,14 @@ use App\Controller\Dashboard\SubscribersController;
 use App\Controller\Dashboard\TimetableController;
 use App\Controller\PublicNewsController;
 use App\Controller\PublicSubscribersController;
+use App\Controller\SeoController;
 use App\Controller\SiteController;
 use FastRoute\RouteCollector;
 
 return function (RouteCollector $r) {
     $r->get('/', [SiteController::class, 'indexAction']);
+    $r->get('/robots.txt', [SeoController::class, 'robotsAction']);
+    $r->get('/sitemap.xml', [SeoController::class, 'sitemapAction']);
 
     $r->get('/aktualnosci', [PublicNewsController::class, 'indexAction']);
     $r->get('/aktualnosci/{page:\d+}', [PublicNewsController::class, 'indexAction']);

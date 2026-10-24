@@ -4,6 +4,7 @@ declare(strict_types=1);
 use App\Controller\AuthController;
 use App\Controller\Dashboard\AbstractDashboardController;
 use App\Controller\PublicNewsController;
+use App\Controller\PublicSubscribersController;
 use App\Core\Config;
 use App\Core\ContextController;
 use App\Core\Database;
@@ -15,6 +16,8 @@ use App\Core\Validator;
 use App\Exception\NotFoundException;
 use App\Middleware\AuthMiddleware;
 use App\Middleware\CsrfMiddleware;
+use App\Redirects\LegacyRedirector;
+use App\Seo\SearchIndexing;
 use App\View\View;
 use EasyCSRF\EasyCSRF;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
@@ -41,6 +44,8 @@ try {
 }
 
 $configurationArray = require dirname(__DIR__) . '/config/config.php';
+$configurationArray['seo'] = require dirname(__DIR__) . '/config/seo.php';
+$configurationArray['redirects'] = require dirname(__DIR__) . '/config/redirects.php';
 $config = new Config($configurationArray);
 
 $isDev = $config->getEnv() === 'dev';
@@ -59,6 +64,10 @@ if ($isDev) {
 $errorHandler = new ErrorHandler($isDev, "{$config->getTemplatesPath()}/errors");
 $request = new Request($_GET, $_POST, $_SERVER, $_FILES);
 
+if (!(new SearchIndexing($config))->isAllowed($request)) {
+    header('X-Robots-Tag: noindex, nofollow');
+}
+
 $sessionManager = new SessionManager(secureCookies: !$isDev);
 $easyCSRF = new EasyCSRF(new NativeSessionProvider());
 
@@ -67,8 +76,26 @@ $factories = require dirname(__DIR__) . '/config/factories.php';
 
 
 try {
+    $redirectsConfig = $config->getRedirectsConfig();
+
+    if (($redirectsConfig['enabled'] ?? false) === true) {
+        $legacyRedirects = require $redirectsConfig['map'];
+        $legacyRedirector = new LegacyRedirector($legacyRedirects['paths'], $legacyRedirects['news_offsets']);
+        $legacyTarget = $legacyRedirector->getTarget($request);
+
+        if ($legacyTarget !== null) {
+            header('Location: ' . $legacyTarget, true, 301);
+            exit;
+        }
+    }
+
     $router = new Router($config->getRoutesPath());
     [$controllerClass, $action] = $router->dispatch($request);
+
+    if (is_a($controllerClass, AbstractDashboardController::class, true)
+        || in_array($controllerClass, [AuthController::class, PublicSubscribersController::class], true)) {
+        header('X-Robots-Tag: noindex, nofollow');
+    }
 
     if (!isset($factories[$controllerClass])) {
         throw new Exception("Błąd konfiguracji: Brak fabryki dla kontrolera " . $controllerClass);

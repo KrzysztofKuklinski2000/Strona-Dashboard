@@ -21,14 +21,18 @@ readonly class PublicNewsService
 
     /**
      * @throws ServiceException
+     * @throws NotFoundException
      */
     public function getNews(int $page, ?int $perPage = null): array
     {
         try {
-            $limit = $perPage ?? $this->itemsPerPage;
+            $limit = max(1, $perPage ?? $this->itemsPerPage);
             $totalPages = (int)ceil($this->repository->countPublishedNews() / $limit);
             $totalPages = max(1, $totalPages);
-            $page = max(1, min($page, $totalPages));
+            if ($page < 1 || $page > $totalPages) {
+                throw new NotFoundException('Nie znaleziono strony aktualności', 404);
+            }
+
             $offset = (int)(($page - 1) * $limit);
 
             $news = $this->repository->getNews($limit, $offset);

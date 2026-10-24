@@ -49,13 +49,13 @@ $newsPosts = array_values(array_filter(
         <?php if ($numberOfRows > 1): ?>
             <nav class="news-pagination" aria-label="Paginacja aktualności">
                 <?php if ($currentPage > 1): ?>
-                    <a class="news-pagination__arrow" href="/aktualnosci/<?= $currentPage - 1 ?>" aria-label="Poprzednia strona">
+                    <a class="news-pagination__arrow" href="<?= $currentPage === 2 ? '/aktualnosci' : '/aktualnosci/' . ($currentPage - 1) ?>" aria-label="Poprzednia strona">
                         <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
                     </a>
                 <?php endif ?>
 
                 <?php for ($i = 1; $i <= $numberOfRows; $i++): ?>
-                    <a class="<?= $i === $currentPage ? 'is-active' : '' ?>" href="/aktualnosci/<?= $i ?>"<?= $i === $currentPage ? ' aria-current="page"' : '' ?> aria-label="Strona <?= $i ?>">
+                    <a class="<?= $i === $currentPage ? 'is-active' : '' ?>" href="<?= $i === 1 ? '/aktualnosci' : '/aktualnosci/' . $i ?>"<?= $i === $currentPage ? ' aria-current="page"' : '' ?> aria-label="Strona <?= $i ?>">
                         <?= $i ?>
                     </a>
                 <?php endfor ?>

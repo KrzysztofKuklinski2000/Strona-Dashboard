@@ -23,11 +23,17 @@ class PublicNewsController extends AbstractController
 
     /**
      * @throws ServiceException
+     * @throws NotFoundException
      */
     public function indexAction(): void
     {
-        $page = (int)$this->request->getRouteParam('page');
+        $routePage = $this->request->getRouteParam('page');
+        $page = $routePage === null ? 1 : (int) $routePage;
         $result = $this->publicNewsService->getNews($page);
+
+        if ($routePage !== null && ($page === 1 || (string) $routePage !== (string) $page)) {
+            $this->redirect($page === 1 ? '/aktualnosci' : '/aktualnosci/' . $page, 301);
+        }
 
         $this->renderer->render([
             'page' => 'news',
