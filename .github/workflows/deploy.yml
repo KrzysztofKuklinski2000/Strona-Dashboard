@@ -1,0 +1,17 @@
+name: Deploy to MyDevil
+
+
+on:
+  push:
+    branches:
+      - master
+
+permissions: {}
+
+
+jobs:
+  ssh-check:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Start SSH check
+        run: echo "Starting SSH connection check"
