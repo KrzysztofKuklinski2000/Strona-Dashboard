@@ -15,3 +15,30 @@ jobs:
     steps:
       - name: Start SSH check
         run: echo "Starting SSH connection check"
+      - name: Prepare SSH files
+        shell: bash
+        env:
+          DEPLOY_SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+          DEPLOY_SSH_KNOWN_HOSTS: ${{ secrets.DEPLOY_SSH_KNOWN_HOSTS }}
+        run: |
+          test -n "$DEPLOY_SSH_PRIVATE_KEY"
+          test -n "$DEPLOY_SSH_KNOWN_HOSTS"
+
+
+          umask 077
+          printf '%s\n' "$DEPLOY_SSH_PRIVATE_KEY" | tr -d '\r' > "$RUNNER_TEMP/deploy_key"
+          printf '%s\n' "$DEPLOY_SSH_KNOWN_HOSTS" | tr -d '\r' > "$RUNNER_TEMP/deploy_known_hosts"
+      - name: Check SSH connection
+        shell: bash
+        run: |
+          result=$(ssh -T \
+          -i "$RUNNER_TEMP/deploy_key" \
+          -o IdentitiesOnly=yes \
+          -o BatchMode=yes \
+          -o StrictHostKeyChecking=yes \
+          -o UserKnownHostsFile="$RUNNER_TEMP/deploy_known_hosts" \
+          -o ConnectTimeout=15 \
+          Musashi14@s92.mydevil.net)
+
+          test "$result" = "DEPLOY-SSH-OK"
+          printf '%s\n' "$result"
