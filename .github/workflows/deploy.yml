@@ -6,15 +6,40 @@ on:
     branches:
       - master
 
-permissions: {}
+permissions: {
+  contents: read
+}
 
+
+concurrency:
+  group: mydevil-production
+  cancel-in-progress: false
 
 jobs:
   ssh-check:
     runs-on: ubuntu-24.04
+    timeout-minutes: 15
     steps:
-      - name: Start SSH check
-        run: echo "Starting SSH connection check"
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962
+        with:
+          php-version: '8.2'
+          tools: composer:2.8
+          coverage: none
+
+      - name: Validate Composer files
+        run: composer validate --strict --no-check-publish
+
+      - name: Check PHP syntax
+        shell: bash
+        run:  |
+          git ls-files -z -- '*.php' | xargs -0 -r -n 1 php -l
+
       - name: Prepare SSH files
         shell: bash
         env:
@@ -28,6 +53,7 @@ jobs:
           umask 077
           printf '%s\n' "$DEPLOY_SSH_PRIVATE_KEY" | tr -d '\r' > "$RUNNER_TEMP/deploy_key"
           printf '%s\n' "$DEPLOY_SSH_KNOWN_HOSTS" | tr -d '\r' > "$RUNNER_TEMP/deploy_known_hosts"
+
       - name: Check SSH connection
         shell: bash
         run: |
