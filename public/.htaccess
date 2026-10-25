@@ -1,7 +1,9 @@
 Options -Indexes -MultiViews
-Require all granted
 
 RewriteEngine On
+
+RewriteCond %{HTTP_HOST} ^www\.kyokushin-wejherowo\.com\.pl$ [NC]
+RewriteRule ^(.*)$ https://kyokushin-wejherowo.com.pl%{REQUEST_URI} [R=301,L,NE]
 
 # Zgodność z adresami zapisanymi przed uporządkowaniem plików.
 RewriteRule ^public/(.*)$ $1 [L]
