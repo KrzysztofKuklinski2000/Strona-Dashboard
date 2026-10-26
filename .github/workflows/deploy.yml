@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  ssh-check:
+  deploy:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
@@ -54,17 +54,24 @@ jobs:
           printf '%s\n' "$DEPLOY_SSH_PRIVATE_KEY" | tr -d '\r' > "$RUNNER_TEMP/deploy_key"
           printf '%s\n' "$DEPLOY_SSH_KNOWN_HOSTS" | tr -d '\r' > "$RUNNER_TEMP/deploy_known_hosts"
 
-      - name: Check SSH connection
+      - name: Deploy to MyDevil
         shell: bash
         run: |
-          result=$(ssh -T \
+          ssh -T \
           -i "$RUNNER_TEMP/deploy_key" \
           -o IdentitiesOnly=yes \
           -o BatchMode=yes \
           -o StrictHostKeyChecking=yes \
           -o UserKnownHostsFile="$RUNNER_TEMP/deploy_known_hosts" \
           -o ConnectTimeout=15 \
-          Musashi14@s92.mydevil.net)
+          Musashi14@s92.mydevil.net "$GITHUB_SHA"
 
-          test "$result" = "DEPLOY-SSH-OK"
-          printf '%s\n' "$result"
+      - name: Check website
+        shell: bash
+        run: |
+          status=$(curl --silent --show-error --max-time 30 \
+            --output /dev/null --write-out '%{http_code}' \
+            https://kyokushin-wejherowo.com.pl/)
+
+          printf 'Website HTTP status: %s\n' "$status"
+          test "$status" = "200"
