@@ -40,6 +40,20 @@ readonly class CsrfMiddleware
         $key = $this->getEasyCSRFKey($context);
         $tokenFromForm = $this->request->getFormParam($this->csrfTokenName);
 
+        if (!is_string($tokenFromForm) || $tokenFromForm === '') {
+            throw new InvalidCsrfTokenException('Invalid CSRF token');
+        }
+
+        if ($context === 'public') {
+            $sessionToken = $this->sessionManager->get($this->getSessionKey($context));
+
+            if (!is_string($sessionToken) || $sessionToken === '' || !hash_equals($sessionToken, $tokenFromForm)) {
+                throw new InvalidCsrfTokenException('Invalid CSRF token');
+            }
+
+            return;
+        }
+
         try {
             $this->easyCSRF->check(
                 key: $key,
@@ -81,9 +95,10 @@ readonly class CsrfMiddleware
      */
     private function createToken(string $context): string
     {
-        $token = $this->easyCSRF->generate(
-            $this->getEasyCsrfKey($context)
-        );
+        // Public forms must survive changes between Wi-Fi and mobile networks.
+        $token = $context === 'public'
+            ? bin2hex(random_bytes(32))
+            : $this->easyCSRF->generate($this->getEasyCSRFKey($context));
 
         $this->sessionManager->set(
             $this->getSessionKey($context),

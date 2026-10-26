@@ -23,6 +23,18 @@ class PublicSubscribersController extends AbstractController
         parent::__construct($contextController);
     }
 
+    public function csrfTokenAction(): void
+    {
+        header('Cache-Control: no-store, private');
+        header('Content-Type: application/json; charset=UTF-8');
+        header('X-Content-Type-Options: nosniff');
+
+        echo json_encode(
+            ['token' => $this->csrfMiddleware->generateToken()],
+            JSON_THROW_ON_ERROR,
+        );
+    }
+
     /**
      * @throws InvalidCsrfTokenException
      */

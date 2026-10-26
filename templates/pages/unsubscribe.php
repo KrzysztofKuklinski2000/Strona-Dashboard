@@ -15,7 +15,7 @@
                 grafiku. Samo otwarcie tej strony nie zmienia subskrypcji.
             </p>
 
-            <form action="/unsubscribe" method="POST" class="contact-actions">
+            <form action="/unsubscribe" method="POST" class="contact-actions" data-csrf-refresh-url="/subscription/csrf-token">
                 <input
                     type="hidden"
                     name="csrf_token"

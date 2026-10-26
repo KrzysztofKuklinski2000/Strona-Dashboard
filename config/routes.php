@@ -41,6 +41,7 @@ return function (RouteCollector $r) {
     $r->get('/dojo-oath', [SiteController::class, 'dojoOathAction']);
     $r->get('/wymagania-egzaminacyjne', [SiteController::class, 'requirementsAction']);
 
+    $r->get('/subscription/csrf-token', [PublicSubscribersController::class, 'csrfTokenAction']);
     $r->post('/subscribe', [PublicSubscribersController::class, 'subscribeAction']);
     $r->get('/confirm-subscription', [PublicSubscribersController::class, 'confirmAction']);
 

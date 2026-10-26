@@ -29,13 +29,11 @@ readonly class AuthMiddleware
 
     public function handle(string $controllerClass): void
     {
-        $isAuthenticated = $this->sessionManager->isAuthenticated();
-
         if(!is_a($controllerClass, AbstractDashboardController::class, true)) {
             return;
         }
 
-        if (!$isAuthenticated) {
+        if (!$this->sessionManager->isAuthenticated()) {
             $this->redirect($this->config->getLoginRoute());
         }
     }

@@ -15,7 +15,7 @@
 			</div>
 		</div>
 
-		<form action="/subscribe" method="POST" class="site-newsletter__form">
+		<form action="/subscribe" method="POST" class="site-newsletter__form" data-csrf-refresh-url="/subscription/csrf-token">
 			<input type="hidden" name="csrf_token" value="<?= e($params['csrf_token'] ?? '') ?>">
 
 			<div class="site-newsletter__field">
