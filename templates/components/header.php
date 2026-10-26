@@ -51,7 +51,7 @@ $heroSlides = [
 		<div class="hero-section__meta">
 			<p class="hero-section__brand">
 				<span aria-hidden="true"></span>
-				Klub Karate Kyokushin i Sportów Walk
+				Klub Karate Kyokushin i Sportów Walki
 			</p>
 			<p class="hero-section__location">Wejherowo / Reda</p>
 		</div>
