@@ -3,10 +3,15 @@ $pageTitle = 'Lista Subskrybentów';
 $moduleName = 'subscribers';
 $showEditAction = false;
 $data = $params['data'] ?? [];
+$nowUtc = gmdate('Y-m-d H:i:s');
 ?>
 <div class="list-header">
     <h3><?= e($pageTitle) ?></h3>
 </div>
+<p>
+    Raz dziennie przejrzyj listę i usuń niepotwierdzone zapisy oznaczone jako „Link wygasł”.
+    Wygasły link nie usuwa adresu automatycznie. Nie usuwaj z tego powodu aktywnych subskrypcji.
+</p>
 
 <?php if ($data === []): ?>
     <div class="dashboard-table-empty" role="status">
@@ -22,20 +27,28 @@ $data = $params['data'] ?? [];
                 <th>Id</th>
                 <th>Email</th>
                 <th>Status</th>
+                <th>Link ważny do (UTC)</th>
                 <th class="dashboard-table__actions-heading">Opcje</th>
             </tr>
             </thead>
             <tbody>
             <?php foreach ($data as $row): ?>
+                <?php
+                $isActive = $row->isActive === 1;
+                $isExpired = !$isActive && (
+                    $row->confirmationExpiresAt === null || $row->confirmationExpiresAt <= $nowUtc
+                );
+                ?>
                 <tr>
                     <td class="dashboard-table__index"><?= e($row->id) ?></td>
                     <td class="dashboard-table__primary"><?= e($row->email) ?></td>
                     <td>
                         <span class="dashboard-status-badge <?= $row->isActive ? 'published' : 'no-published' ?>">
                             <i class="fa-solid <?= $row->isActive ? 'fa-circle-check' : 'fa-clock' ?>" aria-hidden="true"></i>
-                            <?= $row->isActive ? 'Aktywny' : 'Oczekuje na potwierdzenie' ?>
+                            <?= $isActive ? 'Aktywny' : ($isExpired ? 'Link wygasł — do usunięcia' : 'Oczekuje na potwierdzenie') ?>
                         </span>
                     </td>
+                    <td><?= e($isActive ? 'Nie dotyczy' : ($row->confirmationExpiresAt ?? 'Brak ważnego linku')) ?></td>
                     <?php require "templates/dashboard/_partials/_action_links.php"; ?>
                 </tr>
             <?php endforeach; ?>

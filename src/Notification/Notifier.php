@@ -112,7 +112,7 @@ readonly class Notifier
      */
     public function sendConfirmationEmail(string $email, string $token): void
     {
-        $subject = "Potwierdź zapis do aktualności - Karate Kyokushin";
+        $subject = "Potwierdź powiadomienia o zmianach grafiku - Karate Kyokushin";
         $baseUrl = rtrim($this->appUrl, '/');
         $confirmUrl = "$baseUrl/confirm-subscription?token=$token";
 

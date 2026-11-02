@@ -36,6 +36,7 @@ return function (RouteCollector $r) {
     $r->get('/skladki', [SiteController::class, 'feesAction']);
     $r->get('/zapisy', [SiteController::class, 'registrationAction']);
     $r->get('/kontakt', [SiteController::class, 'contactAction']);
+    $r->get('/prywatnosc-powiadomien', [SiteController::class, 'subscriptionPrivacyAction']);
     $r->get('/status', [SiteController::class, 'statuteAction']);
     $r->get('/oyama', [SiteController::class, 'oyamaAction']);
     $r->get('/dojo-oath', [SiteController::class, 'dojoOathAction']);

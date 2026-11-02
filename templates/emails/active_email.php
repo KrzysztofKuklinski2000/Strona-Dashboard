@@ -40,6 +40,10 @@
               </p>
 
               <p>Jeśli to nie Ty zapisywałeś się na naszej stronie, zignoruj tę wiadomość.</p>
+              <p style="font-size: 13px;">
+                  Administratorem danych jest <?= htmlspecialchars(\App\Privacy\SubscriptionPrivacy::CONTROLLER_NAME, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>.
+                  <a href="<?= htmlspecialchars($baseUrl . \App\Privacy\SubscriptionPrivacy::PATH, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Informacja o przetwarzaniu danych i Twoich prawach</a>.
+              </p>
               <p style="margin-bottom: 0;">Pozdrawiamy,<br><strong>Klub Karate Kyokushin</strong></p>
             </td>
           </tr>

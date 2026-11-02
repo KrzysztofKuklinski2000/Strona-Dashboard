@@ -17,6 +17,7 @@
 
 		<form action="/subscribe" method="POST" class="site-newsletter__form" data-csrf-refresh-url="/subscription/csrf-token">
 			<input type="hidden" name="csrf_token" value="<?= e($params['csrf_token'] ?? '') ?>">
+			<input type="hidden" name="consent_version" value="<?= e(\App\Privacy\SubscriptionPrivacy::VERSION) ?>">
 
 			<div class="site-newsletter__field">
 				<label class="visually-hidden" for="newsletter-email">Adres e-mail</label>
@@ -28,9 +29,13 @@
 			</div>
 
 			<label class="site-newsletter__consent">
-				<input type="checkbox" name="terms_consent" required>
-				<span>Wyrażam zgodę na otrzymywanie powiadomień o aktualizacjach grafiku.</span>
+				<input type="checkbox" name="terms_consent" value="1" required aria-describedby="newsletter-privacy">
+				<span><?= e(\App\Privacy\SubscriptionPrivacy::CONSENT_TEXT) ?></span>
 			</label>
+			<p class="site-newsletter__privacy" id="newsletter-privacy">
+				Zapis jest dobrowolny. Zgodę możesz cofnąć w każdej chwili linkiem w wiadomości.
+				<a href="<?= e(\App\Privacy\SubscriptionPrivacy::PATH) ?>">Zasady przetwarzania danych i Twoje prawa</a>.
+			</p>
 		</form>
 
 		<img class="site-newsletter__decor" src="/images/decorations/decor-bamboo.png" alt="" aria-hidden="true">
@@ -109,6 +114,7 @@
 	<div class="site-footer-bottom">
 		<p>&copy; <?= date('Y') ?> Klub Karate Kyokushin Wejherowo / Reda. Wszelkie prawa zastrzeżone.</p>
 		<div>
+			<a href="<?= e(\App\Privacy\SubscriptionPrivacy::PATH) ?>">Prywatność powiadomień</a>
 			<a href="/status">Regulamin</a>
 			<a href="/kontakt">Kontakt</a>
 		</div>

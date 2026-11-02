@@ -10,6 +10,7 @@ use App\Exception\NotFoundException;
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
 use App\Notification\Notifier;
+use App\Privacy\SubscriptionPrivacy;
 use App\Repository\Dashboard\SubscriberRepository;
 use App\Security\TokenGeneratorInterface;
 use App\Service\Contracts\SubscriptionServiceInterface;
@@ -103,6 +104,10 @@ class SubscriptionService implements SubscriptionServiceInterface
      */
     public function subscribe(CreateSubscriberDto $data): void
     {
+        if ($data->consentVersion !== SubscriptionPrivacy::VERSION) {
+            throw new ServiceException('Nieprawidłowa wersja zgody na powiadomienia.', 400);
+        }
+
         try {
             // To odczyt bieżącego stanu, nie rezerwacja adresu ani blokada innych żądań.
             $subscriber = $this->subscriberRepository->getSubscriberByEmail($data->email);
@@ -127,6 +132,9 @@ class SubscriptionService implements SubscriptionServiceInterface
                 'confirmation_token_hash' => $tokenHash,
                 'confirmation_expires_at' => $expiresAt->format('Y-m-d H:i:s'),
                 'confirmation_last_sent_at' => $now->format('Y-m-d H:i:s'),
+                'consent_version' => $data->consentVersion,
+                'consent_given_at' => $now->format('Y-m-d H:i:s'),
+                'consent_text' => SubscriptionPrivacy::CONSENT_TEXT,
             ]);
 
             if ($subscriber === null) {
@@ -139,7 +147,12 @@ class SubscriptionService implements SubscriptionServiceInterface
                 }
             }else {
                 // Warunek 5 minut i aktualizacja są w jednym zapytaniu, nie tylko w PHP.
-                $renewed = $this->subscriberRepository->renewPendingSubscription($data->email, $tokenHash);
+                $renewed = $this->subscriberRepository->renewPendingSubscription(
+                    $data->email,
+                    $tokenHash,
+                    $data->consentVersion,
+                    SubscriptionPrivacy::CONSENT_TEXT,
+                );
 
                 if(!$renewed) {
                     // Za wcześnie na wysyłkę albo w międzyczasie zmienił się stan rekordu.

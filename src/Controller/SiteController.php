@@ -121,6 +121,11 @@ class SiteController extends AbstractController
         ]);
     }
 
+    public function subscriptionPrivacyAction(): void
+    {
+        $this->renderer->render(['page' => 'subscription-privacy']);
+    }
+
     public function statuteAction(): void
     {
         $this->renderer->render(['page' => 'statute']);

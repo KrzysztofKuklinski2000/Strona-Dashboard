@@ -8,6 +8,7 @@ use App\Core\ContextController;
 use App\DTO\Dashboard\Subscriber\CreateSubscriberDto;
 use App\Exception\NotFoundException;
 use App\Exception\ServiceException;
+use App\Privacy\SubscriptionPrivacy;
 use App\Service\Contracts\SubscriptionServiceInterface;
 use App\View\PublicPageRenderer;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
@@ -52,14 +53,27 @@ class PublicSubscribersController extends AbstractController
             return;
         }
 
-        if (!$consent) {
-            $this->sessionManager->setFlash('warning', 'Musisz zaakceptować zgodę na przetwarzanie danych.', 'public');
+        if ($consent !== '1') {
+            $this->sessionManager->setFlash('warning', 'Zaznacz zgodę na powiadomienia, jeśli chcesz się zapisać.', 'public');
+            $this->redirect($this->contextController->config->getHomeRoute());
+            return;
+        }
+
+        if ($this->request->getFormParam('consent_version') !== SubscriptionPrivacy::VERSION) {
+            $this->sessionManager->setFlash(
+                'warning',
+                'Formularz zapisu został zaktualizowany. Odśwież stronę, zapoznaj się z informacją o prywatności i zapisz się ponownie.',
+                'public',
+            );
             $this->redirect($this->contextController->config->getHomeRoute());
             return;
         }
 
         try {
-            $dto = CreateSubscriberDto::fromArray(['email' => $email]);
+            $dto = CreateSubscriberDto::fromArray([
+                'email' => $email,
+                'consent_version' => SubscriptionPrivacy::VERSION,
+            ]);
             $this->service->subscribe($dto);
 
             $this->sessionManager->setFlash(

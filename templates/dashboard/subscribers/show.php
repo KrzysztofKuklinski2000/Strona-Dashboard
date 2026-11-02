@@ -40,7 +40,27 @@ $isActive = $data->isActive === 1;
                     <dt>Data potwierdzenia (UTC)</dt>
                     <dd><?= e($data->confirmedAt ?? 'Brak potwierdzenia') ?></dd>
                 </div>
+                <div>
+                    <dt>Wersja zgody i informacji</dt>
+                    <dd><?= e($data->consentVersion ?? 'Brak zapisu wersji — starsza subskrypcja') ?></dd>
+                </div>
+                <div>
+                    <dt>Data wyrażenia zgody (UTC)</dt>
+                    <dd><?= e($data->consentGivenAt ?? 'Brak zapisanej daty') ?></dd>
+                </div>
+                <?php if (!$isActive): ?>
+                    <div>
+                        <dt>Link ważny do (UTC)</dt>
+                        <dd><?= e($data->confirmationExpiresAt ?? 'Brak ważnego linku') ?></dd>
+                    </div>
+                <?php endif; ?>
             </dl>
+            <?php if ($data->consentText !== null): ?>
+                <section class="homepage-post-details__content" aria-labelledby="subscriber-consent">
+                    <h4 id="subscriber-consent">Zapisana treść zgody</h4>
+                    <p><?= e($data->consentText) ?></p>
+                </section>
+            <?php endif; ?>
         </article>
     </div>
 </div>

@@ -54,6 +54,11 @@ final class PublicPageMetadata
             'title' => 'Regulamin klubu',
             'description' => 'Poznaj regulamin klubu Karate Kyokushin w Wejherowie i Redzie: zasady uczestnictwa, obowiązki członków i organizację treningów.',
         ],
+        'subscription-privacy' => [
+            'path' => '/prywatnosc-powiadomien',
+            'title' => 'Prywatność powiadomień',
+            'description' => 'Informacja o przetwarzaniu danych przy zapisie na powiadomienia o zmianach grafiku treningów oraz o możliwości rezygnacji.',
+        ],
         'oyama' => [
             'path' => '/oyama',
             'title' => 'Masutatsu Oyama – twórca Karate Kyokushin',

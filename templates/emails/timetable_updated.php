@@ -50,6 +50,11 @@
                                 Wypisz się tutaj
                             </a>
                         </p>
+                        <p style="margin: 10px 0 0;">
+                            <a href="<?= htmlspecialchars($baseUrl . \App\Privacy\SubscriptionPrivacy::PATH, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" style="color: #911612;">
+                                Prywatność powiadomień
+                            </a>
+                        </p>
                     </td>
                 </tr>
             </table>

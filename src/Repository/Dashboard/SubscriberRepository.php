@@ -152,13 +152,18 @@ class SubscriberRepository extends BaseDashboardRepository
     public function renewPendingSubscription(
         string $email,
         string $tokenHash,
+        string $consentVersion,
+        string $consentText,
     ): bool {
         try {
             $sql = 'UPDATE subscribers
                 SET confirmation_token_hash = :token_hash,
                     confirmation_expires_at =
                         DATE_ADD(UTC_TIMESTAMP(), INTERVAL 24 HOUR),
-                    confirmation_last_sent_at = UTC_TIMESTAMP()
+                    confirmation_last_sent_at = UTC_TIMESTAMP(),
+                    consent_version = :consent_version,
+                    consent_given_at = UTC_TIMESTAMP(),
+                    consent_text = :consent_text
                 WHERE email = :email
                   AND is_active = 0
                   AND (
@@ -170,6 +175,8 @@ class SubscriberRepository extends BaseDashboardRepository
             $stmt = $this->runQuery($sql, [
                 ':email' => $email,
                 ':token_hash' => $tokenHash,
+                ':consent_version' => $consentVersion,
+                ':consent_text' => $consentText,
             ]);
         } catch (RepositoryException $e) {
             throw new RepositoryException(

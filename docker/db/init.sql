@@ -386,7 +386,10 @@ CREATE TABLE `subscribers`
     `confirmation_expires_at`    datetime DEFAULT NULL,
     `confirmation_last_sent_at`  datetime DEFAULT NULL,
     `confirmed_at`               datetime DEFAULT NULL,
-    `unsubscribe_token`          char(64) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL
+    `unsubscribe_token`          char(64) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL,
+    `consent_version`            varchar(32) DEFAULT NULL,
+    `consent_given_at`           datetime DEFAULT NULL,
+    `consent_text`               text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

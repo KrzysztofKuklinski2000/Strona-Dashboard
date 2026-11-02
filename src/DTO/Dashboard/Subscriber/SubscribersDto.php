@@ -17,6 +17,9 @@ readonly class SubscribersDto implements DataTransferObjectInterface
         public ?string $confirmationLastSentAt = null,
         public ?string $confirmedAt = null,
         public ?string $unsubscribeToken = null,
+        public ?string $consentVersion = null,
+        public ?string $consentGivenAt = null,
+        public ?string $consentText = null,
     ) {
     }
 
@@ -36,6 +39,12 @@ readonly class SubscribersDto implements DataTransferObjectInterface
                 ? (string) $data['confirmed_at'] : null,
             unsubscribeToken: isset($data['unsubscribe_token'])
                 ? (string) $data['unsubscribe_token'] : null,
+            consentVersion: isset($data['consent_version'])
+                ? (string) $data['consent_version'] : null,
+            consentGivenAt: isset($data['consent_given_at'])
+                ? (string) $data['consent_given_at'] : null,
+            consentText: isset($data['consent_text'])
+                ? (string) $data['consent_text'] : null,
         );
     }
 
@@ -50,6 +59,9 @@ readonly class SubscribersDto implements DataTransferObjectInterface
             'confirmation_last_sent_at' => $this->confirmationLastSentAt,
             'confirmed_at' => $this->confirmedAt,
             'unsubscribe_token' => $this->unsubscribeToken,
+            'consent_version' => $this->consentVersion,
+            'consent_given_at' => $this->consentGivenAt,
+            'consent_text' => $this->consentText,
         ];
     }
 }
