@@ -1,6 +1,4 @@
 <?php
-$createdTimestamp = strtotime((string) ($feedPost->created ?? ''));
-$createdDate = $createdTimestamp ? date('d.m.Y', $createdTimestamp) : '';
 $payload = json_decode((string) ($feedPost->payload ?? ''), true);
 $payload = is_array($payload) ? $payload : [];
 $image = $payload['image'] ?? [];
@@ -53,12 +51,6 @@ if ($imageAlt === '') {
         <?php endif ?>
 
         <div class="module-feed-news-card__body">
-            <?php if ($createdDate !== ''): ?>
-                <time datetime="<?= e(date('Y-m-d', $createdTimestamp)) ?>">
-                    <?= e($createdDate) ?>
-                </time>
-            <?php endif ?>
-
             <h3><?= e($feedPost->title ?? '') ?></h3>
             <span class="module-feed-news-card__read-more">
                 Czytaj

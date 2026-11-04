@@ -1,7 +1,4 @@
 <?php
-$createdTimestamp = strtotime((string) ($content->created ?? ''));
-$createdDate = $createdTimestamp ? date('d.m.Y', $createdTimestamp) : '';
-$createdDateTime = $createdTimestamp ? date('Y-m-d', $createdTimestamp) : '';
 $fundingSource = $payload['funding_source'] ?? '';
 $amount = $payload['amount'] ?? '';
 $description = $payload['description'] ?? '';
@@ -22,10 +19,6 @@ $description = $payload['description'] ?? '';
     <div class="news-card__content news-funding-card__content">
         <div class="news-funding-card__heading">
             <span class="news-funding-card__eyebrow">Dofinansowanie</span>
-
-            <?php if ($createdDate !== ''): ?>
-                <time datetime="<?= e($createdDateTime) ?>"><?= e($createdDate) ?></time>
-            <?php endif ?>
         </div>
 
         <h3><?= e($content->title ?? '') ?></h3>

@@ -1,7 +1,4 @@
 <?php
-$createdTimestamp = strtotime((string) ($content->created ?? ''));
-$createdDate = $createdTimestamp ? date('d.m.Y', $createdTimestamp) : '';
-$createdDateTime = $createdTimestamp ? date('Y-m-d', $createdTimestamp) : '';
 $description = $payload['description'] ?? '';
 $image = $payload['image'] ?? [];
 $imageSrc = $image['src'] ?? '';
@@ -24,10 +21,6 @@ if ($imageAlt === '') {
     <?php endif ?>
 
     <div class="news-card__content">
-        <?php if ($createdDate): ?>
-            <time datetime="<?= e($createdDateTime) ?>"><?= e($createdDate) ?></time>
-        <?php endif ?>
-
         <h3><?= e($content->title) ?></h3>
         <p><?= e_br($description) ?></p>
 
