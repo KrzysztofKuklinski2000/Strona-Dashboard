@@ -7,6 +7,7 @@ declare(strict_types=1);
 return [
     'paths' => [
         '/index.php' => '/',
+        '/index.php/home' => '/',
         '/index.php/aktualnoci' => '/aktualnosci',
         '/index.php/aktualnoci/15-aktualnoci' => '/aktualnosci',
         '/index.php/kontakt-z-nami' => '/kontakt',

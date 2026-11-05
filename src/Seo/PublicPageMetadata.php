@@ -11,7 +11,7 @@ final class PublicPageMetadata
     private const PAGES = [
         'homepage' => [
             'path' => '/',
-            'title' => 'Karate Kyokushin Wejherowo i Reda – treningi dla dzieci i dorosłych',
+            'title' => 'Klub Karate Kyokushin i Sportów Walki - Reda i Wejherowo',
             'description' => 'Trenuj Karate Kyokushin w Wejherowie i Redzie. Zajęcia dla dzieci, młodzieży i dorosłych. Sprawdź grafik i przyjdź na bezpłatny pierwszy trening.',
         ],
         'news' => [

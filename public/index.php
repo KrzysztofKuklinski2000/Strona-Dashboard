@@ -13,6 +13,7 @@ use App\Core\Request;
 use App\Core\Router;
 use App\Core\SessionManager;
 use App\Core\Validator;
+use App\DTO\Auth\UserDto;
 use App\Exception\NotFoundException;
 use App\Middleware\AuthMiddleware;
 use App\Middleware\CsrfMiddleware;
@@ -135,7 +136,11 @@ try {
         $pageViewRepository = new PageViewRepository($pdo);
         $pageViewTracker = new PageViewTracker($pageViewRepository);
 
-        $pageViewTracker->track($request);
+        $pageViewTracker->track(
+            $request,
+            responseStatus: http_response_code() ?: 200,
+            isAdministrator: $sessionManager->get('user') instanceof UserDto,
+        );
     }
 
 } catch (InvalidCsrfTokenException) {
