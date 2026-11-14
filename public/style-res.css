@@ -856,14 +856,7 @@
 	}
 
 	.gallery-grid {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 22px;
-	}
-
-	.gallery-card--featured {
-		grid-column: 1 / -1;
-		min-height: 430px;
-		aspect-ratio: 16 / 9;
+		column-count: 2;
 	}
 
 	.newsletter-box {
@@ -1101,19 +1094,7 @@
 	}
 
 	.gallery-grid {
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		grid-auto-rows: 260px;
-	}
-
-	.gallery-card {
-		min-height: 0;
-		aspect-ratio: auto;
-	}
-
-	.gallery-card--featured {
-		grid-column: span 2;
-		grid-row: span 2;
-		min-height: 0;
+		column-count: 3;
 	}
 
 	.nav-container-full-screen.site-desktop-nav {

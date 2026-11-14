@@ -143,7 +143,7 @@ $countContext = $selectedCategoryNames === [] ? 'w galerii' : 'dla wybranych kat
 
         <?php if ($galleryItems): ?>
             <div class="gallery-grid">
-                <?php foreach ($galleryItems as $index => $item): ?>
+                <?php foreach ($galleryItems as $item): ?>
                     <?php
                         $categoryNames = $item->categoryNames !== []
                                 ? $item->categoryNames
@@ -153,10 +153,10 @@ $countContext = $selectedCategoryNames === [] ? 'w galerii' : 'dla wybranych kat
                         $imagePath = upload_url((string) $item->imageName);
                     ?>
 
-                    <article class="gallery-card <?= $index === 0 ? 'gallery-card--featured' : '' ?>">
+                    <article class="gallery-card">
                         <img src="<?= e($imagePath) ?>" alt="<?= e($imageDescription) ?>" loading="lazy">
 
-                        <div class="gallery-card__overlay">
+                        <div class="gallery-card__caption">
                             <div class="gallery-card__badges" aria-label="Kategorie zdjęcia">
                                 <?php foreach ($categoryNames as $categoryName): ?>
                                     <?php

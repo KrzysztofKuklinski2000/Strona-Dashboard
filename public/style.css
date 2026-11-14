@@ -7591,54 +7591,44 @@ footer .copy {
 }
 
 .gallery-grid {
-	display: grid;
-	grid-template-columns: minmax(0, 1fr);
-	gap: 18px;
+	column-count: 1;
+	column-gap: 22px;
 	margin-top: 12px;
 }
 
 .gallery-card {
-	position: relative;
+	display: grid;
+	grid-template-areas: 'photo';
 	width: 100%;
 	min-width: 0;
-	min-height: 280px;
-	aspect-ratio: 4 / 3;
-	border: 1px solid var(--color-line);
-	border-radius: var(--radius-card);
-	background: #f9f7f4;
+	margin: 0 0 28px;
+	border-radius: 12px;
+	background: var(--color-charcoal);
 	overflow: hidden;
-	box-shadow: 0 18px 60px rgba(31, 24, 17, .035);
+	break-inside: avoid;
 }
 
 .gallery-card img {
+	grid-area: photo;
+	align-self: start;
 	width: 100%;
-	height: 100%;
-	display: block;
+	height: auto;
+	min-height: clamp(180px, 16vw, 240px);
 	object-fit: cover;
-	transition: transform .45s ease, filter .45s ease;
+	display: block;
 }
 
-.gallery-card:hover img {
-	filter: saturate(1.05) contrast(1.03);
-	transform: scale(1.045);
-}
-
-.gallery-card__overlay {
-	position: absolute;
-	right: 0;
-	bottom: 0;
-	left: 0;
+.gallery-card__caption {
+	grid-area: photo;
+	align-self: end;
+	position: relative;
+	min-width: 0;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
 	gap: 8px;
-	padding: 96px 20px 20px;
-	background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(15, 15, 15, .78));
-	transition: box-shadow .35s ease;
-}
-
-.gallery-card:hover .gallery-card__overlay {
-	box-shadow: inset 0 -130px 100px -80px rgba(0, 0, 0, .22);
+	padding: 48px 20px 20px;
+	background: linear-gradient(180deg, transparent, rgba(0, 0, 0, .68) 45%, rgba(0, 0, 0, .86));
 }
 
 .gallery-card__badges {
@@ -7726,16 +7716,16 @@ footer .copy {
 	color: #334155;
 }
 
-.gallery-card__overlay h3 {
+.gallery-card__caption h3 {
 	max-width: 620px;
 	margin: 0;
 	color: #fff;
-	font-size: clamp(1.05rem, 4vw, 1.42rem);
-	font-weight: 800;
-	letter-spacing: -.035em;
-	line-height: 1.15;
+	font-size: clamp(1rem, 1.35vw, 1.2rem);
+	font-weight: 700;
+	letter-spacing: -.02em;
+	line-height: 1.35;
 	overflow-wrap: break-word;
-	text-shadow: 0 8px 28px rgba(0, 0, 0, .24);
+	text-shadow: 0 1px 4px rgba(0, 0, 0, .35);
 }
 
 .gallery-empty {
