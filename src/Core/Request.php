@@ -13,6 +13,7 @@ class Request
         private readonly array $post,
         private readonly array $server,
         private readonly array $files = [],
+        private readonly array $cookies = [],
     )
     {
     }
@@ -70,5 +71,9 @@ class Request
     public function getRouteParam(string $key, $default = null): mixed
     {
         return $this->routeParams[$key] ?? $default;
+    }
+
+    public function getCookieParam(string $name, mixed $default = null): mixed {
+        return $this->cookies[$name] ?? $default;
     }
 }

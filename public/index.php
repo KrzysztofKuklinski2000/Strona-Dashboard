@@ -63,7 +63,7 @@ if ($isDev) {
 
 
 $errorHandler = new ErrorHandler($isDev, "{$config->getTemplatesPath()}/errors");
-$request = new Request($_GET, $_POST, $_SERVER, $_FILES);
+$request = new Request($_GET, $_POST, $_SERVER, $_FILES, $_COOKIE);
 
 if (!(new SearchIndexing($config))->isAllowed($request)) {
     header('X-Robots-Tag: noindex, nofollow');
