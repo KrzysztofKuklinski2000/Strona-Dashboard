@@ -18,7 +18,9 @@ use App\Exception\NotFoundException;
 use App\Middleware\AuthMiddleware;
 use App\Middleware\CsrfMiddleware;
 use App\Redirects\LegacyRedirector;
+use App\Security\TokenGenerator;
 use App\Seo\SearchIndexing;
+use App\Service\Analytics\VisitorCookieManager;
 use App\View\View;
 use EasyCSRF\EasyCSRF;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
@@ -129,17 +131,21 @@ try {
     if (!method_exists($controller, $action)) {
         throw new Exception("Metoda $action nie istnieje w kontrolerze $controllerClass");
     }
+    $visitorCookieManager = new VisitorCookieManager(new TokenGenerator(), !$isDev);
+    $visitor = $visitorCookieManager->getOrCreate($request, $isDev);
+
     $controller->$action();
 
     if ($controller instanceof SiteController || $controller instanceof PublicNewsController) {
         $pageViewRepository = new PageViewRepository($pdo);
         $pageViewTracker = new PageViewTracker($pageViewRepository);
 
+
         $pageViewTracker->track(
             $request,
             responseStatus: http_response_code() ?: 200,
             isAdministrator: $sessionManager->get('user') instanceof UserDto,
-            visitorId: null,
+            visitorId: $visitor,
         );
     }
 
