@@ -129,7 +129,6 @@ try {
     if (!method_exists($controller, $action)) {
         throw new Exception("Metoda $action nie istnieje w kontrolerze $controllerClass");
     }
-
     $controller->$action();
 
     if ($controller instanceof SiteController || $controller instanceof PublicNewsController) {
@@ -140,6 +139,7 @@ try {
             $request,
             responseStatus: http_response_code() ?: 200,
             isAdministrator: $sessionManager->get('user') instanceof UserDto,
+            visitorId: null,
         );
     }
 

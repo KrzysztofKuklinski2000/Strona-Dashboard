@@ -6,10 +6,12 @@ namespace App\Service\Analytics;
 use App\Core\Request;
 use App\Exception\RepositoryException;
 use App\Repository\Analytics\PageViewRepository;
+use DateTimeImmutable;
+use DateTimeZone;
+use Exception;
 
 class PageViewTracker
 {
-    // Filtr statystyk, nie mechanizm blokowania dostępu do strony.
     private const AUTOMATED_USER_AGENT_PATTERN = '~\b(?:'
         . 'googlebot|googleother|google-inspectiontool|google-site-verification|google-safety'
         . '|adsbot-google|mediapartners-google|feedfetcher-google|apis-google|storebot-google'
@@ -25,17 +27,27 @@ class PageViewTracker
     {
     }
 
+    /**
+     * @throws Exception
+     */
     public function track(
         Request $request,
         int $responseStatus = 200,
         bool $isAdministrator = false,
+        ?string $visitorId = null,
     ): void {
+        if($visitorId === null || preg_match('/\A[a-f0-9]{64}\z/', $visitorId) !== 1) {
+            return;
+        }
+
         if (!$request->isGet()
             || $responseStatus !== 200
             || $isAdministrator
             || $this->isAutomatedRequest($request)) {
             return;
         }
+
+
 
         $requestUri = $request->getServerParam('REQUEST_URI', '');
 
@@ -51,11 +63,22 @@ class PageViewTracker
             return;
         }
 
-        try {
-            $this->repository->record(rtrim($path, '/') ?: '/');
-        } catch (RepositoryException $e) {
-            error_log($e->getMessage());
+        if($path !== '/' && str_ends_with($path, '/')) {
+            $path = substr($path, 0, -1);
         }
+
+        $visitorHash = hash('sha256', $visitorId);
+        $visitDate = (new DateTimeImmutable('now', new DateTimeZone('Europe/Warsaw')))->modify('today');
+
+
+
+        try {
+            $this->repository->recordUniqueVisit($path, $visitDate, $visitorHash);
+        }catch (RepositoryException $e) {
+            error_log('Nie udało się zapisać wyświetlenia');
+        }
+
+
     }
 
     private function isAutomatedRequest(Request $request): bool
