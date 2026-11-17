@@ -1,6 +1,7 @@
 <?php
 
 use App\Controller\AuthController;
+use App\Controller\CookiesConsentController;
 use App\Controller\Dashboard\CampController;
 use App\Controller\Dashboard\GalleryCategoryController;
 use App\Controller\Dashboard\ContactController;
@@ -149,5 +150,6 @@ return function (RouteCollector $r) {
     $r->post('/dashboard/timetable/location/delete/{id:\d+}', [LocationController::class, 'deleteAction']);
     $r->post('/dashboard/timetable/location/published/{id:\d+}', [LocationController::class, 'publishedAction']);
 
+    $r->post('/cookies/consent', [CookiesConsentController::class, 'saveAction']);
 };
 

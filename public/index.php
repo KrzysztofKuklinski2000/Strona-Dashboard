@@ -22,6 +22,7 @@ use App\Redirects\LegacyRedirector;
 use App\Repository\Analytics\UniqueVisitorRepository;
 use App\Security\TokenGenerator;
 use App\Seo\SearchIndexing;
+use App\Service\Analytics\CookieConsentManager;
 use App\Service\Analytics\UniqueVisitorTracker;
 use App\Service\Analytics\VisitorCookieManager;
 use App\View\View;
@@ -136,8 +137,11 @@ try {
     $visitorId = null;
 
     if ($isPublicPage) {
+        $cookiesConsentManager = new CookieConsentManager(!$isDev);
+        $hasAnalyticsConsent = $cookiesConsentManager->getDecision($request) === 'accepted';
+
         $visitorCookieManager = new VisitorCookieManager(new TokenGenerator(), !$isDev);
-        $visitorId = $visitorCookieManager->getOrCreate($request, $isDev);
+        $visitorId = $visitorCookieManager->getOrCreate($request, $hasAnalyticsConsent);
     }
 
     $controller->$action();

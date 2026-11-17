@@ -7,6 +7,7 @@ namespace App\View;
 use App\Core\ContextController;
 use App\Seo\PublicPageMetadata;
 use App\Seo\SearchIndexing;
+use App\Service\Analytics\CookieConsentManager;
 use App\Service\Contracts\ContactProviderInterface;
 
 readonly class PublicPageRenderer
@@ -19,11 +20,17 @@ readonly class PublicPageRenderer
 
     public function render(array $pageSpecificParams): void
     {
+        $cookieConsentManager = new CookieConsentManager();
+
+
         $globalParams = [
             'contact' => $this->contactProvider->getContact(),
             'csrf_token' => $this->context->csrfMiddleware->generateToken(),
             'flash_public' => $this->context->sessionManager->getFlash('public'),
             'base_url' => $this->context->config->getUrl(),
+            'analytics_consent' => $cookieConsentManager->getDecision(
+                $this->context->request
+            ),
         ];
 
         $finalParams = array_merge($globalParams, $pageSpecificParams);

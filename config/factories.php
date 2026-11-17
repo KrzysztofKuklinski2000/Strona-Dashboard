@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use App\Controller\AuthController;
+use App\Controller\CookiesConsentController;
 use App\Controller\Dashboard\CampController;
 use App\Controller\Dashboard\GalleryCategoryController;
 use App\Controller\Dashboard\ContactController;
@@ -19,6 +20,7 @@ use App\Controller\PublicSubscribersController;
 use App\Controller\SeoController;
 use App\Controller\SiteController;
 use App\Factories\ControllerFactories\AuthControllerFactory;
+use App\Factories\ControllerFactories\CookiesConsentControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\CampControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\GalleryCategoryControllerFactory;
 use App\Factories\ControllerFactories\Dashboard\ContactControllerFactory;
@@ -56,4 +58,5 @@ return [
     SeoController::class => SeoControllerFactory::class,
     SiteController::class => SiteControllerFactory::class,
     AuthController::class => AuthControllerFactory::class,
+    CookiesConsentController::class => CookiesConsentControllerFactory::class,
 ];

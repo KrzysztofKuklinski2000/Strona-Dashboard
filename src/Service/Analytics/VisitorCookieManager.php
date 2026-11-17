@@ -46,4 +46,18 @@ class VisitorCookieManager
 
         return $visitorId;
     }
+
+    public function delete(): bool {
+        return setCookie(
+            name: 'visitor_id',
+            value: '',
+            expires_or_options: [
+                'expires' => time() - 3600,
+                'path' => '/',
+                'secure' => $this->secureCookie,
+                'httponly' => true,
+                'samesite' => 'Lax',
+            ]
+        );
+    }
 }
