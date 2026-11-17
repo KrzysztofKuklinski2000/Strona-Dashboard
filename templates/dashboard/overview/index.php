@@ -27,7 +27,7 @@ $highestPathViewCount = $viewsByPath === [] ? 0 : (int) max($viewsByPath);
 
 $statistics = [
     [
-        'label' => 'Wszystkie odsłony',
+        'label' => 'Unikalni odwiedzający',
         'description' => 'Od początku pomiaru',
         'value' => (int) ($pageViews['total']['views'] ?? 0),
         'percentageChange' => $pageViews['total']['percentageChange'] ?? null,
@@ -130,7 +130,7 @@ $contentStatistics = [
             <span>Ruch na stronie</span>
             <h4 id="overview-page-views-heading">Statystyki odwiedzin</h4>
         </div>
-        <p>Dane zarejestrowane na publicznej części strony.</p>
+        <p>Unikalni odwiedzający publiczną część strony.</p>
     </div>
 
     <div class="overview-stats-grid">
@@ -192,16 +192,16 @@ $contentStatistics = [
                 <div class="overview-dashboard__heading overview-chart__heading">
                     <div>
                         <span>Ostatnie 30 dni</span>
-                        <h4 id="overview-chart-title">Odsłony w czasie</h4>
+                        <h4 id="overview-chart-title">Unikalni odwiedzający dziennie</h4>
                     </div>
-                    <p>Dzienna liczba odsłon publicznej części strony.</p>
+                    <p>Każdy odwiedzający jest liczony raz dziennie, niezależnie od liczby odwiedzonych podstron.</p>
                 </div>
 
                 <div class="overview-chart__canvas">
                     <canvas
                             id="overview-views-chart"
                             role="img"
-                            aria-label="Wykres dziennej liczby odsłon z ostatnich 30 dni"
+                            aria-label="Wykres dziennej liczby unikalnych odwiedzających z ostatnich 30 dni"
                     >
                         Twoja przeglądarka nie obsługuje wykresów
                     </canvas>
@@ -213,10 +213,10 @@ $contentStatistics = [
                 <summary class="overview-page-views__summary" data-overview-page-views-toggle>
                     <span class="overview-page-views__heading">
                         <span>Podstrony</span>
-                        <strong>Odsłony według strony</strong>
+                        <strong>Unikalni odwiedzający według strony</strong>
                     </span>
                     <span class="overview-page-views__description">
-                        Wszystkie zarejestrowane adresy, od najczęściej odwiedzanych.
+                        Liczba unikalnych odwiedzających każdy adres od początku pomiaru.
                     </span>
                     <span class="overview-page-views__toggle" aria-hidden="true">
                         <i class="fa-solid fa-chevron-down"></i>
@@ -227,7 +227,7 @@ $contentStatistics = [
                     <?php if ($viewsByPath === []): ?>
                         <div class="overview-page-views__empty">
                             <i class="fa-regular fa-chart-bar" aria-hidden="true"></i>
-                            <p>Brak zarejestrowanych odsłon podstron.</p>
+                            <p>Brak zarejestrowanych odwiedzin podstron.</p>
                         </div>
                     <?php else: ?>
                         <div class="overview-page-views__list">
@@ -255,7 +255,7 @@ $contentStatistics = [
 
                                     <div class="overview-page-view__count">
                                         <strong><?= number_format($count, 0, ',', ' ') ?></strong>
-                                        <span>odsłon</span>
+                                        <span>unikalnych odwiedzających</span>
                                     </div>
                                 </article>
                             <?php endforeach; ?>

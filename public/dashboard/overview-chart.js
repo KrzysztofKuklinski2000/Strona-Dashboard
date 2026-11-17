@@ -25,7 +25,7 @@ function initializeOverviewChart() {
             labels, // labelki na dole wykresu
             datasets: [
                 {
-                    label: 'Odsłony',
+                    label: 'Unikalni odwiedzający',
                     data: viewCounts,
                     borderColor: '#FF3366',
                     backgroundColor: 'rgba(255, 51, 102, 0.12)',
@@ -51,7 +51,7 @@ function initializeOverviewChart() {
                 tooltip: {
                     displayColors: false,
                     callbacks: {
-                        label: (context) => `Liczba odsłon: ${context.parsed.y}`
+                        label: (context) => `Unikalni odwiedzający: ${context.parsed.y}`
                     }
                 }
             },
