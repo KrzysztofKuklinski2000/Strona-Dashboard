@@ -1,16 +1,17 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Service\Analytics;
 
 use App\Core\Request;
 use App\Exception\RepositoryException;
-use App\Repository\Analytics\PageViewRepository;
+use App\Repository\Analytics\UniqueVisitorRepository;
 use DateTimeImmutable;
 use DateTimeZone;
 use Exception;
 
-class PageViewTracker
+class UniqueVisitorTracker
 {
     private const AUTOMATED_USER_AGENT_PATTERN = '~\b(?:'
         . 'googlebot|googleother|google-inspectiontool|google-site-verification|google-safety'
@@ -23,7 +24,7 @@ class PageViewTracker
         . '|curl|wget|python-requests|python-urllib|go-http-client|guzzlehttp|libwww-perl|apache-httpclient'
         . ')\b~i';
 
-    public function __construct(private readonly PageViewRepository $repository)
+    public function __construct(private readonly UniqueVisitorRepository $repository)
     {
     }
 
@@ -36,7 +37,7 @@ class PageViewTracker
         bool $isAdministrator = false,
         ?string $visitorId = null,
     ): void {
-        if($visitorId === null || preg_match('/\A[a-f0-9]{64}\z/', $visitorId) !== 1) {
+        if ($visitorId === null || preg_match('/\A[a-f0-9]{64}\z/', $visitorId) !== 1) {
             return;
         }
 
@@ -46,8 +47,6 @@ class PageViewTracker
             || $this->isAutomatedRequest($request)) {
             return;
         }
-
-
 
         $requestUri = $request->getServerParam('REQUEST_URI', '');
 
@@ -63,22 +62,18 @@ class PageViewTracker
             return;
         }
 
-        if($path !== '/' && str_ends_with($path, '/')) {
+        if ($path !== '/' && str_ends_with($path, '/')) {
             $path = substr($path, 0, -1);
         }
 
         $visitorHash = hash('sha256', $visitorId);
         $visitDate = (new DateTimeImmutable('now', new DateTimeZone('Europe/Warsaw')))->modify('today');
 
-
-
         try {
             $this->repository->recordUniqueVisit($path, $visitDate, $visitorHash);
-        }catch (RepositoryException $e) {
-            error_log('Nie udało się zapisać wyświetlenia');
+        } catch (RepositoryException $e) {
+            error_log('Nie udało się zapisać unikalnej wizyty');
         }
-
-
     }
 
     private function isAutomatedRequest(Request $request): bool

@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-$pageViews = $params['data']['pageViews'] ?? [];
-$viewsByPath = $params['data']['viewsByPath'] ?? [];
-$viewsByDay = $params['data']['viewsByDay'] ?? [];
+$uniqueVisitors = $params['data']['uniqueVisitors'] ?? [];
+$visitorsByPath = $params['data']['visitorsByPath'] ?? [];
+$visitorsByDay = $params['data']['visitorsByDay'] ?? [];
 $contentSummary = $params['data']['contentSummary'] ?? [];
 
 $pageLabels = [
@@ -23,14 +23,14 @@ $pageLabels = [
     '/wymagania-egzaminacyjne' => 'Wymagania egzaminacyjne',
 ];
 
-$highestPathViewCount = $viewsByPath === [] ? 0 : (int) max($viewsByPath);
+$highestPathVisitorCount = $visitorsByPath === [] ? 0 : (int) max($visitorsByPath);
 
 $statistics = [
     [
         'label' => 'Unikalni odwiedzający',
         'description' => 'Od początku pomiaru',
-        'value' => (int) ($pageViews['total']['views'] ?? 0),
-        'percentageChange' => $pageViews['total']['percentageChange'] ?? null,
+        'value' => (int) ($uniqueVisitors['total']['count'] ?? 0),
+        'percentageChange' => $uniqueVisitors['total']['percentageChange'] ?? null,
         'comparisonLabel' => null,
         'icon' => 'fa-solid fa-chart-line',
         'class' => 'overview-stat-card--featured',
@@ -38,8 +38,8 @@ $statistics = [
     [
         'label' => 'Dzisiaj',
         'description' => 'Od północy',
-        'value' => (int) ($pageViews['today']['views'] ?? 0),
-        'percentageChange' => $pageViews['today']['percentageChange'] ?? null,
+        'value' => (int) ($uniqueVisitors['today']['count'] ?? 0),
+        'percentageChange' => $uniqueVisitors['today']['percentageChange'] ?? null,
         'comparisonLabel' => 'Względem wczoraj',
         'icon' => 'fa-solid fa-calendar-day',
         'class' => '',
@@ -47,8 +47,8 @@ $statistics = [
     [
         'label' => 'Ostatnie 7 dni',
         'description' => 'Łącznie z dzisiaj',
-        'value' => (int) ($pageViews['last7Days']['views'] ?? 0),
-        'percentageChange' => $pageViews['last7Days']['percentageChange'] ?? null,
+        'value' => (int) ($uniqueVisitors['last7Days']['count'] ?? 0),
+        'percentageChange' => $uniqueVisitors['last7Days']['percentageChange'] ?? null,
         'comparisonLabel' => 'Względem poprzednich 7 dni',
         'icon' => 'fa-solid fa-calendar-week',
         'class' => '',
@@ -56,8 +56,8 @@ $statistics = [
     [
         'label' => 'Ostatnie 30 dni',
         'description' => 'Łącznie z dzisiaj',
-        'value' => (int) ($pageViews['last30Days']['views'] ?? 0),
-        'percentageChange' => $pageViews['last30Days']['percentageChange'] ?? null,
+        'value' => (int) ($uniqueVisitors['last30Days']['count'] ?? 0),
+        'percentageChange' => $uniqueVisitors['last30Days']['percentageChange'] ?? null,
         'comparisonLabel' => 'Względem poprzednich 30 dni',
         'icon' => 'fa-solid fa-calendar-days',
         'class' => '',
@@ -199,7 +199,7 @@ $contentStatistics = [
 
                 <div class="overview-chart__canvas">
                     <canvas
-                            id="overview-views-chart"
+                            id="overview-visitors-chart"
                             role="img"
                             aria-label="Wykres dziennej liczby unikalnych odwiedzających z ostatnich 30 dni"
                     >
@@ -224,18 +224,18 @@ $contentStatistics = [
                 </summary>
 
                 <div class="overview-page-views__content" data-overview-page-views-content>
-                    <?php if ($viewsByPath === []): ?>
+                    <?php if ($visitorsByPath === []): ?>
                         <div class="overview-page-views__empty">
                             <i class="fa-regular fa-chart-bar" aria-hidden="true"></i>
                             <p>Brak zarejestrowanych odwiedzin podstron.</p>
                         </div>
                     <?php else: ?>
                         <div class="overview-page-views__list">
-                            <?php foreach ($viewsByPath as $path => $count): ?>
+                            <?php foreach ($visitorsByPath as $path => $count): ?>
                                 <?php
                                 $count = (int) $count;
-                                $share = $highestPathViewCount > 0
-                                        ? (int) round(($count / $highestPathViewCount) * 100)
+                                $share = $highestPathVisitorCount > 0
+                                        ? (int) round(($count / $highestPathVisitorCount) * 100)
                                         : 0;
                                 ?>
                                 <article class="overview-page-view">
@@ -319,9 +319,9 @@ $contentStatistics = [
         integrity="sha512-WoViKhKD4qI2WruSZqv9+kvM4WfFhUMQCLN4QlDTt5aU56fLQy2gYoxWIqlEnXqJy/+Ac5q/hk1oWfqnMDhwMA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script type="application/json" id="overview-views-data">
+<script type="application/json" id="overview-visitors-data">
         <?=
-    json_encode($viewsByDay, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT)
+    json_encode($visitorsByDay, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT)
     ?>
 
 </script>

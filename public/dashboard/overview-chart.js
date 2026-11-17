@@ -1,15 +1,14 @@
 function initializeOverviewChart() {
-    const chartCanvas = document.querySelector('#overview-views-chart');
-    const chartDataElement = document.querySelector('#overview-views-data');
-
+    const chartCanvas = document.querySelector('#overview-visitors-chart');
+    const chartDataElement = document.querySelector('#overview-visitors-data');
 
     if (!chartCanvas || !chartDataElement || typeof Chart === "undefined") {
         return;
     }
 
-    const viewsByDay = JSON.parse(chartDataElement.textContent);
+    const visitorsByDay = JSON.parse(chartDataElement.textContent);
     //przechodzimy po każdym kluczu (w tym wypadku dacie)
-    const labels = Object.keys(viewsByDay).map((date) => {
+    const labels = Object.keys(visitorsByDay).map((date) => {
         //roździelamy klucz na osobne elementy np. 2026-02-01 => ['2026', '02', '01']
         const dateParts = date.split('-');
 
@@ -17,7 +16,7 @@ function initializeOverviewChart() {
         return `${dateParts[2]}.${dateParts[1]}`;
     });
 
-    const viewCounts = Object.values(viewsByDay);
+    const visitorCounts = Object.values(visitorsByDay);
 
     new Chart(chartCanvas, {
         type: 'line',
@@ -26,7 +25,7 @@ function initializeOverviewChart() {
             datasets: [
                 {
                     label: 'Unikalni odwiedzający',
-                    data: viewCounts,
+                    data: visitorCounts,
                     borderColor: '#FF3366',
                     backgroundColor: 'rgba(255, 51, 102, 0.12)',
                     borderWidth: 2,

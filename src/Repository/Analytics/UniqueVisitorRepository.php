@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Repository\Analytics;
@@ -8,7 +9,7 @@ use App\Repository\AbstractRepository;
 use DateTimeImmutable;
 use PDO;
 
-class PageViewRepository extends AbstractRepository
+class UniqueVisitorRepository extends AbstractRepository
 {
     /**
      * @throws RepositoryException
@@ -17,24 +18,22 @@ class PageViewRepository extends AbstractRepository
         string            $path,
         DateTimeImmutable $visitDate,
         string            $visitorHash
-    ): void
-    {
+    ): void {
         try {
             $this->runQuery(
                 'INSERT INTO visitor_page_days (path, visit_date, visitor_hash)
-                        VALUES (:path, :visit_date, :visitor_hash)
-                        ON DUPLICATE KEY UPDATE visitor_hash = visitor_hash',
+                    VALUES (:path, :visit_date, :visitor_hash)
+                    ON DUPLICATE KEY UPDATE visitor_hash = visitor_hash',
                 [
                     ':path' => $path,
-                    'visit_date' => $visitDate->format('Y-m-d'),
-                    'visitor_hash' => $visitorHash
+                    ':visit_date' => $visitDate->format('Y-m-d'),
+                    ':visitor_hash' => $visitorHash
                 ],
             );
         } catch (RepositoryException $e) {
-            throw new RepositoryException('Nie udało się zapisać odsłony', 500, $e);
+            throw new RepositoryException('Nie udało się zapisać unikalnej wizyty', 500, $e);
         }
     }
-
 
     /**
      * @throws RepositoryException
@@ -44,7 +43,7 @@ class PageViewRepository extends AbstractRepository
         try {
             return (int)$this->runQuery('SELECT COUNT(DISTINCT visitor_hash) FROM visitor_page_days')->fetchColumn();
         } catch (RepositoryException $e) {
-            throw new RepositoryException('Nie udało się pobrać wszystkich odsłon', 500, $e);
+            throw new RepositoryException('Nie udało się pobrać liczby unikalnych odwiedzających', 500, $e);
         }
     }
 
@@ -62,7 +61,7 @@ class PageViewRepository extends AbstractRepository
                 ]
             )->fetchColumn();
         } catch (RepositoryException $e) {
-            throw new RepositoryException('Nie udało się pobrać odsłon z danego przedziału', 500, $e);
+            throw new RepositoryException('Nie udało się pobrać liczby unikalnych odwiedzających z danego przedziału', 500, $e);
         }
     }
 
@@ -73,12 +72,12 @@ class PageViewRepository extends AbstractRepository
     {
         try {
             return $this->runQuery(
-                'SELECT path, COUNT(DISTINCT visitor_hash) AS countRows 
+                'SELECT path, COUNT(DISTINCT visitor_hash) AS countRows
                     FROM visitor_page_days
                     GROUP BY path'
             )->fetchAll(PDO::FETCH_KEY_PAIR);
         } catch (RepositoryException $e) {
-            throw new RepositoryException('Nie udało się pobrać pogrupowanych odsłon', 500, $e);
+            throw new RepositoryException('Nie udało się pobrać liczby unikalnych odwiedzających według strony', 500, $e);
         }
     }
 
@@ -89,8 +88,8 @@ class PageViewRepository extends AbstractRepository
     {
         try {
             return $this->runQuery(
-                'SELECT visit_date, COUNT(DISTINCT visitor_hash) AS countRows 
-                    FROM visitor_page_days 
+                'SELECT visit_date, COUNT(DISTINCT visitor_hash) AS countRows
+                    FROM visitor_page_days
                     WHERE visit_date >= :from AND visit_date < :to
                     GROUP BY visit_date',
                 [
@@ -100,7 +99,7 @@ class PageViewRepository extends AbstractRepository
             )->fetchAll(PDO::FETCH_KEY_PAIR);
         } catch (RepositoryException $e) {
             throw new RepositoryException(
-                'Nie udało się pobrać odsłon pogrupowanych według dnia',
+                'Nie udało się pobrać liczby unikalnych odwiedzających według dnia',
                 500,
                 $e
             );

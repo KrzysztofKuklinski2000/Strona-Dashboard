@@ -1,11 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Service\Dashboard;
 
 use App\Exception\RepositoryException;
 use App\Exception\ServiceException;
-use App\Repository\Analytics\PageViewRepository;
+use App\Repository\Analytics\UniqueVisitorRepository;
 use App\Repository\Dashboard\OverviewRepository;
 use DateTimeImmutable;
 use DateTimeZone;
@@ -14,12 +15,10 @@ use Exception;
 readonly class OverviewService
 {
     public function __construct(
-        private PageViewRepository $pageViewRepository,
-        private OverviewRepository $overviewRepository,
-    )
-    {
+        private UniqueVisitorRepository $uniqueVisitorRepository,
+        private OverviewRepository      $overviewRepository,
+    ) {
     }
-
 
     /**
      * @throws ServiceException
@@ -36,16 +35,15 @@ readonly class OverviewService
         $previous7DaysStart = $last7DaysStart->modify('-7 days');
         $previous30DaysStart = $last30DaysStart->modify('-30 days');
 
-
         try {
-            $allViews = $this->pageViewRepository->countAll();
-            $todayViews = $this->pageViewRepository->countBetween($today, $tomorrow);
-            $last7DaysViews = $this->pageViewRepository->countBetween($last7DaysStart, $tomorrow);
-            $last30DaysViews = $this->pageViewRepository->countBetween($last30DaysStart, $tomorrow);
+            $allVisitors = $this->uniqueVisitorRepository->countAll();
+            $todayVisitors = $this->uniqueVisitorRepository->countBetween($today, $tomorrow);
+            $last7DaysVisitors = $this->uniqueVisitorRepository->countBetween($last7DaysStart, $tomorrow);
+            $last30DaysVisitors = $this->uniqueVisitorRepository->countBetween($last30DaysStart, $tomorrow);
 
-            $yesterdayViews = $this->pageViewRepository->countBetween($yesterday, $today);
-            $previous7DaysViews = $this->pageViewRepository->countBetween($previous7DaysStart, $last7DaysStart);
-            $previous30DaysViews = $this->pageViewRepository->countBetween($previous30DaysStart, $last30DaysStart);
+            $yesterdayVisitors = $this->uniqueVisitorRepository->countBetween($yesterday, $today);
+            $previous7DaysVisitors = $this->uniqueVisitorRepository->countBetween($previous7DaysStart, $last7DaysStart);
+            $previous30DaysVisitors = $this->uniqueVisitorRepository->countBetween($previous30DaysStart, $last30DaysStart);
 
             $contentSummary = $this->overviewRepository->getContentSummary();
 
@@ -54,26 +52,26 @@ readonly class OverviewService
         }
 
         return [
-            'pageViews' => [
+            'uniqueVisitors' => [
                 'total' => [
-                    'views' => $allViews,
+                    'count' => $allVisitors,
                     'percentageChange' => null,
                 ],
                 'today' => [
-                    'views' => $todayViews,
-                    'percentageChange' => $this->calculatePercentageChange($todayViews, $yesterdayViews),
+                    'count' => $todayVisitors,
+                    'percentageChange' => $this->calculatePercentageChange($todayVisitors, $yesterdayVisitors),
                 ],
                 'last7Days' => [
-                    'views' => $last7DaysViews,
-                    'percentageChange' => $this->calculatePercentageChange($last7DaysViews, $previous7DaysViews),
+                    'count' => $last7DaysVisitors,
+                    'percentageChange' => $this->calculatePercentageChange($last7DaysVisitors, $previous7DaysVisitors),
                 ],
                 'last30Days' => [
-                    'views' => $last30DaysViews,
-                    'percentageChange' => $this->calculatePercentageChange($last30DaysViews, $previous30DaysViews),
+                    'count' => $last30DaysVisitors,
+                    'percentageChange' => $this->calculatePercentageChange($last30DaysVisitors, $previous30DaysVisitors),
                 ],
             ],
-            'viewsByPath' => $this->getViewsGroupedByPath(),
-            'viewsByDay' => $this->getViewsGroupedByDay($last30DaysStart, $tomorrow),
+            'visitorsByPath' => $this->getVisitorsGroupedByPath(),
+            'visitorsByDay' => $this->getVisitorsGroupedByDay($last30DaysStart, $tomorrow),
             'contentSummary' => $this->groupContentSummary($contentSummary),
         ];
     }
@@ -81,19 +79,19 @@ readonly class OverviewService
     /**
      * @throws ServiceException
      */
-    private function getViewsGroupedByPath(): array
+    private function getVisitorsGroupedByPath(): array
     {
         try {
-            $groupedViewsByPath = $this->pageViewRepository->countGroupedByPath();
-            $normalizedViews = [];
+            $groupedVisitorsByPath = $this->uniqueVisitorRepository->countGroupedByPath();
+            $visitorsByPath = [];
 
-            foreach ($groupedViewsByPath as $path => $count) {
-                $normalizedViews[$path] = (int) $count;
+            foreach ($groupedVisitorsByPath as $path => $count) {
+                $visitorsByPath[$path] = (int) $count;
             }
 
-            arsort($normalizedViews);
+            arsort($visitorsByPath);
 
-            return $normalizedViews;
+            return $visitorsByPath;
         } catch (RepositoryException $e) {
             throw new ServiceException('Nie udało się pobrać statystyk', 500, $e);
         }
@@ -102,17 +100,17 @@ readonly class OverviewService
     /**
      * @throws ServiceException
      */
-    private function getViewsGroupedByDay(DateTimeImmutable $from, DateTimeImmutable $to): array
+    private function getVisitorsGroupedByDay(DateTimeImmutable $from, DateTimeImmutable $to): array
     {
         try {
-            $viewsFromDatabase = $this->pageViewRepository->countGroupedByDay($from, $to);
+            $visitorsFromDatabase = $this->uniqueVisitorRepository->countGroupedByDay($from, $to);
 
             $result = [];
 
             while ($from < $to) {
                 $date = $from->format('Y-m-d');
 
-                $result[$date] = (int)($viewsFromDatabase[$date] ?? 0);
+                $result[$date] = (int)($visitorsFromDatabase[$date] ?? 0);
 
                 $from = $from->modify('+1 day');
             }
@@ -146,42 +144,48 @@ readonly class OverviewService
                 'total' => $contentSummary['totalNews'],
                 'published' => $contentSummary['publishedNews'],
                 'percentage' => $this->calculateSharePercentage(
-                    $contentSummary['publishedNews'], $contentSummary['totalNews']
+                    $contentSummary['publishedNews'],
+                    $contentSummary['totalNews']
                 ),
             ],
             'homepagePosts' => [
                 'total' => $contentSummary['totalHomepagePosts'],
                 'published' => $contentSummary['publishedHomepagePosts'],
                 'percentage' => $this->calculateSharePercentage(
-                    $contentSummary['publishedHomepagePosts'], $contentSummary['totalHomepagePosts']
+                    $contentSummary['publishedHomepagePosts'],
+                    $contentSummary['totalHomepagePosts']
                 ),
             ],
             'gallery' => [
                 'total' => $contentSummary['totalGallery'],
                 'published' => $contentSummary['publishedGallery'],
                 'percentage' => $this->calculateSharePercentage(
-                    $contentSummary['publishedGallery'], $contentSummary['totalGallery']
+                    $contentSummary['publishedGallery'],
+                    $contentSummary['totalGallery']
                 ),
             ],
             'importantPosts' => [
                 'total' => $contentSummary['totalImportantPosts'],
                 'published' => $contentSummary['publishedImportantPosts'],
                 'percentage' => $this->calculateSharePercentage(
-                    $contentSummary['publishedImportantPosts'], $contentSummary['totalImportantPosts']
+                    $contentSummary['publishedImportantPosts'],
+                    $contentSummary['totalImportantPosts']
                 ),
             ],
             'timetable' => [
                 'total' => $contentSummary['totalTimetable'],
                 'published' => $contentSummary['publishedTimetable'],
                 'percentage' => $this->calculateSharePercentage(
-                    $contentSummary['publishedTimetable'], $contentSummary['totalTimetable']
+                    $contentSummary['publishedTimetable'],
+                    $contentSummary['totalTimetable']
                 ),
             ],
             'subscribers' => [
                 'total' => $contentSummary['totalSubscribers'],
                 'active' => $contentSummary['activeSubscribers'],
                 'percentage' => $this->calculateSharePercentage(
-                    $contentSummary['activeSubscribers'], $contentSummary['totalSubscribers']
+                    $contentSummary['activeSubscribers'],
+                    $contentSummary['totalSubscribers']
                 ),
             ]
         ];

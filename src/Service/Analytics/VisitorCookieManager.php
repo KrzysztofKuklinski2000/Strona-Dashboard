@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Analytics;
 
 use App\Core\Request;
@@ -10,10 +12,8 @@ class VisitorCookieManager
     public function __construct(
         private TokenGeneratorInterface $tokenGenerator,
         private bool                    $secureCookie = true,
-    )
-    {
+    ) {
     }
-
 
     public function getOrCreate(Request $request, bool $hasAnalyticsConsent): ?string
     {
@@ -21,16 +21,16 @@ class VisitorCookieManager
             return null;
         }
 
-        $visitor = $request->getCookieParam('visitor_id');
-        if (is_string($visitor) && preg_match('/\A[a-f0-9]{64}\z/', $visitor) === 1) {
-            return $visitor;
+        $visitorId = $request->getCookieParam('visitor_id');
+        if (is_string($visitorId) && preg_match('/\A[a-f0-9]{64}\z/', $visitorId) === 1) {
+            return $visitorId;
         }
 
-        $visitor = $this->tokenGenerator->generate();
+        $visitorId = $this->tokenGenerator->generate();
 
         $cookieSet = setCookie(
             name: 'visitor_id',
-            value: $visitor,
+            value: $visitorId,
             expires_or_options: [
                 'expires' => time() + (86400 * 365),
                 'path' => '/',
@@ -40,10 +40,10 @@ class VisitorCookieManager
             ]
         );
 
-        if($cookieSet === false) {
+        if ($cookieSet === false) {
             return null;
         }
 
-        return $visitor;
+        return $visitorId;
     }
 }

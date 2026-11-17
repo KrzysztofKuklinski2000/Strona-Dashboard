@@ -5,6 +5,7 @@ use App\Controller\AuthController;
 use App\Controller\Dashboard\AbstractDashboardController;
 use App\Controller\PublicNewsController;
 use App\Controller\PublicSubscribersController;
+use App\Controller\SiteController;
 use App\Core\Config;
 use App\Core\ContextController;
 use App\Core\Database;
@@ -18,16 +19,15 @@ use App\Exception\NotFoundException;
 use App\Middleware\AuthMiddleware;
 use App\Middleware\CsrfMiddleware;
 use App\Redirects\LegacyRedirector;
+use App\Repository\Analytics\UniqueVisitorRepository;
 use App\Security\TokenGenerator;
 use App\Seo\SearchIndexing;
+use App\Service\Analytics\UniqueVisitorTracker;
 use App\Service\Analytics\VisitorCookieManager;
 use App\View\View;
 use EasyCSRF\EasyCSRF;
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 use EasyCSRF\NativeSessionProvider;
-use App\Controller\SiteController;
-use App\Repository\Analytics\PageViewRepository;
-use App\Service\Analytics\PageViewTracker;
 use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\Dotenv\Exception\ExceptionInterface as DotenvException;
 
@@ -131,21 +131,26 @@ try {
     if (!method_exists($controller, $action)) {
         throw new Exception("Metoda $action nie istnieje w kontrolerze $controllerClass");
     }
-    $visitorCookieManager = new VisitorCookieManager(new TokenGenerator(), !$isDev);
-    $visitor = $visitorCookieManager->getOrCreate($request, $isDev);
+
+    $isPublicPage = $controller instanceof SiteController || $controller instanceof PublicNewsController;
+    $visitorId = null;
+
+    if ($isPublicPage) {
+        $visitorCookieManager = new VisitorCookieManager(new TokenGenerator(), !$isDev);
+        $visitorId = $visitorCookieManager->getOrCreate($request, $isDev);
+    }
 
     $controller->$action();
 
-    if ($controller instanceof SiteController || $controller instanceof PublicNewsController) {
-        $pageViewRepository = new PageViewRepository($pdo);
-        $pageViewTracker = new PageViewTracker($pageViewRepository);
+    if ($isPublicPage) {
+        $uniqueVisitorRepository = new UniqueVisitorRepository($pdo);
+        $uniqueVisitorTracker = new UniqueVisitorTracker($uniqueVisitorRepository);
 
-
-        $pageViewTracker->track(
+        $uniqueVisitorTracker->track(
             $request,
             responseStatus: http_response_code() ?: 200,
             isAdministrator: $sessionManager->get('user') instanceof UserDto,
-            visitorId: $visitor,
+            visitorId: $visitorId,
         );
     }
 
