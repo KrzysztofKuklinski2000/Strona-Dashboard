@@ -9,10 +9,10 @@
         <h2 id="cookie-consent-title">Ustawienia cookies</h2>
 
         <p>
-            Używamy niezbędnych cookies do działania strony.
-            Za Twoją zgodą dodatkowe cookie pozwoli nam rozpoznawać
-            powracającą przeglądarkę i mierzyć statystyki odwiedzin.
-            Ustawienia możesz zmienić w każdej chwili w stopce.
+            Niezbędne cookies zapewniają działanie strony.
+            Wybierz, czy akceptujesz dodatkowe cookies do statystyk odwiedzin
+            i rozpoznawania powracającej przeglądarki.
+            Decyzję możesz zmienić w każdej chwili w ustawieniach w stopce.
         </p>
     </div>
 
@@ -29,12 +29,12 @@
         >
 
         <div class="cookie-consent__actions">
-            <button type="submit" name="analytics_consent" value="rejected">
-                Tylko niezbędne
+            <button type="submit" name="analytics_consent" value="accepted">
+                Akceptuję
             </button>
 
-            <button type="submit" name="analytics_consent" value="accepted">
-                Zezwól na statystyki
+            <button type="submit" name="analytics_consent" value="rejected">
+                Odrzucam
             </button>
         </div>
 

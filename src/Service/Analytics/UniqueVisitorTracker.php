@@ -37,10 +37,6 @@ class UniqueVisitorTracker
         bool $isAdministrator = false,
         ?string $visitorId = null,
     ): void {
-        if ($visitorId === null || preg_match('/\A[a-f0-9]{64}\z/', $visitorId) !== 1) {
-            return;
-        }
-
         if (!$request->isGet()
             || $responseStatus !== 200
             || $isAdministrator
@@ -54,10 +50,35 @@ class UniqueVisitorTracker
             return;
         }
 
+        $this->recordVisit($requestUri, $visitorId);
+    }
+
+    public function trackAfterConsent(
+        Request $request,
+        string $path,
+        bool $isAdministrator = false,
+        ?string $visitorId = null,
+    ): void {
+        if (!$request->isPost()
+            || $isAdministrator
+            || $this->isAutomatedRequest($request, allowFetch: true)) {
+            return;
+        }
+
+        $this->recordVisit($path, $visitorId);
+    }
+
+    private function recordVisit(string $requestUri, ?string $visitorId): void
+    {
+        if ($visitorId === null || preg_match('/\A[a-f0-9]{64}\z/', $visitorId) !== 1) {
+            return;
+        }
+
         $path = parse_url($requestUri, PHP_URL_PATH);
 
         if (!is_string($path)
-            || !str_starts_with($path, '/')
+            || !str_starts_with($requestUri, '/')
+            || str_starts_with($requestUri, '//')
             || strlen($path) > 255) {
             return;
         }
@@ -76,7 +97,7 @@ class UniqueVisitorTracker
         }
     }
 
-    private function isAutomatedRequest(Request $request): bool
+    private function isAutomatedRequest(Request $request, bool $allowFetch = false): bool
     {
         $userAgent = $request->getServerParam('HTTP_USER_AGENT', '');
 
@@ -87,8 +108,10 @@ class UniqueVisitorTracker
         }
 
         $destination = $request->getServerParam('HTTP_SEC_FETCH_DEST', '');
+        $allowedDestinations = $allowFetch ? ['document', 'empty'] : ['document'];
 
-        if (is_string($destination) && $destination !== '' && strtolower($destination) !== 'document') {
+        if (is_string($destination) && $destination !== ''
+            && !in_array(strtolower($destination), $allowedDestinations, true)) {
             return true;
         }
 

@@ -64,6 +64,11 @@
 
         const body = new FormData(form);
         body.set('analytics_consent', decision);
+
+        if (decision === 'accepted') {
+            body.set('page_path', window.location.pathname);
+        }
+
         const controller = new AbortController();
         const timeout = window.setTimeout(() => controller.abort(), 15000);
 
