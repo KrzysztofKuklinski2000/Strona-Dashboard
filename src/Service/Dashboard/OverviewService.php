@@ -8,6 +8,8 @@ use App\Exception\ServiceException;
 use App\Repository\Analytics\PageViewRepository;
 use App\Repository\Dashboard\OverviewRepository;
 use DateTimeImmutable;
+use DateTimeZone;
+use Exception;
 
 readonly class OverviewService
 {
@@ -21,10 +23,11 @@ readonly class OverviewService
 
     /**
      * @throws ServiceException
+     * @throws Exception
      */
     public function getOverviewData(): array
     {
-        $today = new DateTimeImmutable('today');
+        $today = new DateTimeImmutable('today', new DateTimeZone('Europe/Warsaw'));
         $tomorrow = $today->modify('+1 day');
         $last7DaysStart = $today->modify('-6 days');
         $last30DaysStart = $today->modify('-29 days');
@@ -85,14 +88,7 @@ readonly class OverviewService
             $normalizedViews = [];
 
             foreach ($groupedViewsByPath as $path => $count) {
-                $path = preg_replace(
-                    '#^/aktualnosci/\d+/?$#',
-                    '/aktualnosci',
-                    $path
-                );
-
-                $normalizedViews[$path] =
-                    ($normalizedViews[$path] ?? 0) + (int)$count;
+                $normalizedViews[$path] = (int) $count;
             }
 
             arsort($normalizedViews);

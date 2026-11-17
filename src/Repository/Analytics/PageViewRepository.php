@@ -42,7 +42,7 @@ class PageViewRepository extends AbstractRepository
     public function countAll(): int
     {
         try {
-            return (int)$this->runQuery('SELECT COUNT(*) FROM page_views')->fetchColumn();
+            return (int)$this->runQuery('SELECT COUNT(DISTINCT visitor_hash) FROM visitor_page_days')->fetchColumn();
         } catch (RepositoryException $e) {
             throw new RepositoryException('Nie udało się pobrać wszystkich odsłon', 500, $e);
         }
@@ -55,10 +55,10 @@ class PageViewRepository extends AbstractRepository
     {
         try {
             return (int)$this->runQuery(
-                'SELECT COUNT(*) FROM page_views WHERE viewed_at >= :from AND viewed_at < :to',
+                'SELECT COUNT(DISTINCT visitor_hash) FROM visitor_page_days WHERE visit_date >= :from AND visit_date < :to',
                 [
-                    ':from' => $from->format('Y-m-d H:i:s'),
-                    ':to' => $to->format('Y-m-d H:i:s')
+                    ':from' => $from->format('Y-m-d'),
+                    ':to' => $to->format('Y-m-d')
                 ]
             )->fetchColumn();
         } catch (RepositoryException $e) {
@@ -73,8 +73,8 @@ class PageViewRepository extends AbstractRepository
     {
         try {
             return $this->runQuery(
-                'SELECT path, COUNT(*) AS countRows 
-                    FROM page_views
+                'SELECT path, COUNT(DISTINCT visitor_hash) AS countRows 
+                    FROM visitor_page_days
                     GROUP BY path'
             )->fetchAll(PDO::FETCH_KEY_PAIR);
         } catch (RepositoryException $e) {
@@ -89,10 +89,10 @@ class PageViewRepository extends AbstractRepository
     {
         try {
             return $this->runQuery(
-                'SELECT DATE(viewed_at) AS viewedDay, COUNT(*) AS countRows 
-                    FROM page_views 
-                    WHERE viewed_at >= :from AND viewed_at < :to
-                    GROUP BY DATE(viewed_at)',
+                'SELECT visit_date, COUNT(DISTINCT visitor_hash) AS countRows 
+                    FROM visitor_page_days 
+                    WHERE visit_date >= :from AND visit_date < :to
+                    GROUP BY visit_date',
                 [
                     ':from' => $from->format('Y-m-d'),
                     ':to' => $to->format('Y-m-d')
