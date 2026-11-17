@@ -114,7 +114,7 @@
 	<div class="site-footer-bottom">
 		<p>&copy; <?= date('Y') ?> Klub Karate Kyokushin Wejherowo / Reda. Wszelkie prawa zastrzeżone.</p>
 		<div>
-			<a href="<?= e(\App\Privacy\SubscriptionPrivacy::PATH) ?>">Prywatność powiadomień</a>
+			<a href="<?= e(\App\Privacy\SubscriptionPrivacy::PATH) ?>">Prywatność i cookies</a>
 			<a href="/status">Regulamin</a>
 			<a href="/kontakt">Kontakt</a>
             <button type="button" data-cookie-settings aria-controls="cookie-consent">

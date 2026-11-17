@@ -13,6 +13,7 @@
             Wybierz, czy akceptujesz dodatkowe cookies do statystyk odwiedzin
             i rozpoznawania powracającej przeglądarki.
             Decyzję możesz zmienić w każdej chwili w ustawieniach w stopce.
+            <a href="<?= e(\App\Privacy\SubscriptionPrivacy::PATH . '#privacy-cookies') ?>">Więcej o cookies i prywatności</a>.
         </p>
     </div>
 

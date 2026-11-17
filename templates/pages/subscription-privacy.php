@@ -2,11 +2,12 @@
 use App\Privacy\SubscriptionPrivacy;
 ?>
 <article class="subscription-privacy" aria-labelledby="privacy-scope-title">
-    <p class="subscription-privacy__version">Wersja informacji: <?= e(SubscriptionPrivacy::VERSION) ?></p>
+    <p class="subscription-privacy__version">Wersja zgody na powiadomienia: <?= e(SubscriptionPrivacy::VERSION) ?></p>
 
-    <h2 id="privacy-scope-title">Informacja dla osób zapisujących się na powiadomienia</h2>
+    <h2 id="privacy-scope-title">Powiadomienia, pliki cookies i statystyki odwiedzin</h2>
     <p>
-        Ta informacja dotyczy formularza powiadomień o zmianach grafiku treningów.
+        Ta informacja dotyczy formularza powiadomień o zmianach grafiku treningów
+        oraz własnych plików cookies i statystyk odwiedzin naszej strony.
         Zapis jest dobrowolny i nie jest warunkiem uczestnictwa w zajęciach.
         Nie wykorzystujemy tej listy do wysyłania reklam ani ofert.
     </p>
@@ -23,7 +24,7 @@ use App\Privacy\SubscriptionPrivacy;
     </section>
 
     <section aria-labelledby="privacy-purpose">
-        <h2 id="privacy-purpose">Jakie dane zbieramy i w jakim celu?</h2>
+        <h2 id="privacy-purpose">Jakie dane wykorzystujemy do powiadomień?</h2>
         <p>
             Korzystamy z podanego adresu e-mail, aby wysłać prośbę o potwierdzenie zapisu,
             a po potwierdzeniu — powiadomienia o zmianach grafiku. Podstawą przetwarzania
@@ -44,7 +45,7 @@ use App\Privacy\SubscriptionPrivacy;
     </section>
 
     <section aria-labelledby="privacy-retention">
-        <h2 id="privacy-retention">Jak długo przechowujemy dane?</h2>
+        <h2 id="privacy-retention">Jak długo przechowujemy dane powiadomień?</h2>
         <ul>
             <li>
                 <strong>Przed potwierdzeniem:</strong> link jest ważny 24 godziny.
@@ -85,7 +86,7 @@ use App\Privacy\SubscriptionPrivacy;
     <section aria-labelledby="privacy-recipients">
         <h2 id="privacy-recipients">Kto może mieć dostęp do danych?</h2>
         <p>
-            Dostęp mają osoby upoważnione do obsługi powiadomień oraz dostawcy
+            Dostęp mają osoby upoważnione do obsługi strony i powiadomień oraz dostawcy
             usług technicznych w niezbędnym zakresie. Hosting, bazę danych
             i wysyłkę poczty zapewnia MyDevil.net — ADMIN.NET.PL Tomasz Rzepka
             Arkadiusz Nowara S.C. Nie publikujemy listy subskrybentów.
@@ -125,5 +126,82 @@ use App\Privacy\SubscriptionPrivacy;
         <h2 id="privacy-consent">Treść zgody w tej wersji formularza</h2>
         <p><?= e(SubscriptionPrivacy::CONSENT_TEXT) ?></p>
         <p>Przed zapisem możesz zapoznać się z tą informacją bez zaznaczania zgody.</p>
+    </section>
+
+    <section id="privacy-cookies" aria-labelledby="privacy-cookies-title">
+        <h2 id="privacy-cookies-title">Jakich własnych plików cookies używamy?</h2>
+        <p>
+            Cookies to niewielkie informacje zapisywane przez przeglądarkę.
+            Rozróżniamy pliki potrzebne do działania strony i dobrowolne cookies statystyczne.
+        </p>
+        <ul>
+            <li>
+                <strong>Cookie sesji:</strong> służy m.in. do zabezpieczenia formularzy,
+                obsługi komunikatów i logowania do panelu. Jest plikiem sesyjnym,
+                bez ustawionego przez aplikację trwałego terminu ważności.
+                Nie jest identyfikatorem naszego licznika statystyk.
+            </li>
+            <li>
+                <strong>analytics_consent:</strong> zapamiętuje akceptację albo odmowę
+                cookies statystycznych przez 365 dni od ostatniego zapisu decyzji.
+                Nie służy do liczenia odwiedzin. Dzięki niemu nie pytamy o wybór
+                przy każdym otwarciu strony.
+            </li>
+            <li>
+                <strong>visitor_id:</strong> zawiera losowy identyfikator przeglądarki
+                używany wyłącznie do statystyk. Powstaje dopiero po akceptacji,
+                ma ważność do 365 dni od utworzenia i jest usuwany przy odmowie
+                lub wycofaniu zgody. Nie zawiera imienia, nazwiska ani adresu e-mail.
+            </li>
+        </ul>
+    </section>
+
+    <section aria-labelledby="privacy-analytics">
+        <h2 id="privacy-analytics">Jak działają statystyki odwiedzin?</h2>
+        <p>
+            Po wybraniu „Akceptuję” mierzymy odwiedziny, zaczynając od aktualnie otwartej
+            strony. Celem jest poznanie liczby odwiedzających i popularności podstron.
+            Podstawą przetwarzania danych do tego pomiaru jest Twoja dobrowolna zgoda
+            (art. 6 ust. 1 lit. a RODO). Odmowa nie blokuje korzystania ze strony.
+        </p>
+        <p>
+            W bazie licznika zapisujemy adres podstrony, dzień wizyty oraz skrót
+            kryptograficzny (hash) identyfikatora przeglądarki. Nie zapisujemy w tej tabeli
+            surowej wartości cookie, adresu IP ani danych z formularza powiadomień.
+            Logi techniczne serwera są odrębne od tego licznika.
+        </p>
+        <p>
+            Hash pozwala nadal łączyć wizyty tej samej przeglądarki, więc nie traktujemy
+            tych rekordów jako w pełni anonimowych. Nie łączymy ich z listą subskrybentów.
+            Usunięcie cookie albo użycie innej przeglądarki może spowodować policzenie
+            kolejnego odwiedzającego — nie jest to pomiar liczby konkretnych osób.
+        </p>
+        <!-- Przed publikacją należy wdrożyć egzekwowanie wybranego okresu retencji. -->
+        <p>
+            Rekordy statystyk zawierające hash identyfikatora przechowujemy maksymalnie
+            przez 365 dni od dnia wizyty. Ważność cookies w przeglądarce i okres
+            przechowywania rekordów w bazie to dwa odrębne terminy.
+            Samo wygaśnięcie lub usunięcie cookie nie usuwa historycznych rekordów z bazy.
+        </p>
+    </section>
+
+    <section aria-labelledby="privacy-cookie-choice">
+        <h2 id="privacy-cookie-choice">Jak zmienić decyzję o cookies?</h2>
+        <p>
+            Przy pierwszym wejściu możesz wybrać „Akceptuję” albo „Odrzucam”.
+            Brak wyboru nie oznacza zgody. W każdej chwili możesz otworzyć
+            „Ustawienia cookies” w stopce i zmienić decyzję.
+        </p>
+        <p>
+            Wybranie „Odrzucam” zatrzymuje nowe zapisy naszego licznika i usuwa
+            cookie visitor_id. Zapamiętujemy odmowę, aby nie pokazywać ponownie pytania
+            przy każdym wejściu. Wycofanie zgody nie usuwa automatycznie wcześniejszych
+            rekordów statystyk; w sprawie danych i realizacji swoich praw możesz
+            skontaktować się z administratorem wskazanym wyżej.
+        </p>
+        <p>
+            Cookies możesz również usuwać lub blokować w ustawieniach przeglądarki.
+            Zablokowanie plików niezbędnych może utrudnić działanie formularzy lub logowania.
+        </p>
     </section>
 </article>

@@ -9004,6 +9004,7 @@ body > footer {
 }
 
 .site-newsletter__privacy a,
+.cookie-consent__content a,
 .subscription-privacy a {
 	color: var(--color-accent-dark);
 	text-decoration: underline;
@@ -9011,6 +9012,7 @@ body > footer {
 }
 
 .site-newsletter__privacy a:focus-visible,
+.cookie-consent__content a:focus-visible,
 .subscription-privacy a:focus-visible {
 	outline: 2px solid var(--color-accent);
 	outline-offset: 4px;

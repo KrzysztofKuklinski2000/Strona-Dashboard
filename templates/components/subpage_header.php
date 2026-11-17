@@ -58,9 +58,9 @@ $subpageHeaders = [
         'description' => 'Najważniejsze zasady organizacyjne, które porządkują treningi i funkcjonowanie klubu.',
     ],
     'subscription-privacy' => [
-        'eyebrow' => 'Powiadomienia klubowe',
-        'title' => 'Prywatność powiadomień',
-        'description' => 'Jak korzystamy z Twojego adresu e-mail i jak możesz wyłączyć powiadomienia o zmianach grafiku.',
+        'eyebrow' => 'Dane i ustawienia',
+        'title' => 'Prywatność i cookies',
+        'description' => 'Jak korzystamy z danych przy powiadomieniach, jak działają cookies i statystyki oraz jak zmienić swoją decyzję.',
     ],
     'timetable' => [
         'eyebrow' => 'Plan treningów',

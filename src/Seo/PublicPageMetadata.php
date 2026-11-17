@@ -56,8 +56,8 @@ final class PublicPageMetadata
         ],
         'subscription-privacy' => [
             'path' => '/prywatnosc-powiadomien',
-            'title' => 'Prywatność powiadomień',
-            'description' => 'Informacja o przetwarzaniu danych przy zapisie na powiadomienia o zmianach grafiku treningów oraz o możliwości rezygnacji.',
+            'title' => 'Prywatność i cookies',
+            'description' => 'Informacja o powiadomieniach, plikach cookies i statystykach odwiedzin oraz o możliwości zmiany lub wycofania zgody.',
         ],
         'oyama' => [
             'path' => '/oyama',
