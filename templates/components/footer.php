@@ -117,6 +117,9 @@
 			<a href="<?= e(\App\Privacy\SubscriptionPrivacy::PATH) ?>">Prywatność powiadomień</a>
 			<a href="/status">Regulamin</a>
 			<a href="/kontakt">Kontakt</a>
+            <button type="button" data-cookie-settings aria-controls="cookie-consent">
+                Ustawienia cookies
+            </button>
 		</div>
 	</div>
 </div>

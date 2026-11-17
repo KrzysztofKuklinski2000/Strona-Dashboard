@@ -103,9 +103,11 @@ $seo = $params['seo'] ?? \App\Seo\PublicPageMetadata::forPage(
 	<footer>
 		<?php require_once('components/footer.php') ?>
 	</footer>
+    <?php require __DIR__ . '/components/cookie_consent.php' ?>
 
 	<script type="text/javascript" src="/js/main.js?v=<?= filemtime(__DIR__ . '/../public/js/main.js') ?>"></script>
 	<script src="/js/public-forms.js?v=<?= filemtime(__DIR__ . '/../public/js/public-forms.js') ?>" defer></script>
+	<script src="/js/cookie-consent.js?v=<?= filemtime(__DIR__ . '/../public/js/cookie-consent.js') ?>" defer></script>
 	<script type="text/javascript" src="/js/nav-indicator.js"></script>
 	<?php if (($params['page'] ?? '') === 'homepage'): ?>
 		<script src="/js/hero-carousel.js?v=<?= filemtime(__DIR__ . '/../public/js/hero-carousel.js') ?>" defer></script>
