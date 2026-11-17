@@ -458,14 +458,12 @@ INSERT INTO `user` (`id`, `login`, `password`)
 VALUES (1, 'test', '$2y$10$rx/38yd5XRg5fzMHGfi3i.SjEQhIIqiiTM.eF2C/NvYIo8c/HEXUq');
 
 
-CREATE TABLE `page_views`
-(
-    `id`        bigint unsigned NOT NULL AUTO_INCREMENT,
-    `path`      varchar(255) COLLATE utf8mb4_polish_ci NOT NULL,
-    `viewed_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id`),
-    INDEX `idx_page_views_viewed_at` (`viewed_at`),
-    INDEX `idx_page_views_path` (`path`)
+CREATE TABLE `visitor_page_days` (
+    `path` varchar(255) NOT NULL,
+    `visit_date` DATE NOT NULL,
+    `visitor_hash` CHAR(64) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+    PRIMARY KEY(`visit_date`, `visitor_hash`, `path`),
+    KEY `idx_visitor_days_visitor_hash` (`visitor_hash`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 
