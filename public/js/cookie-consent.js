@@ -4,8 +4,9 @@
     const panel = document.querySelector('[data-cookie-consent]');
     const form = panel?.querySelector('[data-cookie-consent-form]');
     const error = panel?.querySelector('[data-cookie-consent-error]');
+    const closeButton = panel?.querySelector('[data-cookie-consent-close]');
 
-    if (!panel || !form || !error) {
+    if (typeof panel?.showModal !== 'function' || !form || !error || !closeButton) {
         return;
     }
 
@@ -16,35 +17,33 @@
 
     const setExpanded = () => {
         settings.forEach((button) => {
-            button.setAttribute('aria-expanded', String(!panel.hidden));
+            button.setAttribute('aria-expanded', String(panel.open));
         });
     };
 
-    const hidePanel = () => {
-        panel.hidden = true;
+    const openPanel = () => {
+        error.hidden = true;
+        panel.showModal();
+        setExpanded();
+    };
+
+    closeButton.addEventListener('click', () => panel.close());
+
+    panel.addEventListener('close', () => {
         setExpanded();
         returnFocus?.focus({ preventScroll: true });
         returnFocus = null;
-    };
+    });
 
     settings.forEach((button) => {
         button.addEventListener('click', () => {
-            if (pending) {
+            if (pending || panel.open) {
                 return;
             }
 
             returnFocus = button;
-            panel.hidden = false;
-            error.hidden = true;
-            setExpanded();
-            buttons[0]?.focus({ preventScroll: true });
+            openPanel();
         });
-    });
-
-    panel.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && returnFocus && !pending) {
-            hidePanel();
-        }
     });
 
     form.addEventListener('submit', async (event) => {
@@ -99,7 +98,7 @@
                 return;
             }
 
-            hidePanel();
+            panel.close();
         } catch (failure) {
             error.textContent = failure.name === 'AbortError'
                 ? 'Zapisywanie trwało zbyt długo. Sprawdź połączenie i spróbuj ponownie.'
@@ -113,5 +112,9 @@
         }
     });
 
-    setExpanded();
+    if (panel.hasAttribute('data-cookie-consent-auto-open')) {
+        openPanel();
+    } else {
+        setExpanded();
+    }
 })();

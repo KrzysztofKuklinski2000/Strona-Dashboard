@@ -117,7 +117,7 @@
 			<a href="<?= e(\App\Privacy\SubscriptionPrivacy::PATH) ?>">Prywatność i cookies</a>
 			<a href="/status">Regulamin</a>
 			<a href="/kontakt">Kontakt</a>
-            <button type="button" data-cookie-settings aria-controls="cookie-consent">
+            <button type="button" data-cookie-settings aria-controls="cookie-consent" aria-haspopup="dialog">
                 Ustawienia cookies
             </button>
 		</div>
