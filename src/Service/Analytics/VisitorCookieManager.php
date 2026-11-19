@@ -60,4 +60,14 @@ class VisitorCookieManager
             ]
         );
     }
+
+    public function getExisting(Request $request): ?string {
+        $visitorId = $request->getCookieParam('visitor_id');
+
+        if (is_string($visitorId) && preg_match('/\A[a-f0-9]{64}\z/', $visitorId) === 1) {
+            return $visitorId;
+        }
+
+        return null;
+    }
 }

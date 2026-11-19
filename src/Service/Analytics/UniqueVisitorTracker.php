@@ -97,6 +97,19 @@ class UniqueVisitorTracker
         }
     }
 
+    public function deleteHistory(?string $visitorId): bool {
+        if ($visitorId === null) {
+            return true;
+        }
+
+        try {
+            return $this->repository->deleteHistory(hash('sha256', $visitorId));
+        }catch (RepositoryException $e) {
+            error_log('Nie udało się zapisać usunąć historii danego użytkownika');
+            return false;
+        }
+    }
+
     private function isAutomatedRequest(Request $request, bool $allowFetch = false): bool
     {
         $userAgent = $request->getServerParam('HTTP_USER_AGENT', '');

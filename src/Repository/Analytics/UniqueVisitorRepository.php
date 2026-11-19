@@ -105,4 +105,19 @@ class UniqueVisitorRepository extends AbstractRepository
             );
         }
     }
+
+    /**
+     * @throws RepositoryException
+     */
+    public function deleteHistory(string $visitorId): bool {
+        try {
+            $sql = "DELETE FROM visitor_page_days WHERE visitor_hash = :visitorId";
+
+            $stmt = $this->runQuery($sql, [':visitorId' => $visitorId]);
+        }catch (RepositoryException $e) {
+            throw new RepositoryException('Nie udało się usunąć historii', 500, $e);
+        }
+
+        return true;
+    }
 }

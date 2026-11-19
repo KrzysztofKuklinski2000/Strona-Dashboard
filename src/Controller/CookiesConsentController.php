@@ -60,8 +60,11 @@ class CookiesConsentController extends AbstractController
         $visitorDeleted = true;
         $visitorId = null;
 
-        if($decision === 'rejected') {
-            $visitorDeleted = $this->visitorCookieManager->delete();
+        if($decisionSaved && $decision === 'rejected') {
+            $currentVisitorId = $this->visitorCookieManager->getExisting($this->request);
+
+            $visitorDeleted = $this->uniqueVisitorTracker->deleteHistory($currentVisitorId)
+                && $this->visitorCookieManager->delete();
         }
 
         if ($decisionSaved && $decision === 'accepted') {
