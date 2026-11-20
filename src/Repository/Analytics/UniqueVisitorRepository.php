@@ -120,4 +120,18 @@ class UniqueVisitorRepository extends AbstractRepository
 
         return true;
     }
+
+    /**
+     * @throws RepositoryException
+     */
+    public function saveDailyTotal(DateTimeImmutable $day, int $count): void {
+        $this->runQuery('INSERT INTO visitor_daily_totals (visit_date, unique_visitors)
+        VALUES (:visit_date, :unique_visitors)
+        ON DUPLICATE KEY UPDATE unique_visitors = visitor_daily_totals.unique_visitors',
+            [
+                ':visit_date' => $day->format('Y-m-d'),
+                ':unique_visitors' => [$count, PDO::PARAM_INT]
+            ],
+        );
+    }
 }
