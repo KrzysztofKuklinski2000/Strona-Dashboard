@@ -54,7 +54,9 @@ class UniqueVisitorRepository extends AbstractRepository
     {
         try {
             return (int)$this->runQuery(
-                'SELECT COUNT(DISTINCT visitor_hash) FROM visitor_page_days WHERE visit_date >= :from AND visit_date < :to',
+                'SELECT COUNT(DISTINCT visitor_hash) 
+                    FROM visitor_page_days 
+                    WHERE visit_date >= :from AND visit_date < :to',
                 [
                     ':from' => $from->format('Y-m-d'),
                     ':to' => $to->format('Y-m-d')
@@ -132,6 +134,18 @@ class UniqueVisitorRepository extends AbstractRepository
                 ':visit_date' => $day->format('Y-m-d'),
                 ':unique_visitors' => [$count, PDO::PARAM_INT]
             ],
+        );
+    }
+
+    public function saveDailyPageTotals(DateTimeImmutable $day): void {
+        $this->runQuery(
+            'INSERT INTO visitor_daily_page_totals (visit_date, path, unique_visitors)
+                SELECT visits.visit_date, visits.path, COUNT(*)
+                FROM visitor_page_days AS visits
+                WHERE visits.visit_date = :visit_date
+                GROUP BY visits.visit_date, visits.path
+                ON DUPLICATE KEY UPDATE unique_visitors =  visitor_daily_page_totals.unique_visitors',
+            [':visit_date' => $day->format('Y-m-d')],
         );
     }
 }

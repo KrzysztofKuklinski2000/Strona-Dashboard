@@ -22,6 +22,7 @@ $yesterday = $today->modify('-1 day');
 
 $count = $repository->countBetween($yesterday, $today);
 $repository->saveDailyTotal($yesterday, $count);
+$repository->saveDailyPageTotals($yesterday);
 
 printf("Podsumowanie gotowe: %s\n", $yesterday->format('Y-m-d'));
 
