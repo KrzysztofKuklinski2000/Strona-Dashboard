@@ -86,14 +86,13 @@ class UniqueVisitorRepository extends AbstractRepository
     /**
      * @throws RepositoryException
      */
-    public function countGroupedByDay(DateTimeImmutable $from, DateTimeImmutable $to): array
+    public function getArchivedDailyTotals(DateTimeImmutable $from, DateTimeImmutable $to): array
     {
         try {
             return $this->runQuery(
-                'SELECT visit_date, COUNT(DISTINCT visitor_hash) AS countRows
-                    FROM visitor_page_days
-                    WHERE visit_date >= :from AND visit_date < :to
-                    GROUP BY visit_date',
+                'SELECT visit_date, unique_visitors
+                    FROM visitor_daily_totals
+                    WHERE visit_date >= :from AND visit_date < :to',
                 [
                     ':from' => $from->format('Y-m-d'),
                     ':to' => $to->format('Y-m-d')

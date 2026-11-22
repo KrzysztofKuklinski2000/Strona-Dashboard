@@ -71,7 +71,7 @@ readonly class OverviewService
                 ],
             ],
             'visitorsByPath' => $this->getVisitorsGroupedByPath(),
-            'visitorsByDay' => $this->getVisitorsGroupedByDay($last30DaysStart, $tomorrow),
+            'visitorsByDay' => $this->getVisitorsGroupedByDay($last30DaysStart, $today, $todayVisitors),
             'contentSummary' => $this->groupContentSummary($contentSummary),
         ];
     }
@@ -96,35 +96,6 @@ readonly class OverviewService
             throw new ServiceException('Nie udało się pobrać statystyk', 500, $e);
         }
     }
-
-    /**
-     * @throws ServiceException
-     */
-    private function getVisitorsGroupedByDay(DateTimeImmutable $from, DateTimeImmutable $to): array
-    {
-        try {
-            $visitorsFromDatabase = $this->uniqueVisitorRepository->countGroupedByDay($from, $to);
-
-            $result = [];
-
-            while ($from < $to) {
-                $date = $from->format('Y-m-d');
-
-                $result[$date] = (int)($visitorsFromDatabase[$date] ?? 0);
-
-                $from = $from->modify('+1 day');
-            }
-
-            return $result;
-        } catch (RepositoryException $e) {
-            throw new ServiceException(
-                'Nie udało się pobrać statystyk dziennych',
-                500,
-                $e
-            );
-        }
-    }
-
     private function calculatePercentageChange(int $current, int $previous): ?float
     {
         if ($previous === 0) {
@@ -198,5 +169,32 @@ readonly class OverviewService
         }
 
         return round(($part / $total) * 100, 1);
+    }
+
+    /**
+     * @throws ServiceException
+     */
+    private function getVisitorsGroupedByDay(
+        DateTimeImmutable $from,
+        DateTimeImmutable $today,
+        int $todayVisitors,
+    ): array {
+
+        try {
+            $archived = $this->uniqueVisitorRepository->getArchivedDailyTotals($from, $today);
+        } catch (RepositoryException $e) {
+            throw new ServiceException('Nie udało się pobrać statystyk dziennych', 500, $e);
+        }
+
+        $result = [];
+
+        for ($day = $from; $day < $today; $day = $day->modify('+1 day')) {
+            $date = $day->format('Y-m-d');
+            $result[$date] = isset($archived[$date]) ? (int) $archived[$date] : null;
+        }
+
+        $result[$today->format('Y-m-d')] = $todayVisitors;
+
+        return $result;
     }
 }
