@@ -5,11 +5,6 @@ declare(strict_types=1);
 namespace App\Service\Analytics;
 
 use App\Core\Request;
-use App\Exception\RepositoryException;
-use App\Repository\Analytics\UniqueVisitorRepository;
-use DateTimeImmutable;
-use DateTimeZone;
-use Exception;
 
 class UniqueVisitorTracker
 {
@@ -24,54 +19,47 @@ class UniqueVisitorTracker
         . '|curl|wget|python-requests|python-urllib|go-http-client|guzzlehttp|libwww-perl|apache-httpclient'
         . ')\b~i';
 
-    public function __construct(private readonly UniqueVisitorRepository $repository)
-    {
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function track(
+    public function getTrackablePath(
         Request $request,
         int $responseStatus = 200,
         bool $isAdministrator = false,
         ?string $visitorId = null,
-    ): void {
+    ): ?string {
         if (!$request->isGet()
             || $responseStatus !== 200
             || $isAdministrator
             || $this->isAutomatedRequest($request)) {
-            return;
+            return null;
         }
 
         $requestUri = $request->getServerParam('REQUEST_URI', '');
 
         if (!is_string($requestUri)) {
-            return;
+            return null;
         }
 
-        $this->recordVisit($requestUri, $visitorId);
+        return $this->getNormalizedPath($requestUri, $visitorId);
     }
 
-    public function trackAfterConsent(
+    public function getTrackablePathAfterConsent(
         Request $request,
         string $path,
         bool $isAdministrator = false,
         ?string $visitorId = null,
-    ): void {
+    ): ?string {
         if (!$request->isPost()
             || $isAdministrator
             || $this->isAutomatedRequest($request, allowFetch: true)) {
-            return;
+            return null;
         }
 
-        $this->recordVisit($path, $visitorId);
+        return $this->getNormalizedPath($path, $visitorId);
     }
 
-    private function recordVisit(string $requestUri, ?string $visitorId): void
+    private function getNormalizedPath(string $requestUri, ?string $visitorId): ?string
     {
         if ($visitorId === null || preg_match('/\A[a-f0-9]{64}\z/', $visitorId) !== 1) {
-            return;
+            return null;
         }
 
         $path = parse_url($requestUri, PHP_URL_PATH);
@@ -80,34 +68,14 @@ class UniqueVisitorTracker
             || !str_starts_with($requestUri, '/')
             || str_starts_with($requestUri, '//')
             || strlen($path) > 255) {
-            return;
+            return null;
         }
 
         if ($path !== '/' && str_ends_with($path, '/')) {
             $path = substr($path, 0, -1);
         }
 
-        $visitorHash = hash('sha256', $visitorId);
-        $visitDate = (new DateTimeImmutable('now', new DateTimeZone('Europe/Warsaw')))->modify('today');
-
-        try {
-            $this->repository->recordUniqueVisit($path, $visitDate, $visitorHash);
-        } catch (RepositoryException $e) {
-            error_log('Nie udało się zapisać unikalnej wizyty');
-        }
-    }
-
-    public function deleteHistory(?string $visitorId): bool {
-        if ($visitorId === null) {
-            return true;
-        }
-
-        try {
-            return $this->repository->deleteHistory(hash('sha256', $visitorId));
-        }catch (RepositoryException $e) {
-            error_log('Nie udało się zapisać usunąć historii danego użytkownika');
-            return false;
-        }
+        return $path;
     }
 
     private function isAutomatedRequest(Request $request, bool $allowFetch = false): bool

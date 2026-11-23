@@ -14,16 +14,13 @@ use App\Core\Request;
 use App\Core\Router;
 use App\Core\SessionManager;
 use App\Core\Validator;
-use App\DTO\Auth\UserDto;
 use App\Exception\NotFoundException;
 use App\Middleware\AuthMiddleware;
 use App\Middleware\CsrfMiddleware;
 use App\Redirects\LegacyRedirector;
-use App\Repository\Analytics\UniqueVisitorRepository;
 use App\Security\TokenGenerator;
 use App\Seo\SearchIndexing;
 use App\Service\Analytics\CookieConsentManager;
-use App\Service\Analytics\UniqueVisitorTracker;
 use App\Service\Analytics\VisitorCookieManager;
 use App\View\View;
 use EasyCSRF\EasyCSRF;
@@ -133,30 +130,15 @@ try {
         throw new Exception("Metoda $action nie istnieje w kontrolerze $controllerClass");
     }
 
-    $isPublicPage = $controller instanceof SiteController || $controller instanceof PublicNewsController;
-    $visitorId = null;
-
-    if ($isPublicPage) {
+    if ($controller instanceof SiteController || $controller instanceof PublicNewsController) {
         $cookiesConsentManager = new CookieConsentManager(!$isDev);
         $hasAnalyticsConsent = $cookiesConsentManager->getDecision($request) === 'accepted';
 
         $visitorCookieManager = new VisitorCookieManager(new TokenGenerator(), !$isDev);
-        $visitorId = $visitorCookieManager->getOrCreate($request, $hasAnalyticsConsent);
+        $visitorCookieManager->getOrCreate($request, $hasAnalyticsConsent);
     }
 
     $controller->$action();
-
-    if ($isPublicPage) {
-        $uniqueVisitorRepository = new UniqueVisitorRepository($pdo);
-        $uniqueVisitorTracker = new UniqueVisitorTracker($uniqueVisitorRepository);
-
-        $uniqueVisitorTracker->track(
-            $request,
-            responseStatus: http_response_code() ?: 200,
-            isAdministrator: $sessionManager->get('user') instanceof UserDto,
-            visitorId: $visitorId,
-        );
-    }
 
 } catch (InvalidCsrfTokenException) {
     $isDashboardRequest = $controller instanceof AbstractDashboardController
